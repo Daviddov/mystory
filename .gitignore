@@ -1,0 +1,52 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/build
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+
+# env files (.env.example is committed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Local runtime state. The seeded library (data/books, data/media/books/seed-*,
+# data/collections.json, data/settings.json) IS committed so the site works
+# right after cloning.
+#
+# Everything else under data/books and data/media/books (imported catalogues,
+# books created in the admin) stays local: book folders are named by slug, so
+# the six seed books are allow-listed by name.
+/data/books/*
+!/data/books/grandma-ruths-map/
+!/data/books/little-star-goes-to-sleep/
+!/data/books/tamars-yellow-boots/
+!/data/books/the-robot-who-could-not-laugh/
+!/data/books/the-snail-who-was-late/
+!/data/books/who-hides-in-the-garden/
+/data/media/books/*
+!/data/media/books/seed-*/
+/data/.auth-secret
+/data/users.json
+/data/favorites.json
+/data/progress.json
+/data/jobs.json
+/data/**/.*.tmp
+/data/media/tmp/

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "seed-col-bedtime",
+    "slug": "sweet-dreams",
+    "title": "חלומות מתוקים",
+    "description": "סיפורים רגועים וקצרים לדקות האחרונות של היום, כשהאור כבר מעומעם.",
+    "bookIds": [
+      "seed-star",
+      "seed-garden",
+      "seed-snail"
+    ]
+  },
+  {
+    "id": "seed-col-winter",
+    "slug": "rainy-days",
+    "title": "ימים של גשם",
+    "description": "שלוליות, מגפיים ורעמים רחוקים: ספרים לימי חורף שנשארים בהם בבית.",
+    "bookIds": [
+      "seed-boots",
+      "seed-snail"
+    ],
+    "season": "winter"
+  }
+]

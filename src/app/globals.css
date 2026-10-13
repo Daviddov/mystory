@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+/* `bedtime:` variant, e.g. className="bg-surface bedtime:opacity-90" */
+@custom-variant bedtime (&:where([data-theme="bedtime"], [data-theme="bedtime"] *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Day theme is the default; the bedtime theme is applied with
+   <html data-theme="bedtime"> (see ThemeToggle and src/lib/theme.ts).
+   Use the Tailwind names from the @theme block below (bg-surface,
+   text-muted, border-border, ...) rather than raw hex values.
+--------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --background: #fff8ec;
+  --surface: #ffffff;
+  --surface-2: #fdefd8;
+  --foreground: #3b2f2a;
+  --muted: #6f6055;
+
+  --primary: #d9480f;
+  --primary-hover: #bf3f0c;
+  --primary-foreground: #ffffff;
+  --primary-soft: #ffe3d1;
+
+  --secondary: #0b7285;
+  --secondary-hover: #095c6b;
+  --secondary-foreground: #ffffff;
+  --secondary-soft: #d5f1f5;
+
+  --accent: #f5b700;
+  --accent-foreground: #3b2f2a;
+  --accent-soft: #fff1bf;
+
+  --border: #ebd9c0;
+  --border-strong: #c9b193;
+
+  --danger: #c92a2a;
+  --danger-foreground: #ffffff;
+  --danger-soft: #ffe3e3;
+  --success: #2b8a3e;
+  --success-soft: #ddf5e0;
+  --warning: #b35c00;
+  --warning-soft: #ffebc8;
+
+  --ring: #0b7285;
+  /* Background of the word currently being narrated. */
+  --highlight: #ffe066;
+  --highlight-foreground: #3b2f2a;
+  --overlay: rgb(59 47 42 / 0.55);
+
+  --elev-card: 0 2px 0 rgb(59 47 42 / 0.06), 0 10px 24px -12px rgb(59 47 42 / 0.25);
+  --elev-pop: 0 18px 40px -16px rgb(59 47 42 / 0.45);
+
+  /* Minimum size of anything a child taps. */
+  --touch: 3rem;
+  --touch-lg: 3.75rem;
+
+  /* Reader text size; the reader changes it with its font-size control. */
+  --story-font-size: 1.5rem;
+}
+
+[data-theme="bedtime"] {
+  color-scheme: dark;
+
+  --background: #141a33;
+  --surface: #1e2647;
+  --surface-2: #2a3360;
+  --foreground: #f3e9d8;
+  --muted: #b9b5cc;
+
+  --primary: #ffb86b;
+  --primary-hover: #ffa94d;
+  --primary-foreground: #2a1b0a;
+  --primary-soft: #3d3355;
+
+  --secondary: #8fd3de;
+  --secondary-hover: #a9e0e9;
+  --secondary-foreground: #10222a;
+  --secondary-soft: #24405a;
+
+  --accent: #ffd86b;
+  --accent-foreground: #2a1b0a;
+  --accent-soft: #453d2a;
+
+  --border: #36406e;
+  --border-strong: #55609a;
+
+  --danger: #ff8a8a;
+  --danger-foreground: #2a0a0a;
+  --danger-soft: #4a2436;
+  --success: #8ce0a0;
+  --success-soft: #1f4034;
+  --warning: #ffc078;
+  --warning-soft: #4a3a22;
+
+  --ring: #ffd86b;
+  --highlight: #ffd86b;
+  --highlight-foreground: #2a1b0a;
+  --overlay: rgb(5 8 20 / 0.7);
+
+  --elev-card: 0 2px 0 rgb(0 0 0 / 0.2), 0 10px 24px -12px rgb(0 0 0 / 0.6);
+  --elev-pop: 0 18px 40px -16px rgb(0 0 0 / 0.8);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-soft: var(--secondary-soft);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+
+  --color-ring: var(--ring);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+  --color-overlay: var(--overlay);
+
+  --font-sans: var(--font-ui), "Rubik", "Arial Hebrew", Arial, sans-serif;
+  --font-story: var(--font-story-face), "Frank Ruhl Libre", "Times New Roman", serif;
+
+  --shadow-card: var(--elev-card);
+  --shadow-pop: var(--elev-pop);
+
+  --spacing-touch: var(--touch);
+  --spacing-touch-lg: var(--touch-lg);
+}
+
+/* Rounded, friendly corners: rounded-sm / md / lg / xl / 2xl. */
+@theme {
+  --radius-sm: 0.625rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-2xl: 2.5rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-ui), "Rubik", "Arial Hebrew", Arial, sans-serif;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--foreground);
+  }
+
+  button,
+  [role="button"],
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Centered page column with comfortable side padding. */
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  /* Story body text: a serif face that renders nikud well, with generous leading. */
+  .story-text {
+    font-family: var(--font-story-face), "Frank Ruhl Libre", "Times New Roman", serif;
+    font-size: var(--story-font-size);
+    line-height: 2;
+    letter-spacing: 0.01em;
+    text-wrap: pretty;
+  }
+
+  /* The word currently being narrated (reader). */
+  .word-highlight {
+    background: var(--highlight);
+    color: var(--highlight-foreground);
+    border-radius: 0.35em;
+    box-shadow: 0 0 0 0.15em var(--highlight);
+  }
+
+  /* Any page can hide the site header and footer (reader, print view) by
+     rendering an element with the data-immersive attribute. */
+  body:has([data-immersive]) .site-chrome {
+    display: none;
+  }
+
+  .touch-target {
+    min-width: var(--touch);
+    min-height: var(--touch);
+  }
+
+  /* Horizontal shelf without a visible scrollbar. */
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}

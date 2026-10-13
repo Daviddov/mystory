@@ -1,0 +1,371 @@
+{
+  "id": "seed-garden",
+  "slug": "who-hides-in-the-garden",
+  "title": "מי מתחבא בגינה?",
+  "summary": "משחק מחבואים קטן בגינה: מאחורי כל עלה, פרח וענף מחכה חבר חדש. ספר ראשון עם משפטים קצרים שחוזרים על עצמם.",
+  "author": "מערכת הסיפור שלי",
+  "illustrator": "מערכת הסיפור שלי",
+  "license": "CC BY 4.0",
+  "source": "סיפור מקורי שנכתב ואויר במיוחד לאתר, בעזרת בינה מלאכותית",
+  "ageGroup": "0-2",
+  "readingMinutes": 2,
+  "coverImage": "books/seed-garden/cover.svg",
+  "status": "published",
+  "ownerId": "system",
+  "categories": [
+    "animals",
+    "nature",
+    "educational"
+  ],
+  "tags": [
+    "גינה",
+    "חתולים",
+    "ציפורים",
+    "צבעים"
+  ],
+  "themes": [
+    "curiosity"
+  ],
+  "discussionQuestions": [
+    "איזו חיה מצאנו על הפרח?",
+    "איפה עוד אפשר להתחבא בגינה?",
+    "איזה קול עושה הצפרדע?"
+  ],
+  "origin": "manual",
+  "viewCount": 148,
+  "createdAt": "2026-09-02T07:00:00.000Z",
+  "updatedAt": "2026-10-13T19:04:55.841Z",
+  "publishedAt": "2026-09-02T07:00:00.000Z",
+  "pages": [
+    {
+      "index": 0,
+      "text": "בוקר טוב, גינה! מי מתחבא פה?",
+      "textNikud": "בֹּקֶר טוֹב, גִּנָּה! מִי מִתְחַבֵּא פֹּה?",
+      "image": "books/seed-garden/page-01.svg",
+      "audio": "books/seed-garden/narration-01-cd29510ffd.wav",
+      "wordTimings": [
+        {
+          "word": "בֹּקֶר",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "טוֹב,",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "גִּנָּה!",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "מִי",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "מִתְחַבֵּא",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "פֹּה?",
+          "start": 2,
+          "end": 2.4
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 1,
+      "text": "מי מתחבא מתחת לעלה? שבלול קטן! שלום, שבלול.",
+      "textNikud": "מִי מִתְחַבֵּא מִתַּחַת לֶעָלֶה? שַׁבְּלוּל קָטָן! שָׁלוֹם, שַׁבְּלוּל.",
+      "image": "books/seed-garden/page-02.svg",
+      "audio": "books/seed-garden/narration-02-e59b494ae3.wav",
+      "wordTimings": [
+        {
+          "word": "מִי",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "מִתְחַבֵּא",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "מִתַּחַת",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "לֶעָלֶה?",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "שַׁבְּלוּל",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "קָטָן!",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "שָׁלוֹם,",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "שַׁבְּלוּל.",
+          "start": 2.8,
+          "end": 3.2
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 2,
+      "text": "מי מתחבא על הפרח? חיפושית אדומה! שלום, חיפושית.",
+      "textNikud": "מִי מִתְחַבֵּא עַל הַפֶּרַח? חִפּוּשִׁית אֲדֻמָּה! שָׁלוֹם, חִפּוּשִׁית.",
+      "image": "books/seed-garden/page-03.svg",
+      "audio": "books/seed-garden/narration-03-e59b494ae3.wav",
+      "wordTimings": [
+        {
+          "word": "מִי",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "מִתְחַבֵּא",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "עַל",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "הַפֶּרַח?",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "חִפּוּשִׁית",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "אֲדֻמָּה!",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "שָׁלוֹם,",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "חִפּוּשִׁית.",
+          "start": 2.8,
+          "end": 3.2
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 3,
+      "text": "מי מתחבא ליד השלולית? צפרדע ירוקה! קווה, קווה.",
+      "textNikud": "מִי מִתְחַבֵּא לְיַד הַשְּׁלוּלִית? צְפַרְדֵּעַ יְרֻקָּה! קְוָה, קְוָה.",
+      "image": "books/seed-garden/page-04.svg",
+      "audio": "books/seed-garden/narration-04-e59b494ae3.wav",
+      "wordTimings": [
+        {
+          "word": "מִי",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "מִתְחַבֵּא",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "לְיַד",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "הַשְּׁלוּלִית?",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "צְפַרְדֵּעַ",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "יְרֻקָּה!",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "קְוָה,",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "קְוָה.",
+          "start": 2.8,
+          "end": 3.2
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 4,
+      "text": "מי מתחבא על הענף? ציפור כחולה! ציף, ציף.",
+      "textNikud": "מִי מִתְחַבֵּא עַל הֶעָנָף? צִפּוֹר כְּחֻלָּה! צִיף, צִיף.",
+      "image": "books/seed-garden/page-05.svg",
+      "audio": "books/seed-garden/narration-05-e59b494ae3.wav",
+      "wordTimings": [
+        {
+          "word": "מִי",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "מִתְחַבֵּא",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "עַל",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "הֶעָנָף?",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "צִפּוֹר",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "כְּחֻלָּה!",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "צִיף,",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "צִיף.",
+          "start": 2.8,
+          "end": 3.2
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 5,
+      "text": "מי מתחבא בתוך העשב? חתלתול רך! מיאו.",
+      "textNikud": "מִי מִתְחַבֵּא בְּתוֹךְ הָעֵשֶׂב? חֲתַלְתּוּל רַךְ! מְיָאוּ.",
+      "image": "books/seed-garden/page-06.svg",
+      "audio": "books/seed-garden/narration-06-af8b926934.wav",
+      "wordTimings": [
+        {
+          "word": "מִי",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "מִתְחַבֵּא",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "בְּתוֹךְ",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "הָעֵשֶׂב?",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "חֲתַלְתּוּל",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "רַךְ!",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "מְיָאוּ.",
+          "start": 2.4,
+          "end": 2.8
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 6,
+      "text": "ומי מתחבא מאחורי העץ? זה אני! קוקו!",
+      "textNikud": "וּמִי מִתְחַבֵּא מֵאֲחוֹרֵי הָעֵץ? זֶה אֲנִי! קוּקוּ!",
+      "image": "books/seed-garden/page-07.svg",
+      "audio": "books/seed-garden/narration-07-af8b926934.wav",
+      "wordTimings": [
+        {
+          "word": "וּמִי",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "מִתְחַבֵּא",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "מֵאֲחוֹרֵי",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "הָעֵץ?",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "זֶה",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "אֲנִי!",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "קוּקוּ!",
+          "start": 2.4,
+          "end": 2.8
+        }
+      ],
+      "audioSource": "mock"
+    }
+  ]
+}

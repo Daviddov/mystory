@@ -1,0 +1,724 @@
+{
+  "id": "seed-boots",
+  "slug": "tamars-yellow-boots",
+  "title": "המגפיים הצהובים של תמר",
+  "summary": "תמר מחכה לגשם כדי לנעול את המגפיים החדשים שלה. אבל כשהגשם סוף סוף מגיע, מגיע איתו גם רעם. סיפור על פחד קטן ועל דרך פשוטה להרגיע אותו.",
+  "author": "מערכת הסיפור שלי",
+  "illustrator": "מערכת הסיפור שלי",
+  "license": "CC BY 4.0",
+  "source": "סיפור מקורי שנכתב ואויר במיוחד לאתר, בעזרת בינה מלאכותית",
+  "ageGroup": "3-5",
+  "readingMinutes": 5,
+  "coverImage": "books/seed-boots/cover.svg",
+  "status": "published",
+  "ownerId": "system",
+  "categories": [
+    "overcoming",
+    "nature",
+    "home-education"
+  ],
+  "tags": [
+    "חורף",
+    "גשם"
+  ],
+  "themes": [
+    "courage",
+    "feelings",
+    "patience"
+  ],
+  "discussionQuestions": [
+    "ממה תמר נבהלה?",
+    "מה אבא הציע לה לעשות כשהיא שומעת רעם?",
+    "מה עוזר לך כשמשהו מפחיד?",
+    "איך תמר הרגישה בסוף הסיפור?"
+  ],
+  "origin": "manual",
+  "viewCount": 287,
+  "createdAt": "2026-09-23T07:00:00.000Z",
+  "updatedAt": "2026-10-13T19:04:55.623Z",
+  "publishedAt": "2026-09-23T07:00:00.000Z",
+  "pages": [
+    {
+      "index": 0,
+      "text": "תמר קיבלה מגפיים צהובים חדשים. הם הבריקו כמו שני לימונים.",
+      "image": "books/seed-boots/page-01.svg",
+      "audio": "books/seed-boots/narration-01-aaa520a077.wav",
+      "wordTimings": [
+        {
+          "word": "תמר",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "קיבלה",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "מגפיים",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "צהובים",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "חדשים.",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "הם",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "הבריקו",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "כמו",
+          "start": 2.8,
+          "end": 3.2
+        },
+        {
+          "word": "שני",
+          "start": 3.2,
+          "end": 3.6
+        },
+        {
+          "word": "לימונים.",
+          "start": 3.6,
+          "end": 4
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 1,
+      "text": "״מתי ירד גשם?״ שאלה תמר כל בוקר. אבל השמיים היו כחולים, והמגפיים חיכו ליד הדלת.",
+      "image": "books/seed-boots/page-02.svg",
+      "audio": "books/seed-boots/narration-02-c445f452f8.wav",
+      "wordTimings": [
+        {
+          "word": "״מתי",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "ירד",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "גשם?״",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "שאלה",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "תמר",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "כל",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "בוקר.",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "אבל",
+          "start": 2.8,
+          "end": 3.2
+        },
+        {
+          "word": "השמיים",
+          "start": 3.2,
+          "end": 3.6
+        },
+        {
+          "word": "היו",
+          "start": 3.6,
+          "end": 4
+        },
+        {
+          "word": "כחולים,",
+          "start": 4,
+          "end": 4.4
+        },
+        {
+          "word": "והמגפיים",
+          "start": 4.4,
+          "end": 4.8
+        },
+        {
+          "word": "חיכו",
+          "start": 4.8,
+          "end": 5.2
+        },
+        {
+          "word": "ליד",
+          "start": 5.2,
+          "end": 5.6
+        },
+        {
+          "word": "הדלת.",
+          "start": 5.6,
+          "end": 6
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 2,
+      "text": "יום אחד השמיים האפירו. טיפה נחתה על החלון. ועוד טיפה. ״גשם!״ צעקה תמר ורצה אל המגפיים.",
+      "image": "books/seed-boots/page-03.svg",
+      "audio": "books/seed-boots/narration-03-eb94955f1c.wav",
+      "wordTimings": [
+        {
+          "word": "יום",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "אחד",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "השמיים",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "האפירו.",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "טיפה",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "נחתה",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "על",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "החלון.",
+          "start": 2.8,
+          "end": 3.2
+        },
+        {
+          "word": "ועוד",
+          "start": 3.2,
+          "end": 3.6
+        },
+        {
+          "word": "טיפה.",
+          "start": 3.6,
+          "end": 4
+        },
+        {
+          "word": "״גשם!״",
+          "start": 4,
+          "end": 4.4
+        },
+        {
+          "word": "צעקה",
+          "start": 4.4,
+          "end": 4.8
+        },
+        {
+          "word": "תמר",
+          "start": 4.8,
+          "end": 5.2
+        },
+        {
+          "word": "ורצה",
+          "start": 5.2,
+          "end": 5.6
+        },
+        {
+          "word": "אל",
+          "start": 5.6,
+          "end": 6
+        },
+        {
+          "word": "המגפיים.",
+          "start": 6,
+          "end": 6.4
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 3,
+      "text": "ואז נשמע רעם גדול. בום! תמר קפצה אל מתחת לשמיכה. ״אני לא יוצאת,״ לחשה.",
+      "image": "books/seed-boots/page-04.svg",
+      "audio": "books/seed-boots/narration-04-f08fcf48fd.wav",
+      "wordTimings": [
+        {
+          "word": "ואז",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "נשמע",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "רעם",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "גדול.",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "בום!",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "תמר",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "קפצה",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "אל",
+          "start": 2.8,
+          "end": 3.2
+        },
+        {
+          "word": "מתחת",
+          "start": 3.2,
+          "end": 3.6
+        },
+        {
+          "word": "לשמיכה.",
+          "start": 3.6,
+          "end": 4
+        },
+        {
+          "word": "״אני",
+          "start": 4,
+          "end": 4.4
+        },
+        {
+          "word": "לא",
+          "start": 4.4,
+          "end": 4.8
+        },
+        {
+          "word": "יוצאת,״",
+          "start": 4.8,
+          "end": 5.2
+        },
+        {
+          "word": "לחשה.",
+          "start": 5.2,
+          "end": 5.6
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 4,
+      "text": "אבא התיישב לידה. ״הרעם הוא רק קול,״ אמר. ״כשאני שומע אותו, אני סופר עד שלוש ונושם עמוק. רוצה לנסות?״",
+      "image": "books/seed-boots/page-05.svg",
+      "audio": "books/seed-boots/narration-05-66248f2bc2.wav",
+      "wordTimings": [
+        {
+          "word": "אבא",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "התיישב",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "לידה.",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "״הרעם",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "הוא",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "רק",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "קול,״",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "אמר.",
+          "start": 2.8,
+          "end": 3.2
+        },
+        {
+          "word": "״כשאני",
+          "start": 3.2,
+          "end": 3.6
+        },
+        {
+          "word": "שומע",
+          "start": 3.6,
+          "end": 4
+        },
+        {
+          "word": "אותו,",
+          "start": 4,
+          "end": 4.4
+        },
+        {
+          "word": "אני",
+          "start": 4.4,
+          "end": 4.8
+        },
+        {
+          "word": "סופר",
+          "start": 4.8,
+          "end": 5.2
+        },
+        {
+          "word": "עד",
+          "start": 5.2,
+          "end": 5.6
+        },
+        {
+          "word": "שלוש",
+          "start": 5.6,
+          "end": 6
+        },
+        {
+          "word": "ונושם",
+          "start": 6,
+          "end": 6.4
+        },
+        {
+          "word": "עמוק.",
+          "start": 6.4,
+          "end": 6.8
+        },
+        {
+          "word": "רוצה",
+          "start": 6.8,
+          "end": 7.2
+        },
+        {
+          "word": "לנסות?״",
+          "start": 7.2,
+          "end": 7.6
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 5,
+      "text": "בום! ״אחת, שתיים, שלוש,״ ספרה תמר ונשמה עמוק. הלב שלה עוד דפק, אבל קצת פחות.",
+      "image": "books/seed-boots/page-06.svg",
+      "audio": "books/seed-boots/narration-06-c445f452f8.wav",
+      "wordTimings": [
+        {
+          "word": "בום!",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "״אחת,",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "שתיים,",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "שלוש,״",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "ספרה",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "תמר",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "ונשמה",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "עמוק.",
+          "start": 2.8,
+          "end": 3.2
+        },
+        {
+          "word": "הלב",
+          "start": 3.2,
+          "end": 3.6
+        },
+        {
+          "word": "שלה",
+          "start": 3.6,
+          "end": 4
+        },
+        {
+          "word": "עוד",
+          "start": 4,
+          "end": 4.4
+        },
+        {
+          "word": "דפק,",
+          "start": 4.4,
+          "end": 4.8
+        },
+        {
+          "word": "אבל",
+          "start": 4.8,
+          "end": 5.2
+        },
+        {
+          "word": "קצת",
+          "start": 5.2,
+          "end": 5.6
+        },
+        {
+          "word": "פחות.",
+          "start": 5.6,
+          "end": 6
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 6,
+      "text": "היא נעלה את המגפיים הצהובים ויצאה לחצר. שלולית ראשונה: שפריץ! שלולית שנייה: שפריץ גדול עוד יותר!",
+      "image": "books/seed-boots/page-07.svg",
+      "audio": "books/seed-boots/narration-07-eb94955f1c.wav",
+      "wordTimings": [
+        {
+          "word": "היא",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "נעלה",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "את",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "המגפיים",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "הצהובים",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "ויצאה",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "לחצר.",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "שלולית",
+          "start": 2.8,
+          "end": 3.2
+        },
+        {
+          "word": "ראשונה:",
+          "start": 3.2,
+          "end": 3.6
+        },
+        {
+          "word": "שפריץ!",
+          "start": 3.6,
+          "end": 4
+        },
+        {
+          "word": "שלולית",
+          "start": 4,
+          "end": 4.4
+        },
+        {
+          "word": "שנייה:",
+          "start": 4.4,
+          "end": 4.8
+        },
+        {
+          "word": "שפריץ",
+          "start": 4.8,
+          "end": 5.2
+        },
+        {
+          "word": "גדול",
+          "start": 5.2,
+          "end": 5.6
+        },
+        {
+          "word": "עוד",
+          "start": 5.6,
+          "end": 6
+        },
+        {
+          "word": "יותר!",
+          "start": 6,
+          "end": 6.4
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 7,
+      "text": "הרעם נשמע שוב, רחוק רחוק. תמר ספרה עד שלוש וחייכה. ״שמעת, רעם? אני כאן, עם המגפיים שלי.״",
+      "image": "books/seed-boots/page-08.svg",
+      "audio": "books/seed-boots/narration-08-9c21b5909f.wav",
+      "wordTimings": [
+        {
+          "word": "הרעם",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "נשמע",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "שוב,",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "רחוק",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "רחוק.",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "תמר",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "ספרה",
+          "start": 2.4,
+          "end": 2.8
+        },
+        {
+          "word": "עד",
+          "start": 2.8,
+          "end": 3.2
+        },
+        {
+          "word": "שלוש",
+          "start": 3.2,
+          "end": 3.6
+        },
+        {
+          "word": "וחייכה.",
+          "start": 3.6,
+          "end": 4
+        },
+        {
+          "word": "״שמעת,",
+          "start": 4,
+          "end": 4.4
+        },
+        {
+          "word": "רעם?",
+          "start": 4.4,
+          "end": 4.8
+        },
+        {
+          "word": "אני",
+          "start": 4.8,
+          "end": 5.2
+        },
+        {
+          "word": "כאן,",
+          "start": 5.2,
+          "end": 5.6
+        },
+        {
+          "word": "עם",
+          "start": 5.6,
+          "end": 6
+        },
+        {
+          "word": "המגפיים",
+          "start": 6,
+          "end": 6.4
+        },
+        {
+          "word": "שלי.״",
+          "start": 6.4,
+          "end": 6.8
+        }
+      ],
+      "audioSource": "mock"
+    }
+  ]
+}

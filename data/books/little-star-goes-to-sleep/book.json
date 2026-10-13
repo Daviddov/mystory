@@ -1,0 +1,284 @@
+{
+  "id": "seed-star",
+  "slug": "little-star-goes-to-sleep",
+  "title": "הכוכב הקטן הולך לישון",
+  "summary": "הכוכב הקטן מפהק ואומר לילה טוב לכל מי שהוא רואה מלמעלה: לענן, לירח, לינשוף, לים ולבית הקטן. ספר הרגעה קצר לסוף היום.",
+  "author": "מערכת הסיפור שלי",
+  "illustrator": "מערכת הסיפור שלי",
+  "license": "CC BY 4.0",
+  "source": "סיפור מקורי שנכתב ואויר במיוחד לאתר, בעזרת בינה מלאכותית",
+  "ageGroup": "0-2",
+  "readingMinutes": 2,
+  "coverImage": "books/seed-star/cover.svg",
+  "status": "published",
+  "ownerId": "system",
+  "categories": [
+    "bedtime",
+    "nature"
+  ],
+  "tags": [
+    "שינה",
+    "לילה",
+    "ירח",
+    "כוכבים"
+  ],
+  "themes": [
+    "feelings"
+  ],
+  "discussionQuestions": [
+    "למי הכוכב אמר לילה טוב?",
+    "למי אנחנו רוצים לומר לילה טוב היום?"
+  ],
+  "origin": "manual",
+  "viewCount": 231,
+  "createdAt": "2026-09-09T07:00:00.000Z",
+  "updatedAt": "2026-10-13T19:04:55.572Z",
+  "publishedAt": "2026-09-09T07:00:00.000Z",
+  "pages": [
+    {
+      "index": 0,
+      "text": "הכוכב הקטן מפהק. הגיע הזמן לישון.",
+      "textNikud": "הַכּוֹכָב הַקָּטָן מְפַהֵק. הִגִּיעַ הַזְּמַן לִישֹׁן.",
+      "image": "books/seed-star/page-01.svg",
+      "audio": "books/seed-star/narration-01-cd29510ffd.wav",
+      "wordTimings": [
+        {
+          "word": "הַכּוֹכָב",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "הַקָּטָן",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "מְפַהֵק.",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "הִגִּיעַ",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "הַזְּמַן",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "לִישֹׁן.",
+          "start": 2,
+          "end": 2.4
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 1,
+      "text": "לילה טוב, ענן רך.",
+      "textNikud": "לַיְלָה טוֹב, עָנָן רַךְ.",
+      "image": "books/seed-star/page-02.svg",
+      "audio": "books/seed-star/narration-02-43ed924031.wav",
+      "wordTimings": [
+        {
+          "word": "לַיְלָה",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "טוֹב,",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "עָנָן",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "רַךְ.",
+          "start": 1.2,
+          "end": 1.6
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 2,
+      "text": "לילה טוב, ירח עגול.",
+      "textNikud": "לַיְלָה טוֹב, יָרֵחַ עָגֹל.",
+      "image": "books/seed-star/page-03.svg",
+      "audio": "books/seed-star/narration-03-43ed924031.wav",
+      "wordTimings": [
+        {
+          "word": "לַיְלָה",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "טוֹב,",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "יָרֵחַ",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "עָגֹל.",
+          "start": 1.2,
+          "end": 1.6
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 3,
+      "text": "לילה טוב, ינשוף ער.",
+      "textNikud": "לַיְלָה טוֹב, יַנְשׁוּף עֵר.",
+      "image": "books/seed-star/page-04.svg",
+      "audio": "books/seed-star/narration-04-43ed924031.wav",
+      "wordTimings": [
+        {
+          "word": "לַיְלָה",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "טוֹב,",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "יַנְשׁוּף",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "עֵר.",
+          "start": 1.2,
+          "end": 1.6
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 4,
+      "text": "לילה טוב, ים שקט.",
+      "textNikud": "לַיְלָה טוֹב, יָם שָׁקֵט.",
+      "image": "books/seed-star/page-05.svg",
+      "audio": "books/seed-star/narration-05-43ed924031.wav",
+      "wordTimings": [
+        {
+          "word": "לַיְלָה",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "טוֹב,",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "יָם",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "שָׁקֵט.",
+          "start": 1.2,
+          "end": 1.6
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 5,
+      "text": "לילה טוב, בית קטן עם חלון מואר.",
+      "textNikud": "לַיְלָה טוֹב, בַּיִת קָטָן עִם חַלּוֹן מוּאָר.",
+      "image": "books/seed-star/page-06.svg",
+      "audio": "books/seed-star/narration-06-af8b926934.wav",
+      "wordTimings": [
+        {
+          "word": "לַיְלָה",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "טוֹב,",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "בַּיִת",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "קָטָן",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "עִם",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "חַלּוֹן",
+          "start": 2,
+          "end": 2.4
+        },
+        {
+          "word": "מוּאָר.",
+          "start": 2.4,
+          "end": 2.8
+        }
+      ],
+      "audioSource": "mock"
+    },
+    {
+      "index": 6,
+      "text": "הכוכב עוצם עיניים. ששש... לילה טוב.",
+      "textNikud": "הַכּוֹכָב עוֹצֵם עֵינַיִם. שְׁשְׁשְׁ... לַיְלָה טוֹב.",
+      "image": "books/seed-star/page-07.svg",
+      "audio": "books/seed-star/narration-07-cd29510ffd.wav",
+      "wordTimings": [
+        {
+          "word": "הַכּוֹכָב",
+          "start": 0,
+          "end": 0.4
+        },
+        {
+          "word": "עוֹצֵם",
+          "start": 0.4,
+          "end": 0.8
+        },
+        {
+          "word": "עֵינַיִם.",
+          "start": 0.8,
+          "end": 1.2
+        },
+        {
+          "word": "שְׁשְׁשְׁ...",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "word": "לַיְלָה",
+          "start": 1.6,
+          "end": 2
+        },
+        {
+          "word": "טוֹב.",
+          "start": 2,
+          "end": 2.4
+        }
+      ],
+      "audioSource": "mock"
+    }
+  ]
+}

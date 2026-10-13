@@ -1,0 +1,641 @@
+{
+ "books": [
+  {
+   "postId": 35584,
+   "title": "Peter's Peanuts",
+   "description": "Peter likes peanuts. His Aunty Kila shows Peter how to cook peanuts. Yum! What will Peter do with the peanuts he takes home?",
+   "topicCategory": [],
+   "post_type": "book",
+   "post_name": "peters-peanuts-2",
+   "postLink": "https://content.digitallibrary.io/en/book/peters-peanuts-2/",
+   "url": "/book/peters-peanuts-2/",
+   "lastChanged": "2023-08-07 19:26:58",
+   "h5pId": "14051",
+   "h5pUrl": "https://content.digitallibrary.io/wp-content/uploads/h5p/exports/peter-s-peanuts-14051.h5p",
+   "epubUrl": "https://content.digitallibrary.io/wp-json/epub-generator/v1/book/14051",
+   "downloadPdfLocalURL": "",
+   "mainCategory": [],
+   "topic": [
+    {
+     "term_id": 1910,
+     "name": "Library Books",
+     "slug": "library-books",
+     "term_group": 0,
+     "term_taxonomy_id": 556,
+     "taxonomy": "topic",
+     "description": "Books across different reading levels.",
+     "parent": 0,
+     "count": 7625,
+     "filter": "raw",
+     "term_order": "4"
+    }
+   ],
+   "resourceType": [
+    {
+     "term_id": 2136,
+     "name": "book",
+     "slug": "book",
+     "term_group": 0,
+     "term_taxonomy_id": 782,
+     "taxonomy": "resource-type",
+     "description": "",
+     "parent": 0,
+     "count": 10432,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "collectionTag": [],
+   "thumbnail": "https://content.digitallibrary.io/wp-content/uploads/2023/04/35584-d05e2c60b94c428e076fbad0f2cc2778-coverImage.png",
+   "publisher": "",
+   "contentsource": "",
+   "h5pLibrary": {
+    "id": "7",
+    "name": "H5P.InteractiveBookSimple",
+    "majorVersion": "1",
+    "minorVersion": "2",
+    "embedTypes": "iframe",
+    "fullscreen": "1"
+   },
+   "language": [
+    {
+     "term_id": 1523,
+     "name": "English",
+     "slug": "en",
+     "term_group": 0,
+     "term_taxonomy_id": 169,
+     "taxonomy": "language",
+     "description": "",
+     "parent": 0,
+     "count": 2622,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "level": [],
+   "license": [
+    {
+     "term_id": 1578,
+     "name": "CC-BY-4.0",
+     "slug": "cc-by-4-0",
+     "term_group": 0,
+     "term_taxonomy_id": 224,
+     "taxonomy": "license",
+     "description": "",
+     "parent": 0,
+     "count": 9428,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "bookId": "gdl-472",
+   "h5pFiles": [
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/aflogo.png",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/ccby.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/coverImage.png",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/letsread_asf.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-10.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-11.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-12.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-13.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-14.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-15.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-2.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-3.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-4.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-5.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-6.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-7.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-8.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14051/images/p-9.jpg"
+   ]
+  },
+  {
+   "postId": 35931,
+   "title": "Puppy's Story",
+   "description": "A little puppy tried to meow one day, just like a kitten. Why did he want to meow?",
+   "topicCategory": [],
+   "post_type": "book",
+   "post_name": "puppys-story",
+   "postLink": "https://content.digitallibrary.io/en/book/puppys-story/",
+   "url": "/book/puppys-story/",
+   "lastChanged": "2023-10-05 12:48:39",
+   "h5pId": "14191",
+   "h5pUrl": "https://content.digitallibrary.io/wp-content/uploads/h5p/exports/puppy-s-story-14191.h5p",
+   "epubUrl": "https://content.digitallibrary.io/wp-json/epub-generator/v1/book/14191",
+   "downloadPdfLocalURL": "",
+   "mainCategory": [],
+   "topic": [
+    {
+     "term_id": 1911,
+     "name": "Level 1",
+     "slug": "level-1",
+     "term_group": 0,
+     "term_taxonomy_id": 557,
+     "taxonomy": "topic",
+     "description": "Easy words, word repetition, less than 250 words",
+     "parent": 1910,
+     "count": 2738,
+     "filter": "raw",
+     "term_order": "2"
+    },
+    {
+     "term_id": 1910,
+     "name": "Library Books",
+     "slug": "library-books",
+     "term_group": 0,
+     "term_taxonomy_id": 556,
+     "taxonomy": "topic",
+     "description": "Books across different reading levels.",
+     "parent": 0,
+     "count": 7625,
+     "filter": "raw",
+     "term_order": "4"
+    }
+   ],
+   "resourceType": [
+    {
+     "term_id": 2136,
+     "name": "book",
+     "slug": "book",
+     "term_group": 0,
+     "term_taxonomy_id": 782,
+     "taxonomy": "resource-type",
+     "description": "",
+     "parent": 0,
+     "count": 10432,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "collectionTag": [],
+   "thumbnail": "https://content.digitallibrary.io/wp-content/uploads/2023/04/35931-02a526e3718a8a48210b48220f03776d-coverImage.jpeg",
+   "publisher": "",
+   "contentsource": "",
+   "h5pLibrary": {
+    "id": "7",
+    "name": "H5P.InteractiveBookSimple",
+    "majorVersion": "1",
+    "minorVersion": "2",
+    "embedTypes": "iframe",
+    "fullscreen": "1"
+   },
+   "language": [
+    {
+     "term_id": 1523,
+     "name": "English",
+     "slug": "en",
+     "term_group": 0,
+     "term_taxonomy_id": 169,
+     "taxonomy": "language",
+     "description": "",
+     "parent": 0,
+     "count": 2622,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "level": [],
+   "license": [
+    {
+     "term_id": 1578,
+     "name": "CC-BY-4.0",
+     "slug": "cc-by-4-0",
+     "term_group": 0,
+     "term_taxonomy_id": 224,
+     "taxonomy": "license",
+     "description": "",
+     "parent": 0,
+     "count": 9428,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "bookId": "gdl-572",
+   "h5pFiles": [
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/aflogo.png",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/ccbync.png",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/coverImage.jpeg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/letsread_asf.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/p-1.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/p-2.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/p-3.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/p-4.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/14191/images/p-5.jpg"
+   ]
+  },
+  {
+   "postId": 38951,
+   "title": "I love my mom",
+   "description": "The girl in this story learns from her mother every day.",
+   "topicCategory": [],
+   "post_type": "book",
+   "post_name": "i-love-my-mom-2",
+   "postLink": "https://content.digitallibrary.io/en/book/i-love-my-mom-2/",
+   "url": "/book/i-love-my-mom-2/",
+   "lastChanged": "2026-03-23 12:22:14",
+   "h5pId": "15517",
+   "h5pUrl": "https://content.digitallibrary.io/wp-content/uploads/h5p/exports/i-love-my-mom-10-15517.h5p",
+   "epubUrl": "https://content.digitallibrary.io/wp-json/epub-generator/v1/book/15517",
+   "downloadPdfLocalURL": "",
+   "mainCategory": [],
+   "topic": [
+    {
+     "term_id": 1642,
+     "name": "Collections",
+     "slug": "collections",
+     "term_group": 0,
+     "term_taxonomy_id": 288,
+     "taxonomy": "topic",
+     "description": "Fun collections of books and games",
+     "parent": 0,
+     "count": 122,
+     "filter": "raw",
+     "term_order": "2"
+    },
+    {
+     "term_id": 1943,
+     "name": "Emergent Readers",
+     "slug": "emergent-readers",
+     "term_group": 0,
+     "term_taxonomy_id": 589,
+     "taxonomy": "topic",
+     "description": "",
+     "parent": 1910,
+     "count": 446,
+     "filter": "raw",
+     "term_order": "1"
+    },
+    {
+     "term_id": 1925,
+     "name": "Girl Power",
+     "slug": "girls",
+     "term_group": 0,
+     "term_taxonomy_id": 571,
+     "taxonomy": "topic",
+     "description": "",
+     "parent": 1642,
+     "count": 57,
+     "filter": "raw",
+     "term_order": "1"
+    },
+    {
+     "term_id": 1910,
+     "name": "Library Books",
+     "slug": "library-books",
+     "term_group": 0,
+     "term_taxonomy_id": 556,
+     "taxonomy": "topic",
+     "description": "Books across different reading levels.",
+     "parent": 0,
+     "count": 7625,
+     "filter": "raw",
+     "term_order": "4"
+    }
+   ],
+   "resourceType": [
+    {
+     "term_id": 2136,
+     "name": "book",
+     "slug": "book",
+     "term_group": 0,
+     "term_taxonomy_id": 782,
+     "taxonomy": "resource-type",
+     "description": "",
+     "parent": 0,
+     "count": 10432,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "collectionTag": [],
+   "thumbnail": "https://content.digitallibrary.io/wp-content/uploads/2023/09/Skjermbilde-2023-09-21-kl.-14.13.08.png",
+   "publisher": "",
+   "contentsource": "",
+   "h5pLibrary": {
+    "id": "7",
+    "name": "H5P.InteractiveBookSimple",
+    "majorVersion": "1",
+    "minorVersion": "2",
+    "embedTypes": "iframe",
+    "fullscreen": "1"
+   },
+   "language": [
+    {
+     "term_id": 1523,
+     "name": "English",
+     "slug": "en",
+     "term_group": 0,
+     "term_taxonomy_id": 169,
+     "taxonomy": "language",
+     "description": "",
+     "parent": 0,
+     "count": 2622,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "level": [],
+   "license": [
+    {
+     "term_id": 1526,
+     "name": "CC-BY-SA-4.0",
+     "slug": "cc-by-sa-4-0-2",
+     "term_group": 0,
+     "term_taxonomy_id": 172,
+     "taxonomy": "license",
+     "description": "",
+     "parent": 0,
+     "count": 13,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "bookId": "",
+   "h5pFiles": [
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/coverImage.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-106d79866811a7d1594873347ec7a66c.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-1ce0e999d2f96c6d254c2de8d763318a.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-1dd8bab4fb44379a9e7e38ff1ec1a2e3.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-2142fc7ddea06c70787841ba0dfe3f1e.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-57058ea77b07f8f7092625a40752766a.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-5fee02c4aa49c.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-762e64a301388c149ee48fa9d56a88ab.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-76be58f2e29352b6bce9156041d30e4d.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-7b9a9fcf1730e81990b4c61bd06f05d5.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-7bffc9c348ff9bc640b0ccdf82fe63fe.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-8ca68aff3e9ff99b46218ee6a468f316.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-9d2e53c4f5a8e0f7de351ed8232d5b04.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-ab6fdc6e59d34ea3765c98e25e508f57.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-af29cd9045b83463cf027e244f03faf4.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15517/images/file-db804ab30dcf6aef2c49e3babfa954e7.jpg"
+   ]
+  },
+  {
+   "postId": 1738,
+   "title": "Graca's Dream",
+   "description": "The inspiring story of Graça Machel, and her dream to instill a love for reading and learning in the children of Mozambique and the rest of Africa.",
+   "topicCategory": [],
+   "post_type": "book",
+   "post_name": "gracas-dream",
+   "postLink": "https://content.digitallibrary.io/en/book/gracas-dream/",
+   "url": "/book/gracas-dream/",
+   "lastChanged": "2023-08-07 13:14:53",
+   "h5pId": "235",
+   "h5pUrl": "https://content.digitallibrary.io/wp-content/uploads/h5p/exports/graca-039-s-dream-235.h5p",
+   "epubUrl": "https://content.digitallibrary.io/wp-content/uploads/2020/10/15055-7c82e3c3967af7cd0fc0bc6c6c18d468.epub",
+   "downloadPdfLocalURL": "https://content.digitallibrary.io/wp-content/uploads/2020/10/15055-7c82e3c3967af7cd0fc0bc6c6c18d468.pdf",
+   "mainCategory": [],
+   "topic": [
+    {
+     "term_id": 1912,
+     "name": "Level 2",
+     "slug": "level-2",
+     "term_group": 0,
+     "term_taxonomy_id": 558,
+     "taxonomy": "topic",
+     "description": "Simple concepts, up to 600 words.",
+     "parent": 1910,
+     "count": 1908,
+     "filter": "raw",
+     "term_order": "3"
+    },
+    {
+     "term_id": 1910,
+     "name": "Library Books",
+     "slug": "library-books",
+     "term_group": 0,
+     "term_taxonomy_id": 556,
+     "taxonomy": "topic",
+     "description": "Books across different reading levels.",
+     "parent": 0,
+     "count": 7625,
+     "filter": "raw",
+     "term_order": "4"
+    },
+    {
+     "term_id": 1944,
+     "name": "Read Aloud",
+     "slug": "read-aloud",
+     "term_group": 0,
+     "term_taxonomy_id": 590,
+     "taxonomy": "topic",
+     "description": "",
+     "parent": 1910,
+     "count": 264,
+     "filter": "raw",
+     "term_order": "8"
+    }
+   ],
+   "resourceType": [
+    {
+     "term_id": 2136,
+     "name": "book",
+     "slug": "book",
+     "term_group": 0,
+     "term_taxonomy_id": 782,
+     "taxonomy": "resource-type",
+     "description": "",
+     "parent": 0,
+     "count": 10432,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "collectionTag": [],
+   "thumbnail": "https://content.digitallibrary.io/wp-content/uploads/2022/03/httpsdigitallibrary.iowp-contentuploads20201015055-7c82e3c3967af7cd0fc0bc6c6c18d468-b003b31723354248bbd7fbacaff4d2ea.jpg",
+   "publisher": "BookDash",
+   "contentsource": "gdl",
+   "h5pLibrary": {
+    "id": "7",
+    "name": "H5P.InteractiveBookSimple",
+    "majorVersion": "1",
+    "minorVersion": "2",
+    "embedTypes": "iframe",
+    "fullscreen": "1"
+   },
+   "language": [
+    {
+     "term_id": 1523,
+     "name": "English",
+     "slug": "en",
+     "term_group": 0,
+     "term_taxonomy_id": 169,
+     "taxonomy": "language",
+     "description": "",
+     "parent": 0,
+     "count": 2622,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "level": [],
+   "license": [
+    {
+     "term_id": 1578,
+     "name": "CC-BY-4.0",
+     "slug": "cc-by-4-0",
+     "term_group": 0,
+     "term_taxonomy_id": 224,
+     "taxonomy": "license",
+     "description": "",
+     "parent": 0,
+     "count": 9428,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "bookId": "gdl-802",
+   "h5pFiles": [
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/coverImage.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-29691d8ac08658303c8eb4a4a140e3f6.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-353061996dea0f2ed83663e3870b586e.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-378d65cb87cba06404a6d89d3988b9a6.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-3914b3480215f1d3bbf264b58f0c620b.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-3df35cad43bd3f72ee4b0554b35fbaf1.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-435b731be7b9232063906d0e009f0f87.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-4e58faecde8d1966d6ee94668a7fc2ba.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-4fac4144f1e2c6f9da77480812ff50db.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-667d19bcca6d00443b6a963b599508c6.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-787fb029b87454ff3ba0549f59f0ad0d.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-b003b31723354248bbd7fbacaff4d2ea.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-b7699d21f994e2ae6c0986fe8cc847ac.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-daa1ebdafbc58423e7d07db892884288.jpg",
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/235/images/file-e73e9dba7a9b52f857fc22416517fcc9.jpg"
+   ]
+  },
+  {
+   "postId": 42329,
+   "title": "Dividing whole numbers by 10",
+   "description": "",
+   "topicCategory": [
+    {
+     "term_id": 1402,
+     "name": "Learn",
+     "slug": "learn",
+     "term_group": 0,
+     "term_taxonomy_id": 48,
+     "taxonomy": "topicCategory",
+     "description": "",
+     "parent": 0,
+     "count": 566,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "post_type": "book",
+   "post_name": "dividing-whole-numbers-by-10",
+   "postLink": "https://content.digitallibrary.io/en/book/dividing-whole-numbers-by-10/",
+   "url": "/book/dividing-whole-numbers-by-10/",
+   "lastChanged": "2024-11-04 11:49:42",
+   "h5pId": "15794",
+   "h5pUrl": "https://content.digitallibrary.io/wp-content/uploads/h5p/exports/dividing-whole-numbers-by-10-15794.h5p",
+   "epubUrl": "",
+   "downloadPdfLocalURL": "",
+   "mainCategory": [],
+   "topic": [
+    {
+     "term_id": 2673,
+     "name": "Grade 4 Math",
+     "slug": "grade-4-math",
+     "term_group": 0,
+     "term_taxonomy_id": 1319,
+     "taxonomy": "topic",
+     "description": "",
+     "parent": 2472,
+     "count": 516,
+     "filter": "raw",
+     "term_order": "0"
+    },
+    {
+     "term_id": 2679,
+     "name": "How 10 relates to place value",
+     "slug": "how-10-relates-to-place-value",
+     "term_group": 0,
+     "term_taxonomy_id": 1325,
+     "taxonomy": "topic",
+     "description": "",
+     "parent": 2674,
+     "count": 11,
+     "filter": "raw",
+     "term_order": "0"
+    },
+    {
+     "term_id": 2674,
+     "name": "Place value",
+     "slug": "place-value-grade-4-math",
+     "term_group": 0,
+     "term_taxonomy_id": 1320,
+     "taxonomy": "topic",
+     "description": "",
+     "parent": 2673,
+     "count": 66,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "resourceType": [
+    {
+     "term_id": 2136,
+     "name": "book",
+     "slug": "book",
+     "term_group": 0,
+     "term_taxonomy_id": 782,
+     "taxonomy": "resource-type",
+     "description": "",
+     "parent": 0,
+     "count": 10432,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "collectionTag": [],
+   "thumbnail": false,
+   "publisher": "",
+   "contentsource": "",
+   "h5pLibrary": {
+    "id": "159",
+    "name": "H5P.InteractiveVideo",
+    "majorVersion": "1",
+    "minorVersion": "26",
+    "embedTypes": "iframe",
+    "fullscreen": "1"
+   },
+   "language": [
+    {
+     "term_id": 1523,
+     "name": "English",
+     "slug": "en",
+     "term_group": 0,
+     "term_taxonomy_id": 169,
+     "taxonomy": "language",
+     "description": "",
+     "parent": 0,
+     "count": 2622,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "level": [],
+   "license": [
+    {
+     "term_id": 1595,
+     "name": "CC-BY-NC-3.0",
+     "slug": "cc-by-nc-3-0",
+     "term_group": 0,
+     "term_taxonomy_id": 241,
+     "taxonomy": "license",
+     "description": "",
+     "parent": 0,
+     "count": 396,
+     "filter": "raw",
+     "term_order": "0"
+    }
+   ],
+   "bookId": "",
+   "h5pFiles": [
+    "https://content.digitallibrary.io/wp-content/uploads/h5p/content/15794/videos/files-6538c5b79b93e.mp4"
+   ]
+  }
+ ]
+}

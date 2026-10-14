@@ -15,6 +15,7 @@ function withQuery(path: string, params: Record<string, string | number | undefi
 export const adminPaths = {
   home: () => base,
   queue: () => `${base}/queue`,
+  pipeline: (view?: string) => withQuery(`${base}/pipeline`, { view }),
   books: (params: { q?: string; status?: string; page?: number } = {}) => withQuery(`${base}/books`, params),
   book: (id: string) => `${base}/books/${encodeURIComponent(id)}`,
   collections: () => `${base}/collections`,
@@ -25,7 +26,9 @@ export const adminPaths = {
 
 export const adminApi = {
   book: (id: string) => `/api/admin/books/${encodeURIComponent(id)}`,
+  booksBulk: () => "/api/admin/books/bulk",
   bookReview: (id: string) => `/api/admin/books/${encodeURIComponent(id)}/review`,
+  recordingReview: (id: string) => `/api/admin/recordings/${encodeURIComponent(id)}/review`,
   collections: () => "/api/admin/collections",
   collection: (id: string) => `/api/admin/collections/${encodeURIComponent(id)}`,
   settings: () => "/api/admin/settings",

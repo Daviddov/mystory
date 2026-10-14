@@ -18,10 +18,11 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   // Every page repeats this check, because layouts are not re-rendered on client navigation.
   const user = await requireAdminPage(adminPaths.home());
   const repo = await getRepo();
-  const { total: pendingCount } = await repo.listBooks({
-    status: "pending",
-    limit: 1,
-  });
+  const [{ total: pendingBooks }, pendingRecordings] = await Promise.all([
+    repo.listBooks({ status: "pending", limit: 1 }),
+    repo.listRecordings({ status: "pending" }),
+  ]);
+  const pendingCount = pendingBooks + pendingRecordings.length;
 
   return (
     <main className="container-page flex flex-col gap-6 py-8">

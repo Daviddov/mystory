@@ -1,0 +1,4518 @@
+{
+  "description": "Record of niqqud proofreading. nikudHash = sha1 of the book's page textNikud values joined by \"\\n\\u0000\\n\" at proofreading time; if it no longer matches, the niqqud was edited after proofreading.",
+  "books": [
+    {
+      "slug": "a-beautiful-day",
+      "title": "יום יפה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 3,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Pages 3 and 11 have no text. | Pages 3 and 11 have no text.",
+      "nikudHash": "7add23af699f7687ebf5986516671fe6adac1890"
+    },
+    {
+      "slug": "a-dancers-tale",
+      "title": "סיפור של רקדנית: סיפורה של פיליס ספירה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 23,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Page numbers are 0-based. | All of the earlier fixes are correct, including the dagesh in רַקְדָּנִית, וְ\"זִ'יזֶל\" and בּוֹיְד.",
+      "nikudHash": "f62a317d6568642d102f485a51e163bbfb384996"
+    },
+    {
+      "slug": "a-fish-and-a-gift",
+      "title": "דג ומתנה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 22,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "חֲרִיק חָרִיק (p2) left as is (onomatopoeia). | I checked every one of the first proofreader's changes against the baseline diff. All of them are correct, including צְהוֹב-זָנָב and בַּבַּיִת.",
+      "nikudHash": "e81a649b30750665ed0dba08713bbac96705e646"
+    },
+    {
+      "slug": "a-house-for-mouse",
+      "title": "בית לעכבר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Page 10 is empty. | Page 10 is empty.",
+      "nikudHash": "9a2286b2b2c3b8a47b623658c233ce95dde4a4a4"
+    },
+    {
+      "slug": "a-tiny-seed",
+      "title": "זרע קטנטן: סיפורה של ונגארי מאטאי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 21,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "I checked every change and all of them are correct.",
+      "nikudHash": "86d23c26cf0d99304384337b6f55159e18002296"
+    },
+    {
+      "slug": "amazing-daisy",
+      "title": "דייזי המדהימה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 9,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "'הרונדבל' (p9) is left without niqqud. | 'הרונדבל' (p9) still has no niqqud.",
+      "nikudHash": "0d8d29e83aeb24c562c2c514d6daf94e22e63bb3"
+    },
+    {
+      "slug": "asp-0010-the-animals-of-uganda",
+      "title": "החיות של אוגנדה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 11,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "e3f65ef368174b26ba7e89928bc7911d8e47b48e"
+    },
+    {
+      "slug": "asp-0011-father-and-son",
+      "title": "אבא ובן",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 3,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The name is vocalized מוֹדוֹ on pages 1, 4 and 6 but מוֹדוּ on pages 5 and 7. Both are acceptable phonetic renderings and were left as is.",
+      "nikudHash": "7909f145ad456b84564819e98e44d2c1bf9a6cf5"
+    },
+    {
+      "slug": "asp-0012-my-village",
+      "title": "הכפר שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 4,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All of the holam-on-vav fixes are correct.",
+      "nikudHash": "77ce556d5db4ce85a3d600a8bcd0d67384484141"
+    },
+    {
+      "slug": "asp-0021-dembe-the-shopkeeper",
+      "title": "דמבה בעל החנות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 11,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "352a4de87aa1404594329f8f303cc08beec72c9d"
+    },
+    {
+      "slug": "asp-0022-my-baby-boy",
+      "title": "הילד הקטן שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "8a766b82636f5e43ed9e2997bb002528fd8237f9"
+    },
+    {
+      "slug": "asp-0027-decision",
+      "title": "ההחלטה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 9,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "'ג'ומה' (p12) is left without niqqud. | ג'ומה (p12) has no niqqud. This is optional for a name.",
+      "nikudHash": "07b51b793c6d3d1f32f1a4b558f7a0d968355e9d"
+    },
+    {
+      "slug": "asp-0033-the-big-juicy-mango",
+      "title": "המנגו הגדול והעסיסי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 9,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "56b303380c86e2ef4a29a8f358a8a3061a874fb1"
+    },
+    {
+      "slug": "asp-0035-wind",
+      "title": "הרוח",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "25c298b38027b173debb9e3f964b03517e62281a"
+    },
+    {
+      "slug": "asp-0051-the-day-we-saw-rainbow",
+      "title": "היום שבו ראינו את הקשת בענן",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 6,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "ca1f8a42ebb811afc7129c2b4d628b1ee5bd52ca"
+    },
+    {
+      "slug": "asp-0060-nakitto-at-school",
+      "title": "נקיטו בבית הספר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "7065009954808bcb3484bed5b0717d0e5dff0b77"
+    },
+    {
+      "slug": "asp-0061-flowers",
+      "title": "פרחים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first reviewer's changes were checked and are correct. No other errors were found.",
+      "nikudHash": "d3382f873308fde7111a6cf96457f8d8a60dbbbe"
+    },
+    {
+      "slug": "asp-0065-ah-football",
+      "title": "אח! כדורגל!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 9,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "45918546143154e969cfaa926bd3d1a5436b35eb"
+    },
+    {
+      "slug": "asp-0086-things-i-do-at-school",
+      "title": "מה אני עושה בבית הספר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "הַמּוֹרָה (feminine) is correct: on p7 the verb שָׁרָה is feminine.",
+      "nikudHash": "70520818cf1e8196e6a83f07aaafc9ebc0fd1936"
+    },
+    {
+      "slug": "asp-0089-khalai-talks-to-plants",
+      "title": "חלאי מדברת עם צמחים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 11,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "3dd71f89bf5f33b02c61804041641ae80592d608"
+    },
+    {
+      "slug": "asp-0090-huts-in-our-village",
+      "title": "הבקתות בכפר שלנו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "7db1fbcae6fe350acb37ab35487b61826a000216"
+    },
+    {
+      "slug": "asp-0105-ms-phone",
+      "title": "גברת טלפון",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "4ab4f23435ba2407f6546e72609b0eec5f41a1ba"
+    },
+    {
+      "slug": "asp-0106-namukurus-bicycle",
+      "title": "האופניים של נמוקורו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors found.",
+      "nikudHash": "054c4b99e329b2a72ce704f33d682dc808c264fc"
+    },
+    {
+      "slug": "asp-0109-lekishon-and-the-cows",
+      "title": "לקישון והפרות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "c71ef2f532b1e90b71394e2a06c4998a8305e3a0"
+    },
+    {
+      "slug": "asp-0113-new-pussy-cat",
+      "title": "החתול החדש",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 3,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The changes from kubutz to shuruk are correct.",
+      "nikudHash": "3d197ab2279e1ea18099ea41406a720e5f472862"
+    },
+    {
+      "slug": "asp-0117-friendship-between-hyena-and-hare",
+      "title": "החברות בין הצבוע לארנב",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors found.",
+      "nikudHash": "ae19ec1c09a1c3b3fb11b27328cfdc419d090f76"
+    },
+    {
+      "slug": "asp-0119-what-colors-do-you-like",
+      "title": "איזה צבעים אתם אוהבים?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 15,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The proofreader's edits are correct, including גָ'אגָ'ה.",
+      "nikudHash": "a145951443debb3c2485a7e91e216407d3b9a7b7"
+    },
+    {
+      "slug": "asp-0137-locusts",
+      "title": "ארבה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "8cd631b4405fdc981f1e59d759bb6bcd46446c95"
+    },
+    {
+      "slug": "asp-0143-my-red-ball",
+      "title": "הכדור האדום שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The הָאָדוֹם fixes are correct. Nothing else was found.",
+      "nikudHash": "55de30e7b1f8f784232b6fe2b9f6efa16e9df5ce"
+    },
+    {
+      "slug": "asp-0152-what-is-wrong-child",
+      "title": "מה קרה לך, ילד?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "7ebd8883369dbcac9c2ab8d6219659107d0effa0"
+    },
+    {
+      "slug": "asp-0160-disability-is-not-inability",
+      "title": "מוגבלות היא לא חוסר יכולת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "אוֹסְרוֹ is confirmed by originalText (Osero).",
+      "nikudHash": "b4b27b418237c0f1fe5f5f7ee96295c984f56db2"
+    },
+    {
+      "slug": "asp-0174-who-is-big",
+      "title": "מי גדול?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 1,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The first-pass change כּוּלָּנוּ is correct.",
+      "nikudHash": "bcdc6d3f7ffb6e46a327fd85f15f98c5d5e0d8a3"
+    },
+    {
+      "slug": "asp-0181-sunday-at-the-park",
+      "title": "יום ראשון בפארק",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "4260f8c1346b6a95b6410d1831c8795d58aeb8d9"
+    },
+    {
+      "slug": "asp-0182-kabali-and-kateera",
+      "title": "קבאלי וקטירה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Both fixes are correct. Kateera is now vowelled the same way everywhere (קִטֵּירָה).",
+      "nikudHash": "46c1b16b2e5a2f2f6c2ea5a0dcfe6aee22c32943"
+    },
+    {
+      "slug": "asp-0189-hare-trickster",
+      "title": "ארנב הערמומי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 13,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All edits are correct: מִפִּילָה, וְתִישְׂאִי, תָּאוֹ/וְתָאוֹ, וּפִילָה.",
+      "nikudHash": "91e96b66c50255645b44b67b839c4199a84ddfe7"
+    },
+    {
+      "slug": "asp-0191-what-will-i-use-to-travel",
+      "title": "במה אני אסע?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Both holam fixes are correct; no other errors found.",
+      "nikudHash": "ee5d5de14a3fdc9cc332430fb817d53fe13c0465"
+    },
+    {
+      "slug": "asp-0197-dog-and-crocodile",
+      "title": "כלב ותנינה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 16,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All fixes verified.",
+      "nikudHash": "17d712a9089387a1dac8eb613bda19347480e0ae"
+    },
+    {
+      "slug": "asp-0248-my-trip-to-the-zoo",
+      "title": "הטיול שלי לגן החיות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "6f0e26e76525ab4f1a29af5215b6e49fbf115da6"
+    },
+    {
+      "slug": "asp-0256-my-first-pair-of-shoes",
+      "title": "זוג הנעליים הראשון שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 11,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "84b986e1a69b3f948db2fe8b765e3319d09de124"
+    },
+    {
+      "slug": "asp-0257-colours-of-a-rainbow",
+      "title": "צבעי הקשת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 15,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All of the proofreader's edits fixed holam/shuruk placement, and they are correct.",
+      "nikudHash": "6c58c54a429f2aa3b273ef5e0321c0dd3921d061"
+    },
+    {
+      "slug": "asp-0268-a-man-who-built-a-house",
+      "title": "האיש שבנה בית",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 1,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "7f9b9151be4e20382022ed3b2d814661a158bf27"
+    },
+    {
+      "slug": "asp-0276-big-blue-bus",
+      "title": "האוטובוס הכחול הגדול",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 13,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The first-pass changes were only holam moves onto the vav, and all are correct. יִיסְּעוּ keeps an optional dagesh, which is acceptable.",
+      "nikudHash": "43a207da0ef2e9e9e6daeca760fcd68c213fa217"
+    },
+    {
+      "slug": "asp-0295-the-rainbow",
+      "title": "הקשת בענן",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All six changes are correct. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "09425d8d925bdc277c19f30cfeca4ba7cf94fcf3"
+    },
+    {
+      "slug": "asp-0296-tom-the-banana-seller",
+      "title": "טום מוכר הבננות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "7b30381e7fc40fb00a49a20d82eb9f12f1ac14fb"
+    },
+    {
+      "slug": "asp-0316-i-enjoy-doing",
+      "title": "מה אני נהנית לעשות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 6,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The only edits were holam placement, and all are correct.",
+      "nikudHash": "0c21ac4ee36b7f59306be8c1a4d51d17889d0122"
+    },
+    {
+      "slug": "asp-0344-how-tembe-spends-her-day-in-life",
+      "title": "היום של טמבה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 9,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The first-pass change הַמּוֹרָה (feminine, matching נוֹתֶנֶת/עוֹזֶרֶת) is correct. The spellings טַמְבָּה and נֶאֱבוֹנָה are acceptable phonetic renderings of the names.",
+      "nikudHash": "d223c3355d1fb15dae2805ed918a84d611cf1c23"
+    },
+    {
+      "slug": "bathtub-safari",
+      "title": "ספארי באמבטיה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 7,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Page 11 has no textNikud.",
+      "nikudHash": "fdc04eb943d2bd27a73a66c96d78f9a94ea8af0b"
+    },
+    {
+      "slug": "come-back-cat",
+      "title": "חתולה, תחזרי!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Pages 4 and 11 have no textNikud. | All of the first reviewer's changes were checked and are correct (feminine addressee). Pages 4 and 11 have no textNikud.",
+      "nikudHash": "db67152f676a22ab9e92b54394bb71b79a21b0b0"
+    },
+    {
+      "slug": "gdl-alis-little-star",
+      "title": "הכוכב הקטן של עלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 12,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "In the English, Matsa is Ali's sister. All the gender forms were checked against that. | All changes are correct: the name עָלִי, the piel forms נְפַסֵּל and מְפַסֵּל, the feminine שֶׁלִּימַּדְתְּ addressed to his sister, and לְמַאטְסֶה. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "d8b0e518d83e0ddc54c6dae0410fba4f1c1a4876"
+    },
+    {
+      "slug": "gdl-cat-dog-and-the-butterfly",
+      "title": "חתולה וכלב והפרפר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 14,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "Page 12 has no textNikud. | The fixes reading 'super' as סוּפֶּר are correct. Page 12 has no text.",
+      "nikudHash": "e9303eea42b232308f0b3a73cb50a1b7451e2c28"
+    },
+    {
+      "slug": "gdl-cat-dog-and-the-hat",
+      "title": "חתולה וכלב והכובע",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 14,
+      "wordsFixed": 1,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The change יָרוֹק is correct.",
+      "nikudHash": "d506f03d11504378836c7c921775b60d3ae3a54f"
+    },
+    {
+      "slug": "gdl-cat-dog-where-is-cat",
+      "title": "חתולה וכלב: איפה חתולה?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 11,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "a780fa2c4905684400b3df7ad3cb2215dc557485"
+    },
+    {
+      "slug": "gdl-caterpillar-lives-in-our-garden",
+      "title": "זחל גר בגינה שלנו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 6,
+      "wordsFixed": 1,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "8f1d4d7048ae8f1b84992852ff273d231550b386"
+    },
+    {
+      "slug": "gdl-counting-together",
+      "title": "סופרים ביחד",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors found.",
+      "nikudHash": "29fac9755d498a40ee301faa627c80dd90fc22a8"
+    },
+    {
+      "slug": "gdl-crab-and-fish-are-friends",
+      "title": "סרטן ודג חברים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "7f95463264fca818cebed3171a5a680661cdfdeb"
+    },
+    {
+      "slug": "gdl-day-and-night",
+      "title": "יום ולילה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All 4 fixes are correct. Nothing else needs fixing.",
+      "nikudHash": "4f327e2a3fab2eb75b8158f8293572e5dd298004"
+    },
+    {
+      "slug": "gdl-dolly-and-her-little-red-umbrella",
+      "title": "דולי והמטרייה האדומה הקטנה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 6,
+      "wordsFixed": 18,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The proofreader's edits are correct. Gender in the dialogue matches who is speaking: רָאִיתָ to the male squirrel and mouse, רָאִית to Nimshi (female), and בִּיקַּרְתְּ/שָׁכַחְתְּ addressed to Dolly. The other edits are also correct: חִיפְּשָׁה, לְאוֹרֶךְ and שִׁמְשִׁי.",
+      "nikudHash": "ed2e4c1a85f04643e66012c28bec068a55d32929"
+    },
+    {
+      "slug": "gdl-friends-2",
+      "title": "חברים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors.",
+      "nikudHash": "c2b316511c987525e94f8f33e8a44921538eb0df"
+    },
+    {
+      "slug": "gdl-grandson-wants-to-draw",
+      "title": "הנכד רוצה לצייר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Both article fixes (הַכּוּסְבָּרָה, הַפָּרָה) are correct.",
+      "nikudHash": "0179c5782371b4336fd3c056646b1866c2fd5145"
+    },
+    {
+      "slug": "gdl-help-each-other",
+      "title": "עוזרים אחד לשני",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 13,
+      "verdict": "fixed",
+      "letterIssues": [
+        "p0: the English source names the brother both Seng and Deng — This inconsistency is in the English source. The Hebrew already uses דנג on every page."
+      ],
+      "nikudHash": "3a775a112e4def26e684bad30f3a6985ebe4f14c",
+      "letterFixes": [
+        "p1: וָאן אוֹמֶרֶת → וַאן אוֹמֶרֶת (Made the name Vanh match the vocalization used on most pages (וַאן))",
+        "p5: לְוָואן → לְוַואן (Made the name Vanh match the common vocalization. The letters stay לוואן so they still match text.)"
+      ]
+    },
+    {
+      "slug": "gdl-helping-others",
+      "title": "עוזרים זה לזה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 6,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors found.",
+      "nikudHash": "89b13f7bfdf12b16bd2c7676919f3702a1cce798"
+    },
+    {
+      "slug": "gdl-how-the-insects-got-their-colors",
+      "title": "איך החרקים קיבלו את הצבעים שלהם",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 18,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "18 word changes in total. | All changes are correct. לְךָ is right because the caterpillar is masculine. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "1b3de23f250a4c1e93d73dd30805504a68602c48"
+    },
+    {
+      "slug": "gdl-i-cant-hear-you",
+      "title": "אני לא שומע אתכם",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 3,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "e60cebe15d62e5e0ffb4093a3e9d289574a8f400"
+    },
+    {
+      "slug": "gdl-i-want-to-hide",
+      "title": "אני רוצה להתחבא",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 6,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "1f1ad406a765c3733b3c79fec663ecc4857d5925"
+    },
+    {
+      "slug": "gdl-in-the-town-of-kamayanan-and-the-legend-of-the-dancing-hands",
+      "title": "העיירה קמאיאנן ואגדת הידיים הרוקדות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 14,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Name vocalizations (קוּבּוֹלִי/קוֹבּוֹלִי, קָמָאיָאנֶן/נֵן/נָן) vary but were left as name variants. | Every earlier change checks out. פִּתְחוּ is the correct plural imperative.",
+      "nikudHash": "e0b087a9e548ec6234f018b7bd38f118721b0574"
+    },
+    {
+      "slug": "gdl-little-pig-shows-off",
+      "title": "חזרזיר משוויץ",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The earlier fixes are correct: מַשְׁוִויץ and the holam on the vav.",
+      "nikudHash": "6d1fd63be19e959bb233344cf6c0a678dbf096f2"
+    },
+    {
+      "slug": "gdl-message-in-the-sand",
+      "title": "מסר בחול",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 19,
+      "wordsFixed": 10,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's changes are correct.",
+      "nikudHash": "6809508ceed252bfe46ed7ee1410afb326890341"
+    },
+    {
+      "slug": "gdl-monkey-and-banana",
+      "title": "הקוף והבננה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "לַנָּחָשׁ and לַנָּמֵר ('thanks to the snake/tiger') are correct.",
+      "nikudHash": "49ddbc548f828faaca8064b78b2ae105f680dcdc"
+    },
+    {
+      "slug": "gdl-my-pets",
+      "title": "החיות שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "Page 1 has empty text and no textNikud. | Page 1 has empty text and no textNikud (null in the baseline). That is fine.",
+      "nikudHash": "9d28218d9bcd189602b7413531be28b35206e3a2"
+    },
+    {
+      "slug": "gdl-my-red-skirt",
+      "title": "החצאית האדומה שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 8,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The change to מוֹרָה is correct: the costume is a girl's, like the other feminine roles.",
+      "nikudHash": "f9bd4b330f41838b7270a6309e072fead051d690"
+    },
+    {
+      "slug": "gdl-narat-knows-how",
+      "title": "נאראט יודעת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 12,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "fc7be32452e1860594b72007d463f081cc4b19e1"
+    },
+    {
+      "slug": "gdl-nina-and-peter",
+      "title": "נינה ופיטר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 14,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "4b9c685b5d86aba6e5cebfd8b936763325799d29"
+    },
+    {
+      "slug": "gdl-peters-peanuts",
+      "title": "הבוטנים של פיטר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 24,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "8fa73b0d19f1bad81a7c8dbd76b6e42f014d2216"
+    },
+    {
+      "slug": "gdl-poki-pig",
+      "title": "פוקי החזיר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 15,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's changes are correct.",
+      "nikudHash": "d606fd17b8b291b9b5345d1a8212e3712fafec4b"
+    },
+    {
+      "slug": "gdl-protect-the-environment",
+      "title": "שומרים על הסביבה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 8,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The fixes for the female teacher (הַמּוֹרָה) and the holam fixes are verified.",
+      "nikudHash": "923ac484148c8e7e162a0932655ac0bd483aa942"
+    },
+    {
+      "slug": "gdl-rabbit-and-dog-2",
+      "title": "ארנב וכלב",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "966182b2678a1d8b790e126d77a365d11123cc48"
+    },
+    {
+      "slug": "gdl-racing-to-win",
+      "title": "רצים לנצח",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 17,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The Lalu name fix (לָאלוּ) is correct, and so are the dagesh removals after the prefixes ל/וּ. The sound words (וְיוֹוֹוֹ..., הַמָּמ) were left as they are.",
+      "nikudHash": "fcd7ba64bb14bae59d7364734dfd652ac08c68a0"
+    },
+    {
+      "slug": "gdl-she-already-has-that",
+      "title": "כבר יש לה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 1,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "בִּשְׁבִילֵךְ is correct because it is addressed to Socheata (female). I found no other errors.",
+      "nikudHash": "d7d21671354b2075ddb10cee662eb70559371f2e"
+    },
+    {
+      "slug": "gdl-tamarinds-new-neighbor",
+      "title": "השכן החדש של תמרינדי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 17,
+      "wordsFixed": 10,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The name תמרינדי is sometimes unvocalized and sometimes vocalized in different ways (תָּמָרִינְדִּי / תֶּמְרִינְדִּי / שֶׁתַּמְרִינָדִי / לְתָמָרִינָדֵי). I left it as is because it is a foreign name. | The name תמרינדי is vocalized differently on different pages, and on some pages it has no niqqud. I left it because it is a foreign name.",
+      "nikudHash": "d0acc199ec281c9163e3c53375150e95fd3e3ad3"
+    },
+    {
+      "slug": "gdl-the-crow-family-grows-rice",
+      "title": "משפחת עורב מגדלת אורז",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 16,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The proofreader's edits are correct, including לְשָׂדֶה אַחֵר.",
+      "nikudHash": "0dcdad11f50e03bcd72ac41a2377d1a3e5c0e1c5"
+    },
+    {
+      "slug": "gdl-the-little-goat",
+      "title": "הגדי הקטן",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 4,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "On p6 the bleat is written מָההה / מַההה, which is uneven. It is a sound effect, so I left it.",
+      "nikudHash": "fedddff7e650790e307cb08d58cdf60790267893"
+    },
+    {
+      "slug": "gdl-the-new-boy",
+      "title": "הילד החדש",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 12,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "53c2d973ef8bad681cc619a0517d359695f89a78"
+    },
+    {
+      "slug": "gdl-the-observant-little-snake",
+      "title": "נחש קטן שם לב לכל דבר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 3,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "c6647a5a1fc82a154e69fe65b81689e0124199de"
+    },
+    {
+      "slug": "gdl-the-rooster-and-the-sun",
+      "title": "התרנגול והשמש",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 7,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "05098781821bfdb8054b398d8a1e2c7d6009fe78"
+    },
+    {
+      "slug": "gdl-when-mama-is-away",
+      "title": "כשאמא לא בבית",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "18a2641c269ee7139d676ee08fdba2ac57ce96f8"
+    },
+    {
+      "slug": "gdl-where-is-the-kitten",
+      "title": "איפה החתלתולה?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "76118865ce1139a41a48e1309c56860a0b4590d5"
+    },
+    {
+      "slug": "gdl-who-will-help-me",
+      "title": "מי יעזור לי?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 6,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "78aa6a2a56088c00d3ecd3b00512d728e342e295"
+    },
+    {
+      "slug": "gdl-why-do-we-brush-our-teeth",
+      "title": "למה מצחצחים שיניים?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 17,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "dbe74b1e56461ddfd45eb70d4b2ef472de315dea"
+    },
+    {
+      "slug": "gracas-dream",
+      "title": "החלום של גראסה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 31,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Made the names Samora/Machel/Graça consistent across all pages. | Checked every change the first proofreader made and all were correct. Page 2: וְלִבְרָכָה next to the definite לַיּוֹפִי could also be pointed וְלַבְּרָכָה. Both readings work, so I left it.",
+      "nikudHash": "4901df345768a905f699781dc0987b4356a50b70"
+    },
+    {
+      "slug": "grandma-ruths-map",
+      "title": "המפה של סבתא רות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 12,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Pages have no originalText. Page numbers are 0-based. | All of the earlier fixes are correct, including בַּדַּף in context and the name נוּגָה.",
+      "nikudHash": "b08c9e8b36276cd457ba43e2a307b4ab4a434c11"
+    },
+    {
+      "slug": "grandpas-gold",
+      "title": "הזהב של סבא",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 3,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The first-pass changes are correct: עֵז (goat) and כּוּלָּם/הַהוּלֶּדֶת. I found nothing else to fix.",
+      "nikudHash": "53ce00c0f7a2fa1ae8e977829c84b4037f3c7435"
+    },
+    {
+      "slug": "gyly-hgybvrh",
+      "title": "גילי הגיבורה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 16,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's fixes are correct; no other errors found.",
+      "nikudHash": "284069c9a2dc21da2c897292464ebbefdd2db720"
+    },
+    {
+      "slug": "hippo-wants-to-dance",
+      "title": "היפו רוצה לרקוד",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 20,
+      "verdict": "clean",
+      "letterIssues": [
+        "p6: 'שלפ! שלופ!' ends with a regular פ instead of final ף — This is onomatopoeia for SQUISH! SQUASH!. The niqqud has a dagesh (שְׁלַפּ / שְׁלוֹפּ), so the regular פ at the end is meant to give a /p/ sound. This is a deliberate spelling, not a typo."
+      ],
+      "nikudHash": "3f75a18e514b326df0130265945b450ef74b427a",
+      "letterFixes": []
+    },
+    {
+      "slug": "how-about-you",
+      "title": "ומה איתך?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 1,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The first-pass change כָּחוֹל is correct.",
+      "nikudHash": "7ffaacdeaac7775627119e3bfb77567a2db1e4b1"
+    },
+    {
+      "slug": "i-will-help-you",
+      "title": "אני אעזור לך",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 10,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The first proofreader's changes are correct: בַּכָּנָף, עִזְרוּ, לָךְ (said to Mama Heron), and the holam fixes. On p9, לְךָ (said to Lungile, a boy) is correct.",
+      "nikudHash": "ab37ee823e7f60f926575321bbe7ff815720c733"
+    },
+    {
+      "slug": "is-there-anyone-like-me",
+      "title": "יש עוד מישהי כמוני?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "a1a58e01d8072c1b0bc2642356703ee5e02394a9"
+    },
+    {
+      "slug": "karabos-question",
+      "title": "השאלה של קראבו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 4,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "9c70df763dcf55b68bb7efd80dfe34bdb4363b1b"
+    },
+    {
+      "slug": "lara-the-yellow-ladybird",
+      "title": "לארה, פרת משה רבנו הצהובה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 28,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's changes are correct, including לָארָה, סֵסָה, הָעַכָּבִישָׁה, שֶׁלָּךְ and הַמּוֹרָה.",
+      "nikudHash": "7bd8aa1cc301397bf76a6961e087d26fdb46d852",
+      "letterFixes": [
+        "p1: גמל השלמה / גָּמָל הַשְׁלָמָה → גמל שלמה / גְּמַל שְׁלֹמֹה (The praying mantis is 'גמל שלמה'. The extra ה was an error and made correct niqqud impossible.)"
+      ]
+    },
+    {
+      "slug": "little-ants-big-plan",
+      "title": "התוכנית הגדולה של נמלול",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 8,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The only edits were holam and shuruk placement, and all are correct.",
+      "nikudHash": "21ae874cfa0f1e0f197440198cf851cb69eb5ed8"
+    },
+    {
+      "slug": "little-sock",
+      "title": "גרב קטן והיצורים הקטנטנים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 7,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "726f1d7f8a92c0dd3530c76424931a5a3a895786"
+    },
+    {
+      "slug": "little-star-goes-to-sleep",
+      "title": "הכוכב הקטן הולך לישון",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "eee12643b7446148de19607c70f788fd0f905f63"
+    },
+    {
+      "slug": "londi-the-dreaming-girl",
+      "title": "לונדי, הילדה החולמת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "p6 אַוּוּ (an interjection) was left unchanged. | מָאמָא is confirmed by originalText (Mama Neli’s house).",
+      "nikudHash": "11a1ad46b43ab4c113ac323a5afa19291c074591"
+    },
+    {
+      "slug": "lory-dory",
+      "title": "לורי דורי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All 4 of the previous proofreader's changes are correct. הִמְצֵאתָ is right because it is addressed to Grandpa.",
+      "nikudHash": "886dbf9878eae541d6b582c792b017eaa5237720"
+    },
+    {
+      "slug": "maddy-moona",
+      "title": "גן החיות של מדי מונה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 30,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Edits applied with a script that replaced individual words inside textNikud lines only. The script checked that the letters stayed identical to before and to each page's 'text'. | I checked all of the first proofreader's edits and they are correct. These include holam/shuruk placement, נְחַפֵּשׁ, וְאֶרְכַּב, הַצַּלָּחוֹת and בִּילְטוֹנְג.",
+      "nikudHash": "56889ad56879f9841efec72af225c0af86b22a8f"
+    },
+    {
+      "slug": "miss-helens-magical-world",
+      "title": "העולם הקסום של מיס הלן",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 30,
+      "verdict": "needs-human",
+      "letterIssues": [
+        "p1 (0-based): Annie written אנני with niqqud אָנַנִי — The letters אנני are a valid transliteration of Annie. Only the niqqud is odd, so this is not a letter error and the letters were left as they are."
+      ],
+      "notes": "Text fields contain no niqqud; only textNikud edited. | All of the first proofreader's changes check out (לְהֵלֶן, מוֹרָה, מַלְחָס, וּמִמֶּלֶט, בַּיּוֹם, יִזְהֲרוּ, יָשְׁנָה, וְגָדְלָה, and the holam/shuruk fixes). Page numbers are 1-based. The niqqud is now correct. It stays needs-human only because of the בלשנות letter typo.",
+      "nikudHash": "ca74f860d2a0bf6f4cfae2a07982d9090f2354d6",
+      "letterFixes": [
+        "p7: התחילה בלשנות / הִתְחִילָה בַּלְשָׁנוּת → התחילה לשנות / הִתְחִילָה לְשַׁנּוֹת (Extra ב turned 'to change' into 'linguistics'. The English source says 'began by changing'.)"
+      ]
+    },
+    {
+      "slug": "mrs-penguins-palace",
+      "title": "הארמון המושלם של גברת פינגווין",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 12,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "b08b1c2ba3debcca864427e23720e347f7ba1957"
+    },
+    {
+      "slug": "nvny-vhkptvr-shasvr-llchvtz-alyv",
+      "title": "נוּני והכפתור שאסור ללחוץ עליו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 13,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The 'text' field has its own (different) niqqud, so only textNikud was edited. | None of the proofreader's reported fixes were in the file, so I applied them. The 'text' field has its own niqqud that differs from textNikud, so I left it alone.",
+      "nikudHash": "f777eb03006ce1b8a618c2d05d8980c0ae7ea5e2"
+    },
+    {
+      "slug": "queen-of-soweto",
+      "title": "מלכת סווטו: הסיפור של בסצאנה קומאלו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 51,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The name Basetsana is vocalized three different ways (בִּסְצָאנָה / בְּסָצָאנָה / בְּסַצְאָנָה). I left these as acceptable phonetic renderings of a foreign name. | I checked every change in the diff and all of them are correct: בָּאסִי, נֶטְבּוֹל, נַהַג, הַמּוֹרָה/מוֹרָה, מַנְחַת, לְלִיבָּהּ, מָדִיבָּה, and the holam and shuruk position fixes. The name Basetsana is still written three ways (בִּסְצָאנָה / בְּסָצָאנָה / בְּסַצְאָנָה). Each is a valid way to sound out a foreign name, so I left them.",
+      "nikudHash": "f5a23d5a6e731bdecde5c2813e62de7df9b21a3e"
+    },
+    {
+      "slug": "rafikis-style",
+      "title": "הסגנון של רפיקי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 10,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "b3ae093ee6a2a96d5fc434ba13cff1fe89a23aa4"
+    },
+    {
+      "slug": "saba-eliezer-and-the-stubborn-carrot",
+      "title": "סבא אליעזר והגזר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 42,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the reported fixes are correct (עֵז not עַז/עֹז/בֹּעַז, the verb מָשַׁךְ, צְפַרְדְּעִים). סָבְתָא and סַבְתָּא are mixed in the book. Both are accepted forms, so I left them.",
+      "nikudHash": "c06535c59d5121ea50b55762e1b55065eb61e2d4"
+    },
+    {
+      "slug": "sbus-special-shoes",
+      "title": "הנעליים המיוחדות של סיבו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "cb9600af4df03328d3dfd2ad16c28d02f52b6fa5"
+    },
+    {
+      "slug": "searching-for-the-spirit-of-spring",
+      "title": "מחפשת את רוח האביב",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 39,
+      "verdict": "fixed",
+      "letterIssues": [
+        "Ndlovu vocalized three different ways on p1/p10/p11 — Already consistent. All three occurrences (0-based pages 1, 10, 11) are now נְדָלוֹבוֹ in textNikud and נדלובו in text, so nothing needed changing."
+      ],
+      "notes": "There was also an English typo in originalText ('backthe'). I didn't touch it. | I checked all of the first proofreader's changes and they are correct. The English originalText still has the typo 'backthe'. I did not touch it.",
+      "nikudHash": "102d4b4208494c0f7f87fecd56de87e5ecaf45e9",
+      "letterFixes": []
+    },
+    {
+      "slug": "shlvshh-avpnyym-am-chshk-ltzat-2",
+      "title": "שלושה אופניים עם חשק לצאת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 47,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Holam-before-vav and kubutz+vav errors were systematic. Each occurrence was fixed; the table lists one representative entry for each. | I checked every first-pass change and all of them are correct: holam/shuruk moved onto the vav, שׁוֹרָשִׁים, דִּינְג, תִּיסְעוּ, רָכְבוּ, נִרְכַּב and לְנָהָר. The word-timing alignment array in this file still contains the old form קְצֵה. I did not touch it.",
+      "nikudHash": "ba65027c5d965c869cb1af585bd459ed34ecd4f1"
+    },
+    {
+      "slug": "shongololos-shoes",
+      "title": "הנעליים של שונגולולו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 8,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "Page 11 is empty. הַמָּמ ('hmm') was left as is. | The first-pass changes are correct: שֶׁלְּךָ (Shongololo is male, per אני יודע), יַנְשׁוּפָה without mappiq (a name, not a possessive), רַעְיוֹן, and פְּלָמִינְגּוֹ.",
+      "nikudHash": "1c59ecc6fd5e8aedc0f94d94b179063db9a09e3c"
+    },
+    {
+      "slug": "sima-and-siza",
+      "title": "סימה וסיזה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 14,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "5cf7d54434b565f0f28a9eb52fcebbf2a0a0a76c"
+    },
+    {
+      "slug": "sindi-and-the-moon",
+      "title": "סינדי והירח",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 21,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Fixed holam/kubutz written before a vav throughout the book, as listed. 21 word changes in total. | I checked all 21 word changes against the baseline and all are correct. That includes the real fixes וּלְרִיקּוּדִים, הַמְּדַבֵּר and וְיָשְׁנָה. I re-read every page and found no remaining errors. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "b9dd779bcac53711586cd0d724501be819df07de"
+    },
+    {
+      "slug": "sindiwe-and-the-fireflies",
+      "title": "סינדיווה והגחליליות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 36,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's fixes are verified and nothing else needed fixing.",
+      "nikudHash": "e872618005483aee906bb835be8f7834fd6b0d23"
+    },
+    {
+      "slug": "singing-the-truth",
+      "title": "לשיר את האמת: סיפורה של מרים מקבה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 21,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Sophiatown is vocalized two different ways on p6 (סוֹפְּיָאטָאוֹן and סוֹפְּיאַטְאוֹן). Both are phonetically acceptable, so I left them. | All changes are correct. בְּאָמֵרִיקָה (p7) has tsere where the standard form is אָמֶרִיקָה. It is phonetically acceptable, so I left it. The two vocalizations of Sophiatown on p6 are also acceptable. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "b44148677893ae329d5fa09c998d94c577409ee6"
+    },
+    {
+      "slug": "sizwes-smile",
+      "title": "החיוך של סיזווה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 26,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Page numbers are 0-based indexes in the pages array. 'text' fields are unvocalized, so I left them unchanged. | I checked all of the first proofreader's changes and they are correct. I found no further errors.",
+      "nikudHash": "fa01bfa0efd48a7f5f68436a96d2d7cbae81375e"
+    },
+    {
+      "slug": "sleepy-mr-sloth",
+      "title": "מר עצלן הישנוני",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 8,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All changes were checked and are correct, including שֶׁמַּר.",
+      "nikudHash": "10081305f77eaab1224f81ec4f86e0a7786e10d9"
+    },
+    {
+      "slug": "storyweaver-10115-what-s-neema-eating-today",
+      "title": "מה נימה אוכלת היום?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 14,
+      "wordsFixed": 38,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "6d1715ede00b87b12132413f5d9801166ce8b904"
+    },
+    {
+      "slug": "storyweaver-10118-ammachi-s-amazing-machines",
+      "title": "המכונות המופלאות של אמאצ'י",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 14,
+      "wordsFixed": 8,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "62bc3a8e57074b5dfb0b84b08ad7ca2480918fc2"
+    },
+    {
+      "slug": "storyweaver-101299-eikh-hazebra-kibla-pasim",
+      "title": "איך הזברה קיבלה פסים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 23,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "Hyphenated צְבִי-דַּלְגָן kept as is. | I checked every first-pass change and all of them are correct: the holam/shuruk moved onto the vav, וְצָלָה, וְצוֹלֶה, לַפֶּה, זוּזִי, יַשְׁבָנוֹ, וּבָנָנוֹת, and לְבַבּוּן (Baboon is used as a name).",
+      "nikudHash": "159b2074588e404cd97070dec68cbec3f16e3f4b"
+    },
+    {
+      "slug": "storyweaver-101315-bhima-hayashnunit-mikulam",
+      "title": "בהימה, הישנונית מכולם",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 24,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "I checked every change in the diff and all of them are correct.",
+      "nikudHash": "8eac91d43884e58d1c479a231f2b2351322204d9"
+    },
+    {
+      "slug": "storyweaver-101401-lara-hamoshit-hatsehuba",
+      "title": "לארה, המושית הצהובה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 17,
+      "wordsFixed": 31,
+      "verdict": "fixed",
+      "letterIssues": [
+        "Pages 17-18 have empty text and no textNikud — Empty pages with no content. I cannot invent text.",
+        "p3: 'ושלמה הגמל שלמה' looks garbled — This is intentional wordplay: a character named Shlomo who is a praying mantis (גמל שלמה). There is no originalText to check against, so I left it."
+      ],
+      "notes": "The proofreader's edits are correct: לָארָה, הָעַכָּבִישָׁה, and the feminine forms צָבַעְתְּ/שֶׁלָּךְ/מִמֵּךְ and כְּנָפַי. Pages 17–18 have no textNikud, both in the baseline (null) and now; this is fine.",
+      "nikudHash": "ae3b4e9e8f6e204077e5b8b4c74a8514c98499e2",
+      "letterFixes": [
+        "p7: בצהע אדום / בְּצַהַע אָדוֹם → בצבע אדום / בְּצֶבַע אָדוֹם (Typo: the word should be 'בצבע' (in red paint))",
+        "p14: זהובות ו מבריקות / זְהוּבּוֹת ו מַבְרִיקוֹת → זהובות ומבריקות / זְהוּבּוֹת וּמַבְרִיקוֹת (Stray space after the conjunctive vav)"
+      ]
+    },
+    {
+      "slug": "storyweaver-101537-sefer-lepuchku",
+      "title": "ספר לפוצ'קו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 21,
+      "wordsFixed": 39,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Puchku's name was vocalized inconsistently (פּוּצְ'קוּ / פּוּצְ'קוֹ). It is now פּוּצְ'קוּ everywhere. | I checked every diff word and all of the first proofreader's fixes are correct. לְפּוּצְ'קוּ keeps the dagesh on the פּ to mark the P sound in a foreign name.",
+      "nikudHash": "bcd63aef83d967e915fc532065c6e5a014e980eb",
+      "letterFixes": [
+        "p2: \" איפה פוצ'קו?\" / \" אֵיפֹה פּוּצְ'קוּ?\" → \"איפה פוצ'קו?\" / \"אֵיפֹה פּוּצְ'קוּ?\" (Stray space after the opening quote, removed in both text and textNikud)"
+      ]
+    },
+    {
+      "slug": "storyweaver-101892-laila-tov-tinku",
+      "title": "לילה טוב, טינקו!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 14,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "5e3221f3ef558ead633879d821f12d12e98c8795"
+    },
+    {
+      "slug": "storyweaver-102050-ze-hakol-be-ashmat-hakhatul",
+      "title": "זה הכל באשמת החתול!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All changes are correct. נִכְנָס is the right participle after הָיָה.",
+      "nikudHash": "20cddfa2ea531cf4cccf705832765fd011a27183"
+    },
+    {
+      "slug": "storyweaver-102053-avedot-umetsiot",
+      "title": "אֲבֵדוֹת וּמְצִיאוֹת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The text field has its own niqqud that differs from textNikud (e.g. הַיוֹיוֹ), so it was not edited. | The feminine לָךְ and מָצָאתְ for grandma are correct. The 'text' field was not identical to textNikud before the edit (it has הַיוֹיוֹ without dagesh), so it was not changed.",
+      "nikudHash": "96f31ede57100c160f53386970665dd140682929"
+    },
+    {
+      "slug": "storyweaver-102121-oy",
+      "title": "אוי!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the proofreader's fixes are correct (בַּזָּנָב, בֶּעָלִים, אַל, עֲשׂוּ, דּוֹרְבָּן, פְּלוֹפּ). The pufferfish word נְפוֹחִית was left as it is.",
+      "nikudHash": "7f451581ace9e6aa4590533baa709f187e30b0f7"
+    },
+    {
+      "slug": "storyweaver-102262-khiyukh-yafe-bevakasha",
+      "title": "חיוך יפה, בבקשה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's fixes are correct, including בְּכַר הַדֶּשֶׁא.",
+      "nikudHash": "5ee60c3e677563a53d24386a4f9b5067b906dd69"
+    },
+    {
+      "slug": "storyweaver-102811-yoter-miday-bananot",
+      "title": "יותר מדי בננות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 26,
+      "wordsFixed": 36,
+      "verdict": "fixed",
+      "letterIssues": [
+        "The hero's name is reported as spelled inconsistently (סרינגרי / סריניוואס ...). — Checked every page. The full name 'סרינגרי סריניוואס' (סְרִינְגֵּרִי סְרִינִיוָואס) is spelled and vocalized the same everywhere. Page 14 uses only 'סריניוואס' as a short form, which is the same spelling. There is nothing to unify."
+      ],
+      "notes": "All of the first proofreader's edits are correct. These include בְּעָלֶה בָּנָנָה, לַכּוֹהֵן, הוֹדִּית, עוֹשֶׂה and רַעֲיוֹן.",
+      "nikudHash": "8f44fcc07d0a1a70f29ddb201e286847cb45955d",
+      "letterFixes": [
+        "p25: עויים / עוֹיִים → עשויים / עֲשׂוּיִים (Typo: the shin is missing from עשויים ('many Indian sweets are made from bananas'). Fixed in both text and textNikud.)",
+        "p0: שלו . / שֶׁלּוֹ . → שלו. / שֶׁלּוֹ. (Stray space before the final period (both fields).)",
+        "p17: לאלים . / לָאֵלִים . → לאלים. / לָאֵלִים. (Stray space before the final period (both fields).)"
+      ]
+    },
+    {
+      "slug": "storyweaver-103131-melekh-hatsiporim",
+      "title": "מלך הציפורים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 14,
+      "wordsFixed": 10,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first reviewer's changes were checked and are correct. No other errors were found.",
+      "nikudHash": "cb6f15587fbb1f748d051d620808dfd4ad77200a",
+      "letterFixes": [
+        "p8: הציפור הקטנה שטה לצידו / שָׁטָה → הציפור הקטנה טסה לצידו / טָסָה (A bird flying next to the eagle in the sky. 'שטה' (sailed) is a typo for 'טסה' (flew).)"
+      ]
+    },
+    {
+      "slug": "storyweaver-103132-lama-nita-hafukha",
+      "title": "למה ניטה הפוכה?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 19,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Pages 4 and 14 are empty (no textNikud). The stutter לָ-לְ-לְדַבֵּר was left as is. | The first-pass changes are all correct: אוֹתָךְ and אַתְּ (addressing Nita), רָזֶה (the speaker Navi is male), נִיטָה, and בָּאם-בָּאם. Pages 4 and 14 have no textNikud.",
+      "nikudHash": "c9c0c9a6b252197d66d980df975de23ef3494988"
+    },
+    {
+      "slug": "storyweaver-103275-ani-rotse-et-ze",
+      "title": "אני רוצה את זה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 13,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "13 word-level changes, including repeats. | All fixes are verified correct (אֶת, שֶׁלְּךָ, יִבְּלוּ, הַחוּם). No other errors were found.",
+      "nikudHash": "ca6f82e85a9ca71631385b43ce8872e614c119b7",
+      "letterFixes": [
+        "p3: \"בוא מלך לשוק ...\" / \"בּוֹא מֶלֶךְ לַשּׁוּק ...\" → \"בוא נלך לשוק ...\" / \"בּוֹא נֵלֵךְ לַשּׁוּק ...\" (Typo: מלך should be נלך ('let's go'))",
+        "p4: לא אתזה! / לֹא אֶתְּזָהּ! → לא את זה! / לֹא אֶת זֶה! (Missing space between את and זה, and the merged word had wrong niqqud)",
+        "p7: לא אתזה! / לֹא אֶתְּזָהּ! → לא את זה! / לֹא אֶת זֶה! (Missing space between את and זה, and the merged word had wrong niqqud)",
+        "p5: \"אני רותצ האת הספר הזה!, אמר אניל. / \"אֲנִי רוֹתֵצ הָאֵת הַסֵּפֶר הַזֶּה!, אָמַר אָנִיל. → \"אני רוצה את הספר הזה!\" אמר אניל. / \"אֲנִי רוֹצֶה אֶת הַסֵּפֶר הַזֶּה!\" אָמַר אָנִיל. (Garbled words (רותצ האת) and an unclosed quote, where a comma stood in place of the closing quotation mark)"
+      ]
+    },
+    {
+      "slug": "storyweaver-103625-mi-akhal-et-kol-ze",
+      "title": "מי אכל את כל זה?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 3,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "ddb4f0bf6d1cc47a63266360cdeb810e2c0421d9"
+    },
+    {
+      "slug": "storyweaver-103626-tafasti-otcha",
+      "title": "תפסתי אותך!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 8,
+      "verdict": "clean",
+      "letterIssues": [
+        "p4 text and textNikud start with a stray quote and a line break (\"\\nלמה?\") — Not reported, and it is only punctuation and whitespace. I left it alone so the recording stays valid."
+      ],
+      "notes": "The gender fixes for אוֹתָךְ/אוֹתְךָ and בִּשְׁבִילֵךְ/בִּשְׁבִילְךָ are correct for each speaker and listener, and so is סְפְּלָאשׁ.",
+      "nikudHash": "0c8b871288fcb54a80c36eecd5a5751fd7c01e5f",
+      "letterFixes": [
+        "p4: הסתכל מאחורייך / הִסְתַּכֵּל מֵאֲחוֹרַיִיךְ → הסתכל מאחוריך / הִסְתַּכֵּל מֵאֲחוֹרֶיךָ (The frog is talking to the snake, who is male, so the masculine form is needed. Pages 2 and 6 talk to females and correctly keep מאחורייך.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-103627-mi-hakhavera-shelanu",
+      "title": "מי החברה שלנו?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [
+        "p13 (0-based p12): text empty, textNikud missing — The page has no content, and I can't invent text for it."
+      ],
+      "notes": "No niqqud errors. The only diff from the baseline is p13 changing from null to undefined. Its text is empty, so nothing is lost.",
+      "nikudHash": "628a21187bc6caf81ba5597d6cce2240d0fd79d0",
+      "letterFixes": [
+        "p13: רוֹצָה לִהְיוֹת חָבֵר שֶׁלִּי? → רוֹצֶה לִהְיוֹת חָבֵר שֶׁלִּי? (Gender mismatch: the reader is addressed as masculine with חָבֵר, so רוֹצָה (feminine) became רוֹצֶה. Only the niqqud changed; text 'רוצה' is the same in both forms.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-103628-hatuley-bar",
+      "title": "חתולי בר!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 17,
+      "verdict": "needs-human",
+      "letterIssues": [],
+      "notes": "The vowels added to the detached ה and ו are correct (בֶּהָרִים is also correct). On p5 the only change is the reordered marks in פָּאלָאס, which is harmless. The spacing problems in the letters need a human edit.",
+      "nikudHash": "2a2bc4496c8fe3b798c4989454f1d0ae8e94ab70",
+      "letterFixes": [
+        "p0: כמו ה טיגריס ! / כְּמוֹ הַ טִּיגְרִיס ! → כמו הטיגריס! / כְּמוֹ הַטִּיגְרִיס! (The article ה was split from its noun, and there was a stray space before '!')",
+        "p1: כמו ה אריה ! / כְּמוֹ הָ אַרְיֵה ! → כמו האריה! / כְּמוֹ הָאַרְיֵה! (The article ה was split from its noun, and there was a stray space before '!')",
+        "p2: כמו ה נמר ו חתול הנמר הבנגלי ! / כְּמוֹ הַ נָּמֵר וְ חָתוּל הַנָּמֵר הַבֶּנְגָּלִי ! → כמו הנמר וחתול הנמר הבנגלי! / כְּמוֹ הַנָּמֵר וַחֲתוּל הַנָּמֵר הַבֶּנְגָּלִי! (ה and ו were split from their nouns and there was a space before '!'. The niqqud is now the construct form, וַחֲתוּל)",
+        "p3: ו חתול השיש ! / וַ חֲתוּל הַשַּׁיִשׁ ! → וחתול השיש! / וַחֲתוּל הַשַּׁיִשׁ! (The conjunction ו was split from its noun, and there was a stray space before '!')",
+        "p4: ו חתול פאלאס ! / וְ חָתוּל פָּאלָאס ! → וחתול פאלאס! / וַחֲתוּל פָּאלָאס! (ו was split from its noun and there was a space before '!'. The niqqud is now the construct form, וַחֲתוּל)",
+        "p5: האפריקאי ! → האפריקאי! (There was a stray space before '!')",
+        "p6: כמו ה קרקל וה שונר ! / כְּמוֹ הַ קָּרָקָל וְהַ שּׁוּנָר ! → כמו הקרקל והשונר! / כְּמוֹ הַקָּרָקָל וְהַשּׁוּנָר! (ה and וה were split from their nouns, and there was a stray space before '!')",
+        "p7: הנמרי ! → הנמרי! (There was a stray space before '!')",
+        "p8: הכהה ! → הכהה! (There was a stray space before '!')",
+        "p9: ו החתול הזהוב האסייתי ! / וְ הֶחָתוּל הַזָּהוֹב הָאַסְיָיתִי ! → והחתול הזהוב האסייתי! / וְהֶחָתוּל הַזָּהוֹב הָאַסְיָיתִי! (The conjunction ו was split from its noun, and there was a stray space before '!')"
+      ]
+    },
+    {
+      "slug": "storyweaver-103629-zehirut-hatigris-ba",
+      "title": "זהירות, הטיגריס בא!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 11,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "15eb711fbeedfc7d32746d74249f3c8dbed861bf",
+      "letterFixes": [
+        "p2: מצליח לאוכל / מַצְלִיחַ לְאוֹכֶל → מצליח לאכול / מַצְלִיחַ לֶאֱכוֹל (The verb 'to eat' was misspelled as the noun 'לאוכל'. Fixed the letters and the niqqud in both fields.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-104021-anu-makshiva-legufi",
+      "title": "אני מקשיבה לגופי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 22,
+      "wordsFixed": 32,
+      "verdict": "fixed",
+      "letterIssues": [
+        "p12 reviewer suggestion that the word might be להרגיש or למשש — The book is consistently about hearing the body, so לשמוע is the right correction. I used it instead of this alternative."
+      ],
+      "notes": "The first-pass changes are correct: עָלַי, בָּאבּוּם, מְצָא and holam/shuruk moved onto the vav. On page 8, mappiq marks were removed from the repeated heh in the sound effect, which is fine.",
+      "nikudHash": "689932cc3695851f484f679e115231c32536be93",
+      "letterFixes": [
+        "p12: להשמוע / לְהַשְׁמוֹעַ → לשמוע / לִשְׁמוֹעַ (Not a real word. Context is hearing the pulse ('I can hear my pulse'), so the intended word is לשמוע.)",
+        "p10: ללב שלי יכול לפעום / לַלֵּב שֶׁלִּי יָכוֹל לִפְעוֹם → ללב שלי לפעום / לַלֵּב שֶׁלִּי לִפְעוֹם (The extra word יכול made the sentence ungrammatical. The fix matches the question in the first line of the page.)",
+        "p20: ולשמוע הבטן שלי / וְלִשְׁמוֹעַ הַבֶּטֶן → ולשמוע את הבטן שלי / וְלִשְׁמוֹעַ אֶת הַבֶּטֶן (Missing direct-object marker את before a definite object.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-104022-yoter-miday-raash",
+      "title": "יותר מדי רעש!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 17,
+      "wordsFixed": 32,
+      "verdict": "fixed",
+      "letterIssues": [
+        "p4: 'ה קווה קווה' / 'ה צירר-צירר' has the article separated from the sound word — The words are onomatopoeia and the separation looks deliberate"
+      ],
+      "notes": "Some names are left without niqqud in places (סרינגרי סריניוואס on p0/p11, פרוואטאמה on p6/p7, 'צירר' on p4). I did not add niqqud to them. | I checked all of the first proofreader's changes and they are correct. Some names are left without niqqud (סרינגרי סריניוואס, פרוואטאמה, צירר). These are optional. Text letters stay as they are.",
+      "nikudHash": "d80e896e0e0d73f58991695d67769f9cd5bea0a0",
+      "letterFixes": [
+        "p3: לצאת ראש / לָצֵאת רֹאשׁ → לצאת מראש / לָצֵאת מֵרֹאשׁ (The letter מ was missing)",
+        "p9: יכל / יָכֹל → יכול / יָכוֹל (Standard full spelling, matching the rest of the book's ktiv male)",
+        "p10: סרינגגרי / סְרִינָגְּגֵרִי → סרינגרי / סְרִינְגֵּרִי (The gimel was doubled. The name now matches the spelling and vocalization on other pages.)",
+        "p11: בחיו בעיר ברועשת / בְּחָיוֹ בָּעִיר בָּרוֹעֶשֶׁת → שחיו בעיר הרועשת / שֶׁחָיוּ בָּעִיר הָרוֹעֶשֶׁת (Typos: the meaning is people 'who lived in the noisy city')",
+        "p15: כשסרינגר יסריניוואס / כְּשֶׁסְּרִינְגֶּר יסריניוואס → כשסרינגרי סריניוואס / כְּשֶׁסְּרִינְגֵּרִי סְרִינִיוָואס (The space was in the wrong place inside the name)",
+        "p15: הם מרכיב / הֵם מַרְכִּיב → הוא מרכיב / הוּא מַרְכִּיב (The subject is singular, so the pronoun must be הוא)",
+        "p0: סרינגרי סריניוואס (textNikud, unvocalized) → סְרִינְגֵּרִי סְרִינִיוָואס (Gave the proper name the vocalization used on most pages)",
+        "p2: לְסָרִינְגְרִי → לִסְרִינְגֵּרִי (Made the proper name's vocalization consistent)",
+        "p6: סְרִינְגְּרִי / אִשְׁתּוֹ פרוואטאמה → סְרִינְגֵּרִי / אִשְׁתּוֹ פְּרָוָואטַאמָה (Made proper names consistent. Parvatamma was unvocalized and now uses the vocalization from p10.)",
+        "p7: פרוואטאמה הִפְסִיקָה → פְּרָוָואטַאמָה הִפְסִיקָה (Vocalized the proper name the same way as on p10)",
+        "p11: סְרִינְגְּרִי סריניוואס → סְרִינְגֵּרִי סְרִינִיוָואס (Made the proper name consistent; the surname had no niqqud)",
+        "p12: סְרִינְגְרִי. → סְרִינְגֵּרִי. (Made the proper name's vocalization consistent)"
+      ]
+    },
+    {
+      "slug": "storyweaver-104163-kise-hagalgalim-shel-akhiiiiii",
+      "title": "כסא הגלגלים של אחייייייי!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Page 11 is empty. | Page 11 is empty.",
+      "nikudHash": "23b17f7a6c2eccdef32a6dd0dd48e2818494b1ef"
+    },
+    {
+      "slug": "storyweaver-104166-akku-ko3eset",
+      "title": "אָקּוּ כועסת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 32,
+      "verdict": "clean",
+      "letterIssues": [
+        "Spaces before punctuation, e.g. 'מעצבנת !', 'מאוד !', 'האידלי .' — Not in the reported issues. Left as is."
+      ],
+      "notes": "Applied with a script that edits only textNikud lines and checks that the letters stay the same. data/books/* is gitignored, so git diff shows nothing. | All of the first proofreader's edits check out: holam/shuruk placement, רוֹצָה (Akku is a girl), לְבֵנָה (a brick, which fits the story), הַמּוֹרָה (female teacher), and the names בִּיקּוֹ and אַמְלָה. I found nothing else to fix.",
+      "nikudHash": "d61adb6c872f867308ae76859a941ed9e8c42f8c",
+      "letterFixes": [
+        "p9: קטן ו רע / קָטָן ו רַע → קטן ורע / קָטָן וְרַע (A stray space split the conjunction vav off its word.)",
+        "p14: מן ה לבנה / מִן ה לְבֵנָה → מן הלבנה / מִן הַלְּבֵנָה (The definite-article ה was split from its word by a space.)",
+        "p14: מ הילד / מ הַיֶּלֶד → מהילד / מֵהַיֶּלֶד (The prefix מ was split from its word by a space.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-104167-kobri-nakhash-hakobra",
+      "title": "קוברי נחש הקוברה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 25,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "6060f92f76374c70009aa8751be07b723d7fc39d",
+      "letterFixes": [
+        "p5: אף אחד מהר לא הלך ישר / אֶחָד מַהֵר → אף אחד מהם לא הלך ישר / אֶחָד מֵהֶם ('מהר' was a typo for 'מהם' (none of them, meaning the fawns, walked straight).)",
+        "p7: לא יכל / לֹא יָכֹל → לא יכול / לֹא יָכוֹל (Present tense 'can't', so ktiv male 'יכול'. The text was missing its vav.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-1042-my-best-friend",
+      "title": "החברה הכי טובה שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "3e1125c7df6f241df7e5fcb03b39293d06469329"
+    },
+    {
+      "slug": "storyweaver-1052-busy-ants",
+      "title": "נמלים חרוצות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The proofreader's edits are correct: בְּשׁוּרָה, שָׁקֵט (adjective) and וַהֲפָכִים.",
+      "nikudHash": "8d0cce4939c9b5aa3fda399abf52943970b3706b"
+    },
+    {
+      "slug": "storyweaver-106118-haotsar-hatsivoni-shel-didi",
+      "title": "האוצר הצבעוני של דידי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 12,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All the earlier fixes were verified, including מִדִּידִי and הִבְרִיאָה. Page 8 מֵהַחִיפּוּשִׂים already has the correct sin dot.",
+      "nikudHash": "8164375e5e504e7907f728e0c6a8738bd7d9726f",
+      "letterFixes": [
+        "p3: עבים, דקים, וצבעוניים וספרים צבעוניים / דַּקִּים, וְצִבְעוֹנִיִּים וּסְפָרִים → עבים, דקים, וספרים צבעוניים / דַּקִּים, וּסְפָרִים ('צבעוניים' appeared twice in one phrase. I removed the first copy.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-106565-rikdi-mihlali",
+      "title": "רקדי, מיהלאלי!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 5,
+      "wordsFixed": 6,
+      "verdict": "needs-human",
+      "letterIssues": [
+        "Pages 1, 3-10 and 15-18 have no text and no textNikud — These are empty pages with no source content. Writing text for them would mean inventing it."
+      ],
+      "notes": "The niqqud on the pages that exist is correct, including the added name vocalization מִיהְלָאלִי. Most of the book's pages have no text, which needs human attention. The null-to-undefined diffs on the empty pages are harmless.",
+      "nikudHash": "807abb72ff3fbdb9140882cef7055d7b2416ce69",
+      "letterFixes": []
+    },
+    {
+      "slug": "storyweaver-11243-satya-watch-out",
+      "title": "סטיה, תיזהר!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 20,
+      "wordsFixed": 27,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All edits are correct: לַחַוָּוה, אַיָּיל, לַנְגּוּר (langur monkey), עֵז, הַמּוֹרָה, and the holam/shuruk fixes.",
+      "nikudHash": "81a5116da92bc095e7b1dd90c404ed6a5ac180ea"
+    },
+    {
+      "slug": "storyweaver-11537-the-mango-tree",
+      "title": "עץ המנגו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 6,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "מְחַפֵּשׂ/מְחַפֶּשֶׂת are correctly written with sin, so I left them. | Both changes are correct. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "bd1bdd8bcd12b53558f35438d17202ecfd4bb2ec"
+    },
+    {
+      "slug": "storyweaver-120693-mezeg-ha3avir-hapnimi-sheli",
+      "title": "מזג האויר הפנימי שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "ac7651c7a662cb2eb7a99a00278fa6a62cb5a389"
+    },
+    {
+      "slug": "storyweaver-1208-singing-in-the-rain",
+      "title": "שרים בגשם",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 22,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All 20 of the previous proofreader's changes were checked and are correct.",
+      "nikudHash": "0d4d027ba3a3dcb2f7731024dcb586dcd806bbf2"
+    },
+    {
+      "slug": "storyweaver-122-no-smiles-today",
+      "title": "היום בלי חיוכים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 6,
+      "wordsFixed": 29,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's changes are correct. The teacher's name סוּנָה (Sona) could also be vocalized סוֹנָה; I left it as it is.",
+      "nikudHash": "826237b6a51a84fae9a97b1504dce302c10d5d20"
+    },
+    {
+      "slug": "storyweaver-12293-bed-time-stories",
+      "title": "סיפורים לפני השינה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 1,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "fe77c4c3ebeb4f4a00bcc6bd860967c401d8c14c"
+    },
+    {
+      "slug": "storyweaver-12294-the-race",
+      "title": "המרוץ",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 5,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "ef8dbd5baffe4e4ee958b505cd1694d7fee9b543"
+    },
+    {
+      "slug": "storyweaver-123088-maguru-noten-raglayim",
+      "title": "מאגורו נותן רגליים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 9,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "I left p15 נִזְהַר (past tense) and p11 שָׂמֵחַ (adjective) unchanged because both readings are valid.",
+      "nikudHash": "bf0906db94442f3f4cc0ab5f8276a6deb03d5a5b"
+    },
+    {
+      "slug": "storyweaver-12433-angry-akku",
+      "title": "אקו כועסת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 34,
+      "verdict": "fixed",
+      "letterIssues": [
+        "p3 has empty text and no textNikud — Empty page with no originalText. I cannot invent content.",
+        "p1: 'איזה חמניות' could be 'אילו חמניות' — 'איזה' with a plural noun is normal colloquial Hebrew in a father's spoken line, so this is a style choice, not an error."
+      ],
+      "notes": "Page numbers are 0-based array indices. | I verified all of the first proofreader's changes and they are correct: brick לְבֵנָה, feminine רוֹצָה and הַמּוֹרָה, וְטָעֲמָה, מֵאַקּוֹ, and the holam/shuruk placement fixes. Page indices are 0-based.",
+      "nikudHash": "e999f2777438843bef2a2501aeb2b87644ec7e47",
+      "letterFixes": [
+        "p14: את העורב גנב האידלי / אֶת הָעוֹרֵב גָּנַב הָאִידְלִי → את העורב שגנב את האידלי / אֶת הָעוֹרֵב שֶׁגָּנַב אֶת הָאִידְלִי (Missing relative particle and 'את'. The source says 'IDLI-STEALING CROW', and the phrase was ungrammatical as written.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-127304-the-sounds-of-water",
+      "title": "צלילי המים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 19,
+      "wordsFixed": 60,
+      "verdict": "needs-human",
+      "letterIssues": [
+        "Ranger is 'אמר הסייר' (male) on p13 but 'הסיירת נכנסה לג'יפ שלה' (female) on p14 — There is no originalText to confirm the ranger's gender, so I am not confident which one is right. Left for human review.",
+        "p4 'זה הרעש מהפה שלך טורפת את הסמבר' is awkward phrasing — It was not reported and is not a clear letter error. I left the style as it is."
+      ],
+      "notes": "Sound-effect words (שפששש, ספליש etc.) left as-is. Gender decisions: Appa=male, Varsha=female, per majority of text. | The niqqud fixes are correct, but the letters have gender inconsistencies a person needs to fix (listed above). Appa is treated as male and Varsha as female.",
+      "nikudHash": "479b236d79b5912fb456f63cf53c1361078708dd",
+      "letterFixes": [
+        "p0: סביב ביתו של ורשה / בֵּיתוֹ → סביב ביתה של ורשה / בֵּיתָהּ (Varsha is a girl (summary: 'ורשה ואבא שלה', 'האם אביה אפה יאמין לה'))",
+        "p8: נשאר על בבאר / נִשְׁאַר עַל בַּבְּאֵר → נשאר בבאר / נִשְׁאַר בַּבְּאֵר (Extra 'על' (the cub stayed in the well))",
+        "p9: אמר ורשה / אָמַר וַרְשָׁה → אמרה ורשה / אָמְרָה וַרְשָׁה (Varsha is female)",
+        "p10: אפה צעקה / אַפָּה צָעֲקָה → אפה צעק / אַפָּה צָעַק (Appa (father) is male)",
+        "p11: אתה יכולה ... אפה צעקה ... ורשה צעק → את יכולה (אַתְּ) ... אפה צעק (צָעַק) ... ורשה צעקה (צָעֲקָה) (Gender fixes: Appa is speaking to Varsha (female), Appa is male, Varsha is female)",
+        "p12: אמרה אפה / אָמְרָה אַפָּה → אמר אפה / אָמַר אַפָּה (Appa is male (and the same sentence already has 'אני מתקשר'))",
+        "p13: אתה יכולה / אַתָּה יְכוֹלָה → את יכולה / אַתְּ יְכוֹלָה (The ranger is speaking to Varsha (female))",
+        "p14: \"זו חילוץ ... מים, \"אמרה. \"לבאר שלך (שֶׁלְּךָ) ... אם תכין ... הנמר המהן (הַמְּהֵן) → \"זה חילוץ (זֶה) ... מים,\" אמרה. \"לבאר שלך (שֶׁלָּךְ) ... אם תכיני (תָּכִינִי) ... הנמר המהם (הִמְהֵם) (Gender agreement (חילוץ is masculine), misplaced quote/space, addressee is Varsha (female), and the typo המהן changed to המהם)",
+        "p15: \"עשה שיעורי בית\", השיבה אפה / עֲשֵׂה ... הֵשִׁיבָה → \"עשי שיעורי בית\", השיב אפה / עֲשִׂי ... הֵשִׁיב (The addressee Varsha is female, and Appa is male)",
+        "p16: אמר ורשה / אָמַר וַרְשָׁה → אמרה ורשה / אָמְרָה וַרְשָׁה (Varsha is female)",
+        "p17: יום הולדתו של ורשה ... אמר ורשה → יום הולדתה של ורשה (הוּלַּדְתָּהּ) ... אמרה ורשה (אָמְרָה) (Varsha is female)",
+        "p18: ורשה יכלה היתה לראות / יָכְלָה הָיְתָה → ורשה יכלה לראות / יָכְלָה (Duplicated verb)"
+      ]
+    },
+    {
+      "slug": "storyweaver-127443-lama-hazvuv-metsik-lapara",
+      "title": "למה הזבוב מציק לפרה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 37,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Many holam/kubutz-before-vav placement errors fixed throughout. | All of the proofreader's changes checked out (holam/shuruk placement, שֶׁהַפָּרָה, masculine רוֹצֶה). I found no further errors.",
+      "nikudHash": "af9c0430ac2ad11dd826cea0b7ab43c64ce48061",
+      "letterFixes": [
+        "p1: הית / הָיִתָ → היתה / הָיְתָה (Letters missing. Used the book's own spelling, היתה, as on page 2 (both fields).)",
+        "p7: תה / תֶּה → אתה / אַתָּה (Alef missing ('למה אתה עוזב, זבוב? אתה לא נהנה...'). Fixed in both fields.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-127445-anansi-noten-sipurim-lbnei-haadam",
+      "title": "אנאנסי נותן סיפורים לבני האדם",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 33,
+      "verdict": "fixed",
+      "letterIssues": [
+        "Reported niqqud variants נְיָאמָה (p2) and נִיאָמָה (p4) — The current file already has נִיָּאמָה on those pages, which matches the rest of the book. Nothing left to unify.",
+        "p6 'מהר' addressing the wasps (plural feminine) — Here 'מהר' works as an adverb or interjection ('quickly!'), which is fine with the plural verb 'היכנסו' after it. It is not an error."
+      ],
+      "notes": "Holam/kubutz-before-vav misplacements fixed throughout. | All of the first reviewer's changes were checked and are correct.",
+      "nikudHash": "33c35391479755a2012a5de1b20d6332cddfbf15",
+      "letterFixes": [
+        "p8: אישתו / אִישְׁתּוֹ → אשתו / אִשְׁתּוֹ (Standard spelling has no yod. Page 9 already uses אשתי.)",
+        "p7: ניאנה / נִיאֶנָּה → ניאמה / נִיָּאמָה (Sky god's name was inconsistent. Changed it to the spelling and niqqud used on every other page.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-12758-my-brother-and-me",
+      "title": "אחי ואני",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "501f6c5fa94c7ef4804bc5fefc6dae795dbe3981"
+    },
+    {
+      "slug": "storyweaver-127820-eikh-hetsila-hanemala-et-hayona",
+      "title": "איך הצילה הנמלה את היונה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 24,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Pages 7, 15, 19, 22 have no textNikud. | Pages 7, 15, 19 and 22 have no textNikud. On p11, 'שְׂמֵחָה' (adjective) is accepted, though שָׂמְחָה (past tense) would also work.",
+      "nikudHash": "ac509a7171b6b7c854320d1a30dd52c8fa35194e",
+      "letterFixes": [
+        "p6: אם אם לא / אִם אִם לֹא → אם לא / אִם לֹא (Duplicated word)",
+        "p25: צעק הילד וקפץ הילד ממקומו / צָעַק הַיֶּלֶד וְקָפַץ הַיֶּלֶד מִמְּקוֹמוֹ → צעק הילד וקפץ ממקומו / צָעַק הַיֶּלֶד וְקָפַץ מִמְּקוֹמוֹ (Subject הילד was repeated)",
+        "p14: \"עלי, מהר\" / \"עֲלִי, מַהֵר\" → \"עלי, מהרי\" / \"עֲלִי, מַהֲרִי\" (The dove is talking to the female ant, so the imperative must be feminine to match עלי)"
+      ]
+    },
+    {
+      "slug": "storyweaver-128341-hashaldag-vehayam",
+      "title": "השלדג והים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 15,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Name spelled אוּקוּגָבָה on p0 but אוֹקוֹגָבָה on p6; left as is. | The first-pass changes are correct: בְּנֵה, הַפְלֵג, שָׂמַח, וּמוּכָנוֹת and holam on the vav in עוֹשְׁרוֹ.",
+      "nikudHash": "586755038a58c486a198c52c9bdf7c97bf34e31b",
+      "letterFixes": [
+        "p7: וכך שתן כולם / וְכָךְ שֶׁתֶן כּוּלָּם → וכך שתו כולם / וְכָךְ שָׁתוּ כּוּלָּם (Typo: שתן means urine. The intended word is שתו, 'they drank', which goes with וסעדו.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-137-can-and-can-t",
+      "title": "יודעים ולא יודעים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 9,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "e9cfcceb8dc17385a5df1ed597900074e42889d9"
+    },
+    {
+      "slug": "storyweaver-14406-the-greedy-mouse",
+      "title": "העכבר החמדן",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 8,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "d63cc5bccb27f8a5e535c26d375f35b46ca6f483"
+    },
+    {
+      "slug": "storyweaver-15458-ting-tong",
+      "title": "טינג טונג",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 9,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "נִרְדַּמְתָּ and מְנַסֶּה are correct for the boy narrator. I left בָּזַז ('buzz') as a phonetic rendering.",
+      "nikudHash": "3285bed04927137a2234ecddd361de1e18cae25e"
+    },
+    {
+      "slug": "storyweaver-16411-too-big-too-small",
+      "title": "גדולה מדי! קטנה מדי!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 16,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "5f66d3dcc08de0ca8b6f4d8d93f9a150026af8d8"
+    },
+    {
+      "slug": "storyweaver-165004-hapara-shel-sringeri-srinivas-khayevet-lehagid-moo",
+      "title": "הפרה של סרינגרי סריניוואס חייבת להגיד מו!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 31,
+      "wordsFixed": 54,
+      "verdict": "fixed",
+      "letterIssues": [
+        "מנולי is vocalized as both מִנּוּלִי (p1, p6) and מִנּוּלֵי (others) — It wasn't in the report, and I wasn't sure which form to use. The majority form (ֵי) sounds less like 'Manuli', so I left it for a human decision.",
+        "Onomatopoeia vocalization (מִוָּוו, מִוּוּוּוּ etc.) — These are sound words, so I left them alone."
+      ],
+      "notes": "Text field has no niqqud, so only textNikud was edited. Haircut-day and this book vocalize Srinivas differently; I kept each book's own pattern. | All of the first proofreader's fixes were checked against the baseline diff and are correct. After niqqud is stripped, the text still matches the baseline.",
+      "nikudHash": "d89138e4535426ac89c9ad53ca197ab8383d77a4",
+      "letterFixes": [
+        "p8: אני לא יודעת, אבל זה בסדר!\" → \"אני לא יודעת, אבל זה בסדר!\" (Added the missing opening quote in both text and textNikud.)",
+        "p9: לא שמחו.\" \"מוווו!\" → לא שמחו. \"מוווו!\" (Removed the stray closing quote after שמחו in both fields.)",
+        "p0: לַקְשַׁמִּי / לֶקְשָׁמִי / לַקְשָׁמִי / לֶקְשְׁמִי / לִקְשְׁמִי / לִקְשָׁמִי / לְקַשְּׁמִי / לַקְשְׁמֵי / לְלִקְשָׁמִי / לְלִקַּשְׁמִי / בְּלִקְשָׁמִי / שֶׁלְּקִשְׁמֵי (pages 0,1,2,4,5,6,9,10,11,13,15,16,18,19,21,22,23,26) → לַקְשְׁמִי (with prefixes: לְלַקְשְׁמִי, בְּלַקְשְׁמִי, שֶׁלַּקְשְׁמִי) (The cow's name (Lakshmi) was vocalized inconsistently, so I unified it on every page. The letters were already the same everywhere.)",
+        "p7: סְרִינְגֵּרִי / סָרִינְגֵּרִי / סָרִינְגְרִי (pages 0,4,7,10,11,20) → סְרִינְגְרִי (Unified Sringeri to its most common niqqud. The qamats variants were wrong.)",
+        "p10: סריניווס / סָרִינִיווֹס → סריניוואס / סְרִינִיוָואס (Unified the spelling of Srinivas with the other pages, in both fields.)",
+        "p13: פרווטאמה / פַּרְוָוטָאמָה → פרוואטאמה / פַּרְוָואטָאמָה (Unified the spelling of Parvatamma with the other pages, in both fields.)",
+        "p21: לְשֶׁיָּוָוה → לְשִׁיוָוה (Wrong niqqud on the name Shiva (letters unchanged).)"
+      ]
+    },
+    {
+      "slug": "storyweaver-175430-agadat-hakafe",
+      "title": "אגדת הקפה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 21,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The name קַאלְדִי / קַאלְדִּי has the dagesh only some of the time. The dagesh is optional, so I left it. | All of the earlier changes are correct. The dagesh in the name קַאלְדִי / קַאלְדִּי is optional, so I left it.",
+      "nikudHash": "d2b60029b6626198ea7a44c7bc4517a061d00cc4"
+    },
+    {
+      "slug": "storyweaver-176377-mi-zarak-et-hanaal",
+      "title": "מי זרק את הנעל?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 9,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "807a7897de996ba8ab2e740aa77c328bfa992a16"
+    },
+    {
+      "slug": "storyweaver-19039-sofrim-hayot",
+      "title": "סופרים חיות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors found. | The first proofreader made no edits, and the niqqud is correct.",
+      "nikudHash": "883627f11357559b3e26a6f2523f667141698371",
+      "letterFixes": [
+        "p2: וארבעה ציפורים / וְאַרְבָּעָה צִיפּוֹרִים → וארבע ציפורים / וְאַרְבַּע צִיפּוֹרִים (ציפור is feminine, so the number must be ארבע. רוצים stays masculine plural because the group mixes שוורים and ציפורים)"
+      ]
+    },
+    {
+      "slug": "storyweaver-19500-lo-akhshav-lo-akhshav",
+      "title": "לא עכשיו, לא עכשיו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 20,
+      "verdict": "needs-human",
+      "letterIssues": [],
+      "notes": "The niqqud changes are all correct. One small inconsistency is left: the name is אַדֵּגִ'י with a dagesh on page 5 but אַדֵגִ'י without one on page 0. The dagesh is optional for a foreign name, so I left it. The page 6 letter error needs a person to fix it.",
+      "nikudHash": "04ba07d37887748416a3934ec568bfc638b80a8e",
+      "letterFixes": [
+        "p6: אנחנו יכול לשחק / אֲנַחְנוּ יָכוֹל → אנחנו יכולים לשחק / אֲנַחְנוּ יְכוֹלִים (Number agreement: 'we' takes the plural form 'יכולים'.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-19853-clean-cat",
+      "title": "חתולה נקייה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The name Sanjo is vocalized סַנְג'וֹ on p7 but לְסַנְג'וּ on p8. I left both, since it is a foreign name. | All changes are correct, including עָלַי and בַּזָּנָב. The name is vocalized two ways: סַנְג'וֹ on p7 and לְסַנְג'וּ on p8. There is no English text to show which is right, and the name may well be Sanju. I left both, but someone may want to make them consistent. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "a72bb9a9c0927d1ab8f4cb02206061c6ca955e13"
+    },
+    {
+      "slug": "storyweaver-19897-fat-king-thin-dog",
+      "title": "המלך השמן והכלב הרזה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors found. | No changes were made and no errors were found.",
+      "nikudHash": "8e247f4d11325f2789eff0f1a9a0dcf82ea5466f"
+    },
+    {
+      "slug": "storyweaver-19908-naughty-or-not",
+      "title": "שובבה או לא",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors found.",
+      "nikudHash": "3db2dff6986673d48e43c4e2f76451cd701b3f12"
+    },
+    {
+      "slug": "storyweaver-19917-tommy-and-tingu",
+      "title": "טומי וטינגו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 5,
+      "wordsFixed": 3,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Page 5 has no textNikud (its text is empty). | The fixes are correct. Page 5 has no text.",
+      "nikudHash": "3c13c56b185350ba751e7c46d5da4e23d9e9a1cb"
+    },
+    {
+      "slug": "storyweaver-19927-bath-time-for-chunnu-and-munnu",
+      "title": "זמן להתרחץ צ׳ונו ומונו!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 14,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "c61b0ca58e21785a727cc56f9d0b7f57cde9acae"
+    },
+    {
+      "slug": "storyweaver-19990-lehitraot-machar",
+      "title": "להתראות מחר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 3,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Page 1 'אֱיָיל' was left as is. In an animal list it most likely means 'deer' (אַיָּל), but the double-yod spelling has no clean standard vocalization. | Pages 8, 9 and 13 have no text. קְרָא (imperative) and הַבּוֹקֶר are correct.",
+      "nikudHash": "4019e497d00d9243ec34316fbfb91c54b878eacd"
+    },
+    {
+      "slug": "storyweaver-2-smile-please",
+      "title": "חיוך, בבקשה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 7,
+      "verdict": "fixed",
+      "letterIssues": [
+        "p11: the page has empty text and no textNikud — The page has no content and no originalText, probably a back or credits page. There is no text to fix, and inventing text is not allowed."
+      ],
+      "nikudHash": "ea1648a16757f3a58d6058f78eb5748b5920e1ec",
+      "letterFixes": []
+    },
+    {
+      "slug": "storyweaver-20160-yom-hahistaprut-hasnati",
+      "title": "יום ההסתפרות השנתי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 19,
+      "wordsFixed": 22,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "הַסַּפָּר (the barber) is correct. The name is now spelled the same way throughout.",
+      "nikudHash": "09756db40154cd4a6bb58c31a1b1dee044787a22"
+    },
+    {
+      "slug": "storyweaver-20191-hagerev-haktana-ve-hayezurim-haktantanim",
+      "title": "הגרב הקטנה והיצורים הקטנטנים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Pages 13-14 have empty text and no textNikud. | The story treats גרב as feminine throughout, and the letters show that (קטנה), so I left it as is.",
+      "nikudHash": "a58616d1112c003625a29930dc690dcaadb60c8a"
+    },
+    {
+      "slug": "storyweaver-202-bunty-and-bubbly",
+      "title": "באנטי ובאבלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "e2bdfb0a673aeed32c91e81d3b15939c77acc912"
+    },
+    {
+      "slug": "storyweaver-20201-lefachot-ani-merutze",
+      "title": "לפחות אני מרוצה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 44,
+      "verdict": "clean",
+      "letterIssues": [
+        "'בוא מלך לשוק' (listed under this slug) — The report itself marks it n/a: it belongs to a different book and does not appear here"
+      ],
+      "notes": "44 word-level changes in total, including repeated words. Most were the systematic vowel-before-vav pipeline bug. The fixes were applied by a script that changes only textNikud strings in place, with a check that the letters stay the same. Pages 6 and 15 have no text. | I checked every diffed word. All of the first reviewer's fixes are correct, including שֶׁבְּאֶרֶץ, וְשָׁכְחָה, שֶׁבַּנָּהָר and מִפָּרוֹת. I found no remaining errors. The letters check passes on all pages.",
+      "nikudHash": "37dc6fa9abfc406c17df68000cabf322292cacf3",
+      "letterFixes": [
+        "p5: שבחוץ הים / שֶׁבַּחוּץ הַיָּם → שבחוף הים / שֶׁבְּחוֹף הַיָּם (Typo: the sense is the sand on the beach (חוף הים))",
+        "p0: בְּסָאקוֹלְנְד / סַאקּוֹלְנַד → בְּסַאקוֹלַנְד / סַאקוֹלַנְד (Unified the vocalization of the name Sakoland to the most common form, סַאקוֹלַנְד, which already appears on p1 and p13. The letters are unchanged.)",
+        "p3: בְּסָאקוּלְנְד → בְּסַאקוֹלַנְד (Made the proper name's vocalization consistent)",
+        "p4: סַאקּוֹלַנְד → סַאקוֹלַנְד (Made the proper name's vocalization consistent)",
+        "p10: לְסָאקוֹלֵנְד → לְסַאקוֹלַנְד (Made the proper name's vocalization consistent)",
+        "p11: סַאקּוֹלְנָד → סַאקוֹלַנְד (Made the proper name's vocalization consistent)",
+        "p14: בְּסָאקוּלֵנְד → בְּסַאקוֹלַנְד (Made the proper name's vocalization consistent)"
+      ]
+    },
+    {
+      "slug": "storyweaver-20206-etz-hamango",
+      "title": "עץ המנגו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 6,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "268e88c8e72d04e119e972bde5923c72f8c1518e"
+    },
+    {
+      "slug": "storyweaver-20378-eich-machnisim-mishchat-shinaim-lashforferet",
+      "title": "איך מכניסים משחת שיניים לשפורפרת?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 37,
+      "verdict": "fixed",
+      "letterIssues": [
+        "Pages 4, 8 and 11: text uses ״ (gershayim) in ד״ר and כס״מ, while textNikud uses a plain \" (ASCII double quote) — This difference was already in the files and was not reported. It does not change the letters. Left as is."
+      ],
+      "notes": "Pages 7 and 9 have no textNikud. Page numbers are page-array indices. Fixes were applied by a script that changes only niqqud marks, and I checked that letters are identical after stripping niqqud. The shared scratchpad fix.js was overwritten by another parallel agent's script, so I moved my script to the scratchpad/agent9books folder. | I checked all 37 changed words against the baseline and they are correct. That includes שְׁפוֹרְפָרוֹת for tubes, תִּנְזֹל, וְהַקָּצֶה, מֵיכָל, מֶנְטָה and לְךָ (which matches the second לְךָ in the same sentence). Pages 7 and 9 have no textNikud field in either the baseline or the current file, so the strip check is fine there. Two minor inconsistencies were left as is: the name appears as both שֶׁיְיפַיְילְד and שַׁיְיפֶּיְילְד, and the singular appears as both שְׁפוֹרְפֶרֶת and שְׁפוֹרְפֶּרֶת (dagesh after shva nach).",
+      "nikudHash": "6d0e8a88c3dfbc100cbc0088429194218c0896f9",
+      "letterFixes": [
+        "p2: שינייים / שִׁינַּיִיִיִם → שיניים / שִׁינַּיִים (Typo: one yod too many.)",
+        "p1: שיערות / שְׂיעָרוֹת → שערות / שְׂעָרוֹת (Wrong spelling: שְׂעָרוֹת has no yod, even in full spelling.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-20569-mahboim",
+      "title": "מחבואים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 4,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "e3309f065ab807df024d5ea6cd374fa70a24af66"
+    },
+    {
+      "slug": "storyweaver-208-too-many-bananas",
+      "title": "יותר מדי בננות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 26,
+      "wordsFixed": 49,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All first-pass changes are correct. This includes בְּשֵׁלוֹת, בְּעָלֶה (meaning a leaf), the definite article in לַסּוֹחֲרִים/לַפָּרוֹת/לַכּוֹהֵן, the construct form חַלְוַות, שִׁיבָּאנָה, and the added niqqud on the names.",
+      "nikudHash": "39c356b22c9c8999dde595e5ad131ab9ab061123"
+    },
+    {
+      "slug": "storyweaver-21528-maahalim-ve-tzvaim",
+      "title": "מאכלים וצבעים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 14,
+      "verdict": "needs-human",
+      "letterIssues": [],
+      "notes": "Page 9 name רְאֵמוֹ (probably Ramu) was left as is because there is no originalText to confirm the pronunciation. | The name on page 9 was changed to רָאמוּ (Ramu), but there is no originalText to confirm the pronunciation. The stray space on page 9 is a letter-level problem.",
+      "nikudHash": "b87a258c278cd79744b4582e435131be17d924f8",
+      "letterFixes": [
+        "p9: ה גויאבות / הַ גּוּיָאבוֹת → הגויאבות / הַגּוּיָאבוֹת (There was a stray space between the definite article and the noun.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-21602-watch-out-the-tiger-is-here",
+      "title": "זהירות! הטיגריס כאן!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's changes are correct. I left the sound effects (קָהאוּ, אוֹוֹוֹוֹ, אֲהַוֵּון) vocalized as they are.",
+      "nikudHash": "68717a920660dbff0d82b1c05226fdc87aad6ef0"
+    },
+    {
+      "slug": "storyweaver-21618-wild-cat-wild-cat",
+      "title": "חתול בר! חתול בר!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 8,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "0e31ef05ce04d95e1a390ab771dc8d73682ca187"
+    },
+    {
+      "slug": "storyweaver-217398-zman-ha-abirot",
+      "title": "זמן האבירות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Pages 4,5,8,12,13 have no textNikud. | I left the mappiq in the name תִּינְאָמָהּ (page 0) and in the last laugh חָהּ (page 6). They could be intentional phonetic spellings. Pages 4, 5, 8, 12 and 13 have no text.",
+      "nikudHash": "52c52c889009ed21ffcd3de315b57fd6c8bdb73b"
+    },
+    {
+      "slug": "storyweaver-231739-hanamnaf-hakarnov-vehadomer",
+      "title": "הנָמְנַף, הקַרְנוּבָּה והדּוֹמֵר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 32,
+      "verdict": "needs-human",
+      "letterIssues": [],
+      "notes": "Made-up hybrid names (נַמְנַף etc.) were kept as vocalized, except where the article was wrong. | The author's partial niqqud in the text field writes the made-up name as קַרְנְמֵרָהּ with a mappiq. By grammar a noun like this should end in ה without a mappiq. I kept the author's form, so a human should confirm whether to drop the mappiq. קַרְנַפִּית (p1/p3) and קַרְנָפִית (p13) are also vocalized inconsistently, and I left both as they are. All of the first proofreader's fixes are verified as correct.",
+      "nikudHash": "57ca0298ac8ec58d0bcfb023184fa45190e33b15",
+      "letterFixes": [
+        "p9: אמר דובל'ה בכעס\" ואני / בְּכַעַס\" וַאֲנִי → אמר דובל'ה בכעס, \"ואני / בְּכַעַס, \"וַאֲנִי (The opening quote was misplaced, so I moved it to open the resumed speech and added a comma.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-23659-ha-meil-shel-yosef",
+      "title": "הַמְּעִיל שֶׁל יוֹסֵף",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 1,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "text equals textNikud; ktiv haser niqqud is correct throughout. No changes. | The rest of the niqqud is correct short spelling (ktiv haser) throughout.",
+      "nikudHash": "d1d77830682361f20bdf91f275f5fea9016220d6"
+    },
+    {
+      "slug": "storyweaver-23818-tzvaim-ahuvim",
+      "title": "צְבָעִים אֲהוּבִים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 11,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The 'text' field of pages 5 and 7 has its own niqqud, which differs from textNikud (e.g. שֶׁסִיְּימוּ, הַמָקוֹם with a missing dagesh, לְאַחֵר). It was not edited, per the rules. | The first-pass changes are correct: אֶחָד, לְאַחַר, and the holam moves.",
+      "nikudHash": "2362856b497cac8065ca5080c20835134a4b1304"
+    },
+    {
+      "slug": "storyweaver-248117-too-big-too-small",
+      "title": "גדולה מדיי! קטנה מדיי!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 14,
+      "verdict": "needs-human",
+      "letterIssues": [],
+      "notes": "The niqqud is correct. The letter and spacing typos listed above need a human edit.",
+      "nikudHash": "85715f4ee58b2039b7166cf73048744c4d2f9d9b",
+      "letterFixes": [
+        "p0: להרים או תך / לְהָרִים אוֹ תַּךְ → להרים אותך / לְהָרִים אוֹתָךְ (The word אותך was split by a space. The niqqud is feminine because the line addresses Shani.)",
+        "p0: מדיי ! \" / מִדַּיי ! \" → מדיי!\" / מִדַּיי!\" (Removed stray spaces before the ! and the closing quote.)",
+        "p1: מדיי! \" → מדיי!\" (Removed a stray space before the closing quote, in both fields.)",
+        "p2: מדיי! \" → מדיי!\" (Removed a stray space before the closing quote, in both fields.)",
+        "p3: מדיי! \" → מדיי!\" (Removed a stray space before the closing quote, in both fields.)",
+        "p4: באותו בזמן / בְּאוֹתוֹ בַּזְּמַן → באותו זמן / בְּאוֹתוֹ זְמַן (The extra ב made the phrase ungrammatical.)",
+        "p7: בגודל בנכון / בְּגוֹדֶל בַּנָּכוֹן → בגודל הנכון / בְּגוֹדֶל הַנָּכוֹן (The wrong prefix letter was used. The phrase needs the definite article ה.)",
+        "p12: בגודל ה מושלם / בְּגוֹדֶל הַ מּוּשְׁלָם → בגודל המושלם / בְּגוֹדֶל הַמּוּשְׁלָם (The article ה was split from its word by a space.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-24828-scratch-scratch-scratch",
+      "title": "גרד! גרד! גרד!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 10,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The name is vocalized both מֵאַנּוּ and מֵאֲנוּ. Both are valid, so I left both. | The earlier shuruk fixes are correct. Their change from ...נּוֹ to ...נּוּ was right. I also corrected how the name itself is vocalized.",
+      "nikudHash": "50808c8ad493779ce7903371b86e9040f15c51ae"
+    },
+    {
+      "slug": "storyweaver-253724-my-best-friend",
+      "title": "הַחֲבֵרָה הֲכִי טוֹבָה שֶׁלִּי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No errors found. p9 'text' is not identical to textNikud, and no change was needed there. | Nothing was changed and I found no errors. The book uses ktiv haser forms (לִישֹׁן, בַּבֹּקֶר, תַּחֲזֹר, מְרֻצָּה), which are valid.",
+      "nikudHash": "bf3b1635e87a11fcc39e2683195fd46e7075a1c7"
+    },
+    {
+      "slug": "storyweaver-258-goodnight-tinku",
+      "title": "לילה טוב, טינקו!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 28,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "c369cb2bfa9e01b130971d187a5ba1b1f1295bcc"
+    },
+    {
+      "slug": "storyweaver-26650-the-magic-block",
+      "title": "הקוביה הקסומה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 18,
+      "wordsFixed": 40,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the previous editor's fixes were verified. The vocalizations חוֹמָרִים and הַחוֹמָרִים (instead of the haser form חֳמָרִים) are acceptable because the vav is written.",
+      "nikudHash": "9813d6b903ee00dacfbc19a402c2300ecdb9ef0c"
+    },
+    {
+      "slug": "storyweaver-26702-the-very-wiggly-tooth",
+      "title": "השן שמתנדנדת ומתנדנדת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 9,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Both gender fixes are correct: שֶׁלָּךְ, because Chunnu is speaking to her sister, and בִּשְׁבִילְךָ, because Bunu is speaking to Musa, who is male.",
+      "nikudHash": "7eb6b6271427e0c5d40560718d086b016777fe6a"
+    },
+    {
+      "slug": "storyweaver-27121-when-will-amma-be-back",
+      "title": "מתי אמא תחזור?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 42,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All of the earlier changes are correct. Two optional points I left as they are: פַּאפָּאדֶם has the dagesh on p4 but not on p10, and the book uses the modern spelling מָה before עֲשִׂיתֶם.",
+      "nikudHash": "e733ecf3bcc4ff94105e4a4fabd421305efd07fa"
+    },
+    {
+      "slug": "storyweaver-28121-look-up",
+      "title": "תסתכלו למעלה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 16,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Pages 1, 3, 5 and the other odd pages up to 21 are empty. | All changes are correct, including the imperatives מִצְאוּ and פִּקְחוּ and the construct form פַּנְסֵי. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "e26e3652e03a2d34134eec73db29305c35bd5f42"
+    },
+    {
+      "slug": "storyweaver-283-annual-haircut-day",
+      "title": "יום התספורת השנתי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 19,
+      "wordsFixed": 23,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "שֶׁרִינִיוָואס follows the vocalization already used on other pages of this book.",
+      "nikudHash": "34bd9e6e3d767b971f8a791b59ce63df72bf4a23"
+    },
+    {
+      "slug": "storyweaver-28736-maths-at-the-mela",
+      "title": "חשבון ביריד",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 27,
+      "verdict": "fixed",
+      "letterIssues": [
+        "Onomatopoeia spelled with three vavs — The long spelling is deliberate for the train whistle, so I kept the letters."
+      ],
+      "notes": "I checked every change against originalText (gender of Sir and Leelu, mela, the names) and all of them are correct. I found no other errors.",
+      "nikudHash": "d040b333038f531781dfd22956dab4746243aaa5",
+      "letterFixes": [
+        "p1: טֻוֻּווּט (textNikud) → טוּוּוּט (textNikud) (Niqqud only: the odd qubbutz/dagesh marks on the onomatopoeia now match the 'text' field, which already had shuruk on each vav. The letters did not change.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-319930-wise-poeple-of-helm-move-the-mountain",
+      "title": "חכמי חלם מזיזים את ההר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 3,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "218bfb6aea31490999e3b99d13176c66b8c9e7d6"
+    },
+    {
+      "slug": "storyweaver-321931-afifonim",
+      "title": "עפיפונים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 6,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "ade52092b0293353fade45ee49de2b4d67dfca60"
+    },
+    {
+      "slug": "storyweaver-332-bheema-the-sleepyhead",
+      "title": "בהימה הישנוני",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 25,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All changes were checked and are correct (Ramu, Gauri, קִרְקֵר, holam and shuruk fixes).",
+      "nikudHash": "aaf9885a2dae3b73a8cd23a475daab2b2a296a9a",
+      "letterFixes": [
+        "p5: textNikud: פְּצִיייי → textNikud: פְּצִ'יייי (Added the missing geresh so textNikud matches text 'פצ'יייי'. The two fields now agree.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-351358-how-many",
+      "title": "כמה יש?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Both changes are correct.",
+      "nikudHash": "bc6c47199a2fa19d896ba3c83895108e4e262f85"
+    },
+    {
+      "slug": "storyweaver-356-lost-and-found",
+      "title": "אבד ונמצא",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 8,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "90a673cca516fd1d0401701f39f17c62e4400ad2"
+    },
+    {
+      "slug": "storyweaver-369-the-red-raincoat",
+      "title": "מעיל הגשם האדום",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 9,
+      "wordsFixed": 21,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "ff78acc56df33ca699f34920b6b094b9923ebbd8"
+    },
+    {
+      "slug": "storyweaver-44659-meera-and-ameera",
+      "title": "מירה ואמירה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 2,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "da716fca9542748fd57f74d2856f07872989942c"
+    },
+    {
+      "slug": "storyweaver-452970-keshet-bakfar",
+      "title": "קשת בכפר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 6,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "The first-pass changes are correct: קוּבּוּלָה is now consistent, שֶׁנָּנוֹ, and shuruk/holam moved onto the vav.",
+      "nikudHash": "b14c8b7cdc8834560f70be7325371594a2f6405a"
+    },
+    {
+      "slug": "storyweaver-49-my-fish-no-my-fish",
+      "title": "הדג שלי! לא, הדג שלי!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 13,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's fixes are correct (Munia, אַל, מָשַׁךְ, פְּלָאשׁ, צ'וֹרוֹ consistency).",
+      "nikudHash": "2a3bbd42efe3dae3e3c7902a42d70315d88c0700"
+    },
+    {
+      "slug": "storyweaver-551433-anansi-haatslan",
+      "title": "אנאנסי העצלן",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 30,
+      "verdict": "fixed",
+      "letterIssues": [
+        "Pages 3 and 4 mix straight (\") and curly (”) quotation marks. — This is the source's style and not a letter error. I fixed only the missing or misplaced quotes and left the mixed style as it is."
+      ],
+      "nikudHash": "13b50e33e4fafec4e9a5d4ef95b5240c8e927157",
+      "letterFixes": [
+        "p4: ואת הצד השונים שני / וְאֶת הַצַּד הַשּׁוֹנִים שֵׁנִי → ואת הצד השני / וְאֶת הַצַּד הַשֵּׁנִי (Stray word הַשּׁוֹנִים removed. Now matches the parallel phrase on page 3 (the report called this p5, 1-based).)",
+        "p6: משכו את את קוריו / מָשְׁכוּ אֶת אֶת קוּרָיו → משכו את קוריו / מָשְׁכוּ אֶת קוּרָיו (Duplicated word removed (the report called this p7, 1-based).)",
+        "p3: לעזור במשהו. אבל ברשותכם → לעזור במשהו. ”אבל ברשותכם (Opening quote was missing before Anansi's reply (both fields).)",
+        "p3: צריך לעשות. ” ענה → צריך לעשות.” ענה (Stray space before the closing quote (both fields).)",
+        "p4: חזיר היבלות, הסיר שלי → חזיר היבלות, ”הסיר שלי (Opening quote was missing for the warthog's speech (both fields).)",
+        "p4: מאוחר יותר, ”ענה → מאוחר יותר,” ענה (Closing quote was misplaced; moved it to before the space (both fields).)",
+        "p1: מאוחר יותר. \" → מאוחר יותר.\" (Stray space before the closing quote (both fields).)"
+      ]
+    },
+    {
+      "slug": "storyweaver-566377-hakhaverim-shenaasu-oyvim",
+      "title": "החברים שנעשו אויבים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 10,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "61d008cfd87632e2986a08b9b2c83b13ef53fbda"
+    },
+    {
+      "slug": "storyweaver-567941-bo-khatul",
+      "title": "בוא, חתול!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "Pages 4, 11 and 12 have no text. The rest is correct. | No changes, and none are needed. Pages 4, 11 and 12 have no text (textNikud is undefined), which matches the baseline.",
+      "nikudHash": "e90298b521d2dc56a22c5ac2c9c8dce60c9130e8"
+    },
+    {
+      "slug": "storyweaver-575688-honi-hameagel",
+      "title": "חוני המעגל",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 21,
+      "wordsFixed": 12,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's fixes are correct. Letters match the baseline.",
+      "nikudHash": "2ac1a589923e5d8f2d05b9296ea09148572d7e28",
+      "letterFixes": [
+        "p17: מודים מתנצלים / מוֹדִים מִתְנַצְּלִים → מודים ומתנצלים / מוֹדִים וּמִתְנַצְּלִים (The conjunction vav was missing between two coordinated verbs.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-576201-kadima",
+      "title": "קָדִימָה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 0,
+      "verdict": "needs-human",
+      "letterIssues": [],
+      "notes": "The first pass made no niqqud changes, and the niqqud is fine. The only problem is the gender agreement on page 1, which is a letter issue and needs a human.",
+      "nikudHash": "7bc78962d1b9dc33ce44f82401368ccd08795ced",
+      "letterFixes": [
+        "p1: גַּרְבַּיִם מְשֻׁמָּשׁוֹת → גַּרְבַּיִם מְשֻׁמָּשִׁים (גרביים is masculine, so the adjective must be masculine plural. Both text and textNikud carry niqqud on this page, so both were edited)"
+      ]
+    },
+    {
+      "slug": "storyweaver-576205-mar-atslan-ayef",
+      "title": "מר עצלן עייף",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 15,
+      "verdict": "needs-human",
+      "letterIssues": [],
+      "notes": "Pages 12-13 are empty. | The letter typos on p3 and p10 make the niqqud there meaningless, so a person needs to fix the letters. The fragments 'ה' on p9 (in the owl call) were left without vowels. Pages 12-13 are empty.",
+      "nikudHash": "a052ae3936c6ec2120036db3ee05148288a41ca0",
+      "letterFixes": [
+        "p3: לחשטב / לְחַשְׁטֵב → לחשוב / לַחְשׁוֹב (Typo for לחשוב ('to think').)",
+        "p10: שהענף השה / הַשֶּׂה → שהענף הזה / הַזֶּה (Typo: ז was replaced by ש, so it read as 'the lamb'.)",
+        "p2: שאשן / שֶׁאִשַׁן → שאישן / שֶׁאִישַׁן (The yod is missing in this ktiv male future form of ישן. Fixed on pages 2, 4, 6 and 8, which repeat the same sentence.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-582996-hatarnegolet-ve-marbe-haraglayim",
+      "title": "התרנגולת ומרבה הרגליים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 22,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Edit tool could not match the file's non-NFC mark order (dagesh before shva), so this replacement was done with an exact-codepoint node replace; the letters-only check passes.",
+      "nikudHash": "681e64d1a357e7ee9ec2e0f3d1df00f1716a4b94",
+      "letterFixes": [
+        "p2: \\\\\\nהם החליטו להמשיך... → הם החליטו להמשיך... (Removed the stray leading backslash and newline from both text and textNikud.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-60809-the-lion-s-howdah",
+      "title": "האפיריון של האריה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "e895251a2a19220f9f01b23d437f263138f6823e"
+    },
+    {
+      "slug": "storyweaver-60812-the-roti-roll",
+      "title": "המסע של הרוטי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 5,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All edits are correct: Kamal (קָמַל, a phonetic name and acceptable), הַפִּיפָּל (pipal tree), לָרוֹטִי, לֶאֱכוֹל.",
+      "nikudHash": "9b4602053d689552b195b848518ffe4fe2417e93"
+    },
+    {
+      "slug": "storyweaver-61394-get-down-rocky",
+      "title": "רד משם, רוקי!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 22,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "3836b85b54a40a3a3a6254a028eeb9f496685d2a"
+    },
+    {
+      "slug": "storyweaver-622785-shiv-at-hatsva-im-shel-hakeshet",
+      "title": "שִׁבְעַת הַצְּבָעִים שֶׁל הַקֶּשֶׁת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 16,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [
+        "Page 12: 'לָמָּה יֵשׁ צֶבַע אִינְדִּיגוֹ בַּצִּיּוּר?' differs from the 'מָה X בַּצִּיּוּר הַזֶּה?' pattern on the other pages — The sentence is grammatical as written. The book has no originalText to check against, and the suggested 'מה יש צבע אינדיגו' does not read well either; 'איפה' might be meant. I could not tell what was intended, so I left it as is."
+      ],
+      "notes": "No errors found. The niqqud is correct; colour names are in ktiv haser (אָדֹם, כָּתֹם and so on), which is valid. Each page's text and textNikud are identical. | The niqqud is correct, and ktiv haser spellings of the colour names are valid.",
+      "nikudHash": "fb16b103c6a03d428f789e2a439af7443656630d",
+      "letterFixes": []
+    },
+    {
+      "slug": "storyweaver-62772-tell-me-what-is-a-drone",
+      "title": "ספרו לי, מה זה רחפן?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All changes are correct and I found no other errors.",
+      "nikudHash": "6e9725c2da448e8ad618ae485d0e52cb1e589da9"
+    },
+    {
+      "slug": "storyweaver-633082-phila-bayaar-hakadosh",
+      "title": "פְּהִילַה ביער הקדוש",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 1,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Only page 24 has text/textNikud; other 25 pages are empty. | Only page 24 has text.",
+      "nikudHash": "6f3cb55c395551e8a293cdfb4ec1a68c095b0b44",
+      "letterFixes": [
+        "p24: מגפיים צהובות / צְהוּבּוֹת → מגפיים צהובים / צְהוּבִּים ('מגפיים' is masculine, so the adjective must be 'צהובים'. This also removes a wrong dagesh in the vav.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-633275-sringeri-srinivas-lomed-litskhok",
+      "title": "סְרִינְגֵּרִי סְרִינִיוָאס לוֹמֵד לִצְחֹק",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 19,
+      "wordsFixed": 26,
+      "verdict": "fixed",
+      "letterIssues": [
+        "p17: 'הִלֵּם הִתְחִילוּ לְצַחְקֵק' – הלם looks like a typo — There is no originalText, and the intended subject is unclear (הם, הילדים, the people?). I am not confident enough to choose, so it needs human review against the StoryWeaver English source.",
+        "p14: spaces before periods ('חִי חִי .', 'גָּדוֹל .') — Not reported. This is only a punctuation spacing issue, so I left it to avoid changing the word tokens."
+      ],
+      "notes": "The page's 'text' field has niqqud that differs from textNikud, so per the rules only textNikud was edited. The 'text' field has the same errors: לִשְׂדֵה, הַסֵּפֶר, הָרֶגֶשׁ, וּבָּנָנוֹת and מְקַפֵּ. | I checked every changed word and every fix is correct. The 'text' field on non-identical pages still has the old errors (חֲלָווֹת, הַסֵּפֶר, and others); per the rules it was not touched.",
+      "nikudHash": "1f497dae7afeaf304249066dc2b3e6f1489c7d7d",
+      "letterFixes": [
+        "p0: חֲלָווֹת בָּנָנוֹת מְעֻלֶּה (text) / חַלְווֹת בָּנָנוֹת מְעֻלֶּה (textNikud) → חַלְווֹת בָּנָנוֹת מְעֻלּוֹת (both) (Gender and number agreement: the plural feminine noun needs מעולות. The text field's niqqud is also unified with textNikud and with page 5 (חַלְווֹת).)",
+        "p1: בָּעוֹלָם.כְּשֶׁהוּא → בָּעוֹלָם. כְּשֶׁהוּא (Missing space after a period.)",
+        "p2: פָּרְחוּ כְּשֶׁ סְרִינְגֵּרִי; text also had כְּשֶׁסְרִינְגֵּרִי at the start → פָּרְחוּ כְּשֶׁסְּרִינְגֵּרִי; text start changed to כְּשֶׁסְּרִינְגֵּרִי (Removed a stray space after the prefix. The dagesh in the text field now matches textNikud.)",
+        "p4: לִשְׂדֵה שֶׁלּוֹ (text only) → לַשָּׂדֶה שֶׁלּוֹ (The text field's niqqud was wrong (construct form). It now matches textNikud.)",
+        "p9: מְקַפֵּ ץ → מְקַפֵּץ (Stray space inside the word.)",
+        "p11: לִ רְדֹּף → לִרְדֹּף (Stray space inside the word.)",
+        "p14: וּבָּנָנוֹת (text only) → וּבָנָנוֹת (Wrong dagesh after shuruk vav. Now matches textNikud.)",
+        "p15: לִצְחֹק.הַצְּחוֹק → לִצְחֹק. הַצְּחוֹק (Missing space after a period.)",
+        "p16: לְהַקְשִׁיב. צְחוֹק הָיָה → לְהַקְשִׁיב. הַצְּחוֹק הָיָה (Missing definite article. Every other sentence in this parallel series starts with הַצְּחוֹק.)",
+        "p17: הַסֵּפֶר בַּמִּסְפָּרָה (text only) → הַסַּפָּר בַּמִּסְפָּרָה (The text field had the niqqud for 'the book' instead of 'the barber'. Now matches textNikud.)",
+        "p18: הוּא הָרֶגֶשׁ שָׂמֵחַ (text) / הוּא הִרְגִּשׁ שָׂמֵחַ (textNikud) → הוּא הִרְגִּישׁ שָׂמֵחַ (The yod in הרגיש was missing. It is required even in ktiv haser because it is a hif'il form. The text field's niqqud was also wrong.)",
+        "p18: לִילָדָיו.סְרִינְגְּרִי סְרִינִיוָוָאס → לִילָדָיו. סְרִינְגֵּרִי סְרִינִיוָאס (Missing space after a period, an extra vav in the name, and the name's niqqud is now the same as on every other page.)",
+        "p18: זוֹעֵף פְּעָמִים → זוֹעֵף לִפְעָמִים (Missing ל: the intended meaning is 'still frowns sometimes'.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-635131-nokpante",
+      "title": "נוֹקְפָּאנְטֶה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 14,
+      "wordsFixed": 48,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Edits made via an in-place raw-text replacement script restricted to textNikud lines (Edit tool could not match because of combining-mark order differences); skeleton (letters/punctuation) verified identical. 'text' fields contain only partial niqqud, so they were not touched. | All the other earlier fixes were checked and are correct: holam moved onto the vav, kubutz changed to shuruk, the names נוֹרוֹ and נוֹקְפַּאנְטֶה, שִׁבְעַת, לְךָ, כְּשֵׁבֶט, אֵינְסְפּוֹר, הַפּוֹלְקְלוֹר and יוּזְמָה. The letter skeleton is the same as the baseline.",
+      "nikudHash": "884985ea573aff8d97786c11d3f5f57cf93a35f5",
+      "letterFixes": [
+        "p6: אמרה בת הים אמרה לנורו / אָמְרָה בַּת הַיָּם אָמְרָה לְנוֹרוֹ → אמרה בת הים לנורו / אָמְרָה בַּת הַיָּם לְנוֹרוֹ (The word אמרה was duplicated)",
+        "p6: על על אומץ / עַל עַל אוֹמֶץ → על אומץ / עַל אוֹמֶץ (The word על was duplicated)",
+        "p10: החל כל הכפרים / הֵחֵל כָּל הַכְּפָרִים → החלו כל הכפרים / הֵחֵלּוּ כָּל הַכְּפָרִים (The verb must agree with the plural subject הכפרים)",
+        "p0: הַמִּיטֵּאִים / * מִיטָאִים → הַמִּיטֶאִים / * מִיטֶאִים (Unified the vocalization of Mite'im. I used the segol form because the author marked it explicitly in text (המיטֶאים) and it matches the Garo word 'Mite'.)",
+        "p2: הַמִּיטָאִים → הַמִּיטֶאִים (Made the vocalization of Mite'im consistent)",
+        "p3: הַמִּיטֵאִים → הַמִּיטֶאִים (Made the vocalization of Mite'im consistent)",
+        "p5: לְמִיטֵאִים → לַמִּיטֶאִים (Made the vocalization consistent, and the guests are for the specific Mite'im, so the article (patah + dagesh) is needed. The letters are unchanged.)",
+        "p6: הַמִּיטָּאִים → הַמִּיטֶאִים (Made the vocalization of Mite'im consistent)",
+        "p7: הַמִּיטָאִים → הַמִּיטֶאִים (Made the vocalization of Mite'im consistent)",
+        "p10: הַמִּיטָאִים → הַמִּיטֶאִים (Made the vocalization of Mite'im consistent)",
+        "p13: מָגָהָאלָאיָה → מֶגָהָאלָאיָה (Unified the name Meghalaya to the form used on p12 (Megha-))",
+        "p13: יכל / יָכֹל → יכול / יָכוֹל (Standard full spelling)"
+      ]
+    },
+    {
+      "slug": "storyweaver-642485-yemey-shuk",
+      "title": "ימי שוק",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 10,
+      "wordsFixed": 24,
+      "verdict": "fixed",
+      "letterIssues": [
+        "pp. 6, 7 and 13: the foreign names קהואולאו and פואונקט have no niqqud — Their pronunciation is uncertain, so I did not guess niqqud for them.",
+        "p1: the 'text' field has partial niqqud (הוֵנג וֵנג) — Only niqqud is involved. The letters match textNikud, so the two fields are still in sync. Not a letter-level error."
+      ],
+      "notes": "The first proofreader's edits are correct (בַּשָּׁבוּעַ, יְמֵי, הַשִּׁבְעָה, הַוֵּנְג, etc.). The 'text' field has partial niqqud of its own; I left it unchanged.",
+      "nikudHash": "f8c0dd6b11dfea5d51cc86e78ea2495b7a4b1418",
+      "letterFixes": [
+        "p7: ןלכפרים / ןלכפרים (no niqqud) → ולכפרים / וְלִכְפָרִים (The word started with final nun ן instead of vav. Niqqud added to the corrected word.)",
+        "p13: על לו השנה / עַל לוֹ הַשָּׁנָה → על לוח השנה / עַל לוּחַ הַשָּׁנָה (The letter ח was missing from לוח.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-642622-hadorban-vehapil",
+      "title": "הדורבן והפיל",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 11,
+      "verdict": "fixed",
+      "letterIssues": [
+        "p7: the page has empty text and no textNikud — The page is empty and there is no originalText to translate from. I cannot invent content.",
+        "p11: 'גירסאות' (ktiv male) and 'גרסאות' appear on the same page (not reported) — Both spellings are acceptable and this was outside the reported issues, so I left it alone."
+      ],
+      "notes": "All the earlier fixes were verified. On p9, the article in לָעַכְבְּרוֹשִׁים (generic use) is acceptable and was left.",
+      "nikudHash": "7c29d7da36b2c1de93cf4080bb2331193b6ef94c",
+      "letterFixes": [
+        "p12: על מגינת / עַל מְגִינַּת → על מדינת / עַל מְדִינַת (Typo: 'מדינת מגהאלאיה' (the state of Meghalaya).)",
+        "p12: את הגיסאות / אֶת הַגִּיסָאוֹת → את הגרסאות / אֶת הַגִּרְסָאוֹת (Typo: the people shared their versions of the folk tale.)",
+        "p10: בכל ארבעת התמונות / בְּכָל אַרְבַּעַת → בכל ארבע התמונות / בְּכָל אַרְבַּע ('תמונות' is feminine, so the number should be 'ארבע', not the masculine construct 'ארבעת'.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-642897-apjon-apjon",
+      "title": "אָפְּג'וֹן אָפְּג'וֹן",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 7,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "d8deb50bb6b95c2a9d95512c83492c02d04544f7",
+      "letterFixes": [
+        "p6: על מגינת / עַל מְגִינַּת → על מדינת / עַל מְדִינַת (Typo: ג was written instead of ד. The word means 'state of Meghalaya'.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-643108-yadayim-smekhot",
+      "title": "ידיים שמחות",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 17,
+      "wordsFixed": 19,
+      "verdict": "needs-human",
+      "letterIssues": [
+        "Pages 6 and 15 (0-based) have empty text and no textNikud — These are empty pages with no source content. Writing text for them would mean inventing it.",
+        "Pages 1, 3, 8, 17, 18: textNikud with niqqud stripped does not equal text — This was already the case before my edits. The text field itself carries niqqud on some proper names (סוּנג, לַארְנָאִי, רוֹילין and others), and those pages were not part of the reported issues."
+      ],
+      "notes": "The village name is vocalized inconsistently (לָאַרְנַאִי / לַארְנַאי / לָאַרְנַאי); left as phonetic variants. | All of the first proofreader's changes are correct. The remaining problems are in the letters, so I only reported them. The 'text' field on some pages has partial niqqud that differs from textNikud, so I left it untouched.",
+      "nikudHash": "7ef863b12b901f6e9bbfe548e63dcacf5cb92b22",
+      "letterFixes": [
+        "p2: לנסו / לִנְסוֹ → לנסות / לִנְסוֹת (The final ת was missing from the infinitive.)",
+        "p4: אומר טורי / אוֹמֵר טוֹרִי → אומר דורי / אוֹמֵר דּוֹרִי (The name was a typo. The character list on page 0 has דורי, and no character named טורי exists.)",
+        "p12: איך זה שאנחנו... / אֵיךְ זֶה שֶׁאֲנַחְנוּ... → \"איך זה שאנחנו... / \"אֵיךְ זֶה שֶׁאֲנַחְנוּ... (Added the missing opening quotation mark. The closing quote already exists.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-646422-myntdu",
+      "title": "מִינְטְדוּ",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 36,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "I checked every first-pass change and all of them are correct: וְזָרַם, שָׂמְחָה, וְלַכְּפָר, כְּשֶׁפַּעַם, מִגְּדַת, נֶהְדָּר, אֵלַי, שָׁזְרָה, צִבְעוּ, פְּנָאר and הַפּוֹלְקְלוֹר. The optional dagesh in מִינְטְדּוּ (pages 2 and 12) is left as it is.",
+      "nikudHash": "595feaaf0d8b8c007b3de4ccd4fba0d75b76248c"
+    },
+    {
+      "slug": "storyweaver-647406-hamanginot-shel-kungthung",
+      "title": "המנגינות של קוּנְגְתְהוּנְג",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 21,
+      "wordsFixed": 38,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "Names (Shampang/Shempang, Kirpang, Kahasi) are vocalized inconsistently across pages, but they were left as is because they are phonetic transliterations. Pages 0 and 19 have no textNikud. | I checked every one of the proofreader's changes and all are correct. The character names (Shampang/Shempang, Pindap/Pindap) are vocalized inconsistently, but they are phonetic transliterations, so I left them.",
+      "nikudHash": "f62694ca3204a2ede8a5e5adad5148c55b5428d4",
+      "letterFixes": [
+        "p20: שהוא באיזור / שֶׁהוּא בָּאֵיזוֹר → שהוא באזור / שֶׁהוּא בָּאֵזוֹר (Academy spelling is אזור, without a yod)",
+        "p22: תרבותי באיזור / תַּרְבּוּתִי בְּאֵיזוֹר → תרבותי באזור / תַּרְבּוּתִי בְּאֵזוֹר (Same misspelling on the glossary page, fixed so both pages match)"
+      ]
+    },
+    {
+      "slug": "storyweaver-650966-hayalda-haktana-shelo-hefsika-litskhok",
+      "title": "הילדה הקטנה שלא הפסיקה לצחוק",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 21,
+      "wordsFixed": 31,
+      "verdict": "fixed",
+      "letterIssues": [
+        "page 0 'text' field contains embedded niqqud in the name (גוּנְדָפָּן) — The letters are already correct and it was not reported. I left it as is so that only the requested name niqqud changed."
+      ],
+      "notes": "Partial niqqud in 'text' field differs from textNikud, so text was not touched. | I checked every change against the baseline and all of them are correct, including יָדַעַתְּ/עָשִׂית for female Ruti, וְשָׁכְחָה and חוֹמָרִים. The 'text' field holds unvocalized text with a few niqqud-marked names, so I did not touch it.",
+      "nikudHash": "c67e42ccf6d64a02db4fb389b16df3025eaf0bcb",
+      "letterFixes": [
+        "p11: להמציאמכונה / לְהַמְצִיאַמְכּוֹנָה → להמציא מכונה / לְהַמְצִיא מְכוֹנָה (Missing space between the words. Also fixed the niqqud of both words (no patach under the final aleph, no dagesh in kaf).)",
+        "p16: אחרי שהם סיימו לצחוק שאל שלומי \"ידעת שהרגע עשית התעמלות התעמלות?\" שאל שלומי. → אחרי שהם סיימו לצחוק, \"ידעת שהרגע עשית התעמלות?\" שאל שלומי. (The word התעמלות was duplicated and 'שאל שלומי' appeared twice. Fixed in both fields with matching niqqud.)",
+        "p4: textNikud: כְּשֶׁמַּר גּוֹנְדְּפָּן → textNikud: כְּשֶׁמַּר גּוּנְדָּפַּן (Made the teacher's name match its niqqud on page 0. The letters (גונדפן) were already the same in both places, so text did not change.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-651863-gesher-hashorashim",
+      "title": "גשר השורשים",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 18,
+      "wordsFixed": 51,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "Many systematic holam/kamatz-before-vav errors, fixed throughout. | I checked every change in the diff and they are all correct. A few spelling choices are acceptable and I left them alone: p15 בְּפִּינוּרְסוּלָה keeps the dagesh to show the foreign /p/ sound. The book spells the place name both מֵגְהָאלָאיָה (p17) and מֶגְהָאלָאיָה (p15, p16); both are fine phonetic spellings. The 'text' fields on p15 and p17 are not the same as textNikud, so I did not touch them.",
+      "nikudHash": "f6446fc78658e8dca8098d3c838294d3fbbd3fa6"
+    },
+    {
+      "slug": "storyweaver-651923-shir-bakhalal-kesarbai-kerkar",
+      "title": "שיר בחלל - קֵסַרְבָּאי קֶרקָאר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 15,
+      "wordsFixed": 28,
+      "verdict": "fixed",
+      "letterIssues": [
+        "Page 13: the song title \"ג'אאת קאהאאן הו\" is left mostly without niqqud and spelled with doubled alefs. Page 7 spells it differently (גַ'אָת קָהָאן הוֹ). — Foreign transliteration of a Marathi/Hindi song title. I'm not confident which spelling was meant, so I left it.",
+        "Several pages' text field already holds partial niqqud (e.g. p0 'כשקֵסַר', p5 'קֵסַרְבָּאי קֶרקָאר'), so stripped textNikud does not equal text on pages 0, 1, 5, 7, 9, 13 and 14. — This mismatch was already there and is outside the reported issues. My edits did not add any new mismatch."
+      ],
+      "notes": "No originalText for this book. Vowel-on-consonant-before-vav errors were fixed throughout. | I checked all 28 changed words against the baseline and every one is correct. I found no other niqqud errors. Removing the niqqud gives the same text as the baseline on every page.",
+      "nikudHash": "d5865798c9b97b7726f591ae24802cba7318fd4e",
+      "letterFixes": [
+        "p6: קַסְרֵבָאִי → קֵסַרְבָּאִי (Unified the singer's name to one niqqud. The spelling 'קסרבאי' was already the same on every page; only the vowels differed. Chose קֵסַרְבָּאִי (Kesarbai), the form the book's own text field uses on page 5 and the correct pronunciation.)",
+        "p7: קָסַרְבָּאִי ; קַסְרָבָאִי ; קַסְרְבָּאִי → קֵסַרְבָּאִי (x3) (Same unification.)",
+        "p12: קַסְרְבָאִי → קֵסַרְבָּאִי (Same unification.)",
+        "p13: קַסְרָבָאִי → קֵסַרְבָּאִי (Same unification.)",
+        "p14: קְסֵרָבָאִי קְרָקָאר → קֵסַרְבָּאִי קֶרְקָאר (Unified the first name, and the surname to קֶרְקָאר as on pages 5 and 13.)",
+        "p8: קַסֵּר (7 occurrences on pages 8-12) → קֵסַר (Unified the short name to קֵסַר, the vocalization the text field itself uses on page 0 and the correct pronunciation (Kesar). The letters did not change, so text and textNikud stay in sync.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-652225-atem-ken-atem",
+      "title": "אתם! כן, אתם!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 14,
+      "wordsFixed": 15,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Page 14 is empty (no textNikud). | Page 14 is empty. The טוּק consistency change is acceptable (טוֹק would also be valid). The edit was done by exact-codepoint node replace because the file's mark order is not NFC; the letters-only check passes.",
+      "nikudHash": "9e7e1eed4d8c5207b5c57ec380082e3f0bce8736",
+      "letterFixes": [
+        "p1: צריך ש תנערו / שֶׁ תְּנַעֲרוּ → צריך שתנערו / שֶׁתְּנַעֲרוּ (A stray space separated the prefix ש from the verb.)",
+        "p2: צריך ש תנשפו / שֶׁ תִּנְשְׁפוּ → צריך שתנשפו / שֶׁתִּנְשְׁפוּ (A stray space separated the prefix ש from the verb.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-652861-sipurim-lifney-hasheyna",
+      "title": "סִפּוּרִים לִפְנֵי הַשֵּׁנָה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 2,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The fix to אַחַר כָּךְ is correct and was applied to both text and textNikud.",
+      "nikudHash": "24276ff80ff50f367b1b3398d26dda1afe1b372a"
+    },
+    {
+      "slug": "storyweaver-654779-marbe-haraglayim-haofnati-vehamagniv",
+      "title": "הזחל האופנתי והמגניב",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 22,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "22 word changes in total. | All changes are correct, including לַזַּחַל with the article and נוֹקְשׁוֹת as a participle. With niqqud stripped, every page matches the baseline.",
+      "nikudHash": "69351993c56b349987645108de88c78d490f5bf2",
+      "letterFixes": [
+        "p6: מגפיו נוקשות / מַגָּפָיו נוֹקְשׁוֹת → מגפיו נוקשים / מַגָּפָיו נוֹקְשִׁים (Gender agreement: מגפיים is masculine)",
+        "p8: יום אחד זה יעבור ... רגליו\" אמרה השפירית / יוֹם אֶחָד ... → \"יום אחד זה יעבור ... רגליו\" אמרה השפירית / \"יוֹם אֶחָד ... (Added the missing opening quotation mark. The speech closes after רגליו but never opened)"
+      ]
+    },
+    {
+      "slug": "storyweaver-7263-brushing-is-no-fun",
+      "title": "לצחצח שיניים זה לא כיף!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 38,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "Page 10 has no text. | I checked every change in the diff and all of them are correct. Page 10 has no text.",
+      "nikudHash": "4880022f40d5dc0b2421ccb9e017f85d118afa91",
+      "letterFixes": [
+        "p3: אַאַאַפְּצִי → אַאַאַפְּצִ'י (The geresh was missing in textNikud. 'text' already has אאאפצ'י and the English is 'Aaaah-chhhooo', so it reads 'chi'. textNikud now matches text when the niqqud is stripped.)"
+      ]
+    },
+    {
+      "slug": "storyweaver-7960-hamilich-hashim-vihakiliv-harazi",
+      "title": "המלך השמן והכלב הרזה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "No niqqud errors found.",
+      "nikudHash": "7dbdcbe9b8f146b9eaaf44f91e52e63f5fcd027e"
+    },
+    {
+      "slug": "storyweaver-8040-colours-on-the-street",
+      "title": "צבעים ברחוב",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 22,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All 18 of the previous proofreader's changes were checked and are correct.",
+      "nikudHash": "bba35d67b8275776664d44b25262954d5c828fd0"
+    },
+    {
+      "slug": "storyweaver-82-i-want-that-one",
+      "title": "אני רוצה את זה!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 11,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All of the fixes are correct, including הַחוּם (brown) and סְמוּסוֹת.",
+      "nikudHash": "aae8d658d3a83e23dee2f57d347fe0a3a959b475"
+    },
+    {
+      "slug": "storyweaver-876-mouse-in-the-house",
+      "title": "עכבר בבית!",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 14,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All changes check out: מִשְּׂמֹאלֵךְ (feminine, addressed to Grandma), שָׁם with a shin dot, and וּמָחֲאָה.",
+      "nikudHash": "8a17f2d57ef3a893982a4cb6a1ac2d12d9a7490c"
+    },
+    {
+      "slug": "storyweaver-946-too-much-noise",
+      "title": "יותר מדי רעש",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 17,
+      "wordsFixed": 67,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "פֵּאאא was left as is (onomatopoeia). Page 16 לַיְּרִיד is correct (definite) and was kept. | I checked every change against the baseline and all of them are correct. Each page still matches the baseline once the niqqud is removed.",
+      "nikudHash": "cb9565942f012dcbd463b90feacb2b82f5a8c990"
+    },
+    {
+      "slug": "storyweaver-98-rani-s-first-day-at-school",
+      "title": "היום הראשון של רני בבית הספר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 6,
+      "wordsFixed": 5,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "bde0d47ffeadcea01d43158204f9b6aea4561223"
+    },
+    {
+      "slug": "tamars-yellow-boots",
+      "title": "המגפיים הצהובים של תמר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 10,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's fixes are correct.",
+      "nikudHash": "6ed931944241f81074d36b93f762440599ce14b8"
+    },
+    {
+      "slug": "thatos-birthday-surprise",
+      "title": "הפתעת יום ההולדת של תאטו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 19,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The first reviewer's fixes are verified. Kudzai is vocalized קוֹדְזָאי (Ko- rather than Ku-). That is a foreign name rendered phonetically, so I left it.",
+      "nikudHash": "c040d2f5f632a5b00f6150e7a1c3ce9bc8343ba3"
+    },
+    {
+      "slug": "the-best-thing-ever",
+      "title": "הדבר הכי טוב בעולם",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 7,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All of the shuruk fixes are correct. No other errors found.",
+      "nikudHash": "29cc6a47b8392ac51fa9f63353d04027d2fb8ddb"
+    },
+    {
+      "slug": "the-elephant-in-the-room",
+      "title": "הפיל שבחדר",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 18,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "p6 וְחִטִּים (tusks) reads like 'wheat'; tusk is usually חָט/חָטִים, left unchanged as uncertain. | All the changes are correct. Using the feminine הַמּוֹרָה is right, since the verbs רָטְנָה and אָמְרָה are feminine. I left p6 וְחִטִּים ('tusks') as it is.",
+      "nikudHash": "45efb4d7582070d839e401eadf388d1418d28a73"
+    },
+    {
+      "slug": "the-robot-who-could-not-laugh",
+      "title": "הרובוט שלא ידע לצחוק",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 38,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "I checked every change and all of them are correct. The feminine forms addressed to Lia and the name normalization to בּוֹרֶג are right.",
+      "nikudHash": "085fbf6235f75a5e96b95461aa48ef50bd4825eb"
+    },
+    {
+      "slug": "the-snail-who-was-late",
+      "title": "השבלול שאיחר למסיבה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 8,
+      "wordsFixed": 8,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "This book has audio and wordTimings; the niqqud changes did not change any letters.",
+      "nikudHash": "bc17bc8e6b2b460a10d3ed873fd62af6b870503f"
+    },
+    {
+      "slug": "there-must-be-a-rainbow",
+      "title": "חייבת לבוא קשת",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 21,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first proofreader's changes are correct.",
+      "nikudHash": "6eb854dc8c93e2ad8dcbb37ff5bef9705639f48a"
+    },
+    {
+      "slug": "together-were-strong",
+      "title": "יחד אנחנו חזקים: סיפורה של אלברטינה סיסולו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 99,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "Ntsiki is vocalized inconsistently (נַצִיקִי / נְצִיקִי / נְצִיקֵי / נָצִיקִי). I left these as they are, since they are phonetic spellings of a foreign name. | I checked all of the first proofreader's changes and found them correct. The name Ntsiki is still vowelled several different ways (נַצִיקִי / נְצִיקִי / נְצִיקֵי / נָצִיקִי), and Matatiele is too (מֵטָטִיאָלֶה / מָטָטֵיאָלָה). Both are phonetic spellings of foreign names, so I left them alone. With niqqud stripped, every page's letters match the baseline.",
+      "nikudHash": "dd5e11f420dd2ae85b4e0a6933d1ed5216d2329a"
+    },
+    {
+      "slug": "tortoise-finds-his-home",
+      "title": "צב מוצא את הבית שלו",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 7,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "4a64b24f28747702d2f3a82cf08be69e5ca06125"
+    },
+    {
+      "slug": "walking-together",
+      "title": "הולכות ביחד",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 20,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "The feminine forms (אוֹתָךְ, שֶׁלָּךְ, לָךְ) are correct for a girl addressee, and the hif'il form תַּרְאִי is correct.",
+      "nikudHash": "98c14704cfe85b7e2e98563a1b1e28411498435a"
+    },
+    {
+      "slug": "what-if",
+      "title": "מה אם...?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 7,
+      "verdict": "clean",
+      "letterIssues": [],
+      "notes": "All fixes are verified. No other errors were found.",
+      "nikudHash": "bfdc461986b2062dfc24ac74b83cbb523d128654"
+    },
+    {
+      "slug": "what-is-it",
+      "title": "מה זה?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 4,
+      "verdict": "clean",
+      "letterIssues": [],
+      "nikudHash": "5d777eced020b1f3451b9fff0c61de4cf139411f"
+    },
+    {
+      "slug": "when-i-grow-up",
+      "title": "כשאהיה גדולה",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 10,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "70fe7783bb1354d08ee5f6ea323709c5486e474e"
+    },
+    {
+      "slug": "who-hides-in-the-garden",
+      "title": "מי מתחבא בגינה?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 7,
+      "wordsFixed": 0,
+      "verdict": "clean",
+      "letterIssues": [
+        "textNikud is in ktiv haser while text is in ktiv male (גִּנָּה/גינה, חִפּוּשִׁית/חיפושית, אֲדֻמָּה/אדומה, יְרֻקָּה/ירוקה, צִפּוֹר/ציפור, כְּחֻלָּה/כחולה, קְוָה/קווה) — This is a deliberate style difference and the niqqud is correct, so I made no change."
+      ],
+      "notes": "The niqqud is correct throughout. The per-word 'word' entries also carry niqqud and match it.",
+      "nikudHash": "1f476033397cc1da0e5865ba8c6fee3c25c5ba52",
+      "letterFixes": []
+    },
+    {
+      "slug": "who-is-our-friend",
+      "title": "מי החברה שלנו?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 4,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the first reviewer's changes were checked and are correct. No other errors were found.",
+      "nikudHash": "c9460aa6de850a71a5f871e14e8caa35714d130a"
+    },
+    {
+      "slug": "whose-button-is-this",
+      "title": "של מי הכפתור הזה?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 13,
+      "wordsFixed": 6,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "b486314fdbad1f70077bffb04863c38bf815dd0b"
+    },
+    {
+      "slug": "why-is-nita-upside-down",
+      "title": "למה ניטה הפוכה?",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 11,
+      "wordsFixed": 21,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "notes": "All of the earlier changes are correct.",
+      "nikudHash": "a716929a6818d5822d36285dab9a85cf063c48c7"
+    },
+    {
+      "slug": "zanele-situ-my-story",
+      "title": "זנלה סיטו: הסיפור שלי",
+      "proofreadAt": "2026-10-14",
+      "proofreadBy": "Claude (AI) — הגהה ראשונה + הגהה שנייה בלתי תלויה",
+      "passes": [
+        "proofread",
+        "review"
+      ],
+      "pagesChecked": 12,
+      "wordsFixed": 17,
+      "verdict": "fixed",
+      "letterIssues": [],
+      "nikudHash": "0e1299cc1e8834ae11a7a82a74948ea82b2d905d"
+    }
+  ]
+}

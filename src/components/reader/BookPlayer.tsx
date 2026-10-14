@@ -6,6 +6,7 @@ import {
   ChevronRight,
   Languages,
   Maximize,
+  Mic,
   Minimize,
   Moon,
   Pause,
@@ -27,6 +28,7 @@ import {
   type ReactNode,
 } from "react";
 import { MockNotice } from "@/components/MockNotice";
+import type { RecordingView } from "@/lib/recordings/client";
 import { useTheme } from "@/components/ThemeToggle";
 import { Button, ButtonLink, EmptyState, Spinner } from "@/components/ui";
 import { cn } from "@/lib/cn";
@@ -41,7 +43,6 @@ import {
   formatCountdown,
   keyToAction,
   pageDisplayText,
-  progressPercent,
   resolveStartPage,
   swipeToAction,
   switchableOriginalLanguage,
@@ -62,11 +63,16 @@ import { applyTheme } from "@/lib/theme";
 import type { PublicBook } from "@/lib/public-book";
 import { bookLanguage, type BookLanguage } from "@/lib/types";
 import { EndScreen } from "./EndScreen";
-import { ReaderSettings, rateLabel } from "./ReaderSettings";
+import { ReaderSettings } from "./ReaderSettings";
+import { SpeedControl } from "./SpeedControl";
+import { StartScreen } from "./StartScreen";
+import { ProgressScrubber } from "./ProgressScrubber";
+import { RecordingPanel } from "./RecordingPanel";
 import { StoryText } from "./StoryText";
 import { useDeviceVoice } from "./useDeviceVoice";
 import { useNarration } from "./useNarration";
 import { useSleepTimer } from "./useSleepTimer";
+import { VoicePicker } from "./VoicePicker";
 
 export interface BookPlayerProps {
   /** Any book in the shared shape. Pass it through toPlayerBook() on the server first. */
@@ -105,10 +111,26 @@ export interface BookPlayerProps {
    * reader then shows its "press play" message.
    */
   autoNarrate?: boolean;
+  /** Family recordings the reader may pick as the narration: approved ones and the reader's own. */
+  recordings?: RecordingView[];
+  /**
+   * Turns on "record in my voice". Signed-out readers get `loginHref` instead.
+   * `canShare`: sending a recording for sharing is possible (published books).
+   */
+  recorder?: { signedIn: boolean; loginHref: string; canShare: boolean };
+  /** Recording id to start with (a "listen" link from the shelf). */
+  initialVoice?: string;
+  /** Open on a cover screen that asks how to start: read, listen or download (books opened from their card). */
+  startScreen?: boolean;
+  /** The download control offered on the start screen. */
+  downloadControl?: ReactNode;
   /** Report one reading to POST /api/views/<bookId>, once per browser session. Published books only. */
   countView?: boolean;
   className?: string;
 }
+
+/** Width / height up to which a picture counts as square or tall and gets the text beside it. */
+const SIDE_BY_SIDE_MAX_RATIO = 1.2;
 
 const READER_CSS = `
 @keyframes mystory-reader-page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -196,6 +218,11 @@ function Player({
   shareToken,
   syncUrl = false,
   autoNarrate = false,
+  startScreen = false,
+  recordings,
+  recorder,
+  initialVoice,
+  downloadControl,
   countView = false,
   className,
 }: BookPlayerProps) {
@@ -216,6 +243,34 @@ function Player({
   const atEnd = pageCount > 0 && index >= pageCount;
   const current = atEnd ? undefined : book.pages[index];
   const upcoming = book.pages[index + 1];
+
+  // ---- Narration versions: the book's own and family recordings ------------
+  const hasOriginalAudio = useMemo(() => book.pages.some((entry) => !!entry.audio), [book]);
+  const [versions, setVersions] = useState<RecordingView[]>(() => recordings ?? []);
+  const [voiceId, setVoiceId] = useState<string | null>(() => {
+    if (initialVoice && recordings?.some((version) => version.id === initialVoice)) return initialVoice;
+    return hasOriginalAudio ? null : (recordings?.find((version) => version.pages.length > 0)?.id ?? null);
+  });
+  const voice = versions.find((version) => version.id === voiceId) ?? null;
+  const [recordMode, setRecordMode] = useState(false);
+  /** The own recording that new takes go into; null starts a new one with the next take. */
+  const [recordingId, setRecordingId] = useState<string | null>(null);
+  const activeRecording = versions.find((version) => version.id === recordingId && version.mine) ?? null;
+  const voiceAudio = (pageIndex: number): string => {
+    if (!voice) {
+      const page = book.pages[pageIndex];
+      return page?.audio ? mediaUrl(page.audio, book.updatedAt, shareToken) : "";
+    }
+    const take = voice.pages.find((page) => page.index === pageIndex);
+    return take ? mediaUrl(take.audio, voice.updatedAt, shareToken) : "";
+  };
+  const upsertVersion = (next: RecordingView) => {
+    setVersions((list) =>
+      list.some((version) => version.id === next.id)
+        ? list.map((version) => (version.id === next.id ? next : version))
+        : [next, ...list],
+    );
+  };
 
   const advanceTimer = useRef<number | undefined>(undefined);
   const clearAdvance = useCallback(() => {
@@ -249,6 +304,7 @@ function Player({
   const fontStep = clamp(prefs.fontStep ?? defaultFontStep(book.ageGroup), 0, FONT_SIZES_REM.length - 1);
   const rate = prefs.rate ?? 1;
   const autoAdvance = prefs.autoAdvance ?? true;
+  const textLayout = prefs.textLayout ?? "side";
   const nikudAvailable = useMemo(() => bookHasNikud(book), [book]);
   // Vocalized text is the default wherever a book has it.
   const nikudOn = nikudAvailable && (prefs.nikud ?? true);
@@ -278,12 +334,17 @@ function Player({
   };
 
   // ---- Narration ----------------------------------------------------------
-  const hasAnyAudio = useMemo(() => book.pages.some((entry) => !!entry.audio), [book]);
+  const hasAnyAudio = hasOriginalAudio || versions.some((version) => version.pages.length > 0);
   // `shareToken` is set only for an unpublished book opened through its share link;
   // its media is not public, so every media URL carries the token.
-  const audioSrc = current?.audio ? mediaUrl(current.audio, book.updatedAt, shareToken) : "";
+  const audioSrc = atEnd ? "" : voiceAudio(index);
+  const upcomingAudio = index + 1 < pageCount ? voiceAudio(index + 1) : "";
   // The narration is of the translation: its word timings do not fit the original text.
-  const timings = useMemo(() => (current && !inOriginal ? usableTimings(current) : null), [current, inOriginal]);
+  // Family recordings have no word timings.
+  const timings = useMemo(
+    () => (current && !inOriginal && voiceId === null ? usableTimings(current) : null),
+    [current, inOriginal, voiceId],
+  );
   const isLastPage = index === pageCount - 1;
 
   const handlePageEnded = useCallback(() => {
@@ -294,7 +355,7 @@ function Player({
   }, [autoAdvance, clearAdvance, turn]);
 
   // The demo recording is silent. When the device has a Hebrew voice, it reads the page instead.
-  const isDemoAudio = !!current?.audio && current.audioSource === "mock";
+  const isDemoAudio = voiceId === null && !!current?.audio && current.audioSource === "mock";
   const deviceVoice = useDeviceVoice(hasAnyAudio);
   const speech = useMemo(
     () => (isDemoAudio && deviceVoice && current ? { text: current.text, voice: deviceVoice } : null),
@@ -311,6 +372,16 @@ function Player({
     speech,
   });
   const { narrating, stop: stopNarration, audioRef, toggle: toggleNarration } = narration;
+
+  // Recording mode continues the own recording that is playing, or the latest own one.
+  const enterRecordMode = () => {
+    stopNarration();
+    clearAdvance();
+    const own = voice?.mine ? voice : (versions.find((version) => version.mine) ?? null);
+    setRecordingId(own?.id ?? null);
+    if (own) setVoiceId(own.id);
+    setRecordMode(true);
+  };
 
   // Opened through a "listen" link: start reading aloud once, if this page has audio.
   const autoNarrateDone = useRef(false);
@@ -346,6 +417,7 @@ function Player({
 
   // ---- Sleep timer --------------------------------------------------------
   const [asleep, setAsleep] = useState(false);
+  const [choosing, setChoosing] = useState(startScreen);
   const handleSleepFire = useCallback(() => {
     clearAdvance();
     stopNarration();
@@ -452,7 +524,7 @@ function Player({
   };
   const handleKey = (event: KeyboardEvent | ReactKeyboardEvent) => {
     if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
-    if (settingsOpen || asleep || pageCount === 0 || isTypingTarget(event.target)) return;
+    if (settingsOpen || asleep || choosing || pageCount === 0 || isTypingTarget(event.target)) return;
     const action = keyToAction(event.key);
     if (!action) return;
     // Enter and Space on a focused button or link must press it, not turn the page.
@@ -483,8 +555,18 @@ function Player({
     const begin = swipeStart.current;
     swipeStart.current = null;
     if (!begin || begin.id !== event.pointerId) return;
-    const action = swipeToAction(event.clientX - begin.x, event.clientY - begin.y);
-    if (!action) return;
+    const dx = event.clientX - begin.x;
+    const dy = event.clientY - begin.y;
+    const action = swipeToAction(dx, dy);
+    if (!action) {
+      // A plain tap on the page turns it, unless it landed on a control or on a word that plays.
+      if (atEnd || Math.abs(dx) > 10 || Math.abs(dy) > 10) return;
+      const target = event.target as Element;
+      if (target.closest("button, a, input, select, textarea, [role='status']")) return;
+      if (timings && target.closest("[data-word]")) return;
+      turn(1);
+      return;
+    }
     lastSwipeAt.current = event.timeStamp;
     handleAction(action);
   };
@@ -498,11 +580,19 @@ function Player({
   const [brokenImage, setBrokenImage] = useState<string | null>(null);
   const imageSrc = current?.image ? mediaUrl(current.image, book.updatedAt, shareToken) : "";
   const showImage = imageSrc !== "" && brokenImage !== imageSrc;
+  // "Pictures only" still shows the words of a page that has no picture.
+  const showText = !showImage || textLayout !== "hidden";
+  // "Beside" puts the text next to a square or tall picture; a wide picture keeps it underneath.
+  const [imageShape, setImageShape] = useState<{
+    src: string;
+    ratio: number;
+  } | null>(null);
+  const imageRatio = imageShape?.src === imageSrc ? imageShape.ratio : null;
+  const sideBySide = showImage && textLayout === "side" && imageRatio !== null && imageRatio <= SIDE_BY_SIDE_MAX_RATIO;
   const text = current ? (inOriginal ? originalText : pageDisplayText(current, nikudOn)) : "";
   const textLanguage = inOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
   const title = (showOriginal && book.credits?.originalTitle) || book.title;
   const otherLanguage = showOriginal ? bookLanguage(book) : originalLanguage;
-  const percent = progressPercent(index, pageCount);
 
   const readAgain = () => {
     stopNarration();
@@ -657,6 +747,30 @@ function Player({
             {isFullscreen ? <Minimize aria-hidden="true" /> : <Maximize aria-hidden="true" />}
           </Button>
         ) : null}
+        {recorder && !atEnd ? (
+          recorder.signedIn ? (
+            <Button
+              variant={recordMode ? "danger" : "ghost"}
+              size="icon"
+              aria-pressed={recordMode}
+              aria-label="הקלטה בקול שלי"
+              title={recordMode ? "סיום מצב ההקלטה" : "להקליט את הסיפור בקול שלי"}
+              onClick={() => (recordMode ? setRecordMode(false) : enterRecordMode())}
+            >
+              <Mic aria-hidden="true" />
+            </Button>
+          ) : (
+            <ButtonLink
+              href={recorder.loginHref}
+              variant="ghost"
+              size="icon"
+              aria-label="הקלטה בקול שלי (צריך להתחבר)"
+              title="כדי להקליט בקול שלכם צריך להתחבר"
+            >
+              <Mic aria-hidden="true" />
+            </ButtonLink>
+          )
+        ) : null}
         <Button
           variant="ghost"
           size="icon"
@@ -668,19 +782,7 @@ function Player({
         </Button>
       </header>
 
-      <div
-        role="progressbar"
-        aria-label="התקדמות בספר"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={percent}
-        className="h-2 shrink-0 bg-surface-2"
-      >
-        <div
-          className="h-full rounded-e-full bg-accent transition-[width] duration-300"
-          style={{ width: `${percent}%` }}
-        />
-      </div>
+      <ProgressScrubber index={index} pageCount={pageCount} onJump={jump} />
       <p className="sr-only" aria-live="polite">
         {atEnd ? "סוף הסיפור" : `עמוד ${index + 1} מתוך ${pageCount}`}
       </p>
@@ -707,25 +809,43 @@ function Player({
         ) : (
           <div
             key={index}
-            className="mystory-reader-spread flex h-full min-h-0 flex-col items-center gap-3 px-4 py-3"
+            className={cn(
+              "mystory-reader-spread flex h-full min-h-0 flex-col items-center gap-3 px-4 py-3 sm:px-28",
+              sideBySide && "sm:flex-row sm:gap-6",
+            )}
           >
             {showImage ? (
-              <div className="flex min-h-0 w-full min-w-0 flex-1 items-center justify-center">
+              <div
+                className={cn(
+                  "flex min-h-0 w-full min-w-0 flex-1 items-center justify-center",
+                  sideBySide && "sm:h-full",
+                )}
+              >
                 <img
                   src={imageSrc}
                   alt={current?.imageAlt?.trim() || `איור לעמוד ${index + 1}`}
                   draggable={false}
                   decoding="async"
                   onError={() => setBrokenImage(imageSrc)}
+                  onLoad={(event) => {
+                    const { naturalWidth, naturalHeight } = event.currentTarget;
+                    if (naturalWidth > 0 && naturalHeight > 0) {
+                      setImageShape({
+                        src: imageSrc,
+                        ratio: naturalWidth / naturalHeight,
+                      });
+                    }
+                  }}
                   className="size-full select-none object-contain bedtime:opacity-90"
                 />
               </div>
             ) : null}
-            {text.trim() !== "" ? (
+            {showText && text.trim() !== "" ? (
               <div
                 className={cn(
                   "w-full max-w-3xl overflow-y-auto px-2",
                   showImage ? "mystory-reader-text shrink-0" : "flex min-h-0 flex-1 flex-col justify-center",
+                  sideBySide && "sm:max-h-full sm:w-[40%] sm:max-w-md sm:shrink",
                 )}
               >
                 <StoryText
@@ -743,6 +863,31 @@ function Player({
             ) : null}
           </div>
         )}
+
+        {/* Page turners, centred on each side. In RTL start is right: previous is right, next is left. */}
+        {!atEnd ? (
+          <>
+            <Button
+              variant="outline"
+              size="icon-lg"
+              className="absolute start-2 top-1/2 z-10 size-16 -translate-y-1/2 p-0 shadow-card max-sm:bg-surface/85 sm:start-5 sm:size-20"
+              aria-label="לעמוד הקודם"
+              disabled={index === 0}
+              onClick={() => turn(-1)}
+            >
+              <ChevronRight aria-hidden="true" className="size-9 sm:size-11" />
+            </Button>
+            <Button
+              variant="primary"
+              size="icon-lg"
+              className="absolute end-2 top-1/2 z-10 size-16 -translate-y-1/2 p-0 sm:end-5 sm:size-20"
+              aria-label={isLastPage ? "לסוף הסיפור" : "לעמוד הבא"}
+              onClick={() => turn(1)}
+            >
+              <ChevronLeft aria-hidden="true" className="size-9 sm:size-11" />
+            </Button>
+          </>
+        ) : null}
 
         {notice !== null ? (
           <div
@@ -780,20 +925,29 @@ function Player({
       ) : null}
 
       {/* Bottom controls. In RTL the first item sits on the right: previous is right, next is left. */}
-      {!atEnd ? (
-        <footer className="flex shrink-0 items-center justify-center gap-4 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-1 sm:gap-10 sm:px-6">
-          <Button
-            variant="outline"
-            size="lg"
-            className="max-sm:size-touch-lg max-sm:px-0"
-            aria-label="לעמוד הקודם"
-            disabled={index === 0}
-            onClick={() => turn(-1)}
-          >
-            <ChevronRight aria-hidden="true" className="size-8" />
-            <span className="max-sm:hidden">הקודם</span>
-          </Button>
-
+      {!atEnd && recordMode && recorder ? (
+        <RecordingPanel
+          bookId={book.id}
+          shareToken={shareToken}
+          canShare={recorder.canShare}
+          pageIndex={index}
+          pageCount={pageCount}
+          recording={activeRecording}
+          onChange={(next) => {
+            upsertVersion(next);
+            setRecordingId(next.id);
+            setVoiceId(next.id);
+          }}
+          onStartNew={() => {
+            stopNarration();
+            setRecordingId(null);
+          }}
+          onSaved={() => turn(1)}
+          onClose={() => setRecordMode(false)}
+        />
+      ) : null}
+      {!atEnd && !recordMode ? (
+        <footer className="flex shrink-0 items-center justify-center px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-1 sm:px-6">
           <div className="flex min-w-0 flex-col items-center gap-1">
             <div className="flex items-center gap-2">
               {hasAnyAudio ? (
@@ -812,14 +966,16 @@ function Player({
                       <Play aria-hidden="true" className="size-8" />
                     )}
                   </Button>
-                  <button
-                    type="button"
-                    className="inline-flex min-h-touch items-center rounded-full bg-secondary-soft px-3 text-sm font-semibold"
-                    aria-label={`מהירות ההקראה: ${rateLabel(rate)}. לחיצה מחליפה מהירות.`}
-                    onClick={() => updatePrefs({ rate: rate === 0.75 ? 1 : rate === 1 ? 1.25 : 0.75 })}
-                  >
-                    {rateLabel(rate)}
-                  </button>
+                  <SpeedControl rate={rate} onRate={(value) => updatePrefs({ rate: value })} />
+                  <VoicePicker
+                    hasOriginal={hasOriginalAudio}
+                    versions={versions}
+                    value={voiceId}
+                    onChange={(id) => {
+                      stopNarration();
+                      setVoiceId(id);
+                    }}
+                  />
                 </>
               ) : null}
             </div>
@@ -830,17 +986,6 @@ function Player({
               {hasAnyAudio ? (audioSrc ? null : " · לעמוד הזה אין הקראה") : " · לספר הזה אין הקראה"}
             </p>
           </div>
-
-          <Button
-            variant="primary"
-            size="lg"
-            className="max-sm:size-touch-lg max-sm:px-0"
-            aria-label={isLastPage ? "לסוף הסיפור" : "לעמוד הבא"}
-            onClick={() => turn(1)}
-          >
-            <span className="max-sm:hidden">{isLastPage ? "סוף" : "הבא"}</span>
-            <ChevronLeft aria-hidden="true" className="size-8" />
-          </Button>
         </footer>
       ) : null}
 
@@ -851,9 +996,7 @@ function Player({
       {upcoming?.image ? (
         <img src={mediaUrl(upcoming.image, book.updatedAt, shareToken)} alt="" aria-hidden="true" hidden decoding="async" />
       ) : null}
-      {upcoming?.audio ? (
-        <audio key={upcoming.audio} src={mediaUrl(upcoming.audio, book.updatedAt, shareToken)} preload="auto" muted hidden />
-      ) : null}
+      {upcomingAudio ? <audio key={upcomingAudio} src={upcomingAudio} preload="auto" muted hidden /> : null}
 
       {asleep ? (
         <div
@@ -873,11 +1016,34 @@ function Player({
         </div>
       ) : null}
 
+      {choosing && !atEnd ? (
+        <StartScreen
+          title={book.title}
+          author={book.author}
+          cover={mediaUrl(book.coverImage, book.updatedAt, shareToken)}
+          resumePage={index}
+          onRead={() => setChoosing(false)}
+          onListen={
+            hasAnyAudio
+              ? () => {
+                  setChoosing(false);
+                  // A tap starts it, so the browser allows the sound.
+                  if (audioSrc && !narrating) toggleNarration();
+                }
+              : undefined
+          }
+          download={downloadControl}
+          detailsHref={resolvedExitHref}
+        />
+      ) : null}
+
       <ReaderSettings
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
         fontStep={fontStep}
         onFontStep={(step) => updatePrefs({ fontStep: clamp(step, 0, FONT_SIZES_REM.length - 1) })}
+        textLayout={textLayout}
+        onTextLayout={(value) => updatePrefs({ textLayout: value })}
         hasAudio={hasAnyAudio}
         rate={rate}
         onRate={(value) => updatePrefs({ rate: value })}

@@ -7,6 +7,7 @@
  *   data/users.json               User[]
  *   data/favorites.json           Favorite[]
  *   data/progress.json            Progress[]
+ *   data/recordings.json          Recording[]
  *   data/jobs.json                GenerationJob[]
  *
  * Writes are atomic (temp file + rename) and serialized by an in-process mutex.
@@ -23,6 +24,7 @@ import {
   FavoriteSchema,
   GenerationJobSchema,
   ProgressSchema,
+  RecordingSchema,
   SiteSettingsSchema,
   SLUG_PATTERN,
   UserSchema,
@@ -33,6 +35,7 @@ import {
   type GenerationJob,
   type Page,
   type Progress,
+  type Recording,
   type SiteSettings,
   type User,
   type UserRole,
@@ -50,6 +53,9 @@ import {
   type NewBookInput,
   type NewCollectionInput,
   type NewJobInput,
+  type NewRecordingInput,
+  type RecordingFilter,
+  type RecordingPatch,
   type Repository,
   type UpsertUserInput,
 } from "./types";
@@ -293,6 +299,10 @@ export class LocalRepository implements Repository {
     return book ? clone(book) : null;
   }
 
+  async listAllBooksWithPages(): Promise<BookWithPages[]> {
+    return (await this.loadAllBooks()).map((entry) => clone(entry.book));
+  }
+
   async getBookBySlug(slug: string): Promise<BookWithPages | null> {
     if (!SLUG_PATTERN.test(slug)) return null;
     const all = await this.loadAllBooks();
@@ -387,6 +397,13 @@ export class LocalRepository implements Repository {
       const progress = await this.readList("progress.json", ProgressSchema);
       if (progress.some((p) => p.bookId === id)) {
         await this.writeList("progress.json", progress.filter((p) => p.bookId !== id));
+      }
+      const recordings = await this.readList("recordings.json", RecordingSchema);
+      if (recordings.some((r) => r.bookId === id)) {
+        await this.writeList(
+          "recordings.json",
+          recordings.filter((r) => r.bookId !== id),
+        );
       }
       const collections = await this.readList("collections.json", CollectionSchema);
       if (collections.some((c) => c.bookIds.includes(id))) {
@@ -555,6 +572,78 @@ export class LocalRepository implements Repository {
   async listProgress(userId: string): Promise<Progress[]> {
     const all = await this.readList("progress.json", ProgressSchema);
     return all.filter((p) => p.userId === userId).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  }
+
+  // --- family recordings -------------------------------------------------------
+
+  async listRecordings(filter: RecordingFilter = {}): Promise<Recording[]> {
+    const all = await this.readList("recordings.json", RecordingSchema);
+    return all
+      .filter(
+        (r) =>
+          (filter.userId === undefined || r.userId === filter.userId) &&
+          (filter.bookId === undefined || r.bookId === filter.bookId) &&
+          (filter.status === undefined || r.status === filter.status),
+      )
+      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  }
+
+  async getRecording(id: string): Promise<Recording | null> {
+    const all = await this.readList("recordings.json", RecordingSchema);
+    return all.find((r) => r.id === id) ?? null;
+  }
+
+  createRecording(input: NewRecordingInput): Promise<Recording> {
+    return this.mutex.run(async () => {
+      const all = await this.readList("recordings.json", RecordingSchema);
+      const now = nowIso();
+      const recording = RecordingSchema.parse({
+        id: newId(),
+        bookId: input.bookId,
+        userId: input.userId,
+        title: input.title,
+        status: "private",
+        pages: [],
+        createdAt: now,
+        updatedAt: now,
+      });
+      await this.writeList("recordings.json", [...all, recording]);
+      return recording;
+    });
+  }
+
+  updateRecording(id: string, patch: RecordingPatch): Promise<Recording> {
+    return this.mutex.run(async () => {
+      const all = await this.readList("recordings.json", RecordingSchema);
+      const current = all.find((r) => r.id === id);
+      if (!current) throw new NotFoundError(`recording ${id} not found`);
+      const merged: Record<string, unknown> = {
+        ...current,
+        updatedAt: nowIso(),
+      };
+      for (const [key, value] of Object.entries(patch)) {
+        if (value === undefined) delete merged[key];
+        else merged[key] = value;
+      }
+      const next = RecordingSchema.parse(merged);
+      await this.writeList(
+        "recordings.json",
+        all.map((r) => (r.id === id ? next : r)),
+      );
+      return next;
+    });
+  }
+
+  deleteRecording(id: string): Promise<void> {
+    return this.mutex.run(async () => {
+      const all = await this.readList("recordings.json", RecordingSchema);
+      if (all.some((r) => r.id === id)) {
+        await this.writeList(
+          "recordings.json",
+          all.filter((r) => r.id !== id),
+        );
+      }
+    });
   }
 
   // --- users ---------------------------------------------------------------------

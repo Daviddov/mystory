@@ -55,7 +55,8 @@ const ROLES: Record<string, keyof BookDashWebCredits> = {
 
 function decodeEntities(text: string): string {
   return text
-    .replace(/&#0*39;|&#x0*27;|&rsquo;/gi, "'")
+    .replace(/&#0*39;|&#x0*27;|&#0*8217;|&rsquo;/gi, "'")
+    .replace(/&#(\d{2,6});/g, (_, code: string) => String.fromCodePoint(Number(code)))
     .replace(/&quot;/g, '"')
     .replace(/&amp;/g, "&")
     .replace(/&nbsp;/g, " ")

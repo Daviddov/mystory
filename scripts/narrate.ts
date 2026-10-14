@@ -9,7 +9,7 @@
  *     --pages 1,3 only these pages (1-based)
  *
  * Providers follow the same env vars as the site (NIKUD_PROVIDER, TTS_PROVIDER,
- * ...). tsx does not read .env.local, so export them in the shell first.
+ * ...), read from the shell and then from .env.local and .env.
  * With none set the mock providers are used: the audio is SILENCE, stored as
  * audioSource "mock" so the reader shows a demo-voice notice.
  *
@@ -40,7 +40,19 @@ async function pickTts(): Promise<TtsProvider> {
   return (await import("../src/lib/ai/providers/tts")).createTtsProvider();
 }
 
+/** The site's own settings, so the script narrates with the same providers. Variables already set win. */
+function loadEnvFiles(): void {
+  for (const file of [".env.local", ".env"]) {
+    try {
+      process.loadEnvFile(path.join(process.cwd(), file));
+    } catch {
+      // No such file.
+    }
+  }
+}
+
 async function main(): Promise<void> {
+  loadEnvFiles();
   const args = process.argv.slice(2);
   const force = args.includes("--force");
   const all = args.includes("--all");

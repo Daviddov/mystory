@@ -25,6 +25,7 @@ import {
   ID_PATTERN,
   PageSchema,
   ProgressSchema,
+  RecordingSchema,
   SiteSettingsSchema,
   SLUG_PATTERN,
   UserSchema,
@@ -35,6 +36,7 @@ import {
   type GenerationJob,
   type Page,
   type Progress,
+  type Recording,
   type SiteSettings,
   type User,
   type UserRole,
@@ -51,6 +53,9 @@ import {
   type NewBookInput,
   type NewCollectionInput,
   type NewJobInput,
+  type NewRecordingInput,
+  type RecordingFilter,
+  type RecordingPatch,
   type Repository,
   type UpsertUserInput,
 } from "./types";
@@ -185,6 +190,21 @@ interface ProgressRow {
   completed: boolean;
   updated_at: string;
 }
+
+interface RecordingRow {
+  id: string;
+  book_id: string;
+  user_id: string;
+  title: string;
+  status: string;
+  review_note: string | null;
+  pages: unknown;
+  created_at: string;
+  updated_at: string;
+  submitted_at: string | null;
+}
+
+const RECORDING_COLUMNS = "id,book_id,user_id,title,status,review_note,pages,created_at,updated_at,submitted_at";
 
 interface JobRow {
   id: string;
@@ -412,6 +432,24 @@ function progressFromRow(row: ProgressRow): Progress {
   });
 }
 
+function recordingFromRow(row: RecordingRow): Recording | null {
+  const parsed = RecordingSchema.safeParse({
+    id: row.id,
+    bookId: row.book_id,
+    userId: row.user_id,
+    title: row.title,
+    status: row.status,
+    reviewNote: row.review_note ?? undefined,
+    pages: Array.isArray(row.pages) ? row.pages : [],
+    createdAt: iso(row.created_at),
+    updatedAt: iso(row.updated_at),
+    submittedAt: row.submitted_at ? iso(row.submitted_at) : undefined,
+  });
+  if (parsed.success) return parsed.data;
+  console.warn(`[repo] skipping invalid recording ${row.id}: ${parsed.error.message}`);
+  return null;
+}
+
 function jobFromRow(row: JobRow): GenerationJob {
   return GenerationJobSchema.parse(
     compact({
@@ -600,6 +638,13 @@ export class SupabaseRepository implements Repository {
   async getBookBySlug(slug: string): Promise<BookWithPages | null> {
     if (!SLUG_PATTERN.test(slug)) return null;
     return this.fetchBook("slug", slug);
+  }
+
+  async listAllBooksWithPages(): Promise<BookWithPages[]> {
+    // One request; the API's row cap (1000 by default) bounds it.
+    const { data, error } = await this.db.from("books").select(BOOK_WITH_PAGES_COLUMNS);
+    if (error) fail("read all books", error);
+    return (data as unknown as BookRow[]).map(bookWithPagesFromRow).filter((book) => book !== null);
   }
 
   async getBookByShareToken(token: string): Promise<BookWithPages | null> {
@@ -945,6 +990,84 @@ export class SupabaseRepository implements Repository {
       .order("updated_at", { ascending: false });
     if (error) fail("list progress", error);
     return (data as ProgressRow[]).map(progressFromRow);
+  }
+
+  // --- family recordings ---------------------------------------------------------------------
+
+  async listRecordings(filter: RecordingFilter = {}): Promise<Recording[]> {
+    let query = this.db.from("recordings").select(RECORDING_COLUMNS);
+    if (filter.userId !== undefined) query = query.eq("user_id", filter.userId);
+    if (filter.bookId !== undefined) query = query.eq("book_id", filter.bookId);
+    if (filter.status !== undefined) query = query.eq("status", filter.status);
+    const { data, error } = await query.order("updated_at", {
+      ascending: false,
+    });
+    if (error) fail("list recordings", error);
+    return (data as RecordingRow[]).map(recordingFromRow).filter((r): r is Recording => r !== null);
+  }
+
+  async getRecording(id: string): Promise<Recording | null> {
+    const { data, error } = await this.db.from("recordings").select(RECORDING_COLUMNS).eq("id", id).maybeSingle();
+    if (error) fail("read recording", error);
+    return data ? recordingFromRow(data as RecordingRow) : null;
+  }
+
+  async createRecording(input: NewRecordingInput): Promise<Recording> {
+    const now = nowIso();
+    const recording = RecordingSchema.parse({
+      id: newId(),
+      bookId: input.bookId,
+      userId: input.userId,
+      title: input.title,
+      status: "private",
+      pages: [],
+      createdAt: now,
+      updatedAt: now,
+    });
+    const { error } = await this.db.from("recordings").insert({
+      id: recording.id,
+      book_id: recording.bookId,
+      user_id: recording.userId,
+      title: recording.title,
+      status: recording.status,
+      pages: recording.pages,
+      created_at: recording.createdAt,
+      updated_at: recording.updatedAt,
+    });
+    if (error) {
+      if (error.code === FOREIGN_KEY_VIOLATION) throw new NotFoundError(`book ${input.bookId}`);
+      fail("create recording", error);
+    }
+    return recording;
+  }
+
+  async updateRecording(id: string, patch: RecordingPatch): Promise<Recording> {
+    const current = await this.getRecording(id);
+    if (!current) throw new NotFoundError(`recording ${id} not found`);
+    const merged: Record<string, unknown> = { ...current, updatedAt: nowIso() };
+    for (const [key, value] of Object.entries(patch)) {
+      if (value === undefined) delete merged[key];
+      else merged[key] = value;
+    }
+    const next = RecordingSchema.parse(merged);
+    const { error } = await this.db
+      .from("recordings")
+      .update({
+        title: next.title,
+        status: next.status,
+        review_note: next.reviewNote ?? null,
+        pages: next.pages,
+        updated_at: next.updatedAt,
+        submitted_at: next.submittedAt ?? null,
+      })
+      .eq("id", id);
+    if (error) fail("update recording", error);
+    return next;
+  }
+
+  async deleteRecording(id: string): Promise<void> {
+    const { error } = await this.db.from("recordings").delete().eq("id", id);
+    if (error) fail("delete recording", error);
   }
 
   // --- users -----------------------------------------------------------------------------------

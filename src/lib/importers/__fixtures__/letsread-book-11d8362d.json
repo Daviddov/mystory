@@ -1,0 +1,353 @@
+{
+ "id": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+ "name": "Nettle Medicine",
+ "description": "Nhorbu and his grandmother pick a plant to make a healing soup for grandfather.  But the plant stings Nhorbu! What else can the plant do?",
+ "thumborCoverImageUrl": "https://letsread-images.hamropatro.com/OlqScHSdvlA-KMjHvyqUUa8O1kw=/300x400/smart/http://storage.googleapis.com/lets-read-asia/assets/images/cd594b64-41ac-4956-a26c-191146d47614.jpg",
+ "coverImageUrl": "http://storage.googleapis.com/lets-read-asia/assets/images/cd594b64-41ac-4956-a26c-191146d47614.jpg",
+ "coverImageServingUrl": "https://lh3.googleusercontent.com/eOXBZbrlXKxm4AzaKhsPcnAEa_Em8mp9V-hRon2DY6E582ygvEhg9TqK6tNcZRLTUsXfZgs0OEOnBi_Gumf4uDoxlHonZjiQlNHBIA",
+ "languageId": "4846240843956224",
+ "signLanguageId": null,
+ "signLanguage": null,
+ "masterBookId": "11d8362d-7af9-4293-be6a-28046c5d6fef",
+ "illustrator": "",
+ "createdDate": 1672723902203,
+ "featuredTimeStamp": 0,
+ "status": "SUCCESS",
+ "authors": [],
+ "contributingUsers": [
+  "Ritu Rajbanshi",
+  "Rajendra Maharjan"
+ ],
+ "collaboratorsByRole": {
+  "EDITOR": [
+   {
+    "id": 6430075709816832,
+    "name": "Kumudini Gurung Shrestha",
+    "localizedName": "कुमुदिनी गुरुङ श्रेष्ठ",
+    "country": "Nepal",
+    "roles": [
+     "CONTRIBUTOR",
+     "EDITOR"
+    ]
+   }
+  ],
+  "PUBLISHER": [
+   {
+    "id": 5720038195593216,
+    "name": "The Asia Foundation - Let's Read",
+    "localizedName": "The Asia Foundation - Let's Read",
+    "country": "United States",
+    "roles": [
+     "PUBLISHER",
+     "AUTHOR"
+    ]
+   }
+  ],
+  "SIGNER": [],
+  "DESIGNER": [],
+  "AMBASSADOR": [],
+  "ORGANIZATION": [],
+  "ILLUSTRATOR": [],
+  "AUTHOR": [
+   {
+    "id": 5899570677547008,
+    "name": "Buddha Yonjan Lama",
+    "localizedName": "बुद्ध योन्जन लामा",
+    "country": "Nepal",
+    "roles": [
+     "AUTHOR"
+    ]
+   }
+  ],
+  "CONTRIBUTOR": [
+   {
+    "id": 4605560918900736,
+    "name": "Sushma Maharjan",
+    "localizedName": "सुष्मा महर्जन ",
+    "country": "Nepal",
+    "roles": [
+     "CONTRIBUTOR"
+    ]
+   },
+   {
+    "id": 6430075709816832,
+    "name": "Kumudini Gurung Shrestha",
+    "localizedName": "कुमुदिनी गुरुङ श्रेष्ठ",
+    "country": "Nepal",
+    "roles": [
+     "CONTRIBUTOR",
+     "EDITOR"
+    ]
+   },
+   {
+    "id": 5754816626163712,
+    "name": "Srijanalaya",
+    "localizedName": "Srijanalaya",
+    "country": "Nepal",
+    "roles": [
+     "ORGANIZATION"
+    ]
+   }
+  ],
+  "NARRATOR": []
+ },
+ "readingLevel": "1",
+ "totalPages": 14,
+ "license": "CC-BY-4.0",
+ "publisher": null,
+ "notes": null,
+ "progress": 0,
+ "currentPage": 0,
+ "slug": "nettle-medicine",
+ "hasActivity": false,
+ "hasAudio": false,
+ "hasVideo": false,
+ "epubUrl": "https://storage.googleapis.com/lets-read-asia/lets-read-epubs/Nettle_Medicine___English-v12023.01.03T054008.epub",
+ "pages": [
+  {
+   "id": 4730042379665408,
+   "extractedLongContentValue": "Nhorbu loves to spend time with his grandparents.&nbsp;<br/>Today, <em>Aakhe </em>shapes the <em>makhundo</em>.&nbsp;<br/>\"<em>Maam</em>, let us have some nettle soup with <em>dhindo </em>today,\" Aakhe says.&nbsp;<br/>\"My body is aching.\"<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 1,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-1.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/aLhfetSCXSsytdkjSG8SgLc7Kg8poJtItkMXGwr2gGJ0Xi8gFOaEOJtaCj1vpFS2XyTPlUkBXjm1i0NqcS0ZIPWMy4VIQIxR6yWp",
+   "imageWidth": 1200,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-2.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5855942286508032,
+   "extractedLongContentValue": "Nhorbu and Maam go look for nettle.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 2,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-2.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/hgz9JzhtlMnhUJa310q-VIyN91ZT9szsySAHtd94gT_kpL_ZqDw2maP_Oqj1p8KC-UEbXTKC_xw49ntC2vyYKulfvG2SIMm8I7WIMA",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-3.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5292992333086720,
+   "extractedLongContentValue": "Maam picks the nettle leaves.&nbsp;<br/>She sings, too.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 3,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-3.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/Y4yeJ-poBTZbcqYfsjCv9Hurb1IDFaNPh5uKc5FhrqeCt0LsFYEhmTPd_mgH4taMtFRmyQr819hoQa0FV1V-ktSyOh1r3hsAq7JAeA",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-4.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 6418892239929344,
+   "extractedLongContentValue": "\"Maam, will you teach me to sing that song?\" Nhorbu asks.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 4,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-4.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/PhCk5bXt3fu7DDHDUI99JiVivgu9f_boz13RnfoWMR3hSuVhT6_9gwFHnsvCNC_yJQzVahPdQ3YgTNQ_k-rwRWp7QkURW0m7A1rFv6s",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-5.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5011517356376064,
+   "extractedLongContentValue": "\"Yes, if you dance to my song,\" Maam says.&nbsp;<br/>Nhorbu starts to dance.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 5,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-5.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/iHt4bkZ3dZEL5KPF96AdEDwloouSU5N_A7bT50mPVFTLsdAUHiznBzasM7u2FQlOzp4Fip78CXN7EEwtkiheyaNOIkFKE6Y30tZ2",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-6.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 6137417263218688,
+   "extractedLongContentValue": "Nhorbu follows Maam.&nbsp;<br/>He sings and dances.&nbsp;<br/>Suddenly he trips over a goat and falls down hard.&nbsp;<br/>\"Maam!\" he cries.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 6,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-6.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/DN3jQfUwgm0hURYExYqH-0cJFL9I7YPZAvfdRwzbsr_-ljMkbbLqvFYnzghqjFfnBlJdr2UP-NVkizF4DzB9wTv73-Xhf41haml8v-s",
+   "imageWidth": 1200,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-7.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5574467309797376,
+   "extractedLongContentValue": "Maam comes to Nhorbu's side.&nbsp;<br/>\"Oh no, what is the matter?\" Maam asks.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 7,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-7.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/Hg0hRv-404yo1vNgEGsQQjtGZ2Qgmqn3xf9VMo3WCOITN8o1yC_lZzS8Jrnf4evXjRoaGOac9_YWLiH4KzgoIElrE3asUOiRnELdEg",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-8.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 6700367216640000,
+   "extractedLongContentValue": "\"Aakhe,\" Maam calls,&nbsp;<br/>\"Nhorbu tripped over the baby goat.<br/>\"The nettle hairs stung Nhorbu's hand.\"<br/>Aakhe says, \"The baby goat has a broken leg.\"<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 8,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-8.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/Ydnl7vxB3va3ZAl0CQeI7nzmn59uld5txp86cHTjsgcB2hlJLQksvGLvPUaDUi7UIaE-dFkzjytxPnmpHlS0PmhtU93pz3UDwPvW9Q",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-9.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 4554120519221248,
+   "extractedLongContentValue": "Aakhe picks up his sickle.&nbsp;<br/>He looks for something to treat the goat's injury.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 9,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-9.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/FeEn-0XXCM_zCK9_wMW7fZCZn7CD2j45ra-3U2G55AMtrAg8zbvgyAtZgBBU9FvN4xk7PdzW326xYRlCGpM-lMvO-_2f4aBHYi8g2w",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-10.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5680020426063872,
+   "extractedLongContentValue": "Aakhe peels some nettle branches.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 10,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-10.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/VPSs-zePNI1nKgYi_l-z6XLcLns5Odt6Y2G5dhkqpUku3fIRsbCgsfRqrp1imLd36UTdkhbuWX2Tc7xFcr2jY6abvZ_kzhlHgWW64Q",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-11.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 4768844422840320,
+   "extractedLongContentValue": "He uses them to bandage the baby goat’s injured leg.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 11,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-11.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/DvO9fRNAfWdhxtNAsCGM4IGnyAw_IqRBrWf5E07Hh_Gsamqjal-03bCeB8hU1hZkzNEs5ErUyIIUNFjUUJaxpHGBVqpzPPsTGfMd",
+   "imageWidth": 1200,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-12.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5894744329682944,
+   "extractedLongContentValue": "A few days later, the baby goat's leg is all better.&nbsp;<br/>It plays in the courtyard happily.&nbsp;<br/>Nhorbu's house is happy again.<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 12,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/p-12.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/c9JutFQWMX5lupoS1w0jP-9iPgVsjf-SFKETopX6XUP3jcTSJBpt5aKHSpRsRl0-Yo_Rr3qlDDdWRzwfF_l_D4_5KiDS3ENdGpcpnw",
+   "imageWidth": 1200,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-13.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5331794376261632,
+   "extractedLongContentValue": "This product is made possible through the support of the All Children Reading: A Grand Challenge for Development (ACR GCD) Founding Partners (the United States Agency for International Development [USAID], World Vision, and the Australian Government) in collaboration with the Global Book Alliance. It was prepared by The Asia Foundation and does not necessarily reflect the views of the ACR GCD Founding Partners or the Global Book Alliance. Any adaptation or translation of this work should not be considered an official ACR GCD translation, and ACR GCD shall not be liable for any content or errors in this translation.&nbsp;&nbsp;<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 13,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/11d8362d-7af9-4293-be6a-28046c5d6fef/Founders.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/got5t3Iix1_jmjuQzOEz1TPF-tW_us2EQhdEcSa-74Kqs0j_u1eqnnRA25Bf9VcFrAg9UUsgjzZ23znYq7VI6vRUknZ27Puj8dw2SQ",
+   "imageWidth": 2400,
+   "imageHeight": 300,
+   "imageType": null,
+   "imageName": "p-14.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 2169644379425961700,
+   "extractedLongContentValue": "<strong>Wonderful Words</strong><br/><strong>Aakhe</strong> - grandfather<br/><strong>makhundo</strong> - mask<br/><strong>Maam</strong> - grandmother<br/><strong>nettle</strong> - A plant with hairs on the leaves. The hairs can cause a painful skin rash. Other parts of the nettle can be used as medicine.<br/><strong>dhindo</strong> - thick Nepali porridge prepared by cooking ground millet or cornmeal flour<br/>",
+   "bookId": "8eae031c-e459-4727-abdf-e24ae478a8b4",
+   "pageNum": 14,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/assets/images/703caa51-82f4-48ff-85c8-917434cb4f5f.jpg",
+   "imageServingUrl": "https://lh3.googleusercontent.com/pwSWVv1D_w988M4DqWmtyW9013NaPePiYuYkoIhZxH7FHYjAkpVrwGIFzy-NkKyC47KR_gFmllKSiepQv1tw1l5UFdPU3YmU2k64",
+   "imageWidth": 1200,
+   "imageHeight": 1200,
+   "imageType": null,
+   "imageName": "p-14.jpg",
+   "imageAltDescription": "",
+   "useHighResolutionImage": false,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  }
+ ],
+ "originalUrl": "https://letsreadasia.org/",
+ "translationAvailable": true,
+ "translationStatus": null,
+ "countryOfOrigin": "Nepal",
+ "favorite": false,
+ "featured": false,
+ "decodable": false
+}

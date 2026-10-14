@@ -26,6 +26,10 @@ export const routes = {
   /** Reader. `page` is 1-based in the URL; `listen` asks the reader to start the narration. */
   read: (slug: string, page?: number, listen?: boolean) =>
     withQuery(`/read/${slug}`, { page, listen: listen ? 1 : undefined }),
+  /** Reader that plays a family recording. */
+  readVoice: (slug: string, recordingId: string) => withQuery(`/read/${slug}`, { voice: recordingId }),
+  /** Reader opened from a book's cover: it first asks whether to read, listen or download. */
+  readStart: (slug: string) => withQuery(`/read/${slug}`, { start: 1 }),
   /** Continuous bedtime listening queue. */
   listen: () => "/listen",
   print: (slug: string, token?: string) => withQuery(`/print/${slug}`, { token }),

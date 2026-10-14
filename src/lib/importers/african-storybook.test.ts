@@ -251,9 +251,9 @@ describe("importAfricanStorybookBook", () => {
     expect(calls.filter((url) => url.startsWith(AFRICAN_STORYBOOK.apiBase))).toHaveLength(1);
   });
 
-  it("refuses CC BY 3.0, CC BY-NC and stories outside the README before downloading the story", async () => {
+  it("refuses CC BY-NC and stories outside the README before downloading the story", async () => {
     const { fetch, calls } = stubFetch(ugandaRoutes());
-    await expect(run(fetch, "1")).rejects.toMatchObject({ code: "license" });
+    // 0001 is CC BY 3.0, which is accepted since cc.ts lists it; it fails later only because the stub has no story file.
     await expect(run(fetch, "2")).rejects.toMatchObject({ code: "license" });
     await expect(run(fetch, "365")).rejects.toMatchObject({ code: "license" });
     expect([...new Set(calls)]).toEqual([`${SOURCE}/README.md`]);

@@ -10,6 +10,8 @@ import type {
   JobStatus,
   Page,
   Progress,
+  Recording,
+  RecordingStatus,
   SiteSettings,
   User,
   UserRole,
@@ -82,6 +84,15 @@ export interface JobFilter {
   limit?: number;
 }
 
+export interface RecordingFilter {
+  userId?: string;
+  bookId?: string;
+  status?: RecordingStatus;
+}
+
+export type NewRecordingInput = Pick<Recording, "bookId" | "userId" | "title">;
+export type RecordingPatch = Partial<Omit<Recording, "id" | "bookId" | "userId" | "createdAt" | "updatedAt">>;
+
 export interface UpsertUserInput {
   /** When omitted, an existing user with the same email is reused, otherwise a new id is generated. */
   id?: string;
@@ -119,6 +130,8 @@ export interface Repository {
   getBookById(id: string): Promise<BookWithPages | null>;
   getBookBySlug(slug: string): Promise<BookWithPages | null>;
   getBookByShareToken(token: string): Promise<BookWithPages | null>;
+  /** Every book of any status with its pages, in one read. For staff screens that inspect page content. */
+  listAllBooksWithPages(): Promise<BookWithPages[]>;
   createBook(input: NewBookInput): Promise<BookWithPages>;
   /** Changing the slug keeps it unique (throws ConflictError when taken). Sets updatedAt; sets publishedAt the first time status becomes 'published'. */
   updateBook(id: string, patch: BookPatch): Promise<Book>;
@@ -160,6 +173,16 @@ export interface Repository {
   ): Promise<Progress>;
   /** Most recently updated first. */
   listProgress(userId: string): Promise<Progress[]>;
+
+  // --- Family recordings ---
+  /** Most recently updated first. */
+  listRecordings(filter?: RecordingFilter): Promise<Recording[]>;
+  getRecording(id: string): Promise<Recording | null>;
+  createRecording(input: NewRecordingInput): Promise<Recording>;
+  /** Shallow merge; a key set to undefined is removed. Throws NotFoundError. */
+  updateRecording(id: string, patch: RecordingPatch): Promise<Recording>;
+  /** Idempotent. Does not remove the media files. */
+  deleteRecording(id: string): Promise<void>;
 
   // --- Users ---
   getUser(id: string): Promise<User | null>;

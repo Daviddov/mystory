@@ -21,6 +21,7 @@ export function AdminNav({ pendingCount, showUsers }: AdminNavProps) {
   }[] = [
     { href: adminPaths.home(), label: "סקירה", exact: true },
     { href: adminPaths.queue(), label: "תור אישורים", badge: pendingCount },
+    { href: adminPaths.pipeline(), label: "מסלול פרסום" },
     { href: adminPaths.books(), label: "כל הספרים" },
     { href: adminPaths.collections(), label: "אוספים וספר השבוע" },
     { href: adminPaths.taxonomy(), label: "תגיות ונושאים" },

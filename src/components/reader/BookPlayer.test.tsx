@@ -97,6 +97,19 @@ describe("BookPlayer", () => {
     expect(screen.getByText("ראשון")).toBeInTheDocument();
   });
 
+  it("turns to the next page when the page itself is tapped, but not when a button is", () => {
+    render(<BookPlayer book={makeBook()} />);
+    const page = screen.getByText("ראשון");
+    fireEvent.pointerDown(page, { pointerId: 1, clientX: 100, clientY: 100 });
+    fireEvent.pointerUp(page, { pointerId: 1, clientX: 102, clientY: 101 });
+    expect(screen.getByText("שני")).toBeInTheDocument();
+
+    const next = screen.getByRole("button", { name: "לעמוד הבא" });
+    fireEvent.pointerDown(next, { pointerId: 2, clientX: 10, clientY: 10 });
+    fireEvent.pointerUp(next, { pointerId: 2, clientX: 10, clientY: 10 });
+    expect(screen.getByText("שני")).toBeInTheDocument();
+  });
+
   it("goes forward with the left arrow and back with the right arrow", () => {
     render(<BookPlayer book={makeBook()} />);
     fireEvent.keyDown(window, { key: "ArrowLeft" });
@@ -290,5 +303,79 @@ describe("BookPlayer", () => {
   it("explains an empty book", () => {
     render(<BookPlayer book={makeBook({ pages: [] })} />);
     expect(screen.getByText("בספר הזה אין עדיין עמודים")).toBeInTheDocument();
+  });
+});
+
+describe("BookPlayer: starting, navigating and voices", () => {
+  it("opened from a card, asks how to start and reads on a tap", () => {
+    render(<BookPlayer book={makeBook({ pages: narratedPages })} startScreen downloadControl={<button>הורדה</button>} />);
+    expect(screen.getByRole("dialog", { name: "ספר בדיקה" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "הורדה" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /האזנה לסיפור/ }));
+    expect(screen.queryByRole("dialog", { name: "ספר בדיקה" })).not.toBeInTheDocument();
+    expect(play).toHaveBeenCalled();
+  });
+
+  it("jumps to a page from the progress bar", () => {
+    // jsdom has no PointerEvent; a MouseEvent carries the coordinates.
+    if (typeof window.PointerEvent === "undefined") {
+      vi.stubGlobal(
+        "PointerEvent",
+        class extends MouseEvent {
+          pointerId: number;
+          pointerType: string;
+          constructor(type: string, init: PointerEventInit = {}) {
+            super(type, init);
+            this.pointerId = init.pointerId ?? 0;
+            this.pointerType = init.pointerType ?? "mouse";
+          }
+        },
+      );
+    }
+    render(<BookPlayer book={makeBook()} />);
+    const slider = screen.getByRole("slider", { name: "מעבר בין עמודי הספר" });
+    expect(slider).toHaveAttribute("aria-valuenow", "1");
+    // 300px wide, right to left: the left end is the last page.
+    slider.getBoundingClientRect = () => ({ left: 0, right: 300, width: 300, top: 0, bottom: 10, height: 10 }) as DOMRect;
+    fireEvent.pointerDown(slider, { pointerId: 1, clientX: 20 });
+    fireEvent.pointerUp(slider, { pointerId: 1, clientX: 20 });
+    expect(screen.getByText("שלישי")).toBeInTheDocument();
+  });
+
+  it("sets the narration speed with the turtle and the rabbit", () => {
+    render(<BookPlayer book={makeBook({ pages: narratedPages })} />);
+    const fast = screen.getByRole("radio", { name: "מהר" });
+    fireEvent.click(fast);
+    expect(fast).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("radio", { name: "רגיל" })).toHaveAttribute("aria-checked", "false");
+  });
+
+  it("plays a family recording picked as the voice", () => {
+    const { container } = render(
+      <BookPlayer
+        book={makeBook({ pages: narratedPages })}
+        recordings={[
+          {
+            id: "rec_1",
+            bookId: "bk_test",
+            title: "הקול של סבתא",
+            status: "approved",
+            mine: false,
+            pages: [{ index: 0, audio: "books/bk_test/rec/rec_1/p1-a.webm" }],
+            updatedAt: "2026-02-01T00:00:00.000Z",
+          },
+        ]}
+      />,
+    );
+    const picker = screen.getByRole("combobox", { name: "מי מקריא" });
+    fireEvent.change(picker, { target: { value: "rec_1" } });
+    expect(mainAudio(container).getAttribute("src")).toContain("/media/books/bk_test/rec/rec_1/p1-a.webm");
+    fireEvent.change(picker, { target: { value: "original" } });
+    expect(mainAudio(container).getAttribute("src")).toContain("/media/books/bk_test/p1.wav");
+  });
+
+  it("asks a signed-out reader to sign in before recording", () => {
+    render(<BookPlayer book={makeBook()} recorder={{ signedIn: false, loginHref: "/login?next=x", canShare: true }} />);
+    expect(screen.getByRole("link", { name: /הקלטה בקול שלי/ })).toHaveAttribute("href", "/login?next=x");
   });
 });

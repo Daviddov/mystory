@@ -229,6 +229,46 @@ export const ProgressSchema = z.object({
 export type Progress = z.infer<typeof ProgressSchema>;
 
 // ---------------------------------------------------------------------------
+// Family recordings: a reader's own narration of a book
+// ---------------------------------------------------------------------------
+
+/**
+ * private  - only the person who recorded it (and staff) can hear it
+ * pending  - sent for sharing, waiting in the admin queue
+ * approved - offered to every reader as another narration version
+ * A rejected recording goes back to private with a reviewNote.
+ */
+export const RECORDING_STATUSES = ["private", "pending", "approved"] as const;
+export const RecordingStatusSchema = z.enum(RECORDING_STATUSES);
+export type RecordingStatus = z.infer<typeof RecordingStatusSchema>;
+
+export const RECORDING_TITLE_MAX = 60;
+
+export const RecordingPageSchema = z.object({
+  /** Zero-based page index in the book. */
+  index: z.number().int().min(0),
+  /** Media path under books/<bookId>/rec/<recordingId>/. */
+  audio: z.string().min(1),
+});
+export type RecordingPage = z.infer<typeof RecordingPageSchema>;
+
+export const RecordingSchema = z.object({
+  id: IdSchema,
+  bookId: IdSchema,
+  userId: z.string().min(1),
+  /** Shown in the reader's voice picker, e.g. "הקול של אבא". */
+  title: z.string().trim().min(1).max(RECORDING_TITLE_MAX),
+  status: RecordingStatusSchema,
+  reviewNote: z.string().max(1000).optional(),
+  /** Sorted by index, at most one entry per page. */
+  pages: z.array(RecordingPageSchema),
+  createdAt: IsoDateSchema,
+  updatedAt: IsoDateSchema,
+  submittedAt: IsoDateSchema.optional(),
+});
+export type Recording = z.infer<typeof RecordingSchema>;
+
+// ---------------------------------------------------------------------------
 // AI generation jobs
 // ---------------------------------------------------------------------------
 

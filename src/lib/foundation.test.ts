@@ -26,7 +26,7 @@ describe("hebrew helpers", () => {
 
 describe("taxonomy and routes", () => {
   it("has the twelve categories and stable buckets", () => {
-    expect(CATEGORIES).toHaveLength(12);
+    expect(CATEGORIES).toHaveLength(15);
     expect([1, 5, 6, 10, 11, 15, 16, 40].map(readingTimeBucket)).toEqual(["5", "5", "10", "10", "15", "15", "20", "20"]);
   });
 

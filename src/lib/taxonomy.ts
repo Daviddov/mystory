@@ -26,6 +26,9 @@ export const CATEGORIES = [
   { slug: "nature", label: "טבע", emoji: "🌳", description: "עונות, צמחים, ים ושמיים" },
   { slug: "humor", label: "הומור", emoji: "😄", description: "סיפורים מצחיקים ושטותיים" },
   { slug: "values", label: "ערכים", emoji: "💛", description: "כנות, נתינה, סבלנות וכבוד" },
+  { slug: "fables", label: "משלים", emoji: "🦉", description: "סיפורי חיות עם מוסר השכל" },
+  { slug: "parasha", label: "פרשת שבוע", emoji: "📜", description: "סיפורי התורה לפי פרשות השבוע" },
+  { slug: "judaism", label: "יהדות", emoji: "🕯️", description: "שבת, חגים, מסורת וסיפורי חכמים" },
 ] as const satisfies readonly TaxonomyItem[];
 
 export type CategorySlug = (typeof CATEGORIES)[number]["slug"];

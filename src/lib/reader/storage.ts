@@ -30,8 +30,11 @@ const ReaderPrefsSchema = z.object({
     .refine((value) => (PLAYBACK_RATES as readonly number[]).includes(value))
     .optional(),
   autoAdvance: z.boolean().optional(),
+  /** Where the text sits next to the picture, or hidden to look at the pictures only. */
+  textLayout: z.enum(["below", "side", "hidden"]).optional(),
 });
 export type ReaderPrefs = z.infer<typeof ReaderPrefsSchema>;
+export type TextLayout = NonNullable<ReaderPrefs["textLayout"]>;
 
 function storage(): Storage | null {
   try {

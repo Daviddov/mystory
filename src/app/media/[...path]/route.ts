@@ -120,6 +120,7 @@ async function serve(request: Request, segments: string[], headOnly: boolean): P
     mediaPath,
     token: new URL(request.url).searchParams.get(MEDIA_TOKEN_PARAM),
     getBook: bookAccessLoader(repo),
+    getRecording: (id) => repo.getRecording(id),
     // A session that cannot be read is an anonymous visitor, never an error page with details.
     getUser: async () => {
       try {

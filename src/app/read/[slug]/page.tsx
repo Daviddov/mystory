@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { z } from "zod";
+import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { BookPlayer } from "@/components/reader";
 import { loadBookForReader, loadServerProgress, recommendBooks } from "@/lib/reader/access";
 import { toPlayerBook } from "@/lib/reader/logic";
+import { recordingsForReader } from "@/lib/recordings/service";
+import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +25,10 @@ const QuerySchema = z.object({
   token: z.string().min(1).max(128).optional().catch(undefined),
   /** "1" when opened through the "listen" button: start the narration. */
   listen: z.literal("1").optional().catch(undefined),
+  /** Family recording to listen to. */
+  voice: z.string().regex(/^[A-Za-z0-9_-]{1,64}$/).optional().catch(undefined),
+  /** "1" when opened from the book's card: ask how to start. */
+  start: z.literal("1").optional().catch(undefined),
 });
 
 function first(value: string | string[] | undefined): string | undefined {
@@ -33,6 +40,8 @@ function parseQuery(searchParams: SearchParams) {
     page: first(searchParams.page) || undefined,
     token: first(searchParams.token) || undefined,
     listen: first(searchParams.listen) || undefined,
+    start: first(searchParams.start) || undefined,
+    voice: first(searchParams.voice) || undefined,
   });
 }
 
@@ -63,9 +72,10 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
   if (!result.ok) notFound();
   const { book, user, isOwnerOrStaff, viaToken } = result;
 
-  const [serverProgress, recommendations] = await Promise.all([
+  const [serverProgress, recommendations, recordings] = await Promise.all([
     query.page === undefined ? loadServerProgress(user, book.id) : null,
     recommendBooks(book),
+    getRepo().then((repo) => recordingsForReader(repo, book.id, user)),
   ]);
 
   const exitHref =
@@ -79,9 +89,25 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
       recommendations={recommendations}
       exitHref={exitHref}
       syncProgress={user !== null}
+      recordings={recordings}
+      initialVoice={query.voice}
+      recorder={{
+        signedIn: user !== null,
+        loginHref: routes.login(routes.read(book.slug)),
+        canShare: book.status === "published",
+      }}
       shareToken={viaToken ? query.token : undefined}
       syncUrl
       autoNarrate={query.listen === "1"}
+      startScreen={query.start === "1" && query.page === undefined}
+      downloadControl={
+        <OfflineDownloadButton
+          bookId={book.id}
+          title={book.title}
+          token={viaToken ? query.token : undefined}
+          size="lg"
+        />
+      }
       countView={book.status === "published"}
     />
   );

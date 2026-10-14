@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock } from "lucide-react";
+import { Clock, Info } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { mediaUrl } from "@/lib/media/url";
@@ -10,7 +10,7 @@ import type { PublicBook } from "@/lib/public-book";
 export interface BookCardProps {
   /** A full Book works too. Client Components must pass a PublicBook (see @/lib/public-book). */
   book: PublicBook;
-  /** Where the card leads. Default: the book details page. */
+  /** Where the card leads. Default: the reader, which asks whether to read, listen or download; a "details" link sits under the card. */
   href?: string;
   /** 'shelf' is a fixed-width card for horizontal rows. Default 'grid' (fills its grid cell). */
   layout?: "grid" | "shelf";
@@ -30,7 +30,7 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
   return (
     <article className={cn("group relative flex flex-col", layout === "shelf" && "w-40 shrink-0 sm:w-48", className)}>
       <Link
-        href={href ?? routes.book(book.slug)}
+        href={href ?? routes.readStart(book.slug)}
         className="flex flex-col gap-2 rounded-lg focus-visible:outline-offset-4"
       >
         <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-border bg-surface-2 shadow-card transition-transform duration-200 group-hover:-translate-y-1">
@@ -67,6 +67,16 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
           </span>
         </p>
       </Link>
+      {href === undefined ? (
+        <Link
+          href={routes.book(book.slug)}
+          className="mt-1 inline-flex min-h-10 w-fit items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+        >
+          <Info aria-hidden="true" className="size-4" />
+          לפרטים
+          <span className="sr-only"> על {book.title}</span>
+        </Link>
+      ) : null}
       {footer ? <div className="mt-2">{footer}</div> : null}
     </article>
   );

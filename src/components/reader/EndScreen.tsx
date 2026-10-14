@@ -3,7 +3,7 @@
 import { RotateCcw } from "lucide-react";
 import type { ReactNode } from "react";
 import { BookCard } from "@/components/BookCard";
-import { BookCredits, type BookCreditsProps } from "@/components/BookCredits";
+import { BookCredits, hasCredits, type BookCreditsProps } from "@/components/BookCredits";
 import { Button } from "@/components/ui";
 import { routes } from "@/lib/routes";
 import type { PublicBook } from "@/lib/public-book";
@@ -15,7 +15,7 @@ export interface EndScreenProps {
   onReadAgain: () => void;
   /** Exit control (a link or a button), rendered next to "read again". */
   exit?: ReactNode;
-  /** The book, for the credits every reader sees at the end (authors, translator, license, publisher). */
+  /** The book, for the credits link at the end (authors, translator, license, publisher). */
   creditsBook?: BookCreditsProps["book"];
   /** Share token of an unpublished book opened through its share link (for the publisher logo). */
   mediaToken?: string;
@@ -70,8 +70,6 @@ export function EndScreen({
         </section>
       ) : null}
 
-      {creditsBook ? <BookCredits book={creditsBook} variant="compact" headingLevel={3} id="reader-credits" mediaToken={mediaToken} /> : null}
-
       {recommendations.length > 0 ? (
         <section aria-labelledby="reader-next-title">
           <h3 id="reader-next-title" className="mb-4 text-2xl font-bold">
@@ -84,6 +82,24 @@ export function EndScreen({
             ))}
           </div>
         </section>
+      ) : null}
+
+      {/* Credits stay out of the way: a small link that opens them on demand. */}
+      {creditsBook && hasCredits(creditsBook) ? (
+        <details className="text-center">
+          <summary className="inline-flex min-h-touch cursor-pointer list-none items-center px-3 text-base text-muted underline underline-offset-4 hover:text-foreground [&::-webkit-details-marker]:hidden">
+            קרדיטים ורישיון
+          </summary>
+          <div className="mt-3 text-start">
+            <BookCredits
+              book={creditsBook}
+              variant="compact"
+              headingLevel={3}
+              id="reader-credits"
+              mediaToken={mediaToken}
+            />
+          </div>
+        </details>
       ) : null}
     </div>
   );

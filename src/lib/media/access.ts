@@ -10,12 +10,15 @@
  *                                  book's share token in `?t=` ("private")
  *   - no such book              -> staff only (files of a book that is still
  *                                  being generated or imported)
+ * Family recordings live under "books/<bookId>/rec/<recordingId>/". Until a
+ * recording is approved only the person who made it and staff may hear it;
+ * an approved recording follows its book.
  * Everything outside "books/" (the seeded library, "seed-<name>/...") is site
  * content and public.
  */
 import { timingSafeEqual } from "node:crypto";
 import type { Repository } from "../repo/types";
-import { ID_PATTERN, type Book, type User } from "../types";
+import { ID_PATTERN, type Book, type Recording, type User } from "../types";
 
 /** Query parameter that carries a share token on a media URL (see mediaUrl()). */
 export const MEDIA_TOKEN_PARAM = "t";
@@ -28,6 +31,17 @@ type BookAccessFields = Pick<Book, "status" | "ownerId" | "shareToken">;
 export function mediaBookId(mediaPath: string): string | null {
   const parts = mediaPath.split("/");
   return parts.length >= 3 && parts[0] === "books" && parts[1].length > 0 ? parts[1] : null;
+}
+
+/** The recording id of a media path under "books/<bookId>/rec/<recordingId>/...", or null. */
+export function mediaRecordingId(mediaPath: string): string | null {
+  const parts = mediaPath.split("/");
+  return parts.length >= 5 && parts[0] === "books" && parts[2] === "rec" && parts[3].length > 0 ? parts[3] : null;
+}
+
+/** Media folder of one recording. */
+export function recordingMediaPrefix(bookId: string, recordingId: string): string {
+  return `books/${bookId}/rec/${recordingId}`;
 }
 
 function sameToken(given: string | null | undefined, stored: string | undefined): boolean {
@@ -49,11 +63,27 @@ export interface MediaAccessInput {
   getBook: (bookId: string) => Promise<BookAccessFields | null>;
   /** Resolves the signed-in user. Only called when the answer depends on it. */
   getUser: () => Promise<Pick<User, "id" | "role"> | null>;
+  /** Loads a recording, for files under books/<bookId>/rec/. Without it those files are staff only. */
+  getRecording?: (recordingId: string) => Promise<Pick<Recording, "bookId" | "userId" | "status"> | null>;
 }
 
 export async function decideMediaAccess(input: MediaAccessInput): Promise<MediaAccess> {
   const bookId = mediaBookId(input.mediaPath);
   if (!bookId) return "public";
+
+  const recordingId = mediaRecordingId(input.mediaPath);
+  if (recordingId !== null) {
+    const recording =
+      ID_PATTERN.test(recordingId) && input.getRecording ? await input.getRecording(recordingId) : null;
+    if (!recording || recording.bookId !== bookId) {
+      return isStaff(await input.getUser()) ? "private" : "denied";
+    }
+    if (recording.status !== "approved") {
+      const user = await input.getUser();
+      return user && (isStaff(user) || user.id === recording.userId) ? "private" : "denied";
+    }
+    // Approved: the book decides, as for its own narration.
+  }
 
   // A folder name that cannot be a book id belongs to no book.
   const book = ID_PATTERN.test(bookId) ? await input.getBook(bookId) : null;

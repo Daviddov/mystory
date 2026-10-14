@@ -3,6 +3,13 @@
 import { AArrowDown, AArrowUp, Timer } from "lucide-react";
 import { Button, Chip, Dialog } from "@/components/ui";
 import { FONT_SIZES_REM, PLAYBACK_RATES, SLEEP_TIMER_MINUTES, formatCountdown } from "@/lib/reader/logic";
+import type { TextLayout } from "@/lib/reader/storage";
+
+const TEXT_LAYOUTS: { value: TextLayout; label: string }[] = [
+  { value: "side", label: "ליד התמונה" },
+  { value: "below", label: "תמיד מתחת לתמונה" },
+  { value: "hidden", label: "בלי טקסט" },
+];
 
 const RATE_LABELS: Record<number, string> = { 0.75: "לאט", 1: "רגיל", 1.25: "מהר" };
 
@@ -15,6 +22,8 @@ export interface ReaderSettingsProps {
   onClose: () => void;
   fontStep: number;
   onFontStep: (step: number) => void;
+  textLayout: TextLayout;
+  onTextLayout: (layout: TextLayout) => void;
   hasAudio: boolean;
   rate: number;
   onRate: (rate: number) => void;
@@ -26,12 +35,14 @@ export interface ReaderSettingsProps {
   onSleepCancel: () => void;
 }
 
-/** Grown-up controls: text size, narration speed, automatic page turning and the sleep timer. */
+/** Grown-up controls: text size and placement, narration speed, automatic page turning and the sleep timer. */
 export function ReaderSettings({
   open,
   onClose,
   fontStep,
   onFontStep,
+  textLayout,
+  onTextLayout,
   hasAudio,
   rate,
   onRate,
@@ -79,6 +90,24 @@ export function ReaderSettings({
               <AArrowUp aria-hidden="true" />
             </Button>
           </div>
+        </section>
+
+        <section aria-labelledby="reader-layout-title">
+          <h3 id="reader-layout-title" className="mb-2 text-lg font-bold">
+            מיקום הטקסט
+          </h3>
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="מיקום הטקסט">
+            {TEXT_LAYOUTS.map(({ value, label }) => (
+              <Chip key={value} selected={textLayout === value} tone="secondary" onClick={() => onTextLayout(value)}>
+                {label}
+              </Chip>
+            ))}
+          </div>
+          {textLayout === "side" ? (
+            <p className="mt-2 text-sm text-muted">
+              בתמונה מרובעת או גבוהה הטקסט יופיע לצידה. בתמונה רחבה או במסך צר הוא יופיע מתחתיה.
+            </p>
+          ) : null}
         </section>
 
         <section aria-labelledby="reader-audio-title">

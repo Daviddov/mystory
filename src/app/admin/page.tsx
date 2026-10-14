@@ -42,6 +42,7 @@ export default async function AdminDashboardPage() {
   const stats = await getDashboardStats(await getRepo());
   const generations = stats.generations;
   const topViews = stats.mostViewed[0]?.viewCount ?? 0;
+  const unpublished = stats.byStatus.draft + stats.byStatus.private;
 
   return (
     <div className="flex flex-col gap-8">
@@ -54,6 +55,20 @@ export default async function AdminDashboardPage() {
           </p>
           <ButtonLink href={adminPaths.queue()} variant="secondary">
             לתור האישורים
+          </ButtonLink>
+        </Card>
+      ) : null}
+
+      {unpublished > 0 ? (
+        <Card tone="soft" className="flex flex-wrap items-center gap-4">
+          <p className="flex-1 text-lg font-semibold">
+            {unpublished === 1
+              ? "ספר אחד עוד לא פורסם."
+              : `${NUMBER.format(unpublished)} ספרים עוד לא פורסמו.`}{" "}
+            <span className="font-normal text-muted">במסלול הפרסום רואים מה חסר לכל אחד ומטפלים בכמה ספרים יחד.</span>
+          </p>
+          <ButtonLink href={adminPaths.pipeline()} variant="secondary">
+            למסלול הפרסום
           </ButtonLink>
         </Card>
       ) : null}

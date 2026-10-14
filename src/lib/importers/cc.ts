@@ -18,6 +18,8 @@ export const CC_LICENSES: readonly CcLicense[] = [
   { value: "CC BY-NC-SA 4.0", label: "CC BY-NC-SA 4.0 (ייחוס, לא מסחרי, שיתוף זהה)", allowsAdaptation: true },
   { value: "CC BY-ND 4.0", label: "CC BY-ND 4.0 (ייחוס, בלי יצירות נגזרות)", allowsAdaptation: false },
   { value: "CC BY-NC-ND 4.0", label: "CC BY-NC-ND 4.0 (ייחוס, לא מסחרי, בלי יצירות נגזרות)", allowsAdaptation: false },
+  // Older version still common in open picture-book collections (e.g. most of African Storybook).
+  { value: "CC BY 3.0", label: "CC BY 3.0 (ייחוס, גרסה קודמת)", allowsAdaptation: true },
   { value: "CC0 1.0", label: "CC0 1.0 (נחלת הכלל)", allowsAdaptation: true },
 ];
 

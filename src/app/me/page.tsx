@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CloudDownload, Pencil, Plus } from "lucide-react";
+import { CloudDownload, Headphones, Mic, Pencil, Plus } from "lucide-react";
+import { MyRecordingActions } from "@/components/personal/MyRecordingActions";
 import { PersonalLibrary } from "@/components/personal/PersonalLibrary";
 import { PersonalSync } from "@/components/personal/PersonalSync";
 import { ShareControls } from "@/components/personal/ShareControls";
@@ -11,19 +12,86 @@ import { getCurrentUser } from "@/lib/auth";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
-import type { Book, BookStatus } from "@/lib/types";
+import type { Book, BookStatus, BookWithPages, Recording, RecordingStatus } from "@/lib/types";
 
-export const metadata: Metadata = { title: "המדף שלי", robots: { index: false } };
+export const metadata: Metadata = {
+  title: "המדף שלי",
+  robots: { index: false },
+};
 export const dynamic = "force-dynamic";
 
 const STATUS: Record<BookStatus, { label: string; tone: ChipTone; hint: string }> = {
   draft: { label: "טיוטה", tone: "neutral", hint: "רק אתם רואים את הספר." },
-  private: { label: "פרטי", tone: "secondary", hint: "רק אתם רואים את הספר, ומי שקיבל מכם קישור שיתוף." },
-  pending: { label: "ממתין לאישור", tone: "warning", hint: "הספר נשלח לעורך ויופיע בספרייה אחרי אישור." },
-  published: { label: "פורסם בספרייה", tone: "success", hint: "הספר פתוח לכולם בספרייה." },
+  private: {
+    label: "פרטי",
+    tone: "secondary",
+    hint: "רק אתם רואים את הספר, ומי שקיבל מכם קישור שיתוף.",
+  },
+  pending: {
+    label: "ממתין לאישור",
+    tone: "warning",
+    hint: "הספר נשלח לעורך ויופיע בספרייה אחרי אישור.",
+  },
+  published: {
+    label: "פורסם בספרייה",
+    tone: "success",
+    hint: "הספר פתוח לכולם בספרייה.",
+  },
 };
 
-const dateFormat = new Intl.DateTimeFormat("he-IL", { day: "numeric", month: "long", year: "numeric" });
+const RECORDING_STATUS: Record<RecordingStatus, { label: string; tone: ChipTone }> = {
+  private: { label: "רק אצלי", tone: "neutral" },
+  pending: { label: "ממתינה לאישור לשיתוף", tone: "warning" },
+  approved: { label: "משותפת עם כולם", tone: "success" },
+};
+
+function MyRecordingRow({ recording, book }: { recording: Recording; book: BookWithPages }) {
+  const status = RECORDING_STATUS[recording.status];
+  return (
+    <Card as="li" className="flex flex-col gap-3">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <h3 className="text-lg font-bold">
+          <span aria-hidden="true">🎙️ </span>
+          {recording.title}
+        </h3>
+        <Chip tone={status.tone}>{status.label}</Chip>
+      </div>
+      <p className="text-sm text-muted">
+        {book.title} · הוקלטו {recording.pages.length} מתוך {book.pages.length} עמודים
+      </p>
+      {recording.reviewNote && recording.status === "private" ? (
+        <p className="rounded-md bg-warning-soft px-3 py-2 text-sm">
+          <span className="font-semibold">הערת העורך: </span>
+          {recording.reviewNote}
+        </p>
+      ) : null}
+      <div className="flex flex-wrap items-center gap-2">
+        {recording.pages.length > 0 ? (
+          <ButtonLink href={routes.readVoice(book.slug, recording.id)} size="sm">
+            <Headphones aria-hidden="true" className="size-4" />
+            האזנה
+          </ButtonLink>
+        ) : null}
+        <ButtonLink href={routes.read(book.slug)} variant="outline" size="sm">
+          <Mic aria-hidden="true" className="size-4" />
+          להמשיך להקליט
+        </ButtonLink>
+        <MyRecordingActions
+          id={recording.id}
+          title={recording.title}
+          status={recording.status}
+          canShare={book.status === "published" && recording.pages.length > 0}
+        />
+      </div>
+    </Card>
+  );
+}
+
+const dateFormat = new Intl.DateTimeFormat("he-IL", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
 
 function MyBookRow({ book }: { book: Book }) {
   const status = STATUS[book.status];
@@ -83,11 +151,28 @@ function MyBookRow({ book }: { book: Book }) {
   );
 }
 
+/** The reader's own recordings with their books (recordings of books they can no longer see are left out). */
+async function loadMyRecordings(userId: string): Promise<{ recording: Recording; book: BookWithPages }[]> {
+  const repo = await getRepo();
+  const recordings = await repo.listRecordings({ userId });
+  const rows = await Promise.all(
+    recordings.map(async (recording) => {
+      const book = await repo.getBookById(recording.bookId);
+      return book && (book.status === "published" || book.ownerId === userId) ? { recording, book } : null;
+    }),
+  );
+  return rows.filter((row): row is { recording: Recording; book: BookWithPages } => row !== null);
+}
+
 export default async function MePage() {
   const user = await getCurrentUser();
-  const myBooks = user
-    ? (await (await getRepo()).listBooks({ ownerId: user.id, status: "any", sort: "updated" })).books
-    : [];
+  const repo = await getRepo();
+  const [myBooks, myRecordings] = user
+    ? await Promise.all([
+        repo.listBooks({ ownerId: user.id, status: "any", sort: "updated" }).then((result) => result.books),
+        loadMyRecordings(user.id),
+      ])
+    : [[], []];
 
   return (
     <main className="container-page flex flex-col gap-12 py-8">
@@ -147,6 +232,23 @@ export default async function MePage() {
           </ul>
         )}
       </section>
+
+      {myRecordings.length > 0 ? (
+        <section aria-labelledby="my-recordings-title" className="flex flex-col gap-4">
+          <h2 id="my-recordings-title" className="text-2xl font-extrabold">
+            <span aria-hidden="true">🎙️ </span>
+            ההקלטות שלי
+          </h2>
+          <p className="text-muted">
+            סיפורים שהקלטתם בקול שלכם בזמן הקריאה. הקלטה ששיתפתם תופיע לכל הקוראים אחרי אישור העורכים.
+          </p>
+          <ul className="grid gap-4 lg:grid-cols-2">
+            {myRecordings.map(({ recording, book }) => (
+              <MyRecordingRow key={recording.id} recording={recording} book={book} />
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <section aria-labelledby="device-title" className="flex flex-col gap-4">
         <h2 id="device-title" className="text-2xl font-extrabold">

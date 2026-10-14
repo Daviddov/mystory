@@ -1,0 +1,332 @@
+{
+ "id": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+ "name": "Going to School",
+ "description": "What do you do on the first day of school? Who will you meet?",
+ "thumborCoverImageUrl": "https://letsread-images.hamropatro.com/gvJ7AzYoGjOTjO_WfzvYGz6BZ3Q=/300x400/smart/http://storage.googleapis.com/lets-read-asia/assets/images/3fa86c46-ac5f-4002-9ec9-d564edbae981.png",
+ "coverImageUrl": "http://storage.googleapis.com/lets-read-asia/assets/images/3fa86c46-ac5f-4002-9ec9-d564edbae981.png",
+ "coverImageServingUrl": "https://lh3.googleusercontent.com/ap6sTqbao68A9M56kYvv75NBh6vu2LLIL8LteaUuORfMGFr_uL_EJU2aQ1N_eCQvDAZEf7MzbgT1O-zF5ah89l0D1hHb3mukC5Wf3L8",
+ "languageId": "4846240843956224",
+ "signLanguageId": null,
+ "signLanguage": null,
+ "masterBookId": "4201285e-5041-44da-8221-1a5ecaeb3044",
+ "illustrator": "",
+ "createdDate": 1625160818675,
+ "featuredTimeStamp": 0,
+ "status": "SUCCESS",
+ "authors": [],
+ "contributingUsers": [
+  "Brendan Boland"
+ ],
+ "collaboratorsByRole": {
+  "EDITOR": [
+   {
+    "id": 6343852588793856,
+    "name": "Sengmany Souphanthalop",
+    "localizedName": "Sengmany Souphanthalop",
+    "country": "Lao People's Democratic Republic",
+    "roles": [
+     "EDITOR"
+    ]
+   },
+   {
+    "id": 5718004449935360,
+    "name": "Onchanh Phetchantharath",
+    "localizedName": "Onchanh Phetchantharath",
+    "country": "Lao People's Democratic Republic",
+    "roles": [
+     "EDITOR"
+    ]
+   },
+   {
+    "id": 5933708981829632,
+    "name": "Pakian Luangxaysana",
+    "localizedName": "Pakian Luangxaysana",
+    "country": "Lao People's Democratic Republic",
+    "roles": [
+     "EDITOR"
+    ]
+   }
+  ],
+  "PUBLISHER": [
+   {
+    "id": 5878831676129280,
+    "name": "Room to Read",
+    "localizedName": "Room to Read",
+    "country": "United States",
+    "roles": [
+     "PUBLISHER"
+    ]
+   }
+  ],
+  "SIGNER": [],
+  "DESIGNER": [],
+  "AMBASSADOR": [],
+  "ORGANIZATION": [],
+  "ILLUSTRATOR": [
+   {
+    "id": 5702414389739520,
+    "name": "Olod Sanethichak",
+    "localizedName": "Olod Sanethichak",
+    "country": "Lao People's Democratic Republic",
+    "roles": [
+     "ILLUSTRATOR"
+    ]
+   }
+  ],
+  "AUTHOR": [
+   {
+    "id": 5674172493594624,
+    "name": "Phuangthana Phetsavong",
+    "localizedName": "Phuangthana Phetsavong",
+    "country": "Lao People's Democratic Republic",
+    "roles": [
+     "AUTHOR"
+    ]
+   }
+  ],
+  "CONTRIBUTOR": [],
+  "NARRATOR": []
+ },
+ "readingLevel": "1",
+ "totalPages": 13,
+ "license": "CC-BY-4.0",
+ "publisher": null,
+ "notes": "This book series was donated by Save the Children Laos and will be unveiled in August 2021 at a reading event with our partners the National Library.",
+ "progress": 0,
+ "currentPage": 0,
+ "slug": null,
+ "hasActivity": false,
+ "hasAudio": false,
+ "hasVideo": false,
+ "epubUrl": "https://storage.googleapis.com/lets-read-asia/lets-read-epubs/Going_to_School___English-v12023.03.04T103900.epub",
+ "pages": [
+  {
+   "id": 5157258049617920,
+   "extractedLongContentValue": "Going To School<br/>",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 1,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-1.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/Mc45yQ6RS8P9G9w53HQlq881Ij22yfFiVHALlh1C0aS1OXCna8FYwhJ3CJIc88pEcNm5wgjX63kEEm_ZSXsAfCHfgRY1TbDZK-aVAY4",
+   "imageWidth": 342,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-1.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "The flag of Laos is flying high.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 6283157956460544,
+   "extractedLongContentValue": "On the first day of school, Vanna carries his backpack to school.<br/>\n",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 2,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-2.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/QkpmhvcnO2it0Dlg6F2m33SRHMx-0e7snhszgIrchftWYunQD5JKw9KarEHmB5IN7GrAKgkfyoy2DOhvzYac8yD8_OYiCIyBJCkeJrs",
+   "imageWidth": 437,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-2.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "There are many stilt houses in the picture.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 4651898306035712,
+   "extractedLongContentValue": "",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 3,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-3.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/U5LoFvMRIe8VMTpAHipLYExpm8bbM-k_XR3Wt1dELQzmd8FrtsClAOl2EDVL7kHCCNlkpZJbhPZSQsEA3DZgK5rTKtsBhBLXE-gnHvI",
+   "imageWidth": 412,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-3.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "A boy, Vanna, is walking with his mom. ",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5777798212878336,
+   "extractedLongContentValue": "Mom drops Vanna off in front of his classroom.<br/>",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 4,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-4.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/wrP_hO0pMhfRt9F327isyAOny3zj-cpjz6LG7c35KOMSuFnPtAoW_FAvOtlS4lbNzM5jRa2bAc5WfE8IgUj2HLoGaYzMF8IGjVaxUw",
+   "imageWidth": 437,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-4.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "They are standing outside the entrance of a classroom.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5214848259457024,
+   "extractedLongContentValue": "The teacher smiles at Vanna.<br/>\n",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 5,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-5.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/xj8NNdL2swoIxq-nIOQA3KxFHSn2uOKwtx7R_esHvYzjbuPDUeGrNNDMmGsQlaUBIWNUnHPVm73Q-_j9ZfjTUujTD5HlJFA387IBjbM",
+   "imageWidth": 413,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-5.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "A teacher is greeting Vanna and his mom outside the classroom.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 6340748166299648,
+   "extractedLongContentValue": "The teacher asks Vanna to take a seat in the classroom.<br/>\n",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 6,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-6.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/yqDL_Zy1m0H70HvYy2-tCqdknsoM0rKfd_Qk4NS8B41-FNfiDOn8Jy6lTBtHO7EupFWf11V2vPNrYkEU27iF1FJVGf89arSxQu6D",
+   "imageWidth": 437,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-6.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "Vanna and the teacher are standing inside the classroom.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 4560142705098752,
+   "extractedLongContentValue": "Many of Vanna's friends are in the classroom.<br/>",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 7,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-7.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/x6hkvhnBur6Kt4LR0Sp_WdzRpZnbw26_WrhSMXGtDlkCo8goDtqOJUimAP1tjeVYvFFxs6hbStow5vAjCQIwjHrdtceB-uqeH6fmCg",
+   "imageWidth": 412,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-7.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "Many children are sitting on a mat and playing in the classroom.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5686042611941376,
+   "extractedLongContentValue": "The teacher lets Vanna sit near Bo.<br/>\n",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 8,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-8.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/-fuwyCAlqx1x_OpDNwBHjIyycjZtIcYYs45CDckMv9PPFJco0DP9q6YuHxPBessX-_gxkqi-4sHu7jWraTN4_fZGlLjmWdm-9soea0Y",
+   "imageWidth": 413,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-8.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "The teacher is gesturing Vanna towards another student, Bo.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5123092658520064,
+   "extractedLongContentValue": "The teacher walks Vanna and his friends around the school.<br/>\n",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 9,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-9.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/VhAK77-_dPEfygErsC46evVfz94A_vXyJjoLBcYe1uQPo6WkIpGMRSeymXo9p4OtipTATwNBu7uyVr_ifz0gtDtaQs6Xfob31povTg",
+   "imageWidth": 413,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-9.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "The teacher and all the students are standing outside on the playground. There is a slide in the back. ",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 6248992565362688,
+   "extractedLongContentValue": "There are lots of things to play with in the school playground.<br/>\n",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 10,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-10.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/kXn73hS6ZON2UBIm312_s8pTXrRwpk7XKDBlral5olFzQlsYoY67ybX4H3cpFoqOGR_7O7mPTJBa2U61jDrjJf_bkTYXPgH10JiH",
+   "imageWidth": 437,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-10.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "The teacher and all the students are standing outside on the playground. There are many playground equipments like slides and seesaws.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 4810743376510976,
+   "extractedLongContentValue": "There is a flower garden and a flagpole in the school.<br/>",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 11,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-11.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/nfZJnpnSL0c4-UNciIhCDQGE9FDhMnlM7MFaNBwkNJ5KuFCVRH-ortBz3wUfB9vtf_qhlM47EKIcO9D33Y3DxgDAeV-_FSqotyvG",
+   "imageWidth": 412,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-11.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "There is a flower garden and a flagpole in the school.\n\n",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 5031435288182784,
+   "extractedLongContentValue": "There is a hand-washing basin and restroom.<br/>Vanna is happy to wash his hands with his friends.<br/>",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 12,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/4201285e-5041-44da-8221-1a5ecaeb3044/Images/p-12.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/LDeeV6DpN7WBTjkCfqAKf2qQbFScR64WTNGhFNsXLDzST7d-5GLRXy7xPv3fjClDTmEiNVwtu1EL1Ft_DKED8pIW6-epmvzNDb6_",
+   "imageWidth": 413,
+   "imageHeight": 600,
+   "imageType": null,
+   "imageName": "p-12.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": false,
+   "alttext": "Vanna is washing hands with his friends in the handwashing basin.",
+   "translatedState": false,
+   "deleted": false
+  },
+  {
+   "id": 81623802485308640,
+   "extractedLongContentValue": "This storybook received assistance by the People of USA through USAID. License: Creative Commons Attribution CC BY 4. 0  IGO<br/>Translation of work: If individuals or legal entities translate this work, you must mention that translation is not conducted by Room to Read or USAID and not considered the official translation of Room to Read or USAID. Room to Read or USAID will not be responsible for the content or mistakes of the translation.  <br/>Amendment of work: If individuals or legal entities make amendments to the work, the source should be referenced: this work has been amended from the original work of Room to Read and USAID. The views and perspectives in this amended work are the sole responsibility of the party making the amendments because it has been reviewed by Room to Read and USAID.<br/>\n",
+   "bookId": "506e703c-1a42-4f67-9dda-4fd0ad5c744e",
+   "pageNum": 13,
+   "imageUrl": "https://storage.googleapis.com/lets-read-asia/assets/images/b23569fc-5cc0-4ff9-895b-2f6e752e74ed.png",
+   "imageServingUrl": "https://lh3.googleusercontent.com/sXoeQj7IO-5sYB9ounGFJSFD5wYHKgxJFgGcLfYKXSy2fGUeQT9VcAJkLZiEAGcGt_w-VVw_bsejpBWu91trxZLNO3ASGn5he8ixag",
+   "imageWidth": 2000,
+   "imageHeight": 301,
+   "imageType": null,
+   "imageName": "p-13.jpg",
+   "imageAltDescription": null,
+   "useHighResolutionImage": true,
+   "alttext": "",
+   "translatedState": false,
+   "deleted": false
+  }
+ ],
+ "originalUrl": "",
+ "translationAvailable": true,
+ "translationStatus": null,
+ "countryOfOrigin": "Lao People's Democratic Republic",
+ "favorite": false,
+ "featured": false,
+ "decodable": false
+}

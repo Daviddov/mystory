@@ -23,6 +23,9 @@ each with (silent) demo narration.
 | `npm test` | Vitest (`src/**/*.test.ts(x)`) |
 | `npm run seed` | Rewrite the sample books, collections and book of the week, then narrate them |
 | `npm run narrate -- <slug>… \| --all \| --seed [--force] [--pages 1,3]` | Run the nikud + narration pipeline on local books |
+| `npm run pipeline:status -- [--details]` | What stands between the local books and the library: missing details, pages and characters still to narrate |
+| `npm run book-meta -- <bookId> <file> [--submit]` / `-- --batch <file>` | Set metadata and credits from a JSON patch; `--batch` takes `{ "<bookId>": patch }` for many books |
+| `npm run bookdash:credits -- [<slug>…] [--dry-run]` | Fill author, illustrator, designer and editor of Book Dash books from their page on bookdash.org |
 | `npm run daily-story -- [--force] [--dry-run]` | Create today's AI story as a `pending` book (local data only) |
 | `npm run import:bookdash -- <slug>… \| --all \| --list [--owner <email>] [--force]` | Import Book Dash books (CC BY 4.0) as English drafts; see "Free books and translation" |
 
@@ -42,7 +45,7 @@ there. An email listed in `ADMIN_EMAILS` gets the admin role.
 | AI wizard | `/create`, `POST /api/generate`, `GET /api/generate/[jobId]`, `POST /api/generate/daily` |
 | Personal | `/me`, `/me/favorites`, `/share/[token]`, `/api/favorites`, `/api/progress`, `/api/share/[bookId]`, `POST /api/views/[bookId]` |
 | Offline / PWA | `/offline`, `/offline/read`, `public/sw.js`, `manifest.webmanifest` |
-| Admin | `/admin`, `/admin/queue`, `/admin/books`, `/admin/collections`, `/admin/taxonomy`, `/admin/import`, `/admin/users`, `/api/admin/**` |
+| Admin | `/admin`, `/admin/queue`, `/admin/pipeline`, `/admin/books`, `/admin/collections`, `/admin/taxonomy`, `/admin/import`, `/admin/users`, `/api/admin/**` |
 | Info | `/about`, `/faq`, `/privacy`, `/terms` (the last two are unreviewed drafts with `[חסר]` placeholders) |
 
 Book lifecycle: `draft` → `private` (share link possible) → `pending`
@@ -54,6 +57,30 @@ Unpublished books open only for their owner, for editors and admins, and for
 anyone holding the share token; everyone else gets a 404. The same rule covers
 their pictures and recordings (see "Media access" below). A share link is
 cleared when a book leaves the public library.
+
+### From draft to library, many books at once
+
+`/admin/pipeline` ("מסלול פרסום", editors and admins) lists every book that is
+not both published and fully narrated, with what it lacks: the items of the
+publication checklist (`publishProblems`, plus a source) and how many of its
+text pages have a real narration. Tick books and:
+
+- **קטגוריות וגיל** sets the age group and adds or replaces categories and
+  themes (`POST /api/admin/books/bulk`, `action: "meta"`).
+- **ניקוד והקראה** narrates the ticked books one after the other through the
+  ordinary `POST /api/narration/<bookId>`. The run lives in the browser tab,
+  shows the number of characters before it starts (the vendor charges by
+  character), can be stopped, and can be run again: narrated pages are skipped.
+  `npm run narrate -- --all` does the same from the command line and now reads
+  `.env.local` itself.
+- **פרסום** publishes the ticked books that pass the whole checklist
+  (`action: "publish"`). Nothing is waived in bulk: a book with missing details
+  is reported and left as it is. Narration is not required, but the dialog says
+  how many of the books lack it.
+
+The rules are in `src/app/admin/_lib/readiness.ts` and `bulk.ts`. The page
+loads every book with its pages, which is fine for a few hundred local books
+and would need a summary query in Supabase mode.
 
 Studio saves are conditional: each one sends the `updatedAt` the tab last saw
 (header `x-book-updated-at`), and the server answers 409 when the book changed
@@ -126,8 +153,9 @@ listing.
   a book as one list ("creator: A, B, C") without roles, so the importer stores
   that list in `credits.creators` and leaves author, illustrator, designer and
   editor empty rather than guess. The studio and `/admin/import` flag such a
-  book; fill the roles in by hand from the book's page on bookdash.org. A book
-  without an author cannot be submitted.
+  book. `npm run bookdash:credits` reads the roles from the book's page on
+  bookdash.org and fills the empty fields. A book without an author cannot be
+  submitted.
 - **Translation.** In the studio a book whose original language is not Hebrew
   gets a "תרגום" tab: one button translates the whole book in a single Claude
   call (`src/lib/translation`), and every page shows the original next to the

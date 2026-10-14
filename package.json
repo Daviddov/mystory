@@ -11,11 +11,17 @@
     "test": "vitest run",
     "seed": "tsx scripts/seed.ts && tsx scripts/narrate.ts --seed",
     "narrate": "tsx scripts/narrate.ts",
+    "pipeline:status": "tsx scripts/pipeline-status.ts",
+    "book-meta": "tsx scripts/book-meta.ts",
+    "bookdash:credits": "tsx scripts/bookdash-credits.ts",
     "daily-story": "tsx scripts/daily-story.ts",
     "import:bookdash": "tsx scripts/import-bookdash.ts",
     "import:storyweaver": "tsx scripts/import-storyweaver.ts",
     "import:african-storybook": "tsx scripts/import-african-storybook.ts",
     "import:gdl": "tsx scripts/import-gdl.ts",
+    "import:gutenberg": "tsx scripts/import-gutenberg.ts",
+    "import:letsread": "tsx scripts/import-letsread.ts",
+    "import:originals": "tsx scripts/import-originals.ts",
     "translate:file": "tsx scripts/translate-file.ts"
   },
   "dependencies": {

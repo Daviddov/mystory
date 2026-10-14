@@ -1,0 +1,59 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Rabbi Meir",
+      "description": "sage about 40, medium build, olive skin, full dark brown beard, dark brown hair under a cream head wrap, expressive dark eyebrows, warm brown eyes; long terracotta-red wool robe over a cream tunic with tzitzit corners, brown belt, sandals"
+    },
+    {
+      "name": "Beruriah",
+      "description": "wise woman about 35, slender, olive skin, warm intelligent brown eyes, gentle knowing smile, hair fully covered by a soft deep-blue head scarf; long modest sage-green dress with long sleeves and a cream shawl, small silver earrings"
+    },
+    {
+      "name": "Neighbors",
+      "description": "three rowdy neighbor men in their 20s and 30s, olive skin: one tall with a scruffy black beard in a mustard-yellow tunic, one stocky and bald with a short beard in a rust-brown tunic, one thin and young with curly hair in a faded blue tunic; simple modest clothes, cheeky expressions (later friendly)"
+    }
+  ],
+  "cover": {
+    "prompt": "Rabbi Meir and Beruriah sit together on low cushions in their small cozy stone home by oil-lamp light, an open scroll with abstract marks between them. Beruriah points to a spot on the scroll with a gentle, clever smile, and Rabbi Meir listens with raised eyebrows, starting to smile. Through the window, a quiet night neighborhood. Warm amber glow, intimate two-shot.",
+    "characters": ["Rabbi Meir", "Beruriah"]
+  },
+  "pages": [
+    {
+      "prompt": "Evening in a small simple stone house: Rabbi Meir and Beruriah sit facing each other at a low table with scrolls, both animated and happy, debating with lively hand gestures and laughing. An oil lamp glows between them; shelves of scrolls on the wall. Warm cozy light, medium shot.",
+      "characters": ["Rabbi Meir", "Beruriah"]
+    },
+    {
+      "prompt": "Night in a stone neighborhood lane. The three rowdy neighbors stand outside banging on clay pots, shouting and laughing loudly. In the house window above, Rabbi Meir peeks out sleepy and annoyed, holding a blanket; in neighboring windows other people cover their ears. Moonlight and lamplight, slightly comic, not threatening.",
+      "characters": ["Rabbi Meir", "Neighbors"]
+    },
+    {
+      "prompt": "Inside the house by daylight. Rabbi Meir stands in the corner of the room, eyes closed, fists tight, brows furrowed, starting to pray in frustration. Through the window the three neighbors are seen making noise in the lane. A shaft of morning light. Medium shot with Rabbi Meir in the corner as the focus.",
+      "characters": ["Rabbi Meir", "Neighbors"]
+    },
+    {
+      "prompt": "Beruriah walks over to Rabbi Meir with an open scroll of abstract marks, gently touching his arm and pointing to a line with a warm, gentle smile. Rabbi Meir turns toward her, surprised, his eyebrows raised. Soft light from a window, simple room with a scroll shelf. Close two-shot, her kind expression central.",
+      "characters": ["Rabbi Meir", "Beruriah"]
+    },
+    {
+      "prompt": "Beruriah sits at the low table explaining, one hand gently brushing away a small grey cloud of dust and broken pottery shards from the table, the other hand gesturing warmly toward the window, where the three neighbors stand in the lane looking ordinary and a little lost. Rabbi Meir listens thoughtfully, beginning to understand. Clear, simple composition, soft daylight, her open gesture toward the people as the focus.",
+      "characters": ["Rabbi Meir", "Beruriah", "Neighbors"]
+    },
+    {
+      "prompt": "Beruriah sits beside Rabbi Meir at the table, her hand resting gently on the open scroll, looking at him with hope and compassion as she speaks. Through the window behind them, sunlight breaks through clouds over the neighborhood rooftops. Rabbi Meir rests his chin on his hand, thinking deeply. Warm, hopeful light.",
+      "characters": ["Rabbi Meir", "Beruriah"]
+    },
+    {
+      "prompt": "Rabbi Meir stands again in the corner of the room, but now his face is soft and peaceful, eyes closed, hands open and raised a little in a gentle prayer for his neighbors. A soft warm light fills the room from the window. Beruriah watches from the table with a quiet, loving smile. Calm, tender mood.",
+      "characters": ["Rabbi Meir", "Beruriah"]
+    },
+    {
+      "prompt": "A sunny morning in the lane. The three neighbors, now friendly and smiling, wave good morning; the tall one helps Rabbi Meir carry a heavy grain sack on his shoulder, both laughing. Beruriah smiles from the doorway. Flowers in clay pots, a cat napping peacefully on a wall. Bright cheerful light, wide street view.",
+      "characters": ["Rabbi Meir", "Beruriah", "Neighbors"]
+    },
+    {
+      "prompt": "A gentle scene in a courtyard of the same era: a little boy about 5 who just grabbed a wooden toy from a girl about 5 stands looking sheepish, while a third child, a kind girl about 6, kneels beside them with a soft smile and speaks a kind word, her hand on his shoulder. The girl who lost the toy looks hopeful. Soft afternoon light, low child's-eye framing.",
+      "characters": []
+    }
+  ]
+}

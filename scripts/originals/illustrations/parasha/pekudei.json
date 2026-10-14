@@ -1,0 +1,111 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Bezalel",
+      "description": "young craftsman, teenage boy about 14, slim, curly black hair, bright brown eyes, light-brown skin, knee-length undyed linen tunic, brown leather work apron, small bronze hammer tucked in the apron pocket, sandals"
+    },
+    {
+      "name": "Moses",
+      "description": "tall slender man about 80 but strong, long beard brown turning grey, kind deep-set brown eyes, olive skin, undyed cream wool robe with a brown striped mantle, brown head cloth, plain wooden shepherd's staff"
+    },
+    {
+      "name": "Itamar",
+      "description": "Aaron's son, young man about 25, short dark-brown beard, friendly brown eyes, olive skin, simple white linen tunic with a blue sash, small white cap, carries a reed pen tucked behind his ear"
+    }
+  ],
+  "cover": {
+    "prompt": "The finished Mishkan stands in the middle of the desert camp, its colorful woven curtains glowing, and a great soft white cloud rests over it. In front, Bezalel holds his little hammer and a rolled scroll, smiling proudly beside Moses and Itamar, while the whole people gather around in awe. Golden evening light, wide majestic shot.",
+    "characters": [
+      "Bezalel",
+      "Moses",
+      "Itamar"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Close-up of Bezalel tapping the very last peg into a wooden board of the Mishkan with his small bronze hammer, then setting the hammer down with a tired, happy smile, wiping his brow. Wood shavings, gleaming gold-covered boards. Warm afternoon light, intimate shot.",
+      "characters": [
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "Moses stands beside a long table of finished pieces and raises his hand to the gathered craftsmen and people, speaking warmly, inviting them to count everything together. Bezalel and Itamar nod. People lean in with curious faces. Medium-wide shot, morning light.",
+      "characters": [
+        "Moses",
+        "Bezalel",
+        "Itamar"
+      ]
+    },
+    {
+      "prompt": "Bezalel unrolls a long scroll covered with small abstract tally marks, no letters, while Itamar points at a gleaming heap of gold objects and a pile of copper, counting on his fingers. Bezalel's eyes are wide at the amount of gold. Warm golden reflections on their faces, medium shot.",
+      "characters": [
+        "Bezalel",
+        "Itamar"
+      ]
+    },
+    {
+      "prompt": "A long line of people each drop a single small silver coin into a large basket, from grandparents to children. Nearby, craftsmen cast the silver into heavy square bases with sockets, lined up in a row as foundations for the boards. Bezalel supervises. Bright sunny scene, shiny silver.",
+      "characters": [
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "Bezalel scratches his curly head in confusion, staring at the scroll of tally marks, while Itamar holds out empty hands and shrugs. Between them, a small empty silver tray. Comic puzzled expressions, close-medium two-shot, warm light. Gleaming boards and silver bases of the Mishkan stand behind them in the courtyard.",
+      "characters": [
+        "Bezalel",
+        "Itamar"
+      ]
+    },
+    {
+      "prompt": "Moses suddenly looks up and points high with a bright smile toward the tops of the courtyard posts, where small shiny silver hooks hold up the white linen curtains. Bezalel and Itamar follow his finger with surprised faces. Low angle looking up at the gleaming hooks against the blue sky.",
+      "characters": [
+        "Moses",
+        "Bezalel",
+        "Itamar"
+      ]
+    },
+    {
+      "prompt": "Everyone laughs with relief: Bezalel throws his head back laughing as he marks the scroll, Itamar claps him on the back, and the craftsmen around smile and cheer. Light, happy mood in the courtyard, warm late-morning sun, medium group shot.",
+      "characters": [
+        "Bezalel",
+        "Itamar"
+      ]
+    },
+    {
+      "prompt": "Craftsmen carry all the finished pieces before Moses: the golden ark covered with a blue cloth, the golden table, the seven-branched menorah, folded woven curtains, and the priestly garments with the blue robe and its golden bells. Moses inspects them carefully, nodding with satisfaction. Wide procession shot, golden light.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Moses raises his hands over the craftsmen in a warm blessing, smiling with love. In the front row Bezalel smiles shyly, his ears glowing bright red with joy. Itamar beside him grins. Soft golden light falling over everyone, medium shot.",
+      "characters": [
+        "Moses",
+        "Bezalel",
+        "Itamar"
+      ]
+    },
+    {
+      "prompt": "Moses sets up the Mishkan: standing the wooden boards one beside another on their silver bases, with helpers lifting huge colorful curtains over the top. All around, the whole people stand in a big circle holding their breath, children on fathers' shoulders. Early spring morning, wide panoramic shot.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Night in the desert camp: a great soft white cloud rests over the finished Mishkan, and inside the cloud a warm fiery orange light glows gently, lighting up the curtains. Families stand outside their tents gazing at it with wonder and calm, a child pointing. No figure in the cloud. Majestic wide shot, deep blue starry sky.",
+      "characters": []
+    },
+    {
+      "prompt": "The cloud rises from the Mishkan into the morning sky, and the whole camp springs into motion: families folding tents, loading donkeys, children cheering and pointing up at the cloud. Bezalel helps lift a beam. Bright, busy, joyful wide shot.",
+      "characters": [
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "Present-day Israeli living room: a child stands proudly next to a tall tower of colorful blocks and a neatly tidied toy shelf, holding a drawing for grandma, while a parent gives a high five. Warm afternoon light, a bookshelf with holy books, happy celebratory mood.",
+      "characters": [],
+      "style": "modern"
+    }
+  ]
+}

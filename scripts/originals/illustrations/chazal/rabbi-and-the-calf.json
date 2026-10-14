@@ -1,0 +1,71 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Rabbi",
+      "description": "Rabbi Yehuda HaNasi, the dignified head of the sages, about 60, tall and stately, fair olive skin, calm deep-brown eyes, a long well-groomed silver-grey beard, a white linen head wrap, a fine deep-blue wool robe with a narrow gold-embroidered hem over a white tunic, a wide soft sleeve; studies from a scroll on a carved wooden stand."
+    },
+    {
+      "name": "Calf",
+      "description": "A small, young calf with soft caramel-brown fur, a white patch on its forehead, big shiny dark eyes with long lashes, floppy ears, wobbly thin legs, a thin rope halter around its head."
+    },
+    {
+      "name": "Maid",
+      "description": "Rabbi's household maid, a kind, energetic woman of about 40, round cheeks, warm brown skin, bright dark eyes, a terracotta-red long dress with long sleeves, a cream apron, a mustard-yellow head covering tied at the nape; carries a straw broom."
+    },
+    {
+      "name": "Weasel Pups",
+      "description": "Four tiny newborn weasel pups, palm-sized, soft pinkish-cream fur with light brown backs, eyes still closed, tiny pink noses, curled up close together in a nest of straw and cloth scraps."
+    }
+  ],
+  "cover": {
+    "prompt": "In a sunlit stone room with a carved wooden study stand, the Rabbi kneels and gently holds out his hand to stop a straw broom, looking tenderly at the tiny Weasel Pups curled in a straw nest in the corner. The Maid pauses with her broom, surprised and softening. Through the open doorway the little Calf peeks in. Warm golden morning light, cozy, compassionate mood, medium-wide framing.",
+    "characters": ["Rabbi", "Maid", "Weasel Pups", "Calf"]
+  },
+  "pages": [
+    {
+      "prompt": "A calm stone study hall with low benches, shelves of scrolls and an oil lamp. The Rabbi sits on a cushioned bench reading a scroll on a carved wooden stand, the scroll showing only abstract marks. A few students sit around him listening. Soft morning light from a high window, peaceful, wide shot.",
+      "characters": ["Rabbi"]
+    },
+    {
+      "prompt": "Outside the study hall in a sunny stone courtyard, the little Calf runs as fast as its wobbly legs can carry it, ears flapping and rope halter trailing, mouth open in a loud moo. Two herdsmen in plain tunics hurry behind, far away and small. The Rabbi looks up from his scroll in the doorway. Bright daylight, dynamic wide shot.",
+      "characters": ["Calf", "Rabbi"]
+    },
+    {
+      "prompt": "Close medium shot: the frightened little Calf pushes its head under the wide sleeve and robe of the Rabbi, hiding its face in the deep-blue fabric, a single tear on its cheek, legs trembling. The Rabbi sits still, looking down at it. Soft light, intimate and emotional, no other figures.",
+      "characters": ["Calf", "Rabbi"]
+    },
+    {
+      "prompt": "The Rabbi gently lifts the Calf's head from his robe and points back toward the courtyard gate with a serious, distant expression. The little Calf looks up at him with big sad eyes. In the background two herdsmen wait by the gate. Muted cool light, medium shot, a quiet sad mood without any harm shown.",
+      "characters": ["Rabbi", "Calf"]
+    },
+    {
+      "prompt": "The Rabbi lies on a simple bed under a wool blanket in a dim stone room, looking pale and uncomfortable, a hand on his forehead. A cup of water and a bowl of herbs sit untouched on a small table. Outside the window, gray clouds hang low over the flat roofs. Soft subdued light, medium shot, quiet mood.",
+      "characters": ["Rabbi"]
+    },
+    {
+      "prompt": "Many days later, a bright morning in the Rabbi's house: the Maid sweeps busily with her straw broom across a stone floor, little clouds of dust rising, her face cheerful and focused. Morning sunbeams stream through a small window onto clay jars and a woven rug. Wide shot of the room, lively mood.",
+      "characters": ["Maid"]
+    },
+    {
+      "prompt": "Close-up in a corner of the stone room: the tiny Weasel Pups huddle together in a nest of straw and cloth scraps, squeaking softly. The tips of the Maid's straw broom approach them from the side. The Maid's surprised face is visible above, mid-sweep. Warm low light, close framing at floor level, focus on the tiny pups.",
+      "characters": ["Weasel Pups", "Maid"]
+    },
+    {
+      "prompt": "The Rabbi, recovering but still a little weak, steps into the room and raises his hand gently toward the Maid, saying to leave them. His face is soft and full of compassion as he looks at the Weasel Pups in the corner. The Maid freezes with her broom in midair. Warm light, medium-wide shot, all three elements clearly visible.",
+      "characters": ["Rabbi", "Maid", "Weasel Pups"]
+    },
+    {
+      "prompt": "The Maid leans her straw broom against the wall and kneels, smiling tenderly, tucking a small cloth more snugly around the nest. The Weasel Pups sleep curled together in their warm corner. Golden afternoon light falls softly on them. Close medium shot, cozy and tender.",
+      "characters": ["Maid", "Weasel Pups"]
+    },
+    {
+      "prompt": "The Rabbi stands by an open window, healthy again, his face bright and peaceful, breathing in fresh air. A soft warm light pours in through the window over him, and the clouds outside have parted into a clear blue sky. Behind him, the Maid smiles happily. Bright morning light, medium shot, joyful relief.",
+      "characters": ["Rabbi", "Maid"]
+    },
+    {
+      "prompt": "A gentle closing scene in an ancient stone village lane: a little girl in a simple blue dress sets a clay bowl of water down for a thirsty cat, and a little boy in a tunic crouches carefully beside a line of ants, stepping around them. A friendly dog wags its tail nearby. Soft golden light, wide, warm framing.",
+      "characters": []
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Aaron",
+      "description": "the High Priest, man in his eighties but sturdy, a bit broad, long full grey beard, bushy grey eyebrows, warm smiling brown eyes, olive skin; wears his priestly garments: white linen tunic, long sky-blue robe with small golden bells and woven red-blue-purple pomegranates alternating at the hem, an apron-like ephod woven of gold, blue, purple and red with two round onyx stones on the shoulders, a square breastplate on his chest with twelve colored stones in four rows of three, a white linen turban with a gold headplate across the forehead, barefoot"
+    },
+    {
+      "name": "Uri",
+      "description": "boy about 6, small and curious, short black curls, big dark eyes, light-brown skin, knee-length undyed linen tunic with a green belt, sandals"
+    },
+    {
+      "name": "Moses",
+      "description": "tall slender man about 80 but strong, long brown beard streaked with grey, kind deep-set brown eyes, olive skin, undyed cream wool robe with a brown striped mantle, brown head cloth, plain wooden shepherd's staff"
+    }
+  ],
+  "cover": {
+    "prompt": "Aaron in his full priestly garments stands in front of the Mishkan curtain, smiling gently, one hand resting over the breastplate on his heart. The twelve colored stones sparkle like a small rainbow. Little Uri looks up at him in wonder from below. Warm golden light, low-angle medium shot, the stones as the bright focus.",
+    "characters": [
+      "Aaron",
+      "Uri"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Wide view of the Mishkan in the middle of the desert camp: a rectangular courtyard with white linen curtain walls on posts, the tent-sanctuary inside covered with colorful woven curtains, a small curl of smoke rising from the altar. Aaron, small in the distance, walks toward the entrance. Tents all around, mountains, morning light.",
+      "characters": [
+        "Aaron"
+      ]
+    },
+    {
+      "prompt": "Aaron turns around slowly in the courtyard, arms slightly lifted, showing his new garments as they shine in the sunlight: the long blue robe, the white tunic, the turban. Moses stands beside him smiling proudly, and a crowd of people watch in admiration. Sparkles of light, joyful wide shot.",
+      "characters": [
+        "Aaron",
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Close-up of the breastplate on Aaron's chest: twelve precious stones in four rows of three, red, green, blue, yellow, purple, orange and more, set in gold, gleaming like a small rainbow. Aaron's hand gently touches its edge, and part of his grey beard and blue robe frame the shot. Warm sparkling light.",
+      "characters": [
+        "Aaron"
+      ]
+    },
+    {
+      "prompt": "Extreme close-up of several stones of the breastplate: each colored gem is engraved with a small, different abstract pattern of delicate lines, like a little seal, no letters. Light glints through the carved lines, and reflections of many colors dance on Aaron's white sleeve. Detailed, jewel-like composition.",
+      "characters": [
+        "Aaron"
+      ]
+    },
+    {
+      "prompt": "Little Uri tugs at Aaron's blue sleeve and points at the stones with a curious question on his face. Aaron bends down toward him with a big warm smile, explaining, one finger touching a single stone. Other children gather close. Medium shot, soft afternoon light in the courtyard.",
+      "characters": [
+        "Uri",
+        "Aaron"
+      ]
+    },
+    {
+      "prompt": "Aaron walks slowly toward the entrance of the Mishkan, his right hand placed over the breastplate on his heart, eyes softly closed, face full of love and care. The stones glow warmly. Behind him, far away, families of the camp watch. Side view, quiet golden light.",
+      "characters": [
+        "Aaron"
+      ]
+    },
+    {
+      "prompt": "Aaron seen from behind and slightly to the side, showing the two round onyx stones set in gold on his shoulders, engraved with abstract marks. He stands a little hunched as if lovingly carrying something heavy, with a gentle smile over his shoulder. Morning light, medium shot.",
+      "characters": [
+        "Aaron"
+      ]
+    },
+    {
+      "prompt": "Low close-up of the hem of Aaron's blue robe as he walks: tiny golden bells alternating with woven red-blue-purple pomegranates, swinging and chiming. Little musical sparkles in the air. Uri and two other children peek around a post, smiling and listening. Playful motion, warm light.",
+      "characters": [
+        "Aaron",
+        "Uri"
+      ]
+    },
+    {
+      "prompt": "Inside the sanctuary at sunset: Aaron gently pours pure golden olive oil from a small pitcher into the cups of the seven-branched golden menorah and lights it, the flames rising softly. Woven curtains in blue, purple and red around him glow in the warm light. Calm, holy, intimate shot.",
+      "characters": [
+        "Aaron"
+      ]
+    },
+    {
+      "prompt": "Night in the camp: Uri and other children lie on mats at the openings of their tents under a starry sky, chins on their hands, looking toward the Mishkan where a small warm light glows. Uri whispers to a friend, eyes getting sleepy. Deep blue night, warm small light in the distance, peaceful wide shot.",
+      "characters": [
+        "Uri"
+      ]
+    },
+    {
+      "prompt": "A circle of children of many looks and skin tones, from the desert camp and from today, hold hands; each child's tunic or shirt carries a soft glow of a different gem color: red, green, blue, yellow, purple. In the middle, a softly sparkling breastplate shape with all the colors. Dreamy warm light, joyful composition.",
+      "characters": []
+    }
+  ]
+}

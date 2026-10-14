@@ -1,0 +1,91 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Ephraim",
+      "description": "little boy about 6, small and lively, round face, short dark-brown curly hair, big curious sparkling brown eyes, olive skin, cream knee-length linen tunic with a sky-blue sash, leather sandals"
+    },
+    {
+      "name": "Menashe",
+      "description": "Ephraim's big brother, boy about 9, taller and calmer, slightly longer straight dark-brown hair, thoughtful brown eyes, olive skin, cream knee-length linen tunic with a deep green sash, leather sandals"
+    },
+    {
+      "name": "Joseph",
+      "description": "the boys' father, ruler of Egypt, man about 56, slim, brown curly hair with grey at the temples, clean-shaven, warm brown eyes with smile lines, olive skin, long white fine linen robes, heavy gold chain around his neck, gold signet ring, gold-trimmed white head cloth"
+    },
+    {
+      "name": "Grandpa Jacob",
+      "description": "very old man about 100, thin, long snow-white beard, white curly hair, kind cloudy brown eyes that barely see, deep wrinkles, gentle smile, olive-green wool robe with a brown rope belt, cream wool blanket, wooden staff leaning beside his bed"
+    },
+    {
+      "name": "Judah",
+      "description": "Jacob's son, tall broad man about 60, thick reddish-grey hair and a full reddish-grey beard, strong proud face, olive skin, rust-red wool robe with a brown leather belt"
+    },
+    {
+      "name": "Naftali",
+      "description": "Jacob's son, lean wiry man about 55, quick bright eyes, short dark beard with grey, olive skin, light tan robe with a green belt, looks ready to run"
+    },
+    {
+      "name": "Zevulun",
+      "description": "Jacob's son, sturdy man about 55, sun-tanned face, curly grey-black beard, olive skin, sea-blue wool robe with a rope belt like a sailor's"
+    },
+    {
+      "name": "Brothers",
+      "description": "Jacob's other sons, a group of eight grown men aged 50 to 70, olive skin, grey and dark beards, Hebrew wool robes in brown, grey, olive, dull blue and sand, standing tall"
+    }
+  ],
+  "cover": {
+    "prompt": "A warm room lit by a golden window. Grandpa Jacob sits up in his big bed and gently places one hand on Ephraim's head and the other on Menashe's head, eyes closed in blessing, a peaceful smile in his white beard. The two boys stand close with shining, happy faces. Joseph stands behind them smiling with emotion. Soft golden light filling the room, medium shot at child's eye level.",
+    "characters": ["Grandpa Jacob", "Ephraim", "Menashe", "Joseph"]
+  },
+  "pages": [
+    {
+      "prompt": "A sunny courtyard of an Egyptian house with palm trees and a small pool. Little Ephraim crouches with curious wide eyes, watching a frog by the water, while big brother Menashe stands beside him with his hands on his knees. Joseph, their father, watches from a shady doorway with a fond smile. Wide shot at child's eye level, bright warm colors.",
+      "characters": ["Ephraim", "Menashe", "Joseph"]
+    },
+    {
+      "prompt": "Joseph kneels down in the courtyard to talk with his two sons, one hand on each boy's shoulder, his face gentle and a little serious. Ephraim looks up eagerly and Menashe nods thoughtfully. Behind them, a doorway opens to a path toward green fields and tents in the distance. Medium shot, soft morning light.",
+      "characters": ["Joseph", "Ephraim", "Menashe"]
+    },
+    {
+      "prompt": "Inside a simple, cozy room with woven rugs and a small window. Grandpa Jacob lies in a large wooden bed under a cream blanket, his long white beard spread on his chest. Hearing the children at the door, he pushes himself up to sit and smiles widely, holding out his arms. Ephraim and Menashe peek in shyly with Joseph behind them. Medium-wide shot, warm soft light.",
+      "characters": ["Grandpa Jacob", "Ephraim", "Menashe", "Joseph"]
+    },
+    {
+      "prompt": "Grandpa Jacob, sitting in bed, squints toward the boys with curiosity, one hand reaching out. Joseph gently guides Ephraim and Menashe forward by their backs, presenting them proudly. The boys step closer, Ephraim smiling and Menashe a bit shy. Medium shot at child's eye level, soft window light on their faces.",
+      "characters": ["Grandpa Jacob", "Joseph", "Ephraim", "Menashe"]
+    },
+    {
+      "prompt": "Close-up of Grandpa Jacob hugging both boys to his chest at once and kissing Ephraim's forehead, his eyes wet with happy tears. Ephraim giggles and Menashe hugs back. Joseph stands in the soft background, wiping a tear and smiling. Warm golden light, intimate, very loving moment.",
+      "characters": ["Grandpa Jacob", "Ephraim", "Menashe", "Joseph"]
+    },
+    {
+      "prompt": "Close-medium shot: Grandpa Jacob's wrinkled hands rest gently on the two boys' heads, his right hand on little Ephraim and his left on Menashe, his arms crossed slightly. The boys stand very still with eyes looking up, feeling the warm, slightly trembling hands. Soft golden window light falls on the hands, the main focus of the picture.",
+      "characters": ["Grandpa Jacob", "Ephraim", "Menashe"]
+    },
+    {
+      "prompt": "Grandpa Jacob, eyes closed, speaks his blessing, and the room fills with a soft warm glow. Above the boys, as a gentle dream image in the air, many shimmering little fish swim in a sparkling stream of light. Ephraim's face glows with wonder, hand on his heart. Menashe smiles. No figures in the light. Medium shot, magical golden-blue tones.",
+      "characters": ["Grandpa Jacob", "Ephraim", "Menashe"]
+    },
+    {
+      "prompt": "Ephraim and Menashe turn and look at each other with big, proud, happy smiles, still standing beside Grandpa Jacob's bed. Grandpa smiles with his hand raised. Joseph, behind them, beams with emotion. Close-medium shot focused on the brothers' faces, warm light, a sweet moment of brotherhood.",
+      "characters": ["Ephraim", "Menashe", "Grandpa Jacob", "Joseph"]
+    },
+    {
+      "prompt": "The room is now full: twelve grown brothers stand in a circle around Grandpa Jacob's bed, tall and serious. Low at the bottom of the picture, little Ephraim peeks out from between the long robes and legs of the uncles with curious wide eyes. Low child's-eye-level angle looking up at the tall men, warm light on Grandpa in the center.",
+      "characters": ["Ephraim", "Grandpa Jacob", "Joseph", "Judah", "Naftali", "Zevulun", "Brothers"]
+    },
+    {
+      "prompt": "Grandpa Jacob raises his hand toward Judah, who kneels proudly by the bed. Behind Judah, a soft translucent golden glow takes the shape of a strong, friendly lion. Beside him Naftali stands with a faint image of a leaping deer, and Zevulun with a faint image of a small sailboat on blue waves. Other brothers watch. Medium-wide shot, warm golden light, dreamy and uplifting.",
+      "characters": ["Grandpa Jacob", "Judah", "Naftali", "Zevulun", "Brothers"]
+    },
+    {
+      "prompt": "In the corner of the room, Ephraim cups his hand and whispers into Menashe's ear, and Menashe smiles and nods wisely. In the soft background, the uncles stand around Grandpa's bed. Close-up on the two boys at child's eye level, warm light, a quiet secret moment.",
+      "characters": ["Ephraim", "Menashe", "Brothers", "Grandpa Jacob"]
+    },
+    {
+      "prompt": "Evening in Joseph's home, lit by small clay oil lamps and a bowl of fruit and bread on a low table. Joseph places his hands on the heads of Ephraim and Menashe, eyes closed, blessing them, just as Grandpa did. The boys smile with closed eyes. Through the window, the first stars. Medium shot, deep warm golden lamplight, peaceful and loving.",
+      "characters": ["Joseph", "Ephraim", "Menashe"]
+    }
+  ]
+}

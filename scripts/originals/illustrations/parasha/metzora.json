@@ -1,0 +1,63 @@
+{
+  "style": "modern",
+  "characters": [
+    { "name": "Dudu", "description": "Boy of about 8, slim, light olive skin, big expressive brown eyes, short messy dark-brown hair, a navy knitted kippah. Wears an orange T-shirt, khaki shorts, blue sneakers and white tzitzit strings peeking at his waist. Signature item: a green school backpack." },
+    { "name": "Roni", "description": "Boy of about 8, sturdy and a bit taller than Dudu, fair skin with freckles, mischievous blue eyes, spiky ginger hair, a black knitted kippah. Wears a red-and-white striped T-shirt and dark jeans shorts, grey sneakers." },
+    { "name": "Gil", "description": "Shy boy of about 8, small and thin, tan skin, gentle dark eyes, neat short black curly hair, a light-blue knitted kippah. Wears a pale-yellow T-shirt, grey shorts and white sneakers; often holds a red rubber ball." },
+    { "name": "Saba", "description": "Dudu's grandfather, about 70, tall with slightly stooped shoulders, olive skin, warm twinkling eyes with deep smile lines, neat white beard, a large black velvet kippah. Wears a light-blue button shirt with sleeves rolled up, a grey knitted vest and dark trousers." }
+  ],
+  "cover": {
+    "prompt": "On a Jerusalem-stone rooftop at sunset, Dudu shakes an open old pillow high in the wind and hundreds of white feathers burst out and swirl across a golden-pink sky over the city rooftops, like snow. Saba stands beside him smiling wisely. Dudu laughs with wonder. Wide, airy composition, the feathers filling the sky.",
+    "characters": ["Dudu", "Saba"]
+  },
+  "pages": [
+    {
+      "prompt": "A sunny schoolyard at recess beside a metal drinking fountain. Roni pulls Dudu aside and whispers into his ear, cupping his hand and giggling. Dudu giggles too, but his hand rests uneasily on his tummy and his smile is a little crooked. In the background, children play ball; Gil sits alone on a low wall. Bright midday light, medium shot.",
+      "characters": ["Roni", "Dudu", "Gil"]
+    },
+    {
+      "prompt": "Dudu walks home along a sidewalk of stone apartment buildings with his green backpack, lips pressed tight and cheeks puffed as if holding something bursting inside. A girl his age waves from a building entrance, and another girl with a dance bag passes by; Dudu almost opens his mouth to talk to them. Afternoon light, funny tension, wide street shot.",
+      "characters": ["Dudu"]
+    },
+    {
+      "prompt": "Family dinner table in the evening, Shabbat candlesticks on the sideboard, bookshelf of holy books behind. Dudu leans eagerly toward Saba to tell something. Saba has put his fork down and looks at Dudu with a calm, gentle, questioning gaze. Dudu's eager smile fades into uncertainty. Warm lamp light, medium close shot of both.",
+      "characters": ["Dudu", "Saba"]
+    },
+    {
+      "prompt": "Saba sits at the table with an open Chumash (pages shown only as abstract lines, no letters), speaking seriously but kindly to Dudu, one finger raised. Dudu listens with his chin in his hands. Then Saba starts to rise from his chair as if to say come with me. Warm evening light in the dining room, cozy home.",
+      "characters": ["Saba", "Dudu"]
+    },
+    {
+      "prompt": "On the flat Jerusalem-stone rooftop of the apartment building in the cool evening breeze, with water tanks and solar heaters and a view over the neighborhood. Saba holds an old white pillow with a cut-open seam and a pair of scissors in his other hand, offering the pillow to Dudu. Dudu stares at him wide-eyed in disbelief. Saba smiles mischievously. Sunset light, the wind ruffling their clothes.",
+      "characters": ["Saba", "Dudu"]
+    },
+    {
+      "prompt": "Dudu shakes the open pillow hard with both hands and hundreds of white feathers burst out, flying over the rooftop rail, floating above the trees, landing on neighbors' balconies and on parked cars in the street below. Dudu laughs with delight, looking like he is in snow. Saba watches calmly. Wide shot from behind, golden-pink sky full of feathers.",
+      "characters": ["Dudu", "Saba"]
+    },
+    {
+      "prompt": "Dudu runs across the rooftop with his arms outstretched, trying to grab feathers, but the wind blows them farther away over the rooftops and into the next street. His face shows wide-eyed dismay. A few feathers slip through his fingers. Saba stands by the rail with the empty pillow. Dynamic diagonal composition, dusky evening sky.",
+      "characters": ["Dudu", "Saba"]
+    },
+    {
+      "prompt": "Saba sits on the low rooftop parapet, the empty flat pillow on his knees, and Dudu sits close beside him, both looking out at the city where tiny white feathers still drift far away in the twilight. Saba speaks softly with an open hand toward the view. Calm, thoughtful mood, blue-violet dusk with the first lights in windows.",
+      "characters": ["Saba", "Dudu"]
+    },
+    {
+      "prompt": "Dudu sits on the parapet with a thoughtful, sorry face, looking up at Saba. Above them, like a soft daydream bubble in the evening sky, a faint gentle image of Gil sitting alone at recess, blushing. Saba rests an arm around Dudu. Quiet, reflective twilight light, close medium shot.",
+      "characters": ["Dudu", "Saba", "Gil"]
+    },
+    {
+      "prompt": "Next day by the schoolyard drinking fountain: Roni asks Dudu something with a curious look. Dudu stands firm and calm, shaking his head kindly, then speaks honestly with a small shy smile. Roni's face softens and he looks down a little, admitting something. Bright morning sunlight, two boys face to face, medium shot.",
+      "characters": ["Roni", "Dudu"]
+    },
+    {
+      "prompt": "At recess, Dudu sits down next to Gil on the low wall at the edge of the schoolyard and holds out a red ball, inviting him to play. Gil looks up with a huge, surprised, happy smile. Other children play dodgeball in the background. Warm sunshine, cheerful mood, medium close shot of the two boys.",
+      "characters": ["Dudu", "Gil"]
+    },
+    {
+      "prompt": "A bright, playful closing picture: Dudu, Gil and Roni play dodgeball together in the sunny schoolyard, laughing. Above them in the blue sky float little white feathers, each one softly glowing like a kind word carried by the wind toward other children. Happy, warm, uplifting wide shot.",
+      "characters": ["Dudu", "Gil", "Roni"]
+    }
+  ]
+}

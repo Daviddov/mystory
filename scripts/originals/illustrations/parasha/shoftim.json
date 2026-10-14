@@ -1,0 +1,125 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Devorah",
+      "description": "The village judge, a woman about 45, tall and calm, warm brown skin, wise dark eyes, dark hair fully covered by a long deep-blue head cloth, long ochre-yellow linen robe with a woven brown belt, sits on a woven reed mat; signature item: a deep-blue head cloth."
+    },
+    {
+      "name": "Tamar",
+      "description": "Girl about 7, slim, olive skin, long straight black hair tied in a low ponytail, bright determined brown eyes, long-sleeved rose-pink linen dress to the ankles, sandals."
+    },
+    {
+      "name": "Uri",
+      "description": "Boy about 7, stocky, light tan skin, short wavy chestnut hair, round face, expressive hazel eyes, short-sleeved green wool tunic with a rope belt, sandals."
+    },
+    {
+      "name": "Red ball",
+      "description": "A round sewn red leather ball the size of a melon, slightly worn, with one small hand-painted yellow star on one side."
+    }
+  ],
+  "cover": {
+    "prompt": "Under a tall date palm in a stone village, Devorah sits calmly on her woven mat holding the red ball in her open hands. Tamar and Uri sit on either side of her, both looking at the ball and then at each other with the first hint of a smile. Golden afternoon light, palm shade, peaceful and fair.",
+    "characters": [
+      "Devorah",
+      "Tamar",
+      "Uri",
+      "Red ball"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Wide establishing shot of a small ancient village of stone houses with flat roofs among olive trees. At its center stands a tall date palm, and in its shade Devorah sits on a woven mat, serene and attentive. A few villagers pass by with water jars. Soft morning light, calm composition.",
+      "characters": [
+        "Devorah"
+      ]
+    },
+    {
+      "prompt": "Tamar and Uri run along the dusty village path toward the palm tree, both gripping one red ball between them and pulling in opposite directions, faces frowning and determined. Dust kicks up around their sandals. Dynamic diagonal composition, Devorah small under the palm in the background.",
+      "characters": [
+        "Tamar",
+        "Uri",
+        "Red ball",
+        "Devorah"
+      ]
+    },
+    {
+      "prompt": "Close-up of Tamar and Uri face to face, both clutching the red ball, mouths open wide shouting, eyebrows furrowed, cheeks red. Comic, energetic but not mean, bright midday light, the ball in the exact center of the picture. Their sandals are planted in the dust, and a curious goat and a few villagers turn their heads to watch.",
+      "characters": [
+        "Tamar",
+        "Uri",
+        "Red ball"
+      ]
+    },
+    {
+      "prompt": "Devorah raises one open hand calmly, her face gentle and steady. Tamar and Uri stop mid-shout and look at her, surprised. She pats the mat beside her, inviting them to sit. Medium shot under the palm shade, a moment of quiet settling in.",
+      "characters": [
+        "Devorah",
+        "Tamar",
+        "Uri",
+        "Red ball"
+      ]
+    },
+    {
+      "prompt": "Tamar sits on the mat explaining with her hands and points toward a stone well in the village. Devorah listens with full attention, nodding slowly, her hands resting in her lap. Uri sits a little apart, arms crossed, waiting. Soft dappled palm light, medium shot focused on Tamar and Devorah.",
+      "characters": [
+        "Devorah",
+        "Tamar",
+        "Uri",
+        "Red ball"
+      ]
+    },
+    {
+      "prompt": "Now Uri speaks, making a pouting face, hands on his chest, telling his side. Devorah turns fully toward him, listening just as carefully to the end. Tamar sits quietly holding the ball on her lap. Medium shot, Devorah between the two children, balanced composition.",
+      "characters": [
+        "Devorah",
+        "Tamar",
+        "Uri",
+        "Red ball"
+      ]
+    },
+    {
+      "prompt": "Tamar asks a question with a curious tilted head. Devorah answers warmly with one finger raised, sunlight falling softly between the two children seated on either side of her, showing that she listens to both sides equally. Calm symmetrical composition, warm golden tones.",
+      "characters": [
+        "Devorah",
+        "Tamar",
+        "Uri"
+      ]
+    },
+    {
+      "prompt": "Close-up of Devorah's hands turning the red leather ball, revealing a small hand-painted yellow star on its side. Uri leans in excitedly pointing at it, Tamar looks on with wide eyes. Shallow focus on the ball, warm light. Behind them the palm leaves sway, casting striped shadows over the mat.",
+      "characters": [
+        "Devorah",
+        "Tamar",
+        "Uri",
+        "Red ball"
+      ]
+    },
+    {
+      "prompt": "Devorah hands the red ball to Uri, while placing her other hand kindly on Tamar's shoulder and praising her. Tamar stands tall and proud, chin up, smiling. Uri hugs his ball happily. Medium shot, warm and fair resolution. A few villagers by the well look on approvingly, and the palm shade forms a soft circle around the three of them.",
+      "characters": [
+        "Devorah",
+        "Tamar",
+        "Uri",
+        "Red ball"
+      ]
+    },
+    {
+      "prompt": "Tamar and Uri play together joyfully in the village square, tossing the red ball between them, laughing, dust glowing in the late-afternoon sun. Devorah watches from under the palm in the background, smiling. Wide lively shot, bright and happy. A goat trots after the rolling ball, and long late-afternoon shadows stretch across the square.",
+      "characters": [
+        "Tamar",
+        "Uri",
+        "Red ball",
+        "Devorah"
+      ]
+    },
+    {
+      "prompt": "Under the palm tree at sunset, Devorah sits with a small circle of village children, including Tamar and Uri. One child speaks while the others sit quietly listening, waiting for their turn, hands in their laps. A gentle lesson in listening, warm orange sky, calm and cozy.",
+      "characters": [
+        "Devorah",
+        "Tamar",
+        "Uri"
+      ]
+    }
+  ]
+}

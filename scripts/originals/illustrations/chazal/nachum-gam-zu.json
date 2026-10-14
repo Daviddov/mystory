@@ -1,0 +1,75 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Nachum",
+      "description": "Nachum Ish Gam Zu, a calm, cheerful Jewish sage of about 55, medium build, warm olive skin, gentle smiling brown eyes, a neat medium-length salt-and-pepper beard, a sand-beige head wrap, a moss-green wool robe over a cream tunic, a leather belt, sandals; his signature item is a carved wooden chest with brass corners that he carries on journeys."
+    },
+    {
+      "name": "Emperor",
+      "description": "The Roman emperor, a tall, clean-shaven man of about 50 with short wavy grey hair, a golden laurel wreath, a white toga with a broad purple border over a purple tunic, a gold ring; expressive face that moves from grumpy to delighted, more comical than frightening, never holding a weapon."
+    },
+    {
+      "name": "Elijah",
+      "description": "Elijah the Prophet disguised as a Roman courtier: an older man with a kind, wise face, short neat white beard, bright knowing blue-grey eyes, a long pale-grey courtier's robe with a silver clasp at the shoulder; a faint warm glow around him only in the eyes and smile, no halo."
+    },
+    {
+      "name": "Innkeeper",
+      "description": "The innkeeper, a round, sly-looking man of about 45, ruddy cheeks, small darting eyes, a bald head with a fringe of black hair, a short black beard, a stained mustard-yellow tunic, a brown apron, clumsy and comical rather than scary."
+    },
+    {
+      "name": "Innkeeper's Helper",
+      "description": "The innkeeper's helper, a tall, skinny young man of about 20, pale olive skin, wide eyes, a tuft of unruly brown hair, a faded rust-orange tunic, always a step behind the innkeeper, comical and nervous."
+    }
+  ],
+  "cover": {
+    "prompt": "Nachum sits on a travel-worn road with his carved wooden chest open on his lap, smiling serenely. From the chest rises a swirl of glittering golden dust that sparkles in the air like fireflies, lighting his calm, happy face. Behind him a winding road leads toward distant Roman columns and a grand palace on a hill. Warm sunset glow, centered composition with the sparkling chest as the focus.",
+    "characters": ["Nachum"]
+  },
+  "pages": [
+    {
+      "prompt": "A sunny courtyard of a stone house. Nachum sits on a bench, a bowl of soup tipped over beside him and a few light raindrops starting to fall, yet he smiles peacefully with open palms raised, as if saying it is all for the best. A cat laps up the spilled soup. Neighbors peek from a doorway, smiling. Medium shot, light and humorous mood.",
+      "characters": ["Nachum"]
+    },
+    {
+      "prompt": "Inside a study hall with low benches and scrolls, a group of sages in simple robes gathers around Nachum and hands him the carved wooden chest, its lid lifted to reveal glittering gems and pearls in soft blue, red and white. Nachum receives it with both hands, humble and smiling. Warm oil-lamp light, medium-wide shot.",
+      "characters": ["Nachum"]
+    },
+    {
+      "prompt": "A quiet roadside inn at night: a small stone room lit by one dim oil lamp. Nachum sleeps peacefully on a simple bed under a wool blanket. Next to the bed the carved wooden chest is closed. In the doorway, in deep blue shadows, the Innkeeper and the Innkeeper's Helper tiptoe in with a sack, fingers to their lips, more silly than sinister. Moonlight through a small window, calm hushed mood.",
+      "characters": ["Nachum", "Innkeeper", "Innkeeper's Helper"]
+    },
+    {
+      "prompt": "Morning in the little inn room. Nachum kneels beside the opened carved chest, now filled with plain brown dry earth. He looks down calmly, takes a deep breath, and smiles gently. Soft morning sunbeams through the window, dust motes floating. Close medium shot on his peaceful face and the chest of dirt.",
+      "characters": ["Nachum"]
+    },
+    {
+      "prompt": "A grand Roman throne hall with marble columns and purple drapes. The Emperor sits on his throne, the carved chest open on his lap showing only brown earth, his cheeks puffed and red with comic indignation. Courtiers in togas frown and mutter behind him. Nachum stands before the throne calm and patient. Bright daylight, wide shot, more funny than frightening.",
+      "characters": ["Emperor", "Nachum"]
+    },
+    {
+      "prompt": "In the throne hall, Elijah in his pale-grey courtier's robe steps forward from among the courtiers and leans toward the Emperor with a raised finger and a wise, knowing smile, suggesting an idea. The Emperor turns, curious, his frown softening. Nachum watches quietly in the background. A gentle shaft of warm light falls on Elijah. Medium shot.",
+      "characters": ["Elijah", "Emperor", "Nachum"]
+    },
+    {
+      "prompt": "On a palace balcony, the Emperor holds a handful of the earth over the balustrade, and it turns into glittering golden dust that drifts on the wind toward a distant walled hill town far away. The town gates swing open peacefully in the soft light. The Emperor's mouth hangs open in astonishment. No soldiers, no fighting. Bright magical light, wide shot.",
+      "characters": ["Emperor"]
+    },
+    {
+      "prompt": "The happy Emperor, beaming, personally pours sparkling gems and pearls into Nachum's carved chest. Courtiers applaud. Nachum smiles warmly and bows his head. A fine decorated cart with a white donkey waits at the palace door to carry him home in honor. Warm golden light, medium-wide celebratory shot.",
+      "characters": ["Emperor", "Nachum"]
+    },
+    {
+      "prompt": "Outside the same small roadside inn by day, Nachum arrives sitting in the honorable decorated cart with his carved chest. The Innkeeper and the Innkeeper's Helper rush out, jaws dropped and eyes wide in amazement. Nachum answers them simply and kindly with an open hand. Bright afternoon light, medium-wide shot.",
+      "characters": ["Nachum", "Innkeeper", "Innkeeper's Helper"]
+    },
+    {
+      "prompt": "Gently comic scene on a dusty road leading away from the distant palace: the Innkeeper and the Innkeeper's Helper trudge home, shoulders slumped and faces long, dragging limp empty sacks behind them. A little puff of plain, ordinary brown dust trails from the sacks, with no sparkle at all. The Helper wipes his brow, the Innkeeper sighs. Late-afternoon light, wide shot.",
+      "characters": ["Innkeeper", "Innkeeper's Helper"]
+    },
+    {
+      "prompt": "A gentle closing scene in an ancient stone courtyard after rain: a little boy in a simple tunic leaps joyfully into a perfect puddle, splashing, while a little girl paints a round purple moon on a flat stone with berry juice, smiling at her unexpected idea. Nachum sits nearby on a bench watching them with a warm smile. A soft rainbow over the flat roofs. Wide, bright, cheerful framing.",
+      "characters": ["Nachum"]
+    }
+  ]
+}

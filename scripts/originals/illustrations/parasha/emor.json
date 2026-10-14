@@ -1,0 +1,63 @@
+{
+  "style": "modern",
+  "characters": [
+    { "name": "Omer", "description": "Boy of about 6, round face, light olive skin, big curious brown eyes, short wavy chestnut hair, a white knitted kippah with a blue rim. Wears a green T-shirt with a small wheat-ear print, blue jeans shorts and red sneakers; on Shabbat a white shirt and navy trousers; at bedtime striped blue pajamas." },
+    { "name": "Saba", "description": "Omer's grandfather, about 72, round and cheerful, olive skin, twinkling eyes behind gold-rimmed glasses, full white beard, a black velvet kippah. Wears a white shirt and a dark-brown knitted vest." },
+    { "name": "Ima", "description": "Omer's mother, about 36, slim, light olive skin, warm hazel eyes, hair covered by a coral-orange head scarf. Wears a long sage-green skirt and a white long-sleeved blouse." },
+    { "name": "Abba", "description": "Omer's father, about 38, tall, olive skin, brown eyes, short black beard, a navy knitted kippah. Wears a light-grey button shirt and dark trousers; holds a small prayer book (siddur) in the evenings." }
+  ],
+  "cover": {
+    "prompt": "Omer stands on tiptoe in front of a big wall chart of 49 squares filled with little yellow wheat-ear stickers, pressing the last sticker into place with a joyful grin. Around the chart, green branches and flowers hint at Shavuot. Warm evening lamp light in a cozy home. The chart has only squares and wheat stickers, no numbers or writing. Medium shot.",
+    "characters": ["Omer"]
+  },
+  "pages": [
+    {
+      "prompt": "Shabbat afternoon in a sunlit living room with a bookshelf of holy books. Saba and Omer sit close together on the sofa with a large open Chumash on Saba's lap (pages shown as abstract lines, no letters). Saba points at the page with delight, and Omer looks at it with huge, wide-open eyes. Golden afternoon light, warm grandfather-and-grandson moment.",
+      "characters": ["Saba", "Omer"]
+    },
+    {
+      "prompt": "Saba reads aloud from the Chumash, and above them, like soft dreamy bubbles floating in the air, appear little pictures of the holidays: Shabbat candles, a Seder plate with matzah, green branches of Shavuot, a shofar, a white Yom Kippur prayer shawl, and a sukkah. Omer gazes up at the bubbles in wonder. Warm, magical light.",
+      "characters": ["Saba", "Omer"]
+    },
+    {
+      "prompt": "Omer sits up straight on the sofa, pointing at himself with both thumbs in amazement, mouth open. Saba laughs heartily, his head tilted back, the Chumash still open in his lap. Playful, funny mood, warm afternoon light, close medium shot of both.",
+      "characters": ["Omer", "Saba"]
+    },
+    {
+      "prompt": "Saba explains with his hands, showing a long path: in a soft dream image above them a winding road of little evening moons and stars leads from a Seder plate with matzah to a bunch of wheat and flowers of Shavuot far away. Omer follows the path with his finger. Warm golden light, gentle magical mood.",
+      "characters": ["Saba", "Omer"]
+    },
+    {
+      "prompt": "Omer holds up both hands with all ten fingers spread, counting with a worried, funny frown, while Ima sits down beside him smiling and holding a roll of paper and markers, ready with an idea. Saba watches with amusement. Bright living room, cheerful mood, medium shot.",
+      "characters": ["Omer", "Ima", "Saba"]
+    },
+    {
+      "prompt": "At the dining table, Omer and Ima draw a big poster with a grid of seven rows of seven empty squares, using a ruler and colored markers, no numbers or writing. On the table beside them is a pile of tiny yellow wheat-ear stickers. Omer concentrates with his tongue out; Ima smiles. Afternoon light, crafty, happy scene.",
+      "characters": ["Omer", "Ima"]
+    },
+    {
+      "prompt": "Evening after sunset, the window showing a deep-blue sky with the first star. Abba stands holding a small siddur and makes the blessing with his eyes on the page. Omer, beside him, presses the very first yellow wheat sticker into the first square of the chart on the wall; the rest of the grid is empty. Warm lamp light, festive quiet mood.",
+      "characters": ["Abba", "Omer"]
+    },
+    {
+      "prompt": "A rhythmic picture of several evenings: on the left Omer jumps eagerly toward the chart with a sticker in his hand, bright-eyed; on the right, on a later evening, Omer in striped pajamas yawns widely but still presses a sticker on, rubbing one eye. The chart has more wheat stickers each time. Warm lamplight, sweet and funny mood.",
+      "characters": ["Omer"]
+    },
+    {
+      "prompt": "Omer sits on the floor with his chin in his hands, looking tired and a bit impatient. Abba kneels beside him and points to the wall chart, where more than half of the squares are already filled with yellow wheat stickers. Omer's face starts to brighten. Soft evening light, encouraging mood, medium shot.",
+      "characters": ["Omer", "Abba"]
+    },
+    {
+      "prompt": "Close view of the wall chart, now nearly full, the yellow wheat-ear stickers forming a golden little field that seems to sway and shine. Omer stands in front of it with his face lit up in a big smile, reflected warm light on his cheeks. No numbers or writing on the chart. Magical warm glow, sense of growing joy.",
+      "characters": ["Omer"]
+    },
+    {
+      "prompt": "Omer jumps in the air in his pajamas with arms raised in triumph in front of the completely full wheat chart. Abba, holding his siddur, and Ima clap and laugh behind him. Through the window, a starry evening sky. Joyful, celebratory moment, dynamic medium shot.",
+      "characters": ["Omer", "Abba", "Ima"]
+    },
+    {
+      "prompt": "Shavuot morning: the home is decorated with green branches and colorful flowers, and a white cheesecake sits on the festive table with a white tablecloth. Omer, in his white holiday shirt, takes a big happy bite of cheesecake, eyes closed in delight. Saba, Ima and Abba smile around the table. The full wheat chart hangs on the wall behind. Bright, fresh morning light.",
+      "characters": ["Omer", "Saba", "Ima", "Abba"]
+    }
+  ]
+}

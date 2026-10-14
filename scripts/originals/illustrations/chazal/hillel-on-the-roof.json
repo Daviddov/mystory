@@ -1,0 +1,104 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Hillel",
+      "description": "young poor man about 20, thin, olive skin, short black beard, short black curly hair, kind bright dark eyes, eager gentle face; patched grey wool tunic with tzitzit corners, worn brown cloak, small grey cap, old worn sandals with a torn strap"
+    },
+    {
+      "name": "Shemaya",
+      "description": "great sage about 65, tall, olive skin, long white beard, kind serious eyes, white head wrap, long deep-blue robe over a cream tunic with tzitzit"
+    },
+    {
+      "name": "Avtalyon",
+      "description": "great sage about 60, shorter and rounder, olive skin, grey beard, warm smiling eyes, cream head wrap, long olive-green robe over a cream tunic with tzitzit"
+    },
+    {
+      "name": "Guard",
+      "description": "study hall doorkeeper about 50, stocky, olive skin, bushy grey-black beard, stern but not cruel face, brown head wrap, rust-colored tunic, holding a large iron key ring"
+    }
+  ],
+  "cover": {
+    "prompt": "Night on a flat stone roof in Jerusalem as gentle snowflakes fall. Hillel lies on his stomach beside a small open skylight, wrapped in his brown cloak, listening with a joyful, rapt expression to the warm golden light and voices rising from below. Snow-dusted rooftops of Jerusalem stretch behind him under a deep blue sky. Contrast of cold blue snow and warm glow, Hillel's happy face as focus.",
+    "characters": [
+      "Hillel"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Jerusalem street of stone houses in morning light. Young Hillel walks with a small cloth bundle, having arrived from far away, looking around with wonder and hope; his sandals are worn and torn, his tunic patched. In the background, a large stone study hall building. Warm light, medium-wide shot.",
+      "characters": [
+        "Hillel"
+      ]
+    },
+    {
+      "prompt": "End of a workday in a Jerusalem market lane, golden late light. Hillel, tired but smiling, has just carried sacks for a merchant and holds out his palm with one small copper coin in it. A few steps away is the study hall door where the Guard waits; a round loaf of bread peeks from Hillel's bundle. Composition reads left to right: work, coin, study hall door.",
+      "characters": [
+        "Hillel",
+        "Guard"
+      ]
+    },
+    {
+      "prompt": "Inside the study hall with a skylight: Shemaya and Avtalyon sit at the front on low benches teaching, scrolls with abstract marks open before them. Among the students on the benches, Hillel leans forward eagerly, eyes shining, one hand raised with a question. Warm oil lamps and daylight from the skylight above. Medium shot with Hillel and the two sages as focus.",
+      "characters": [
+        "Hillel",
+        "Shemaya",
+        "Avtalyon"
+      ]
+    },
+    {
+      "prompt": "Late Friday afternoon, grey wintry sky. Hillel stands outside the closed wooden door of the study hall, empty hands turned up, his face disappointed but patient. The Guard has just shut the door, seen half-hidden behind it, shaking his head. Cold blue-grey light, a lonely street, medium shot.",
+      "characters": [
+        "Hillel",
+        "Guard"
+      ]
+    },
+    {
+      "prompt": "Dusk. Hillel carefully climbs the stone wall of the study hall, gripping the jutting stones, one knee already on the edge of the flat roof. On the roof beside him a small open skylight glows warm gold from the lamps inside. His face is careful and determined. Deep blue evening sky, low angle from the street looking up.",
+      "characters": [
+        "Hillel"
+      ]
+    },
+    {
+      "prompt": "Winter night on the roof. Big soft snowflakes fall; Hillel lies beside the skylight, curled in his brown cloak, a white layer of snow gathering over him like a blanket, but his face is turned to the warm golden light from below, eyes bright, utterly absorbed in listening. Snowy Jerusalem rooftops all around. Peaceful, cold blue with one warm glow.",
+      "characters": [
+        "Hillel"
+      ]
+    },
+    {
+      "prompt": "Shabbat morning inside the study hall. Shemaya and Avtalyon sit on the benches and look up together at the skylight, puzzled, because the room is dim. The open skylight above is covered by a white mound of snow in the shape of a person lying across it, blocking the light. Cool dim interior with a pale white glow at the edges of the skylight, upward-looking composition.",
+      "characters": [
+        "Shemaya",
+        "Avtalyon"
+      ]
+    },
+    {
+      "prompt": "On the snowy roof in bright morning light, Shemaya and Avtalyon kneel beside a mound of snow and gently brush the snow away from Hillel, who lies curled in his cloak with his eyes open, cheeks pale, shivering but looking up at them with a small grateful smile. Their faces are full of tenderness and care. Soft white morning light, close tender shot.",
+      "characters": [
+        "Hillel",
+        "Shemaya",
+        "Avtalyon"
+      ]
+    },
+    {
+      "prompt": "Inside a warm room, Hillel sits wrapped in a thick blanket beside a crackling fire in a stone hearth, holding his hands to the warmth, smiling, while Avtalyon gently rubs his shoulders and Shemaya sets a basin of warm water beside him. Steam rises. The sages look kind and decisive. Golden firelight filling the room, cozy medium shot.",
+      "characters": [
+        "Hillel",
+        "Shemaya",
+        "Avtalyon"
+      ]
+    },
+    {
+      "prompt": "Close cozy scene by the fire: Hillel's cheeks are rosy again and he smiles broadly, wiggling his warm fingers; Shemaya and Avtalyon smile back at him warmly. A scroll with abstract marks lies on Hillel's lap, ready for learning. Rich warm orange firelight, joyful mood.",
+      "characters": [
+        "Hillel",
+        "Shemaya",
+        "Avtalyon"
+      ]
+    },
+    {
+      "prompt": "A gentle scene in a stone courtyard of the same era on a crisp winter day: a little girl about 6, bundled in a thick red wool cloak and head scarf, climbs a short wooden ladder to reach a bird's nest in an olive tree with eager determination, while her small brother below holds out a warm woolen coat for her with a smile. Bright clear winter light.",
+      "characters": []
+    }
+  ]
+}

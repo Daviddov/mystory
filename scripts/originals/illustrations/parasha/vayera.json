@@ -1,0 +1,79 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Abraham",
+      "description": "elderly kind man, about 75-looking, tall lean build, olive skin, warm brown eyes, long white beard, cream linen robe under a terracotta-and-brown striped wool mantle, white head-cloth tied with a brown cord, leather sandals, carries a tall wooden shepherd's staff"
+    },
+    {
+      "name": "Sarah",
+      "description": "elderly gentle woman, about 70-looking, slim, olive skin, kind wrinkled face with smile lines, dark expressive eyes, long deep-blue wool dress, cream head-scarf covering all her hair, a thin silver bracelet on her right wrist"
+    },
+    {
+      "name": "Three Guests",
+      "description": "three tall, calm travelers (angels in disguise) in plain long white robes and simple white head-cloths, kind serene faces with short dark beards, dusty sandals, a very soft gentle glow around them; no wings, no halos"
+    },
+    {
+      "name": "Baby Isaac",
+      "description": "a chubby, giggling newborn baby with round rosy cheeks, a little tuft of dark hair, sparkling dark eyes and a huge toothless laugh, wrapped in a soft cream blanket with a thin blue stripe"
+    },
+    {
+      "name": "Abraham's Tent",
+      "description": "a large tent of dark-brown goat-hair cloth with cream stripes, raised on wooden poles, with a wide open doorway on each of its four sides, woven red-and-cream rugs and cushions inside, a large shady oak tree beside it"
+    }
+  ],
+  "cover": {
+    "prompt": "Abraham stands in the wide-open doorway of Abraham's Tent under the big oak, arms spread in warm welcome and smiling broadly, while Sarah peeks out from inside holding a tray of fresh round cakes. The desert behind glows in golden sunlight, a clay water jug and cups wait on a rug. Medium-wide shot at a child's eye level, warm inviting mood.",
+    "characters": ["Abraham", "Sarah", "Abraham's Tent"]
+  },
+  "pages": [
+    {
+      "prompt": "A blazing hot desert midday: the white sun burns in a pale sky, heat shimmers above the golden sand dunes, and a couple of small lizards hide in the thin shadow of a rock, looking up with half-closed sleepy eyes. Abraham's Tent is a small shape in the distance. Wide shot, bleached bright colors, a sense of heavy heat.",
+      "characters": ["Abraham's Tent"]
+    },
+    {
+      "prompt": "Abraham sits on a rug in one opening of Abraham's Tent, staff across his knees. The camera shows the whole tent from a slightly raised angle so all four open doorways can be seen, each facing a different direction of the empty desert. Medium-wide shot, hot bright light, deep cool shade inside the tent.",
+      "characters": ["Abraham", "Abraham's Tent"]
+    },
+    {
+      "prompt": "Close-up of Abraham at the tent opening, shading his eyes with one hand and leaning forward, looking left and right over the empty shimmering desert with a caring, hopeful expression. A clay jug of water and cups ready beside him. Warm bright light, the empty horizon behind him.",
+      "characters": ["Abraham", "Abraham's Tent"]
+    },
+    {
+      "prompt": "Abraham runs across the hot sand toward the Three Guests who stand far off in the heat, his robe and mantle flapping, one hand holding up the hem, the other waving. His face is full of joy. Wide shot from the side, heat haze, the tent behind him and the guests small and glowing softly in the distance.",
+      "characters": ["Abraham", "Three Guests", "Abraham's Tent"]
+    },
+    {
+      "prompt": "In the deep shade of the big oak beside Abraham's Tent, the Three Guests sit on rugs while Abraham kneels and pours cool water from a clay jug into a basin for their feet, smiling up at them. Dappled light filters through the leaves. Medium shot, calm and refreshing mood, a small loaf of bread on a plate nearby.",
+      "characters": ["Abraham", "Three Guests", "Abraham's Tent"]
+    },
+    {
+      "prompt": "Inside Abraham's Tent: Sarah kneels at a low wooden board kneading soft dough with flour on her hands, a few round cakes already baking on a hot stone, a puff of warm steam rising. Abraham leans in through the doorway, excited and urging her on with a big smile. Medium shot, warm golden light inside the tent, cozy baking mood.",
+      "characters": ["Sarah", "Abraham", "Abraham's Tent"]
+    },
+    {
+      "prompt": "A generous feast spread on a rug under the oak: round cakes, bowls of butter and milk, dates, figs and grapes. The Three Guests sit and eat, while Abraham stands beside them bending forward with a clay pitcher, offering more with a warm smile. Medium-wide shot, dappled afternoon light, abundant and welcoming.",
+      "characters": ["Abraham", "Three Guests", "Abraham's Tent"]
+    },
+    {
+      "prompt": "One of the Three Guests speaks kindly to Abraham under the oak, one hand gently raised. In the foreground, just inside the doorway of Abraham's Tent, Sarah listens from behind the tent cloth, her eyes wide with surprise. Composition split between the guests outside and Sarah close in the foreground, late afternoon light.",
+      "characters": ["Sarah", "Abraham", "Three Guests", "Abraham's Tent"]
+    },
+    {
+      "prompt": "Close-up of Sarah inside the tent, hand over her mouth, laughing softly in disbelief, eyes crinkled with amusement and a little wonder. Behind her through the doorway, a warm golden light shines softly over the desert, with no figure in it. Gentle, warm mood.",
+      "characters": ["Sarah", "Abraham's Tent"]
+    },
+    {
+      "prompt": "A year later inside Abraham's Tent: Sarah sits on cushions cradling Baby Isaac, who laughs a huge toothless laugh. Abraham kneels beside them, beaming, gently touching the baby's tiny hand. Soft morning light streams in through the open doorway. Medium close-up, tender and joyful.",
+      "characters": ["Sarah", "Baby Isaac", "Abraham", "Abraham's Tent"]
+    },
+    {
+      "prompt": "A happy celebration outside Abraham's Tent: Sarah lifts Baby Isaac up high, laughing, while neighbors in simple robes and head-scarves gather around clapping and smiling, children dancing, Abraham laughing among them. Platters of food on rugs. Wide shot, bright festive afternoon light, everyone laughing.",
+      "characters": ["Sarah", "Baby Isaac", "Abraham", "Abraham's Tent"]
+    },
+    {
+      "prompt": "Sunset at Abraham's Tent with all its doorways wide open and a warm lamp glowing inside. On the rug in front: a clay jug, cups and a plate of fresh cakes, ready for any guest. Abraham and Sarah, holding Baby Isaac, wave toward the viewer in welcome. Wide shot at a child's eye level, warm golden and pink sky, inviting mood.",
+      "characters": ["Abraham", "Sarah", "Baby Isaac", "Abraham's Tent"]
+    }
+  ]
+}

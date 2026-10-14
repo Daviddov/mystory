@@ -1,0 +1,148 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Abraham",
+      "description": "elderly kind man, about 75-looking, tall lean build, olive skin, warm brown eyes, long white beard, cream linen robe under a terracotta-and-brown striped wool mantle, white head-cloth tied with a brown cord, leather sandals, carries a tall wooden shepherd's staff"
+    },
+    {
+      "name": "Isaac",
+      "description": "gentle young man, about 20-looking, tall and strong, olive skin, warm dark-brown eyes, short curly dark-brown hair, short soft dark beard, sage-green knee-length wool tunic with a brown leather belt, cream head-cloth, leather sandals"
+    },
+    {
+      "name": "Two Helpers",
+      "description": "two young servant lads, about 17-looking, slim, olive skin, short dark hair, simple undyed beige tunics with rope belts, sandals, one with a rolled blanket on his back"
+    },
+    {
+      "name": "Donkey",
+      "description": "a sturdy small grey donkey with a pale muzzle, long soft ears, a dark stripe along its back, wearing a red-and-cream woven saddle blanket"
+    },
+    {
+      "name": "Ram",
+      "description": "a handsome woolly ram with thick cream-white fleece, a calm face and large dark curled horns spiraling beside his ears"
+    },
+    {
+      "name": "Angel",
+      "description": "a tall gentle figure made of soft warm golden-white light in a plain flowing white robe, a kind calm face that is mostly glow, no wings and no halo; usually seen only as a beam of light from the sky"
+    },
+    {
+      "name": "Abraham's Tent",
+      "description": "a large tent of dark-brown goat-hair cloth with cream stripes, raised on wooden poles, with a wide open doorway on each of its four sides, woven red-and-cream rugs and cushions inside"
+    }
+  ],
+  "cover": {
+    "prompt": "Abraham and Isaac walk side by side up a rocky mountain path in warm morning light, seen from a slight angle so their calm, loving faces show. Isaac carries a bundle of firewood on his shoulders; Abraham holds his staff in one hand and a small clay fire-pot with a gentle glowing ember in the other. A soft white cloud rests on the mountain top ahead. Wide shot, golden light, togetherness.",
+    "characters": [
+      "Abraham",
+      "Isaac"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Before dawn outside Abraham's Tent, stars still twinkling in a deep-blue sky. Abraham has saddled the Donkey; a bundle of split firewood tied with rope lies beside it. Inside the tent opening, by a tiny oil lamp, Abraham bends and gently touches the shoulder of Isaac, who is waking up on his sleeping mat. Medium shot, quiet hushed mood, soft lamplight and starlight.",
+      "characters": [
+        "Abraham",
+        "Isaac",
+        "Donkey",
+        "Abraham's Tent"
+      ]
+    },
+    {
+      "prompt": "Night. Abraham stands alone outside Abraham's Tent, face lifted toward a soft warm column of light shining down through the clouds, with no figure in it. His hand is on his heart, his face serious and thoughtful, listening carefully. Medium shot from the side, starry night, gentle golden glow on his face.",
+      "characters": [
+        "Abraham",
+        "Abraham's Tent"
+      ]
+    },
+    {
+      "prompt": "Close-up of Abraham sitting on a rock at the edge of the camp in the grey before sunrise, hands folded, eyes closed, quiet and trusting, with a soft warm light touching his face. Behind him the sky begins to turn pale pink over the hills, a calm reassuring dawn. Peaceful, tender mood.",
+      "characters": [
+        "Abraham"
+      ]
+    },
+    {
+      "prompt": "On the third day of the journey: Abraham, Isaac, the Two Helpers and the Donkey stand on a rocky ridge. Abraham and Isaac look far ahead and point toward a distant mountain crowned by a glowing white cloud, faces full of awe; the Two Helpers squint in the same direction and see nothing, puzzled. Wide shot, clear morning light, rugged hills.",
+      "characters": [
+        "Abraham",
+        "Isaac",
+        "Two Helpers",
+        "Donkey"
+      ]
+    },
+    {
+      "prompt": "At the foot of the mountain the Two Helpers sit in the shade of a rock beside the Donkey. Abraham gently places the bundle of wood on Isaac's shoulders; Abraham holds a small clay fire-pot with a glowing ember. Then the two begin to walk up together. Medium-wide shot, warm morning light, father and son close.",
+      "characters": [
+        "Abraham",
+        "Isaac",
+        "Two Helpers",
+        "Donkey"
+      ]
+    },
+    {
+      "prompt": "Halfway up the rocky path, Isaac turns his face to his father with a soft questioning look, the firewood on his back. Abraham answers with a gentle, loving look, his hand resting on Isaac's shoulder. Close-up of the two faces in profile, warm sunlight, wild thyme and rocks around, deep trust between them.",
+      "characters": [
+        "Abraham",
+        "Isaac"
+      ]
+    },
+    {
+      "prompt": "On the mountain top, a simple altar of rough stones with the firewood neatly arranged on it. Abraham and Isaac stand facing each other beside it, holding each other's hands and looking into each other's eyes, calm and devoted, both ready. Medium shot from the side, a soft white cloud glowing overhead, golden light. No knife and no rope shown.",
+      "characters": [
+        "Abraham",
+        "Isaac"
+      ]
+    },
+    {
+      "prompt": "Very wide, distant view of the mountain top from far below: a tiny figure of Abraham beside the stone altar, his arm stopped mid-motion and turned toward the sky, as a brilliant warm beam of golden light pours down onto him from parting clouds. The Angel is suggested only within the light. The figures are small, no knife visible, the focus on the light. Dramatic yet safe and tender.",
+      "characters": [
+        "Abraham",
+        "Angel"
+      ]
+    },
+    {
+      "prompt": "Isaac stands up safe and well beside the altar, and Abraham hugs him tightly, eyes closed with relief and love, Isaac hugging him back. Warm golden light from the sky surrounds them softly. A loosened rope lies on the ground, harmless. Medium close-up, deeply tender and joyful mood.",
+      "characters": [
+        "Abraham",
+        "Isaac"
+      ]
+    },
+    {
+      "prompt": "Abraham turns and sees the Ram caught by his curled horns in a tangle of thorny bushes nearby, the Ram looking calm. Abraham points, Isaac beside him with a hand on his father's arm, both surprised and grateful. Medium-wide shot at bush level, bright clear midday light on the mountain top, soft cloud above.",
+      "characters": [
+        "Abraham",
+        "Isaac",
+        "Ram"
+      ]
+    },
+    {
+      "prompt": "Abraham and Isaac walk down the mountain path together arm in arm, smiling, as the sky above glows with gentle light and the first evening stars appear. Below them the Two Helpers jump up waving happily beside the Donkey. Wide shot from below, warm sunset colors, a sense of homecoming.",
+      "characters": [
+        "Abraham",
+        "Isaac",
+        "Two Helpers",
+        "Donkey"
+      ]
+    },
+    {
+      "prompt": "Evening on the way home: Abraham and Isaac sit together by a small campfire under a sky full of stars, the Donkey resting nearby. Abraham looks at his son with deep tender love, his hand gently on Isaac's cheek, and Isaac smiles back, safe and whole. Medium close-up, warm firelight on their faces against the deep-blue night, a soft protective glow in the sky with no figure in it.",
+      "characters": [
+        "Abraham",
+        "Isaac",
+        "Donkey"
+      ]
+    },
+    {
+      "prompt": "Close-up of a curled ram's horn shofar, cream and honey-brown, held up by Isaac's hands toward the sunrise on a hilltop, light shining along its spiral. Isaac's face, slightly blurred, smiles thoughtfully behind it. Soft golden morning light, a few rays spreading across the sky. Warm, festive, quiet mood.",
+      "characters": [
+        "Isaac"
+      ]
+    },
+    {
+      "prompt": "Seen from behind at a child's eye level: Abraham and Isaac walk side by side along a path through the hills toward a glowing sunrise, Abraham's arm around Isaac's shoulders, their long shadows joined into one. Wide shot, warm golden light, peaceful and hopeful, a sense of 'the two of them together'.",
+      "characters": [
+        "Abraham",
+        "Isaac"
+      ]
+    }
+  ]
+}

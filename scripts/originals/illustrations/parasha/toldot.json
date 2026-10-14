@@ -1,0 +1,87 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Isaac",
+      "description": "gentle older man, about 60-looking, tall, olive skin, warm dark-brown eyes, short curly hair and a full beard both dark brown streaked with grey, sage-green wool robe with a brown leather belt, cream head-cloth, leather sandals"
+    },
+    {
+      "name": "Rebecca",
+      "description": "warm wise woman, about 40-looking, slim, olive skin, big warm brown eyes, rose-red long dress with a cream sash, cream head-scarf covering all her hair, gold bracelets on both wrists"
+    },
+    {
+      "name": "Baby Esau",
+      "description": "a newborn baby with ruddy reddish skin and a soft fuzz of reddish hair all over his head and arms like a tiny coat, wriggly and loud, wrapped in a rust-red blanket"
+    },
+    {
+      "name": "Baby Jacob",
+      "description": "a newborn baby with smooth light-olive skin, a little tuft of dark curly hair, calm curious dark eyes, wrapped in a pale-blue blanket"
+    },
+    {
+      "name": "Esau",
+      "description": "teenage young man, about 16-looking, strong and broad, ruddy sunburnt skin, wild reddish-brown hair, hairy forearms, green-brown eyes, short rough brown leather tunic with a goat-fur vest, a hunter's bow and quiver slung on his back (never in use), dusty boots of wrapped leather"
+    },
+    {
+      "name": "Jacob",
+      "description": "teenage young man, about 16-looking, slim, smooth light-olive skin, dark curly hair, calm thoughtful dark eyes, long sky-blue wool robe with a cream sash, a cream head-cloth, often holds a wooden stirring spoon"
+    },
+    {
+      "name": "Family Tent",
+      "description": "a large tent of dark-brown goat-hair cloth with cream stripes on wooden poles, wide open doorway, woven rugs and cushions inside, a small cooking fire with a round black clay pot in front"
+    }
+  ],
+  "cover": {
+    "prompt": "In front of the Family Tent, Jacob stirs a steaming pot of red lentil stew over a small fire with his wooden spoon, while Esau, just back from the field with his bow on his back, leans in eagerly sniffing the delicious smell, eyes wide. Warm late-afternoon light, curls of steam, a playful, inviting moment. Medium shot at a child's eye level.",
+    "characters": ["Jacob", "Esau", "Family Tent"]
+  },
+  "pages": [
+    {
+      "prompt": "Inside the Family Tent in soft afternoon light, Rebecca sits on cushions with both hands on her round pregnant belly, eyebrows raised in surprise as it bumps and wiggles. Isaac sits beside her smiling with wonder. A soft warm light shines through the tent doorway, with no figure in it. Medium shot, tender and slightly comic mood.",
+      "characters": ["Rebecca", "Isaac", "Family Tent"]
+    },
+    {
+      "prompt": "Close-up of the two newborn twins lying side by side on a soft blanket: Baby Esau, ruddy and fuzzy-haired, wriggling and crying loudly, and Baby Jacob, smooth and calm, his tiny hand holding on to his brother's heel. Rebecca and Isaac lean over them smiling, faces partly in frame. Warm gentle light.",
+      "characters": ["Baby Esau", "Baby Jacob", "Rebecca", "Isaac"]
+    },
+    {
+      "prompt": "Bright morning in the open fields: Esau runs and leaps over rocks with his bow on his back, hair flying, full of energy. Near the Family Tent in the distance, Isaac sits on a rug smiling proudly as Esau comes toward him holding up a basket of field food. Wide shot, sunny hills, active joyful mood.",
+      "characters": ["Esau", "Isaac", "Family Tent"]
+    },
+    {
+      "prompt": "Inside the cozy Family Tent: Jacob sits cross-legged on a rug, listening thoughtfully and asking a question with one finger raised, a scroll with abstract marks on his lap and a clay pot beside him. Rebecca sits nearby, smiling at him lovingly. Through the doorway, Esau can be seen running off into the bright fields. Medium shot, warm indoor light, two worlds in one picture.",
+      "characters": ["Jacob", "Rebecca", "Esau", "Family Tent"]
+    },
+    {
+      "prompt": "Jacob crouches by the small cooking fire in front of the Family Tent, stirring a black clay pot of thick red lentil stew with his wooden spoon, a chopped onion on a board beside him. Curling steam drifts away. In the distance Esau trudges in from the fields, dusty and sweaty, clutching his rumbling stomach. Wide shot, warm late-afternoon light.",
+      "characters": ["Jacob", "Esau", "Family Tent"]
+    },
+    {
+      "prompt": "Esau leans over the pot with wide hungry eyes and open mouth, pointing at the red stew and almost drooling, his bow askew on his back. Jacob, holding the spoon, looks at him with a long calm thoughtful look, thinking. Close-up of both faces over the steaming pot, warm golden light, comic but thoughtful.",
+      "characters": ["Esau", "Jacob"]
+    },
+    {
+      "prompt": "Jacob sits calmly by the pot, holding a bowl of stew, and speaks slowly and seriously to Esau, who stands in front of him, surprised. Behind them, Isaac can be seen inside the Family Tent with Rebecca, a symbol of the family path. Medium shot, low golden sunset light, a quiet important moment.",
+      "characters": ["Jacob", "Esau", "Isaac", "Rebecca", "Family Tent"]
+    },
+    {
+      "prompt": "Esau sits on the ground eating stew greedily from a large bowl with a piece of bread, cheeks full, while Jacob stands beside him holding the empty spoon, watching quietly. In the next moment Esau will get up and leave: his bow lies ready next to him. Medium shot, warm dusk light, steam from the bowl.",
+      "characters": ["Esau", "Jacob"]
+    },
+    {
+      "prompt": "Esau walks away into the evening fields, wiping his mouth, his bow on his back, not looking back, an empty bowl left on the ground behind him. Jacob stands in the tent doorway watching him go with a thoughtful face. Wide shot, long shadows, orange-violet sky, quiet reflective mood.",
+      "characters": ["Esau", "Jacob", "Family Tent"]
+    },
+    {
+      "prompt": "Night inside the Family Tent: Jacob sits by a small oil lamp with a scroll of abstract marks open on his knees, looking up with a calm, determined, peaceful face, as if he knows exactly who he wants to be. Warm golden lamplight, soft shadows, cozy and focused mood. Medium close-up.",
+      "characters": ["Jacob", "Family Tent"]
+    },
+    {
+      "prompt": "A split composition at golden hour: on the left, Esau standing on a rocky hill in the open fields, strong and free; on the right, Jacob sitting peacefully in the doorway of the Family Tent. In the middle Isaac and Rebecca stand together smiling and stretching out their arms to both sons. Wide shot, warm sunset light, balanced and loving.",
+      "characters": ["Esau", "Jacob", "Isaac", "Rebecca", "Family Tent"]
+    },
+    {
+      "prompt": "Close-up at a child's eye level: Jacob sits by the cooking fire, eyes closed, taking a slow deep breath with a calm smile, hand resting on his chest, a small bowl of lentil stew cooling beside him. Soft steam rises, the evening sky glows behind him. Peaceful, gentle mood, warm amber light.",
+      "characters": ["Jacob"]
+    }
+  ]
+}

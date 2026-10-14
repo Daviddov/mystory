@@ -1,0 +1,99 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Abraham",
+      "description": "elderly kind man, about 75-looking, tall lean build, olive skin, warm brown eyes, long white beard, cream linen robe under a terracotta-and-brown striped wool mantle, white head-cloth tied with a brown cord, leather sandals, carries a tall wooden shepherd's staff"
+    },
+    {
+      "name": "Sarah",
+      "description": "elderly gentle woman, about 70-looking, slim, olive skin, kind wrinkled face with smile lines, dark expressive eyes, long deep-blue wool dress, cream head-scarf covering all her hair, a thin silver bracelet on her right wrist"
+    },
+    {
+      "name": "Three Guests",
+      "description": "three tall, calm travelers (angels in disguise) in plain long white robes and simple white head-cloths, kind serene faces with short dark beards, dusty sandals, a very soft gentle glow around them; no wings, no halos"
+    },
+    {
+      "name": "Lot",
+      "description": "Abraham's nephew, man about 50-looking, medium build, olive skin, brown eyes, short dark-brown beard with a little grey, mustard-yellow robe with a dark-red sash, brown head-cloth, sandals"
+    },
+    {
+      "name": "Lot's Wife",
+      "description": "woman about 45-looking, olive skin, worried dark eyes, long plum-purple dress, grey head-scarf covering all her hair, a small bundle tied in cloth"
+    },
+    {
+      "name": "Lot's Daughters",
+      "description": "two teenage sisters, about 15 and 17-looking, olive skin, dark eyes, long dark hair under light head-scarves, one in a rose-pink dress and one in a pale-orange dress, holding hands"
+    },
+    {
+      "name": "Kind Girl",
+      "description": "a brave kind girl of Sodom, about 12-looking, slim, olive skin, big gentle brown eyes, two long dark braids, simple sky-blue dress with a white sash, carries a round clay water jug on her shoulder"
+    },
+    {
+      "name": "Poor Man",
+      "description": "a thin, tired elderly beggar, about 70-looking, olive skin, grey stubbly beard, patched faded-brown robe, bare feet, sad but grateful eyes"
+    },
+    {
+      "name": "Abraham's Tent",
+      "description": "a large tent of dark-brown goat-hair cloth with cream stripes, raised on wooden poles, with a wide open doorway on each of its four sides, woven red-and-cream rugs and cushions inside, a large shady oak tree beside it"
+    }
+  ],
+  "cover": {
+    "prompt": "Abraham stands on a dark hilltop at night under a vast sky full of stars, his face lifted and his open hands raised in heartfelt prayer, his staff leaning beside him. Far below in the valley the small lights of a walled city glimmer. A soft warm glow from the clouds falls on his face, with no figure in it. Wide shot, deep-blue night, earnest and hopeful mood.",
+    "characters": ["Abraham"]
+  },
+  "pages": [
+    {
+      "prompt": "Hot midday at Abraham's Tent: Abraham, who was sitting in the doorway, has jumped up and runs across the sand toward the Three Guests standing a little way off, one hand waving in welcome, his face full of joy. Heat shimmers over the desert. Wide shot from the side, bright white sunlight, the big oak casting a dark shade.",
+      "characters": ["Abraham", "Three Guests", "Abraham's Tent"]
+    },
+    {
+      "prompt": "Late afternoon on a ridge near the tent: Abraham walks beside the Three Guests to see them off, his hand on his staff. All four stop at the edge of the ridge and look down into a wide valley where a walled city with high gates and closed doors lies far below. Wide shot from behind them, long shadows, a hush in the air.",
+      "characters": ["Abraham", "Three Guests"]
+    },
+    {
+      "prompt": "Abraham stands at the edge of the ridge listening, his face serious and sad, as a soft warm light shines on him from the clouds, with no figure in it. Far below, the walled city of Sodom: tall locked gates, shuttered houses, and a lonely traveler sitting outside the closed gate with an empty bowl. Wide shot, dusky light, a feeling of a closed, unkind place.",
+      "characters": ["Abraham"]
+    },
+    {
+      "prompt": "Early morning in a narrow stone street of Sodom. The Kind Girl bends down beside the Poor Man sitting against a wall, and secretly slips a round loaf of bread out of her clay water jug into his hands, a finger to her lips. His tired face lights up with gratitude. Medium close-up, soft morning light in the shadowy lane, kindness as the focus.",
+      "characters": ["Kind Girl", "Poor Man"]
+    },
+    {
+      "prompt": "Abraham steps forward on the hilltop with both hands open and lifted, pleading with all his heart, his face earnest and brave. A soft warm light shines down on him from the clouds, with no figure in it. Far below, the city lies in the valley. Medium shot, low angle, evening sky turning gold and violet.",
+      "characters": ["Abraham"]
+    },
+    {
+      "prompt": "Close-up of Abraham kneeling humbly on the dusty ground, one hand touching the earth, the other raised, his head bowed a little but his eyes looking up hopefully into a soft warm glow from above. Specks of dust float in the light. Gentle evening light, humble and courageous mood.",
+      "characters": ["Abraham"]
+    },
+    {
+      "prompt": "Night on the hilltop: Abraham, still standing in prayer under a sky full of stars, holds up his fingers as if counting down, his face pleading and hopeful. The soft warm glow from the clouds stays gently on him, listening. Wide shot, deep-blue starry sky taking up most of the picture, Abraham small but lit warmly.",
+      "characters": ["Abraham"]
+    },
+    {
+      "prompt": "Abraham walks slowly back toward Abraham's Tent in the late night, shoulders bowed, his staff in hand, face sad but peaceful, knowing he did all he could. A lamp glows in the tent doorway where Sarah waits for him. Wide shot, cool moonlight and the warm tent light, quiet heavy-hearted mood.",
+      "characters": ["Abraham", "Sarah", "Abraham's Tent"]
+    },
+    {
+      "prompt": "Evening at the great stone gate of Sodom: Lot rises from his seat by the gate and bows warmly to two of the Three Guests, gesturing toward his house with an open hand. In the background, a few townspeople watch from doorways with cold, unfriendly frowns. Medium-wide shot, dusky orange light, Lot's welcome as the bright focus.",
+      "characters": ["Lot", "Three Guests"]
+    },
+    {
+      "prompt": "Inside Lot's house by lamplight: the two guests pull Lot gently inside and shut the heavy wooden door; a brilliant soft white light glows through the cracks around the door. Lot's Wife and Lot's Daughters huddle together, wide-eyed, as one guest speaks to them calmly and urgently. Medium shot, warm lamplight inside, no one outside shown.",
+      "characters": ["Lot", "Three Guests", "Lot's Wife", "Lot's Daughters"]
+    },
+    {
+      "prompt": "Grey-pink dawn outside the city wall: the two guests, glowing softly, hold the hands of Lot, Lot's Wife and Lot's Daughters and lead them quickly along a path away from the city toward the mountains. Lot looks back hesitantly; the guests point firmly ahead. Wide shot, cool early light, the closed city behind them, a sense of rescue.",
+      "characters": ["Three Guests", "Lot", "Lot's Wife", "Lot's Daughters"]
+    },
+    {
+      "prompt": "Early morning: Abraham stands on the ridge near his tent, leaning on his staff, gazing far out over the valley with a solemn, sad face. On the distant horizon a faint orange glow and a tall column of grey smoke rise from where the cities were. Very wide shot from behind Abraham, pale sky, everything far away and quiet, no people visible in the valley.",
+      "characters": ["Abraham"]
+    },
+    {
+      "prompt": "Abraham's Tent at golden sunset with all four of its doorways wide open, a lamp glowing inside and a clay jug and bread set out on a rug. Abraham and Sarah stand in the doorways smiling and waving in a traveler with a walking stick. Wide shot at a child's eye level, warm welcoming light, open and kind mood.",
+      "characters": ["Abraham", "Sarah", "Abraham's Tent"]
+    }
+  ]
+}

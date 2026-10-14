@@ -1,0 +1,120 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Dama ben Netina",
+      "description": "non-Jewish gem merchant of Ashkelon about 40, tall, light-brown skin, short curly black hair uncovered, neatly trimmed short black beard, warm caring brown eyes; Roman-era Mediterranean dress: knee-length sea-teal tunic with a woven gold border, a draped cream mantle, leather sandals, a small leather pouch on his belt; no tzitzit and no head covering"
+    },
+    {
+      "name": "Dama's father",
+      "description": "very old man about 80, frail and thin, light-brown skin, wispy white hair and short white beard, peaceful wrinkled face; long soft lavender-grey sleeping tunic, often lying on a low wooden bed with a woven blue blanket and a plump cream pillow"
+    },
+    {
+      "name": "Sage Yehuda",
+      "description": "Jewish sage about 60, round friendly face, olive skin, long white beard, cream head wrap, long deep-blue robe over a cream tunic with tzitzit, carries a leather money bag"
+    },
+    {
+      "name": "Sage Natan",
+      "description": "Jewish sage about 40, tall and slim, olive skin, black beard, olive-green robe with tzitzit, brown head wrap, holding a walking staff"
+    },
+    {
+      "name": "Red heifer",
+      "description": "a beautiful young calf with a soft, glossy coat entirely of rich even red-copper color from ear tips to tail tip, big gentle dark eyes with long lashes, small pink-brown nose, slender legs"
+    },
+    {
+      "name": "Rabbi Eliezer",
+      "description": "elderly sage about 70, olive skin, long silver beard, bushy eyebrows, wise kind eyes, white head wrap, terracotta-brown robe over a cream tunic with tzitzit"
+    }
+  ],
+  "cover": {
+    "prompt": "Dama ben Netina stands in a sunny courtyard of his seaside home in Ashkelon, gently stroking the beautiful red calf beside him, smiling warmly. Behind him through an open doorway his old father rests peacefully on a bed. The blue Mediterranean Sea and palm trees in the background, a few gems glinting on a cloth on a table. Warm golden light, harmonious composition.",
+    "characters": [
+      "Dama ben Netina",
+      "Red heifer",
+      "Dama's father"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Ashkelon by the sea: a white stone house with arches overlooking a blue harbor with small sailing boats and palm trees. In the courtyard, Dama ben Netina holds up a glittering green gem to the light, an open cloth on the table full of sparkling green, red and blue stones; beside him his old father sits in a chair under a shade, and Dama turns to him with a loving smile. Bright Mediterranean light, wide view.",
+      "characters": [
+        "Dama ben Netina",
+        "Dama's father"
+      ]
+    },
+    {
+      "prompt": "Jerusalem in the distance: the gleaming Temple on its hill above the stone city walls, seen from afar so no figures inside are visible. On the road leading out of the city, Sage Yehuda and Sage Natan set out on a journey, staff in hand and a money bag at the belt, looking hopeful and purposeful. Sage Yehuda holds up a small cloth showing a few colorful gemstones as an example of what they seek. Morning light, wide landscape.",
+      "characters": [
+        "Sage Yehuda",
+        "Sage Natan"
+      ]
+    },
+    {
+      "prompt": "At the doorway of Dama's house, Sage Yehuda and Sage Natan stand politely, Sage Yehuda holding up a heavy, bulging leather money bag. Dama ben Netina listens, eyes wide with surprise and delight, his hand on his chest. A view of the sea behind them. Bright daylight, medium three-person shot.",
+      "characters": [
+        "Dama ben Netina",
+        "Sage Yehuda",
+        "Sage Natan"
+      ]
+    },
+    {
+      "prompt": "A quiet bedroom with soft afternoon light filtered through a curtain. Dama's father sleeps peacefully on the low bed, breathing gently; the corner of a small bronze key peeks out from under his pillow. Dama ben Netina stands still at the doorway, one hand on the door frame, gazing at his father with deep tenderness. A carved wooden chest sits in the corner. Hushed, gentle mood.",
+      "characters": [
+        "Dama ben Netina",
+        "Dama's father"
+      ]
+    },
+    {
+      "prompt": "Back at the front doorway, Dama ben Netina spreads his hands apologetically with a calm, sincere face. Sage Yehuda and Sage Natan nod respectfully and turn to leave down the street, the money bag still with them. Behind Dama, through the inner door, his father still sleeps. Warm daylight, the sages walking away on the right, Dama calm on the left.",
+      "characters": [
+        "Dama ben Netina",
+        "Sage Yehuda",
+        "Sage Natan",
+        "Dama's father"
+      ]
+    },
+    {
+      "prompt": "Dama's father, just awake, sits up on his bed smiling, and Dama ben Netina kneels beside him handing him a clay cup of cool water, smiling lovingly. Late afternoon golden light through the window, a peaceful contented feeling. Through the window, two neighbors in the street glance in with puzzled faces. Close warm family moment as the focus.",
+      "characters": [
+        "Dama ben Netina",
+        "Dama's father"
+      ]
+    },
+    {
+      "prompt": "Early morning in a meadow near Ashkelon with the sea glimmering beyond. In a small herd of brown and white cattle, a newborn calf stands on wobbly legs, entirely glossy red-copper from ears to tail. Dama ben Netina kneels before it in amazement, hands raised in wonder. Soft pink-gold dawn light making the calf's coat glow. The calf as the main focus.",
+      "characters": [
+        "Dama ben Netina",
+        "Red heifer"
+      ]
+    },
+    {
+      "prompt": "In Dama's courtyard, Sage Yehuda and Sage Natan have arrived again, hurried and eager, the money bag ready. The red calf stands beside Dama ben Netina, who rests a hand on its back and answers them with a modest, honest expression, one finger raised as if naming a small amount. The sages look surprised and moved. Bright day, sea in the background.",
+      "characters": [
+        "Dama ben Netina",
+        "Sage Yehuda",
+        "Sage Natan",
+        "Red heifer"
+      ]
+    },
+    {
+      "prompt": "Dama ben Netina stands at the courtyard gate with his old father leaning happily on his arm, both smiling, as the two sages lead the red calf gently away on a soft rope toward the road to Jerusalem. Dama holds just one modest money pouch, content. Golden sunset over the sea, peaceful satisfied mood, wide framing.",
+      "characters": [
+        "Dama ben Netina",
+        "Dama's father",
+        "Sage Yehuda",
+        "Sage Natan",
+        "Red heifer"
+      ]
+    },
+    {
+      "prompt": "Many years later, in a study hall with a skylight: Rabbi Eliezer sits on a low bench, telling a story with one hand pointing gently outward as if toward the distant sea, a warm smile on his face. A group of students in simple tunics with tzitzit lean in, curious and attentive. Beam of golden light from above, scrolls on shelves. Medium-wide group shot.",
+      "characters": [
+        "Rabbi Eliezer"
+      ]
+    },
+    {
+      "prompt": "A gentle scene in a simple home of the same era: a mother rests with eyes closed on a cushioned bench, and her little boy about 5 tiptoes past with a finger to his lips, quietly setting down a wooden rattle and picking up a soft cloth doll instead, smiling proudly. Soft afternoon light, cozy hushed atmosphere.",
+      "characters": []
+    }
+  ]
+}

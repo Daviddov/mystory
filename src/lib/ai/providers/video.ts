@@ -13,7 +13,8 @@
  *   https://ai.google.dev/gemini-api/docs/pricing
  * What the docs state: POST {base}/models/{model}:predictLongRunning with
  * header `x-goog-api-key`; body `instances[0].prompt`, `instances[0].image`
- * = {inlineData:{mimeType,data}} (the first frame), `parameters` with
+ * = {bytesBase64Encoded,mimeType} (the first frame; the live API answered
+ * HTTP 400 "`inlineData` isn't supported by this model" on 2026-10-15), `parameters` with
  * aspectRatio ("16:9"|"9:16"), durationSeconds (4|6|8), resolution ("720p"
  * default), personGeneration ("allow_adult" is the only value for
  * image-to-video). The response is an Operation whose top-level `name` is
@@ -42,6 +43,7 @@
 import { aiEnv } from "../../config";
 import {
   ProviderNotImplementedError,
+  VideoQuotaError,
   VideoRefusedError,
   type VideoProvider,
   type VideoRequest,
@@ -101,23 +103,34 @@ export function buildVeoPrompt(prompt: string): string {
   ].join(" ");
 }
 
+/**
+ * The clip length actually requested. A looping clip (lastFrame) must be 8 s:
+ * the live API answers HTTP 400 "Your use case is currently not supported" for
+ * 4 and 6 s with a lastFrame (checked on 2026-10-15).
+ */
+export function veoClipSeconds(request: Pick<VideoRequest, "durationSeconds" | "loop">): VeoDuration {
+  return request.loop === false ? roundVeoDuration(request.durationSeconds) : 8;
+}
+
 /** Body for POST {base}/models/{model}:predictLongRunning. */
 export function buildVeoRequest(request: VideoRequest): Record<string, unknown> {
+  const frame = {
+    bytesBase64Encoded: Buffer.from(request.image).toString("base64"),
+    mimeType: request.imageContentType,
+  };
   return {
     instances: [
       {
         prompt: buildVeoPrompt(request.prompt),
-        image: {
-          inlineData: {
-            mimeType: request.imageContentType,
-            data: Buffer.from(request.image).toString("base64"),
-          },
-        },
+        image: frame,
+        // The same picture as the last frame: the clip loops seamlessly and Veo
+        // cannot drift away from the illustration (new objects, growing characters).
+        ...(request.loop === false ? {} : { lastFrame: frame }),
       },
     ],
     parameters: {
       aspectRatio: request.aspect ?? "16:9",
-      durationSeconds: roundVeoDuration(request.durationSeconds),
+      durationSeconds: veoClipSeconds(request),
       resolution: "720p",
       personGeneration: "allow_adult",
     },
@@ -230,7 +243,7 @@ export function createGeminiVideoProvider(
       signal?.throwIfAborted();
       const deadline = AbortSignal.timeout(timeoutMs);
       const overall = signal ? AbortSignal.any([signal, deadline]) : deadline;
-      const durationSeconds = roundVeoDuration(request.durationSeconds);
+      const durationSeconds = veoClipSeconds(request);
 
       /** Rethrows the caller's abort as-is; turns our own deadline into a clear error. */
       const failIfStopped = (operationName?: string): void => {
@@ -264,6 +277,7 @@ export function createGeminiVideoProvider(
       if (!start.ok) {
         const message = started?.error?.message ?? "no details";
         if (start.status === 400 && isPolicyMessage(message)) throw new VideoRefusedError(`Veo refused the input: ${message}`);
+        if (start.status === 429) throw new VideoQuotaError(`Veo quota exceeded (HTTP 429): ${message}`);
         throw new VideoProviderError(`Veo request failed with HTTP ${start.status}: ${message}`);
       }
       if (!started?.name) throw new VideoProviderError("Veo did not return an operation name.");

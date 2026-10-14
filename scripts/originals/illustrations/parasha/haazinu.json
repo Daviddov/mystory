@@ -1,0 +1,109 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Abba Nesher",
+      "description": "A large majestic father eagle, dark brown feathers with a golden-tawny head and nape, huge broad wings with lighter tips, a strong yellow hooked beak, gentle warm amber eyes, kind and calm expression."
+    },
+    {
+      "name": "Gozal",
+      "description": "A small eaglet chick, round and fluffy with soft grey down feathers, a funny white tuft of fluff sticking up on its head, oversized round dark eyes, tiny yellow beak, small stubby wings that grow stronger through the story."
+    },
+    {
+      "name": "Moshe",
+      "description": "Very old man of about 120, slender, long flowing white beard and white hair, kind tired brown eyes, warm olive skin, simple light cream linen robe with a sand-colored sash, plain undyed head cloth, sandals, holds a tall plain wooden shepherd's staff. No glow or rays around his head."
+    }
+  ],
+  "cover": {
+    "prompt": "High above golden mountains and a silver stream, Abba Nesher soars with his huge wings spread wide, and little fluffy Gozal rides on his back, clutching the feathers with a thrilled open-beaked smile. Soft clouds, warm morning sky, sense of freedom and safety. Wide dynamic composition.",
+    "characters": [
+      "Abba Nesher",
+      "Gozal"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Wide view of a towering rocky cliff over a desert valley. Near the top sits a large nest of sticks, and inside it little Gozal, grey and fluffy with a funny tuft on its head, peeks over the edge. Soft dawn light, mountains in the distance.",
+      "characters": [
+        "Gozal"
+      ]
+    },
+    {
+      "prompt": "Morning: Abba Nesher hovers gently just above the nest, lightly flapping his wings, looking down tenderly. Gozal blinks awake and stretches, tuft wobbling. Soft pink-golden sunrise, close-medium shot of the nest. The golden tawny head of Abba Nesher shines in the first sunbeams, and the valley below is still wrapped in soft morning mist.",
+      "characters": [
+        "Abba Nesher",
+        "Gozal"
+      ]
+    },
+    {
+      "prompt": "Gozal peers over the edge of the nest at the very deep valley far below, eyes huge with fear, tiny wings clutched to its body. Abba Nesher stands on the rim of the nest beside it, calm. Dramatic downward view showing the height, but soft and not scary.",
+      "characters": [
+        "Gozal",
+        "Abba Nesher"
+      ]
+    },
+    {
+      "prompt": "Abba Nesher spreads his huge wings wide like a warm blanket around the nest, lowering his back invitingly toward Gozal. Gozal looks up at him with hesitant hope. Golden light glows through the outspread feathers. Medium shot, protective and loving.",
+      "characters": [
+        "Abba Nesher",
+        "Gozal"
+      ]
+    },
+    {
+      "prompt": "Joyful flight: Abba Nesher glides high over green trees, mountains and a shimmering silver stream, with Gozal on his back holding tight, beak wide open shouting with delight, its fluffy tuft blowing in the wind. Bright sky, sweeping panoramic view.",
+      "characters": [
+        "Abba Nesher",
+        "Gozal"
+      ]
+    },
+    {
+      "prompt": "Close-up in the air: Gozal, riding on Abba Nesher's back, leans forward and asks a question. Abba Nesher turns his head with a warm amber eye. Below them, far down, the ground, and Abba's broad body is clearly between Gozal and everything below. Soft clouds, safe and cozy.",
+      "characters": [
+        "Abba Nesher",
+        "Gozal"
+      ]
+    },
+    {
+      "prompt": "Back on the cliff edge: Gozal stands trembling, tiny wings opening for the first time, about to jump. Abba Nesher hovers in the air right beside him, wings spread, ready. Mid-air tension but gentle, morning sun on the rocks. The valley floor is far below, hazy and soft, and a warm breeze ruffles Gozal's grey down.",
+      "characters": [
+        "Gozal",
+        "Abba Nesher"
+      ]
+    },
+    {
+      "prompt": "Gozal tumbles a little in the air, wings flapping awkwardly, but Abba Nesher swoops right underneath and catches him gently on his broad wings. Gozal grins with relief and excitement. Dynamic diagonal composition, blue sky, warm light. Feathers float in the air around them, and the sun sparkles on Abba Nesher's broad wingtips.",
+      "characters": [
+        "Gozal",
+        "Abba Nesher"
+      ]
+    },
+    {
+      "prompt": "Gozal flies on his own for the first time, wings outstretched, soaring proudly over the valley and calling back joyfully. Abba Nesher flies a little behind, watching with pride. Bright open sky, golden mountains below, triumphant mood. His little tuft streams in the wind, and soft clouds drift past like friends cheering him on.",
+      "characters": [
+        "Gozal",
+        "Abba Nesher"
+      ]
+    },
+    {
+      "prompt": "Far away, on a desert plain at golden late afternoon, old Moshe stands on a low rise before a great crowd of the people of Israel, arms raised as he sings to them. The sky above is wide and luminous, the land listening. Wide panoramic shot, people in the foreground listening in awe.",
+      "characters": [
+        "Moshe"
+      ]
+    },
+    {
+      "prompt": "Moshe sings to the people, and high in the luminous sky above them a great eagle soars with a small eaglet on its back, echoing the song. The people look up, smiling with recognition. Soft warm golden light connecting the eagle above and the people below.",
+      "characters": [
+        "Moshe",
+        "Abba Nesher",
+        "Gozal"
+      ]
+    },
+    {
+      "prompt": "A small child in a simple tunic climbs a low olive tree for the first time, reaching for the next branch, a little scared but determined. Right below, a loving parent stands with arms open, ready to catch, smiling encouragement. High in the sky, Abba Nesher and Gozal fly side by side. Warm sunset light.",
+      "characters": [
+        "Abba Nesher",
+        "Gozal"
+      ]
+    }
+  ]
+}

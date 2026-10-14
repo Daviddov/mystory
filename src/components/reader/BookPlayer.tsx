@@ -651,7 +651,6 @@ function Player({
   const videoSrc = animatePictures && current?.video ? mediaUrl(current.video, book.updatedAt, shareToken) : "";
   const showVideo = videoSrc !== "" && brokenVideo !== videoSrc;
   const showImage = showVideo || imageReady;
-  const pictureSrc = showVideo ? videoSrc : imageSrc;
   const pictureAlt = current?.imageAlt?.trim() || `איור לעמוד ${index + 1}`;
   // The clip is decorative: it rests while the tab is hidden, the sleep screen is up or the start screen covers it.
   const pageHidden = usePageHidden();
@@ -682,7 +681,23 @@ function Player({
     src: string;
     ratio: number;
   } | null>(null);
-  const imageRatio = imageShape?.src === pictureSrc ? imageShape.ratio : null;
+  // The clip is the picture letterboxed into 16:9 (or 9:16), so the layout and the crop
+  // below follow the still picture's shape, read from the poster.
+  const imageRatio = imageShape?.src === imageSrc ? imageShape.ratio : null;
+  useEffect(() => {
+    if (!showVideo || !imageReady) return;
+    let live = true;
+    const probe = new Image();
+    probe.onload = () => {
+      if (live && probe.naturalWidth > 0 && probe.naturalHeight > 0) {
+        setImageShape({ src: imageSrc, ratio: probe.naturalWidth / probe.naturalHeight });
+      }
+    };
+    probe.src = imageSrc;
+    return () => {
+      live = false;
+    };
+  }, [showVideo, imageReady, imageSrc]);
   const sideBySide = showImage && textLayout === "side" && imageRatio !== null && imageRatio <= SIDE_BY_SIDE_MAX_RATIO;
   const text = current ? (inOriginal ? originalText : pageDisplayText(current, nikudOn)) : "";
   const textLanguage = inOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
@@ -917,6 +932,7 @@ function Player({
                   sideBySide && "sm:h-full",
                   !motionActive && "mystory-motion-paused",
                 )}
+                style={showVideo ? { containerType: "size" } : undefined}
               >
                 {showVideo ? (
                   <video
@@ -933,13 +949,20 @@ function Player({
                     preload="auto"
                     disablePictureInPicture
                     onError={() => setBrokenVideo(videoSrc)}
-                    onLoadedMetadata={(event) => {
-                      const { videoWidth, videoHeight } = event.currentTarget;
-                      if (videoWidth > 0 && videoHeight > 0) {
-                        setImageShape({ src: videoSrc, ratio: videoWidth / videoHeight });
-                      }
-                    }}
-                    className="pointer-events-none size-full select-none object-contain bedtime:opacity-90"
+                    // Sized to the picture's shape inside the frame; object-cover then cuts away
+                    // exactly the bars the vendor added around it.
+                    style={
+                      imageRatio !== null
+                        ? {
+                            width: `min(100cqw, ${imageRatio * 100}cqh)`,
+                            height: `min(100cqh, ${100 / imageRatio}cqw)`,
+                          }
+                        : undefined
+                    }
+                    className={cn(
+                      "pointer-events-none select-none bedtime:opacity-90",
+                      imageRatio !== null ? "object-cover" : "size-full object-contain",
+                    )}
                   />
                 ) : (
                   <img

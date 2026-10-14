@@ -1,0 +1,107 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Dinah",
+      "description": "girl about 12, slim, long dark brown hair in a single braid, big curious dark eyes, warm olive skin, gentle smile, modest long-sleeved rose-pink wool dress reaching her ankles, cream sash, small light shawl of cream wool over her shoulders, simple sandals"
+    },
+    {
+      "name": "Jacob",
+      "description": "man about 55, medium build, dark curly hair with grey streaks, full dark beard with grey threads, warm brown eyes with smile lines, olive skin, olive-green wool robe with a brown rope belt, cream linen head cloth, simple wooden walking staff, leather sandals"
+    },
+    {
+      "name": "Old Jacob",
+      "description": "the same Jacob many years later, very old man about 90, thin, long snow-white beard, white curly hair, kind tired brown eyes, olive skin with deep wrinkles, olive-green wool robe with a brown rope belt, cream wool blanket over his knees, wooden staff beside him"
+    },
+    {
+      "name": "Leah",
+      "description": "Dinah's mother, woman about 45, soft gentle face, kind tender brown eyes, olive skin, deep plum-purple long wool dress, sand-colored head covering that covers her hair, small silver earrings"
+    },
+    {
+      "name": "Shimon",
+      "description": "Dinah's brother, young man about 20, tall and strong, short black curly hair, short black beard, intense dark eyes, thick eyebrows, olive skin, dark brown wool tunic and robe with a black belt, shepherd's staff"
+    },
+    {
+      "name": "Levi",
+      "description": "Dinah's brother, young man about 19, tall and lean, wavy dark hair to his neck, thin dark beard, serious dark eyes, olive skin, deep blue wool tunic and robe with a tan belt, shepherd's staff"
+    },
+    {
+      "name": "Brothers",
+      "description": "Dinah's other brothers, a group of young men and boys from 8 to 22, olive skin, dark hair, shepherds in simple tunics of sand, rust, grey and olive, wooden staffs, often with sheep"
+    },
+    {
+      "name": "Hamor",
+      "description": "Canaanite ruler of the town, man about 60, heavy build, grey hair and neat grey square beard, proud confident face, light-brown skin, long wine-red embroidered robe with a gold-trimmed collar, gold armbands, tall rounded cloth cap"
+    },
+    {
+      "name": "Shechem",
+      "description": "Hamor's son, young man about 22, slim, black hair tied back, thin short beard, smooth confident face, light-brown skin, long purple robe with gold trim, gold rings, cloth cap like his father's but smaller"
+    },
+    {
+      "name": "Town girls",
+      "description": "three Canaanite girls about 12 to 14 from the town, light-brown skin, dark hair with colorful ribbons, modest long dresses in saffron yellow, light green and sky blue, carrying water jugs and a reed basket, laughing together"
+    }
+  ],
+  "cover": {
+    "prompt": "Morning in a green field outside a walled stone town in Canaan. Dinah stands at the entrance of her family's brown goat-hair tent, one hand on the tent pole, smiling with curiosity as she looks toward the town on the hill. Her shawl flutters in a light breeze. Behind her, sheep graze and small figures of her brothers tend the flock. Wide shot with Dinah in the foreground, warm golden light, hopeful and peaceful mood.",
+    "characters": ["Dinah", "Brothers"]
+  },
+  "pages": [
+    {
+      "prompt": "Wide panoramic view at late afternoon: Jacob's family arrives at a green field below the stone walls of the town of Shechem. Brothers are raising brown tents and leading flocks, Leah unpacks a basket, and Jacob stands beside a small altar of rough stacked field stones, hands raised in thanks. Dinah, the only girl, holds a tent rope and smiles. Soft golden light, sense of rest after a long journey.",
+      "characters": ["Jacob", "Leah", "Dinah", "Brothers"]
+    },
+    {
+      "prompt": "Dinah stands at the edge of the family field near a low stone wall, leaning forward with bright curious eyes, watching three town girls laughing together by a well at the foot of the town, carrying jugs and a basket. Behind Dinah, far away, her many brothers play and work with the sheep. Medium-wide shot from behind and to the side of Dinah, warm morning light, a feeling of longing for a friend.",
+      "characters": ["Dinah", "Town girls", "Brothers"]
+    },
+    {
+      "prompt": "A wide distant view of the walled town of Shechem on its hill under a heavy grey cloudy sky. The town gate is closed, the streets are empty, and no people are visible. In the foreground the family field lies quiet, a single wilted wildflower bending in the wind. The mood is sad and serious, muted colors, but nothing frightening is shown.",
+      "characters": []
+    },
+    {
+      "prompt": "Inside the family tent at evening. Dinah's empty sleeping mat with her neatly folded blanket and a small clay cup beside it, untouched. Leah sits next to the empty place holding an oil lamp, her face worried and sad, looking toward the tent door, waiting. Warm small lamplight in dim blue shadows, close-medium shot, quiet and tender, a feeling of someone missing.",
+      "characters": ["Leah"]
+    },
+    {
+      "prompt": "Jacob sits alone in the doorway of his tent, shoulders bowed, hands clasped, eyes lowered, silent and heartbroken. In the background, through the opening, his sons come in from the field with their staffs and sheep, and their faces turn shocked and then angry: frowning brows, clenched fists, Shimon and Levi in front. Late afternoon light, medium-wide shot, heavy emotional mood, no violence.",
+      "characters": ["Jacob", "Shimon", "Levi", "Brothers"]
+    },
+    {
+      "prompt": "Outside Jacob's tent, Hamor and Shechem in rich embroidered robes stand talking with smooth smiles and open hands, gesturing as if offering gifts and trade. Facing them, Jacob sits silent and serious, and his sons stand behind him with stern, distrustful faces and crossed arms. Dinah is not in the picture. Midday light, medium-wide shot, tense conversation.",
+      "characters": ["Hamor", "Shechem", "Jacob", "Shimon", "Levi", "Brothers"]
+    },
+    {
+      "prompt": "At the open stone gate of the town, Hamor and Shechem stand on a step speaking to a crowd of town men in simple robes, who nod and raise their hands in agreement. In the foreground, at the edge of the scene, Shimon and Levi watch from a distance and exchange a meaningful sideways glance. Bright afternoon, wide shot, a feeling that something is being planned.",
+      "characters": ["Hamor", "Shechem", "Shimon", "Levi"]
+    },
+    {
+      "prompt": "Dusk. Shimon and Levi are seen from behind, two dark figures walking side by side along a dirt path toward the walled town on the hill, their long robes moving in the wind, no weapons visible, no fighting anywhere. The town gate is a dark arch, the sky is deep orange fading to purple, long shadows stretch behind them. Wide shot from behind, serious and quiet mood.",
+      "characters": ["Shimon", "Levi"]
+    },
+    {
+      "prompt": "Inside Jacob's tent, by lamplight. Jacob stands with a troubled, frightened face, one hand raised and the other on his heart, speaking to Shimon and Levi. The two brothers stand firm facing him, faces determined and hurt, one with an open hand pointing toward the family as if asking a question. Warm lamplight and deep shadows, medium shot, a serious argument with no violence.",
+      "characters": ["Jacob", "Shimon", "Levi"]
+    },
+    {
+      "prompt": "Early morning. Jacob stands alone on a small rise beside the packed-up tents and loaded donkeys, leaning on his staff and gazing thoughtfully back toward the quiet, distant town, its houses peaceful under pale light. His face is sad and reflective. A soft mist lies over the valley. Wide shot from behind Jacob's shoulder, gentle muted colors, contemplative mood.",
+      "characters": ["Jacob"]
+    },
+    {
+      "prompt": "Many years later, inside a tent. Very old Jacob sits on his bed wrapped in a blanket, speaking to his grown sons gathered around him. Shimon and Levi kneel in front of him with lowered heads, and old Jacob rests a loving hand on each of their shoulders, his face firm but full of love. The other brothers stand quietly behind. Soft window light, medium shot, warm and serious.",
+      "characters": ["Old Jacob", "Shimon", "Levi", "Brothers"]
+    },
+    {
+      "prompt": "Dinah is safely home in the family tent, wrapped warmly in her cream wool shawl, sitting on cushions. Leah hugs her tightly with closed eyes and a tender face, and Jacob kneels beside them with his arm around both. A few brothers stand close and smile softly. Warm golden lamplight, close-medium shot, feelings of love, safety and belonging.",
+      "characters": ["Dinah", "Leah", "Jacob", "Brothers"]
+    },
+    {
+      "prompt": "A calm evening outside the tent. Dinah sits on a woven mat beside her mother Leah, talking and looking up at her face, while Leah listens closely with full attention and holds Dinah's hands in hers, smiling gently and reassuringly. An oil lamp glows between them and the first stars appear. Close-medium shot at child's eye level, safe, trusting, warm atmosphere.",
+      "characters": ["Dinah", "Leah"]
+    },
+    {
+      "prompt": "Sunset in front of the family tents. Jacob kneels and hugs one of his younger sons, a boy about 8 whose face is still a little upset and teary, while Jacob's eyes are closed with love and his big hand rests on the boy's back. Behind them Leah and Dinah smile warmly. Golden light, close-medium shot, comforting, loving mood.",
+      "characters": ["Jacob", "Brothers", "Leah", "Dinah"]
+    }
+  ]
+}

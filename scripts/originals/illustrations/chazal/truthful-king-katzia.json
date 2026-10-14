@@ -1,0 +1,75 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Alexander",
+      "description": "Alexander the Great, a young Greek king of about 25, athletic, fair skin with rosy cheeks, bright curious blue-grey eyes, a lively face, clean-shaven, thick tousled golden-brown hair, a golden laurel wreath, a polished bronze chest breastplate over a short white tunic, a long purple cloak fastened with a gold brooch, laced sandals; never holds a weapon."
+    },
+    {
+      "name": "Katzia",
+      "description": "King Katzia of a faraway land, a wise, calm king of about 60, deep-brown skin, warm amber eyes, a long braided grey beard, a tall rounded crown of woven gold set with green stones, a flowing saffron-orange robe with a turquoise patterned border, a gentle amused smile."
+    },
+    {
+      "name": "Buyer",
+      "description": "The man who bought the ruin, about 45, short and round, light-brown skin, a bushy brown beard, eager wide eyes, a dusty sky-blue tunic with a brown rope belt and a cloth cap, earnest and excited."
+    },
+    {
+      "name": "Seller",
+      "description": "The man who sold the ruin, about 50, tall and thin, dark-olive skin, a long narrow black-and-grey beard, a serious stubborn face, a moss-green robe over a cream tunic, a white head wrap."
+    },
+    {
+      "name": "Son",
+      "description": "The buyer's son, a shy young man of about 20, round face, light-brown skin, short brown curls, a sky-blue festive tunic, a garland of flowers at the wedding."
+    },
+    {
+      "name": "Daughter",
+      "description": "The seller's daughter, a young woman of about 19, slender, dark-olive skin, bright dark eyes, a modest long moss-green dress with long sleeves, a cream veil-like head covering with a flower wreath at the wedding."
+    }
+  ],
+  "cover": {
+    "prompt": "A sunlit throne hall of a faraway palace with turquoise tiles and tall columns. King Katzia smiles kindly from his throne, while young Alexander leans forward on a guest chair in wonder. Between them stand the Buyer and the Seller, each pushing an open clay pot of gold coins toward the other with polite insistence. Warm golden light, symmetrical medium-wide composition.",
+    "characters": ["Katzia", "Alexander", "Buyer", "Seller"]
+  },
+  "pages": [
+    {
+      "prompt": "Alexander rides a black horse at the head of a long, colorful traveling procession across a vast landscape: palm-dotted desert, blue sea and distant palaces on the horizon. His soldiers in white tunics and red cloaks carry banners and supplies, no weapons. Alexander gazes ahead with eager curiosity, cloak flowing. Bright morning light, very wide panoramic shot.",
+      "characters": ["Alexander"]
+    },
+    {
+      "prompt": "Inside King Katzia's palace, reached beyond misty dark mountains seen through a window, Katzia welcomes Alexander at a long table and presents a large silver platter. On it lie shiny golden loaves of bread, yellow, gleaming and hard as stone. Alexander stares at them with comic surprise. Warm golden lamp light, medium-wide shot.",
+      "characters": ["Katzia", "Alexander"]
+    },
+    {
+      "prompt": "A gentle comic moment at the table: Alexander laughs, tapping a golden loaf that clinks like metal, pretending to bite it with a funny grimace. King Katzia smiles slyly, one eyebrow raised, hands folded. Close medium shot across the table with the shiny golden bread in the foreground, warm light.",
+      "characters": ["Alexander", "Katzia"]
+    },
+    {
+      "prompt": "The Buyer and the Seller rush into the throne hall, both talking at once with animated hands. King Katzia sits upright on his throne, listening. Alexander sits nearby on a guest chair, leaning forward in curiosity, chin on his fist. Bright daylight through tall windows, wide shot of the hall.",
+      "characters": ["Buyer", "Seller", "Katzia", "Alexander"]
+    },
+    {
+      "prompt": "A memory-style scene: in the rubble of an old ruined stone house, the Buyer kneels moving stones aside and finds an old clay pot overflowing with shining gold coins without markings. His mouth forms a surprised O, hands raised. Dusty sunbeams fall through the broken roof. Medium shot, warm light, sense of discovery.",
+      "characters": ["Buyer"]
+    },
+    {
+      "prompt": "Back in the throne hall, the Seller folds his arms and turns his head away from the pot of gold that the Buyer holds out to him, refusing firmly. Alexander's jaw drops in amazement. King Katzia strokes his braided beard thoughtfully. Medium-wide shot, warm light, humorous tone.",
+      "characters": ["Seller", "Buyer", "Alexander", "Katzia"]
+    },
+    {
+      "prompt": "King Katzia raises a wise finger with a bright, kind smile, looking from the Buyer to the Seller. The two men look at each other, surprised and thinking. Alexander leans in, fascinated. A soft beam of window light falls across the throne. Medium shot, centered on Katzia.",
+      "characters": ["Katzia", "Buyer", "Seller", "Alexander"]
+    },
+    {
+      "prompt": "A joyful wedding in a courtyard under a simple canopy of embroidered cloth on four wooden poles: the Son and the Daughter stand shyly smiling with flower wreaths, while the Buyer and the Seller hug and laugh beside them. Families dance in a circle, musicians play drums and flutes, and the clay pot of gold sits safely on a table among fruits. Warm golden evening light, wide festive shot.",
+      "characters": ["Son", "Daughter", "Buyer", "Seller"]
+    },
+    {
+      "prompt": "Alexander sits alone on the palace terrace at dusk, his laurel wreath in his lap, gazing thoughtfully at the honest families celebrating in the courtyard below. His face shows quiet wonder and respect. The golden bread platter sits forgotten beside him. Soft purple-and-gold twilight, medium-wide shot from behind his shoulder.",
+      "characters": ["Alexander"]
+    },
+    {
+      "prompt": "A gentle closing scene in an ancient village lane: a little boy in a simple tunic finds a shiny coin on the stone path and runs with a big smile to give it back to an old woman, who holds out her hands in happy surprise. A soft warm glow around the children. Golden afternoon light, medium-wide framing.",
+      "characters": []
+    }
+  ]
+}

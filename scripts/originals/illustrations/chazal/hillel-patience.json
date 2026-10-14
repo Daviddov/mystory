@@ -1,0 +1,67 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Hillel",
+      "description": "elderly sage about 75, slight build, olive skin, long soft white beard, white hair under a cream head wrap, gentle crinkled dark eyes and a warm patient smile; long cream wool robe over a light tunic with tzitzit corners, brown belt, simple sandals"
+    },
+    {
+      "name": "The challenger",
+      "description": "man about 30 who tries to anger Hillel, wiry and restless, olive skin, pointy short black beard, messy black hair under a mustard-yellow head wrap, sly narrow eyes and a smirk; bright mustard-yellow tunic with tzitzit, a red sash, sandals"
+    },
+    {
+      "name": "The friend",
+      "description": "the other man in the bet, about 35, plump and round-faced, olive skin, curly brown beard, raised skeptical eyebrows, dark-green tunic with tzitzit and a brown cloak, holding a bulging leather coin purse"
+    }
+  ],
+  "cover": {
+    "prompt": "In front of a simple Jerusalem stone house, the challenger stands with hands cupped around his mouth calling out loudly, while Hillel stands in the doorway with a towel over his shoulders and droplets in his beard, smiling peacefully and patiently at him. A golden Friday afternoon sun, flat roofs and a market lane behind. Humorous, warm composition contrasting the impatient man and calm Hillel.",
+    "characters": ["Hillel", "The challenger"]
+  },
+  "pages": [
+    {
+      "prompt": "A busy Jerusalem market lane: in the background Hillel walks calmly, nodding kindly to people who tug at his sleeve with questions. In the foreground the challenger and the friend lean against a stone wall, watching him, the friend with a doubtful smirk and folded arms. Warm afternoon light, layered composition.",
+      "characters": ["Hillel", "The challenger", "The friend"]
+    },
+    {
+      "prompt": "Close two-shot of the challenger and the friend shaking hands on a bet beside a market stall. The friend dangles the bulging leather coin purse; the challenger grins confidently, tapping his temple as if he has a clever plan. Fruit baskets and clay jars around them. Bright midday light, comic mood.",
+      "characters": ["The challenger", "The friend"]
+    },
+    {
+      "prompt": "Friday afternoon, people hurry by carrying bread and fish for Shabbat. Outside Hillel's modest stone house, the challenger stands with hands cupped around his mouth, shouting rudely toward the window. Inside, glimpsed through the window, Hillel bends over a basin of water, washing his head. Golden low sun, busy street, medium-wide shot.",
+      "characters": ["Hillel", "The challenger"]
+    },
+    {
+      "prompt": "Hillel steps out of his doorway, fully wrapped in his long cream robe, a towel around his shoulders, his white hair and beard still dripping with water, and greets the challenger with a calm, gentle smile and an open hand. The challenger looks taken aback. Warm late-afternoon light, two-shot at the doorway.",
+      "characters": ["Hillel", "The challenger"]
+    },
+    {
+      "prompt": "At the doorway, the challenger smirks and gestures in a circle near his own head as he asks his silly question. Hillel listens seriously, stroking his wet beard thoughtfully, eyes kind and not offended at all. A basin and towel visible inside. Gentle humor, close medium shot.",
+      "characters": ["Hillel", "The challenger"]
+    },
+    {
+      "prompt": "The challenger is back again, standing at the doorway rubbing his own eyes theatrically as he asks his question, while Hillel, wrapped once more in his robe with water drops on his beard, answers calmly with one hand raised, as if describing blowing sand. The sun is lower now, longer shadows. Comic, warm framing.",
+      "characters": ["Hillel", "The challenger"]
+    },
+    {
+      "prompt": "Third visit: the challenger stands at the doorway pointing down at his own sandaled feet with a puzzled exaggerated face, asking his question. Hillel, serene as ever, gestures with flat open palms as if showing broad feet stepping on mud. The street is emptying as Shabbat nears, orange evening light.",
+      "characters": ["Hillel", "The challenger"]
+    },
+    {
+      "prompt": "Hillel has sat down calmly on the bench by his door, patting the seat beside him invitingly, his face patient and kind. The challenger stands before him sweating, wiping his forehead, nervous and fidgeting, glancing at the setting sun. Golden sunset light, medium two-shot showing calm versus frazzled.",
+      "characters": ["Hillel", "The challenger"]
+    },
+    {
+      "prompt": "The challenger throws up his hands in frustration, his face flushed, finally bursting out, while Hillel, still seated, looks up at him with gentle, curious concern, eyebrows slightly raised. At the corner of the lane, the friend peeks out grinning and holding up his coin purse. Warm dusky light, comic but kind.",
+      "characters": ["Hillel", "The challenger", "The friend"]
+    },
+    {
+      "prompt": "Close-up: Hillel rests a gentle hand on the challenger's arm and speaks softly, his face full of warmth and calm, while the challenger's angry expression begins to melt into surprise and embarrassment. The first stars appear in a twilight sky behind them. Soft warm light on their faces.",
+      "characters": ["Hillel", "The challenger"]
+    },
+    {
+      "prompt": "Twilight, Shabbat beginning: the challenger walks home down the quiet stone lane with empty hands but a thoughtful, softened smile, glancing back. Behind him, at the lit doorway, Hillel waves goodbye peacefully, Shabbat lamps glowing in the windows. Gentle blue and gold evening light, wide calm shot.",
+      "characters": ["Hillel", "The challenger"]
+    }
+  ]
+}

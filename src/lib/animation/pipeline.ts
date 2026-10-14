@@ -25,7 +25,7 @@
  */
 import { createHash } from "node:crypto";
 import { VEO_DEFAULT_MODEL, VEO_PRICE_PER_SECOND_720P } from "../ai/providers/video";
-import { VideoRefusedError, type VideoProvider } from "../ai/types";
+import { VideoQuotaError, VideoRefusedError, type VideoProvider } from "../ai/types";
 import { withBookLock } from "../book-lock";
 import type { MediaStore } from "../media/types";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
@@ -60,7 +60,8 @@ export interface BookAnimationOptions extends AnimationOptions {
 }
 
 /** Clip length asked of the provider. Veo supports 4-8 seconds; short clips loop best and cost least. */
-export const DEFAULT_CLIP_SECONDS = 4;
+/** Looping clips (first frame = last frame) are 8 s with Veo; see veoClipSeconds(). */
+export const DEFAULT_CLIP_SECONDS = 8;
 
 /**
  * Estimated price of one second of generated video, in USD (Veo "fast" tier,
@@ -170,6 +171,10 @@ function errorMessage(err: unknown): string {
 function isRefusal(err: unknown): boolean {
   // The name check also matches a VideoRefusedError from a second copy of the module.
   return err instanceof VideoRefusedError || (err instanceof Error && err.name === "VideoRefusedError");
+}
+
+function isQuota(err: unknown): boolean {
+  return err instanceof VideoQuotaError || (err instanceof Error && err.name === "VideoQuotaError");
 }
 
 function videoExtension(contentType: string): string {
@@ -373,6 +378,11 @@ export async function animateBookWith(
         error: errorMessage(err),
       };
       if (options.signal?.aborted) summary.aborted = true;
+      // Every further page would hit the same limit: stop, and let a later run continue.
+      if (isQuota(err)) {
+        summary.quotaExceeded = true;
+        summary.aborted = true;
+      }
     }
     summary.results.push(result);
     summary[result.status]++;

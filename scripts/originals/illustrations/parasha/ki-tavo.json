@@ -1,0 +1,87 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Michal",
+      "description": "Girl about 7, slim and bouncy, sun-tanned olive skin, thick wavy dark-brown hair under a small saffron-yellow kerchief, big sparkling brown eyes, long-sleeved leaf-green linen dress to the ankles with a woven belt, sandals; signature item: the saffron-yellow kerchief."
+    },
+    {
+      "name": "Abba",
+      "description": "Michal's father, a farmer about 40, broad-shouldered, sun-weathered olive skin, short black curly beard, warm dark eyes, off-white wool tunic with a brown cloak over one shoulder, a white head cloth with a dark cord, sandals."
+    },
+    {
+      "name": "Ima",
+      "description": "Michal's mother, about 35, slender, olive skin, gentle smile, hair fully covered by a long terracotta-red head cloth, long indigo-blue robe, a bead necklace of clay beads."
+    },
+    {
+      "name": "Ox",
+      "description": "A big calm white-and-tan ox with gilded golden horns and a wreath of olive branches on its head, a soft brown rope around its neck."
+    },
+    {
+      "name": "Flute player",
+      "description": "Young man about 20, lean, olive skin, short dark curly hair, a beaming face, white tunic with a sky-blue sash, plays a long simple wooden reed flute."
+    },
+    {
+      "name": "King",
+      "description": "Middle-aged king, about 50, dignified but humble, olive skin, neat grey-streaked beard, a simple thin gold circlet on his head, long deep-purple robe with a plain gold border, carries his own wicker basket of fruit on his shoulder."
+    },
+    {
+      "name": "Kohen",
+      "description": "Temple priest, about 45, kind and solemn, olive skin, dark beard, pure white linen robe to the feet with a long white woven sash, a plain white wrapped linen turban, barefoot."
+    }
+  ],
+  "cover": {
+    "prompt": "A joyful procession winds up a hillside road toward the golden-white stone walls of ancient Jerusalem. In front, Michal walks beside the ox with golden horns and an olive wreath, proudly holding her decorated basket of first fruits with a purple fig on top. Abba and Ima walk behind her, the flute player plays, families with baskets follow. Morning sun, festive and bright.",
+    "characters": ["Michal", "Abba", "Ima", "Ox", "Flute player"]
+  },
+  "pages": [
+    {
+      "prompt": "Early morning in a family orchard with terraced stone walls. Michal runs barefoot between trees and stops before a fig tree, pointing up at one soft ripe purple fig hanging on a branch, her face full of delight. Dew on the leaves, golden sunrise light, wide shot with the fig as the focus.",
+      "characters": ["Michal"]
+    },
+    {
+      "prompt": "Abba arrives, smiling, and ties a long green reed around the fig branch while Michal jumps beside him, clapping. A small stream with reeds runs at the edge of the orchard. Medium shot under the fig tree, warm morning light.",
+      "characters": ["Michal", "Abba"]
+    },
+    {
+      "prompt": "Wide view of the orchard looking festive: green reed ribbons tied on branches of ripe grapevines, red pomegranates and olive trees. Michal skips from tree to tree tying more reeds, a bundle of green reeds under her arm. Bright midday sun, a happy, celebratory feeling like a birthday.",
+      "characters": ["Michal"]
+    },
+    {
+      "prompt": "Inside a stone house courtyard, Ima hands Michal a woven wicker basket. Michal decorates it with flowers and leaves, carefully arranging the most beautiful grapes, pomegranates, olives and figs inside, placing her purple fig on top. Ima smiles beside her. Close-medium shot, warm afternoon light.",
+      "characters": ["Michal", "Ima"]
+    },
+    {
+      "prompt": "Dawn departure from the village: at the front walks the big ox with gilded golden horns and an olive wreath, led by a rope. Behind it the flute player plays merrily, cheeks puffed. Michal, Abba and Ima follow with their baskets. Rosy morning sky over the hills, a lively marching rhythm.",
+      "characters": ["Ox", "Flute player", "Michal", "Abba", "Ima"]
+    },
+    {
+      "prompt": "A long cheerful procession on a road through the hills, as families from many villages join, each carrying a decorated basket. Children ride on their fathers' shoulders, grandparents walk with sticks, everyone sings. Michal waves at a new friend. Wide panoramic shot, terraced hills and olive trees, golden light.",
+      "characters": ["Michal", "Abba", "Ima"]
+    },
+    {
+      "prompt": "At the gates of Jerusalem, people of the city in fine robes come out with open arms to greet the travelers. Michal waves both hands high with a huge smile, her basket hanging from Abba's arm. Golden stone walls and arches behind, festive atmosphere, medium-wide shot.",
+      "characters": ["Michal", "Abba", "Ima"]
+    },
+    {
+      "prompt": "In a crowded stone street of Jerusalem, the King, in a purple robe and simple gold circlet, lifts his own basket of fruit onto his shoulder and walks among the people. Michal stares up at him with wide amazed eyes, tugging Ima's sleeve; Ima leans down smiling and explains. Medium shot, warm light.",
+      "characters": ["King", "Michal", "Ima"]
+    },
+    {
+      "prompt": "The great courtyard of the ancient Holy Temple in Jerusalem, built of white stone and gold, with a stone altar in the distance under a clear sky. Abba hands the decorated basket to the Kohen in white linen, and speaks solemnly with one hand on his chest. Michal stands close by, listening. Bright, reverent, no other religious symbols.",
+      "characters": ["Abba", "Kohen", "Michal"]
+    },
+    {
+      "prompt": "Close-medium shot in the Temple courtyard: the Kohen places the basket down beside the altar. Abba bows his head slightly, and Michal, hands clasped at her chest and eyes closed, whispers her thanks with a radiant smile. Warm golden sunlight floods the white stone, festive joy.",
+      "characters": ["Abba", "Kohen", "Michal"]
+    },
+    {
+      "prompt": "The road home in the late afternoon: Michal walks between Abba and Ima holding their hands, her hands empty but her face glowing with happiness. Abba smiles down at her as he speaks. Long shadows, golden hills and a view of Jerusalem behind them. Wide, peaceful, content.",
+      "characters": ["Michal", "Abba", "Ima"]
+    },
+    {
+      "prompt": "Evening in front of the family's stone house: Michal sits with Abba and Ima around a small table with bread, fruit and a clay lamp, filling a small empty basket with flowers as tokens of thanks while counting them on her fingers. Soft warm lamplight, stars beginning to show, cozy and grateful.",
+      "characters": ["Michal", "Abba", "Ima"]
+    }
+  ]
+}

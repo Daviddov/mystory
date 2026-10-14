@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { mockIllustrationSvg, mockVideoProvider } from "../ai/mock";
-import { VideoRefusedError, type VideoProvider, type VideoRequest } from "../ai/types";
+import { VideoQuotaError, VideoRefusedError, type VideoProvider, type VideoRequest } from "../ai/types";
 import { NotFoundError } from "../repo/types";
 import { createTempData, type TempData } from "../../test/temp-data";
 import { allowsAdaptation, animationLicenseCheck, forbidsDerivatives } from "./license";
@@ -22,7 +22,9 @@ const PNG2 = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 9, 
 const PLAIN_SVG = new TextEncoder().encode('<svg xmlns="http://www.w3.org/2000/svg"><rect/></svg>');
 
 /** A pretend real video vendor: distinct bytes per call, optional refusal per page prompt. */
-function fakeRealVideo(options: { refuseWhen?: (request: VideoRequest) => boolean; costUsd?: number } = {}) {
+function fakeRealVideo(
+  options: { refuseWhen?: (request: VideoRequest) => boolean; quotaAfter?: number; costUsd?: number } = {},
+) {
   const calls: VideoRequest[] = [];
   const provider: VideoProvider & { calls: VideoRequest[] } = {
     name: "fake-veo",
@@ -32,6 +34,9 @@ function fakeRealVideo(options: { refuseWhen?: (request: VideoRequest) => boolea
       signal?.throwIfAborted();
       calls.push(request);
       if (options.refuseWhen?.(request)) throw new VideoRefusedError("blocked by the safety filter");
+      if (options.quotaAfter !== undefined && calls.length > options.quotaAfter) {
+        throw new VideoQuotaError("quota exceeded (HTTP 429)");
+      }
       return {
         video: new TextEncoder().encode(`mp4:${calls.length}`),
         contentType: "video/mp4",
@@ -192,7 +197,7 @@ describe("animation pipeline", () => {
   it("sends the picture and a motion prompt, and reports the cost", async () => {
     const real = fakeRealVideo({ costUsd: 0.5 });
     const summary = await animateBookWith(deps({ video: real }), bookId, { pages: [0] });
-    expect(real.calls[0]).toMatchObject({ imageContentType: "image/png", durationSeconds: 4 });
+    expect(real.calls[0]).toMatchObject({ imageContentType: "image/png", durationSeconds: 8 });
     expect(real.calls[0].image).toEqual(PNG);
     expect(real.calls[0].prompt).toContain("A girl in a garden");
     expect(summary).toMatchObject({ animated: 1, estimatedCostUsd: 0.5, pagesToAnimate: 1 });
@@ -285,9 +290,17 @@ describe("animation pipeline", () => {
       { dryRun: true, costPerSecondUsd: 0.2 },
     );
     expect(real.calls).toHaveLength(0);
-    expect(summary).toMatchObject({ dryRun: true, pagesToAnimate: 2, estimatedCostUsd: 1.6, animated: 0 });
+    expect(summary).toMatchObject({ dryRun: true, pagesToAnimate: 2, estimatedCostUsd: 3.2, animated: 0 });
     expect(summary.results.map((r) => r.reason)).toEqual(["would-animate", "would-animate", "no-image"]);
     expect((await temp.repo.getBookById(bookId))!.pages.every((p) => !p.video)).toBe(true);
+  });
+
+  it("stops at the first quota error instead of failing every remaining page", async () => {
+    const real = fakeRealVideo({ quotaAfter: 0 });
+    const summary = await animateBookWith(deps({ video: real }), bookId, {});
+    expect(real.calls).toHaveLength(1);
+    expect(summary).toMatchObject({ quotaExceeded: true, aborted: true, failed: 1, animated: 0 });
+    expect(summary.results).toHaveLength(1);
   });
 
   it("refuses a book whose license forbids derivatives, even with force", async () => {

@@ -1,0 +1,100 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Moshe",
+      "description": "Very old man of about 120, slender and slightly stooped, long flowing white beard and white hair, kind tired brown eyes, warm olive skin, simple light cream linen robe with a sand-colored sash, plain undyed head cloth, sandals, holds a tall plain wooden shepherd's staff. No glow or rays around his head."
+    },
+    {
+      "name": "Yehoshua",
+      "description": "Moshe's devoted student, a strong man looking about 55, broad-shouldered, olive skin, short dark-brown beard with the first grey streaks, thick wavy brown hair, earnest dark eyes, deep red-brown wool robe with a wide leather belt, a sand-colored cloak, sandals; signature item: the wide leather belt."
+    }
+  ],
+  "cover": {
+    "prompt": "Old Moshe stands beside Yehoshua on a rise above the desert camp at golden sunrise, his hand resting firmly on Yehoshua's shoulder. Yehoshua, standing tall, looks ahead toward the distant hills of the promised land with a brave, hopeful expression. Below them, rows of tents and the people. Warm, encouraging, medium-wide shot.",
+    "characters": [
+      "Moshe",
+      "Yehoshua"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "A walk through the desert: Moshe walks ahead with his staff, and Yehoshua follows a step behind, listening intently, leaning forward to catch every word. Their footprints trail behind them in the sand. Soft morning light, wide shot of two figures among dunes and distant tents.",
+      "characters": [
+        "Moshe",
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Inside Moshe's simple tent, sunlight through the open flap. Moshe, seated, speaks gently to Yehoshua, who stands with his hand on his chest, eyebrows raised, gulping in surprise. Close-medium shot of the two faces, warm earthy tones. A water jar and a rolled sleeping mat stand in the corner, and the desert glows beyond the tent opening.",
+      "characters": [
+        "Moshe",
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Yehoshua stands at the edge of the camp, overwhelmed, looking out at a vast busy sea of people: grandparents and children, endless tents, goats wandering, a mother rocking a baby. His hand presses his stomach anxiously. Wide shot from behind his shoulder showing the immense camp, afternoon light.",
+      "characters": [
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Night outside the tents: Yehoshua stands alone, wrapped in his cloak, gazing up at a sky full of stars, his face thoughtful and a little lonely. The camp sleeps in soft blue shadows behind him. Deep blue starry night, quiet and contemplative, wide framing.",
+      "characters": [
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Morning: Moshe looks kindly at Yehoshua's tired face, tilting his head with understanding. Yehoshua nods, looking down, holding up a thumb and finger as if saying a little, then spreading his hands wide for a lot. Soft morning light, intimate close-medium shot.",
+      "characters": [
+        "Moshe",
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Moshe smiles warmly and shares his own memory. Above them, a soft golden memory vision shows a younger Moshe in shepherd's clothes standing hesitantly before a burning bush that glows with warm light, his hand on his mouth. Yehoshua listens, surprised and comforted. Gentle dreamy colors.",
+      "characters": [
+        "Moshe",
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Before the whole people gathered on the plain, Moshe places his hand on Yehoshua's shoulder and calls out with a strong voice. Yehoshua stands beside him, eyes widening. The people watch, many raising their hands. Medium-wide shot, the two figures elevated on a low rise, bright morning sun.",
+      "characters": [
+        "Moshe",
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Moshe, leaning close to Yehoshua, points ahead toward the path into the land. Ahead of them, a soft warm light glows over the road like a guiding presence, without any figure. Yehoshua looks at it, his face softening. Wide-medium view of the path leading toward distant green hills.",
+      "characters": [
+        "Moshe",
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Close-up of Yehoshua with his hand on his chest, a small warm glow there, his face changing from worry to quiet courage, shoulders lifting. Behind him the morning sky brightens. Soft warm light, emotional and hopeful. Behind him the camp is waking, smoke rising gently from cooking fires.",
+      "characters": [
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Moshe raises his staff toward the people and calls to them all. Across the crowd, mothers, fathers and children straighten up, smile and hold hands, standing tall together. Yehoshua among them, nodding. Wide panoramic shot, golden light spreading over everyone.",
+      "characters": [
+        "Moshe",
+        "Yehoshua"
+      ]
+    },
+    {
+      "prompt": "Yehoshua stands tall with a straight back, firmly holding a closed scroll with plain wooden handles against his chest. He takes a first steady step forward on a path leading toward green hills. Moshe watches proudly from behind. Low angle, morning sun, courageous mood.",
+      "characters": [
+        "Yehoshua",
+        "Moshe"
+      ]
+    },
+    {
+      "prompt": "A small child stands at the entrance of a tent looking out at a new path into an unknown village, a little nervous, holding a small bundle. Behind the child, a loving parent kneels with a hand on the child's shoulder, smiling encouragement. Soft morning light, warm and reassuring.",
+      "characters": []
+    }
+  ]
+}

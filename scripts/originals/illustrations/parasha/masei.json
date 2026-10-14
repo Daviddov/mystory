@@ -1,0 +1,63 @@
+{
+  "style": "modern",
+  "characters": [
+    {
+      "name": "Alon",
+      "description": "Alon, boy about 8, skinny, light olive skin, messy light-brown hair, big curious green eyes, a gap-toothed grin, striped orange-and-white T-shirt, navy shorts, white sneakers, a small blue knitted kippah; often wears a floppy khaki hiking hat."
+    },
+    {
+      "name": "Grandpa",
+      "description": "Alon's grandpa, man about 72, round and cheerful, fair-olive skin, short neat white beard, bald with white hair at the sides, warm twinkling brown eyes, round tortoiseshell reading glasses, light-blue button shirt with rolled sleeves, grey trousers, a black velvet kippah; keeps an old brass compass on a chain."
+    }
+  ],
+  "cover": {
+    "prompt": "Alon in his floppy khaki hiking hat and Grandpa sit side by side at a wooden table, leaning over a big hand-drawn map full of colorful little pictures: a broken chain, blue sea waves with a dry path, palm trees, a mountain with a cloud, tents by a river, connected by a winding dotted path with no writing. Grandpa's brass compass lies on it. Warm sunny Friday morning light from a balcony window.",
+    "characters": ["Alon", "Grandpa"]
+  },
+  "pages": [
+    {
+      "prompt": "Friday morning in a warm Israeli apartment: Grandpa sits at the kitchen table reading a Chumash through his round glasses (pages shown as abstract lines only, no letters), and Alon peeks over his shoulder with a puzzled, funny frown. A challah under a cloth and Shabbat candlesticks wait on the counter, a bookshelf of holy books behind. Golden morning light, medium shot.",
+      "characters": ["Grandpa", "Alon"]
+    },
+    {
+      "prompt": "Grandpa laughs heartily, holding up his hands spread wide to show 'so many'. Alon sits on the chair next to him, eyes huge and mouth open in amazement, fingers counting. The Chumash lies open between them. Bright cheerful kitchen, sunlight through the balcony door, close-medium shot.",
+      "characters": ["Grandpa", "Alon"]
+    },
+    {
+      "prompt": "Alon stands proudly beside the table wearing his floppy khaki hiking hat, one hand raised like an explorer, holding colored markers, with a big sheet of white paper spread out and Grandpa's brass compass on top. Grandpa smiles and gently raises a finger, saying 'slowly'. Lively, warm morning light, low angle making Alon look heroic.",
+      "characters": ["Alon", "Grandpa"]
+    },
+    {
+      "prompt": "Close-up over the table: Alon's hand draws on the map with markers: a broken chain, little booths, and tall blue sea waves with a dry path between them. Alon's tongue pokes out in concentration under his hiking hat; Grandpa watches over his glasses. No writing on the map, only pictures. Bright light, overhead three-quarter angle.",
+      "characters": ["Alon", "Grandpa"]
+    },
+    {
+      "prompt": "Alon draws many little palm trees in a row around twelve small blue springs on the map, shaking his tired hand in the air with a comic grimace. Grandpa, reading from the Chumash, chuckles. Marker caps scattered around, a small tree already drawn by a pool of water. Warm late-morning light, medium shot.",
+      "characters": ["Alon", "Grandpa"]
+    },
+    {
+      "prompt": "Grandpa speaks with a solemn, glowing face, hand on his heart, while Alon carefully draws a big mountain on the map with a soft cloud on top, looking up at Grandpa with respect. Beyond the mountain, a long winding dotted path continues with many small dots for more stops. Soft golden light filling the kitchen, close-medium shot.",
+      "characters": ["Grandpa", "Alon"]
+    },
+    {
+      "prompt": "Alon leans his cheek on his hand, a bit tired. Grandpa takes off his round glasses and tells a story, and above them a soft dreamy watercolor vignette shows an ancient king in a simple robe and crown walking on a long road with his young son, pointing at places along the way. Warm afternoon light, cozy medium shot.",
+      "characters": ["Alon", "Grandpa"]
+    },
+    {
+      "prompt": "Alon jumps up excitedly, waving his arms and acting out family trip memories; above him small playful vignettes show a family picnic, a boy splashing in a stream, and a dad scratching his head beside a car at a crossroads. Grandpa laughs with his head thrown back. Bright, joyful kitchen scene, medium shot.",
+      "characters": ["Alon", "Grandpa"]
+    },
+    {
+      "prompt": "Overhead view of the finished map spread on the table: full of colorful drawings, arrows and a twisting, looping dotted path that goes backward and around, with a couple of brown cocoa stains and a mug of chocolate milk at the edge. Alon's and Grandpa's hands rest on its corners. No writing anywhere. Warm light.",
+      "characters": ["Alon", "Grandpa"]
+    },
+    {
+      "prompt": "Alon draws the last stop on the map, tents beside a blue river with green mountains beyond it, then starts a new small map in the corner of the paper with a hospital building, a kindergarten and a little bicycle. Grandpa leans in, curious and touched, glasses on his forehead. Soft afternoon light, close-medium shot.",
+      "characters": ["Alon", "Grandpa"]
+    },
+    {
+      "prompt": "Late Friday afternoon, the Shabbat candles ready on the table: Alon proudly holds up his own journey map full of little drawings, showing it to Grandpa, who hugs him around the shoulders with a warm smile. The balcony behind them glows with golden sunset over Jerusalem-stone buildings. Cozy, loving, medium-wide shot.",
+      "characters": ["Alon", "Grandpa"]
+    }
+  ]
+}

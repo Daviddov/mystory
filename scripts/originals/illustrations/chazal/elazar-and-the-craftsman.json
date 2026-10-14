@@ -1,0 +1,67 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Rabbi Elazar",
+      "description": "young sage about 30, tall and upright, olive skin, short glossy black beard, black hair under a white head wrap, sharp dark eyes; fine long white linen robe with a deep-blue sash over a cream tunic with tzitzit corners, good leather sandals"
+    },
+    {
+      "name": "Donkey",
+      "description": "tall elegant light-brown donkey with a cream belly and muzzle, wearing a deep-blue saddle cloth with a simple woven border"
+    },
+    {
+      "name": "The man",
+      "description": "plain, ordinary-looking traveler about 45, short and broad, dark olive skin, round weathered face with a wide flat nose, heavy eyebrows, a short scruffy grey-black beard, calm wise eyes and great dignity in his posture; patched brown wool tunic, rope belt, a small cloth bundle on a stick over his shoulder; never ugly or grotesque, simply unremarkable"
+    },
+    {
+      "name": "Townspeople",
+      "description": "a cheerful crowd of villagers of all ages: men in beige and olive tunics with tzitzit, women in modest long dresses and head coverings in rust and blue, a few children"
+    }
+  ],
+  "cover": {
+    "prompt": "On a riverside path at golden hour, Rabbi Elazar stands humbly with his head bowed and hands open, asking forgiveness, before the plain-looking traveler, who stands tall and dignified. Behind them, a tall slender reed bends gracefully in the breeze by the water while a big cedar stands stiff on the far bank. The donkey waits nearby. Warm, reconciling light, two-shot.",
+    "characters": ["Rabbi Elazar", "The man", "Donkey"]
+  },
+  "pages": [
+    {
+      "prompt": "Rabbi Elazar rides the light-brown donkey along a calm riverbank with reeds and willows, the water flowing gently beside him in late afternoon light. He sits very upright with his chin a little high and a proud, satisfied smile. Wide landscape shot with soft reflections in the river.",
+      "characters": ["Rabbi Elazar", "Donkey"]
+    },
+    {
+      "prompt": "On the riverside path, the plain-looking traveler steps aside respectfully and greets Rabbi Elazar with a warm, polite smile and a slight bow, his hand on his heart. Rabbi Elazar, still on the donkey, looks down at him. Golden afternoon light, reeds framing the scene, medium shot showing the man's kindness and dignity.",
+      "characters": ["Rabbi Elazar", "Donkey", "The man"]
+    },
+    {
+      "prompt": "Rabbi Elazar, still seated high on the donkey, speaks with a haughty, dismissive gesture of his hand. The traveler below stands quietly, his smile gone, his shoulders lowered and his eyes hurt and sad. A cloud passes over the sun and the light turns a little greyer. Low angle emphasizing the gap between them, no exaggeration, the man's sadness as focus.",
+      "characters": ["Rabbi Elazar", "Donkey", "The man"]
+    },
+    {
+      "prompt": "Close-up of the traveler answering quietly with calm dignity, looking straight at Rabbi Elazar, one hand gesturing gently upward toward the open sky, where soft warm light breaks through the clouds over the river. His face is steady, wise and composed. Rabbi Elazar is seen from behind, partly in frame.",
+      "characters": ["The man", "Rabbi Elazar"]
+    },
+    {
+      "prompt": "Rabbi Elazar has jumped down from the donkey and kneels on the path before the traveler, head bowed, hands pressed together, his face full of regret and sorrow. The traveler stands still, looking away, hurt and not yet ready to forgive, his bundle on his shoulder. The donkey looks on. Soft overcast light, emotional two-shot.",
+      "characters": ["Rabbi Elazar", "The man", "Donkey"]
+    },
+    {
+      "prompt": "A dusty road leading to a small hill town of stone houses. The traveler walks ahead; Rabbi Elazar follows behind on foot, head bowed, leading the donkey by its rope. At the town gate the townspeople pour out joyfully to greet the rabbi, waving and smiling. Late afternoon light, wide shot showing the procession and the welcoming crowd.",
+      "characters": ["The man", "Rabbi Elazar", "Donkey", "Townspeople"]
+    },
+    {
+      "prompt": "At the town gate, the traveler turns to the townspeople and speaks, pointing back at Rabbi Elazar, who stands with lowered eyes and red cheeks of shame. The townspeople gather around the traveler, hands raised pleadingly and kindly, asking him to forgive. Warm stone walls, gentle evening light, crowd composition with the traveler at the center.",
+      "characters": ["The man", "Rabbi Elazar", "Townspeople"]
+    },
+    {
+      "prompt": "The traveler, softened, places a hand on Rabbi Elazar's shoulder with a small forgiving smile. Rabbi Elazar clasps the man's other hand in both of his, eyes shining with relief and gratitude. The townspeople smile around them. Warm golden sunset light, close two-shot of reconciliation.",
+      "characters": ["The man", "Rabbi Elazar", "Townspeople"]
+    },
+    {
+      "prompt": "Inside a study hall with a skylight, Rabbi Elazar, now humble and gentle, teaches seated on a low bench among students. Beside him, through a wide window, a slender green reed bends softly in the wind while a tall stiff cedar stands outside; he gestures toward the bending reed with a soft smile. Students listen attentively. Golden afternoon light.",
+      "characters": ["Rabbi Elazar"]
+    },
+    {
+      "prompt": "A joyful group of children of the same era playing together in a sunny courtyard: a tall boy and a short girl, a girl with freckles, a boy with curly hair, a girl with straight hair and a child with a different skin tone, all laughing and holding hands in a circle under an olive tree. Bright warm light, celebrating everyone being different and loved.",
+      "characters": []
+    }
+  ]
+}

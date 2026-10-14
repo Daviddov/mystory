@@ -1,0 +1,64 @@
+{
+  "style": "biblical",
+  "characters": [
+    { "name": "The Field", "description": "The narrator: a gently rounded field on top of a small hill in the Land of Israel, bordered by a low dry-stone wall and one old olive tree at its corner. Its soil is warm reddish-brown. Personified only very subtly: the curves of the furrows and the hill's soft outline suggest a peaceful, content, sleepy expression, never a cartoon face, eyes or mouth." },
+    { "name": "Farmer", "description": "Kind farmer of about 40, strong and weathered, sun-browned olive skin, gentle brown eyes with crinkles, short dark beard, a cream head cloth tied with a brown cord. Wears a knee-length undyed wool tunic with an olive-green sash, sandals. Signature item: a simple wooden plough handle or a reed basket." },
+    { "name": "Daughter", "description": "The farmer's daughter, girl of about 6, slim, olive skin, big sparkling brown eyes, long dark wavy hair loose under a small yellow head kerchief. Wears an ankle-length soft-red linen dress with a white sash and sandals. Signature item: a little woven straw basket." },
+    { "name": "Rabbit", "description": "Small grey-brown wild hare with long ears, white fluffy tail and bright black eyes, bouncing playfully." },
+    { "name": "Gazelle", "description": "Slender young Israeli mountain gazelle, sandy-brown coat with a white belly and a darker side stripe, short curved horns, very large gentle dark eyes." }
+  ],
+  "cover": {
+    "prompt": "A small hilltop field in the Land of Israel resting peacefully under a deep-blue sky, covered with red poppies, yellow chrysanthemums and a few wild wheat stalks, an old olive tree at its corner. The farmer's daughter sits in the middle of the flowers smiling, while butterflies, a hare and a gazelle visit. Warm spring light, wide, restful composition.",
+    "characters": ["The Field", "Daughter", "Rabbit", "Gazelle"]
+  },
+  "pages": [
+    {
+      "prompt": "Wide landscape: a small rounded field on top of a gentle hill in the Land of Israel, with a low stone wall and one old olive tree, under a vast bright blue sky with a few soft clouds. Terraced hills and a distant stone village below. The field seems calm and friendly. No people. Morning light.",
+      "characters": ["The Field"]
+    },
+    {
+      "prompt": "A sequence across the hilltop field showing hard work through the seasons: the farmer ploughing with an ox, scattering seeds from a bag, and tall yellow wheat waving in the summer sun, flowing from left to right across the picture without borders. Warm busy rhythm, golden and brown palette.",
+      "characters": ["The Field", "Farmer"]
+    },
+    {
+      "prompt": "The field after many harvests, at the end of a hot dry summer: the soil is cracked, pale and dusty, a few dry stubbles, the old olive tree drooping slightly. The hill's outline sags in a tired, weary way. Hazy hot light, quiet, slightly sleepy and tired mood. No people.",
+      "characters": ["The Field"]
+    },
+    {
+      "prompt": "The farmer walks up to the field holding his daughter's hand. He kneels down and tenderly strokes the soil with his open palm, smiling kindly as if speaking to the field. His daughter watches curiously beside him with her little basket. Soft autumn morning light, warm, gentle mood, medium shot.",
+      "characters": ["Farmer", "Daughter", "The Field"]
+    },
+    {
+      "prompt": "The farmer sits on the low stone wall at the edge of the field with his daughter on his knee, explaining with a raised hand that shows six fingers then points at the resting field. The daughter listens wide-eyed. Behind them the field is empty and quiet, the plough leaning unused against the olive tree. Warm afternoon light.",
+      "characters": ["Farmer", "Daughter", "The Field"]
+    },
+    {
+      "prompt": "The field alone, stretching and relaxing: its clods of earth are soft and loose, the furrows gently smoothed like a blanket being pulled, the plough left leaning against the olive tree. A big soft breeze sweeps across it like a long earthy yawn, sending a little swirl of dust and leaves. Playful, relaxed mood, golden light.",
+      "characters": ["The Field"]
+    },
+    {
+      "prompt": "Gentle winter rain falls on the resting hilltop field, silver drops sparkling; then sunshine breaks through the clouds and warms the dark wet soil, a rainbow faintly over the hills. Small puddles shine. The field looks peaceful and content. No people, calm cozy mood.",
+      "characters": ["The Field"]
+    },
+    {
+      "prompt": "Spring: the field is suddenly bursting with life that nobody planted: red poppies, yellow chrysanthemums, and patches of wild wheat growing on their own, green shoots everywhere. Fresh bright morning light, dewdrops sparkling, a feeling of surprise and wonder. Close-low camera among the flowers with the olive tree behind.",
+      "characters": ["The Field"]
+    },
+    {
+      "prompt": "Visitors in the blooming field: colorful butterflies flutter over the poppies, a grey-brown hare bounces between the flowers, and a young gazelle with large gentle eyes nibbles the wild wheat. The field feels welcoming and generous. Sunny spring day, joyful wide shot.",
+      "characters": ["The Field", "Rabbit", "Gazelle"]
+    },
+    {
+      "prompt": "People of the village come into the open field with small baskets: an elderly woman in plain worn clothes, a well-dressed man in a fine striped robe, a neighbor with a child, a traveler with a staff. Each picks a little wild wheat and fruit, smiling and sharing with one another. The farmer welcomes them. Bright warm afternoon, friendly wide shot.",
+      "characters": ["The Field", "Farmer"]
+    },
+    {
+      "prompt": "The farmer's daughter sits in the middle of the flowering field among poppies and chrysanthemums, her straw basket beside her, smiling and whispering down to the earth with her hand resting on the soil. The flowers around her seem to lean toward her and glow warmly, as if the field is smiling back. Golden late-afternoon light, close medium shot.",
+      "characters": ["Daughter", "The Field"]
+    },
+    {
+      "prompt": "The following year: the hilltop field is rich and strong, covered with tall golden wheat waving in the wind. The farmer harvests happily, and his daughter runs through the wheat laughing with her arms out. The old olive tree is full and green. Bright summer sun, joyful, renewed mood, wide shot.",
+      "characters": ["The Field", "Farmer", "Daughter"]
+    }
+  ]
+}

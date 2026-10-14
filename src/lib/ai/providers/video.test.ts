@@ -11,6 +11,7 @@ import {
   createVideoProvider,
   parseVeoOperation,
   roundVeoDuration,
+  veoClipSeconds,
   veoCostUsd,
 } from "./video";
 
@@ -74,15 +75,17 @@ describe("pure helpers", () => {
 
   it("builds the predictLongRunning body", () => {
     const body = buildVeoRequest({ ...request, durationSeconds: 7.9, aspect: "9:16" }) as {
-      instances: { prompt: string; image: { inlineData: { mimeType: string; data: string } } }[];
+      instances: { prompt: string; image: { bytesBase64Encoded: string; mimeType: string } }[];
       parameters: Record<string, unknown>;
     };
     expect(body.instances).toHaveLength(1);
     expect(body.instances[0].prompt).toContain("the leaves sway");
-    expect(body.instances[0].image.inlineData).toEqual({
+    expect(body.instances[0].image).toEqual({
+      bytesBase64Encoded: Buffer.from(PNG).toString("base64"),
       mimeType: "image/png",
-      data: Buffer.from(PNG).toString("base64"),
     });
+    expect((body.instances[0] as { lastFrame?: unknown }).lastFrame).toEqual(body.instances[0].image);
+    expect((buildVeoRequest({ ...request, loop: false }) as { instances: { lastFrame?: unknown }[] }).instances[0].lastFrame).toBeUndefined();
     expect(body.parameters).toEqual({
       aspectRatio: "9:16",
       durationSeconds: 8,
@@ -115,6 +118,11 @@ describe("pure helpers", () => {
     expect(parseVeoOperation({ done: true, response: {} }).kind).toBe("error");
   });
 
+  it("makes looping clips 8 seconds long (Veo requires it with lastFrame)", () => {
+    expect(veoClipSeconds({ durationSeconds: 4 })).toBe(8);
+    expect(veoClipSeconds({ durationSeconds: 4, loop: false })).toBe(4);
+  });
+
   it("estimates cost per model at 720p", () => {
     expect(veoCostUsd("veo-3.1-lite-generate-preview", 4)).toBe(0.2);
     expect(veoCostUsd("veo-3.1-fast-generate-preview", 6)).toBe(0.6);
@@ -128,7 +136,7 @@ describe("gemini video provider", () => {
 
   it("starts, polls, downloads and reports cost", async () => {
     const fetchMock = stubFetch(json({ name: OP }), json({ name: OP, done: false }), json(doneBody), mp4());
-    const result = await provider().animate({ ...request, durationSeconds: 6 });
+    const result = await provider().animate({ ...request, durationSeconds: 6, loop: false });
 
     expect(result.isMock).toBe(false);
     expect(result.contentType).toBe("video/mp4");

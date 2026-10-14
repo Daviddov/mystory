@@ -1,0 +1,79 @@
+{
+  "style": "modern",
+  "characters": [
+    {
+      "name": "Boaz",
+      "description": "Boy about 6 years old, sturdy and energetic, sun-tanned olive skin, short curly light-brown hair, freckles, bright green-brown eyes, small navy knitted kippah, orange T-shirt, khaki shorts, blue sneakers; signature item: a round wicker basket with a handle that he carries everywhere."
+    },
+    {
+      "name": "Saba",
+      "description": "Boaz's grandfather, about 70, tall and a little round, sun-weathered olive skin, short neat white beard, twinkling grey eyes, white knitted kippah, light-blue checked short-sleeved work shirt with a front pocket, beige trousers, brown work boots; signature item: the shirt pocket where he keeps a surprise date."
+    },
+    {
+      "name": "Ima",
+      "description": "Boaz's mother, mid 30s, slim, olive skin, dark brown eyes, hair tucked under a mustard-yellow headscarf, long-sleeved white blouse and long denim skirt, warm smile."
+    },
+    {
+      "name": "Noga",
+      "description": "Boaz's sister, about 9, thin, olive skin, long straight dark-brown hair in a single braid, brown eyes, purple long-sleeved T-shirt and long navy skirt, sandals; signature item: a purple hair clip."
+    }
+  ],
+  "cover": {
+    "prompt": "A sunny moshav orchard in the Land of Israel: Boaz runs ahead holding up his wicker basket overflowing with the seven species - wheat and barley stalks, a cluster of purple grapes, figs, a red pomegranate, olives and dates - while Saba walks behind him laughing. Golden fields, a fig tree, a tall date palm and silver olive trees around them, blue sky. Bright, joyful, abundant.",
+    "characters": ["Boaz", "Saba"]
+  },
+  "pages": [
+    {
+      "prompt": "Morning on the porch of a moshav house with a mezuzah on the door frame. Saba bends toward Boaz with a twinkle, gesturing out toward the fields. Boaz jumps in the air with excitement, grabbing his empty wicker basket from a bench. Fields and trees in the background in soft morning sun. Medium-wide shot, lively.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "A golden wheat field gently waving in the breeze. Saba holds up one ripe wheat stalk, explaining, while Boaz carefully places a single stalk into his basket, holding up one finger proudly. Wide shot with the two figures small among tall golden wheat, warm morning light.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "Close-up at the edge of the field: Saba holds a barley stalk with long spiky whiskers next to his own white beard, and Boaz bursts out laughing, pointing at the similarity. Boaz holds up two fingers. Playful, funny moment, soft golden light, wheat field blurred behind.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "A grapevine climbs along a wooden fence, heavy with purple grape clusters. Boaz tastes one grape with eyes closed in delight, cheeks full, while Saba snips a small cluster for the basket. Dappled sunlight through vine leaves, three fingers raised by Boaz. Medium shot, rich purples and greens.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "Under a big fig tree with wide leaves, cool shade and spots of sunlight. Saba reaches up and picks a soft purple fig, handing it to Boaz, who holds his basket open. Boaz holds up four fingers. Low camera looking up through the broad green leaves, cozy and calm.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "A pomegranate tree with shiny red fruit. Boaz points excitedly at one round red pomegranate with a little crown on top, shouting with joy, imagining it is a king. Saba laughs beside him. Bright midday light, the red fruit as the clear focus, Boaz raising five fingers.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "Among pale rocks stands an ancient gnarled olive tree with silver-green leaves shimmering. Saba touches the twisted trunk respectfully while Boaz drops a handful of small green and black olives into his basket, six fingers raised. Wide shot, silvery light, a sense of old age and calm.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "Boaz stands at the foot of a very tall date palm, head tilted all the way back, looking up at clusters of dates far above against the blue sky. Saba, with a playful wink, pulls a single date out of his shirt pocket. Low angle emphasizing the towering palm, humorous and warm. Boaz raises seven fingers.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "Boaz sits on a low stone wall with his full basket on his lap, counting the seven species on his fingers: wheat, barley, grapes, figs, pomegranate, olives and dates all visible in the basket. Saba crouches beside him, clapping proudly. Late afternoon golden light, close-medium shot of the basket.",
+      "characters": ["Boaz", "Saba"]
+    },
+    {
+      "prompt": "Evening family dinner around a wooden table on the porch, warm hanging lights. Boaz proudly walks around the table sharing from his basket: grapes to Ima, a pomegranate to Noga, a date to Saba. Plates with bread and salads, smiles all around. Medium-wide shot, golden evening light.",
+      "characters": ["Boaz", "Saba", "Ima", "Noga"]
+    },
+    {
+      "prompt": "After the meal: Boaz leans back in his chair patting his full round tummy contentedly, while Saba, seated beside him, raises a finger and speaks kindly. Ima and Noga smile, empty plates and fruit peels on the table. Cozy evening lamplight, relaxed happy mood.",
+      "characters": ["Boaz", "Saba", "Ima", "Noga"]
+    },
+    {
+      "prompt": "The whole family sits around the table saying the grace after meals together, each holding a small closed booklet with a plain decorated cover. Boaz sits up straight with a huge proud smile, his empty basket beside him. Saba leads, eyes gently closed. Warm light, feeling of gratitude and togetherness.",
+      "characters": ["Boaz", "Saba", "Ima", "Noga"]
+    },
+    {
+      "prompt": "Overhead view of a cheerful family table laid for a meal: bread, a bowl of grapes, figs, a pomegranate, olives, dates and a small jar of honey among plates and cups, with a few children's hands reaching in from the edges. Boaz's wicker basket sits in the middle. Bright, inviting, a gentle game of searching for the seven species.",
+      "characters": []
+    }
+  ]
+}

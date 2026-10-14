@@ -1,0 +1,117 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Yitro",
+      "description": "grandfather about 75, tall and a little stooped, long silver beard, white turban, curious sparkling grey-brown eyes with smile wrinkles, tanned brown skin, long indigo-blue Midianite robe with a woven orange-and-white striped mantle, leans on a carved walking stick"
+    },
+    {
+      "name": "Moses",
+      "description": "tall slender man about 80 but strong, long brown beard with streaks of grey, kind deep-set brown eyes, olive skin, undyed cream wool robe with a brown striped mantle, brown head cloth, plain wooden shepherd's staff"
+    },
+    {
+      "name": "Zipporah",
+      "description": "Moses' wife, woman about 45, slim, tanned brown skin, gentle dark eyes, hair covered by a long indigo head cloth with an orange border, long rust-red dress, silver bead necklace"
+    },
+    {
+      "name": "Gershom",
+      "description": "Moses' older son, boy about 11, tall for his age, short black curly hair, tanned brown skin, brown eyes, knee-length sand-colored tunic with an indigo belt, sandals"
+    },
+    {
+      "name": "Eliezer",
+      "description": "Moses' younger son, boy about 7, small and round-faced, messy black curls, tanned brown skin, big brown eyes, knee-length light-blue tunic with a rope belt, sandals"
+    }
+  ],
+  "cover": {
+    "prompt": "Grandpa Yitro and Moses sit together in the shade of a tent at sunset, Yitro leaning in and raising one finger as he gives gentle advice, Moses listening thoughtfully. In the far background rises Mount Sinai wrapped in a soft grey cloud. Gershom and Eliezer sit at their feet listening. Warm golden-hour light, cozy wide shot.",
+    "characters": [
+      "Yitro",
+      "Moses",
+      "Gershom",
+      "Eliezer"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "A Midianite tent camp among rolling desert hills, palm trees and grazing sheep. Grandpa Yitro stands at the tent opening with his walking stick, gazing curiously at a bird on a branch, eyes sparkling. Morning light, peaceful wide shot with Yitro as the focus.",
+      "characters": [
+        "Yitro"
+      ]
+    },
+    {
+      "prompt": "Grandpa Yitro sits outside his tent listening to a traveling merchant beside a camel, who gestures wide with both arms describing a sea splitting. Yitro's eyes are wide, mouth open in amazement, one hand on his chest, already half standing up. Afternoon light, medium shot.",
+      "characters": [
+        "Yitro"
+      ]
+    },
+    {
+      "prompt": "Desert reunion: Moses runs toward Yitro with open arms, robe flying, and bows to him; Yitro opens his arms to embrace and kiss him. Zipporah smiles warmly behind, and Gershom and Eliezer run toward their father with huge grins. Israelite tents in the background. Joyful wide shot, bright morning.",
+      "characters": [
+        "Moses",
+        "Yitro",
+        "Zipporah",
+        "Gershom",
+        "Eliezer"
+      ]
+    },
+    {
+      "prompt": "Morning in the Israelite camp: Moses sits on a simple stone seat, and an extremely long line of people stretches out before him, winding through the tents to the horizon, each waiting with a question. At the edge of the frame, Yitro stands watching with a puzzled, raised-eyebrow expression, hand on his beard. High wide shot showing the endless line.",
+      "characters": [
+        "Moses",
+        "Yitro"
+      ]
+    },
+    {
+      "prompt": "Evening in the tent. Moses slumps tiredly on a cushion, shoulders drooping, eyes heavy, his staff leaning against the wall. Yitro sits close beside him, a gentle hand on Moses' arm, speaking softly with a caring face. An oil lamp glows. Intimate warm two-shot.",
+      "characters": [
+        "Moses",
+        "Yitro"
+      ]
+    },
+    {
+      "prompt": "Yitro explains with his hands, drawing in the sand with his walking stick: several small circles around one big circle. Moses leans forward, studying the drawing with growing understanding. Oil-lamp and moonlight, close framing on the two men and the simple sand diagram, no letters.",
+      "characters": [
+        "Yitro",
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Next day in the camp: several small groups, each gathered around a kind elder sitting on a stool, people getting answers and smiling. In the foreground, Moses finally sits relaxed at a low table eating dinner with bread and lentils, Zipporah serving and the boys laughing beside him. Warm evening light, cheerful mood.",
+      "characters": [
+        "Moses",
+        "Zipporah",
+        "Gershom",
+        "Eliezer"
+      ]
+    },
+    {
+      "prompt": "Yitro hugs Moses goodbye at the edge of the camp, his camel loaded and waiting. Then far in the background the long line of Israelites walks onward through the desert toward a tall, majestic mountain, Mount Sinai, rising against a clear sky. Bittersweet, warm morning light, wide composition.",
+      "characters": [
+        "Yitro",
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "At the foot of Mount Sinai, families in freshly washed white and cream clothes stand waiting. On the mountain a heavy cloud has descended, with smoke curling and soft flashes of lightning inside it. Above, a light seems to shine from within the cloud, no figure. People look up in awe; a mother holds a child's hand. Grand wide shot, morning.",
+      "characters": []
+    },
+    {
+      "prompt": "Utter silence: a desert landscape with the mountain in cloud in the distance. In the foreground a bird sits on a branch with its beak closed, a cow stands perfectly still, a dog sits quietly with ears up, and a child holds a finger to her lips. Everything is still, the air seems to hold its breath. Soft, hushed light, wide calm composition.",
+      "characters": []
+    },
+    {
+      "prompt": "The whole people stands at the foot of Mount Sinai listening, faces lifted, eyes wide with wonder and awe: grandparents, parents, children holding hands. The mountain glows in its cloud, with a warm golden light pouring down gently over everyone. Moses stands at the front among them. No figure on the mountain, no writing. Majestic, peaceful wide shot.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Yitro sits on a rock at dusk, eyes closed, a peaceful smile, hand cupped to his ear, listening to the quiet desert. Gershom and Eliezer sit on either side of him, copying him with closed eyes and cupped ears. First stars appearing, soft purple sky. Gentle, calm close shot.",
+      "characters": [
+        "Yitro",
+        "Gershom",
+        "Eliezer"
+      ]
+    }
+  ]
+}

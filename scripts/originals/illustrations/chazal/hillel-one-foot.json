@@ -1,0 +1,67 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Hillel",
+      "description": "elderly sage about 75, slight build, olive skin, long soft white beard, white hair under a cream head wrap, gentle crinkled dark eyes and a warm patient smile; long cream wool robe over a light tunic with tzitzit corners, brown belt, simple sandals"
+    },
+    {
+      "name": "Shammai",
+      "description": "sage and builder about 65, tall and broad-shouldered, olive skin, thick dark-grey beard, strong eyebrows, serious stern face, brown head wrap; sturdy dark-brown work robe with sleeves rolled up over a beige tunic with tzitzit, holding a long wooden builder's measuring rod"
+    },
+    {
+      "name": "The traveler",
+      "description": "foreign traveler about 35 from another nation, lanky and tall, tan skin, clean-shaven with a long thin moustache, short wavy chestnut hair, lively hazel eyes and a big playful grin; knee-length orange-and-red striped tunic, a short green traveling cloak, leather boots"
+    }
+  ],
+  "cover": {
+    "prompt": "In a sunny Jerusalem courtyard, the lanky traveler balances on one leg with arms out like wings, wobbling with a grin, while Hillel stands before him smiling warmly, one hand raised gently as he speaks. Stone houses with flat roofs and an olive tree behind them. Bright playful light, both figures full-length in the center.",
+    "characters": ["Hillel", "The traveler"]
+  },
+  "pages": [
+    {
+      "prompt": "The traveler arrives at a Jerusalem city gate of golden stone in morning light, a travel bag on his shoulder, gazing up at the city with curiosity and a mischievous idea on his face. Local people in tunics and modest dresses pass by. Wide establishing shot of stone walls and flat-roofed houses.",
+      "characters": ["The traveler"]
+    },
+    {
+      "prompt": "Close, funny moment: the traveler stands on one leg in a stone street, the other knee lifted high, arms flailing as he wobbles, cheeks puffed and grinning. A few children nearby giggle behind their hands. Bright midday light, low playful camera angle.",
+      "characters": ["The traveler"]
+    },
+    {
+      "prompt": "At a building site of new stone walls, Shammai stands holding his long wooden measuring rod, frowning and pointing firmly away with his free hand. The traveler, caught mid-balance on one leg, startles and hops backward. Stone blocks and scaffolding of wooden poles around them. Daylight, medium shot, stern but not violent.",
+      "characters": ["Shammai", "The traveler"]
+    },
+    {
+      "prompt": "Hillel sits on a bench in the shady doorway of his simple stone house under a grapevine. The traveler stands before him again on one leg, arms out, eyebrows raised hopefully. Hillel looks up at him with a calm, interested face. Soft dappled afternoon light, medium two-shot.",
+      "characters": ["Hillel", "The traveler"]
+    },
+    {
+      "prompt": "Close-up on Hillel, who neither scolds nor laughs but smiles kindly, leaning toward the wobbling traveler and speaking gently, one finger raised. The traveler, still on one foot, listens in surprise, mouth slightly open. Warm golden light on Hillel's face, the vine leaves above.",
+      "characters": ["Hillel", "The traveler"]
+    },
+    {
+      "prompt": "Hillel places his hand on his own heart and then reaches the other hand out toward the traveler, connecting them, as he explains. The traveler, still on one leg, looks thoughtful, his finger on his chin. Behind them, two neighbors share bread in friendship. Warm afternoon light, composition linking the two men.",
+      "characters": ["Hillel", "The traveler"]
+    },
+    {
+      "prompt": "A gentle scene in a courtyard of the same era: one small boy about 5 starts to grab a wooden toy horse from a girl about 5, then stops, remembers how it feels, and instead holds out his own toy to share, while the girl smiles. Another child nearby offers a hand to a child who tripped. Bright warm light, child's-eye framing.",
+      "characters": []
+    },
+    {
+      "prompt": "Hillel stands and gestures toward the open door of a study hall across the street, where scrolls on shelves are visible and students sit on benches, as if saying go and learn. The traveler, still on one foot, turns to look, his face lighting up. Golden afternoon light, wide shot leading the eye toward the study hall.",
+      "characters": ["Hillel", "The traveler"]
+    },
+    {
+      "prompt": "The traveler slowly lowers his raised foot to the ground, standing on both feet, his face glowing with joy and excitement, hands clasped in front of him. Hillel watches with a satisfied, loving smile. Warm late light, medium shot, the moment of decision.",
+      "characters": ["Hillel", "The traveler"]
+    },
+    {
+      "prompt": "Years later, inside a study hall with a skylight: the traveler, now Jewish, with a few grey hairs at his temples and tzitzit hanging from the corners of his striped tunic and a small cap on his head, sits on a low bench deeply engrossed in an open scroll of abstract marks, among other students. Golden sunbeams from the skylight. Peaceful medium shot.",
+      "characters": ["The traveler"]
+    },
+    {
+      "prompt": "A playful scene in a sunny courtyard of the same era: three children about 5 to 7 in simple tunics and a long dress each balance on one leg with arms out, laughing, one of them with a hand on a friend's shoulder to help her keep balance. An olive tree and stone houses behind. Bright, joyful light.",
+      "characters": []
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "style": "modern",
+  "characters": [
+    { "name": "Michal", "description": "Girl of about 5, round cheeks, light olive skin, big dark-brown eyes, shoulder-length straight black hair with a straight fringe and a pink hair clip. Wears a pink T-shirt with a small star, a lilac knee-length skirt over leggings and purple sandals; at the celebration a lilac party dress. Signature item: the pink star hair clip." },
+    { "name": "Ima Shulamit", "description": "Michal's mother, about 33, soft round face, light olive skin, warm brown eyes, hair covered by a mustard-yellow head scarf tied in a knot at the back. Wears a long flowing light-green dress with long sleeves; before the birth her belly is big and round, afterward it is normal." },
+    { "name": "Abba", "description": "Michal's father, about 35, medium build, light olive skin, brown eyes, curly black hair, short trimmed black beard, a white knitted kippah. Wears a navy polo shirt and beige trousers; at the brit a crisp white shirt and black trousers." },
+    { "name": "Savta", "description": "Michal's grandmother, about 65, plump and cozy, olive skin, twinkling eyes with reading glasses on a beaded chain, short grey hair under a wine-red snood. Wears a long grey skirt and a soft rose cardigan." },
+    { "name": "Saba", "description": "Michal's grandfather, about 68, tall, olive skin, laughing eyes, white trimmed beard, a black kippah. Wears a light-grey jacket over a white shirt." },
+    { "name": "Uri", "description": "Newborn baby boy, tiny round pink face, a tiny button nose, a few wisps of dark hair, a little curled fist, always wrapped in a soft light-blue (tchelet) blanket; at the celebration in a white outfit on a white embroidered pillow." },
+    { "name": "Rav", "description": "Friendly community rabbi, about 55, round glasses, full salt-and-pepper beard, a black kippah, dark suit with a white shirt and a white tallit draped over his shoulders; warm smiling face." }
+  ],
+  "cover": {
+    "prompt": "Michal sits on a soft living-room sofa, carefully holding her tiny newborn brother Uri, wrapped in a light-blue blanket, in her lap, while Ima Shulamit sits right beside her with an arm around both. Michal looks down at Uri with a huge, proud, loving smile. Warm afternoon sunlight through a balcony window, cozy family home. Close medium shot.",
+    "characters": ["Michal", "Ima Shulamit", "Uri"]
+  },
+  "pages": [
+    {
+      "prompt": "Ima Shulamit, very pregnant, sits on the sofa leaning back comfortably. Michal stands beside her and rests her small hand on Ima's big round belly, her eyes popping wide and mouth in a surprised O as she feels a kick. Ima laughs. Warm living room with a bookshelf of holy books and plants, soft morning light, close shot.",
+      "characters": ["Michal", "Ima Shulamit"]
+    },
+    {
+      "prompt": "In a pastel baby room, Abba assembles a small white wooden cradle while Michal sits on the rug folding tiny baby clothes, holding up a teeny onesie next to her doll to compare the size, delighted. Ima Shulamit, pregnant, watches from a rocking chair. Soft light through curtains, sweet preparing mood.",
+      "characters": ["Abba", "Michal", "Ima Shulamit"]
+    },
+    {
+      "prompt": "Morning in the family kitchen: Savta sits at the breakfast table in her cardigan holding a phone to her ear, a joyful smile spreading on her face. Michal, in pajamas with messy hair, stands on tiptoe next to her, leaning in to hear, eyes shining with excitement. Sunlight streams through the window, cereal bowls on the table.",
+      "characters": ["Savta", "Michal"]
+    },
+    {
+      "prompt": "At the front door of the apartment, Ima Shulamit has just come home holding a small bundle in a light-blue blanket. Michal leans in on tiptoe to peek: inside is baby Uri's tiny face, button nose and curled little fist. Michal whispers hello with a tender, amazed expression. Abba stands behind, holding a bag, smiling. Mezuzah on the doorframe, soft light.",
+      "characters": ["Ima Shulamit", "Uri", "Michal", "Abba"]
+    },
+    {
+      "prompt": "The living room is full of smiling guests crowded around Ima Shulamit and baby Uri, bending over him with delighted faces and hands on hearts. At the edge of the picture, Michal stands holding up her new colorful crayon drawing of a house and a sun, but nobody is looking at it. Busy, cheerful room, but Michal small and overlooked. Wide shot.",
+      "characters": ["Ima Shulamit", "Uri", "Michal", "Abba", "Savta"]
+    },
+    {
+      "prompt": "Michal sits alone in a quiet corner of the hallway on the floor, knees pulled to her chest, arms wrapped around them, her drawing on the floor beside her. Her eyes are wet and sad. In the soft-focus background, the bright living room full of guests. Quiet, gentle, slightly dim light around her. Close shot at her level.",
+      "characters": ["Michal"]
+    },
+    {
+      "prompt": "Ima Shulamit sits in an armchair with baby Uri sleeping in one arm and opens her other arm to Michal, who comes close and snuggles against her side. Ima looks into Michal's eyes with deep warmth. A soft warm glow surrounds the three of them. The guests are blurred away in the background. Tender close medium shot.",
+      "characters": ["Ima Shulamit", "Michal", "Uri"]
+    },
+    {
+      "prompt": "Michal, still on Ima Shulamit's lap, wipes her eyes with the back of her hand and suddenly sits up with a bright, proud smile, ready to sing. Baby Uri lies in Ima's arm, looking up at his sister. Ima smiles encouragingly. Warm evening lamp light, hopeful mood, close shot.",
+      "characters": ["Michal", "Ima Shulamit", "Uri"]
+    },
+    {
+      "prompt": "A joyful celebration in a decorated community hall: long tables with white cloths, cakes and fruit platters, balloons in light blue. Saba and Savta, uncles, aunts and neighbors smile and sing together, clapping. Michal in her lilac party dress dances between them. Bright cheerful light, festive wide shot. No medical or ceremonial details shown.",
+      "characters": ["Saba", "Savta", "Michal"]
+    },
+    {
+      "prompt": "Abba holds baby Uri, dressed in white on a white embroidered pillow, while the Rav in his tallit stands beside him with hands raised joyfully as he announces the name. Everyone around cheers with raised arms. In front, Michal jumps up on her toes, shouting happily with both fists in the air, louder than everyone. Ima Shulamit beams. Festive warm light.",
+      "characters": ["Abba", "Uri", "Rav", "Michal", "Ima Shulamit"]
+    },
+    {
+      "prompt": "Night in the baby room, lit by a soft star-shaped night light. Michal stands beside the white cradle, leaning over the side and singing softly to baby Uri. Uri, wrapped in his light-blue blanket, has opened one eye and looks up at her. Gentle blue and gold shadows, a moon in the window, tender quiet mood.",
+      "characters": ["Michal", "Uri"]
+    },
+    {
+      "prompt": "The whole family together on the sofa in a warm group hug: Abba and Ima Shulamit with baby Uri in the middle, Michal snuggled in front, Savta and Saba leaning in from the sides. Everyone smiling. A soft golden glow fills the cozy living room. Evening light, picture of overflowing love.",
+      "characters": ["Abba", "Ima Shulamit", "Uri", "Michal", "Savta", "Saba"]
+    }
+  ]
+}

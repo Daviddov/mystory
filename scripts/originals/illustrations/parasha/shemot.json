@@ -1,73 +1,142 @@
 {
   "style": "biblical",
   "characters": [
-    { "name": "Miriam", "description": "girl about 9, thin, long black braid, big dark eyes, light-brown skin, simple undyed linen dress, red head scarf, barefoot" },
-    { "name": "Mother", "description": "Miriam's mother Yocheved, woman about 35, slim, warm brown eyes, light-brown skin, dark hair fully covered by a long sand-colored head cloth, faded blue long linen dress with a brown woven sash, bare feet" },
-    { "name": "Baby", "description": "baby boy Moses, about three months old, chubby, round cheeks, a few dark curls, light-brown skin, big dark eyes, always wrapped in a soft cream blanket with a thin blue stripe" },
-    { "name": "Pharaoh's daughter", "description": "Egyptian princess about 20, tall and graceful, kind face, warm bronze skin, straight black hair cut at the shoulders under a thin gold band, kohl-lined gentle eyes, long modest white linen dress with long sleeves, wide turquoise-and-gold beaded collar, gold sandals" },
-    { "name": "Maid", "description": "Egyptian handmaid about 16, small and quick, bronze skin, black hair in one short braid, long plain cream linen dress with long sleeves, turquoise bead bracelet, barefoot" },
-    { "name": "Pharaoh", "description": "Egyptian king, middle-aged, stern but not scary, bronze skin, clean-shaven, heavy kohl eyes, tall blue-and-gold striped nemes headdress, long white pleated robe covering shoulders, wide gold collar, gold crook staff" }
+    {
+      "name": "Miriam",
+      "description": "girl about 9, thin, long black braid, big dark eyes, light-brown skin, simple undyed linen dress, red head scarf, barefoot"
+    },
+    {
+      "name": "Mother",
+      "description": "Miriam's mother Yocheved, woman about 35, slim, warm brown eyes, light-brown skin, dark hair fully covered by a long sand-colored head cloth, faded blue long linen dress with a brown woven sash, bare feet"
+    },
+    {
+      "name": "Baby",
+      "description": "baby boy Moses, about three months old, chubby, round cheeks, a few dark curls, light-brown skin, big dark eyes, always wrapped in a soft cream blanket with a thin blue stripe"
+    },
+    {
+      "name": "Pharaoh's daughter",
+      "description": "Egyptian princess about 20, tall and graceful, kind face, warm bronze skin, straight black hair cut at the shoulders under a thin gold band, kohl-lined gentle eyes, long modest white linen dress with long sleeves, wide turquoise-and-gold beaded collar, gold sandals"
+    },
+    {
+      "name": "Maid",
+      "description": "Egyptian handmaid about 16, small and quick, bronze skin, black hair in one short braid, long plain cream linen dress with long sleeves, turquoise bead bracelet, barefoot"
+    },
+    {
+      "name": "Pharaoh",
+      "description": "Egyptian king, middle-aged, stern but not scary, bronze skin, clean-shaven, heavy kohl eyes, tall blue-and-gold striped nemes headdress, long white pleated robe covering shoulders, wide gold collar, gold crook staff"
+    }
   ],
   "cover": {
     "prompt": "Miriam crouches between tall green reeds on the bank of the Nile, peeking out with a brave, worried face. In front of her, on calm golden water, floats a small woven reed basket with the baby's face and cream blanket just visible. Papyrus, lotus flowers, a heron in the distance, warm morning light glittering on the river. Medium shot from water level, Miriam and the basket as the focus.",
-    "characters": ["Miriam", "Baby"]
+    "characters": [
+      "Miriam",
+      "Baby"
+    ]
   },
   "pages": [
     {
       "prompt": "Wide establishing shot of the Nile riverbank at early morning: tall reeds and papyrus swaying, soft mist on the water, palm trees and distant mud-brick houses. Small among the reeds, Miriam hides and peeks out, her red head scarf the bright spot of color in the green. Peaceful, curious mood.",
-      "characters": ["Miriam"]
+      "characters": [
+        "Miriam"
+      ]
     },
     {
       "prompt": "Split mood scene. In the background, through an open doorway, tired Hebrew men and women carry mud bricks on their shoulders under a hot pale sky, bent and weary, no whips, no guards. In the foreground, inside a small dim mud-brick house, Mother holds the baby close to her chest, glancing toward the door protectively. A clay jar and a woven mat nearby. Tender, quiet tension.",
-      "characters": ["Mother", "Baby"]
+      "characters": [
+        "Mother",
+        "Baby"
+      ]
     },
     {
       "prompt": "Inside the small mud-brick house in lamplight. The baby, now a bit bigger, cries with his mouth wide open and little fists up. Mother leans over him, finger to her lips, shushing gently, looking worried. Miriam sits on the floor nearby covering her ears halfway with a sympathetic grimace. Warm oil-lamp glow, simple clay pots on a shelf. Close, cozy framing.",
-      "characters": ["Mother", "Baby", "Miriam"]
+      "characters": [
+        "Mother",
+        "Baby",
+        "Miriam"
+      ]
     },
     {
       "prompt": "Mother sits on a mat in the courtyard weaving a small oval basket from reeds, a bundle of cut reeds beside her and a clay pot of dark pitch with a wooden stick. The finished basket rests open; she gently lays the baby inside, tucking his cream blanket around him. Miriam watches with wide eyes, holding extra reeds. Soft afternoon light, close-up on hands and basket.",
-      "characters": ["Mother", "Baby", "Miriam"]
+      "characters": [
+        "Mother",
+        "Baby",
+        "Miriam"
+      ]
     },
     {
       "prompt": "Mother kneels at the river's edge between tall reeds, gently letting go of the little reed basket as it bobs on the calm water. Her hands are still reaching, her face full of love and hope. Ripples spread in circles, a dragonfly hovers. Low camera angle from the water, golden light through the reeds.",
-      "characters": ["Mother", "Baby"]
+      "characters": [
+        "Mother",
+        "Baby"
+      ]
     },
     {
       "prompt": "Miriam stands half hidden behind the reeds a little distance away, hands clutching reed stalks, eyes fixed on the small basket floating further down the river. Her face is determined and watchful, lips whispering. Over-the-shoulder view from behind Miriam toward the tiny basket on the shimmering water.",
-      "characters": ["Miriam"]
+      "characters": [
+        "Miriam"
+      ]
     },
     {
       "prompt": "Pharaoh's daughter walks down stone steps to the river with her maid and two other young women in long white dresses carrying towels and a jar. She has stopped and points toward the basket among the reeds; the maid steps into the shallow water to fetch it. In the foreground corner, Miriam peeks out, startled. Bright late-morning light, palace columns far behind.",
-      "characters": ["Pharaoh's daughter", "Maid", "Miriam"]
+      "characters": [
+        "Pharaoh's daughter",
+        "Maid",
+        "Miriam"
+      ]
     },
     {
       "prompt": "Close scene at the water's edge: Pharaoh's daughter kneels and opens the lid of the reed basket the maid holds. Inside the baby cries in his cream blanket. Her face melts into tenderness, a hand on her heart. The maid looks on surprised. Soft sparkling reflections from the river, warm intimate framing.",
-      "characters": ["Pharaoh's daughter", "Maid", "Baby"]
+      "characters": [
+        "Pharaoh's daughter",
+        "Maid",
+        "Baby"
+      ]
     },
     {
       "prompt": "Miriam steps out from between the reeds onto the sandy bank, fists clenched at her sides, chin up, taking a deep brave breath. Her eyes are wide, cheeks flushed. In the soft-focus background Pharaoh's daughter holds the baby. Camera at Miriam's height, focus on her courageous face.",
-      "characters": ["Miriam", "Pharaoh's daughter", "Baby"]
+      "characters": [
+        "Miriam",
+        "Pharaoh's daughter",
+        "Baby"
+      ]
     },
     {
       "prompt": "Miriam stands before Pharaoh's daughter on the riverbank, small and polite, one hand raised as she offers help. Pharaoh's daughter, cradling the baby, looks down at her with a kind, amused smile and nods. The maid stands behind. Two-shot showing the height difference, palms and reeds framing the scene.",
-      "characters": ["Miriam", "Pharaoh's daughter", "Baby", "Maid"]
+      "characters": [
+        "Miriam",
+        "Pharaoh's daughter",
+        "Baby",
+        "Maid"
+      ]
     },
     {
       "prompt": "Miriam runs as fast as she can along a dusty path between mud-brick houses, braid flying, red scarf fluttering, feet kicking up dust, a huge happy grin. Ahead, Mother turns in her doorway in surprise. Dynamic side view, sense of speed, a chicken scattering out of the way.",
-      "characters": ["Miriam", "Mother"]
+      "characters": [
+        "Miriam",
+        "Mother"
+      ]
     },
     {
       "prompt": "On the riverbank, Pharaoh's daughter gently places the baby into Mother's arms. Mother holds him tight, eyes closed with joy and tears of happiness; the baby nestles against her. Miriam beams beside them, hands clasped. Pharaoh's daughter smiles warmly. Golden light, emotional close group shot.",
-      "characters": ["Pharaoh's daughter", "Mother", "Baby", "Miriam"]
+      "characters": [
+        "Pharaoh's daughter",
+        "Mother",
+        "Baby",
+        "Miriam"
+      ]
     },
     {
       "prompt": "Some years later: in a sunny palace garden by the Nile, a boy of about three with dark curls and a cream tunic with a thin blue stripe stands beside Pharaoh's daughter, who smiles and points from him to the river. At the edge of the garden, Miriam, a little taller now in her red scarf, watches from the riverbank with a soft, proud smile. Lotus pool, palms, warm evening light.",
-      "characters": ["Pharaoh's daughter", "Miriam"]
+      "characters": [
+        "Pharaoh's daughter",
+        "Miriam"
+      ]
     },
     {
       "prompt": "A gentle reflective picture: Miriam sits on the riverbank among the reeds with her arm around the little reed basket, now empty, a small rag doll inside it, as if guarding it. She looks out at the viewer with a warm encouraging smile. Soft sunset light, peaceful river, fireflies starting to glow.",
-      "characters": ["Miriam"]
+      "characters": [
+        "Miriam"
+      ]
     }
   ]
 }

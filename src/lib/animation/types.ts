@@ -86,6 +86,8 @@ export interface BookAnimationSummary {
   estimatedCostUsd: number;
   /** True when the run was stopped before all pages were handled. */
   aborted: boolean;
+  /** The vendor's quota ran out; the run stopped there. Running again later continues. */
+  quotaExceeded?: boolean;
   /** Set when the book's license forbids animation; then no page was handled. */
   license?: AnimationLicenseCheck & { allowed: false };
   results: PageAnimationResult[];

@@ -1,0 +1,61 @@
+{
+  "style": "biblical",
+  "characters": [
+    { "name": "Itamar", "description": "Boy of about 8, slim and energetic, light olive skin, bright brown eyes, short dark-brown wavy hair, a few freckles across his nose. Wears a simple knee-length white linen tunic with a narrow blue-purple-red woven belt, barefoot at the Mishkan, brown sandals at home. Signature item: the small woven belt in blue, purple and red." },
+    { "name": "Aaron", "description": "Itamar's father, the High Priest, about 60, tall and gentle, olive skin, kind deep-brown eyes with smile lines, long white-grey beard. Wears a long white linen tunic, a white wrapped turban and a long sash woven in blue, purple and red. Calm, warm expression. No halo, no jewelry beyond this." }
+  ],
+  "cover": {
+    "prompt": "Itamar stands proudly beside the bronze-covered altar of the Mishkan at dawn, holding a small log in his arms and smiling at the warm, friendly fire that dances on top of the altar. The fire's glow lights his face in orange and gold. Behind him the white linen fence of the courtyard and a soft pink-and-grey early sky. Medium shot, warm cozy mood.",
+    "characters": ["Itamar"]
+  },
+  "pages": [
+    {
+      "prompt": "Split view of one place at two times: the square bronze-covered altar in the Mishkan courtyard with a steady warm fire on top; on the left half under a bright blue day sky, on the right half under a deep-blue starry night sky. The fire glows the same in both. White linen courtyard fence and colorful curtains of the tent behind. No people, calm and steady mood.",
+      "characters": []
+    },
+    {
+      "prompt": "Inside the family tent, Aaron rests his hand on Itamar's shoulder and speaks to him with a warm smile. Itamar stands up very straight, chest out, chin raised, beaming with pride. Soft light comes in through the tent opening, wool rugs and clay jars around them. Medium shot at Itamar's height.",
+      "characters": ["Aaron", "Itamar"]
+    },
+    {
+      "prompt": "Very early morning, the sky still grey-blue and the first stars fading. Itamar runs barefoot on the sandy path between quiet tents toward the Mishkan, pulling on the sleeve of his white tunic as he runs. Little birds sleep with their heads tucked on a tent rope. Everything is still and hushed; wide shot with Itamar small and lively in the middle.",
+      "characters": ["Itamar"]
+    },
+    {
+      "prompt": "Close shot at the altar at dawn: the fire on top is small and quiet, a few soft low flames curled like a sleepy kitten. Itamar stands on the altar's sloping ramp and gently places a log on the embers, a second log under his arm. His face is careful and tender. Soft grey dawn light mixed with the small orange glow.",
+      "characters": ["Itamar"]
+    },
+    {
+      "prompt": "The fire on the altar wakes up and leaps happily upward in bright orange and yellow flames, sparks twinkling like tiny stars. Itamar steps back laughing with his arms wide open in greeting, his face lit gold by the fire. Sunrise light breaks over the courtyard fence. Joyful, energetic mood, medium shot.",
+      "characters": ["Itamar"]
+    },
+    {
+      "prompt": "A cheerful sequence of three small moments shown side by side in one picture as three panels without borders or text: Itamar carrying logs to the altar at sunrise on three different mornings, each time smiling, the fire bright and happy, the sky slightly different each morning (pink, gold, pale blue). Rhythmic, joyful composition.",
+      "characters": ["Itamar"]
+    },
+    {
+      "prompt": "Inside the tent on a very cold morning: Itamar is curled up under a thick striped wool blanket on his sleeping mat, only his sleepy face and messy hair poking out, eyes half closed. His breath makes a little cloud in the chilly air. Pale cold-blue light seeps through the tent opening. Cozy and drowsy mood, close shot.",
+      "characters": ["Itamar"]
+    },
+    {
+      "prompt": "Itamar suddenly sits up and leaps out from under his blanket, eyes wide open, one foot already on the floor, the blanket flying off. Through the tent opening a tiny far-away orange glow of the altar fire can be seen in the dim morning. Dynamic, determined movement, cold blue light inside the tent.",
+      "characters": ["Itamar"]
+    },
+    {
+      "prompt": "At the altar on the cold morning, Itamar, slightly out of breath with pink cheeks, kneels on the ramp and patiently adds small sticks one by one to a fire that has grown low. The flames are starting to grow again, bigger and happier. His face shows care and patience. Frosty pale light with a warming orange glow, close medium shot.",
+      "characters": ["Itamar"]
+    },
+    {
+      "prompt": "Aaron kneels beside Itamar next to the altar and hugs him warmly, his big arms around the boy. Itamar smiles with eyes closed, cheek against his father's shoulder. Behind them the altar fire burns big and bright again. Morning sunlight warms the courtyard. Tender medium close shot.",
+      "characters": ["Aaron", "Itamar"]
+    },
+    {
+      "prompt": "Aaron and Itamar sit together on a low stone near the courtyard fence. Itamar looks up with a curious question on his face. Aaron gently points his finger toward Itamar's chest, and a soft small warm glow shines there over the boy's heart, like a tiny candle flame of love. Golden afternoon light, intimate mood.",
+      "characters": ["Aaron", "Itamar"]
+    },
+    {
+      "prompt": "A warm family morning in the tent: Itamar sets clay bowls on a low table to help, hugs his father good morning, and the sunrise shines in through the opening. A soft heart-shaped warm glow hovers subtly near Itamar's chest. Simple, cozy, joyful picture of everyday kindness.",
+      "characters": ["Itamar", "Aaron"]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Shimon ben Shetach",
+      "description": "Shimon ben Shetach, a humble Jewish sage of Jerusalem, about 55, lean and wiry, sun-weathered olive skin, honest deep-brown eyes, a medium-length dark-grey beard, a sand-colored head wrap, a patched earth-brown wool robe over an undyed tunic, a rope belt, worn sandals; a hard-working man, not rich."
+    },
+    {
+      "name": "Students",
+      "description": "Three young students of about 18 to 22, always together: one tall with short black curls and a teal tunic, one round-faced and beardless with a mustard-yellow tunic, one slim with a thin new beard and a rust-red tunic; all with simple head wraps and eager, kind faces."
+    },
+    {
+      "name": "Merchant",
+      "description": "An Arab (Ishmaelite) donkey merchant, about 50, tall and lean, deep-tan skin, a neat black beard with grey streaks, warm dark eyes, a white desert head cloth held by a dark cord, a long striped robe in indigo and cream, a woven sash; dignified and friendly."
+    },
+    {
+      "name": "Donkey",
+      "description": "A strong, friendly brown donkey with a cream muzzle and belly, dark mane, long ears, a soft rope halter; around its neck, until it is returned, a thin leather cord holding a single large glowing white pearl."
+    }
+  ],
+  "cover": {
+    "prompt": "In a busy Jerusalem market street of stone arches, Shimon ben Shetach holds out a single large glowing white pearl on his open palm to the Merchant, who stares at it with wide astonished eyes and lifts his hands in joy. The brown Donkey stands beside Shimon, flicking its ears. Warm golden light, the pearl gleaming softly as the bright focal point, medium composition.",
+    "characters": ["Shimon ben Shetach", "Merchant", "Donkey"]
+  },
+  "pages": [
+    {
+      "prompt": "A narrow stone street in old Jerusalem with flat-roofed houses. Shimon ben Shetach walks bent forward under a large heavy bundle of pale flax stalks tied on his back, wiping sweat from his brow, tired but patient. Late-afternoon golden light, long shadows, medium-wide shot.",
+      "characters": ["Shimon ben Shetach"]
+    },
+    {
+      "prompt": "In a stone courtyard, the three Students gather around Shimon ben Shetach, who has just set down his heavy flax bundle and rubs his back. The Students speak with caring, eager faces, one pointing toward the town. Shimon smiles gratefully, a hand on his heart. Warm evening light, medium shot.",
+      "characters": ["Shimon ben Shetach", "Students"]
+    },
+    {
+      "prompt": "A lively market with stalls of pottery, spices and fabric under striped awnings, donkeys and camels tied near a well. The three Students pay the smiling Merchant with a small cloth purse and take the brown Donkey's rope. Hidden on the Donkey's neck, a thin leather cord with a large glowing white pearl, half covered by its mane. Bright midday light, wide busy shot.",
+      "characters": ["Students", "Merchant", "Donkey"]
+    },
+    {
+      "prompt": "In front of Shimon's simple stone house, one of the Students points excitedly at the large glowing white pearl on the Donkey's neck, while the other two jump with joy, arms raised. Shimon ben Shetach steps out of the doorway, looking at it. The pearl sparkles brightly. Warm afternoon light, medium-wide shot.",
+      "characters": ["Students", "Shimon ben Shetach", "Donkey"]
+    },
+    {
+      "prompt": "Close medium shot: Shimon ben Shetach holds the pearl in his palm, not smiling but thoughtful and serious, looking up at the Students with a question in his eyes. The Students' joyful faces turn uncertain. The Donkey nuzzles his shoulder. Soft light, focus on Shimon's honest face and the gleaming pearl.",
+      "characters": ["Shimon ben Shetach", "Students", "Donkey"]
+    },
+    {
+      "prompt": "The three Students spread their hands in protest, surprised. Shimon ben Shetach answers firmly but kindly, one hand resting on the Donkey's neck and the other holding the pearl out a little apart, as if separating the two. Warm courtyard light, medium-wide shot showing everyone's expressions.",
+      "characters": ["Students", "Shimon ben Shetach", "Donkey"]
+    },
+    {
+      "prompt": "Shimon ben Shetach stands in his courtyard at sunset, holding the pearl close to his heart and gazing up at the glowing sky with a warm, hopeful smile, imagining something more precious than riches. The Students watch him quietly, moved. Rich golden-pink light, wide calm shot.",
+      "characters": ["Shimon ben Shetach", "Students"]
+    },
+    {
+      "prompt": "Back in the market among the stalls, Shimon ben Shetach holds out the glowing pearl to the Merchant. The Merchant looks at the pearl, then at Shimon, frozen in disbelief, one hand halfway to his chest. Passersby with baskets turn to look. Warm afternoon light, medium shot of the two men face to face.",
+      "characters": ["Shimon ben Shetach", "Merchant"]
+    },
+    {
+      "prompt": "The Merchant lifts both hands toward the sky with tears of joy, crying out a blessing, the pearl in his palm. Shimon ben Shetach smiles humbly, head slightly bowed. Market people gather around, amazed and smiling. Bright golden light, medium-wide shot, an emotional joyful moment.",
+      "characters": ["Merchant", "Shimon ben Shetach"]
+    },
+    {
+      "prompt": "A road leading home to Shimon's stone house at dusk: the brown Donkey, now with no cord around its neck, carries the bundles of flax on its back, and Shimon ben Shetach walks beside it upright and light-hearted, smiling broadly. Soft golden-blue evening light, wide peaceful shot.",
+      "characters": ["Shimon ben Shetach", "Donkey"]
+    },
+    {
+      "prompt": "A gentle closing scene in an ancient village square: a little girl in a simple green dress hands a lost ball made of wrapped cloth back to a younger boy, who smiles in relief. Shimon ben Shetach watches from nearby with a warm, approving smile, his Donkey beside him. A soft shimmer of light around the children. Warm afternoon light, medium-wide framing.",
+      "characters": ["Shimon ben Shetach", "Donkey"]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Korach",
+      "description": "Korach, man about 50, tall, well-fed, olive skin, neatly trimmed glossy black beard, proud raised chin and narrowed eyes, rich robe and mantle entirely of sky-blue (tekhelet) wool with blue tassels on the corners, gold rings on his fingers, fine leather sandals."
+    },
+    {
+      "name": "Moses",
+      "description": "Moses, older man about 80, tall and lean, weathered olive skin, long grey-white beard, deep calm eyes, simple undyed cream wool robe with a brown cloak, plain head covering; holds a tall wooden shepherd's staff."
+    },
+    {
+      "name": "Aaron",
+      "description": "Aaron the High Priest, older man about 80, gentle face, long full white beard, soft brown eyes; wears priestly garments: white linen tunic, deep-blue robe with a hem of woven pomegranates and tiny gold bells, a colorful woven apron, a breastplate of twelve colored stones without engravings, and a white wound turban."
+    },
+    {
+      "name": "Dathan",
+      "description": "Dathan, man about 45, thin and wiry, olive skin, pointed black beard, sharp scowling eyebrows, dark-brown robe with a red sash, arms often folded stubbornly."
+    },
+    {
+      "name": "Abiram",
+      "description": "Abiram, man about 45, stocky and round-faced, olive skin, bushy dark-grey beard, sulky frown, dark-maroon robe with a black belt and a striped head cloth."
+    },
+    {
+      "name": "Sons of Korach",
+      "description": "Three young brothers aged about 16 to 20, slim, olive skin, soft early beards, gentle thoughtful brown eyes, matching plain cream linen robes with sky-blue sashes; as Levite singers they hold small wooden harps (lyres)."
+    },
+    {
+      "name": "Hillel",
+      "description": "Hillel the sage, elderly man about 80, small and slender, warm kind smile, short white beard, olive skin, simple undyed wool tunic and a white prayer shawl, white head cloth, sitting relaxed."
+    },
+    {
+      "name": "Shammai",
+      "description": "Shammai the sage, man about 65, tall and upright, serious focused expression, long dark-grey beard, olive skin, dark-blue wool tunic and a white prayer shawl, dark head cloth, holding a measuring rod used by builders."
+    }
+  ],
+  "cover": {
+    "prompt": "Split mood composition: on the left, Korach in his all-blue robe stands with a crowd of men holding up small bronze fire-pans, faces angry and proud; on the right, Moses kneels humbly on the sand with open hands, pleading for peace, Aaron behind him. Between them the desert ground is calm, and above the Mishkan in the background a soft warm cloud glows. Late-afternoon light, wide shot.",
+    "characters": ["Korach", "Moses", "Aaron"]
+  },
+  "pages": [
+    {
+      "prompt": "Korach stands at the entrance of his large, richly decorated tent among hundreds of tents, gold rings on his fingers, people bowing respectfully as they pass. But his face is sour: he looks across the camp at Aaron in priestly garments in the distance, his eyes narrowed with envy. Warm afternoon light, medium shot with Aaron small in the background.",
+      "characters": ["Korach", "Aaron"]
+    },
+    {
+      "prompt": "Korach walks from tent to tent, whispering into the ears of important-looking men, gathering a crowd. Dathan and Abiram stand at his side. Then the whole group of men stands facing Moses and Aaron, and Korach raises his arm and shouts. Wide shot with the crowd filling the left side and Moses and Aaron calm on the right, harsh midday light.",
+      "characters": ["Korach", "Dathan", "Abiram", "Moses", "Aaron"]
+    },
+    {
+      "prompt": "Korach and his followers all wear mantles dyed entirely sky-blue with blue tassels on the corners. Korach holds up the corner of his mantle with a mocking smirk while his men laugh behind their hands. Moses stands calm and serious before them, answering with one raised finger. Medium shot, bright light, the blue garments vivid.",
+      "characters": ["Korach", "Moses"]
+    },
+    {
+      "prompt": "Moses has fallen to his knees with his face toward the sand, deeply saddened, his staff lying beside him; Aaron stands behind him with a worried face. Then Moses lifts his head and speaks quietly, holding out a small bronze fire-pan as an example. Korach's men stand watching, a little uneasy. Soft overcast light, low camera angle near Moses.",
+      "characters": ["Moses", "Aaron", "Korach"]
+    },
+    {
+      "prompt": "Moses, the great leader, walks humbly on foot across the camp toward the tents of Dathan and Abiram, his staff in hand, followed by a few elders. People step aside in surprise and respect. His face is gentle and determined, seeking peace. Long late-afternoon shadows, wide shot following him from behind.",
+      "characters": ["Moses"]
+    },
+    {
+      "prompt": "Dathan and Abiram stand stubbornly at the entrance of their tents with folded arms and scowls. Meanwhile, near the Tent of Meeting, Korach's company holds up bronze fire-pans with thin wisps of incense smoke. In the foreground Moses calls out with raised arms, and the people quietly move their families and belongings away from those tents. Morning light, wide shot.",
+      "characters": ["Dathan", "Abiram", "Moses", "Korach"]
+    },
+    {
+      "prompt": "A very wide, distant view across the desert: far away on the horizon, a thin crack of bright light opens in the empty ground where the tents of Korach stood, and a soft glow rises like a flash. In the foreground, the people of Israel, seen from behind, step back in awe, holding their children close. No people are shown near the light. Dramatic but gentle evening sky.",
+      "characters": []
+    },
+    {
+      "prompt": "A great sad silence over the camp: a wide, empty patch of smooth sand where tents once stood, the ground closed and flat. Families sit quietly at the edge with lowered heads, a mother hugging a child, an old man with his hand on his heart. Muted grey-gold dusk light, wide and still composition.",
+      "characters": []
+    },
+    {
+      "prompt": "The three sons of Korach stand together apart from the crowd, safe and unharmed, their hands on their hearts and their faces thoughtful and sorrowful but at peace. A soft protective warm light surrounds them from above. Behind them, the calm desert and the quiet camp. Gentle evening light, medium shot.",
+      "characters": ["Sons of Korach"]
+    },
+    {
+      "prompt": "Two scenes in one warm composition: on the left, a craftsman hammers the bronze fire-pans flat into thin shining plates, and they cover the sides of the altar of the Mishkan, gleaming; on the right, inside the tent, Moses holds up Aaron's staff covered with white-pink almond blossoms, green buds and almonds, while Aaron looks on with humble joy. Bright morning light.",
+      "characters": ["Moses", "Aaron"]
+    },
+    {
+      "prompt": "Years later in a grand stone Temple courtyard with tall columns: the sons of Korach, now Levite singers, stand on wide steps playing small wooden harps and singing with eyes closed and joyful faces. Below them a deer drinks from a little stream of water at the courtyard's edge, echoing their song. Warm golden light, uplifting wide shot.",
+      "characters": ["Sons of Korach"]
+    },
+    {
+      "prompt": "Shown as a soft, dreamlike vignette of a later time: in a simple study hall with low benches and scrolls, Hillel and Shammai sit facing each other in lively debate, Shammai holding a measuring rod and gesturing firmly, Hillel smiling gently with open hands; then they warmly clasp hands as friends. Students listen around them. Warm lamplight.",
+      "characters": ["Hillel", "Shammai"]
+    },
+    {
+      "prompt": "In the desert camp, two children, a brother and sister, have been arguing over a toy and stand back to back with crossed arms. The boy pauses, turns around and takes the first step toward his sister, holding out his hand with a shy smile; she begins to soften and smile. Their mother watches from the tent. Warm late-afternoon light, close-medium shot.",
+      "characters": []
+    }
+  ]
+}

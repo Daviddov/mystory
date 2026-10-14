@@ -1,0 +1,87 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Joseph",
+      "description": "ruler of Egypt, man about 39, slim, brown curly hair, clean-shaven, warm brown eyes that easily fill with tears, olive skin, long white fine linen robes, heavy gold chain around his neck, gold signet ring on his right hand, gold-trimmed white head cloth over his curls"
+    },
+    {
+      "name": "Judah",
+      "description": "tall broad-shouldered man about 45, thick reddish-brown hair and a full reddish beard, strong brave face, brown eyes, olive skin, rust-red wool robe with a brown leather belt, brown travel cloak, sandals"
+    },
+    {
+      "name": "Benjamin",
+      "description": "the youngest brother, slim young man about 20, short brown curly hair, no beard, big brown eyes, gentle face that looks like Joseph's, olive skin, cream wool tunic with a sky-blue sash and a light sky-blue cloak"
+    },
+    {
+      "name": "Brothers",
+      "description": "nine other Hebrew brothers, men aged 40 to 55, olive skin, dark hair and beards with some grey, plain wool travel robes in brown, grey, olive, dull blue and sand, travel cloaks, sandals, carrying sacks"
+    },
+    {
+      "name": "Jacob",
+      "description": "the brothers' father, very old man about 85, thin, long white beard, white curly hair, kind tired brown eyes, olive skin with deep wrinkles, olive-green wool robe with a brown rope belt, cream linen head cloth, wooden walking staff"
+    },
+    {
+      "name": "Egyptian servants",
+      "description": "palace servants and guards, Egyptian men, light-brown skin, shaved heads or short black hair, white linen kilts and short tunics, some with simple gold armbands, no weapons"
+    }
+  ],
+  "cover": {
+    "prompt": "Inside a sunlit Egyptian palace hall, Joseph in white robes and gold chain opens his arms wide with tears of joy, embracing young Benjamin, while the other brothers and Judah stand around them, stunned and starting to smile. Warm golden light streams through tall lotus columns. Medium-wide shot centered on the embrace, emotional and happy. No statues of gods.",
+    "characters": ["Joseph", "Benjamin", "Judah", "Brothers"]
+  },
+  "pages": [
+    {
+      "prompt": "A grand palace hall in Egypt with tall painted columns and a polished floor. Eleven Hebrew brothers in dusty travel robes stand together in a row, holding empty sacks, looking up nervously. Opposite them, on a high gold-and-wood chair on a raised platform, sits Joseph in white robes and a gold chain, watching them with a serious face and a secret tender look in his eyes. Wide shot from behind the brothers. No statues of gods.",
+      "characters": ["Joseph", "Judah", "Benjamin", "Brothers"]
+    },
+    {
+      "prompt": "In the middle of the hall, Benjamin stands frightened, holding an opened grain sack, and a shining silver goblet sits on top of the grain inside it. An Egyptian steward points at the goblet. Around Benjamin the brothers gasp, hands on their heads, faces pale with shock. Joseph watches from his high seat with a stern expression. Medium-wide shot, dramatic but not scary.",
+      "characters": ["Benjamin", "Brothers", "Judah", "Joseph", "Egyptian servants"]
+    },
+    {
+      "prompt": "Judah takes a big step forward out of the group of brothers, toward Joseph's raised seat. His shoulders are back, his hand is on his chest, and his face is brave and determined though his eyes show worry. The brothers behind watch, surprised. Low-angle medium shot from beside Judah, warm light falling on his face.",
+      "characters": ["Judah", "Joseph", "Brothers"]
+    },
+    {
+      "prompt": "Close-up of Judah standing near Joseph, speaking with feeling, one hand pointing back toward Benjamin. Above Judah floats a soft, sepia-toned memory bubble of an old father with a white beard hugging a young boy at a tent in Canaan. Joseph listens intently, his face starting to soften. Warm light, emotional close framing.",
+      "characters": ["Judah", "Joseph"]
+    },
+    {
+      "prompt": "Judah kneels on one knee before Joseph, his open hands held out in pleading, offering himself, his face full of love and determination. Behind him Benjamin stands with tears in his eyes and the brothers hold their breath. The hall is completely still, with soft dust in a sunbeam. Wide shot, quiet, powerful moment.",
+      "characters": ["Judah", "Benjamin", "Brothers", "Joseph"]
+    },
+    {
+      "prompt": "Close-up of Joseph on his high seat, looking down at Judah and his brothers. His eyes are filling with tears and his lips tremble, one hand pressed to his chest. In the soft background, the blurred figures of the brothers standing together protecting Benjamin. Warm golden backlight, intimate framing, deep emotion.",
+      "characters": ["Joseph"]
+    },
+    {
+      "prompt": "Joseph stands up from his seat with arms raised, and the Egyptian servants hurry out through a tall doorway, glancing back in surprise. Joseph, now alone with his brothers, bursts into tears, his head tilted back, crying loudly, the gold chain shining. The brothers stare at him in astonishment. Wide shot, strong golden light, a turning point.",
+      "characters": ["Joseph", "Egyptian servants", "Brothers", "Judah", "Benjamin"]
+    },
+    {
+      "prompt": "The brothers stand frozen, mouths open, eyes wide in disbelief. Joseph steps down toward them with open arms and a gentle, loving, tear-streaked smile, inviting them closer. One brother drops his sack, another covers his mouth. Medium-wide shot at eye level, soft warm light, the beginning of recognition.",
+      "characters": ["Joseph", "Brothers", "Judah", "Benjamin"]
+    },
+    {
+      "prompt": "Joseph and Benjamin hug tightly, each crying on the other's neck, eyes closed. Around them Joseph kisses and embraces the other brothers one by one; Judah wipes away a tear, and some brothers begin to talk and smile with relief. Close-medium shot centered on Joseph and Benjamin, warm golden light, tender family reunion.",
+      "characters": ["Joseph", "Benjamin", "Judah", "Brothers"]
+    },
+    {
+      "prompt": "Outside the palace, a line of wooden ox-drawn wagons loaded with sacks of food, baskets of bread and gifts sets off on the road toward Canaan. The brothers run alongside, laughing and waving like happy children, Benjamin in front. Joseph waves from the palace steps. Wide shot, bright sunny day, palm trees and the desert road ahead.",
+      "characters": ["Brothers", "Benjamin", "Judah", "Joseph"]
+    },
+    {
+      "prompt": "In front of Jacob's tents in Canaan, old Jacob sits on a mat, at first shaking his head in disbelief. Then he sees the Egyptian wagons full of gifts and his face lights up with a huge joyful smile, hands raised. Behind him the whole family packs up: children, grandchildren, sheep and cows begin moving down the road. Wide shot, warm morning light.",
+      "characters": ["Jacob", "Judah", "Benjamin", "Brothers"]
+    },
+    {
+      "prompt": "Green fields of Goshen at sunset. Joseph has jumped down from his small two-wheeled chariot and holds old Jacob in a long, tight embrace, crying on his shoulder. Jacob's eyes are closed with joy, one hand on Joseph's curls. Behind them the family and flocks gather with happy faces. Medium shot, glowing golden light, deep emotional warmth.",
+      "characters": ["Joseph", "Jacob", "Benjamin", "Judah", "Brothers"]
+    },
+    {
+      "prompt": "Evening in Goshen, the whole family together around a campfire near their tents. Judah sits with his arm protectively around Benjamin, and Joseph, sitting on the ground among them like one of the brothers, laughs and shares bread with his brothers. Old Jacob smiles at them all. Wide, cozy shot, warm firelight and a starry sky, feeling of forgiveness and togetherness.",
+      "characters": ["Judah", "Benjamin", "Joseph", "Brothers", "Jacob"]
+    }
+  ]
+}

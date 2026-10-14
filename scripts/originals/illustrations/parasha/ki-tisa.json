@@ -1,0 +1,99 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Moses",
+      "description": "tall slender man about 80 but strong, long beard brown turning grey, kind deep-set brown eyes, olive skin, undyed cream wool robe with a brown striped mantle, brown head cloth, plain wooden shepherd's staff"
+    },
+    {
+      "name": "Aaron",
+      "description": "Moses' older brother, man in his eighties, a bit shorter and broader than Moses, long full grey beard, bushy grey eyebrows, warm brown eyes, olive skin, sand-colored wool robe with a dark-red sash, white head cloth, almond-wood staff"
+    },
+    {
+      "name": "Tablets",
+      "description": "two rounded-top tablets of pale blue-grey sapphire-like stone, each about the size of a large book, covered with fine abstract engraved marks that glow faintly, never letters"
+    }
+  ],
+  "cover": {
+    "prompt": "Moses walks down the slope of Mount Sinai in the early morning, holding two new stone tablets close to his chest with both arms, his face softly glowing with a gentle light. Below, at the foot of the mountain, the tents of the camp and tiny people waving with happy faces. Clouds part around the summit, golden sunrise. Hopeful wide shot.",
+    "characters": [
+      "Moses",
+      "Tablets"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "At the foot of Mount Sinai, Moses waves goodbye as he begins walking up a rocky path into a thick white cloud that covers the summit. In the foreground, the people stand among their tents looking up, a child holding her mother's hand, a few already sitting on rocks with chins in their hands, ready for a long wait. Wide shot, soft morning haze.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Morning at the foot of the mountain: a crowd stands staring at the empty path that leads up into the cloud. One man whispers into another's ear with worried eyes, and the worry spreads across the faces from person to person in the crowd. The mountain is calm and silent. Grey-blue light, wide shot with the empty path as the focus.",
+      "characters": []
+    },
+    {
+      "prompt": "Seen from a distance on a hillside: in the middle of the camp stands a small shiny golden calf statue on a stone base, and people dance around it in a circle with drums. Aaron stands to the side with a troubled, uncertain face. Golden earrings lie in a basket nearby. Far view, people small, bright afternoon sun, no close-up worship.",
+      "characters": [
+        "Aaron"
+      ]
+    },
+    {
+      "prompt": "Moses walks down a rocky mountain path holding the two stone tablets carefully. He has stopped and looks down toward the camp far below, where a tiny golden glint and dancing figures can be seen. His face changes from calm to shocked and sad. Wide shot from behind his shoulder down to the camp, late afternoon light.",
+      "characters": [
+        "Moses",
+        "Tablets"
+      ]
+    },
+    {
+      "prompt": "At the foot of the mountain, Moses stands with empty hands and a heartbroken face, eyes full of sorrow. At his feet lie scattered pieces of the broken stone tablets, their faint glow fading. In the background the dancing has stopped; drums lie on the ground and people stand frozen, heads lowered, realizing. Quiet, sad muted light, no punishment.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Moses kneels high on the mountainside, alone, arms raised and palms open toward the sky, eyes closed in deep heartfelt prayer, his mantle blowing in the wind. Far below, the camp's tents are tiny. A soft warm light breaks gently through the clouds onto him, no figure in the sky. Wide, emotional, hopeful composition.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Moses sits on a rock at the foot of the mountain, patiently carving a new rounded-top stone tablet with a chisel and hammer; a second blank tablet leans beside him. Stone dust floats in the light. His face is calm and focused. Close-medium shot, soft morning light, careful and slow mood.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Early morning: Moses climbs to the summit of Mount Sinai holding the two new blank stone tablets, entering a soft glowing white cloud. Inside the cloud, warm light surrounds him gently like a hug, and he bows his head in gratitude. No figure besides Moses. Dreamy pale gold and white palette.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "In the camp, the people wait patiently: a father and his child scratch one mark per day on a wooden board, a grandmother calmly weaves, children play quietly, everyone glancing up at the mountain with peaceful faces. In the distance, Moses descends the mountain holding whole tablets. Calm late-afternoon light, wide shot.",
+      "characters": [
+        "Moses",
+        "Tablets"
+      ]
+    },
+    {
+      "prompt": "Moses stands at the foot of the mountain holding the whole tablets; his face itself glows with a soft warm inner light, like gentle sunlight on his skin, no rays and no ring around his head. He looks puzzled at the people's amazed expressions. Aaron and the people gaze at him with wonder and joy, children pointing. Medium-wide shot.",
+      "characters": [
+        "Moses",
+        "Aaron",
+        "Tablets"
+      ]
+    },
+    {
+      "prompt": "Inside a simple golden chest lined with cloth, the two whole stone tablets stand upright, and beside them rest the carefully gathered broken pieces of the first tablets, all glowing faintly. Seen from above as if peeking inside, soft golden light, precious and tender mood.",
+      "characters": [
+        "Tablets"
+      ]
+    },
+    {
+      "prompt": "Present-day Israeli kindergarten: a child holds two halves of a broken clay mug with a sorry face, and a teacher kneels beside her with a gentle smile, helping glue the pieces together. On the table, a drawing of two tablets with colorful marks, no letters. Warm sunlight through the window, comforting mood.",
+      "characters": [],
+      "style": "modern"
+    }
+  ]
+}

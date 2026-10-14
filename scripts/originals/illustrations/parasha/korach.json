@@ -1,0 +1,71 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Aaron's Staff",
+      "description": "A plain wooden walking staff about as tall as a man, warm brown almond wood, slightly crooked, with a few small cracks and a smooth worn grip at the top; gives a gentle sense of personality through its pose and the light on it, but has no face. Later it carries a few carved abstract marks (no readable letters)."
+    },
+    {
+      "name": "Aaron",
+      "description": "Aaron the High Priest, older man about 80, gentle face, long full white beard, soft brown eyes; wears a long white linen robe with a deep-blue sash and a white wound turban; inside the Mishkan, the full priestly garments: blue robe with pomegranate hem, colorful woven apron, breastplate of twelve colored stones without engravings."
+    },
+    {
+      "name": "Moses",
+      "description": "Moses, older man about 80, tall and lean, weathered olive skin, long grey-white beard, deep calm eyes, simple undyed cream wool robe with a brown cloak, plain head covering; holds a tall wooden shepherd's staff."
+    },
+    {
+      "name": "Korach",
+      "description": "Korach, man about 50, tall, well-fed, olive skin, neatly trimmed glossy black beard, proud raised chin and narrowed eyes, rich robe entirely of sky-blue (tekhelet) wool with gold rings on his fingers, fine leather sandals."
+    }
+  ],
+  "cover": {
+    "prompt": "Close, glowing view of Aaron's Staff standing upright inside a dim tent, covered with white-pink almond blossoms, green leaves and small green almonds sprouting along its brown wood, as if it bloomed overnight. Soft warm light radiates around it, a few petals drifting down. Other plain dry staffs lean softly blurred in the background. Magical, gentle, hopeful mood.",
+    "characters": ["Aaron's Staff"]
+  },
+  "pages": [
+    {
+      "prompt": "Inside Aaron's tent, the plain brown staff leans in a corner by the woven wall. Through the open flap we see the lively camp: children laughing and chasing, a few sheep, the desert wind lifting the tent cloth. Aaron reaches toward the staff, about to take it for his walk. Warm morning light, the staff in clear focus in the foreground.",
+      "characters": ["Aaron's Staff", "Aaron"]
+    },
+    {
+      "prompt": "In the camp, Korach in his all-blue robe stands with a crowd of men behind him, pointing an accusing finger and shouting with an angry face. Facing him stand Moses and Aaron, calm and saddened; Aaron holds his staff, which is in the foreground. Tense but not violent, harsh noon light, medium-wide shot with the staff's low point of view.",
+      "characters": ["Korach", "Moses", "Aaron", "Aaron's Staff"]
+    },
+    {
+      "prompt": "Close shot of Aaron's hand gripping his staff, trembling slightly. Above, Aaron's face is quiet and pained, not shouting back. In the background Moses sends a young messenger off toward distant tents, where two men in dark robes fold their arms and turn away. A small campfire nearby flares higher, a visual echo of growing anger. Late afternoon light.",
+      "characters": ["Aaron's Staff", "Aaron", "Moses"]
+    },
+    {
+      "prompt": "Quiet thoughtful scene: the staff leans against the tent at dusk. In the distance, Korach stands looking enviously toward the Mishkan, while beside him Levite men of his family carefully carry sacred vessels wrapped in blue cloth on poles. Soft purple dusk light, the staff in the foreground as if watching and thinking.",
+      "characters": ["Aaron's Staff", "Korach"]
+    },
+    {
+      "prompt": "Moses gathers twelve wooden staffs laid side by side on a cloth before the tribal princes. He carefully carves simple abstract marks into Aaron's Staff with a small knife (no readable letters, just simple lines). The princes watch. A soft warm light glows from the direction of the Mishkan. Close-medium shot, a little wood shaving curling playfully off the staff.",
+      "characters": ["Moses", "Aaron's Staff"]
+    },
+    {
+      "prompt": "Inside the dark Tent of Meeting, twelve plain staffs lie side by side on the floor before the golden Ark of the Covenant, which is covered and softly gleaming. Aaron's Staff lies among them, dry and ordinary. A thin ray of moonlight falls across them. Hushed, mysterious, low camera close to the floor.",
+      "characters": ["Aaron's Staff"]
+    },
+    {
+      "prompt": "The same dark tent at night, close-up: from the dry wood of Aaron's Staff tiny green buds burst out, open into white-pink almond blossoms, and green almonds begin to swell, all at once. A soft warm magical glow rises from the staff, petals floating in the air. The other eleven staffs stay dry beside it. Wondrous, gentle mood.",
+      "characters": ["Aaron's Staff"]
+    },
+    {
+      "prompt": "Morning outside the Mishkan: Moses holds up the blossoming staff full of flowers and almonds for all to see, with eleven dry staffs in his other arm. A large crowd gazes in amazement: people rubbing their eyes, children pointing excitedly. Aaron stands nearby, humble and moved. Bright clear morning light, wide shot, calm returning.",
+      "characters": ["Moses", "Aaron's Staff", "Aaron"]
+    },
+    {
+      "prompt": "Each tribal prince takes back his own dry staff from Moses, nodding with understanding and respect. Behind them, the tribes go about their roles: the tribe of Judah with its blue lion flag ready at the front, Levites standing guard around the Mishkan. Aaron holds the blossoming staff. Warm afternoon light, harmonious wide composition.",
+      "characters": ["Moses", "Aaron", "Aaron's Staff"]
+    },
+    {
+      "prompt": "Inside the Mishkan, the blossoming Aaron's Staff stands proudly upright beside the covered golden Ark of the Covenant, full of flowers and almonds, softly glowing. Moses, in the entrance, looks at it with a peaceful smile and a raised gentle hand as if explaining to the people outside. Calm golden light, reverent framing.",
+      "characters": ["Aaron's Staff", "Moses"]
+    },
+    {
+      "prompt": "In the camp at sunset, a row of children each holds a small almond branch: some branches in full white-pink bloom, some with tight buds, some with just green leaves. They compare them with smiles, one girl who looked jealous now smiling at her own budding branch. Aaron watches warmly from his tent with his blossoming staff. Golden sunset light.",
+      "characters": ["Aaron", "Aaron's Staff"]
+    }
+  ]
+}

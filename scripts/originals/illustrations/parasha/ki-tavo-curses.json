@@ -1,0 +1,91 @@
+{
+  "style": "modern",
+  "characters": [
+    {
+      "name": "Noa",
+      "description": "Girl about 7, slender, light olive skin, long dark-brown hair in two braids with white ribbons, curious amber-brown eyes, a sunny yellow long-sleeved Shabbat dress below the knee, white tights, black Mary-Jane shoes; signature item: the white braid ribbons."
+    },
+    {
+      "name": "Saba",
+      "description": "Noa's grandfather, about 72, tall and slightly stooped, light olive skin, neatly trimmed white beard, warm grey eyes behind round gold-rimmed glasses, black velvet kippah, navy Shabbat suit with a white shirt; in synagogue a white tallit with black stripes over his shoulders; signature item: the round gold-rimmed glasses."
+    },
+    {
+      "name": "Torah reader",
+      "description": "The synagogue Torah reader, about 45, medium build, olive skin, short brown beard, black kippah, white tallit with blue stripes, holds a silver pointer."
+    },
+    {
+      "name": "Abba",
+      "description": "Noa's father, about 40, athletic, light olive skin, short dark beard, brown eyes, knitted blue-and-white kippah, white Shabbat shirt with sleeves rolled up, dark trousers."
+    },
+    {
+      "name": "Ima",
+      "description": "Noa's mother, about 38, light olive skin, warm hazel eyes, hair fully covered by an elegant burgundy headscarf, long-sleeved navy Shabbat dress, small pearl earrings."
+    },
+    {
+      "name": "Moshe",
+      "description": "Very old man of about 120, slender, long flowing white beard and white hair, kind tired brown eyes, warm olive skin, simple light cream linen robe with a sand-colored sash, plain undyed head cloth, sandals, holds a tall plain wooden shepherd's staff. No glow or rays around his head."
+    },
+    {
+      "name": "Levites",
+      "description": "A group of about a dozen men of the Torah era, various ages, olive skin, dark and grey beards, in plain white linen robes and white head cloths, standing together, some carrying a wooden ark covered with a plain blue cloth on poles."
+    }
+  ],
+  "cover": {
+    "prompt": "Noa and Saba sit together on a park bench under a tree, Saba telling a story with his hand raised toward the horizon. Above them, in a soft golden dream vision, two mountains face each other: a lush green mountain on the left and a rocky brown mountain on the right, both covered with tiny crowds of people, a small group in white in the valley between. Warm, inviting, full of wonder.",
+    "characters": ["Noa", "Saba"]
+  },
+  "pages": [
+    {
+      "prompt": "Inside a warm Israeli synagogue of Jerusalem stone on Shabbat morning. At the raised reading table, the Torah reader leans over an open Torah scroll whose columns are only soft blurred lines with no visible letters, reading quickly. In the foreground on a wooden bench, Noa tugs at Saba's sleeve and whispers a question, Saba in his tallit leaning down to her. Soft daylight from high windows.",
+      "characters": ["Noa", "Saba", "Torah reader"]
+    },
+    {
+      "prompt": "A shady tree-lined boulevard after prayers. Noa and Saba sit on a green park bench, Saba turning toward her with a storyteller's gesture, two fingers raised like two mountains. Noa listens, swinging her legs. Shabbat-quiet street, sunlight through the leaves, medium shot.",
+      "characters": ["Noa", "Saba"]
+    },
+    {
+      "prompt": "Saba's story vision filling the page: two mountains face each other across a valley - Mount Gerizim on the left, green and covered with grass and trees, and Mount Ebal on the right, rocky and bare brown. Thousands of tiny people stand on both slopes looking at each other quietly. In the valley between, the Levites in white stand around a wooden ark covered with a blue cloth. Grand panoramic view, soft golden light.",
+      "characters": ["Levites"]
+    },
+    {
+      "prompt": "Story vision, closer: the Levites in the valley turn toward the green mountain, arms raised as they call out, and the people on both mountainsides raise their hands together, mouths open calling a great amen. The sound is shown as soft golden waves rolling between the mountains like gentle thunder. Dramatic but peaceful composition, bright sky.",
+      "characters": ["Levites"]
+    },
+    {
+      "prompt": "Back on the park bench: Saba explains seriously and kindly while Noa thinks hard. In a soft vision above them, good deeds done when no one is looking: a kind person gently guiding a blind man with a cane along the right path, and a neat fence standing straight between two neighbors' fields, the neighbors waving to each other. Gentle and warm, never frightening.",
+      "characters": ["Noa", "Saba"]
+    },
+    {
+      "prompt": "Story vision: in the valley, people gather around several huge standing stones coated in white plaster. Men carefully paint rows of abstract marks on them, like flowing decorative patterns of many different kinds, with no readable letters. Families from both mountains watch. In a small corner inset, Noa on the bench tilts her head curiously. Soft daylight.",
+      "characters": ["Noa", "Saba"]
+    },
+    {
+      "prompt": "A joyful vision of blessing above the bench where Noa smiles: gentle rain falling on green fields, fruit trees heavy with fruit, a peaceful village with families walking in and out of its gate, a loaf of bread on every table. Soft sunlight, lush greens and golds. Saba gestures toward the vision, Noa beams.",
+      "characters": ["Noa", "Saba"]
+    },
+    {
+      "prompt": "Saba, still on the bench, explains with a gentle, serious face, while a small memory of the synagogue appears softly beside him: the Torah reader at the reading table, leaning close to the open scroll with blurred unreadable columns, reading in a low voice. Noa listens, her face understanding. Muted calm colors, quiet mood.",
+      "characters": ["Noa", "Saba", "Torah reader"]
+    },
+    {
+      "prompt": "Noa sits thoughtfully on the bench, chin in hand, as Saba asks his question. In a soft memory vision, a smaller, younger Noa stands at a sidewalk curb, and Abba kneels beside her holding both her hands firmly, his face worried but full of love. No cars in the scene. Gentle pastel memory colors.",
+      "characters": ["Noa", "Saba", "Abba"]
+    },
+    {
+      "prompt": "Saba draws a shape in the air with his finger, and beside them a big imagined yellow caution sign appears at the side of a winding path, completely blank with no symbols, like a friendly guard, while a sunny path continues safely past it. Noa nods slowly with understanding. Bright, reassuring colors, medium-wide shot.",
+      "characters": ["Noa", "Saba"]
+    },
+    {
+      "prompt": "Story vision: old Moshe stands before a great crowd of the people of Israel in the desert at evening. Their faces are pale and worried, but Moshe spreads his arms comfortingly and a soft warm light fills the sky above them, as everyone stands together, families holding each other close. In the corner, Noa on the bench listening. Gentle and comforting.",
+      "characters": ["Moshe", "Noa"]
+    },
+    {
+      "prompt": "Shabbat lunch at home around a white-clothed table with challah under a cover, wine cup and Shabbat candles in silver holders. Saba stands raising the silver kiddush cup, and Noa answers with a loud happy amen, both arms raised as if standing on the green mountain. Abba and Ima laugh warmly. Bright midday light, mezuzah on the doorpost.",
+      "characters": ["Saba", "Noa", "Abba", "Ima"]
+    },
+    {
+      "prompt": "Noa walks up a sunny path climbing a lush green mountain covered with flowers and olive trees, her braids flying as she takes a confident step forward. Behind her in the soft distance stands the bare rocky mountain, small and far away. Along the path, tiny scenes of kindness: children helping each other. Bright morning sky, hopeful and joyful.",
+      "characters": ["Noa"]
+    }
+  ]
+}

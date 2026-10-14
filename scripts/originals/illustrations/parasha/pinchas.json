@@ -1,0 +1,83 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Machlah",
+      "description": "Machlah, the eldest sister, young woman about 22, tall and upright, warm olive skin, long straight black hair under a deep-red head scarf, steady brave dark eyes, ankle-length deep-red dress with a cream sash; wears a small carved wooden pendant of an olive tree that was her father's."
+    },
+    {
+      "name": "Noa",
+      "description": "Noa, second sister, young woman about 19, slender, olive skin, wavy brown hair under a sky-blue head scarf, worried soft brown eyes, ankle-length sky-blue dress with a white sash."
+    },
+    {
+      "name": "Hoglah",
+      "description": "Hoglah, third sister, girl about 16, small and energetic, olive skin, curly black hair under a yellow head scarf, round lively face, ankle-length mustard-yellow dress with a brown sash."
+    },
+    {
+      "name": "Milcah",
+      "description": "Milcah, fourth sister, girl about 14, thoughtful, light-olive skin, long dark braid under a green head scarf, calm wise eyes, ankle-length olive-green dress with a cream sash."
+    },
+    {
+      "name": "Tirzah",
+      "description": "Tirzah, the youngest sister, girl about 10, small, round cheeks, olive skin, short curly black hair with a white ribbon, big hopeful eyes, ankle-length lavender dress, barefoot."
+    },
+    {
+      "name": "Moses",
+      "description": "Moses, older man about 80, tall and lean, weathered olive skin, long grey-white beard, deep calm eyes, simple undyed cream wool robe with a brown cloak, plain head covering; holds a tall wooden shepherd's staff."
+    },
+    {
+      "name": "Elazar",
+      "description": "Elazar the High Priest, man about 55, sturdy, olive skin, full dark beard streaked with grey, kind serious eyes; priestly garments: white linen tunic, deep-blue robe with pomegranate hem, colorful woven apron, breastplate of twelve colored stones without engravings, white wound turban."
+    }
+  ],
+  "cover": {
+    "prompt": "The five daughters of Tzelofchad stand side by side holding hands at the entrance of the Tent of Meeting, facing Moses: Machlah in front in red with her chin raised bravely, Noa, Hoglah and Milcah beside her, and little Tirzah clutching Machlah's hand. Moses leans forward to listen, Elazar beside him. Golden morning light, low angle making the sisters look courageous.",
+    "characters": ["Machlah", "Noa", "Hoglah", "Milcah", "Tirzah", "Moses", "Elazar"]
+  },
+  "pages": [
+    {
+      "prompt": "Wide view of the camp near the Jordan: Moses sits at a low table outside the Tent of Meeting with elders, counting the families who line up before him. Around the tents, families chatter excitedly, one father pointing to distant green hills, a child holding a grape vine cutting, another holding an olive branch. Bright, hopeful morning light.",
+      "characters": ["Moses"]
+    },
+    {
+      "prompt": "A single quiet tent among the busy, cheerful camp. Inside, the five sisters sit close together on a rug in the soft shade, faces thoughtful and a little sad. A carved wooden olive-tree pendant hangs on Machlah's neck, and an old empty walking stick of their father leans against the tent pole. Muted afternoon light, the noisy camp blurred outside.",
+      "characters": ["Machlah", "Noa", "Hoglah", "Milcah", "Tirzah"]
+    },
+    {
+      "prompt": "Close medium shot inside the tent: little Tirzah looks up with tearful, questioning eyes; Machlah kneels and hugs her tightly, her face firm and determined. The other sisters watch, Noa wiping a tear. Warm light from the tent entrance falls on the two of them.",
+      "characters": ["Tirzah", "Machlah", "Noa", "Hoglah", "Milcah"]
+    },
+    {
+      "prompt": "Evening in the tent by an oil lamp: the five sisters sit in a circle planning together. Noa twists her scarf nervously, Hoglah rocks from foot to foot standing, Milcah raises a calm finger making a wise point, Machlah nods, and Tirzah listens with her chin on her knees. Warm golden lamplight, cozy and focused.",
+      "characters": ["Machlah", "Noa", "Hoglah", "Milcah", "Tirzah"]
+    },
+    {
+      "prompt": "Morning: the five sisters walk hand in hand toward the entrance of the Tent of Meeting, where Moses, Elazar in his priestly garments, the tribal princes and a big crowd are gathered. Many eyes turn toward them. Tirzah holds Machlah's hand tightly, her eyes wide. Wide shot from behind the sisters, bright morning light.",
+      "characters": ["Machlah", "Noa", "Hoglah", "Milcah", "Tirzah", "Moses", "Elazar"]
+    },
+    {
+      "prompt": "Machlah steps half a pace forward and speaks in a clear voice, one hand on her heart and the other open, respectful and brave. Her sisters stand close behind her in a line, holding hands. Moses and Elazar face her, listening. Medium shot centered on Machlah, warm sunlight on her face.",
+      "characters": ["Machlah", "Noa", "Hoglah", "Milcah", "Tirzah", "Moses", "Elazar"]
+    },
+    {
+      "prompt": "A hush over the crowd. Moses listens carefully, his hand on his beard, then turns with humility and walks toward the Tent of Meeting to ask God. The sisters watch him go, hopeful. A soft warm light glows from the tent entrance. Wide shot, calm and reverent.",
+      "characters": ["Moses", "Machlah", "Noa", "Hoglah", "Milcah", "Tirzah"]
+    },
+    {
+      "prompt": "Moses comes out of the Tent of Meeting with a soft warm light glowing behind him from inside the tent, a gentle smile on his face, and raises his open hand toward the sisters with the good news. Elazar nods in approval. The sisters look up, astonished and hopeful. Golden light, medium-wide shot.",
+      "characters": ["Moses", "Elazar", "Machlah", "Noa", "Hoglah", "Milcah", "Tirzah"]
+    },
+    {
+      "prompt": "The five sisters hug each other in a joyful huddle, laughing and crying together. Tirzah jumps up and down in the middle with her arms high. Around them, a few women of the camp smile and clap. Bright, happy midday light, close-medium shot full of emotion.",
+      "characters": ["Machlah", "Noa", "Hoglah", "Milcah", "Tirzah"]
+    },
+    {
+      "prompt": "A dreamlike view of the future: the five sisters, a little older, plant a young olive tree together in their own green field in the Land of Israel, Tirzah watering it from a jug. In the distance, terraced hills and other families in their fields. Warm sunrise light, hopeful wide shot.",
+      "characters": ["Machlah", "Noa", "Hoglah", "Milcah", "Tirzah"]
+    },
+    {
+      "prompt": "Close, tender shot of two hands holding each other: Tirzah's small hand in Machlah's, as the five sisters stand together in a row seen from behind, looking out over the camp toward the green hills across the Jordan. Soft golden evening light, peaceful and brave.",
+      "characters": ["Machlah", "Noa", "Hoglah", "Milcah", "Tirzah"]
+    }
+  ]
+}

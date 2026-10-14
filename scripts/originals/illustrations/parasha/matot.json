@@ -1,0 +1,79 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Reuven",
+      "description": "Reuven, shepherd boy about 11, wiry, sun-tanned olive skin, tousled short black curls, bright brown eyes, freckles on his nose, knee-length sheepskin-cream tunic with a red woven belt, brown sandals; carries a crooked wooden shepherd's staff and a small reed flute tied on a cord around his neck."
+    },
+    {
+      "name": "Grown-up Reuven",
+      "description": "Reuven as a grown man about 25, tall and strong, sun-tanned olive skin, short black curly hair and a short black beard, the same bright brown eyes and freckles, knee-length cream tunic with the same red woven belt, brown cloak, sandals; still wears the small reed flute on a cord around his neck and carries a shepherd's staff."
+    },
+    {
+      "name": "Ptit",
+      "description": "Ptit, the smallest lamb of the flock, very fluffy and curly snow-white wool, round black eyes, tiny pink nose, one black ear, and a little blue bead on a string around her neck. When grown, a big fluffy white sheep with the same black ear and blue bead."
+    },
+    {
+      "name": "Eliav",
+      "description": "Eliav, boy about 11 from the tribe of Zebulun, Reuven's best friend, round-faced, light-brown skin, straight brown hair, dreamy grey-green eyes, knee-length sea-blue tunic with a white rope belt; carries a seashell on a cord."
+    },
+    {
+      "name": "Moses",
+      "description": "Moses, older man about 80, tall and lean, weathered olive skin, long grey-white beard, deep calm eyes, simple undyed cream wool robe with a brown cloak, plain head covering; holds a tall wooden shepherd's staff."
+    },
+    {
+      "name": "Joshua",
+      "description": "Joshua as the leader, older man about 70, tall, olive skin, white-streaked beard, calm steady dark eyes, deep-blue robe with a grey cloak, plain head covering, holding a wooden staff."
+    }
+  ],
+  "cover": {
+    "prompt": "Reuven stands on a green hilltop east of the Jordan with his staff, a reed flute at his lips, while fluffy curly Ptit with her black ear trots happily toward him at the head of a flock of sheep. Behind him, in the distance, the Jordan river glimmers and green mountains rise beyond it. Warm golden afternoon light, wide shot.",
+    "characters": ["Reuven", "Ptit"]
+  },
+  "pages": [
+    {
+      "prompt": "Reuven whistles with two fingers in a grassy desert pasture, and his whole flock of sheep runs toward him, led by tiny fluffy Ptit with her black ear and blue bead, bouncing ahead. Reuven laughs with his staff in hand. Fresh morning light, low camera angle with Ptit in the foreground.",
+      "characters": ["Reuven", "Ptit"]
+    },
+    {
+      "prompt": "Reuven stands on top of a hill east of the Jordan, mouth wide open in amazement, arms thrown out. Below him spread tall green grass, sparkling springs and shady trees. Ptit is already munching grass happily at his feet. The camp's tents are small in the distance by the river. Bright afternoon light, wide sweeping shot.",
+      "characters": ["Reuven", "Ptit"]
+    },
+    {
+      "prompt": "The elders of the tribes of Reuben and Gad, men in shepherd robes, stand before Moses at the edge of the camp, gesturing toward the green hills full of huge flocks of sheep and cattle behind them. Moses listens, leaning on his staff. Midday light, medium-wide shot with the flocks filling the background.",
+      "characters": ["Moses"]
+    },
+    {
+      "prompt": "Reuven stands at the back of the crowd on tiptoes, listening. In front, Moses, unsmiling and serious, points across the river toward the Land, speaking firmly to the elders, who lower their eyes. Reuven's face shows he is starting to understand. Afternoon light, shot from behind Reuven so we see the scene over his shoulder.",
+      "characters": ["Reuven", "Moses"]
+    },
+    {
+      "prompt": "Close shot: Reuven blushes, cheeks red, looking down at his feet. Beside him, in a soft dreamy vignette, appears his friend Eliav standing on a beach gazing at the sea, holding his seashell. Reuven's hand grips his flute cord thoughtfully. Warm soft light.",
+      "characters": ["Reuven", "Eliav"]
+    },
+    {
+      "prompt": "The tribal leaders of Reuben and Gad return to Moses with an offer, one drawing in the sand with a stick the plan of sheep pens and small walled towns, another placing his hand on his chest in a promise. Moses listens attentively. Reuven watches from nearby. Late-afternoon light, medium shot.",
+      "characters": ["Moses", "Reuven"]
+    },
+    {
+      "prompt": "Moses smiles a little and holds up one finger, then another, explaining the right order. Next to him, a small scene shows children playing safely inside a little walled town with houses, and beyond it sheep pens with sheep. The leaders nod. Reuven smiles. Warm golden light, medium-wide shot.",
+      "characters": ["Moses", "Reuven"]
+    },
+    {
+      "prompt": "Reuven kneels in the grass and strokes tiny Ptit, whispering a promise to her with a serious, loving face. Ptit nuzzles his hand. Behind them, the men of the tribes raise their hands together answering yes. The green hills glow at sunset. Tender close-medium shot.",
+      "characters": ["Reuven", "Ptit"]
+    },
+    {
+      "prompt": "Years later, across the Jordan: Grown-up Reuven stands with the men of Reuben and Gad among all the tribes on a hill in the Land, tired but proud. Joshua, now old, raises his hands to bless them and sends them home with a warm smile. The green hills of the Land spread behind. Golden afternoon light, wide shot.",
+      "characters": ["Grown-up Reuven", "Joshua"]
+    },
+    {
+      "prompt": "Grown-up Reuven walks back onto the green hills east of the Jordan and whistles his old whistle. From the tall grass, a big fluffy white sheep with one black ear and a blue bead runs to him, followed by a whole flock of tiny curly lambs. Reuven kneels with open arms, laughing with joy. Warm golden sunset light, wide joyful shot.",
+      "characters": ["Grown-up Reuven", "Ptit"]
+    },
+    {
+      "prompt": "A gentle closing image: a simple wooden footbridge crosses a small stream at sunrise. On it, young Reuven and Eliav walk side by side, Reuven helping his friend carry a heavy bundle, Ptit trotting behind them. Soft morning mist and warm light, wide peaceful shot.",
+      "characters": ["Reuven", "Eliav", "Ptit"]
+    }
+  ]
+}

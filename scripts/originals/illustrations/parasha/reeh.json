@@ -1,0 +1,79 @@
+{
+  "style": "modern",
+  "characters": [
+    {
+      "name": "Ido",
+      "description": "Boy about 7, slim, light olive skin, straight dark-brown hair with a cowlick, thoughtful brown eyes, small dark-green knitted kippah, green T-shirt, grey shorts, sneakers with long white laces; signature item: a red lunch box."
+    },
+    {
+      "name": "Ruti",
+      "description": "Teacher, about 40, medium build, warm brown skin, curly dark hair under a rust-orange headscarf, round tortoise-shell glasses, long-sleeved white blouse and long olive-green skirt; signature item: the round glasses."
+    },
+    {
+      "name": "Noam",
+      "description": "Boy about 7, small and chubby, fair skin, red-ginger curly hair, freckles, prominent ears, light-blue knitted kippah, yellow T-shirt and navy shorts; signature item: an empty blue lunch box."
+    },
+    {
+      "name": "Maya",
+      "description": "Girl about 7, slender, medium brown skin, long black hair in two braids tied with pink ribbons, dark expressive eyes, pink long-sleeved shirt and long denim skirt, a paint-splattered smock in art class; signature item: the pink ribbons."
+    },
+    {
+      "name": "Abba",
+      "description": "Ido's father, about 40, tall, light olive skin, short dark beard, brown eyes, black knitted kippah, white button-up shirt with rolled sleeves, dark trousers; signature item: a brown leather messenger bag."
+    },
+    {
+      "name": "Old man",
+      "description": "Elderly man, about 80, thin, wrinkled tan skin, white stubble beard, gentle watery blue eyes, grey flat cap, brown cardigan, sits on a folding stool with a small plain metal tzedakah box beside him."
+    }
+  ],
+  "cover": {
+    "prompt": "Ido stands at a sunny imaginary crossroads where two paths split in a park-like landscape: one path leads to a green signpost and blooming trees, the other to a grey signpost and a dull grey path. Both signposts are completely blank. Ido looks thoughtfully from one to the other, hand on chin, red lunch box in his other hand. Bright colors, playful, inviting choice.",
+    "characters": ["Ido"]
+  },
+  "pages": [
+    {
+      "prompt": "Morning circle on the rug of a bright Israeli classroom, sun through large windows. Teacher Ruti sits on a low chair holding an open book with pages shown as soft blurred lines, speaking warmly. Children sit cross-legged around her; Ido at the edge of the circle twirls his shoelace and raises one eyebrow quizzically. Noam and Maya sit nearby. Wide shot.",
+      "characters": ["Ruti", "Ido", "Noam", "Maya"]
+    },
+    {
+      "prompt": "Split composition: Ruti laughs kindly in the classroom, while Ido closes his eyes and, in a dreamy thought cloud above him, imagines a crossroads with two blank signposts, one bright green and one grey, with no writing. Ido's face is confident and relaxed, as if the choice is easy. Soft pastel dream colors.",
+      "characters": ["Ruti", "Ido"]
+    },
+    {
+      "prompt": "Recess on a sunny schoolyard bench. Ido opens his red lunch box revealing a warm omelette sandwich. Beside him Noam stares sadly into his empty blue lunch box, holding his tummy. Ido looks at the sandwich, then at Noam, with a conflicted expression. Medium shot, the two boys and the sandwich as the focus.",
+      "characters": ["Ido", "Noam"]
+    },
+    {
+      "prompt": "Ido breaks his sandwich in half and holds out one half to Noam. Noam beams with an enormous smile, his ears lifting. Both boys munch together happily on the bench. Faintly above Ido, a tiny green blank signpost glows. Warm midday light, friendship and joy.",
+      "characters": ["Ido", "Noam"]
+    },
+    {
+      "prompt": "Art class: Ido reaches quickly for the paints and his elbow knocks over a cup of water, which splashes across Maya's horse painting on the table. Ido freezes, eyes wide, hands up. In the background, Maya stands at the sink washing brushes with her back turned, unaware. Colorful classroom, a frozen surprised moment, no one else looking.",
+      "characters": ["Ido", "Maya"]
+    },
+    {
+      "prompt": "Maya, back at the table, looks down at her wet, smudged horse painting with sad eyes. Ido stands beside her, hands clasped, breathing deeply and bravely saying sorry, his face honest and nervous. Maya looks up at him, surprised and quiet. Close-medium shot, emotional but gentle.",
+      "characters": ["Ido", "Maya"]
+    },
+    {
+      "prompt": "Ido and Maya paint together side by side, heads close, laughing. The blue water stains on the paper have become a sea; Maya's horse now gallops along a beach with fish jumping from the waves. Ido looks light and relieved. Bright cheerful colors, paint brushes and jars around them, overhead-angle view of the painting.",
+      "characters": ["Ido", "Maya"]
+    },
+    {
+      "prompt": "Afternoon street in an Israeli neighborhood beside a small grocery shop with fruit crates outside. An old man sits on a folding stool with a small plain tzedakah box beside him. Abba, holding Ido's hand, takes a coin from his pocket and offers it to Ido. Ido looks at the old man thoughtfully. Warm late-afternoon light, wide-medium shot.",
+      "characters": ["Abba", "Ido", "Old man"]
+    },
+    {
+      "prompt": "Close-up: Ido's open palm tips a shiny coin into the small tzedakah box with a tiny sparkle. The old man raises his head and smiles warmly at Ido; Ido smiles back. Abba stands behind with a proud gentle look. Soft golden light, a feeling of blessing.",
+      "characters": ["Abba", "Ido", "Old man"]
+    },
+    {
+      "prompt": "Ido's bedroom at night with a small lamp. Ido sits in bed counting on three fingers, a thoughtful face, while Abba sits beside him stroking his hair reassuringly. Three tiny remembered images float softly above: a half sandwich, a paint cup, a coin. Warm, calm bedtime light, mezuzah on the doorpost.",
+      "characters": ["Ido", "Abba"]
+    },
+    {
+      "prompt": "Ido lies snug under his blanket, eyes open and wondering, looking toward the window. In a soft dream above him, many tiny crossroads with little blank green signposts are hidden around a schoolyard, a classroom and a street, like a gentle treasure map. Deep blue night, golden lamp glow, quiet and hopeful.",
+      "characters": ["Ido"]
+    }
+  ]
+}

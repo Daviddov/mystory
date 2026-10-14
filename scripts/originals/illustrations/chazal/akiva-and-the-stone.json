@@ -1,0 +1,75 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Akiva",
+      "description": "shepherd about 40, strong broad-shouldered build, sun-tanned olive skin, short thick black beard with first touches of grey, curly black hair under a brown head wrap, deep-set thoughtful dark eyes; rough undyed beige wool tunic, short brown sheepskin vest, rope belt, sturdy sandals, carries a long wooden shepherd's crook"
+    },
+    {
+      "name": "Rabbi Akiva (older)",
+      "description": "the same man years later, about 60, olive skin, full grey-and-black beard, the same deep-set kind dark eyes, now dressed as a sage in a long deep-blue wool robe over a cream tunic with tzitzit corners and an off-white head wrap"
+    },
+    {
+      "name": "Akiva's son",
+      "description": "Akiva's little son about 5, round cheeks, olive skin, curly black hair, big curious dark eyes, small kippah-like knit cap in brown, short light-blue tunic and tiny sandals"
+    },
+    {
+      "name": "Teacher",
+      "description": "children's teacher about 50, slim, olive skin, neat medium brown beard, gentle patient smile, round face, olive-green robe with tzitzit and a cream head wrap"
+    },
+    {
+      "name": "Sheep",
+      "description": "a small flock of fluffy cream-white sheep with soft brown faces and floppy ears"
+    }
+  ],
+  "cover": {
+    "prompt": "Akiva kneels beside an old stone well at golden hour, his crook leaning on the well, gently touching a smooth deep hollow worn into a large stone at the well's edge; a single bright water drop falls into the hollow. His face is full of wonder. A few sheep graze around him on green hills. Warm close composition, the stone and his hand as the focus.",
+    "characters": ["Akiva", "Sheep"]
+  },
+  "pages": [
+    {
+      "prompt": "Wide pastoral scene on rolling green-and-gold hills in the morning. Akiva walks with his crook among his flock of sheep, counting them with his fingers, a clay water trough nearby where some sheep drink. In the distance a small stone village. Peaceful bright light, Akiva in the middle ground surrounded by sheep.",
+      "characters": ["Akiva", "Sheep"]
+    },
+    {
+      "prompt": "Akiva sits on a rock at the edge of the pasture, shoulders slumped, chin on his hand, looking a little sad and doubtful, his crook across his knees. Far behind him, at the edge of the village, tiny children walk toward a schoolhouse. Sheep graze around him. Late afternoon light, medium shot focused on his wistful expression.",
+      "characters": ["Akiva", "Sheep"]
+    },
+    {
+      "prompt": "An old round stone well in a sunny clearing, a wooden bucket and rope on its rim. On the well's edge sits a large stone with a deep, smooth round hollow in its middle. Akiva stands beside it pointing at the hollow, puzzled, asking two villagers (a woman in a modest long dress and head covering holding a clay jar, and an older man) who stand nearby. Sheep drinking at a trough. Medium-wide shot.",
+      "characters": ["Akiva", "Sheep"]
+    },
+    {
+      "prompt": "Close view at the well: the woman with the clay jar lifts the wet bucket, and a few shining water drops fall from it onto the stone, landing right in the smooth hollow. The older villager points and smiles, explaining. Akiva watches the drops, listening intently. Sparkling sunlight on the water drops, which are the focus.",
+      "characters": ["Akiva"]
+    },
+    {
+      "prompt": "Close-up: Akiva kneels by the stone, his big rough hand gently stroking the smooth hollow, his face lit by a dawning realization, eyes wide, lips parted, hand on his heart. Water glistens in the hollow. Warm golden side light, intimate framing on his face and hand.",
+      "characters": ["Akiva"]
+    },
+    {
+      "prompt": "Akiva rises to his feet beside the well, crook raised high, face shining with excitement and determination, his other hand pressed to his chest over his heart. The sheep look up at him curiously. A bright sky opens behind him with warm sunbeams. Low camera angle, uplifting and joyful.",
+      "characters": ["Akiva", "Sheep"]
+    },
+    {
+      "prompt": "A village lane in morning light. Akiva walks hand in hand with his little son toward a simple stone schoolhouse doorway, where the teacher stands welcoming them with a surprised, kind smile. Akiva bows his head slightly, humble and hopeful; his son looks up at him proudly. Medium shot, the three figures at the doorway.",
+      "characters": ["Akiva", "Akiva's son", "Teacher"]
+    },
+    {
+      "prompt": "Inside the small schoolhouse, soft light through a window. Akiva and his son sit side by side on a low bench, each holding one side of a small wooden tablet with two simple abstract marks drawn on it (no readable letters). The son points at a mark and speaks proudly; Akiva repeats, concentrating with a happy smile. The teacher leans over them encouragingly. Close, warm framing.",
+      "characters": ["Akiva", "Akiva's son", "Teacher"]
+    },
+    {
+      "prompt": "Night by oil-lamp light. Akiva sits at a low table with an open scroll covered only in abstract marks, rubbing his tired eyes but still smiling with determination. On the table beside the scroll is a small smooth stone with a hollow, kept as a reminder. Stacks of scrolls nearby. Warm amber lamp glow, cozy and quiet.",
+      "characters": ["Akiva"]
+    },
+    {
+      "prompt": "A large bright study hall with a skylight and many rows of low benches. Rabbi Akiva, now an older sage, sits at the front teaching with an open hand, while a big crowd of students of many ages in simple tunics fills the hall, listening eagerly, some with scrolls. Golden sunbeams from the skylight. Wide shot emphasizing the many students and the sage at the center.",
+      "characters": ["Rabbi Akiva (older)"]
+    },
+    {
+      "prompt": "A gentle scene in a sunny courtyard of the same era: a little girl about 6 in a long rust-colored dress sits on a stone step, carefully tying the leather straps of her sandal, tongue out in concentration. Beside her a small boy slowly sounds out abstract marks on a little wooden tablet. A clay jug drips one water drop onto a stone nearby. Bright encouraging morning light.",
+      "characters": []
+    }
+  ]
+}

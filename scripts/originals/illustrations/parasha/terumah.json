@@ -1,0 +1,98 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Bezalel",
+      "description": "young craftsman, teenage boy about 14, slim, curly black hair, bright brown eyes, light-brown skin, knee-length undyed linen tunic, brown leather work apron, small bronze hammer tucked in the apron pocket, sandals"
+    },
+    {
+      "name": "Moses",
+      "description": "tall slender man about 80 but strong, long brown beard streaked with grey, kind deep-set brown eyes, olive skin, undyed cream wool robe with a brown striped mantle, brown head cloth, plain wooden shepherd's staff"
+    },
+    {
+      "name": "Avigail",
+      "description": "girl about 5, tiny, round face, two short black braids, shy big dark eyes, light-brown skin, long plain oat-colored linen dress with long sleeves, small yellow head scarf, barefoot, often holding a single blue wool thread"
+    }
+  ],
+  "cover": {
+    "prompt": "Bezalel kneels in the desert camp to Avigail's height, smiling warmly, as she holds out a single blue wool thread on her open palms. Behind them, a colorful pile of gifts: gold rings, silver bracelets, shiny copper pots and folded fabrics in blue, purple and red. Tents and a soft golden afternoon light. Tender medium shot.",
+    "characters": [
+      "Bezalel",
+      "Avigail"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "In the middle of the desert camp, Bezalel sits on a wooden stool outside his tent with a small bronze hammer, carefully tapping a little copper bowl into shape. Tools spread on a cloth: chisels, a small anvil, wood shavings. Neighbors pass by admiring his work. Warm morning light, medium shot focused on his skilled hands and focused face.",
+      "characters": [
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "Moses stands on a low rock in the center of the camp, speaking to a large gathered crowd of men, women and children, one arm open toward an empty space between the tents. People listen with excited, curious faces. Bezalel stands in the front row. Bright morning, wide shot.",
+      "characters": [
+        "Moses",
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "A line of happy people bring gifts: a man holds out a gold ring, a woman offers a silver bracelet, another man proudly carries a shiny copper pot. Bezalel receives them beside a growing pile of treasures sparkling in the sun. Medium-wide shot, joyful generous mood.",
+      "characters": [
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "A rich pile of gifts: bolts of fabric dyed sky blue, grape purple and pomegranate red, stacks of acacia wood beams, clay jars of golden olive oil, and baskets of fragrant spices with little swirls of scent rising. People keep adding more. Close-medium still-life with colorful textures, warm light.",
+      "characters": []
+    },
+    {
+      "prompt": "At the end of the line stands little Avigail, shy and small among the tall adults, holding out a single blue wool thread with both hands. Her head is a little bowed, cheeks pink. Behind her, the huge sparkling pile of gold and fabrics. Camera low at her height, focus on her and the thread.",
+      "characters": [
+        "Avigail"
+      ]
+    },
+    {
+      "prompt": "Bezalel kneels down on one knee in front of Avigail, eye to eye, gently taking the blue thread from her hands with a respectful, warm smile. Avigail looks up at him, her shyness turning into a small hopeful smile. Close two-shot, soft golden light.",
+      "characters": [
+        "Bezalel",
+        "Avigail"
+      ]
+    },
+    {
+      "prompt": "Inside a busy workshop tent lit by oil lamps, Bezalel and other craftsmen cover a wooden chest with thin gold leaf, brushing it smooth until it glows inside and out. Seen from a low angle, the golden lid on top shines so brightly in the lamplight that only a soft radiant glow is visible above it, no figures or shapes on it. The craftsmen look at it in quiet wonder. Night work, warm shining gold, medium shot.",
+      "characters": [
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "Bezalel hammers a single shining block of gold on an anvil, tap-tap-tap, little sparks of light flying. Beside him stands the nearly finished golden menorah with seven branches, decorated with small almond blossoms and flowers. His face concentrates, tongue slightly out. Warm workshop light, close-medium shot.",
+      "characters": [
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "Inside the workshop: a golden table with twelve round loaves of bread in two neat stacks, and around the space huge woven curtains in blue, purple and red hanging from wooden frames. Craftsmen stretch the fabric, Bezalel checks the weaving. Rich colors, wide interior shot.",
+      "characters": [
+        "Bezalel"
+      ]
+    },
+    {
+      "prompt": "Avigail stands in front of the enormous woven curtain in blue, purple and red, pointing with joy at one bright blue thread running through it, her mouth open in delight. People around smile. Low angle making the curtain huge and her small, the blue thread clearly visible. Soft glowing light.",
+      "characters": [
+        "Avigail"
+      ]
+    },
+    {
+      "prompt": "Bezalel stands beside Avigail in front of the curtain, smiling and nodding, his hand lightly on her shoulder. Avigail hugs herself, glowing with pride and happiness, eyes shining. Warm golden light, gentle close shot. The blue, purple and red curtain fills the background, with the single blue thread shining.",
+      "characters": [
+        "Bezalel",
+        "Avigail"
+      ]
+    },
+    {
+      "prompt": "Present-day Israeli home: a little girl helps set the Shabbat table, placing plates, while a little boy offers half of his cookie to his younger sister and another child gives a drawing to grandma. Warm golden evening light, Shabbat candles waiting on the table, a bookshelf of holy books. Cozy wide family scene.",
+      "characters": [],
+      "style": "modern"
+    }
+  ]
+}

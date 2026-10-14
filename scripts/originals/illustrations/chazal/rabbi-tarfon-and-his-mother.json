@@ -1,0 +1,63 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Rabbi Tarfon",
+      "description": "Rabbi Tarfon, a warm-hearted Jewish sage of about 45, strong and broad-shouldered, warm olive skin, gentle dark-brown eyes, a full black beard with a touch of grey at the chin, a white head wrap, a clean white linen robe with a pale-blue sash over a cream tunic, sandals."
+    },
+    {
+      "name": "Mother",
+      "description": "Rabbi Tarfon's mother, a small, gentle elderly woman of about 75, slightly stooped, soft wrinkled light-olive skin, kind smiling brown eyes, a few grey curls showing at the temples, a long plum-purple dress with long sleeves, a cream head covering wrapped modestly, simple leather sandals."
+    },
+    {
+      "name": "Sages",
+      "description": "Three visiting sages, friends of Rabbi Tarfon, men of 50 to 70 with grey and white beards, earth-toned robes in brown, olive and deep blue, simple head wraps, kind attentive faces; always shown together as a small group."
+    }
+  ],
+  "cover": {
+    "prompt": "In a peaceful Shabbat courtyard with olive trees and stone walls, Rabbi Tarfon kneels on the pebbly ground with both hands laid flat, palms up, and his smiling Mother steps lightly onto his palm with her bare foot, holding her torn sandal in one hand. They look at each other with deep love. Warm golden afternoon light, close medium-wide composition focused on the hands and their faces.",
+    "characters": ["Rabbi Tarfon", "Mother"]
+  },
+  "pages": [
+    {
+      "prompt": "A sunlit courtyard of a stone house. Rabbi Tarfon sits teaching a few students on low benches, scrolls with abstract marks in their hands, but he turns his head toward the doorway to smile tenderly at his Mother, who brings a jug of water. Warm morning light, medium-wide shot showing both his learning and his love.",
+      "characters": ["Rabbi Tarfon", "Mother"]
+    },
+    {
+      "prompt": "A quiet Shabbat afternoon in a stone-walled courtyard with an olive tree and flowering bushes. Mother strolls slowly along a pebbly path, hands folded, face peaceful and content, birds chirping on the wall. Soft golden light and long gentle shadows, wide calm shot.",
+      "characters": ["Mother"]
+    },
+    {
+      "prompt": "In the courtyard, Mother stops short and looks down in dismay at her sandal, its strap snapped and hanging loose. Around her the ground is hard and full of small sharp pebbles. She holds one hand to her cheek, worried. Golden afternoon light, close medium shot at her feet and worried face.",
+      "characters": ["Mother"]
+    },
+    {
+      "prompt": "Rabbi Tarfon hurries across the courtyard toward his Mother, then bends down and places both hands flat on the stony ground right in front of her bare foot, looking up at her with a reassuring smile. Mother looks surprised and touched. Warm light, medium shot from a low angle.",
+      "characters": ["Rabbi Tarfon", "Mother"]
+    },
+    {
+      "prompt": "Step by step across the courtyard toward the open doorway of the house: Rabbi Tarfon moves his hands forward on the ground one after the other, and his Mother steps gently on his palms, steadying herself with a hand on his shoulder. Both are smiling. Warm late-afternoon light, wide side view showing the path to the door and a bed inside.",
+      "characters": ["Rabbi Tarfon", "Mother"]
+    },
+    {
+      "prompt": "A simple stone bedroom on a weekday. Rabbi Tarfon lies propped up on pillows under a wool blanket, looking tired and unwell but smiling faintly as the three Sages enter through the doorway with kind, concerned faces. An oil lamp glows on a small table. Soft afternoon light, medium-wide shot.",
+      "characters": ["Rabbi Tarfon", "Sages"]
+    },
+    {
+      "prompt": "Mother stands beside her son's bed, speaking earnestly to the three Sages, one hand pressed to her heart and the other gesturing toward Rabbi Tarfon's hands resting on the blanket. The Sages lean in to listen. Rabbi Tarfon looks a little shy. Warm lamp light, medium shot.",
+      "characters": ["Mother", "Sages", "Rabbi Tarfon"]
+    },
+    {
+      "prompt": "The three Sages smile warmly and gently shake their heads, one raising a finger as if explaining a great idea, while Mother listens with wide eyes and Rabbi Tarfon nods humbly from his bed. Soft golden light through the window, medium-wide shot, gentle and wise mood.",
+      "characters": ["Sages", "Mother", "Rabbi Tarfon"]
+    },
+    {
+      "prompt": "A dreamy symbolic picture: a long winding path of soft glowing footsteps and open helping hands stretches from the courtyard far into the distant hills and on into a starry evening sky, without end. In the foreground Rabbi Tarfon and his Mother stand side by side, looking along it in wonder. Gentle twilight colors, wide shot.",
+      "characters": ["Rabbi Tarfon", "Mother"]
+    },
+    {
+      "prompt": "A gentle closing scene in the same ancient stone house: a small girl in a simple dress carefully carries a clay cup of water with both hands to her tired mother resting on a bench, while a small boy in a tunic runs to hug his father coming through the doorway. Soft warm evening light from oil lamps, cozy medium-wide framing.",
+      "characters": []
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Jacob",
+      "description": "young man about 25, slim, dark curly shoulder-length hair, short dark beard, warm brown eyes, olive skin, olive-green wool robe with a brown rope belt, cream linen head cloth, brown leather travel bag on his back, simple wooden walking staff, leather sandals"
+    },
+    {
+      "name": "Rachel",
+      "description": "young shepherdess about 18, slender, long dark braid showing under a sky-blue headscarf, large dark eyes, warm olive skin, bright friendly smile, long terracotta-red wool dress with a cream sash, small wooden shepherd's crook, barefoot or simple sandals"
+    },
+    {
+      "name": "Shepherds",
+      "description": "three local shepherds of Haran, men aged 30 to 50, sun-tanned skin, dark beards, plain undyed and brown wool robes, simple head cloths, wooden staffs, relaxed and slow, leaning and sitting near the well"
+    },
+    {
+      "name": "Sheep",
+      "description": "Rachel's small flock of about eight fluffy cream-white sheep with soft black faces and gentle eyes, one little lamb with a tiny brown spot on its head that stays close to Rachel"
+    },
+    {
+      "name": "Angels",
+      "description": "tall gentle figures made of soft golden-white light in plain long white robes, calm kind faces only faintly visible, no wings, no halos, glowing softly"
+    }
+  ],
+  "cover": {
+    "prompt": "Night in the desert hills. Jacob sleeps peacefully on the ground, his head beside a few smooth stones, his staff and bag next to him, a small smile on his face. From the earth beside him a wide glowing stairway of warm golden light rises into a deep blue starry sky, and gentle figures of light walk up and down it. The top of the stairway fades into soft light among the stars, with no figure at the top. Wide shot, Jacob in the lower foreground, magical calm mood.",
+    "characters": ["Jacob", "Angels"]
+  },
+  "pages": [
+    {
+      "prompt": "Morning on a long dusty road winding between sandy hills and olive trees. Jacob walks alone away from a small cluster of family tents far behind him, his travel bag on his back and staff in hand. He glances back over his shoulder with a brave but slightly lonely expression. Golden early light, long shadows, wide shot that shows how long and empty the road ahead is.",
+      "characters": ["Jacob"]
+    },
+    {
+      "prompt": "Dusk turning to night in rocky open country. The sun has just set behind the hills, leaving a thin orange line on the horizon and a darkening blue sky with the first stars. Jacob stands holding his staff close to his chest, eyes wide, shoulders a little hunched, whispering to himself. Tiny crickets sit on a nearby stone. Medium shot at child's eye level, cool blue shadows with a little warm afterglow, a hint of fear but still safe.",
+      "characters": ["Jacob"]
+    },
+    {
+      "prompt": "Night on a flat stony hilltop. Jacob kneels and arranges a few smooth round stones around the place where his head will rest, his bag laid flat as a pillow. Then the moment after: he lies on his back on the hard ground, looking up at a sky full of bright stars, eyelids heavy and almost closed. Show the lying-down moment, medium-wide shot from slightly above, silver moonlight and deep blue sky, peaceful.",
+      "characters": ["Jacob"]
+    },
+    {
+      "prompt": "The dream begins. Jacob sleeps peacefully on the hilltop in the lower corner of the picture. Beside him a wide, softly glowing stairway of golden light stands firmly on the earth and rises up and up into the starry night sky, its top disappearing into a soft bright cloud of light. No figures yet. Low-angle wide shot looking up the stairway, dreamy sparkles, deep blue and gold colors, wonder.",
+      "characters": ["Jacob"]
+    },
+    {
+      "prompt": "The glowing stairway is now full of gentle figures of light in plain white robes, some climbing up, some coming down, moving in a calm graceful rhythm like a quiet dance. Their light makes soft trails in the dark sky. The top of the stairway melts into a bright cloud of light with no one standing there. Jacob sleeps small at the bottom, smiling. Tall vertical-feeling composition within the landscape frame, magical and serene.",
+      "characters": ["Jacob", "Angels"]
+    },
+    {
+      "prompt": "Close-up of Jacob sleeping on the hilltop, his face calm and comforted, one hand resting on his chest. A warm beam of soft golden light pours down from the sky and wraps gently around him like a blanket, and the night air sparkles. No figure, face or hand in the sky, only the warm light. The feeling of a promise: safe, loved, protected. Gentle, glowing, intimate framing.",
+      "characters": ["Jacob"]
+    },
+    {
+      "prompt": "Early morning on the same hilltop. Jacob sits up on the ground, rubbing his eyes, face full of amazement, mouth open in wonder, one hand raised. Pink and gold sunrise light touches his face, small birds fly and sing on a nearby bush, dew sparkles on the stones. Medium shot at child's eye level, fresh bright morning colors.",
+      "characters": ["Jacob"]
+    },
+    {
+      "prompt": "Bright morning. Jacob has set up one of the stones upright as a small marker on the hilltop, and he now strides away down the path with big confident steps, chin up, staff swinging, a happy smile. Behind him the upright stone stands in the sunlight on the hill. Wide shot showing green valleys ahead, clear blue sky, a feeling of courage and joy.",
+      "characters": ["Jacob"]
+    },
+    {
+      "prompt": "Afternoon in an open pasture near Haran. A round stone well is covered by a huge heavy flat stone. Three shepherds lean on their staffs and sit lazily around it with their flocks, waiting. Jacob arrives from the road, dusty and curious, pointing at the well and asking a question. Wide shot, warm afternoon light, green grass and sandy ground, a few palm trees.",
+      "characters": ["Jacob", "Shepherds"]
+    },
+    {
+      "prompt": "A young shepherdess, Rachel, walks across the pasture toward the well leading her little flock of sheep, the small spotted lamb trotting at her feet. Jacob, standing by the well, turns toward her with a huge delighted smile and his hand on his heart, eyes shining. Rachel looks up, curious and friendly. Medium-wide shot, golden late-afternoon light, joyful meeting.",
+      "characters": ["Jacob", "Rachel", "Sheep"]
+    },
+    {
+      "prompt": "Jacob pushes the giant stone off the mouth of the well all by himself, leaning into it with both hands, face scrunched with effort, the stone rolling aside. The shepherds watch with surprised wide eyes. Rachel's sheep crowd happily around the stone water trough and drink, the little lamb bleating with joy. Rachel claps her hands, smiling. Dynamic medium shot, splashing water drops sparkling in the sun.",
+      "characters": ["Jacob", "Rachel", "Sheep", "Shepherds"]
+    },
+    {
+      "prompt": "Evening at the well. Jacob and Rachel walk together toward a small stone village and tents in the distance, the sheep following, Jacob smiling peacefully. Above them, in the soft violet evening sky, the first stars appear and faintly form the shape of a gentle stairway of starlight, a quiet reminder of the dream. Wide, calm, cozy shot, warm lamps glowing in the village windows.",
+      "characters": ["Jacob", "Rachel", "Sheep"]
+    }
+  ]
+}

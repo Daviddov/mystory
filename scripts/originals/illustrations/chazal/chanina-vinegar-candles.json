@@ -1,0 +1,67 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Rabbi Chanina ben Dosa",
+      "description": "humble sage about 50, thin build, olive skin, long soft grey-brown beard, gentle smiling dark eyes with laugh lines, plain off-white head wrap; very simple patched light-brown wool robe over a cream tunic with tzitzit corners, rope belt, bare feet or simple sandals"
+    },
+    {
+      "name": "Chanina's daughter",
+      "description": "girl about 9, slim, olive skin, big dark eyes, long dark braid under a light rose-pink head scarf, long modest soft-yellow dress with long sleeves and a small cream apron"
+    },
+    {
+      "name": "The lamp",
+      "description": "a small round terracotta Shabbat oil lamp with a short spout and a single bright, cheerful golden flame, standing on a simple wooden shelf"
+    }
+  ],
+  "cover": {
+    "prompt": "In a tiny clean stone home at dusk, Rabbi Chanina ben Dosa and his daughter sit side by side, gazing with joy at the small terracotta lamp whose golden flame burns bright and steady, lighting their faces. He has an arm around her shoulders. Two simple clay jars stand on the shelf nearby. Warm glowing light against deep blue twilight in the window. Intimate composition, the flame at the center.",
+    "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+  },
+  "pages": [
+    {
+      "prompt": "Friday afternoon. A tiny, very plain one-room stone house, swept clean and neat: a simple woven mat, a low table with a white cloth and a round loaf of bread under a cover, a shelf with two clay jars. Rabbi Chanina ben Dosa straightens the cloth with a content smile while his daughter sweeps the doorstep. Soft afternoon light, wide interior view showing poverty and care.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter"]
+    },
+    {
+      "prompt": "Sunset glows orange through the small window. Chanina's daughter, standing on tiptoe, lights the small terracotta lamp on the shelf with a burning twig; the little flame dances and warm light spreads across the room. Rabbi Chanina ben Dosa watches from behind, smiling. Close-medium shot focused on her hands and the new flame.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "In the lamplit room, Chanina's daughter stands by the shelf with drooping shoulders and teary, shining eyes. Rabbi Chanina ben Dosa kneels to her height, looking at her with concern and tenderness, one hand reaching out. The lamp burns softly behind them. Gentle warm light, close two-shot.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "Close view of the shelf: two nearly identical clay jars side by side, one slightly darker. Chanina's daughter points at the darker jar with an upset, embarrassed face, her other hand on her cheek. Rabbi Chanina ben Dosa leans in, listening. The little lamp glows beside the jars. Warm lamplight, focus on the jars and her expression.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "Chanina's daughter looks worriedly at the little lamp, both hands clasped near her face, imagining the dark. Around the edges of the room the shadows are deep blue; only the small flame lights the center. Her father stands calmly behind her. Composition contrasting the tiny flame with the dark room, gentle not scary.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "Rabbi Chanina ben Dosa strokes his daughter's head tenderly and smiles a wide, calm, confident smile, his eyes full of trust. She looks up at him, her tears stopping. The lamp's warm glow lights both faces. Close, tender framing, the father's peaceful smile as the focus.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "Father and daughter sit together on the mat by the window, looking out at the first stars in the deep blue evening sky, a soft warm light spreading gently across the room from the lamp. Rabbi Chanina ben Dosa gestures softly upward toward the sky as he explains; his daughter listens with growing wonder. Peaceful, quiet mood.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "Close-up of Chanina's daughter's amazed face, eyes wide and a delighted open-mouthed smile, as she leans close to the little terracotta lamp whose golden flame keeps dancing, small and warm. The flame's glow is the brightest point in the picture. Magical, warm atmosphere.",
+      "characters": ["Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "Shabbat morning. Bright sunlight pours through the window, yet the little terracotta lamp on the shelf is still burning with its steady golden flame. Chanina's daughter, in her Shabbat dress, points at it joyfully while Rabbi Chanina ben Dosa sits on the mat beside the Shabbat table with a peaceful, grateful smile. Fresh, light morning palette, the flame clearly visible at the center.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "Saturday night, stars in the window. Rabbi Chanina ben Dosa holds a braided candle toward the little terracotta lamp, taking its flame for Havdalah, while his daughter holds a small cup and a little spice pouch, beaming. The room glows golden. Medium close shot on the two flames meeting.",
+      "characters": ["Rabbi Chanina ben Dosa", "Chanina's daughter", "The lamp"]
+    },
+    {
+      "prompt": "A gentle scene in a simple home of the same era: a little boy about 5 has spilled a clay cup of water on the floor and looks upset; his older sister about 9 kneels and hugs him warmly, smiling and comforting him, while a small cloth waits to wipe the puddle. Soft warm afternoon light, close and tender framing.",
+      "characters": []
+    }
+  ]
+}

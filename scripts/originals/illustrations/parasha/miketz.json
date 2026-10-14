@@ -1,0 +1,83 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Pharaoh",
+      "description": "king of Egypt, man about 45, tall and stately, light-brown skin, clean-shaven, dark eyes lined with kohl, expressive eyebrows, blue-and-gold striped royal head cloth, white pleated linen robe, wide gold-and-turquoise collar necklace, gold bracelets; no snake or god symbols"
+    },
+    {
+      "name": "Joseph",
+      "description": "Hebrew young man about 30, slim, brown curly hair, clean-shaven, warm intelligent brown eyes, kind calm smile, olive skin, plain knee-length cream linen tunic with a simple brown belt, barefoot or simple sandals"
+    },
+    {
+      "name": "Joseph the ruler",
+      "description": "the same Joseph about 30, slim, brown curly hair, clean-shaven, warm intelligent brown eyes, kind calm smile, olive skin, now in long white fine linen robes, a heavy gold chain around his neck, a gold signet ring on his right hand, gold-trimmed white head cloth over his curls"
+    },
+    {
+      "name": "Cupbearer",
+      "description": "Pharaoh's chief cupbearer, slim Egyptian man about 42, light-brown skin, clean-shaven, short black hair, thin face, white linen tunic with a red sash, thin gold earring, holds a golden cup"
+    },
+    {
+      "name": "Wise men",
+      "description": "Egypt's wise men and magicians, five older men, light-brown skin, shaved heads, long white and pale-yellow linen robes, holding rolled papyrus scrolls with no visible writing, puzzled expressions"
+    }
+  ],
+  "cover": {
+    "prompt": "In a grand Egyptian hall with tall painted lotus columns, Joseph stands calm and confident before Pharaoh's throne, one hand raised as he explains, a gentle smile. Pharaoh leans forward on his gold throne, listening in amazement. Above them, like a soft dream mist, faint images of seven plump cows and seven golden wheat stalks float in the warm air. Sunlight streams in. Medium-wide shot. No statues of gods.",
+    "characters": ["Joseph", "Pharaoh"]
+  },
+  "pages": [
+    {
+      "prompt": "Night in Pharaoh's palace bedroom: a large bed with soft gold cushions, tall lotus columns, moonlight through a wide window overlooking the Nile and palm trees. Pharaoh sleeps but tosses restlessly, frowning, a blanket twisted around him. Wide shot, deep blue night with warm golden accents, a feeling of uneasy sleep. No statues of gods.",
+      "characters": ["Pharaoh"]
+    },
+    {
+      "prompt": "Pharaoh's dream: he stands on the green bank of the wide Nile at dawn, surprised. Out of the shining water seven fat, healthy, smiling brown and white cows climb up and graze happily on lush green reeds, one mooing. Dreamy soft edges, golden mist, wide shot.",
+      "characters": ["Pharaoh"]
+    },
+    {
+      "prompt": "The dream continues on the Nile bank, but the colors turn greyer. Seven very thin, bony cows with tired eyes come up from the water after the fat ones, and the fat cows have vanished into gentle swirling mist, while the thin cows stay just as thin. Cartoonish and not scary, no eating or blood shown. Pharaoh stares in confusion. Dreamy, soft, wide shot.",
+      "characters": ["Pharaoh"]
+    },
+    {
+      "prompt": "Split moment: Pharaoh sits up in bed, startled, wide-eyed, clutching his blanket. Above him in a soft dream cloud, seven full, heavy golden ears of wheat grow on one stalk, and beside them seven thin, dry, wind-blown ears lean over them in the dusty air. Night-blue and gold colors, close-medium shot.",
+      "characters": ["Pharaoh"]
+    },
+    {
+      "prompt": "Morning in the throne hall. Pharaoh sits on his throne, chin on his fist, waiting impatiently. Before him a row of Egypt's wise men in long robes scratch their shaved heads, shrug their shoulders and look at each other, holding scrolls that do not help. Bright morning light through tall columns, wide shot, gently humorous mood. No statues of gods.",
+      "characters": ["Pharaoh", "Wise men"]
+    },
+    {
+      "prompt": "In the throne hall, the cupbearer suddenly steps forward with a raised finger and an 'I remember!' expression, slapping his forehead. Pharaoh turns to him with interest. Through an open doorway in the background, two palace guards in white kilts hurry off down a sunlit corridor. Medium shot, bright light, a turning point.",
+      "characters": ["Cupbearer", "Pharaoh"]
+    },
+    {
+      "prompt": "Joseph, freshly washed and wearing a clean cream tunic, stands humbly before Pharaoh's golden throne, one hand on his heart and the other pointing gently upward toward the light from a high window, as if saying the answer comes from God. Pharaoh looks at him curiously. Medium shot from the side, warm sunbeams, calm and dignified. No statues of gods.",
+      "characters": ["Joseph", "Pharaoh"]
+    },
+    {
+      "prompt": "Close-medium shot: Joseph explains with an open hand, and beside him a soft glowing image appears in the air like a dream picture, showing seven fat happy cows standing in front of rich green fields full of grain and baskets of fruit. Pharaoh listens with wide eyes, leaning forward. Warm golden light, sense of understanding.",
+      "characters": ["Joseph", "Pharaoh"]
+    },
+    {
+      "prompt": "Joseph continues explaining, and the soft dream image beside him now shows seven thin cows in front of dry cracked earth under a pale hot sun. Joseph's face is serious but calm, and he lifts one finger with a bright look of having an idea. Pharaoh looks worried. Medium shot, the contrast between grey dream image and warm hall light.",
+      "characters": ["Joseph", "Pharaoh"]
+    },
+    {
+      "prompt": "Joseph draws in the air with his hands, and the dream image beside him shows large mud-brick storehouses with round domed roofs, workers carrying sacks of golden wheat inside. Pharaoh nods with growing excitement. The wise men in the background look impressed. Medium-wide shot, warm hopeful light.",
+      "characters": ["Joseph", "Pharaoh", "Wise men"]
+    },
+    {
+      "prompt": "A joyful ceremony in the throne hall. Pharaoh, smiling broadly, places a heavy gold chain around Joseph's neck; Joseph now wears long white linen robes and a gold signet ring on his hand, looking humble and surprised. Courtiers in the background bow and clap. Bright golden light pouring from above, medium shot. No statues of gods.",
+      "characters": ["Pharaoh", "Joseph the ruler"]
+    },
+    {
+      "prompt": "A wide busy scene in Egypt: in front of huge full storehouses piled with sacks of wheat, Joseph in white robes and gold chain directs workers and hands out grain. A long line of travelers from many lands, with donkeys, camels and families in colorful robes, waits patiently to buy food. Dry land under a hot sky in the distance, but here there is plenty. Sunny, lively, wide shot.",
+      "characters": ["Joseph the ruler"]
+    },
+    {
+      "prompt": "Golden evening by a storehouse. Joseph kneels to the eye level of a small Egyptian girl and her little brother, smiling warmly and placing a round loaf of bread and a small sack of grain into their hands, while their mother smiles behind them. Warm sunset light, close-medium shot at child's eye level, caring and kind.",
+      "characters": ["Joseph the ruler"]
+    }
+  ]
+}

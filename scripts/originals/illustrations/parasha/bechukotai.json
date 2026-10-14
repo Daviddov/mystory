@@ -1,0 +1,61 @@
+{
+  "style": "modern",
+  "characters": [
+    { "name": "Yoav", "description": "Boy of about 5, small and round-cheeked, light olive skin, big shining brown eyes, short straight dark-brown hair with a cowlick, a small red knitted kippah with a clip. Wears a sky-blue sweatshirt with a little sun print, grey track pants and white sneakers; outside in the rain bright yellow rubber boots and a yellow raincoat. Signature item: the yellow rubber boots." },
+    { "name": "Savta", "description": "Yoav's grandmother, about 68, slim and lively, light olive skin, warm green eyes behind round red glasses, short silver hair under a soft lavender head scarf. Wears a long navy skirt, a cream knitted cardigan and a gardening apron with a pocket." }
+  ],
+  "cover": {
+    "prompt": "Yoav in his yellow raincoat and yellow rubber boots crouches on a rainy balcony beside a terracotta flower pot, looking with delight at a tiny green sprout with two leaves that has just come up. Gentle raindrops fall, and a soft sunbeam breaks through grey clouds onto the sprout. Savta smiles from the doorway. Close medium shot, fresh hopeful mood.",
+    "characters": ["Yoav", "Savta"]
+  },
+  "pages": [
+    {
+      "prompt": "Close-up at a garden table on Savta's balcony: Savta places a tiny round brown seed into Yoav's open palm. Yoav brings his hand close to his face and stares at the little seed with wide, amazed eyes. Lemon tree in a big pot behind them, potted herbs, Jerusalem stone, soft autumn morning light.",
+      "characters": ["Savta", "Yoav"]
+    },
+    {
+      "prompt": "Yoav kneels on the balcony floor with a small terracotta pot full of dark soil. With one finger he makes a little hole, places the seed inside and gently covers it, whispering goodnight to it with a tender face. Savta's watering can stands nearby. Golden evening light, sweet close shot.",
+      "characters": ["Yoav"]
+    },
+    {
+      "prompt": "Early morning, Yoav in pajamas rushes onto the balcony and bends over the pot, but there is only brown soil, nothing growing. He spreads his hands in disappointment and calls back toward the house with a frown. Savta peeks out of the door with a mug of tea. Soft morning light, funny impatient mood.",
+      "characters": ["Yoav", "Savta"]
+    },
+    {
+      "prompt": "Savta crouches down next to Yoav beside the little pot and holds up three fingers, counting gently: water, sun and patience. She smiles warmly. Yoav listens with his chin on his knees, looking at the pot. Warm light, calm patient mood, medium close shot.",
+      "characters": ["Savta", "Yoav"]
+    },
+    {
+      "prompt": "A gentle three-part sequence flowing across one picture without borders: in the morning Yoav waters the pot with a small green watering can; at noon he slides the pot into a patch of sunlight; in the evening he sits beside it, talking to it lovingly. The sky changes from pink to bright blue to purple. Rhythmic, caring mood.",
+      "characters": ["Yoav"]
+    },
+    {
+      "prompt": "Shabbat afternoon on the sofa in Savta's living room: Savta, with Yoav snuggled beside her in a white Shabbat shirt, reads aloud from an open Chumash (pages shown as abstract lines, no letters). Yoav looks up at her with a curious question. Shabbat candlesticks on the sideboard, bookshelf of holy books, golden light.",
+      "characters": ["Savta", "Yoav"]
+    },
+    {
+      "prompt": "Savta explains with an open hand, and above them a soft dreamy image floats like a painted daydream: gentle rain falling on green fields, fruit trees full of lemons and oranges, and people walking together peacefully in a sunny land. Yoav gazes at it in wonder. Warm magical light.",
+      "characters": ["Savta", "Yoav"]
+    },
+    {
+      "prompt": "Yoav points eagerly toward the balcony where his little flower pot stands, asking with a hopeful face; Savta nods and smiles broadly, her hand on his shoulder. Through the window, the pot sits in a patch of sunlight. Cozy living room, warm afternoon light, medium shot.",
+      "characters": ["Yoav", "Savta"]
+    },
+    {
+      "prompt": "A winter day: grey clouds gather over the stone rooftops of the neighborhood, and the first big raindrops begin to fall on the balcony and the little pot. Yoav presses his face and hands against the window glass from inside, eyes wide with excitement. Cool grey-blue light with a hint of silver, anticipation.",
+      "characters": ["Yoav"]
+    },
+    {
+      "prompt": "Yoav in his yellow raincoat and yellow rubber boots jumps into a big puddle in the courtyard below the apartment building, water splashing high around him, laughing with his arms up. Nearby, his little pot stands in the rain, drinking the drops. Savta watches from the balcony above with an umbrella. Dynamic, joyful rainy scene.",
+      "characters": ["Yoav", "Savta"]
+    },
+    {
+      "prompt": "The next morning, fresh and sparkling after the rain: in the brown soil of the little pot a tiny green sprout with two leaves has come up. Yoav leans over it, shouting with joy, arms flung up toward the clearing sky. Savta hurries onto the balcony smiling. Soft sunbeams through parting clouds, dewdrops shining.",
+      "characters": ["Yoav", "Savta"]
+    },
+    {
+      "prompt": "A warm, hopeful closing picture: some months later, Yoav stands beside his lemon seedling, now a small leafy lemon plant in a bigger pot on the balcony, with fresh shiny leaves, watering it with his green can. Savta stands beside him with her arm around his shoulders. Bright sunshine, blue sky, feeling of patience rewarded.",
+      "characters": ["Yoav", "Savta"]
+    }
+  ]
+}

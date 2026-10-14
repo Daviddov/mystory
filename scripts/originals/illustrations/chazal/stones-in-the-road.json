@@ -1,0 +1,59 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Farmer",
+      "description": "The field owner, a stocky man of about 40, sun-browned skin, thick black eyebrows, brown eyes, short bushy black beard, short black hair under a rolled ochre head cloth, an olive-green knee-length work tunic with a wide brown leather belt, sturdy sandals; later in the story the same tunic is faded and patched at the knee."
+    },
+    {
+      "name": "Hasid",
+      "description": "A kind, pious man of about 65, slender and calm, pale olive skin, gentle grey eyes, a long soft white beard, a white head wrap, a long light-grey wool robe over a cream tunic, a wooden walking staff, a small cloth bag over the shoulder."
+    },
+    {
+      "name": "Child",
+      "description": "A curious village boy of about 7, round cheeks, warm brown skin, big brown eyes, short black curls, a sky-blue tunic with a rope belt, bare feet."
+    }
+  ],
+  "cover": {
+    "prompt": "A village dirt road beside a field at golden sunset. The Farmer, in his faded patched tunic, bends to lift a stone from the road and set it neatly at the roadside, smiling softly, while the Child crouches beside him helping with a small pebble. Behind them, a low stone wall, a wheat field and flat-roofed village houses. Warm glowing light, medium-wide composition with the clean road leading into the distance.",
+    "characters": ["Farmer", "Child"]
+  },
+  "pages": [
+    {
+      "prompt": "A large field full of stones of every size, round and pointed, beside a village road. The Farmer stands by a wooden plow stuck against a big stone, hands on his hips, frowning and grumbling. A patient ox waits at the plow. Bright morning light, wide shot showing the stony field.",
+      "characters": ["Farmer"]
+    },
+    {
+      "prompt": "The Farmer tosses a stone over the low field wall onto the public road, where many stones already lie scattered. On the road, villagers pass carefully: children running, a woman with a basket on her head, an old man with a stick stepping around the stones. Warm late-morning light, wide shot with the road filling the foreground.",
+      "characters": ["Farmer"]
+    },
+    {
+      "prompt": "On the stone-strewn road, the Hasid stops with his walking staff and turns to the Farmer, who holds a stone mid-throw at the field wall. The Hasid gestures gently from the field to the road with a calm, questioning face. Soft midday light, medium shot of the two men across the low wall.",
+      "characters": ["Hasid", "Farmer"]
+    },
+    {
+      "prompt": "The Farmer throws his head back laughing, shrugging his shoulders with a stone in his hand, pointing proudly at his field. The Hasid, already walking on along the road, looks back and shakes his head sadly but kindly. Afternoon light, medium-wide shot.",
+      "characters": ["Farmer", "Hasid"]
+    },
+    {
+      "prompt": "Years later at the field's edge, the Farmer, in his faded patched tunic and looking thinner and sadder, hands a small rolled document with abstract marks to a new owner, a man in a rich brown robe, and turns away with drooping shoulders. The same stony road runs beside them. Muted cloudy light, medium-wide shot, gentle sad mood.",
+      "characters": ["Farmer"]
+    },
+    {
+      "prompt": "On the stony road, the Farmer in his faded tunic has just tripped and landed lightly on his knees, more surprised than hurt, brushing dust from his clothes. He looks down with dawning recognition at the stones around him. A small puff of dust, no injury. Afternoon light, medium shot at road level.",
+      "characters": ["Farmer"]
+    },
+    {
+      "prompt": "The Farmer stands alone in the middle of the stone-strewn road, quiet and thoughtful, a hand on his chin, looking from the field that is no longer his to the long road stretching into the village. A soft breeze moves the wheat. Gentle golden late-afternoon light, wide shot with him small in the landscape.",
+      "characters": ["Farmer"]
+    },
+    {
+      "prompt": "The Farmer bends to lift a stone from the road and places it neatly in a pile by the roadside, already halfway through clearing a stretch of road. The Child stands nearby looking up with curiosity, and the Farmer smiles warmly at him while answering. Warm golden evening light, medium shot.",
+      "characters": ["Farmer", "Child"]
+    },
+    {
+      "prompt": "A gentle closing scene in the same ancient village square by a well: children in simple tunics and dresses happily pick up scraps and pebbles from the shared path and drop them into a large woven basket, while the Child carries a fallen clay cup back to the well. Soft golden light, wide, cheerful framing.",
+      "characters": ["Child"]
+    }
+  ]
+}

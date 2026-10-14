@@ -1,0 +1,71 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Caleb",
+      "description": "Caleb, man about 40, strong and broad-shouldered, sun-tanned olive skin, short reddish-brown beard and curly hair, bright determined hazel eyes, knee-length rust-orange tunic with a brown leather belt, brown traveling cloak, sandals; carries a woven brown backpack (bundle tied with rope) and a walking stick."
+    },
+    {
+      "name": "Joshua",
+      "description": "Joshua, young man about 30, tall and lean, olive skin, short neat black beard, calm steady dark eyes, knee-length deep-blue tunic with a rope belt, grey traveling cloak, sandals; carries a leather water skin over his shoulder."
+    },
+    {
+      "name": "Moses",
+      "description": "Moses, older man about 80, tall and lean, weathered olive skin, long grey-white beard, deep calm eyes, simple undyed cream wool robe with a brown cloak, plain head covering; holds a tall wooden shepherd's staff."
+    }
+  ],
+  "cover": {
+    "prompt": "Caleb and Joshua walk down a green hillside of the Land of Israel, carrying between them on a wooden pole an enormous cluster of purple grapes almost as big as a child. Caleb grins proudly; Joshua smiles. Pomegranates and figs peek out of Caleb's bundle. Behind them, rolling green hills, wildflowers and a sparkling stream under a bright blue sky. Joyful, sunny, medium-wide shot.",
+    "characters": ["Caleb", "Joshua"]
+  },
+  "pages": [
+    {
+      "prompt": "At the edge of the desert camp, Moses stands with his staff before twelve men dressed for travel, pointing toward distant hills on the horizon. Caleb stands in the front row, eager and alert; Joshua stands next to him. Families watch from the tents with curious faces. Morning light, wide shot with the far hills hazy and inviting.",
+      "characters": ["Moses", "Caleb", "Joshua"]
+    },
+    {
+      "prompt": "Caleb and Joshua hike through a lush landscape: green fields, wildflowers of red and yellow, a sparkling stream, terraced hills with olive trees. Caleb strides ahead with his backpack and stick, arms open in amazement; Joshua follows, smiling at the view. Fresh spring morning light, wide panoramic shot.",
+      "characters": ["Caleb", "Joshua"]
+    },
+    {
+      "prompt": "Beside a stream in a valley of vineyards, Caleb and Joshua lift a gigantic cluster of purple grapes tied to a wooden pole across both their shoulders, straining and laughing. Baskets on the ground hold red pomegranates and green figs. Dappled sunlight through the vines, medium shot, comic sense of the grapes' huge size.",
+      "characters": ["Caleb", "Joshua"]
+    },
+    {
+      "prompt": "From behind a rock on a hillside, Caleb and Joshua peek at a fortified city in the distance with very tall stone walls and towers. Near its gate stand a few very tall people in ordinary robes, seen small and far away, calm and not monstrous. The two spies look small and impressed. Cool afternoon light, wide shot emphasizing the height of the walls.",
+      "characters": ["Caleb", "Joshua"]
+    },
+    {
+      "prompt": "Caleb alone in Hebron at dusk, kneeling quietly before a stone cave entrance among old olive trees, the resting place of Abraham, Isaac and Jacob. His hands are folded and his eyes closed in prayer, his walking stick laid beside him. A soft warm light falls over him from the sky. Peaceful, hushed, medium shot.",
+      "characters": ["Caleb"]
+    },
+    {
+      "prompt": "Back at the desert camp, a huge crowd gathers around the returning spies. Ten of them stand on a rise with worried, exaggerated gestures, one holding his hand very high to show the giants' height and then crouching small like a grasshopper. The giant grape cluster rests on the ground beside them. Caleb and Joshua stand apart, frowning. Midday light, wide shot.",
+      "characters": ["Caleb", "Joshua"]
+    },
+    {
+      "prompt": "Close view of the frightened people: mothers hugging children, a father covering his face, children crying into their parents' robes, worried glances. Tents behind them. The light is a little dimmer and greyer, clouds passing over the sun. Emotional but gentle, medium framing on a few families.",
+      "characters": []
+    },
+    {
+      "prompt": "Caleb climbs onto a large rock in the middle of the crowd and raises his hand high, calling out with a brave, hopeful face. The people turn toward him, surprised, crying stopping mid-tear. Sunlight breaks through the clouds onto Caleb. Low-angle heroic shot, crowd seen from behind and around him.",
+      "characters": ["Caleb"]
+    },
+    {
+      "prompt": "Joshua steps up beside Caleb on the rock, one hand on Caleb's shoulder and the other open toward the people, speaking calmly and encouragingly. Caleb nods firmly. Below, Moses watches with hope. Some faces in the crowd soften while others still look afraid. Warm afternoon light, medium-wide shot.",
+      "characters": ["Joshua", "Caleb", "Moses"]
+    },
+    {
+      "prompt": "A quiet, wide desert landscape at sunset: the people turn back toward the wilderness, tents in neat rows, children growing taller among them, a soft white cloud resting over the Mishkan. The far green hills of the Land glow faintly on the horizon, waiting. Calm, patient mood, long shadows.",
+      "characters": []
+    },
+    {
+      "prompt": "Caleb sits in front of his tent at evening, older now with a touch of grey in his reddish beard, gazing toward the distant hills with a peaceful, confident smile. His children sit around him and his wife beside him, and he points toward the horizon, telling them of Hebron. Golden evening light, cozy family scene.",
+      "characters": ["Caleb"]
+    },
+    {
+      "prompt": "Caleb stands on a hilltop with his walking stick, looking out with a hopeful smile. On one side of the valley rise tall stone city walls; on the other side sparkle vineyards heavy with giant purple grapes. A small child stands beside him holding his hand, and Caleb points toward the grapes. Bright, optimistic morning light, wide shot.",
+      "characters": ["Caleb"]
+    }
+  ]
+}

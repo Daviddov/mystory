@@ -1,0 +1,142 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Rebecca",
+      "description": "kind energetic girl, about 14-looking, slim, olive skin, big warm brown eyes, one long dark braid down her back, rose-red long dress with a cream sash, light cream head-scarf, barefoot or simple sandals, carries a round terracotta water jug on her shoulder"
+    },
+    {
+      "name": "Eliezer",
+      "description": "Abraham's loyal servant, man about 60-looking, broad shoulders, olive skin, grey-and-black short beard, gentle thoughtful eyes, dusty sand-colored travel robe with a dark-blue sash, blue head-cloth, holds a wooden walking stick"
+    },
+    {
+      "name": "Little Camel",
+      "description": "the smallest, youngest camel of the caravan: light-tan fluffy fur, long curly eyelashes, big gentle sleepy eyes, a little blue tassel on its halter"
+    },
+    {
+      "name": "Camels",
+      "description": "nine tall grown camels of the caravan, sandy-brown fur, droopy tired eyelids, red-and-cream woven saddle blankets with bundles and bags tied on"
+    },
+    {
+      "name": "Isaac",
+      "description": "gentle young man, about 30-looking, tall and strong, olive skin, warm dark-brown eyes, short curly dark-brown hair, short neat dark beard, sage-green knee-length wool tunic with a brown leather belt, cream head-cloth, leather sandals"
+    },
+    {
+      "name": "Laban",
+      "description": "Rebecca's older brother, young man about 22-looking, olive skin, black hair and a thin black beard, sharp dark eyes, bright orange robe with a gold-colored sash"
+    },
+    {
+      "name": "Rebecca's Mother",
+      "description": "woman about 45-looking, plump and warm, olive skin, brown eyes, long dark-green dress, brown head-scarf covering all her hair"
+    }
+  ],
+  "cover": {
+    "prompt": "At a stone well in golden evening light, Rebecca pours water from her terracotta jug into a long stone trough while the Little Camel drinks happily and nuzzles her arm, and the tall Camels line up behind it. Rebecca laughs warmly, her braid swinging. Medium-wide shot at a child's eye level, warm sunset glow, joyful and kind.",
+    "characters": [
+      "Rebecca",
+      "Little Camel",
+      "Camels"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Evening, the sun low and orange: a long caravan arrives at a stone well outside a small town of mud-brick houses. Eliezer walks at the front with his stick, followed by the Camels and the Little Camel in a long line across the sand. Very wide shot, long shadows, warm golden-orange light.",
+      "characters": [
+        "Eliezer",
+        "Camels",
+        "Little Camel"
+      ]
+    },
+    {
+      "prompt": "Close-up of the tired camels by the well: the Little Camel in front with drooping eyelids and its dry tongue poking out, sighing, the big Camels behind it lowering their heads, dust on their fur. Low warm evening light, a comic yet sympathetic mood.",
+      "characters": [
+        "Little Camel",
+        "Camels"
+      ]
+    },
+    {
+      "prompt": "Eliezer sits on the edge of the stone well, chin in his hand, thinking hard with a puzzled, caring expression. Behind him the Camels rest, and on the horizon tents and the women of the town are coming with jugs. Medium shot, soft orange evening light.",
+      "characters": [
+        "Eliezer",
+        "Camels"
+      ]
+    },
+    {
+      "prompt": "Eliezer stands by the well with eyes closed and palms open, praying quietly and earnestly. A soft warm light touches his face from the evening sky, with no figure in it. The Little Camel looks up at him curiously. Medium close-up, golden-pink sunset light, calm and hopeful.",
+      "characters": [
+        "Eliezer",
+        "Little Camel"
+      ]
+    },
+    {
+      "prompt": "Rebecca comes down stone steps to the well with her terracotta jug on her shoulder, her long braid swinging, and dips the jug into the water. Eliezer watches from the side, surprised, his prayer just finished. Medium-wide shot, warm sunset light glowing on the water.",
+      "characters": [
+        "Rebecca",
+        "Eliezer"
+      ]
+    },
+    {
+      "prompt": "Eliezer hurries up to Rebecca, hand held out politely, and Rebecca immediately lowers the full jug from her shoulder and offers it to him with a warm, generous smile. Close-up on the two of them and the jug between them, water drops glistening, golden evening light.",
+      "characters": [
+        "Rebecca",
+        "Eliezer"
+      ]
+    },
+    {
+      "prompt": "Rebecca turns and looks at the tired Camels and the Little Camel with a caring, compassionate face, pointing to the empty stone trough. Eliezer, still holding the jug, looks at her with dawning wonder. Medium shot from the camels' side, warm low light.",
+      "characters": [
+        "Rebecca",
+        "Eliezer",
+        "Camels",
+        "Little Camel"
+      ]
+    },
+    {
+      "prompt": "Action scene: Rebecca runs back and forth between the well and the long stone trough, pouring a big splash of water from her jug, her braid flying. The Camels drink with big gulping mouths, water rippling. Wide shot, motion and energy, warm orange evening light, sparkling water.",
+      "characters": [
+        "Rebecca",
+        "Camels"
+      ]
+    },
+    {
+      "prompt": "A long row of all the Camels drinking at the trough, Rebecca pouring yet another jug of water, still smiling and full of energy, not tired at all. Wide shot along the line of camels from one end, the sun sinking low behind them, dust glowing in the light.",
+      "characters": [
+        "Rebecca",
+        "Camels",
+        "Little Camel"
+      ]
+    },
+    {
+      "prompt": "The Little Camel licks Rebecca's hand and she giggles. Eliezer stands nearby, hands clasped at his chest, whispering in amazement with shining eyes. Close-up on Rebecca and the Little Camel, Eliezer softly in the background, warm twilight glow. Dust motes glow in the air and the stone well is softly visible behind them.",
+      "characters": [
+        "Rebecca",
+        "Little Camel",
+        "Eliezer"
+      ]
+    },
+    {
+      "prompt": "Inside a mud-brick house lit by oil lamps: Rebecca wears shining gold bracelets on her wrists and looks at them shyly, while Eliezer talks warmly to Laban and Rebecca's Mother sitting on cushions. Rebecca steps forward with a brave, decided smile. Medium shot, cozy golden lamplight.",
+      "characters": [
+        "Rebecca",
+        "Eliezer",
+        "Laban",
+        "Rebecca's Mother"
+      ]
+    },
+    {
+      "prompt": "Late afternoon in a field in Canaan: Rebecca, riding on a camel with Eliezer leading it, looks toward Isaac who walks across the field toward them with a happy, warm smile. A tent glows with lamplight in the background. Wide shot, golden-green field, soft sunset light, a joyful meeting.",
+      "characters": [
+        "Rebecca",
+        "Eliezer",
+        "Isaac"
+      ]
+    },
+    {
+      "prompt": "Close-up at a child's eye level: Rebecca kneels down and offers water from her terracotta jug to a small thirsty dog, which laps happily, while the Little Camel watches over her shoulder. Bright warm afternoon light, gentle and caring mood.",
+      "characters": [
+        "Rebecca",
+        "Little Camel"
+      ]
+    }
+  ]
+}

@@ -157,8 +157,10 @@ export interface VideoRequest {
   prompt: string;
   /** Clip length; providers round to the nearest length they support. Default 4. */
   durationSeconds?: number;
-  /** Default "16:9". */
+  /** Default "16:9". The vendor letterboxes an image of another shape; the reader crops the bars. */
   aspect?: "16:9" | "9:16";
+  /** End on the same frame it starts on, so the clip loops without a jump. Default true. */
+  loop?: boolean;
 }
 
 export interface VideoResult {
@@ -183,6 +185,17 @@ export class VideoRefusedError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "VideoRefusedError";
+  }
+}
+
+/**
+ * Thrown when the vendor's quota or rate limit is used up (HTTP 429). Every
+ * further request would fail the same way, so a batch should stop.
+ */
+export class VideoQuotaError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "VideoQuotaError";
   }
 }
 

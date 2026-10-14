@@ -1,0 +1,63 @@
+{
+  "style": "biblical",
+  "characters": [
+    { "name": "Elad", "description": "Boy of about 7, slim, olive skin, big dark eyes that show every feeling, short black curly hair. Wears a knee-length rust-orange wool tunic with a brown cord belt over light trousers and brown sandals. Signature item: a small leather pouch on his belt." },
+    { "name": "Yehonatan", "description": "Elad's best friend, boy of about 7, slightly taller and rounder, light-brown skin, kind brown eyes, straight brown hair cut in a bowl shape. Wears a knee-length sky-blue linen tunic with a white sash and sandals. Signature item: a small round reddish clay jug with one handle (later with a crack on one side)." },
+    { "name": "Ima", "description": "Elad's mother, about 32, slender, olive skin, calm brown eyes, gentle face, hair covered by a long olive-green head scarf. Wears a long cream wool dress with a terracotta woven belt and sandals." },
+    { "name": "Aaron", "description": "The High Priest, about 80, upright and gentle, olive skin, soft deep-brown eyes with smile lines, long flowing white beard. In this story he wears only plain pure-white linen garments: a long simple white tunic, a white sash and a white wrapped turban, no gold, no gems, no bells, barefoot. No halo." }
+  ],
+  "cover": {
+    "prompt": "Aaron in plain white linen sits at the entrance of a tent in the soft evening light, with Elad sitting close beside him, looking up at him with hopeful eyes. Aaron smiles warmly and rests a hand on the boy's shoulder. Behind them, the camp of tents and the Mishkan's curtains under a calm violet-gold sky. Medium shot, tender peaceful mood.",
+    "characters": ["Aaron", "Elad"]
+  },
+  "pages": [
+    {
+      "prompt": "Between the tents of the Israelite camp, Ima kneels beside Elad and points toward the Mishkan in the distance, its colorful curtains visible beyond the tents, explaining something important. Other families nearby talk excitedly among themselves. Elad listens but looks distracted. Warm late-afternoon light, wide-medium shot.",
+      "characters": ["Ima", "Elad"]
+    },
+    {
+      "prompt": "Inside Yehonatan's family tent, Elad alone plays with the small reddish clay jug, tossing it gently. In this moment the jug slips from his hands and falls toward the rug; a small crack appears on its side, no shards. Elad's face is frozen in shock. Through the tent opening, Yehonatan can be seen far away walking off with a water skin. Soft interior light.",
+      "characters": ["Elad"]
+    },
+    {
+      "prompt": "Night inside Elad's tent: Elad lies awake on his sleeping mat, tossing under a wool blanket, his face worried and eyes open. In a soft thought-cloud above him, the cracked clay jug looms large and heavy. Moonlight falls through the tent opening. Quiet, heavy, but gentle mood, close shot.",
+      "characters": ["Elad"]
+    },
+    {
+      "prompt": "Morning of Yom Kippur: the whole people stand quietly gathered in front of the Mishkan. Aaron steps out of the courtyard dressed entirely in simple pure-white linen, no colors and no gold, glowing softly in the morning light. The crowd watches in hushed respect. Elad and Ima stand in the front of the crowd. Wide shot, calm and solemn.",
+      "characters": ["Aaron", "Elad", "Ima"]
+    },
+    {
+      "prompt": "Within the quiet crowd, Elad tugs Ima's sleeve and whispers a question up at her. Ima leans down and answers softly, her hand on his back. In the background, Aaron in his white linen garments stands at the Mishkan, simple and bright like a clean white page. Soft morning light, close medium shot of mother and son.",
+      "characters": ["Elad", "Ima", "Aaron"]
+    },
+    {
+      "prompt": "Aaron stands at the entrance of the Mishkan with his arms lifted slightly, eyes closed in prayer, a soft warm light glowing gently around the tent. The whole camp is silent; only the wind moves the curtains and the people's head scarves. Elad, small among the crowd, closes his eyes and holds his hands together, hopeful. Wide, serene composition.",
+      "characters": ["Aaron", "Elad"]
+    },
+    {
+      "prompt": "Evening after the fast, golden twilight. Aaron sits resting on a low stone at the entrance of a tent. Elad approaches him slowly, a little shy, his hands twisted together, and speaks in a small voice. Aaron turns toward him with a kind, attentive face. Warm sunset light, quiet mood, medium shot.",
+      "characters": ["Aaron", "Elad"]
+    },
+    {
+      "prompt": "Aaron has seated Elad next to him on the low stone. He looks at the boy with a soft smile, one hand resting on Elad's shoulder, the other gesturing gently toward the tents of the camp as he explains. Elad listens seriously, wide-eyed. Purple-gold dusk, an oil lamp glowing nearby, intimate close shot.",
+      "characters": ["Aaron", "Elad"]
+    },
+    {
+      "prompt": "Elad stands at the entrance of Yehonatan's tent at dusk, knees a little shaky, holding the cracked clay jug out in both hands. His face is brave and sorry. Yehonatan sits inside on a rug and looks up at him. Warm lamp light spills from the tent, cool blue twilight outside. Medium shot from the side.",
+      "characters": ["Elad", "Yehonatan"]
+    },
+    {
+      "prompt": "Inside the tent, Yehonatan holds the cracked jug and looks from it to Elad, his face a little sad for a moment but already softening into a forgiving smile; he puts his hand on Elad's arm. Elad's face fills with relief. Warm lamp light, close shot of two friends.",
+      "characters": ["Yehonatan", "Elad"]
+    },
+    {
+      "prompt": "Night in Elad's tent, moonlight and calm. Elad sleeps peacefully on his mat, smiling slightly, his blanket smooth and neat, his body relaxed. A soft white glow fills the tent like the white of Aaron's garments. A single white feather drifts lightly in the air above him. Serene, light, peaceful mood.",
+      "characters": ["Elad"]
+    },
+    {
+      "prompt": "The next morning by a gentle stream bank with reeds: Elad and Yehonatan kneel side by side, hands muddy with fresh clay, happily shaping a new round jug together and laughing. The old cracked jug stands nearby on a rock. Bright fresh morning light, sparkling water, joyful new-beginning mood, wide medium shot.",
+      "characters": ["Elad", "Yehonatan"]
+    }
+  ]
+}

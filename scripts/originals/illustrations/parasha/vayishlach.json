@@ -1,0 +1,91 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Jacob",
+      "description": "man about 50, medium build, dark curly hair with a few grey streaks, full dark beard with grey threads, warm brown eyes with smile lines, olive skin, olive-green wool robe with a brown rope belt, cream linen head cloth, simple wooden walking staff, leather sandals"
+    },
+    {
+      "name": "Esau",
+      "description": "Jacob's twin brother, man about 50, broad and strong, thick wavy reddish-copper hair and a big bushy red beard, ruddy sun-tanned skin, bright hazel eyes, rust-red tunic under a brown sleeveless leather vest, wide leather belt, no weapons, big expressive hands"
+    },
+    {
+      "name": "Leah",
+      "description": "Jacob's wife, woman about 45, soft gentle face, kind tender brown eyes, olive skin, deep plum-purple long wool dress, sand-colored head covering that covers her hair, small silver earrings"
+    },
+    {
+      "name": "Rachel",
+      "description": "Jacob's wife, woman about 38, slender, large dark eyes, warm olive skin, bright smile, long terracotta-red wool dress with a cream sash, sky-blue head covering that covers her hair"
+    },
+    {
+      "name": "Joseph",
+      "description": "Rachel's little son, boy about 6, round face, brown curly hair, big smiling brown eyes, cream knee-length tunic with a small blue sash, barefoot, always close to Rachel"
+    },
+    {
+      "name": "Children",
+      "description": "Jacob's other children: a group of about ten boys from 7 to 14 and one girl about 10 (long dark hair, rose-pink dress, modest), olive skin, dark hair, simple tunics in sand, brown, rust and dull blue, sandals"
+    },
+    {
+      "name": "Servants",
+      "description": "Jacob's shepherd servants, a few men aged 20 to 40, sun-tanned, short dark beards, plain undyed wool tunics and head cloths, wooden staffs, leading animals"
+    },
+    {
+      "name": "Angel",
+      "description": "a tall gentle man-shaped figure made of soft silvery-white light in a plain long white robe, calm kind face only faintly visible, no wings, no halo, glowing gently"
+    }
+  ],
+  "cover": {
+    "prompt": "The moment of reunion in an open valley at morning. Jacob and Esau embrace warmly in the middle of a dusty road, Esau's big arms around Jacob, both brothers with eyes closed and happy tears on their cheeks. Behind Jacob, at a little distance, his family peeks out with relieved smiles; behind Esau, a soft cloud of dust and far-away tiny figures. Golden sunlight, green hills, wide shot centered on the hug.",
+    "characters": ["Jacob", "Esau", "Leah", "Rachel", "Joseph", "Children"]
+  },
+  "pages": [
+    {
+      "prompt": "A long caravan sets out from Haran in the morning: Jacob walks at the front with his staff, looking ahead with an excited, hopeful face. Behind him come Leah and Rachel on donkeys, many children walking and riding, servants leading big flocks of sheep and goats, camels and donkeys. A warm ray of sunlight falls on the road ahead. Wide panoramic shot, sense of a big family going home.",
+      "characters": ["Jacob", "Leah", "Rachel", "Joseph", "Children", "Servants"]
+    },
+    {
+      "prompt": "Jacob's camp of tents at midday. Two servants who have just come back run up to Jacob, dusty and out of breath, one pointing back toward the distant mountains. Jacob stands still with a worried frown, hand on his beard. Far on the horizon, a faint haze over the mountains of Seir. Medium shot, bright but slightly tense light.",
+      "characters": ["Jacob", "Servants"]
+    },
+    {
+      "prompt": "Inside the camp, Jacob kneels down to the level of his youngest children, gathering them close in his arms, his face serious and worried but loving, hand pressed on his chest as if feeling his heart beating. Leah and Rachel stand behind, holding the little ones. Late afternoon light, close-medium shot at child's eye level, protective family feeling.",
+      "characters": ["Jacob", "Leah", "Rachel", "Joseph", "Children"]
+    },
+    {
+      "prompt": "Evening outside the tents. Jacob stands alone with his eyes closed and his hands open toward the sky in prayer, his old wooden staff leaning against him. A soft warm glow lights his face from above, with no figure in the sky. In the background, servants sort the gift animals into groups: goats, sheep, camels with their young, cows and donkeys. Medium-wide shot, golden-violet sunset, calm and hopeful.",
+      "characters": ["Jacob", "Servants"]
+    },
+    {
+      "prompt": "A wide road through hilly country seen from a high viewpoint. Several separate herds walk one after another along the road with gaps between them: first goats, then sheep, then camels with baby camels, then cows, then donkeys, each led by a servant. In the foreground Jacob stands on a rock watching them go, giving a little hopeful wave. Bright day, wide bird's-eye shot.",
+      "characters": ["Jacob", "Servants"]
+    },
+    {
+      "prompt": "Night by a shallow stream. Jacob's family has crossed to the far bank, where their small tents glow with lamps. On the near bank, in the dim blue light just before dawn, two silhouettes stand close, holding each other by the arms and shoulders, leaning into each other in a long struggle like a strong embrace: Jacob, tired but determined, and a tall figure of soft silvery light. No violent motion, no hitting. Wide shot, mostly silhouettes, quiet and mysterious.",
+      "characters": ["Jacob", "Angel"]
+    },
+    {
+      "prompt": "Sunrise over the stream. The figure of light is fading gently into the bright morning rays, one hand raised in blessing. Jacob walks on toward the sunrise, limping a little and leaning on his staff, but his face is strong, calm and glowing with new courage. Long golden light, mist rising from the water, medium-wide shot from behind and slightly to the side.",
+      "characters": ["Jacob", "Angel"]
+    },
+    {
+      "prompt": "An open plain at morning. Far on the horizon rises a big cloud of dust with tiny figures. In the foreground Jacob walks out in front of everyone and bows low toward the horizon, his staff laid beside him. Behind him the family waits: small children hide behind Leah's and Rachel's dresses, peeking out and holding their breath. Wide shot from behind the family, tense but safe.",
+      "characters": ["Jacob", "Leah", "Rachel", "Joseph", "Children"]
+    },
+    {
+      "prompt": "Close-up of the reunion: Esau has run up and throws his arms around Jacob's neck, both twins hugging tightly and crying, tears shining on their cheeks, Esau's red beard pressed against Jacob's shoulder, Jacob's hand gripping Esau's back. Their faces show love, relief and missing each other. Warm sunlight from behind, dust sparkling in the air, emotional and tender.",
+      "characters": ["Jacob", "Esau"]
+    },
+    {
+      "prompt": "Esau smiles broadly and bends down to greet the children, who come forward one by one: a boy shyly offers his hand, little Joseph peeks from behind Rachel and waves. Jacob gestures toward the herds of gift animals in the background, and Esau raises his palms as if to say he already has plenty, laughing. Medium-wide shot, cheerful bright daylight.",
+      "characters": ["Jacob", "Esau", "Rachel", "Leah", "Joseph", "Children"]
+    },
+    {
+      "prompt": "A fork in the road at late afternoon. Esau walks away toward red-brown mountains on one side, turning back to wave warmly. Jacob, with his family and flocks, heads the other way toward green hills where new tents are being raised. Both brothers wave. Wide shot from above the crossroads, peaceful golden light.",
+      "characters": ["Jacob", "Esau", "Children", "Servants"]
+    },
+    {
+      "prompt": "Near the new tents in Canaan, two of Jacob's young sons who had quarreled sit apart on a rock with crossed arms. One of them gets up, takes a step toward the other and holds out a ripe fig as a peace gift, smiling shyly. The other boy uncrosses his arms and begins to smile. Jacob watches warmly from the tent doorway. Close-medium shot at child's eye level, soft afternoon light.",
+      "characters": ["Jacob", "Children"]
+    }
+  ]
+}

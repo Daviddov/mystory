@@ -1,0 +1,71 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Rabbi Akiva",
+      "description": "elderly sage about 70, medium build, warm olive skin, neat grey beard to mid-chest, grey hair under a simple off-white head wrap, kind crinkled dark eyes, calm smile; long deep-blue wool robe over a cream tunic with tzitzit corners, brown leather belt, worn sandals, carries a wooden walking staff"
+    },
+    {
+      "name": "Donkey",
+      "description": "small friendly grey donkey with a pale muzzle, long fluffy ears and a dark stripe along its back, wearing a woven red-and-tan saddle blanket with two bundles tied on"
+    },
+    {
+      "name": "Rooster",
+      "description": "plump proud rooster with a bright red comb, golden-orange neck feathers, glossy dark green tail feathers and yellow feet"
+    },
+    {
+      "name": "Students",
+      "description": "four young students of the sages, aged 16 to 25, olive skin, short dark beards or none, simple tunics in beige, olive green and light brown with tzitzit, head wraps, sitting on low benches"
+    }
+  ],
+  "cover": {
+    "prompt": "Rabbi Akiva walks along a winding dirt road between golden hills at sunset, staff in hand, smiling peacefully. Beside him trots the little grey donkey with bundles on its back; the rooster rides proudly on top of the bundles. Rabbi Akiva holds a small clay oil lamp, unlit, hanging from a cord. Olive trees and a distant stone town on a hill. Wide warm view, the trio in the center foreground.",
+    "characters": ["Rabbi Akiva", "Donkey", "Rooster"]
+  },
+  "pages": [
+    {
+      "prompt": "Morning in a stone courtyard. Rabbi Akiva packs for a long journey: he ties a bundle onto the grey donkey, the rooster perches on the donkey's back, and he places a small clay oil lamp into a cloth bag. He looks cheerful and ready. Soft early light, flat-roofed stone houses behind. Medium shot showing all three of his companions clearly: donkey, rooster, lamp.",
+      "characters": ["Rabbi Akiva", "Donkey", "Rooster"]
+    },
+    {
+      "prompt": "Evening in a narrow street of a small stone town. Rabbi Akiva knocks politely on a wooden door; a door is already closed in front of him and another further down the lane is shut too, with only a sliver of lamplight behind it. The donkey and rooster wait patiently behind him. Long blue evening shadows, the last orange glow on the rooftops. Framing down the lane to show many closed doors.",
+      "characters": ["Rabbi Akiva", "Donkey", "Rooster"]
+    },
+    {
+      "prompt": "Close-up of Rabbi Akiva standing in the dusky street, not angry at all: a gentle, accepting smile, one hand open at his chest, eyes calm. The donkey nuzzles his shoulder and the rooster looks up at him. Soft golden light from behind him at the edge of town. Warm, peaceful expression is the focus.",
+      "characters": ["Rabbi Akiva", "Donkey", "Rooster"]
+    },
+    {
+      "prompt": "Twilight in an open field outside the town. Rabbi Akiva sits on a cloak spread under a big carob tree, lighting the small clay oil lamp, its glow warm on his face. He has tied the donkey to the tree with a rope; the rooster settles on a low branch. First stars appear in a deep blue sky; the dark town silhouette far behind. Cozy wide shot.",
+      "characters": ["Rabbi Akiva", "Donkey", "Rooster"]
+    },
+    {
+      "prompt": "Night in the field. A gust of wind sweeps through the carob tree, leaves and grass bending, and the little lamp has just gone out with a thin curl of smoke. Rabbi Akiva, lit only by soft moonlight, holds the dark lamp and smiles calmly. The donkey's ears blow sideways. Deep blue moonlit palette, gentle, not scary.",
+      "characters": ["Rabbi Akiva", "Donkey"]
+    },
+    {
+      "prompt": "Moonlit field. The rooster, startled, flaps its wings and flies off from the branch into the dark sky, a few feathers floating down, heading safely away over the field. Rabbi Akiva watches it go from under the tree with a calm, accepting smile, one hand raised gently. Soft silvery night light, the rooster small but clearly visible against the moon.",
+      "characters": ["Rabbi Akiva", "Rooster"]
+    },
+    {
+      "prompt": "Moonlit field, a little later. The untied rope hangs loose from the carob tree; in the distance the grey donkey trots off unharmed into the night among the bushes. Rabbi Akiva lies down on his cloak under the tree, eyes closing, a peaceful smile, completely alone and calm. Wide quiet night scene with stars, soothing deep blues.",
+      "characters": ["Rabbi Akiva", "Donkey"]
+    },
+    {
+      "prompt": "Dark night, wide view. In the foreground Rabbi Akiva sleeps peacefully, tiny and hidden in the dark field under the carob tree. Far away on a distant hill, beyond the town, a long line of small orange torch lights moves along the ridge, the only sign of a passing army; no soldiers or weapons are visible. The quiet dark around Rabbi Akiva keeps him safe. Calm, hushed mood.",
+      "characters": ["Rabbi Akiva"]
+    },
+    {
+      "prompt": "Early morning, pink and gold sunrise over the field. Rabbi Akiva sits up on his cloak under the carob tree, one hand on his chest, eyes wide with understanding and gratitude. Beside him lie the dark lamp and the loose rope. The distant town is quiet and empty in the soft morning haze. Medium shot, the dawn light on his thoughtful face as the main focus.",
+      "characters": ["Rabbi Akiva"]
+    },
+    {
+      "prompt": "Inside a study hall with a skylight, afternoon sun streaming in. Rabbi Akiva sits on a low bench, staff leaning beside him, telling his story with an open hand and a warm smile. The students sit around him on low benches, leaning in, listening with wonder; scrolls on a shelf behind them. Warm golden light, group composition centered on Rabbi Akiva.",
+      "characters": ["Rabbi Akiva", "Students"]
+    },
+    {
+      "prompt": "A gentle scene in a sunny village lane of the same era: a small boy about 6 in a light tunic watches his leather ball roll far away down the slope. Instead of crying, he stands still, takes a deep breath with his eyes closed and a small hopeful smile. Further down, the ball has stopped beside a little girl about 6 who is smiling and about to bring it back. Bright afternoon light, olive trees, wide framing.",
+      "characters": []
+    }
+  ]
+}

@@ -34,6 +34,8 @@ const SceneSchema = z
     prompt: z.string().trim().min(40).max(1200),
     /** Names from `characters` who appear in the picture. */
     characters: z.array(z.string()).max(8),
+    /** A page set in another era than the rest of the story (a closing scene of today). Default: the story's style. */
+    style: z.enum(["biblical", "sages", "modern"]).optional(),
   })
   .strict();
 
@@ -56,7 +58,7 @@ function scenePrompt(art: Art, scene: z.infer<typeof SceneSchema>, style: z.infe
     return `- ${name}: ${character?.description}`;
   });
   return [
-    `${what}. ${style.styles[art.style]}`,
+    `${what}. ${style.styles[scene.style ?? art.style]}`,
     `Format: ${style.aspectRatio}.`,
     "",
     `Scene: ${scene.prompt}`,

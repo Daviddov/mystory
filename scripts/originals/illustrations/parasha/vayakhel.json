@@ -1,0 +1,116 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Hannah",
+      "description": "girl about 8, slim, long wavy brown hair tied back with a purple cord, bright hazel eyes, light-brown skin, long-sleeved long rose-pink linen dress with a brown sash, sandals"
+    },
+    {
+      "name": "Grandma Malka",
+      "description": "grandmother about 70, plump and cheerful, round wrinkled face with laughing dark eyes, olive skin, hair covered by a deep-purple head cloth, long dark-blue wool dress, a small wooden spindle always at her waist"
+    },
+    {
+      "name": "Moses",
+      "description": "tall slender man about 80 but strong, long beard brown turning grey, kind deep-set brown eyes, olive skin, undyed cream wool robe with a brown striped mantle, brown head cloth, plain wooden shepherd's staff"
+    },
+    {
+      "name": "Bezalel",
+      "description": "young craftsman, teenage boy about 14, slim, curly black hair, bright brown eyes, light-brown skin, knee-length undyed linen tunic, brown leather work apron, small bronze hammer tucked in the apron pocket, sandals"
+    },
+    {
+      "name": "Goat",
+      "description": "black long-haired goat with shaggy silky hair, small curved horns, a white star on its forehead, mischievous yellow eyes"
+    }
+  ],
+  "cover": {
+    "prompt": "Hannah sits beside Grandma Malka in the shade of a tent, proudly spinning a long colorful thread on a small spindle, tongue out in concentration, while Grandma smiles and guides her hand. Baskets of blue, purple and red wool around them, the black goat peeking in curiously. Warm afternoon light, cozy medium shot.",
+    "characters": [
+      "Hannah",
+      "Grandma Malka",
+      "Goat"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "A big crowd gathers in the desert camp: men, women, children and mothers with babies in their arms, all sitting and standing on the sand to listen. Moses stands on a low rock in front of them. Hannah sits in the front row beside Grandma Malka, eager. Wide shot, tents and mountains, bright morning.",
+      "characters": [
+        "Moses",
+        "Hannah",
+        "Grandma Malka"
+      ]
+    },
+    {
+      "prompt": "Moses speaks to the people with open, warm gestures, holding up six fingers on one hand and resting the other on his heart. Behind him the sky has a soft golden glow. Hannah listens with shining eyes, already leaning forward as if ready to jump up. Medium shot from the crowd's view.",
+      "characters": [
+        "Moses",
+        "Hannah"
+      ]
+    },
+    {
+      "prompt": "Hannah runs into a large open tent where wise women sit on mats spinning wool with twirling spindles, threads of blue, purple and red stretching from their hands, baskets of wool all around. Grandma Malka sits among them and looks up smiling. Sunlight through the tent opening, lively wide interior.",
+      "characters": [
+        "Hannah",
+        "Grandma Malka"
+      ]
+    },
+    {
+      "prompt": "Grandma Malka hands Hannah a small wooden spindle and shows her with her own hands how to twist and draw the wool slowly. Hannah watches with focused, excited eyes. Close two-shot of their hands and faces, a tuft of blue wool between them, warm soft light.",
+      "characters": [
+        "Grandma Malka",
+        "Hannah"
+      ]
+    },
+    {
+      "prompt": "Hannah sits on a mat with her spindle, a few short broken bits of thread at her feet from earlier tries. Now she holds up a long, strong blue thread with a proud, triumphant smile, cheeks flushed from effort. A basket of wool beside her, warm afternoon light through the tent opening, medium shot.",
+      "characters": [
+        "Hannah"
+      ]
+    },
+    {
+      "prompt": "Funny scene outside the tent: a wise woman spins thread straight from the shaggy hair of the black goat while it stands there, mouth open in a loud bleat. Hannah laughs so hard she holds her belly; Grandma Malka chuckles behind her hand. Bright sunny day, playful wide shot.",
+      "characters": [
+        "Goat",
+        "Hannah",
+        "Grandma Malka"
+      ]
+    },
+    {
+      "prompt": "A stream of people bring gifts to a growing pile near the Mishkan site: gold, silver, copper, wooden beams, sparkling gemstones. In the front, women proudly carry their shiny round polished copper mirrors, reflecting the sunlight in bright spots. Hannah watches nearby. Wide shot, glittering golden light.",
+      "characters": [
+        "Hannah"
+      ]
+    },
+    {
+      "prompt": "The pile of gifts has grown into a huge mountain of treasure. Bezalel and other craftsmen come to Moses with amazed, laughing faces and arms full. Moses raises his hand to the camp, calling out that there is enough, while people still holding gifts stop and smile. Wide, cheerful shot.",
+      "characters": [
+        "Bezalel",
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Bezalel and craftsmen stretch a huge woven curtain of blue, purple and red across wooden frames. Hannah stands close, her finger touching one blue thread in the weave, beaming with pride; Bezalel smiles at her. Warm glowing light on the rich fabric, medium-wide shot.",
+      "characters": [
+        "Bezalel",
+        "Hannah"
+      ]
+    },
+    {
+      "prompt": "Friday at sunset: in the camp everyone lays down their tools. In the corner of the tent, Hannah's little spindle rests on a basket of wool. Outside, the sky glows orange and pink, women light small oil lamps, families greet one another warmly. Peaceful wide shot.",
+      "characters": [
+        "Hannah"
+      ]
+    },
+    {
+      "prompt": "Shabbat in the tent: Hannah and Grandma Malka sit together on cushions, singing with happy faces, a plate of white manna cakes and oil lamps glowing between them. The spindles lie still in a basket. Soft warm evening light, cozy intimate shot.",
+      "characters": [
+        "Hannah",
+        "Grandma Malka"
+      ]
+    },
+    {
+      "prompt": "Present-day Israel: a group of children sit around a table, each knitting or braiding a colorful yarn strand, then joining them into one big bright woven blanket, laughing together. Through the window, Shabbat candles wait on a table at sunset. Warm, joyful wide shot.",
+      "characters": [],
+      "style": "modern"
+    }
+  ]
+}

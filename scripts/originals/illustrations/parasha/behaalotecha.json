@@ -1,0 +1,67 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Aaron",
+      "description": "Aaron the High Priest, older man about 80, gentle smiling face with laugh lines, long full white beard, soft brown eyes; wears priestly garments: white linen tunic, a robe of deep blue with a hem of little woven pomegranates and tiny gold bells, a colorful woven apron, a breastplate with twelve colored stones (no engravings), and a white wound turban with a small plain gold band on the forehead."
+    },
+    {
+      "name": "Little Girl",
+      "description": "Girl about 5, small and round-cheeked, warm olive skin, two short black braids tied with red cords, big dark eyes, ankle-length rose-pink wool dress with a cream sash, barefoot."
+    },
+    {
+      "name": "Boy",
+      "description": "Boy about 7, skinny, light-brown skin, messy brown curls, freckles, cheeky grin, knee-length sand-colored tunic with a green belt, sandals."
+    }
+  ],
+  "cover": {
+    "prompt": "Aaron sits on the sand among a small group of children at dusk, the Little Girl and the Boy closest to him, all holding small handfuls of white manna and smiling. Behind them, through the open entrance of the Mishkan, the golden seven-branched menorah glows warmly. A soft pillar of gentle fire-light rises far in the background against a purple-blue sky. Warm, grateful mood, medium-wide shot.",
+    "characters": ["Aaron", "Little Girl", "Boy"]
+  },
+  "pages": [
+    {
+      "prompt": "Sunset over the desert camp. Aaron, seen from behind and to the side, walks into the dim interior of the Mishkan, carrying a small golden oil pitcher. Before him stands a tall golden seven-branched menorah with almond-blossom decorations, not yet lit. Orange-pink sky glowing through the tent entrance, reverent quiet mood, wide shot.",
+      "characters": ["Aaron"]
+    },
+    {
+      "prompt": "Close shot inside the Mishkan: Aaron gently lights the wicks of the golden menorah one by one with a small flame. Several lamps already burn and all the little flames lean toward the central lamp, like friends drawing close. Warm golden glow on his white beard and calm, focused face; dark rich tent coverings around.",
+      "characters": ["Aaron"]
+    },
+    {
+      "prompt": "Split-feeling wide landscape: in the morning a soft white cloud lifts above the Mishkan and the people pack tents and lead donkeys after it; in the far background at night-blue edge of the sky a gentle glowing pillar of fire lights a winding path. The Boy waves happily in the foreground with a bundle on his back. Composition flowing from day on the left to night on the right.",
+      "characters": ["Boy"]
+    },
+    {
+      "prompt": "Early morning among the tents: the ground is covered with small round white flakes of manna sparkling like tiny snowflakes in the dew. The Little Girl crouches, gathering manna into a clay bowl with delight, while the Boy scoops some into a basket. Pale pink dawn light, close-to-the-ground camera angle.",
+      "characters": ["Little Girl", "Boy"]
+    },
+    {
+      "prompt": "A group of children sits outside the tents, pulling grumpy, funny faces at their bowls of white manna: crossed arms, stuck-out tongues, puffed cheeks. The Boy pretends to hold an imaginary watermelon. Aaron, walking past in the background, turns his head toward the noise with raised eyebrows and a gentle smile. Bright midday light, comic tone.",
+      "characters": ["Aaron", "Boy", "Little Girl"]
+    },
+    {
+      "prompt": "Aaron sits down on the sand among the children, his priestly robe spread around him, leaning forward with interest and a warm smile. The children answer eagerly, hands raised, eyes shining: the Little Girl bounces on her knees, the Boy rubs his tummy. Medium shot at the children's eye level, soft afternoon light.",
+      "characters": ["Aaron", "Little Girl", "Boy"]
+    },
+    {
+      "prompt": "Close, cozy framing: Aaron leans in with a finger to his lips and a twinkle in his eye, whispering a secret. The children huddle around him, wide-eyed and curious; the Boy cups a hand to his ear. Above them, small dreamy thought-bubbles of clouds show grapes, a honey jar and a loaf of bread, drawn without any letters. Warm afternoon glow.",
+      "characters": ["Aaron", "Little Girl", "Boy"]
+    },
+    {
+      "prompt": "The Little Girl tastes a flake of manna with her eyes closed and a blissful smile, a faint warm glow and the soft image of a steaming loaf of bread floating above her. The other children and the Boy burst out laughing and reach for manna, and Aaron chuckles beside them. Joyful close-medium shot, golden light.",
+      "characters": ["Little Girl", "Boy", "Aaron"]
+    },
+    {
+      "prompt": "Aaron gestures upward with an open hand toward the sky above the camp, where a soft white cloud glows. The children look up together, faces full of wonder and gratitude, some with hands raised in thanks. Wide, low-angle shot, big open sky, warm late-afternoon light. No figure in the sky, only cloud and light.",
+      "characters": ["Aaron", "Little Girl", "Boy"]
+    },
+    {
+      "prompt": "Evening: the children stand quietly at a respectful distance outside the Mishkan courtyard, seen from behind, the Little Girl holding the Boy's hand. Through the open entrance Aaron lights the golden menorah and its warm light spills out across the sand toward them. Deep blue dusk, first stars, peaceful and full.",
+      "characters": ["Little Girl", "Boy", "Aaron"]
+    },
+    {
+      "prompt": "Night inside a family tent: the Little Girl is tucked under a woven blanket on her mat, a small clay oil lamp glowing beside her, a bowl of warm food set aside. Her mother's arms hug her goodnight. The Little Girl smiles with folded hands, saying thank you. Soft amber light, very cozy close framing.",
+      "characters": ["Little Girl"]
+    }
+  ]
+}

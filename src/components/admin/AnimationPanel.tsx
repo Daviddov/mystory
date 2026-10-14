@@ -261,7 +261,11 @@ export function AnimationPanel({ bookId, title, estimate: initial, licenseRefusa
           {summary.refused > 0 ? `, נדחו ${summary.refused}` : ""}
           {summary.failed > 0 ? `, נכשלו ${summary.failed}` : ""}
           {summary.providerMock ? "." : `. עלות: ${usd(summary.estimatedCostUsd)}.`}
-          {summary.aborted ? " ההנפשה הופסקה לפני הסוף." : ""}
+          {summary.quotaExceeded
+            ? " המכסה של ספק הווידאו נגמרה, וההנפשה נעצרה. אפשר להפעיל שוב מאוחר יותר; עמודים שכבר הונפשו יידלגו."
+            : summary.aborted
+              ? " ההנפשה הופסקה לפני הסוף."
+              : ""}
         </p>
       ) : null}
 

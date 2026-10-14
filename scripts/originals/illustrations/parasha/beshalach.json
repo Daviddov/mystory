@@ -1,0 +1,93 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Nachshon",
+      "description": "young man about 20, lean and athletic, short curly black hair, short dark beard, bright determined brown eyes, light-brown skin, knee-length undyed linen tunic with a blue woven belt, sleeves that he rolls up, barefoot or simple sandals"
+    },
+    {
+      "name": "Moses",
+      "description": "tall slender man about 80 but strong, long brown beard with streaks of grey, kind deep-set brown eyes, olive skin, undyed cream wool robe with a brown striped mantle, brown head cloth, plain wooden shepherd's staff"
+    },
+    {
+      "name": "Miriam",
+      "description": "woman in her late eighties, energetic and joyful, slim, warm wrinkled smile, big dark eyes, light-brown skin, long grey braid mostly covered by a red head scarf, long undyed linen dress with a red sash, holds a round hand drum with a wooden frame and small brass jingles"
+    }
+  ],
+  "cover": {
+    "prompt": "Nachshon wades into the sea up to his chin, head held high, eyes forward with brave calm. Behind and above him the water begins to rise into two tall shimmering turquoise walls, revealing a strip of wet sand. On the shore behind, the crowd of Israelites watches in amazement, Moses at the front raising his staff. Dawn light glowing through the water, hopeful wide shot.",
+    "characters": [
+      "Nachshon",
+      "Moses"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "Wide panoramic scene: a long column of Israelite families with bundles, sheep and cows reaches the shore of an enormous blue sea stretching to the horizon. Desert hills on both sides, sand and sea glittering under a pale afternoon sky. Moses walks at the front with his staff. Sense of the sea being huge.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "The Israelites on the beach turn to look back with worried faces, parents holding children close. Far away on the horizon behind them rises a big brown cloud of dust, the Egyptian army only suggested as tiny distant shapes. In front of them, the wide sea. The people are squeezed between the two. Wide shot, tense but not frightening, late-afternoon light.",
+      "characters": []
+    },
+    {
+      "prompt": "At the water's edge, a group of Israelite men stand frozen, each pointing at another and nudging each other forward, with hesitant, nervous faces and stiff shoulders. Nobody steps in. Small waves lap at their sandals. Women and children watch behind. Slightly humorous, medium group shot, golden light.",
+      "characters": []
+    },
+    {
+      "prompt": "Nachshon steps forward from the hesitant crowd, rolling up his sleeves with a determined, calm face, looking straight at the sea. The people behind him turn their heads in surprise. Low angle from the sand, the sea in front, wind lifting his tunic.",
+      "characters": [
+        "Nachshon"
+      ]
+    },
+    {
+      "prompt": "Nachshon wades into the cold sea, water up to his waist, arms slightly raised for balance, shivering a little but walking forward steadily. Small waves around him, footprints behind him on the wet sand, the crowd watching from the shore. Side view, cool morning blues.",
+      "characters": [
+        "Nachshon"
+      ]
+    },
+    {
+      "prompt": "Close-up of Nachshon in the sea with the water up to his chin, face tilted up, eyes brave and focused, lips pressed together. Ripples around his chin, sky reflected in the water. He keeps moving forward. Dramatic but safe, soft dawn light on his face.",
+      "characters": [
+        "Nachshon"
+      ]
+    },
+    {
+      "prompt": "Moses stands on a rock at the shore, raising his staff over the sea; a strong wind blows his robe and beard. The sea splits in two, rising into tall shimmering walls of turquoise water on the left and right, fish visible inside like an aquarium, a dry path opening between them. Night turning to dawn, glowing light inside the water. Epic wide shot.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Looking down the dry path between two towering walls of glittering water: families walk across on dry sandy ground, fathers carrying children on their shoulders, grandparents with sticks, mothers holding babies, sheep and cows trotting along, a child touching the water wall with wonder. Warm morning light filtering through the water. Long perspective shot.",
+      "characters": []
+    },
+    {
+      "prompt": "On the far shore, under a bright clear morning sky, Moses stands on a low rock with arms raised and face lifted, singing joyfully, and the whole crowd of Israelites sings with him, mouths open, hands raised. The calm sea sparkles behind them, no trace of anything else in the water. Wide celebratory shot.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Miriam dances on the beach, beating her round hand drum high over her head, her red scarf flying. Behind her a circle of women dance with drums and clapping hands, and children jump and twirl around them. Sand flying, sparkling sea in the background, sunny morning, full of movement and joy.",
+      "characters": [
+        "Miriam"
+      ]
+    },
+    {
+      "prompt": "Early morning in the desert camp. The ground around the tents is covered with small white flakes, like snowflakes or crumbs, glittering in the soft pink dawn. Children kneel and gather them into baskets, one child tasting a flake with a delighted face. Mothers with jars. Wide peaceful scene, dew sparkling.",
+      "characters": []
+    },
+    {
+      "prompt": "Friday in the desert camp, late afternoon sun. A smiling father and his little girl carry two full baskets of white manna flakes each toward their tent, more than on other days. At the tent, a mother sets out clay oil lamps for Shabbat, and neighbors are already sitting and resting. Calm golden light, sense of preparation and rest.",
+      "characters": []
+    },
+    {
+      "prompt": "Present-day Israel: a young child in a modest long-sleeved swim shirt and arm floats stands on the first step of a pool, toes touching the water, taking a deep brave breath with puffed cheeks. A parent waits in the water with open arms, smiling. Bright sunny day, palm trees, encouraging mood.",
+      "characters": [],
+      "style": "modern"
+    }
+  ]
+}

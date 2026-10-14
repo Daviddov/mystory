@@ -1,0 +1,64 @@
+{
+  "style": "modern",
+  "characters": [
+    { "name": "Tamar", "description": "Curious girl of about 7, light-tan skin, hazel eyes, a high bouncy chestnut-brown ponytail with a yellow hair tie, a small gap in her front teeth. Wears a knee-length mustard-yellow dress with small white dots over navy leggings, and white sneakers; on Shabbat a white dress with a yellow ribbon. Signature item: a big round magnifying glass with a red handle." },
+    { "name": "Abba", "description": "Tamar's father, about 40, tall and lean, light-tan skin, warm brown eyes behind round black glasses, short brown beard, a blue knitted kippah. Wears a light-blue button shirt with rolled sleeves and grey trousers; on Shabbat a white shirt and dark trousers." },
+    { "name": "Ima", "description": "Tamar's mother, about 38, medium build, light-tan skin, green eyes, cheerful smile, hair covered by a soft teal head scarf tied at the back. Wears a long denim skirt and a cream long-sleeved top." },
+    { "name": "Cow", "description": "Big friendly brown cow with a white patch on her forehead, soft dark eyes, short curved horns, split hooves, always chewing slowly." },
+    { "name": "Camel", "description": "Tall sandy-beige camel with one hump, long eyelashes, sleepy half-closed eyes, a lazy chewing mouth and big soft padded feet; wears a simple red woven halter." }
+  ],
+  "cover": {
+    "prompt": "Tamar leans forward toward the viewer, holding her big red-handled magnifying glass in front of one eye, which looks huge and curious through the lens. Around her, playfully arranged, a silver fish, a brown cow and a tall camel peek in from the sides. Bright, sunny, playful mood, close-up on Tamar's face, soft light background.",
+    "characters": ["Tamar", "Cow", "Camel"]
+  },
+  "pages": [
+    {
+      "prompt": "Shabbat morning in a sunlit neighborhood synagogue with Jerusalem-stone walls and wooden benches. Tamar in her white Shabbat dress sits beside Abba on a bench, listening to the Torah reading at the wooden bima in the distance (scroll shown without any writing). She raises one eyebrow in a puzzled, curious expression. Soft sunlight through tall windows, medium shot.",
+      "characters": ["Tamar", "Abba"]
+    },
+    {
+      "prompt": "Tamar and Abba walk home along a quiet tree-lined street of stone apartment buildings on Shabbat noon. Tamar looks up asking a question, hands spread; Abba bends slightly toward her and gestures with his fingers as if describing little round coins on a fish. Soft dappled light under the trees, side view, both in Shabbat clothes.",
+      "characters": ["Tamar", "Abba"]
+    },
+    {
+      "prompt": "In a bright family kitchen, Tamar pulls a big red-handled magnifying glass out of an open drawer and holds it up high triumphantly, like an explorer. Ima stands at the counter with a mug, smiling at her with amusement. Morning sun through the window, a mezuzah on the doorframe, cheerful medium shot.",
+      "characters": ["Tamar", "Ima"]
+    },
+    {
+      "prompt": "At a colorful open-air market fish stall with ice and shiny fish, Tamar leans close with her magnifying glass over a large silver fish. Through the lens its shiny scales shine like little coins and the fins are clearly visible. A friendly fish seller in a white apron with a grey moustache smiles from behind the counter. Abba stands behind Tamar. Lively market, bright light.",
+      "characters": ["Tamar", "Abba"]
+    },
+    {
+      "prompt": "Close-up on the ice of the fish stall: a pink curly shrimp lies next to the silver fish. Tamar looks at it through her magnifying glass with a polite, slightly apologetic little smile and waves at it with her other hand, as if saying a kind goodbye. Funny, gentle mood, bright market light.",
+      "characters": ["Tamar"]
+    },
+    {
+      "prompt": "Friday morning at a green farm in the Israeli countryside, wooden fences, hay bales and rolling hills. Abba crouches beside Tamar and points at a brown cow's split hoof, showing two parts with his fingers. Tamar listens, holding her magnifying glass. Bright sun, blue sky, wide medium shot.",
+      "characters": ["Tamar", "Abba", "Cow"]
+    },
+    {
+      "prompt": "Tamar bursts out laughing with her hand over her mouth, eyes squeezed half shut, while Abba explains with a big grin, miming chewing with his hand near his mouth. Next to the fence the brown cow chews slowly and looks at them calmly. Sunny farmyard, warm and funny mood, medium close shot.",
+      "characters": ["Tamar", "Abba", "Cow"]
+    },
+    {
+      "prompt": "Tamar crouches by the brown cow's legs and examines her split hoof through the magnifying glass with great concentration, tongue poking out a little. In a small inset-like moment within the same scene, she then lifts the lens toward the cow's chewing mouth. The cow stands patiently. Low camera angle, warm sunlight, straw on the ground.",
+      "characters": ["Tamar", "Cow"]
+    },
+    {
+      "prompt": "The brown cow lowers her big head toward Tamar with her mouth open in a long moo. Tamar pats the cow's nose reassuringly with one hand, holding the magnifying glass in the other, smiling kindly like a doctor calming a patient. Sweet, funny moment, close shot, soft farm light.",
+      "characters": ["Tamar", "Cow"]
+    },
+    {
+      "prompt": "A very tall camel strolls up beside the farm fence, chewing lazily with sleepy eyes. Tamar tilts her head far back to look up at it, then examines its big soft padded foot through her magnifying glass. She smiles admiringly at the camel. Low camera angle emphasizing the camel's height, golden afternoon light.",
+      "characters": ["Tamar", "Camel"]
+    },
+    {
+      "prompt": "Evening at home, Tamar kneels at a low table drawing with colored markers on a big white poster board: a fish with fins and scales and a cow with split hooves and a chewing mouth. The board has only pictures, no writing at all. Her magnifying glass lies beside the markers. Warm lamp light, cozy living room with a bookshelf of holy books.",
+      "characters": ["Tamar"]
+    },
+    {
+      "prompt": "Bedtime in Tamar's room: Tamar sits up in bed in pajamas with the magnifying glass in her hands, talking excitedly to Abba, who sits on the edge of the bed smiling. Her finished drawing board with the fish and cow leans against the wall. A small night light glows, starry sky in the window. Warm, sleepy, happy mood.",
+      "characters": ["Tamar", "Abba"]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "style": "biblical",
+  "characters": [
+    { "name": "Aaron", "description": "The High Priest, about 80 but strong and upright, olive skin, gentle deep-brown eyes with smile lines, long flowing white beard. Wears the special High Priest garments: a long sky-blue robe with small golden bells and woven pomegranates at the hem, a colorful woven apron in gold, blue, purple and red, a square breastplate with twelve different colored gemstones (no engravings), and a white turban with a golden band (no writing). No halo." },
+    { "name": "Moses", "description": "Aaron's younger brother, about 80, tall and thin, olive skin, deep thoughtful dark eyes, long grey-white beard and long grey hair, a soft gentle face. Wears a plain dark-blue wool robe with a brown rope belt and a cream head cloth, sandals. Signature item: a tall wooden shepherd's staff." },
+    { "name": "Nadav", "description": "Aaron's eldest son, young man of about 30, tall, olive skin, intense shining dark eyes, short neat black beard. Wears a long white linen priestly tunic, a white rounded cap-turban and a sash woven in blue, purple and red. Signature item: a small bronze fire-pan with a short handle." },
+    { "name": "Avihu", "description": "Aaron's second son, young man of about 28, a little shorter and broader than Nadav, olive skin, warm eager brown eyes, short curly dark-brown beard. Wears a long white linen priestly tunic, a white rounded cap-turban and a sash woven in blue, purple and red. Signature item: a small bronze fire-pan with a short handle." },
+    { "name": "Elazar", "description": "Aaron's third son, young man of about 25, slim, olive skin, calm serious eyes, short thin black beard. Wears a long white linen priestly tunic, a white rounded cap-turban and a sash woven in blue, purple and red." },
+    { "name": "Itamar", "description": "Aaron's youngest son, young man of about 22, slim, light olive skin, bright brown eyes, freckles on his nose, a short light-brown beard just starting. Wears a long white linen priestly tunic, a white rounded cap-turban and a sash woven in blue, purple and red." }
+  ],
+  "cover": {
+    "prompt": "The Mishkan stands shining in the center of the desert camp, its colorful curtains in blue, purple and red fluttering in the breeze, the white linen courtyard fence glowing. A soft column of warm golden light rises from the altar into a clear sky. Crowds of families gather around in festive clothes. Wide view, warm morning light, a sense of awe and celebration.",
+    "characters": []
+  },
+  "pages": [
+    {
+      "prompt": "Wide festive view of the Mishkan courtyard on the eighth day: crowds of men, women and children gather around the white linen fence in their best clothes, children on fathers' shoulders. In front of the tent entrance stands Aaron in his colorful High Priest garments, with his four sons in white beside him. Colorful curtains wave in the wind. Bright morning sun.",
+      "characters": ["Aaron", "Nadav", "Avihu", "Elazar", "Itamar"]
+    },
+    {
+      "prompt": "Aaron stands on the ramp beside the altar with both hands raised outward toward the people in blessing, palms open, face calm and full of love. Moses stands beside him. Below, the crowd waits silently and attentively. On the altar lies a neat pile of wood and the offering, not yet burning. Soft golden light, hushed expectant mood, medium-wide shot.",
+      "characters": ["Aaron", "Moses"]
+    },
+    {
+      "prompt": "A great fire of warm golden light descends from above the Mishkan tent and rests on the altar, which blazes up in bright, gentle golden flames. The whole crowd bows down to the ground in joy; children clap their hands, adults have tears of happiness. Aaron and Moses stand near the altar, faces lit with wonder. Radiant glowing sky, overwhelming joyful mood, wide shot.",
+      "characters": ["Aaron", "Moses"]
+    },
+    {
+      "prompt": "Nadav and Avihu stand side by side near the tent entrance, excited and eager, each holding a small bronze fire-pan with its own little flame and a curl of fragrant incense smoke rising. Their eyes shine with longing as they look toward the tent. The courtyard is bright and festive behind them. Medium shot, warm light, a feeling of great enthusiasm.",
+      "characters": ["Nadav", "Avihu"]
+    },
+    {
+      "prompt": "Nadav and Avihu walk together toward the entrance of the tent with their small glowing fire-pans, each looking straight ahead, not turning to each other. In the background, out of their sight, Moses and Aaron stand talking with the people, unaware. The composition separates the two groups. Soft, slightly more serious light, thoughtful mood.",
+      "characters": ["Nadav", "Avihu", "Moses", "Aaron"]
+    },
+    {
+      "prompt": "Near the tent entrance, an empty place: two small bronze fire-pans lie on the ground side by side, their flames gone, a thin wisp of smoke fading into soft white light. No people in that spot. In the distance, a few people stand frozen and silent, hands over their hearts. The colors are muted and quiet, a gentle pale sky. Still, hushed, sad mood.",
+      "characters": []
+    },
+    {
+      "prompt": "Moses stands close beside Aaron and rests his hand gently on his brother's shoulder, leaning in to speak softly. Aaron's head is slightly bowed. Their faces are full of sorrow and love. Behind them, the Mishkan's curtains hang still. Soft, muted afternoon light, intimate medium close shot, quiet mood.",
+      "characters": ["Moses", "Aaron"]
+    },
+    {
+      "prompt": "Aaron stands alone and silent beside the Mishkan, eyes closed, hands folded at his chest, his face full of deep quiet sadness but steady. A soft warm beam of light falls gently on him from above, like a quiet comfort, with no figure in it. Muted colors around him, calm and still. Close medium shot.",
+      "characters": ["Aaron"]
+    },
+    {
+      "prompt": "Elazar and Itamar continue their work at the altar with bowed heads, beside their father Aaron, while all around the courtyard fence the whole people of Israel stand together weeping quietly, families holding each other, mothers hugging children, men with hands on each other's shoulders. Moses watches tenderly. Soft grey-golden light, communal mourning, wide shot.",
+      "characters": ["Elazar", "Itamar", "Aaron", "Moses"]
+    },
+    {
+      "prompt": "Evening in the camp: Moses sits with a small group of children by the light of an oil lamp outside a tent, listening to them and gently raising a finger as if saying first we ask and listen. The children sit quietly and thoughtfully. Deep-blue twilight sky with first stars, warm lamp glow, calm reflective mood.",
+      "characters": ["Moses"]
+    },
+    {
+      "prompt": "Inside a tent in the camp, a small excited boy of about 6 in a tan tunic holds an unlit clay oil lamp and pauses, looking up at his mother with a questioning face before lighting it. His mother, in a green head scarf, kneels beside him smiling and nodding. Warm interior light, gentle family moment, medium close shot.",
+      "characters": []
+    },
+    {
+      "prompt": "Outside a tent at sunset, a little girl of about 6 in a rose-colored dress sits close beside a sad friend her age, one arm around the friend's shoulders, both quiet. The friend leans her head on the girl's shoulder. A soft golden sky, a sense of comfort slowly returning. Tender, warm, quiet close shot.",
+      "characters": []
+    }
+  ]
+}

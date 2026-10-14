@@ -1,0 +1,75 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Miriam",
+      "description": "Miriam, very old woman about 120, small and slightly stooped, warm wrinkled olive skin, long hair white as wool under a light-blue head scarf, twinkling dark eyes and a big warm smile, long terracotta-red wool dress with an embroidered yellow trim; always carries a round wooden tambourine with small brass jingles and a red ribbon."
+    },
+    {
+      "name": "Yael",
+      "description": "Girl about 7, slim, warm olive skin, shoulder-length curly black hair with a yellow ribbon, large dark expressive eyes, ankle-length leaf-green dress with a cream sash, barefoot."
+    },
+    {
+      "name": "Grandma",
+      "description": "Yael's grandmother, woman about 65, round and soft, olive skin, grey hair under a cream head scarf, gentle brown eyes with laugh lines, long plum-purple dress with a brown shawl."
+    },
+    {
+      "name": "Moses",
+      "description": "Moses, older man about 80, tall and lean, weathered olive skin, long grey-white beard, deep calm eyes, simple undyed cream wool robe with a brown cloak, plain head covering; holds a tall wooden shepherd's staff."
+    },
+    {
+      "name": "Aaron",
+      "description": "Aaron, older man about 80, gentle face, long full white beard, soft brown eyes; wears a long white linen robe with a deep-blue sash and a white wound turban."
+    }
+  ],
+  "cover": {
+    "prompt": "Miriam sits on a smooth rock beside a round stone well bubbling with clear sparkling water in the middle of the desert, green grass and little flowers growing around it. She smiles and taps her tambourine, and Yael sits at her feet listening, holding a clay jug. Children splash water in the background, tents behind. Warm golden morning light, medium-wide shot.",
+    "characters": ["Miriam", "Yael"]
+  },
+  "pages": [
+    {
+      "prompt": "A wide desert landscape: the long line of the people of Israel walks between dunes, and behind them rolls a large round rock-like well, sparkling with water at its top, following them like a faithful friend. A few children look back at it and wave. Bright clear sky, playful sense of movement, wide shot.",
+      "characters": []
+    },
+    {
+      "prompt": "Miriam sits by the well, and above her, in soft dreamy cloud-like vignettes, appear memories: a young girl hiding among tall reeds watching over a baby in a little basket floating on a river; and a young woman joyfully dancing with a tambourine among women by the sea. Warm nostalgic light, Miriam smiling at her memories.",
+      "characters": ["Miriam"]
+    },
+    {
+      "prompt": "Morning at the well: children fill clay jugs and splash each other, laughing, water drops sparkling in the sun. Green grass and small flowers grow around the stones. Miriam sits on a rock, telling a story and softly drumming on her tambourine; Yael leans against her knee. Bright cheerful light, lively medium-wide shot.",
+      "characters": ["Miriam", "Yael"]
+    },
+    {
+      "prompt": "A quiet, sad morning at Kadesh: outside a tent, Miriam's empty woven mat lies beside the well, with her round tambourine and red ribbon resting on it. Moses and Aaron sit on the ground nearby with lowered heads, Moses' hand covering his eyes. People sit quietly around, and Yael hugs Miriam's tambourine to her chest. Soft grey dawn light, gentle and still.",
+      "characters": ["Moses", "Aaron", "Yael"]
+    },
+    {
+      "prompt": "Children run up with empty clay jugs and stop in shock: where the well stood, there are only dry stones and cracked sand, the grass wilted around it. Yael stands in front, her jug hanging from her hand, mouth open in surprise. Hot pale morning light, wide shot of the empty dry spot.",
+      "characters": ["Yael"]
+    },
+    {
+      "prompt": "A crowd of thirsty people under a hot white sun gathers before Moses and Aaron, some crying, some raising empty jugs and shouting, faces tired and upset. Children cling to their parents. Moses and Aaron stand calm but sorrowful. Heat shimmer over the sand, wide shot, tension shown through gestures only.",
+      "characters": ["Moses", "Aaron"]
+    },
+    {
+      "prompt": "The people gather before a huge rock. Moses raises his staff and strikes the rock, and a great gush of clear water bursts out, sparkling in the sunlight, flowing into a stream. People cheer and run with jugs; sheep and camels hurry to drink. Aaron stands beside Moses. Bright joyful light, dynamic wide shot.",
+      "characters": ["Moses", "Aaron"]
+    },
+    {
+      "prompt": "Away from the joyful crowd drinking by the rock, Yael sits alone on a small stone, her jug empty beside her, holding Miriam's tambourine and looking down sadly. Grandma sits down next to her and wraps her in a warm hug, eyes also moist. Soft afternoon light, close-medium shot, the cheerful crowd blurred behind.",
+      "characters": ["Yael", "Grandma"]
+    },
+    {
+      "prompt": "Grandma and Yael sit together by the stream, Grandma gesturing gently while she speaks. Around them, small reminders of Miriam: a mother singing to a baby, a big brother holding his little brother's hand, water flowing in the desert. Yael looks up at Grandma, listening, a first small smile. Warm golden evening light.",
+      "characters": ["Grandma", "Yael"]
+    },
+    {
+      "prompt": "At a new well in the desert, the people stand in a circle singing with joyful faces, hands raised. Yael stands in front, singing loudest, drumming on an empty clay jug like a tambourine, smiling broadly; Grandma claps beside her. Water bubbles up from the well. Bright festive light, medium-wide shot.",
+      "characters": ["Yael", "Grandma"]
+    },
+    {
+      "prompt": "Evening: a small stream of clear water flows from the well through the sand, and green plants sprout along its banks. Yael sits by it with Miriam's tambourine on her lap, gently tapping it, a peaceful smile on her face, Grandma's hand on her shoulder. The sunset sky is soft pink and gold. Calm, comforting, wide shot.",
+      "characters": ["Yael", "Grandma"]
+    }
+  ]
+}

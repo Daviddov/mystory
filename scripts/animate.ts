@@ -156,6 +156,11 @@ async function main(): Promise<void> {
     failed += summary.failed;
     totalCost += summary.estimatedCostUsd;
     totalPages += summary.pagesToAnimate;
+    if (summary.quotaExceeded) {
+      console.error("
+  stopped: the video provider's quota is used up. Run again later; finished pages are skipped.");
+      break;
+    }
   }
   if (targets.length > 1) {
     console.log(

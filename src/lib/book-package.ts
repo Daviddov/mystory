@@ -48,6 +48,8 @@ export const PortableBookSchema = BookWithPagesSchema.omit({
   viewCount: true,
   reviewNote: true,
   costUsd: true,
+  // The hero image is a studio working file; it does not travel with the book.
+  hero: true,
 }).partial({ slug: true, createdAt: true, updatedAt: true, publishedAt: true });
 export type PortableBook = z.infer<typeof PortableBookSchema>;
 

@@ -94,7 +94,11 @@ const CONTENT_TYPES: Record<string, string> = {
   opus: "audio/ogg",
   m4a: "audio/mp4",
   aac: "audio/aac",
+  // WebM stays "audio/webm": family recordings are WebM, and the Supabase
+  // bucket is chosen from this type. Browsers play a WebM clip in <video> either way.
   webm: "audio/webm",
+  mp4: "video/mp4",
+  m4v: "video/mp4",
   json: "application/json; charset=utf-8",
   txt: "text/plain; charset=utf-8",
   pdf: "application/pdf",
@@ -124,6 +128,7 @@ const EXTENSIONS: Record<string, string> = {
   "audio/aac": "aac",
   "audio/webm": "webm",
   "video/webm": "webm",
+  "video/mp4": "mp4",
   "application/pdf": "pdf",
   "application/zip": "zip",
 };

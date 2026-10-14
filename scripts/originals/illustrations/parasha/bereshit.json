@@ -1,0 +1,67 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Or",
+      "description": "a tiny living spark of light, a round glowing golden-white orb about the size of an apple, soft short sparkle rays around her, big round dark friendly eyes, rosy glowing cheeks, a wide cheerful smile, no arms or legs, floats in the air and leaves a faint trail of golden sparkles"
+    },
+    {
+      "name": "Adam",
+      "description": "the first man, young adult about 25-looking, tall and gentle, warm olive skin, short dark brown curly hair, short dark beard, kind wondering brown eyes, wears a simple knee-length cream linen tunic tied with a green vine belt, barefoot"
+    }
+  ],
+  "cover": {
+    "prompt": "Or floats happily in the center of a brand-new, blooming world, smiling wide. Below her a green meadow full of pink and yellow flowers runs down to a sparkling blue sea with a jumping fish; birds fly in a clear morning sky, a rabbit and a small elephant peek from the grass, and a golden sun rises over soft hills. Wide shot, soft morning light, everything fresh and glowing, Or as the clear bright focus.",
+    "characters": ["Or"]
+  },
+  "pages": [
+    {
+      "prompt": "A deep, quiet, velvety darkness fills the whole picture, with no colors at all. In the very center a tiny spark has just lit up: Or, glowing golden-white, opening her eyes for the first time with a big surprised smile. Soft rays of warm light spread a little way into the dark around her. Close-up, calm and magical, the only light comes from Or.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "Or twirls joyfully in empty space, leaving a spiral trail of golden sparkles. The picture is split softly in two: on the left side a warm golden glow of day, on the right side a calm deep-blue night. Or is in the middle where they meet, eyes shining, whispering in wonder. Medium shot, gentle and dreamy.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "A huge blue sky is unfolding above a calm misty sea, stretching out like a giant soft blanket with gentle wavy edges. Little Or flies high and free across it with her sparkle trail, arms of light spread in delight. Wide panoramic shot from below, lots of open blue space, bright morning light, Or small but bright in the sky.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "The sea has rolled aside and new land has appeared: green grass sprouting, young trees unfolding leaves, flowers opening everywhere. Close-up at flower height: Or floats right next to a big pink flower, eyes closed, sniffing it with a blissful smile, golden pollen sparkles drifting around. Soft fresh morning light, dewdrops on the leaves.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "Evening over the new hills: on one side a warm orange sun sinks low, on the other side a round silver moon rises, and hundreds of tiny twinkling stars fill the deep-blue sky. Or floats among the stars, laughing, as if playing with new glowing friends. Wide shot of the sky with small dark hills below, magical twilight colors.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "A bright scene at the seashore: a small orange fish leaps out of the turquoise water with a happy splash right in front of Or, who giggles in surprise. Above them a flock of colorful little birds flies past, beaks open as they chirp. Medium shot from just above the waves, sparkling water droplets, cheerful morning light.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "A green meadow full of new animals: an elephant lifting its long trunk, a soft white rabbit with big ears, a purring striped cat curled in the grass. In the front a small playful monkey hanging from a branch tickles Or with one finger, and Or tips over in the air laughing hard, eyes squeezed shut. Medium shot at a child's eye level, warm sunny afternoon.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "Late afternoon in a lush garden of fruit trees and flowers by a stream. Adam stands in the middle, newly created, looking around at the world in quiet wonder, one hand gently touching a leafy branch. A soft warm beam of golden light falls on him from above, with no figure in it. Or floats nearby at his shoulder, smiling up at him. Medium-wide shot, peaceful golden light.",
+      "characters": ["Adam", "Or"]
+    },
+    {
+      "prompt": "A grand, happy panorama of the whole new world at golden hour: blue sky and sea, flowering hills and trees, fish in the water, birds overhead, animals resting in the meadow, and Adam small in the distance tending a tree. In the foreground Or floats looking out over it all, hands of light clasped, whispering with a soft content smile. Very wide shot, warm glowing light over everything.",
+      "characters": ["Or", "Adam"]
+    },
+    {
+      "prompt": "The seventh day: total calm. A still lake reflects a pale golden sky; birds sit quietly on branches, the sea's waves are tiny and slow, animals doze in the shade, flowers droop softly. Or floats slowly above the water with eyes half closed, relaxed and peaceful. Wide shot, soft hazy light, gentle pastel colors, a feeling of rest.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "Close-up of Or resting on a soft moss-covered stone beside a still pond, smiling warmly straight at the viewer, glowing gently and calmly instead of sparkling. Behind her, softly blurred, a sleeping rabbit and a cat curled together in the grass, and a few birds perched quietly. Late golden afternoon light, cozy and peaceful.",
+      "characters": ["Or"]
+    },
+    {
+      "prompt": "Sunrise over green hills: the sun peeks above the horizon and its first golden rays spread across a field of flowers. Or glows in the sky right in the sunrise, smiling down warmly. In the foreground, a small watering can of clay rests beside a young potted plant with fresh water drops on its leaves. Wide shot from a child's eye level, fresh hopeful morning light.",
+      "characters": ["Or"]
+    }
+  ]
+}

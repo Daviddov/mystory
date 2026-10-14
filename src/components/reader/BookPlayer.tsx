@@ -141,7 +141,68 @@ const READER_CSS = `
   .mystory-reader-text { max-height: 100%; width: 50%; }
 }
 @media (prefers-reduced-motion: reduce) { .mystory-reader-spread { animation: none; } }
+@keyframes mystory-kb-0 { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.06) translate(-1%, -0.8%); } }
+@keyframes mystory-kb-1 { from { transform: scale(1.06) translate(1%, 0.6%); } to { transform: scale(1) translate(0, 0); } }
+@keyframes mystory-kb-2 { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.06) translate(1%, 0.8%); } }
+@keyframes mystory-kb-3 { from { transform: scale(1.06) translate(-1%, -0.6%); } to { transform: scale(1) translate(0, 0); } }
+.mystory-kenburns { animation: var(--kb-name) var(--kb-duration, 16s) ease-in-out infinite alternate both; will-change: transform; }
+.mystory-motion-paused .mystory-kenburns { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .mystory-kenburns { animation: none; } }
 `;
+
+/**
+ * "Living pictures": a still illustration drifts and zooms by at most 6% inside
+ * its frame (the frame clips it), never enough to lose what matters. Each page
+ * gets the next of four directions so turning pages does not repeat the move.
+ * A long page moves slower: about as long as reading it aloud, 12 to 20 seconds.
+ */
+function kenBurnsStyle(pageIndex: number, words: number): CSSProperties {
+  const seconds = Math.min(20, Math.max(12, Math.round(words * 0.7)));
+  return { "--kb-name": `mystory-kb-${pageIndex % 4}`, "--kb-duration": `${seconds}s` } as CSSProperties;
+}
+
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function reducedMotionList(): MediaQueryList | null {
+  return typeof window !== "undefined" && typeof window.matchMedia === "function"
+    ? window.matchMedia(REDUCED_MOTION_QUERY)
+    : null;
+}
+
+function subscribeReducedMotion(onChange: () => void): () => void {
+  const list = reducedMotionList();
+  if (!list) return () => {};
+  if (typeof list.addEventListener === "function") {
+    list.addEventListener("change", onChange);
+    return () => list.removeEventListener("change", onChange);
+  }
+  // Safari before 14.
+  list.addListener?.(onChange);
+  return () => list.removeListener?.(onChange);
+}
+
+/** True while the device asks for less motion. */
+function useReducedMotion(): boolean {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    () => reducedMotionList()?.matches ?? false,
+    () => false,
+  );
+}
+
+function subscribeVisibility(onChange: () => void): () => void {
+  document.addEventListener("visibilitychange", onChange);
+  return () => document.removeEventListener("visibilitychange", onChange);
+}
+
+/** True while the tab is in the background or the screen is off. */
+function usePageHidden(): boolean {
+  return useSyncExternalStore(
+    subscribeVisibility,
+    () => document.visibilityState === "hidden",
+    () => false,
+  );
+}
 
 /** Short label of the language switch: the language it switches to. */
 const LANGUAGE_CODES: Record<BookLanguage, string> = { he: "עב", en: "EN" };
@@ -305,6 +366,10 @@ function Player({
   const rate = prefs.rate ?? 1;
   const autoAdvance = prefs.autoAdvance ?? true;
   const textLayout = prefs.textLayout ?? "side";
+  // Living pictures are on by default; the device's reduced-motion setting always wins.
+  const liveImages = prefs.liveImages ?? true;
+  const reducedMotion = useReducedMotion();
+  const animatePictures = liveImages && !reducedMotion;
   const nikudAvailable = useMemo(() => bookHasNikud(book), [book]);
   // Vocalized text is the default wherever a book has it.
   const nikudOn = nikudAvailable && (prefs.nikud ?? true);
@@ -579,7 +644,37 @@ function Player({
   // ---- Derived view data --------------------------------------------------
   const [brokenImage, setBrokenImage] = useState<string | null>(null);
   const imageSrc = current?.image ? mediaUrl(current.image, book.updatedAt, shareToken) : "";
-  const showImage = imageSrc !== "" && brokenImage !== imageSrc;
+  const imageReady = imageSrc !== "" && brokenImage !== imageSrc;
+  // An animated page plays its clip (the illustration is its poster). A clip that
+  // fails, reduced motion and "living pictures" off all fall back to the still picture.
+  const [brokenVideo, setBrokenVideo] = useState<string | null>(null);
+  const videoSrc = animatePictures && current?.video ? mediaUrl(current.video, book.updatedAt, shareToken) : "";
+  const showVideo = videoSrc !== "" && brokenVideo !== videoSrc;
+  const showImage = showVideo || imageReady;
+  const pictureSrc = showVideo ? videoSrc : imageSrc;
+  const pictureAlt = current?.imageAlt?.trim() || `איור לעמוד ${index + 1}`;
+  // The clip is decorative: it rests while the tab is hidden, the sleep screen is up or the start screen covers it.
+  const pageHidden = usePageHidden();
+  const motionActive = !pageHidden && !asleep && !(choosing && !atEnd);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    // React sets `muted` as a property only; browsers allow autoplay only for muted media.
+    video.muted = true;
+    try {
+      if (motionActive) {
+        const started = video.play() as Promise<void> | undefined;
+        started?.catch(() => {
+          // Autoplay refused (low-power mode): the poster stays, which is fine.
+        });
+      } else {
+        video.pause();
+      }
+    } catch {
+      // No media playback here (tests, very old browsers): the poster stays.
+    }
+  }, [motionActive, videoSrc]);
   // "Pictures only" still shows the words of a page that has no picture.
   const showText = !showImage || textLayout !== "hidden";
   // "Beside" puts the text next to a square or tall picture; a wide picture keeps it underneath.
@@ -587,7 +682,7 @@ function Player({
     src: string;
     ratio: number;
   } | null>(null);
-  const imageRatio = imageShape?.src === imageSrc ? imageShape.ratio : null;
+  const imageRatio = imageShape?.src === pictureSrc ? imageShape.ratio : null;
   const sideBySide = showImage && textLayout === "side" && imageRatio !== null && imageRatio <= SIDE_BY_SIDE_MAX_RATIO;
   const text = current ? (inOriginal ? originalText : pageDisplayText(current, nikudOn)) : "";
   const textLanguage = inOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
@@ -817,27 +912,58 @@ function Player({
             {showImage ? (
               <div
                 className={cn(
-                  "flex min-h-0 w-full min-w-0 flex-1 items-center justify-center",
+                  // The frame clips the slow zoom of a living picture.
+                  "flex min-h-0 w-full min-w-0 flex-1 items-center justify-center overflow-hidden",
                   sideBySide && "sm:h-full",
+                  !motionActive && "mystory-motion-paused",
                 )}
               >
-                <img
-                  src={imageSrc}
-                  alt={current?.imageAlt?.trim() || `איור לעמוד ${index + 1}`}
-                  draggable={false}
-                  decoding="async"
-                  onError={() => setBrokenImage(imageSrc)}
-                  onLoad={(event) => {
-                    const { naturalWidth, naturalHeight } = event.currentTarget;
-                    if (naturalWidth > 0 && naturalHeight > 0) {
-                      setImageShape({
-                        src: imageSrc,
-                        ratio: naturalWidth / naturalHeight,
-                      });
-                    }
-                  }}
-                  className="size-full select-none object-contain bedtime:opacity-90"
-                />
+                {showVideo ? (
+                  <video
+                    key={videoSrc}
+                    ref={videoRef}
+                    src={videoSrc}
+                    poster={imageReady ? imageSrc : undefined}
+                    role="img"
+                    aria-label={pictureAlt}
+                    muted
+                    loop
+                    playsInline
+                    autoPlay={motionActive}
+                    preload="auto"
+                    disablePictureInPicture
+                    onError={() => setBrokenVideo(videoSrc)}
+                    onLoadedMetadata={(event) => {
+                      const { videoWidth, videoHeight } = event.currentTarget;
+                      if (videoWidth > 0 && videoHeight > 0) {
+                        setImageShape({ src: videoSrc, ratio: videoWidth / videoHeight });
+                      }
+                    }}
+                    className="pointer-events-none size-full select-none object-contain bedtime:opacity-90"
+                  />
+                ) : (
+                  <img
+                    src={imageSrc}
+                    alt={pictureAlt}
+                    draggable={false}
+                    decoding="async"
+                    onError={() => setBrokenImage(imageSrc)}
+                    onLoad={(event) => {
+                      const { naturalWidth, naturalHeight } = event.currentTarget;
+                      if (naturalWidth > 0 && naturalHeight > 0) {
+                        setImageShape({
+                          src: imageSrc,
+                          ratio: naturalWidth / naturalHeight,
+                        });
+                      }
+                    }}
+                    className={cn(
+                      "size-full select-none object-contain bedtime:opacity-90",
+                      animatePictures && "mystory-kenburns",
+                    )}
+                    style={animatePictures ? kenBurnsStyle(index, currentWordCount) : undefined}
+                  />
+                )}
               </div>
             ) : null}
             {showText && text.trim() !== "" ? (
@@ -911,6 +1037,11 @@ function Player({
           </div>
         ) : null}
       </main>
+
+      {/* A demo clip says so, like demo narration. */}
+      {!atEnd && showVideo && current?.videoSource === "mock" ? (
+        <MockNotice kind="video" className="mx-3 mb-1 shrink-0 px-3 py-1.5 text-sm" />
+      ) : null}
 
       {/* Narration messages */}
       {!atEnd && isDemoAudio ? (
@@ -996,6 +1127,18 @@ function Player({
       {upcoming?.image ? (
         <img src={mediaUrl(upcoming.image, book.updatedAt, shareToken)} alt="" aria-hidden="true" hidden decoding="async" />
       ) : null}
+      {animatePictures && upcoming?.video ? (
+        // Only the first bytes (size and first frame), so a page turn starts the clip quickly without fetching it all.
+        <video
+          key={upcoming.video}
+          src={mediaUrl(upcoming.video, book.updatedAt, shareToken)}
+          preload="metadata"
+          muted
+          playsInline
+          aria-hidden="true"
+          hidden
+        />
+      ) : null}
       {upcomingAudio ? <audio key={upcomingAudio} src={upcomingAudio} preload="auto" muted hidden /> : null}
 
       {asleep ? (
@@ -1044,6 +1187,9 @@ function Player({
         onFontStep={(step) => updatePrefs({ fontStep: clamp(step, 0, FONT_SIZES_REM.length - 1) })}
         textLayout={textLayout}
         onTextLayout={(value) => updatePrefs({ textLayout: value })}
+        liveImages={liveImages}
+        onLiveImages={(value) => updatePrefs({ liveImages: value })}
+        reducedMotion={reducedMotion}
         hasAudio={hasAnyAudio}
         rate={rate}
         onRate={(value) => updatePrefs({ rate: value })}

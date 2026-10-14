@@ -379,3 +379,132 @@ describe("BookPlayer: starting, navigating and voices", () => {
     expect(screen.getByRole("link", { name: /הקלטה בקול שלי/ })).toHaveAttribute("href", "/login?next=x");
   });
 });
+
+describe("BookPlayer: living pictures", () => {
+  const animatedPages: PlayerBook["pages"] = [
+    {
+      index: 0,
+      text: "עמוד ראשון כאן",
+      image: "books/bk_test/page-1.png",
+      imageAlt: "ארנב קופץ בשדה",
+      video: "books/bk_test/page-1.mp4",
+      videoSource: "ai",
+    },
+    { index: 1, text: "עמוד שני כאן", image: "books/bk_test/page-2.png", video: "books/bk_test/page-2.mp4", videoSource: "mock" },
+    { index: 2, text: "עמוד שלישי כאן", image: "books/bk_test/page-3.png" },
+  ];
+
+  function stubReducedMotion(reduce: boolean) {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({
+        matches: reduce && query.includes("prefers-reduced-motion"),
+        media: query,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      })),
+    );
+  }
+
+  function stageVideo(container: HTMLElement): HTMLVideoElement | null {
+    return container.querySelector("main video");
+  }
+
+  it("plays the clip of an animated page muted and looped, with the picture as poster", () => {
+    const { container } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+    const video = stageVideo(container)!;
+    expect(video).not.toBeNull();
+    expect(video.getAttribute("src")).toContain("/media/books/bk_test/page-1.mp4");
+    expect(video.getAttribute("poster")).toContain("/media/books/bk_test/page-1.png");
+    expect(video.muted).toBe(true);
+    expect(video.loop).toBe(true);
+    expect(video).toHaveAttribute("playsinline");
+    // Same meaning as the picture it replaces.
+    expect(screen.getByRole("img", { name: "ארנב קופץ בשדה" })).toBe(video);
+    expect(container.querySelector("main img")).toBeNull();
+    expect(play).toHaveBeenCalled();
+    // A real clip is not labelled as a demo.
+    expect(screen.queryByRole("note")).not.toBeInTheDocument();
+  });
+
+  it("warms up the next page's clip lightly", () => {
+    const { container } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+    const next = container.querySelector('video[preload="metadata"]');
+    expect(next?.getAttribute("src")).toContain("/media/books/bk_test/page-2.mp4");
+  });
+
+  it("labels a demo clip", () => {
+    render(<BookPlayer book={makeBook({ pages: animatedPages })} initialPage={1} />);
+    expect(screen.getByRole("note")).toHaveTextContent("הנפשה לדוגמה");
+  });
+
+  it("shows a still picture that drifts slowly on a page without a clip", () => {
+    const { container } = render(<BookPlayer book={makeBook({ pages: animatedPages })} initialPage={2} />);
+    expect(stageVideo(container)).toBeNull();
+    const image = container.querySelector("main img")!;
+    expect(image.getAttribute("src")).toContain("/media/books/bk_test/page-3.png");
+    expect(image).toHaveClass("mystory-kenburns");
+    // Each page moves in its own direction.
+    expect((image as HTMLElement).style.getPropertyValue("--kb-name")).toBe("mystory-kb-2");
+  });
+
+  it("falls back to the picture when the clip fails", () => {
+    const { container } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+    fireEvent.error(stageVideo(container)!);
+    expect(stageVideo(container)).toBeNull();
+    expect(screen.getByRole("img", { name: "ארנב קופץ בשדה" }).tagName).toBe("IMG");
+  });
+
+  it("keeps the pictures still when the device asks for less motion", () => {
+    stubReducedMotion(true);
+    const { container } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+    expect(stageVideo(container)).toBeNull();
+    const image = screen.getByRole("img", { name: "ארנב קופץ בשדה" });
+    expect(image.tagName).toBe("IMG");
+    expect(image).not.toHaveClass("mystory-kenburns");
+    expect(container.querySelector('video[preload="metadata"]')).toBeNull();
+  });
+
+  it("plays the clip when the device does not ask for less motion", () => {
+    stubReducedMotion(false);
+    const { container } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+    expect(stageVideo(container)).not.toBeNull();
+  });
+
+  it("turns living pictures off from the settings and remembers it", () => {
+    const { container, unmount } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+    expect(stageVideo(container)).not.toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "הגדרות קריאה" }));
+    const toggle = screen.getByRole("checkbox", { name: "תמונות חיות" });
+    expect(toggle).toBeChecked();
+    fireEvent.click(toggle);
+
+    expect(stageVideo(container)).toBeNull();
+    const image = container.querySelector("main img")!;
+    expect(image.getAttribute("src")).toContain("/media/books/bk_test/page-1.png");
+    expect(image).not.toHaveClass("mystory-kenburns");
+    expect(JSON.parse(window.localStorage.getItem("mystory:reader-prefs") ?? "{}")).toMatchObject({ liveImages: false });
+
+    unmount();
+    const again = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+    expect(stageVideo(again.container)).toBeNull();
+  });
+
+  it("pauses the clip while the tab is hidden and resumes when it is back", () => {
+    const { container } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+    const video = stageVideo(container)!;
+    const visibility = vi.spyOn(document, "visibilityState", "get").mockReturnValue("hidden");
+    act(() => {
+      document.dispatchEvent(new Event("visibilitychange"));
+    });
+    expect(pause.mock.contexts).toContain(video);
+
+    play.mockClear();
+    visibility.mockReturnValue("visible");
+    act(() => {
+      document.dispatchEvent(new Event("visibilitychange"));
+    });
+    expect(play.mock.contexts).toContain(video);
+  });
+});

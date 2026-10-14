@@ -11,6 +11,7 @@
     "test": "vitest run",
     "seed": "tsx scripts/seed.ts && tsx scripts/narrate.ts --seed",
     "narrate": "tsx scripts/narrate.ts",
+    "animate": "tsx scripts/animate.ts",
     "pipeline:status": "tsx scripts/pipeline-status.ts",
     "book-meta": "tsx scripts/book-meta.ts",
     "bookdash:credits": "tsx scripts/bookdash-credits.ts",
@@ -22,6 +23,7 @@
     "import:gutenberg": "tsx scripts/import-gutenberg.ts",
     "import:letsread": "tsx scripts/import-letsread.ts",
     "import:originals": "tsx scripts/import-originals.ts",
+    "illustration-prompts": "tsx scripts/illustration-prompts.ts",
     "translate:file": "tsx scripts/translate-file.ts"
   },
   "dependencies": {

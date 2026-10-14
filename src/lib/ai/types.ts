@@ -146,6 +146,46 @@ export interface ImageProvider {
   generate(request: ImageRequest): Promise<ImageResult>;
 }
 
+// --- Video (animate an illustration) -------------------------------------------------
+
+export interface VideoRequest {
+  /** The illustration to animate; it becomes the first frame. */
+  image: Uint8Array;
+  /** "image/png", "image/jpeg" or "image/webp". */
+  imageContentType: string;
+  /** What should move, e.g. "the leaves sway gently, the girl blinks". Gentle motion only. */
+  prompt: string;
+  /** Clip length; providers round to the nearest length they support. Default 4. */
+  durationSeconds?: number;
+  /** Default "16:9". */
+  aspect?: "16:9" | "9:16";
+}
+
+export interface VideoResult {
+  video: Uint8Array;
+  /** e.g. "video/mp4". */
+  contentType: string;
+  durationSeconds: number;
+  /** True for the demo placeholder; store Page.videoSource = "mock" in that case. */
+  isMock: boolean;
+  usage?: AiUsage;
+}
+
+export interface VideoProvider {
+  readonly name: string;
+  readonly isMock: boolean;
+  /** Long-running (seconds to minutes). Honors `signal`. */
+  animate(request: VideoRequest, signal?: AbortSignal): Promise<VideoResult>;
+}
+
+/** Thrown when the vendor refuses the input (e.g. a safety filter on people/children). Not retryable. */
+export class VideoRefusedError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "VideoRefusedError";
+  }
+}
+
 // --- Errors and status -------------------------------------------------------------
 
 /** Thrown by a real provider file that has not been implemented yet. */
@@ -167,6 +207,7 @@ export interface AiStatus {
   nikud: AiProviderStatus;
   tts: AiProviderStatus;
   image: AiProviderStatus;
+  video: AiProviderStatus;
   /** True when at least one provider is a mock. */
   anyMock: boolean;
 }

@@ -6,12 +6,13 @@
  *   nikud  NIKUD_PROVIDER=dicta    -> providers/dicta-nikud.ts
  *   tts    TTS_PROVIDER=<vendor>   -> providers/tts.ts
  *   image  IMAGE_PROVIDER=<vendor> -> providers/image.ts
+ *   video  VIDEO_PROVIDER=<vendor> -> providers/video.ts  (gemini = Veo; key VIDEO_API_KEY or IMAGE_API_KEY)
  *
  * Results always carry `isMock`; surface it in the UI.
  */
 import "server-only";
 import { aiEnv } from "../config";
-import { mockImageProvider, mockNikudProvider, mockTextProvider, mockTtsProvider } from "./mock";
+import { mockImageProvider, mockNikudProvider, mockTextProvider, mockTtsProvider, mockVideoProvider } from "./mock";
 import type {
   AiStatus,
   ImageProvider,
@@ -25,10 +26,13 @@ import type {
   TtsOptions,
   TtsProvider,
   TtsResult,
+  VideoProvider,
+  VideoRequest,
+  VideoResult,
 } from "./types";
 
 export * from "./types";
-export { MOCK_STORY, evenWordTimings, mockIllustrationSvg, silentWav } from "./mock";
+export { MOCK_STORY, MOCK_VIDEO_SECONDS, evenWordTimings, mockIllustrationSvg, mockVideoMp4, silentWav } from "./mock";
 
 function isTextConfigured(): boolean {
   return aiEnv.anthropicApiKey() !== undefined;
@@ -42,6 +46,10 @@ function isTtsConfigured(): boolean {
 }
 function isImageConfigured(): boolean {
   const name = aiEnv.imageProvider()?.toLowerCase();
+  return name !== undefined && name !== "mock";
+}
+function isVideoConfigured(): boolean {
+  const name = aiEnv.videoProvider()?.toLowerCase();
   return name !== undefined && name !== "mock";
 }
 
@@ -65,6 +73,11 @@ export async function getImageProvider(): Promise<ImageProvider> {
   return (await import("./providers/image")).createImageProvider();
 }
 
+export async function getVideoProvider(): Promise<VideoProvider> {
+  if (!isVideoConfigured()) return mockVideoProvider;
+  return (await import("./providers/video")).createVideoProvider();
+}
+
 /** Which providers are real and which are mocks, decided from env vars only (no network, no imports). */
 export function getAiStatus(): AiStatus {
   const text = { name: isTextConfigured() ? "claude" : "mock", isMock: !isTextConfigured() };
@@ -77,10 +90,21 @@ export function getAiStatus(): AiStatus {
     name: isImageConfigured() ? (aiEnv.imageProvider() as string) : "mock",
     isMock: !isImageConfigured(),
   };
-  return { text, nikud, tts, image, anyMock: text.isMock || nikud.isMock || tts.isMock || image.isMock };
+  const video = {
+    name: isVideoConfigured() ? (aiEnv.videoProvider() as string) : "mock",
+    isMock: !isVideoConfigured(),
+  };
+  return {
+    text,
+    nikud,
+    tts,
+    image,
+    video,
+    anyMock: text.isMock || nikud.isMock || tts.isMock || image.isMock || video.isMock,
+  };
 }
 
-// --- The four functions named in PLAN.md -------------------------------------------
+// --- The four functions named in PLAN.md, plus animateImage -------------------------------------------
 
 export async function generateText<T>(request: TextRequest<T>): Promise<TextResult<T>> {
   return (await getTextProvider()).generate(request);
@@ -96,4 +120,9 @@ export async function synthesize(text: string, options?: TtsOptions): Promise<Tt
 
 export async function generateImage(request: ImageRequest): Promise<ImageResult> {
   return (await getImageProvider()).generate(request);
+}
+
+/** Turns an illustration into a short silent looping clip. Long-running; honors `signal`. */
+export async function animateImage(request: VideoRequest, signal?: AbortSignal): Promise<VideoResult> {
+  return (await getVideoProvider()).animate(request, signal);
 }

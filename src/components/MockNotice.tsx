@@ -2,7 +2,7 @@ import { FlaskConical } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-export type MockKind = "text" | "nikud" | "tts" | "tts-device" | "image" | "login" | "translation" | "generic";
+export type MockKind = "text" | "nikud" | "tts" | "tts-device" | "image" | "video" | "login" | "translation" | "generic";
 
 const MESSAGES: Record<MockKind, string> = {
   text: "מצב הדגמה: שירות כתיבת הסיפורים לא מחובר, ולכן מוצג סיפור קבוע לדוגמה.",
@@ -10,6 +10,7 @@ const MESSAGES: Record<MockKind, string> = {
   tts: "קול הדגמה: שירות ההקראה לא מחובר ובמכשיר הזה אין קול עברי, ולכן ההקלטה שקטה והמילים מודגשות בקצב קבוע.",
   "tts-device": "קול המכשיר: שירות ההקראה לא מחובר, ולכן הסיפור מוקרא בקול העברי המובנה של המכשיר.",
   image: "איור לדוגמה: שירות האיורים לא מחובר, ולכן מוצג איור זמני במקום איור אמיתי.",
+  video: "הנפשה לדוגמה: שירות הנפשת האיורים לא מחובר, ולכן מוצגת תנועה זמנית במקום הנפשה אמיתית.",
   translation:
     "מצב הדגמה: שירות התרגום לא מחובר, ולכן הספר לא תורגם והטקסט לא השתנה. אפשר לתרגם ידנית, עמוד מול עמוד.",
   login: "התחברות לסביבת פיתוח: בלי סיסמה ובלי אימות. לא לשימוש באתר פעיל.",

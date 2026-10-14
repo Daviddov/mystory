@@ -32,6 +32,12 @@ const ReaderPrefsSchema = z.object({
   autoAdvance: z.boolean().optional(),
   /** Where the text sits next to the picture, or hidden to look at the pictures only. */
   textLayout: z.enum(["below", "side", "hidden"]).optional(),
+  /**
+   * "Living pictures": a slow pan and zoom over the illustrations, and the
+   * animated clip of a page that has one. Missing = on. The device's
+   * reduced-motion setting turns it off regardless.
+   */
+  liveImages: z.boolean().optional(),
 });
 export type ReaderPrefs = z.infer<typeof ReaderPrefsSchema>;
 export type TextLayout = NonNullable<ReaderPrefs["textLayout"]>;

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { AnimationPanel } from "@/components/admin/AnimationPanel";
 import { BookRowActions } from "@/components/admin/BookRowActions";
 import { ReviewActions } from "@/components/admin/ReviewActions";
 import { StatusChip } from "@/components/admin/StatusChip";
 import { MockNotice } from "@/components/MockNotice";
 import { ButtonLink, Card, CardTitle, Chip } from "@/components/ui";
+import { animateBook, animationLicenseCheck, type BookAnimationSummary } from "@/lib/animation";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
@@ -34,6 +36,16 @@ export default async function AdminBookPreviewPage({ params }: { params: Promise
   ]);
   const ownerName = book.ownerId === SYSTEM_OWNER_ID ? "ספריית האתר" : (owner?.name ?? "משתמש לא ידוע");
   const hasMockAudio = book.pages.some((page) => page.audioSource === "mock");
+  const animationLicense = animationLicenseCheck(book);
+  // Dry run: which pages would be animated and what it would cost. Reads the illustrations, calls no provider.
+  let animationEstimate: BookAnimationSummary | null = null;
+  if (animationLicense.allowed) {
+    try {
+      animationEstimate = await animateBook(book.id, { dryRun: true });
+    } catch (err) {
+      console.error("[admin] animation estimate failed", err);
+    }
+  }
   const details: [string, string][] = [
     ["יוצר", ownerName],
     ["מחבר", book.author || "לא צוין"],
@@ -108,6 +120,18 @@ export default async function AdminBookPreviewPage({ params }: { params: Promise
         />
       </Card>
 
+      <Card className="flex flex-col gap-4">
+        <CardTitle>הנפשת איורים</CardTitle>
+        <AnimationPanel
+          bookId={book.id}
+          title={book.title}
+          estimate={animationEstimate}
+          licenseRefusal={animationLicense.allowed ? undefined : animationLicense.message}
+          animatedPages={book.pages.filter((page) => page.video).map((page) => page.index)}
+          canRun={viewer.role === "admin"}
+        />
+      </Card>
+
       <div className="grid gap-6 lg:grid-cols-[14rem_1fr]">
         <div className="aspect-[3/4] w-56 max-w-full overflow-hidden rounded-lg bg-surface-2">
           {book.coverImage ? (
@@ -179,6 +203,22 @@ export default async function AdminBookPreviewPage({ params }: { params: Promise
                     <p className="text-sm text-muted">אין הקראה לעמוד הזה.</p>
                   )}
                   {page.audioSource === "mock" ? <MockNotice kind="tts" variant="inline" /> : null}
+                  {page.video ? (
+                    <video
+                      src={mediaUrl(page.video, book.updatedAt)}
+                      poster={page.image ? mediaUrl(page.image, book.updatedAt) : undefined}
+                      muted
+                      loop
+                      controls
+                      playsInline
+                      preload="none"
+                      aria-label={`ההנפשה של עמוד ${page.index + 1}`}
+                      className="aspect-video w-full max-w-sm rounded-md bg-surface-2"
+                    />
+                  ) : null}
+                  {page.video && page.videoSource === "mock" ? (
+                    <MockNotice variant="inline">הנפשה לדוגמה: שירות הווידאו לא היה מחובר.</MockNotice>
+                  ) : null}
                 </div>
               </Card>
             ))}

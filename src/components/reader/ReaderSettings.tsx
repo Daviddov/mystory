@@ -24,6 +24,11 @@ export interface ReaderSettingsProps {
   onFontStep: (step: number) => void;
   textLayout: TextLayout;
   onTextLayout: (layout: TextLayout) => void;
+  /** "Living pictures": gentle motion over the illustrations and the clips of animated pages. */
+  liveImages: boolean;
+  onLiveImages: (value: boolean) => void;
+  /** The device asks for less motion, which keeps the pictures still whatever this setting says. */
+  reducedMotion?: boolean;
   hasAudio: boolean;
   rate: number;
   onRate: (rate: number) => void;
@@ -35,7 +40,7 @@ export interface ReaderSettingsProps {
   onSleepCancel: () => void;
 }
 
-/** Grown-up controls: text size and placement, narration speed, automatic page turning and the sleep timer. */
+/** Grown-up controls: text size and placement, living pictures, narration speed, automatic page turning and the sleep timer. */
 export function ReaderSettings({
   open,
   onClose,
@@ -43,6 +48,9 @@ export function ReaderSettings({
   onFontStep,
   textLayout,
   onTextLayout,
+  liveImages,
+  onLiveImages,
+  reducedMotion = false,
   hasAudio,
   rate,
   onRate,
@@ -108,6 +116,26 @@ export function ReaderSettings({
               בתמונה מרובעת או גבוהה הטקסט יופיע לצידה. בתמונה רחבה או במסך צר הוא יופיע מתחתיה.
             </p>
           ) : null}
+        </section>
+
+        <section aria-labelledby="reader-pictures-title">
+          <h3 id="reader-pictures-title" className="mb-2 text-lg font-bold">
+            איורים
+          </h3>
+          <label className="flex min-h-touch cursor-pointer items-center gap-3">
+            <input
+              type="checkbox"
+              className="size-6 accent-[var(--secondary)]"
+              checked={liveImages}
+              onChange={(event) => onLiveImages(event.target.checked)}
+            />
+            <span>תמונות חיות</span>
+          </label>
+          <p className="mt-1 text-sm text-muted">
+            {reducedMotion
+              ? "המכשיר מוגדר להפחתת תנועה, ולכן האיורים נשארים דוממים."
+              : "תנועה איטית ועדינה באיורים, וסרטון קצר בעמודים שהאיור שלהם הונפש. כשהאפשרות כבויה האיורים דוממים."}
+          </p>
         </section>
 
         <section aria-labelledby="reader-audio-title">

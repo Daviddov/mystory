@@ -61,6 +61,8 @@ describe("Supabase media store", () => {
     expect(bucketForPath("books/bk_1/page-01.mp3")).toBe(AUDIO_BUCKET);
     expect(bucketForPath("books/bk_1/page-01.webm")).toBe(AUDIO_BUCKET);
     expect(bucketForPath("books/bk_1/source.pdf")).toBe(FILE_BUCKET);
+    // Animated illustrations: book-files accepts any MIME type, so mp4 needs no migration.
+    expect(bucketForPath("books/bk_1/page-01.mp4")).toBe(FILE_BUCKET);
     expect(bucketForPath("books/bk_1/unknown.bin")).toBe(FILE_BUCKET);
   });
 

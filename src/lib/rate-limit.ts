@@ -98,6 +98,8 @@ export const RATE_LIMIT_DEFAULTS = {
   OCR: 150,
   /** POST /api/studio/books/<id>/translate and other translation calls. */
   TRANSLATE: 60,
+  /** POST /api/studio/books/<id>/illustrate: one hero image or one page illustration. */
+  ILLUSTRATE: 60,
   /** GET /api/pdf/<slug>. */
   PDF: 60,
   /** POST /api/views/<bookId>, per IP. */

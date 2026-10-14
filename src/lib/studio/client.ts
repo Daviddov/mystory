@@ -184,6 +184,36 @@ export async function acceptTranslation(id: string, translator: string): Promise
   return request<TranslationOutcome>(`${bookUrl(id)}/translate`, json("POST", { action: "accept", translator }));
 }
 
+export interface HeroImageOutcome {
+  path: string;
+  url: string;
+  description: string;
+  style: string;
+  /** True when the description was written from the story. */
+  descriptionWritten: boolean;
+  isMock: boolean;
+}
+
+export interface PageIllustrationOutcome {
+  path: string;
+  url: string;
+  scene: string;
+  isMock: boolean;
+}
+
+/** Draws the hero's reference image. Without a description the server writes one from the saved story. */
+export async function createHeroImage(id: string, hero: { description?: string; style?: string }): Promise<HeroImageOutcome> {
+  return request<HeroImageOutcome>(`${bookUrl(id)}/illustrate`, json("POST", { target: "hero", ...hero }));
+}
+
+/** Illustrates one SAVED page from the saved hero and story. Save (flush) first. */
+export async function illustratePage(id: string, page: number, note?: string): Promise<PageIllustrationOutcome> {
+  return request<PageIllustrationOutcome>(
+    `${bookUrl(id)}/illustrate`,
+    json("POST", { target: "page", page, ...(note?.trim() ? { note: note.trim() } : {}) }),
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Narration module (optional)
 // ---------------------------------------------------------------------------

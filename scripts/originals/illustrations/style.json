@@ -1,0 +1,18 @@
+{
+  "aspectRatio": "4:3 landscape",
+  "styles": {
+    "biblical": "Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy Middle-Eastern palette (sand, olive green, terracotta, sky blue), rounded friendly faces with expressive eyes, ancient Near-East setting of the Torah era: tents, desert hills, stone villages, simple wool and linen robes, head coverings, sandals. Calm, warm, safe mood.",
+    "sages": "Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy palette (stone beige, olive green, terracotta, deep blue), rounded friendly faces with expressive eyes, the Land of Israel and Babylon in the time of the Mishnah and Talmud (Roman era): stone houses with flat roofs, oil lamps, study halls with low benches and scrolls, markets, olive and carob trees. Jewish sages with beards, tunics and simple robes; women in modest long dresses and head coverings. Calm, warm, safe mood.",
+    "modern": "Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, bright friendly palette, rounded friendly faces with expressive eyes, present-day Israel: apartments with balconies, kindergartens, moshav fields, Jerusalem stone, a warm Jewish family home (Shabbat candles, mezuzah, bookshelf with holy books). Calm, warm, safe mood."
+  },
+  "rules": [
+    "No text, letters, words or numbers anywhere in the picture (no signs, no writing on scrolls or tablets — show tablets with abstract marks only).",
+    "Never depict God in any form: no face, hand, figure or silhouette in the sky. When the story needs God's presence, show only the effect (a soft warm light, a cloud, wind, the scene reacting).",
+    "No Christian or other religious iconography: no halos, no crosses, no church buildings, no winged cherub-babies, no stained-glass look.",
+    "Angels, when the story requires them, are tall gentle figures in plain white robes made of soft light, without wings and without halos.",
+    "Jewish details where fitting: kippot and tzitzit for men and boys in Jewish settings of later periods, head coverings for married women, modest clothing for everyone.",
+    "No violence, blood, weapons in use, injuries, dead bodies or frightening monsters. Hard moments are shown through feelings and aftermath (faces, hugs, an empty place, a gentle sky).",
+    "Every character keeps the same face, age, hair, clothes and colors on every page, exactly as in the character list.",
+    "One clear scene per picture, a main focus that a young child can read at a glance."
+  ]
+}

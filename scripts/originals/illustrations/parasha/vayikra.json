@@ -1,0 +1,65 @@
+{
+  "style": "biblical",
+  "characters": [
+    { "name": "Elia", "description": "Girl of about 6, small and slim, warm olive skin, big dark-brown eyes, dark curly hair in two short braids tied with red threads. Wears a knee-length sky-blue linen dress over light trousers, a narrow terracotta sash, brown leather sandals. Signature item: a small round woven straw basket with a lid, holding two white doves." },
+    { "name": "Abba", "description": "Elia's father, about 35, tall and broad-shouldered, olive skin, kind brown eyes, short black beard, cream wool head cloth tied with a brown cord. Wears a long olive-green robe with a brown belt and sandals. Signature item: a wooden walking staff." },
+    { "name": "Ima", "description": "Elia's mother, about 32, medium build, olive skin, warm brown eyes, gentle smile, hair fully covered by a long terracotta-red head scarf falling over her shoulders. Wears a long sand-beige dress with a blue embroidered neckline and sandals. Signature item: a blue woven bracelet." },
+    { "name": "Kohen", "description": "Kind priest of the Mishkan, about 50, round friendly face, olive skin, laughing brown eyes, full grey-streaked beard. Wears a long plain white linen tunic, a white wrapped head turban and a long white sash; barefoot. No halo, no jewelry." },
+    { "name": "Doves", "description": "Two small pure-white doves with soft round bodies, pink feet and gentle black eyes, one slightly larger than the other; they peek out of Elia's straw basket and coo." },
+    { "name": "Bull Man", "description": "Very tall man of about 45, deep-brown skin, thick black beard, brown head cloth, long brown striped robe. He leads a huge calm brown bull with curved horns and a small bronze bell on a rope around its neck." }
+  ],
+  "cover": {
+    "prompt": "Elia stands in the foreground holding her small straw basket with both hands close to her chest; two white doves peek out. She smiles proudly. Behind her, softly blurred, the Mishkan's colorful woven curtains in the middle of a desert camp of tents, with a gentle column of warm light and smoke rising from the courtyard into a clear morning sky. Warm golden sunrise light. Medium shot, Elia centered.",
+    "characters": ["Elia", "Doves"]
+  },
+  "pages": [
+    {
+      "prompt": "Wide establishing view of the Israelite camp in the desert on a bright clear morning: rows of tents in sand and terracotta colors, and in the middle the Mishkan courtyard with its white linen fence and colorful curtains. Many families walk along the dusty paths toward it, carrying baskets and leading animals. Long morning shadows, soft golden light, pale blue sky.",
+      "characters": []
+    },
+    {
+      "prompt": "Elia walks between Abba and Ima along a path between tents, holding her small straw basket in both hands. The lid is lifted a little and the two white doves peek out, beaks open as if cooing. Elia looks down at them lovingly. Abba holds his staff, Ima smiles at Elia. Morning light, medium shot from the side at child height.",
+      "characters": ["Elia", "Abba", "Ima", "Doves"]
+    },
+    {
+      "prompt": "Low camera at Elia's height: the very tall Bull Man passes right beside her, leading his enormous brown bull with curved horns and a bronze bell on its neck. The bull's big hooves kick up little puffs of dust. Elia leans back in wonder, eyes wide, clutching her small basket. The bull looks huge and gentle, not scary. Bright morning light.",
+      "characters": ["Elia", "Bull Man", "Doves"]
+    },
+    {
+      "prompt": "A cheerful procession on the path to the Mishkan: a family of father, mother and son leads a plump fluffy white lamb on a rope, and behind them a small boy runs after a bouncing spotted brown goat that leaps playfully. Elia watches from the side of the path with her basket, smiling a little. Dusty path, tents, warm sunlight, wide shot.",
+      "characters": ["Elia"]
+    },
+    {
+      "prompt": "Close-up of Elia stopped on the path, looking down into her little basket at the two small doves. Her eyebrows are raised with worry, lips pressed. She whispers up toward Ima, who stands beside her. In the soft-focus background, the big bull and the white lamb walk ahead. Gentle morning light, quiet, thoughtful mood.",
+      "characters": ["Elia", "Ima", "Doves"]
+    },
+    {
+      "prompt": "Ima kneels down on the sandy path to Elia's eye level, one hand on Elia's shoulder and the other resting softly on the basket. She looks into Elia's eyes with a warm, reassuring smile. Elia listens closely. Abba stands just behind them, smiling. Tents and warm morning light around them, intimate medium close shot.",
+      "characters": ["Elia", "Ima", "Abba", "Doves"]
+    },
+    {
+      "prompt": "A dreamy memory scene in soft pastel tones with a gentle glowing edge: Elia at dawn outside her family tent, sitting on a low stone, scattering grains from her palm for the two white doves, stroking one with a finger and singing to them with her mouth open in song. Little music-like curls of breeze, no musical notes or symbols. Soft pink sunrise light.",
+      "characters": ["Elia", "Doves"]
+    },
+    {
+      "prompt": "At the entrance of the Mishkan courtyard, framed by colorful woven curtains in blue, purple and red. The Kohen in white linen bends forward and smiles warmly at Elia, who has just arrived with Abba and Ima. A little to the side, the Bull Man and his big bull have just been received by another priest. Behind, the altar with a gentle, calm fire. Bright midday light.",
+      "characters": ["Kohen", "Elia", "Abba", "Ima", "Bull Man", "Doves"]
+    },
+    {
+      "prompt": "The Kohen crouches down to Elia and admires the two white doves peeking from her basket, his hand open in a gesture of delight. Beside him on a low wooden table stands a small clay bowl of fine white flour, showing that small offerings are welcome. Elia's face lights up with surprise. Close medium shot, warm sunlight, white linen curtains behind.",
+      "characters": ["Kohen", "Elia", "Doves"]
+    },
+    {
+      "prompt": "Elia stretches out both arms and hands her small straw basket to the smiling Kohen, who receives it gently with two hands. Her face glows with pride and joy; warm golden light seems to shine around her chest and the moment. Abba and Ima watch from behind with proud smiles. In the background, the altar with a soft gentle fire and light smoke rising into the sky.",
+      "characters": ["Elia", "Kohen", "Abba", "Ima", "Doves"]
+    },
+    {
+      "prompt": "Late afternoon on the way home through the camp: Elia skips happily ahead with her arms swinging, her empty straw basket bouncing in one hand, her braids flying. She turns her head back, talking and laughing to Ima. Abba walks beside Ima. Long golden shadows, tents glowing in the warm sunset light, wide shot.",
+      "characters": ["Elia", "Ima", "Abba"]
+    },
+    {
+      "prompt": "A warm, cozy closing scene inside the family tent in the evening: Elia hugs Ima tightly while Abba sits nearby smiling; beside them on a rug lies a simple child's drawing on a flat stone of two doves and a heart shape, made with charcoal. Oil lamp light, soft warm glow, feeling of love and giving.",
+      "characters": ["Elia", "Ima", "Abba"]
+    }
+  ]
+}

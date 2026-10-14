@@ -14,6 +14,7 @@ import {
   type TextProvider,
   type TextRequest,
   type TtsProvider,
+  type VideoProvider,
 } from "./types";
 
 // --- Text -----------------------------------------------------------------------
@@ -214,5 +215,32 @@ export const mockImageProvider: ImageProvider = {
       contentType: "image/svg+xml",
       isMock: true,
     };
+  },
+};
+
+// --- Video ----------------------------------------------------------------------------
+
+/**
+ * A real, tiny H.264 MP4 (64x36, 2 s, 4 fps, one flat cream colour, no audio,
+ * faststart), generated once with:
+ *   ffmpeg -f lavfi -i "color=c=0xF3E9D2:s=64x36:r=4:d=2" -c:v libx264 -preset veryslow
+ *          -crf 40 -pix_fmt yuv420p -profile:v baseline -movflags +faststart -an mock.mp4
+ * Browsers play it, so the reader's video path can be exercised without a vendor.
+ */
+const MOCK_MP4_BASE64 =
+  "AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAANGbW9vdgAAAGxtdmhkAAAAAAAAAAAAAAAAAAAD6AAAB9AAAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAnF0cmFrAAAAXHRraGQAAAADAAAAAAAAAAAAAAABAAAAAAAAB9AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAEAAAAAkAAAAAAAkZWR0cwAAABxlbHN0AAAAAAAAAAEAAAfQAAAAAAABAAAAAAHpbWRpYQAAACBtZGhkAAAAAAAAAAAAAAAAAABAAAAAgABVxAAAAAAALWhkbHIAAAAAAAAAAHZpZGUAAAAAAAAAAAAAAABWaWRlb0hhbmRsZXIAAAABlG1pbmYAAAAUdm1oZAAAAAEAAAAAAAAAAAAAACRkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAAVRzdGJsAAAAvHN0c2QAAAAAAAAAAQAAAKxhdmMxAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAEAAJABIAAAASAAAAAAAAAABFUxhdmM2MS4zMy4xMDIgbGlieDI2NAAAAAAAAAAAAAAAGP//AAAAMmF2Y0MBQsAK/+EAGWdCwAqmERH+fARAAAADAEAAAAMCA8SJhGABAAZoyEIDksgAAAAQcGFzcAAAAAEAAAABAAAAFGJ0cnQAAAAAAAALdAAAAAAAAAAYc3R0cwAAAAAAAAABAAAACAAAEAAAAAAUc3RzcwAAAAAAAAABAAAAAQAAABxzdHNjAAAAAAAAAAEAAAABAAAACAAAAAEAAAA0c3RzegAAAAAAAAAAAAAACAAAApMAAAAKAAAACgAAAAoAAAALAAAACwAAAAsAAAALAAAAFHN0Y28AAAAAAAAAAQAAA3YAAABhdWR0YQAAAFltZXRhAAAAAAAAACFoZGxyAAAAAAAAAABtZGlyYXBwbAAAAAAAAAAAAAAAACxpbHN0AAAAJKl0b28AAAAcZGF0YQAAAAEAAAAATGF2ZjYxLjkuMTA3AAAACGZyZWUAAALlbWRhdAAAAnIGBf//btxF6b3m2Ui3lizYINkj7u94MjY0IC0gY29yZSAxNjQgcjMyMDQgMzczNjk3YiAtIEguMjY0L01QRUctNCBBVkMgY29kZWMgLSBDb3B5bGVmdCAyMDAzLTIwMjUgLSBodHRwOi8vd3d3LnZpZGVvbGFuLm9yZy94MjY0Lmh0bWwgLSBvcHRpb25zOiBjYWJhYz0wIHJlZj0xNiBkZWJsb2NrPTE6MDowIGFuYWx5c2U9MHgxOjB4MTMxIG1lPXVtaCBzdWJtZT0xMCBwc3k9MSBwc3lfcmQ9MS4wMDowLjAwIG1peGVkX3JlZj0xIG1lX3JhbmdlPTI0IGNocm9tYV9tZT0xIHRyZWxsaXM9MiA4eDhkY3Q9MCBjcW09MCBkZWFkem9uZT0yMSwxMSBmYXN0X3Bza2lwPTEgY2hyb21hX3FwX29mZnNldD0tMiB0aHJlYWRzPTEgbG9va2FoZWFkX3RocmVhZHM9MSBzbGljZWRfdGhyZWFkcz0wIG5yPTAgZGVjaW1hdGU9MSBpbnRlcmxhY2VkPTAgYmx1cmF5X2NvbXBhdD0wIGNvbnN0cmFpbmVkX2ludHJhPTAgYmZyYW1lcz0wIHdlaWdodHA9MCBrZXlpbnQ9MjUwIGtleWludF9taW49NCBzY2VuZWN1dD00MCBpbnRyYV9yZWZyZXNoPTAgcmNfbG9va2FoZWFkPTYwIHJjPWNyZiBtYnRyZWU9MSBjcmY9NDAuMCBxY29tcD0wLjYwIHFwbWluPTAgcXBtYXg9NjkgcXBzdGVwPTQgaXBfcmF0aW89MS40MCBhcT0xOjEuMDAAgAAAABlliIICXiMUAARPo4AB2OAG+++uuuuuuuvAAAAABkGaHAS8bAAAAAZBmioBLxsAAAAGQZo7AS8bAAAAB0GaSQBLxsAAAAAHQZpZQEvGwAAAAAdBmmmAR8bAAAAAB0GaecBDxsA=";
+export const MOCK_VIDEO_SECONDS = 2;
+
+/** The bytes of the placeholder clip (a fresh copy on every call). */
+export function mockVideoMp4(): Uint8Array {
+  return new Uint8Array(Buffer.from(MOCK_MP4_BASE64, "base64"));
+}
+
+export const mockVideoProvider: VideoProvider = {
+  name: "mock",
+  isMock: true,
+  async animate(_request, signal) {
+    signal?.throwIfAborted();
+    return { video: mockVideoMp4(), contentType: "video/mp4", durationSeconds: MOCK_VIDEO_SECONDS, isMock: true };
   },
 };

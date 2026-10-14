@@ -1,6 +1,7 @@
 /**
  * Serves files from the media store: GET/HEAD /media/<media path>[?v=..][&t=<share token>].
- * Supports single byte ranges (needed for audio seeking), ETag revalidation,
+ * Supports single byte ranges (needed for audio seeking, and by Safari before it
+ * plays any <video>), ETag revalidation,
  * and rejects any path that is not a valid media path.
  *
  * Access follows the book the file belongs to (see @/lib/media/access):
@@ -15,6 +16,7 @@
 import { getCurrentUser } from "@/lib/auth";
 import { getMediaStore, isValidMediaPath, type MediaStore } from "@/lib/media";
 import { bookAccessLoader, decideMediaAccess, MEDIA_TOKEN_PARAM, type MediaAccess } from "@/lib/media/access";
+import { parseByteRange } from "@/lib/media/range";
 import { getRepo } from "@/lib/repo";
 
 export const dynamic = "force-dynamic";
@@ -86,28 +88,6 @@ async function redirectToStore(store: MediaStore, mediaPath: string, access: Med
   });
 }
 
-interface ByteRange {
-  start: number;
-  end: number;
-}
-
-/** Parses "bytes=a-b", "bytes=a-" and "bytes=-n". Returns "invalid" when unsatisfiable. */
-function parseRange(header: string, size: number): ByteRange | "invalid" | null {
-  const match = /^bytes=(\d*)-(\d*)$/.exec(header.trim());
-  if (!match) return null; // unsupported form (e.g. multiple ranges): send the whole file
-  const [, rawStart, rawEnd] = match;
-  if (rawStart === "" && rawEnd === "") return "invalid";
-  if (rawStart === "") {
-    const suffix = Number(rawEnd);
-    if (suffix <= 0 || size === 0) return "invalid";
-    return { start: Math.max(0, size - suffix), end: size - 1 };
-  }
-  const start = Number(rawStart);
-  const end = rawEnd === "" ? size - 1 : Math.min(Number(rawEnd), size - 1);
-  if (start >= size || start > end) return "invalid";
-  return { start, end };
-}
-
 async function serve(request: Request, segments: string[], headOnly: boolean): Promise<Response> {
   // Next.js gives us decoded segments; anything outside the strict media path
   // alphabet (including "..", backslashes and encoded separators) is rejected.
@@ -159,7 +139,7 @@ async function serve(request: Request, segments: string[], headOnly: boolean): P
   }
 
   const rangeHeader = request.headers.get("range");
-  const range = rangeHeader ? parseRange(rangeHeader, object.size) : null;
+  const range = rangeHeader ? parseByteRange(rangeHeader, object.size) : null;
   if (range === "invalid") {
     headers.set("Content-Range", `bytes */${object.size}`);
     return new Response(null, { status: 416, headers });

@@ -28,6 +28,7 @@ export const adminApi = {
   book: (id: string) => `/api/admin/books/${encodeURIComponent(id)}`,
   booksBulk: () => "/api/admin/books/bulk",
   bookReview: (id: string) => `/api/admin/books/${encodeURIComponent(id)}/review`,
+  bookAnimate: (id: string) => `/api/admin/books/${encodeURIComponent(id)}/animate`,
   recordingReview: (id: string) => `/api/admin/recordings/${encodeURIComponent(id)}/review`,
   collections: () => "/api/admin/collections",
   collection: (id: string) => `/api/admin/collections/${encodeURIComponent(id)}`,

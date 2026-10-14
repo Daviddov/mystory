@@ -77,6 +77,16 @@ export const PageSchema = z.object({
   originalText: z.string().optional(),
   /** Description of the illustration (alternative text), in the language it was written in. */
   imageAlt: z.string().max(1000).optional(),
+  /**
+   * Media path of a short silent clip that animates the illustration ("brings
+   * it to life"). Shown muted and looped instead of `image` when present;
+   * `image` stays the poster and the fallback (reduced motion, PDF, cards).
+   */
+  video: z.string().optional(),
+  /** Hash of the image the clip was made from; the clip is stale when the image changes. */
+  videoImageHash: z.string().max(100).optional(),
+  /** 'mock' means the clip is a demo placeholder and the UI must say so. */
+  videoSource: z.enum(["ai", "mock"]).optional(),
 });
 export type Page = z.infer<typeof PageSchema>;
 
@@ -112,6 +122,21 @@ export const BookCreditsSchema = z.object({
   adaptation: z.string().max(500).optional(),
 });
 export type BookCredits = z.infer<typeof BookCreditsSchema>;
+
+/**
+ * The hero of an illustrated book, so every page draws the same character.
+ * The studio makes the reference image from the description (or the owner
+ * uploads one) and then illustrates each page from it.
+ */
+export const BookHeroSchema = z.object({
+  /** Visual description of the hero (English or Hebrew), reused in every illustration prompt. */
+  description: z.string().max(1000),
+  /** Illustration style slug (STORY_STYLES in generation/options.ts) or free text. */
+  style: z.string().max(100).optional(),
+  /** Media path of the hero reference image (character sheet). */
+  image: z.string().max(300).optional(),
+});
+export type BookHero = z.infer<typeof BookHeroSchema>;
 
 export const BookSchema = z.object({
   id: IdSchema,
@@ -156,8 +181,9 @@ export const BookSchema = z.object({
   /** Language the book was written in, when it is (or will be) a translation. */
   originalLanguage: BookLanguageSchema.optional(),
   credits: BookCreditsSchema.optional(),
+  hero: BookHeroSchema.optional(),
 });
-export type Book = z.infer<typeof BookSchema>;
+export type Book =z.infer<typeof BookSchema>;
 
 /** The language of a book's text; books stored before the field existed are Hebrew. */
 export function bookLanguage(book: Pick<Book, "language">): BookLanguage {

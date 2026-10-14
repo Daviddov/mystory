@@ -5,6 +5,7 @@ import {
   ArrowUp,
   Copy,
   ImagePlus,
+  Paintbrush,
   Sparkles,
   Trash2,
   Upload,
@@ -13,11 +14,18 @@ import {
 } from "lucide-react";
 import { useRef, useState, type DragEvent } from "react";
 import { MockNotice } from "@/components/MockNotice";
-import { Button, Card, Field, Spinner, Textarea } from "@/components/ui";
+import { Button, Card, Field, Input, Spinner, Textarea } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { countWords } from "@/lib/hebrew";
 import { mediaUrl } from "@/lib/media/url";
-import { AUDIO_ACCEPT, IMAGE_ACCEPT, MAX_PAGE_TEXT, narrationStale, nikudWordMismatch } from "@/lib/studio/shared";
+import {
+  AUDIO_ACCEPT,
+  IMAGE_ACCEPT,
+  MAX_ILLUSTRATION_NOTE,
+  MAX_PAGE_TEXT,
+  narrationStale,
+  nikudWordMismatch,
+} from "@/lib/studio/shared";
 import { getAgeGroup } from "@/lib/taxonomy";
 import type { AgeGroup } from "@/lib/types";
 import { AudioRecorder } from "./AudioRecorder";
@@ -58,6 +66,10 @@ export interface PageEditorProps {
   onAudioBlob: (audio: Blob, fileName: string) => Promise<void>;
   onAutoNikud: () => void;
   onAutoNarrate: () => void;
+  /** True when the book has a hero to draw the page from. */
+  hasHero: boolean;
+  /** Draws the page from the hero, the story and the page; `note` is optional art direction. */
+  onIllustrate: (note: string) => void;
 }
 
 /** Everything about one page: picture, text, vocalized text and narration. */
@@ -75,6 +87,8 @@ export function PageEditor({
   onAudioBlob,
   onAutoNikud,
   onAutoNarrate,
+  hasHero,
+  onIllustrate,
 }: PageEditorProps) {
   const imageInput = useRef<HTMLInputElement>(null);
   const audioInput = useRef<HTMLInputElement>(null);
@@ -82,6 +96,7 @@ export function PageEditor({
   const [dragOver, setDragOver] = useState(false);
   const [showNikud, setShowNikud] = useState(false);
   const [audioBusy, setAudioBusy] = useState(false);
+  const [illustrationNote, setIllustrationNote] = useState("");
 
   const image = page.preview ?? mediaUrl(page.image, version);
   const audio = mediaUrl(page.audio, version);
@@ -212,6 +227,37 @@ export function PageEditor({
                 if (file) onImageFile(file);
               }}
             />
+          </div>
+          <div className="flex flex-col gap-2 rounded-md bg-surface-2 p-3">
+            <Field
+              label="יצירת איור לפי הגיבור והסיפור"
+              htmlFor={`${idBase}-art-note`}
+              hint={
+                hasHero
+                  ? "לא חובה: מה חשוב לכם שיופיע באיור הזה."
+                  : "צרו קודם את תמונת הגיבור בחלק \"הגיבור של הסיפור\" למעלה."
+              }
+            >
+              <Input
+                id={`${idBase}-art-note`}
+                maxLength={MAX_ILLUSTRATION_NOTE}
+                value={illustrationNote}
+                onChange={(event) => setIllustrationNote(event.target.value)}
+                placeholder="למשל: הגיבורה מחזיקה את המטרייה הצהובה"
+                disabled={!hasHero}
+              />
+            </Field>
+            <div>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => onIllustrate(illustrationNote)}
+                disabled={!hasHero || page.text.trim().length === 0 || page.uploading}
+              >
+                <Paintbrush aria-hidden="true" className="size-4" />
+                {image ? "יצירת איור חדש" : "יצירת איור"}
+              </Button>
+            </div>
           </div>
         </div>
 

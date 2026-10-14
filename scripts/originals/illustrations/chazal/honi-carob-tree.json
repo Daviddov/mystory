@@ -1,0 +1,75 @@
+{
+  "style": "sages",
+  "characters": [
+    {
+      "name": "Honi",
+      "description": "Honi HaMe'agel, a Jewish sage of about 50, slim and upright, warm olive skin, kind dark-brown eyes with smile lines, short dark-brown beard with a few grey strands, a cream linen head wrap, a deep-blue wool robe over a beige tunic, a rope belt, leather sandals, carries a small cloth-wrapped bundle of bread and a wooden walking staff."
+    },
+    {
+      "name": "Old Honi",
+      "description": "Honi after seventy years of sleep: exactly the same face, kind dark-brown eyes and slim build as before, but with a very long flowing white beard reaching his belt and long white hair under the same cream head wrap, now faded; the same deep-blue robe, faded to a soft dusty blue, the same rope belt, sandals and wooden walking staff. Looks surprised and gentle, not frail."
+    },
+    {
+      "name": "Planter",
+      "description": "A cheerful farmer of about 40, sturdy and broad-shouldered, sun-browned skin, curly black hair and a short curly black beard, bright brown eyes, an undyed oatmeal tunic with rolled sleeves, a terracotta-red sash, bare forearms dusty with soil, holds a small wooden digging hoe."
+    },
+    {
+      "name": "Grandson",
+      "description": "The planter's grandson, a friendly man of about 35, sturdy, sun-browned skin, curly black hair and short curly black beard just like his grandfather, bright brown eyes, an olive-green tunic with a terracotta-red sash, carries a woven reed basket for carob pods."
+    },
+    {
+      "name": "Donkey",
+      "description": "Honi's gentle she-donkey, small and soft grey with a pale belly and muzzle, long ears with dark tips, a dark stripe along the back, a woven striped saddle blanket in blue and terracotta."
+    }
+  ],
+  "cover": {
+    "prompt": "A huge, wide carob tree with heavy branches full of long brown pods stands on a sunny hillside path. Under it Old Honi, with his very long white beard, looks up in wonder, holding a carob pod, while the friendly Grandson holds out his basket to him. In the lower corner a tiny green carob sapling sprouts from the soil as a gentle echo. Warm golden afternoon light, soft green hills behind, wide composition with the tree as the main shape.",
+    "characters": ["Old Honi", "Grandson"]
+  },
+  "pages": [
+    {
+      "prompt": "Honi sits on a low stone bench in the courtyard of a stone house with a flat roof, an open scroll on his knees showing only abstract wavy marks. He gazes into the distance with a thoughtful, puzzled expression, chin resting on one hand. Above him a dreamy pale cloud drifts in a soft blue evening sky. An oil lamp glows beside him. Medium shot, calm and wondering mood.",
+      "characters": ["Honi"]
+    },
+    {
+      "prompt": "A dusty country road between gentle hills with old carob trees. The Planter kneels on the ground, carefully pressing soil around a tiny carob sapling with both hands, tender as tucking a baby into bed. Honi stands beside him with his staff, leaning forward with curiosity, the Donkey waiting behind him on the road. Bright morning light, wide shot showing the road and the small sapling in the center.",
+      "characters": ["Honi", "Planter", "Donkey"]
+    },
+    {
+      "prompt": "Close medium shot at the roadside: Honi raises one eyebrow and holds up his open hands in friendly disbelief, asking a question. The Planter, still kneeling by the tiny sapling, looks up at him with a calm, patient expression. The little sapling with three small leaves is in the foreground between them. Warm morning sunlight, soft background of hills.",
+      "characters": ["Honi", "Planter"]
+    },
+    {
+      "prompt": "The Planter stands, wiping his hands on his tunic and smiling broadly, gesturing with an open arm toward a row of tall old carob trees behind him on the hillside, full of pods. Honi listens closely, leaning on his staff, his face softening. The tiny sapling sits at their feet. Golden light, medium-wide shot linking the old trees and the new sapling.",
+      "characters": ["Honi", "Planter"]
+    },
+    {
+      "prompt": "Honi sits at the side of the road with his back against a large boulder, eating a piece of bread, eyelids drooping sleepily. Little birds chirp on a branch above. Smooth pale rock curves gently around him like a small cozy cave, half hiding him. The Donkey grazes nearby. Warm, hazy midday sunlight, peaceful drowsy mood, medium shot.",
+      "characters": ["Honi", "Donkey"]
+    },
+    {
+      "prompt": "A dreamy time-passing scene in one picture: on the left, a small rocky alcove where Honi sleeps peacefully, curled up and smiling. Across the picture the same carob grows from a tiny sapling to a young tree to a great broad tree, while the sky changes from winter rain clouds to bright summer sun and falling leaves swirl gently. Soft, magical light, wide panoramic framing.",
+      "characters": ["Honi"]
+    },
+    {
+      "prompt": "Old Honi steps out of the small rocky alcove, stretching his arms and yawning, his very long white beard flowing. He freezes with wide eyes and open mouth, staring at a giant carob tree full of brown pods where the sapling used to be. Under the tree the Grandson is picking pods into his basket. Fresh morning light, wide shot with the huge tree dominating.",
+      "characters": ["Old Honi", "Grandson"]
+    },
+    {
+      "prompt": "Under the broad shade of the huge carob tree, Old Honi points politely at the tree and asks a question. The Grandson laughs warmly, one hand on his chest, shaking his head, his basket of pods on his arm. Dappled light through the leaves, medium shot of the two men facing each other, friendly mood.",
+      "characters": ["Old Honi", "Grandson"]
+    },
+    {
+      "prompt": "On a grassy hillside, Old Honi stands with his staff, looking amazed at a whole herd of grey donkeys of all sizes grazing around the old Donkey, now with a grey-white muzzle, and little foals playing at her side. Honi's expression shows sudden understanding, one hand on his long white beard. Soft late-afternoon light, wide shot.",
+      "characters": ["Old Honi", "Donkey"]
+    },
+    {
+      "prompt": "Close, warm scene under the carob tree: the smiling Grandson hands a long brown carob pod to Old Honi, who takes a bite and closes his eyes in delight, as if tasting honey. The basket of pods sits between them, and a few village children peek happily from behind the trunk. Golden glowing light, cozy medium close-up.",
+      "characters": ["Old Honi", "Grandson"]
+    },
+    {
+      "prompt": "A gentle scene in the same ancient village: a grandmother in a long terracotta dress and cream head covering kneels with two small children, a boy and a girl in simple tunics, planting a tiny sapling and watering it from a clay jug. Behind them the great carob tree spreads its shade. The children smile proudly. Soft golden evening light, medium-wide shot full of warmth and hope.",
+      "characters": []
+    }
+  ]
+}

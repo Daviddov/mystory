@@ -26,6 +26,7 @@ export type EditorMeta = Pick<
   | "discussionQuestions"
   | "coverImage"
   | "credits"
+  | "hero"
 >;
 
 /** Fields only the server changes. */
@@ -64,6 +65,7 @@ export function pickMeta(book: Book): EditorMeta {
     discussionQuestions: book.discussionQuestions,
     coverImage: book.coverImage,
     credits: book.credits,
+    hero: book.hero,
   };
 }
 
@@ -108,5 +110,5 @@ export interface EditorNotice {
   tone: "success" | "error" | "info";
   text: string;
   /** Shows the matching "demo mode" notice under the text. */
-  mock?: "nikud" | "tts" | "translation";
+  mock?: "nikud" | "tts" | "translation" | "image";
 }

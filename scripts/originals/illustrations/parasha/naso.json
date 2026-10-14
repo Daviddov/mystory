@@ -1,0 +1,79 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Netanel",
+      "description": "Prince of the tribe of Issachar, man about 40, sturdy build, warm tan skin, short dark-brown beard with a touch of grey, kind brown eyes and thoughtful brows, long deep-green robe with an embroidered gold border, cream head wrap; wears a dark-blue sash with a small brass clasp shaped like a sun."
+    },
+    {
+      "name": "Naama",
+      "description": "Netanel's daughter, girl about 6, small and round-faced, warm tan skin, wavy black shoulder-length hair under a soft peach head scarf, bright dark eyes, ankle-length peach-colored dress with a green sash; carries a little rolled drawing on a scrap of cloth."
+    },
+    {
+      "name": "Nachshon",
+      "description": "Prince of the tribe of Judah, tall broad-shouldered man about 45, olive skin, full black beard, confident warm smile, long sky-blue robe with a gold-embroidered collar, white head wrap."
+    },
+    {
+      "name": "Aaron",
+      "description": "Aaron the High Priest, older man about 80, gentle face, long full white beard, soft eyes; wears priestly garments: white linen tunic, a robe of deep blue with pomegranate-and-bell hem, a colorful woven apron, a breastplate with twelve colored stones (no engravings), and a white wound turban with a small plain gold band on the forehead."
+    },
+    {
+      "name": "Moses",
+      "description": "Moses, older man about 80, tall and lean, weathered olive skin, long grey-white beard, deep calm eyes, simple undyed cream wool robe with a brown cloak, plain head covering; holds a tall wooden shepherd's staff."
+    }
+  ],
+  "cover": {
+    "prompt": "Netanel walks toward the shining Mishkan in the morning, carrying a silver dish, a silver bowl and a small golden spoon filled with incense on a cloth-covered tray, with a gentle proud smile. Naama walks beside him holding his sash and looking up at him. Behind them the white linen courtyard of the Mishkan glows in golden light, colorful tribal flags above the tents. Medium-wide shot, warm and festive.",
+    "characters": ["Netanel", "Naama"]
+  },
+  "pages": [
+    {
+      "prompt": "Wide view of the brand-new Mishkan in the middle of the desert camp: white linen courtyard walls, a bronze altar, the tent with rich dark coverings, all glittering in sunlight. In the foreground Netanel stands among the tents of Issachar, hand on his heart, gazing at it with admiration and an idea forming. Bright morning light.",
+      "characters": ["Netanel"]
+    },
+    {
+      "prompt": "Netanel stands with the other tribal princes, men in robes of different colors, raising one hand eagerly as he shares his idea. Behind them six covered wooden wagons and pairs of strong brown oxen are lined up near the Mishkan. The princes nod and smile. Medium-wide shot, cheerful afternoon light.",
+      "characters": ["Netanel", "Nachshon"]
+    },
+    {
+      "prompt": "Moses stands alone at the entrance of the Mishkan courtyard, listening with closed eyes and a peaceful face, his staff in hand. A soft warm light and a gentle white cloud glow above the tent, the only sign of the divine voice. In the background, twelve small colored banners of the tribes ripple in a row. Calm, reverent, wide framing.",
+      "characters": ["Moses"]
+    },
+    {
+      "prompt": "First day of the gifts: Nachshon walks proudly toward the Mishkan carrying a large silver dish and a silver bowl, and a small golden spoon from which a thin curl of fragrant incense smoke rises. People of the tribe of Judah follow under their blue lion flag, smiling and clapping. Festive bright morning, medium shot following Nachshon.",
+      "characters": ["Nachshon"]
+    },
+    {
+      "prompt": "Night inside Netanel's tent: he lies awake on a sleeping mat, propped on one elbow, frowning worriedly at the silver dish, silver bowl and golden spoon set on a chest beside him, lit by a small oil lamp. Blue moonlight seeps under the tent flap. Quiet, intimate close-medium shot.",
+      "characters": ["Netanel"]
+    },
+    {
+      "prompt": "Naama, in her peach dress, has crept over and snuggles against her father's side on the mat, holding up her little drawing on a scrap of cloth, asking him a question with a sweet earnest face. Netanel looks down at her, surprised. Warm oil-lamp glow, cozy close framing inside the tent.",
+      "characters": ["Netanel", "Naama"]
+    },
+    {
+      "prompt": "Close shot of father and daughter in the lamplit tent: Netanel smiles gently and holds Naama's little drawing as if it were a treasure; Naama beams back at him, chin lifted. His worried look has melted away. Soft golden light on their faces, the gift vessels softly blurred in the background.",
+      "characters": ["Netanel", "Naama"]
+    },
+    {
+      "prompt": "Morning at the Mishkan courtyard: Netanel walks forward carefully, holding the small golden spoon of incense in both hands close to his chest, smiling softly, the silver dish and bowl carried by helpers behind him. Naama watches from among the people of Issachar, waving. Golden early light, medium shot centered on the golden spoon.",
+      "characters": ["Netanel", "Naama"]
+    },
+    {
+      "prompt": "A sequence-like wide view of the path to the Mishkan: a line of twelve princes, each in a robe of a different color, each carrying the very same silver dish, silver bowl and golden spoon, each with a different expression and posture: one solemn, one joyful, one bowing. Netanel in green is among them. Suggests days passing, sunrise light washing over them.",
+      "characters": ["Netanel", "Nachshon"]
+    },
+    {
+      "prompt": "Aaron stands at the front of the Mishkan courtyard with his sons beside him in white priestly garments, all raising their hands outstretched toward the people in blessing. A large crowd of families stands below, heads slightly bowed, children in front. Soft warm light pours down from the sky over everyone. Wide, majestic yet gentle shot.",
+      "characters": ["Aaron"]
+    },
+    {
+      "prompt": "Close-up of Naama standing in the crowd with her eyes closed and a peaceful smile, hands folded over her heart. A soft golden glow wraps around her shoulders like a warm blanket of light. Netanel's hand rests gently on her shoulder. Blurred people and the Mishkan behind. Tender, dreamy light.",
+      "characters": ["Naama", "Netanel"]
+    },
+    {
+      "prompt": "Friday evening inside Netanel's tent: two oil lamps glow on a low table set with round loaves of bread under a cloth. Netanel stands and places both hands gently on Naama's head, blessing her, eyes closed with love; Naama smiles with her eyes closed. A small hand-drawn picture hangs on the tent wall. Warm, intimate golden light.",
+      "characters": ["Netanel", "Naama"]
+    }
+  ]
+}

@@ -11,9 +11,11 @@ import { estimateReadingMinutes, hasNikud } from "@/lib/hebrew";
 import { routes } from "@/lib/routes";
 import {
   acceptTranslation,
+  createHeroImage,
   createShareLink,
   deleteBook,
   fetchBook,
+  illustratePage,
   narrate,
   removeShareLink,
   requestNikud,
@@ -35,7 +37,8 @@ import {
   type BookMetaPatch,
 } from "@/lib/studio/shared";
 import { readingTimeLabel } from "@/lib/taxonomy";
-import type { BookStatus, BookWithPages } from "@/lib/types";
+import type { BookHero, BookStatus, BookWithPages } from "@/lib/types";
+import { HeroPanel } from "./HeroPanel";
 import { MetaForm } from "./MetaForm";
 import { PageEditor } from "./PageEditor";
 import { PageList } from "./PageList";
@@ -184,6 +187,8 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
       const toSend: BookMetaPatch = { ...patch };
       // An empty title is never sent: the stored title stays until a new one is typed.
       if (toSend.title !== undefined && toSend.title.trim().length === 0) delete toSend.title;
+      // Removing the hero is sent as null (an undefined field would not reach the server).
+      if ("hero" in patch && patch.hero === undefined) toSend.hero = null;
       if (Object.keys(toSend).length > 0) markMeta(toSend);
     },
     [markMeta],
@@ -542,6 +547,105 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
     void autoNarrate([index], false);
   };
 
+  // ---- Hero and illustrations -------------------------------------------------
+
+  const setHero = (hero: BookHero | undefined) => updateMeta({ hero });
+
+  /** The server may write the description from the story, so the story is saved first. */
+  const generateHero = async (description: string, style: string) => {
+    setBusy(description ? "מצייר את הגיבור…" : "כותב תיאור של הגיבור לפי הסיפור ומצייר אותו…");
+    try {
+      if (!(await flush())) {
+        setNotice({ tone: "error", text: "אי אפשר ליצור את הגיבור לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        return;
+      }
+      const outcome = await createHeroImage(bookId, { description: description || undefined, style });
+      setHero({ description: outcome.description, style: outcome.style, image: outcome.path });
+      setNotice({
+        tone: "success",
+        text: outcome.descriptionWritten
+          ? "הגיבור מוכן. כתבנו את התיאור שלו לפי הסיפור, ואפשר לתקן אותו וליצור מחדש."
+          : "הגיבור מוכן. עכשיו אפשר ליצור איור לכל עמוד לפיו.",
+        mock: outcome.isMock ? "image" : undefined,
+      });
+    } catch (err) {
+      setNotice({ tone: "error", text: errorMessage(err, "יצירת הגיבור נכשלה") });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const uploadHero = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setNotice({ tone: "error", text: "אפשר לבחור רק קובץ תמונה." });
+      return;
+    }
+    setBusy("מעלה את תמונת הגיבור…");
+    try {
+      const upload = await uploadMedia(bookId, "image", await shrinkImage(file), file.name);
+      const current = metaRef.current.hero;
+      setHero({ description: current?.description ?? "", style: current?.style, image: upload.path });
+    } catch (err) {
+      setNotice({ tone: "error", text: errorMessage(err, "העלאת התמונה נכשלה") });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  /** Illustrations are drawn from the SAVED book: save first, then one page at a time. */
+  const illustrate = async (keys: string[], note?: string) => {
+    setBusy("מאייר את העמוד…");
+    let done = 0;
+    let mock = false;
+    try {
+      if (!(await flush())) {
+        setNotice({ tone: "error", text: "אי אפשר לאייר לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        return;
+      }
+      for (const [i, key] of keys.entries()) {
+        const index = pagesRef.current.findIndex((page) => page.key === key);
+        if (index < 0) continue;
+        if (keys.length > 1) setBusy(`מאייר עמוד ${i + 1} מתוך ${keys.length}…`);
+        const outcome = await illustratePage(bookId, index, note);
+        updatePage(key, { image: outcome.path, preview: undefined, uploadError: undefined });
+        if (outcome.isMock) mock = true;
+        done += 1;
+      }
+      setNotice({
+        tone: "success",
+        text: done === 1 ? "האיור מוכן. אם הוא לא מתאים, אפשר ליצור איור חדש." : `אוירו ${done} עמודים.`,
+        mock: mock ? "image" : undefined,
+      });
+    } catch (err) {
+      const prefix = done > 0 ? `אוירו ${done} עמודים, ואז ` : "";
+      setNotice({ tone: "error", text: `${prefix}${errorMessage(err, "יצירת האיור נכשלה")}`, mock: mock ? "image" : undefined });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const illustrateOne = (key: string, note: string) => {
+    const page = pagesRef.current.find((candidate) => candidate.key === key);
+    if (!page) return;
+    if (page.image || page.preview) {
+      setConfirm({
+        title: "להחליף את התמונה של העמוד?",
+        description: "האיור החדש יחליף את התמונה שיש עכשיו בעמוד.",
+        confirmLabel: "יצירת איור חדש",
+        run: () => void illustrate([key], note),
+      });
+      return;
+    }
+    void illustrate([key], note);
+  };
+
+  const illustrateMissing = () => {
+    const keys = pagesRef.current
+      .filter((page) => !page.image && !page.preview && page.text.trim().length > 0)
+      .map((page) => page.key);
+    if (keys.length > 0) void illustrate(keys);
+  };
+
   // ---- Book actions -----------------------------------------------------------
 
   const runBookAction = async (label: string, action: () => Promise<BookWithPages>, success: string) => {
@@ -600,6 +704,8 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
   const readingMinutes = useMemo(() => estimateReadingMinutes(pages.map((page) => page.text)), [pages]);
   const firstPageImage = pages.find((page) => page.image)?.image;
   const uploadingCount = pages.filter((page) => page.uploading).length;
+  const missingImages = pages.filter((page) => !page.image && !page.preview && page.text.trim().length > 0).length;
+  const hasHero = !!(meta.hero && (meta.hero.description.trim() || meta.hero.image));
 
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     if (!event.dataTransfer.types.includes("Files")) return;
@@ -775,6 +881,15 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
                 }}
               />
             </div>
+            <HeroPanel
+              hero={meta.hero}
+              version={info.updatedAt}
+              missingImages={missingImages}
+              onChange={setHero}
+              onGenerate={(description, style) => void generateHero(description, style)}
+              onUpload={(file) => void uploadHero(file)}
+              onIllustrateMissing={illustrateMissing}
+            />
             <p className="text-muted">
               אפשר לגרור לכאן כמה תמונות בבת אחת: כל תמונה תהפוך לעמוד, לפי סדר שמות הקבצים.
               {uploadingCount > 0 ? ` מעלה עוד ${uploadingCount} תמונות…` : ""}
@@ -805,6 +920,8 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
                   onAudioBlob={(audio, fileName) => setPageAudio(selected.key, audio, fileName)}
                   onAutoNikud={() => void autoNikud([selected.key], true)}
                   onAutoNarrate={() => narratePage(selected.key)}
+                  hasHero={hasHero}
+                  onIllustrate={(note) => illustrateOne(selected.key, note)}
                 />
               ) : null}
             </div>

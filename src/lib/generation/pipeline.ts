@@ -355,11 +355,13 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
     const references: ImageReference[] = isRaster(sheetImage.contentType)
       ? [{ bytes: sheetImage.image, contentType: sheetImage.contentType, description: "character sheet of the hero" }]
       : [];
-    await media.put(
-      bookMediaPath(bookId, `character.${extensionForContentType(sheetImage.contentType)}`),
-      sheetImage.image,
-      sheetImage.contentType,
-    );
+    const characterPath = (
+      await media.put(
+        bookMediaPath(bookId, `character.${extensionForContentType(sheetImage.contentType)}`),
+        sheetImage.image,
+        sheetImage.contentType,
+      )
+    ).path;
 
     // 5. One illustration per page, then the cover. Each uses the character sheet as reference.
     const illustrationsStart = STEP_INFO.get("illustrations")?.progress ?? 52;
@@ -439,6 +441,8 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
       themes: Array.from(new Set(meta.themes.filter((slug) => THEME_SLUGS.includes(slug)))).slice(0, 3),
       discussionQuestions: clampList(meta.discussionQuestions, 4, 200),
       origin: "ai",
+      // The studio redraws pages from this hero.
+      hero: { description: character, style: input.style, image: characterPath },
       ...(cost.value() !== undefined ? { costUsd: cost.value() } : {}),
       pages: bookPages,
     });

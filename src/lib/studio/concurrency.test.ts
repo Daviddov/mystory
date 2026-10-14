@@ -187,3 +187,23 @@ describe("a share link does not outlive a book's time in the public library", ()
     expect((await stored(book.id)).shareToken).toBeUndefined();
   });
 });
+
+describe("animation clips survive studio saves", () => {
+  it("keeps a page's clip while its illustration stays, and drops it when the illustration is replaced", async () => {
+    const book = await createStudioBook(ctx, { title: "הספר שלי" });
+    const picture = await storeUpload(ctx, book.id, "image", png());
+    await saveBookPages(ctx, book.id, { pages: [{ text: "עמוד", image: picture.path }] });
+    const withClip = await stored(book.id);
+    await data.repo.replacePages(book.id, [
+      { ...withClip.pages[0], video: `books/${book.id}/animation-01-abc.mp4`, videoImageHash: "abc", videoSource: "ai" },
+    ]);
+
+    const edited = await saveBookPages(ctx, book.id, { pages: [{ text: "עמוד ערוך", image: picture.path }] });
+    expect(edited.pages[0].video).toBe(`books/${book.id}/animation-01-abc.mp4`);
+    expect(edited.pages[0].videoSource).toBe("ai");
+
+    const other = await storeUpload(ctx, book.id, "image", png(80));
+    const replaced = await saveBookPages(ctx, book.id, { pages: [{ text: "עמוד ערוך", image: other.path }] });
+    expect(replaced.pages[0].video).toBeUndefined();
+  });
+});

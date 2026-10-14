@@ -5,7 +5,8 @@
  *
  * A media path keeps its name inside the bucket ("books/<bookId>/page-01.png");
  * the bucket is chosen by file extension: illustrations, narration audio, and
- * everything else.
+ * everything else (including the mp4 clips of animated illustrations: the
+ * book-files bucket has no MIME type allowlist).
  *
  * The buckets are PRIVATE (migration 20261013000400_private_media.sql).
  * Browsers always ask the site's own /media route, which checks who may see

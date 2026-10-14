@@ -73,4 +73,9 @@ export const aiEnv = {
   imageProvider: () => env("IMAGE_PROVIDER"),
   imageApiKey: () => env("IMAGE_API_KEY"),
   imageModel: () => env("IMAGE_MODEL"),
+  /** Name of the video vendor implemented in providers/video.ts ("gemini" = Veo); unset uses the mock. */
+  videoProvider: () => env("VIDEO_PROVIDER"),
+  /** Defaults to IMAGE_API_KEY when the image vendor is the same. */
+  videoApiKey: () => env("VIDEO_API_KEY"),
+  videoModel: () => env("VIDEO_MODEL"),
 };

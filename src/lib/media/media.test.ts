@@ -51,6 +51,13 @@ describe("media paths", () => {
     expect(contentTypeForPath("a/b.SVG")).toBe("image/svg+xml");
     expect(contentTypeForPath("a/b.unknown")).toBe("application/octet-stream");
     expect(extensionForContentType("audio/webm;codecs=opus")).toBe("webm");
+    // Animated illustrations are mp4 clips.
+    expect(contentTypeForPath("books/b1/page-1.mp4")).toBe("video/mp4");
+    expect(contentTypeForPath("books/b1/page-1.M4V")).toBe("video/mp4");
+    expect(extensionForContentType("video/mp4")).toBe("mp4");
+    expect(extensionForContentType("video/webm")).toBe("webm");
+    // WebM keeps its audio type: family recordings are WebM and stay in the audio bucket.
+    expect(contentTypeForPath("books/b1/rec/r1/p1.webm")).toBe("audio/webm");
     expect(safeFileName("../תמונה של ילד.PNG")).toMatch(/^[A-Za-z0-9_-][A-Za-z0-9._-]*$/);
   });
 });

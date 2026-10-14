@@ -115,6 +115,7 @@ export function ownMediaReferences(book: BookWithPages): Set<string> {
   };
   add(book.coverImage);
   add(book.soundtrack);
+  add(book.hero?.image);
   for (const page of book.pages) {
     add(page.image);
     add(page.audio);
@@ -125,9 +126,11 @@ export function ownMediaReferences(book: BookWithPages): Set<string> {
 function allMediaReferences(book: BookWithPages): Set<string> {
   const refs = new Set<string>();
   if (book.coverImage) refs.add(book.coverImage);
+  if (book.hero?.image) refs.add(book.hero.image);
   for (const page of book.pages) {
     if (page.image) refs.add(page.image);
     if (page.audio) refs.add(page.audio);
+    if (page.video) refs.add(page.video);
   }
   return refs;
 }
@@ -232,7 +235,14 @@ async function updateBookMetaLocked(
     clean.credits = Object.keys(credits).length > 0 ? credits : undefined;
   }
 
+  if (patch.hero !== undefined) {
+    const hero = patch.hero;
+    // A hero with neither a description nor a picture is no hero.
+    clean.hero = hero && (hero.description || hero.image) ? { ...hero, style: hero.style || undefined } : undefined;
+  }
+
   if (clean.coverImage) assertMediaField(book, allMediaReferences(book), clean.coverImage, "image", "תמונת השער");
+  if (clean.hero?.image) assertMediaField(book, allMediaReferences(book), clean.hero.image, "image", "תמונת הגיבור");
 
   const updated = await ctx.repo.updateBook(id, clean);
   const after: BookWithPages = { ...updated, pages: book.pages };
@@ -266,7 +276,7 @@ async function saveBookPagesLocked(
   assertContentEditable(book, ctx.user);
   assertFreshVersion(book, options);
 
-  const pages: Page[] = sanitizePages(payload.pages);
+  const pages: Page[] = keepAnimations(book.pages, sanitizePages(payload.pages));
   const known = allMediaReferences(book);
   pages.forEach((page, i) => {
     if (page.image) assertMediaField(book, known, page.image, "image", `האיור בעמוד ${i + 1}`);
@@ -281,6 +291,21 @@ async function saveBookPagesLocked(
   }
   if (options.baseUpdatedAt !== undefined) await deleteDroppedMedia(ctx.media, book, after);
   return after;
+}
+
+/**
+ * The editor does not send animation clips (they are made by the animation
+ * pipeline), so a page keeps the clip that was made from its illustration.
+ * A page whose illustration was replaced loses its clip.
+ */
+function keepAnimations(before: Page[], pages: Page[]): Page[] {
+  const byImage = new Map<string, Page>();
+  for (const page of before) if (page.image && page.video) byImage.set(page.image, page);
+  return pages.map((page) => {
+    const old = page.image ? byImage.get(page.image) : undefined;
+    if (!old) return page;
+    return { ...page, video: old.video, videoImageHash: old.videoImageHash, videoSource: old.videoSource };
+  });
 }
 
 export async function deleteStudioBook(ctx: StudioContext, id: string): Promise<void> {

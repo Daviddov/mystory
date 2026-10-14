@@ -28,6 +28,12 @@ export const MAX_CATEGORIES = 5;
 export const MAX_THEMES = 6;
 export const MAX_QUESTIONS = 10;
 export const MAX_QUESTION_LENGTH = 300;
+/** Hero description (see BookHeroSchema). */
+export const MAX_HERO_DESCRIPTION = 1000;
+/** Optional art direction typed for one page illustration. */
+export const MAX_ILLUSTRATION_NOTE = 300;
+/** Illustration style used when the book's hero does not name one (a STORY_STYLES slug). */
+export const DEFAULT_ILLUSTRATION_STYLE = "watercolor";
 
 export const IMAGE_MAX_BYTES = 10 * 1024 * 1024;
 export const AUDIO_MAX_BYTES = 25 * 1024 * 1024;
@@ -130,6 +136,18 @@ export const BookMetaPatchSchema = z.strictObject({
       /** Accepted so a stored credits block can be sent back as is; the server ignores it. */
       publisherLogo: z.string().max(300).optional(),
     })
+    .optional(),
+  /**
+   * The whole hero block (it replaces the stored one); null removes it. The
+   * image is a media path inside the book's own folder (checked on the server).
+   */
+  hero: z
+    .strictObject({
+      description: trimmed(MAX_HERO_DESCRIPTION),
+      style: trimmed(100).optional(),
+      image: z.string().max(300).optional(),
+    })
+    .nullable()
     .optional(),
 });
 export type BookMetaPatch = z.infer<typeof BookMetaPatchSchema>;

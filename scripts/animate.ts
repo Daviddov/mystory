@@ -157,8 +157,7 @@ async function main(): Promise<void> {
     totalCost += summary.estimatedCostUsd;
     totalPages += summary.pagesToAnimate;
     if (summary.quotaExceeded) {
-      console.error("
-  stopped: the video provider's quota is used up. Run again later; finished pages are skipped.");
+      console.error("\n  stopped: the video provider's quota is used up. Run again later; finished pages are skipped.");
       break;
     }
   }

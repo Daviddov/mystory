@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { mockVideoProvider } from "../mock";
-import { ProviderNotImplementedError, VideoRefusedError, type VideoRequest } from "../types";
+import { ProviderNotImplementedError, VideoQuotaError, VideoRefusedError, type VideoRequest } from "../types";
 import {
   VEO_BASE_URL,
   VEO_DEFAULT_MODEL,
@@ -166,6 +166,11 @@ describe("gemini video provider", () => {
   it("maps a 400 policy rejection on start to VideoRefusedError", async () => {
     stubFetch(json({ error: { code: 400, message: "The prompt violates our usage policies." } }, 400));
     await expect(provider().animate(request)).rejects.toBeInstanceOf(VideoRefusedError);
+  });
+
+  it("maps a 429 on start to VideoQuotaError", async () => {
+    stubFetch(json({ error: { code: 429, message: "You exceeded your current quota", status: "RESOURCE_EXHAUSTED" } }, 429));
+    await expect(provider().animate(request)).rejects.toBeInstanceOf(VideoQuotaError);
   });
 
   it("other HTTP errors are normal errors", async () => {

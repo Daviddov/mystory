@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { z } from "zod";
+import { missingPublishCredits, publishBlockers } from "@/app/admin/_lib/service";
+import { ReaderPublishPanel } from "@/components/admin/ReaderPublishPanel";
 import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { BookPlayer } from "@/components/reader";
 import { loadBookForReader, loadServerProgress, recommendBooks } from "@/lib/reader/access";
 import { toPlayerBook } from "@/lib/reader/logic";
 import { recordingsForReader } from "@/lib/recordings/service";
+import { hasRole } from "@/lib/auth";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 
@@ -81,6 +84,21 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
   const exitHref =
     book.status === "published" ? routes.book(book.slug) : isOwnerOrStaff ? routes.studioBook(book.id) : routes.home();
 
+  // An editor who reads an unpublished book to the end can publish it right there.
+  const publishPanel =
+    book.status !== "published" && hasRole(user, "editor") ? (
+      <ReaderPublishPanel
+        bookId={book.id}
+        slug={book.slug}
+        title={book.title}
+        status={book.status}
+        blockers={publishBlockers(book)}
+        missingCredits={missingPublishCredits(book)}
+        canWaiveCredits={hasRole(user, "admin")}
+        updatedAt={book.updatedAt}
+      />
+    ) : undefined;
+
   return (
     <BookPlayer
       book={toPlayerBook(book)}
@@ -109,6 +127,7 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
         />
       }
       countView={book.status === "published"}
+      endScreenStaffPanel={publishPanel}
     />
   );
 }

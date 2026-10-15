@@ -126,6 +126,8 @@ export interface BookPlayerProps {
   downloadControl?: ReactNode;
   /** Report one reading to POST /api/views/<bookId>, once per browser session. Published books only. */
   countView?: boolean;
+  /** Shown on the end screen under its header: the publish panel for an editor reading an unpublished book. */
+  endScreenStaffPanel?: ReactNode;
   className?: string;
 }
 
@@ -285,6 +287,7 @@ function Player({
   initialVoice,
   downloadControl,
   countView = false,
+  endScreenStaffPanel,
   className,
 }: BookPlayerProps) {
   const isPage = variant === "page";
@@ -915,6 +918,7 @@ function Player({
             exit={exitControl("lg")}
             creditsBook={book}
             mediaToken={shareToken}
+            staffPanel={endScreenStaffPanel}
           />
         ) : (
           <div

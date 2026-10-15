@@ -1,0 +1,103 @@
+{
+  "id": "ai-hamster-plutzi",
+  "slug": "kacha-ogeret-omeret",
+  "title": "ככה אוגרת אומרת!",
+  "summary": "האוגרת הקטנה לא רוצה ללכת לגן של פלוצי הארנבת. היא מנסה להישאר בבית, לבוא עם אמא לעבודה, לקבל עגלה וטבלת מדבקות, ואמא תמיד עונה: \"אולי מחר\". בסוף היא הולכת לגן, מכריזה שלא אכפת לה, ויושבת יפה בכל זאת, פשוט כי בא לה. סיפור בחרוזים עם שורה חוזרת שכיף להצטרף אליה, בהשראת עקרונות הכתיבה של דוקטור סוס: קצב, חזרה והסלמה.",
+  "ageGroup": "3-5",
+  "categories": [
+    "humor",
+    "transitions"
+  ],
+  "themes": [
+    "feelings",
+    "family"
+  ],
+  "tags": [
+    "אוגרים",
+    "ארנבים",
+    "גן ילדים",
+    "חרוזים",
+    "אמא"
+  ],
+  "discussionQuestions": [
+    "למה האוגרת לא רצתה ללכת לגן של הארנבת?",
+    "מה אמא ענתה בכל פעם שהאוגרת ביקשה משהו?",
+    "למה לדעתך האוגרת ישבה יפה בסוף?",
+    "מה את או אתה עושים בבקרים שלא בא לכם ללכת לגן?"
+  ],
+  "source": "נכתב ואויר בעזרת בינה מלאכותית, בהשראת עקרונות הכתיבה של דוקטור סוס",
+  "style": "whimsical classic mid-century picture-book cartoon, bold wobbly black ink outlines, bright flat colors (red, turquoise, sunny yellow, pink) on a creamy paper background, curvy crooked houses and furniture, playful exaggerated proportions, lots of energy and humor, warm and safe mood. Landscape 4:3. No text, letters, words or numbers anywhere in the picture.",
+  "characters": [
+    "THE HAMSTER GIRL, the main character: a tiny round chubby golden-orange hamster girl, very puffy cheeks, white belly, big expressive black eyes, small pink nose, a red bow on her left ear. At home she wears pink-and-white striped pajamas; outside she wears a yellow dress and a small red backpack.",
+    "MOM HAMSTER: a taller golden-orange hamster mother, round glasses, a turquoise dress, a brown work bag, NO bow.",
+    "PLUTZI THE RABBIT, the kindergarten teacher: a tall slim white rabbit with absurdly long ears (much taller than her body), a purple dress with big white polka dots, a red whistle on a cord around her neck."
+  ],
+  "coverScene": "the hamster girl in her yellow dress and red backpack stands in front of a crooked, curvy, colorful kindergarten building, arms crossed, nose up, cheeks puffed, a stubborn 'no way!' face. Behind her in the doorway, tall Plutzi peeks out with her long ears bending over the roof, whistle in mouth. Leave calm empty sky at the top for a title.",
+  "pages": [
+    {
+      "text": "השמש בחלון כבר קמה ומחייכת.\n\"קומי, אוגרת!\" אמא קוראת ומחכה.\nאבל האוגרת מתחת לשמיכה יושבת,\nמוציאה רק אף, ואומרת:\n\"לא בא לי ללכת לגן של הארנבת!\"",
+      "alt": "האוגרת הקטנה מתחבאת מתחת לשמיכה ומוציאה רק את האף, ואמא אוגרת עומדת ליד המיטה.",
+      "scene": "Morning in a cozy, crooked little hamster bedroom inside a round burrow-house. Sunlight through a round window. The little hamster girl is buried under a huge puffy striped blanket on a wobbly bed; only her pink nose and one eye stick out. Mom hamster stands by the bed with hands on hips, already dressed for work, holding a tiny backpack."
+    },
+    {
+      "text": "בגן יש גננת, והיא ארנבת.\nקוראים לה פלוצי. פלוצי הארנבת!\nאוזניים ארוכות עד התקרה,\nומשרוקית בפה: פְּרִי-פְּרִי! \"שבו בשורה!\"",
+      "alt": "פלוצי הארנבת הגננת, עם אוזניים ארוכות עד התקרה ומשרוקית בפה, וילדי הגן יושבים בשורה.",
+      "scene": "Inside a colorful kindergarten with curvy walls. Plutzi the rabbit teacher stands tall in the middle, her extremely long ears reaching all the way up and bending against the ceiling. She blows a whistle. Small animal children (a hedgehog, a duckling, a mouse, a little turtle) sit in a perfectly straight row on tiny chairs. This is how the hamster girl imagines the kindergarten, so it looks a bit exaggerated and strict but still funny, not scary."
+    },
+    {
+      "text": "אמא אומרת: \"את כבר ילדה גדולה!\nוילדה גדולה הולכת לגן, זאת לא שאלה.\"\n\"אז אני גדולה, ואני מחליטה:\nאני נשארת בבית! בפיג'מה! במיטה!\"",
+      "alt": "האוגרת עומדת על המיטה בפיג'מה, מרימה אצבע ומכריזה שהיא נשארת בבית.",
+      "scene": "The hamster girl stands proudly on top of her bed in pajamas, one finger raised in the air like a queen making a big announcement, pillow on her head like a crown. Mom hamster looks at her with raised eyebrows, arms crossed."
+    },
+    {
+      "text": "\"בבית? לבד?\" אמא הרימה גבה.\n\"לא, לא ולא! זאת לא תשובה טובה.\"",
+      "alt": "אמא אוגרת מרימה גבה ומנענעת באצבע: לא, לא ולא.",
+      "scene": "Close-up, funny: Mom hamster with one eyebrow raised super high, wagging her finger 'no, no, no'. Behind her the hamster girl peeks from behind the bedroom door with a disappointed pout."
+    },
+    {
+      "text": "\"אז אבוא איתך לעבודה!\" היא קפצה ממקום,\n\"אשב מתחת לשולחן, קטנה כמו גרגר של שום!\"\nאמא נשמה עמוק, ואמרה בלי למהר:\n\"אולי מחר.\"",
+      "alt": "האוגרת קופצת באוויר ומדמיינת שהיא יושבת מתחת לשולחן של אמא בעבודה, קטנה כמו גרגר שום.",
+      "scene": "The hamster girl jumps high in the air with excitement in the kitchen. A big dreamy thought bubble shows her tiny as a garlic clove, sitting under Mom's office desk among cables and shoes. Mom hamster, holding a coffee mug, takes a deep calm breath."
+    },
+    {
+      "text": "\"אז תעשי לי מבצע! תקני לי עגלה!\nעגלה עם גלגלים, עם פעמון, עם צפצפה!\"\nאמא נשמה עמוק, ואמרה בלי למהר:\n\"אולי מחר.\"",
+      "alt": "האוגרת מדמיינת עגלה ענקית עם גלגלים, פעמון וצפצפה, ואמא אומרת: אולי מחר.",
+      "scene": "The hamster girl stretches her arms wide describing her dream. A huge thought bubble shows a ridiculous toy wagon: too many wheels of different sizes, a bell, a big honking horn, flags, a tiny roof. Mom hamster, now putting on her coat, sighs calmly."
+    },
+    {
+      "text": "\"אז תציירי לי טבלה! עם כוכבים! עם מדבקות!\nמאה כוכבים זהובים, ואלף נקודות!\"\n\"אני לא יכולה עכשיו לצייר לך טבלה.\nאולי מחר.\"",
+      "alt": "האוגרת מושכת את אמא בשרוול ומבקשת טבלה עם כוכבים ומדבקות, ואמא כבר בדרך לדלת.",
+      "scene": "The hamster girl tugs Mom's sleeve, holding up an empty piece of paper and a box of golden star stickers spilling everywhere, stars flying around the room. Mom hamster is half-way to the front door, keys in hand, looking at the clock."
+    },
+    {
+      "text": "\"לא בא לי ללכת לגן של הארנבת! מה לא ברור?\nאו שאני בבית לבד, כמו גיבור,\nאו שאני הולכת איתך לעבודה.\nפשוט! זה ברור! תודה!\"",
+      "alt": "האוגרת עומדת עם ידיים על המותניים ומסבירה לאמא שיש רק שתי אפשרויות.",
+      "scene": "The hamster girl stands with hands on her hips, very serious, holding up two fingers: option one and option two. Two small thought bubbles over her head: in one she is home alone wearing a superhero cape, in the other she sits on Mom's office chair spinning. Mom hamster looks at her, trying not to laugh."
+    },
+    {
+      "text": "\"בבית אני אוהבת לראות סרטונים\nבמחשב של אבא, שהתחבא בין הכריות והסדינים.\nואחר כך צ'יפס! עם הרבה קטשופ!\nקראנץ', קראנץ', קראנץ'! ושוב, ושוב, ושוב!\"",
+      "alt": "האוגרת מדמיינת את עצמה על הספה, עם המחשב של אבא שמוחבא בין הכריות וקערה גדולה של צ'יפס.",
+      "scene": "A big dreamy daydream picture: the hamster girl lounging on a squishy sofa in a nest of pillows and blankets, Dad's laptop peeking out from its hiding place between the cushions, and a giant bowl of french fries with a huge bottle of ketchup. Fries are flying, crunch crunch."
+    },
+    {
+      "text": "אבל בסוף, כן, כן, נו, בסוף,\nהאוגרת הלכה לגן. עם תיק. ועם פרצוף.",
+      "alt": "האוגרת הולכת לגן עם תיק על הגב ופרצוף חמוץ, ואמא מחזיקה לה את היד.",
+      "scene": "Outside on a curvy, wobbly street lined with funny round trees. The hamster girl walks to kindergarten holding Mom's hand, backpack on, with the grumpiest little pouting face, cheeks puffed out. A small storm cloud floats just above her head only. Mom smiles."
+    },
+    {
+      "text": "היא נכנסה לגן, שילבה ידיים, ואמרה: \"די!\nלא אכפת לי! אתחצף כמה שבא לי!\"",
+      "alt": "האוגרת עומדת בכניסה לגן עם ידיים משולבות ומכריזה: די! לא אכפת לי!",
+      "scene": "At the kindergarten door. The hamster girl stands with arms crossed and her nose up high, shouting her declaration. The other little animal children turn around in shock, mouths open; the duckling drops its crayon."
+    },
+    {
+      "text": "פלוצי שרקה: פְּרִי-פְּרִי! \"שבי יפה במקום,\nאו שלא תקבלי את הממתק של שבת היום!\nגם את רוצה להפסיד? גם את?\"\nשאלה פלוצי הארנבת.",
+      "alt": "פלוצי הארנבת מתכופפת מעל האוגרת עם משרוקית ומחזיקה צנצנת של ממתקים לשבת.",
+      "scene": "Plutzi the tall rabbit teacher bends down very low over the tiny hamster girl, long ears curling down around them both, whistle in her mouth. In her other hand she holds up a big glass jar of colorful Shabbat candies. The hamster girl looks up at the jar from the corner of her eye."
+    },
+    {
+      "text": "האוגרת שתקה... ושתקה... ושתקה...\nואז ישבה. יפה. במקום. כמו בובה.\n\"ישבתי כי בא לי, לא בגלל ממתק ולא בגלל שאמרת.\nלא אכפת לי! ככה אוגרת אומרת!\"",
+      "alt": "האוגרת יושבת יפה במקום בשורה, עם ידיים משולבות ואף למעלה, ומציצה בעין אחת על צנצנת הממתקים.",
+      "scene": "The hamster girl sits perfectly in her place in the row, back straight, arms crossed and nose up proudly, but one eye secretly peeks sideways at the candy jar on Plutzi's table. Plutzi stands behind her, ears relaxed, hiding a small smile. The other children giggle."
+    }
+  ]
+}

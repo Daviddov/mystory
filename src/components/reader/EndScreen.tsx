@@ -19,6 +19,8 @@ export interface EndScreenProps {
   creditsBook?: BookCreditsProps["book"];
   /** Share token of an unpublished book opened through its share link (for the publisher logo). */
   mediaToken?: string;
+  /** Extra panel right under the header (the publish panel an editor sees on an unpublished book). */
+  staffPanel?: ReactNode;
 }
 
 /** Shown after the last page: questions to talk about, read again, and what to read next. */
@@ -30,6 +32,7 @@ export function EndScreen({
   exit,
   creditsBook,
   mediaToken,
+  staffPanel,
 }: EndScreenProps) {
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-8">
@@ -47,6 +50,8 @@ export function EndScreen({
           {exit}
         </div>
       </header>
+
+      {staffPanel}
 
       {discussionQuestions.length > 0 ? (
         <section aria-labelledby="reader-questions-title" className="rounded-xl bg-surface p-6 shadow-card">

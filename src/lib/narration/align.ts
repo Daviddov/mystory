@@ -32,6 +32,11 @@ export type AlignmentMethod = "exact" | "fuzzy" | "proportional" | "empty";
 export interface AlignmentResult {
   wordTimings: WordTiming[];
   method: AlignmentMethod;
+  /**
+   * Share of the words (0..1) that got their timing from matched characters;
+   * the rest were interpolated between them. 1 for "exact", 0 for "proportional".
+   */
+  coverage: number;
 }
 
 export class AlignmentError extends Error {
@@ -111,7 +116,7 @@ export function alignWords(
   }
 
   const words = splitWords(text);
-  if (words.length === 0) return { wordTimings: [], method: "empty" };
+  if (words.length === 0) return { wordTimings: [], method: "empty", coverage: 0 };
 
   // Units on the audio side: one per folded character, with its time span.
   const audioChars: string[] = [];
@@ -170,9 +175,10 @@ export function alignWords(
   }
 
   if (method === "proportional") {
-    return { wordTimings: proportionalTimings(words, foldedLength, duration), method };
+    return { wordTimings: proportionalTimings(words, foldedLength, duration), method, coverage: 0 };
   }
 
+  const coverage = spans.filter((span) => span !== null).length / words.length;
   fillMissing(spans, foldedLength, duration);
 
   // Keep the sequence monotonic and free of overlaps.
@@ -190,7 +196,7 @@ export function alignWords(
     wordTimings[i].start = round(wordTimings[i].start);
     wordTimings[i].end = round(wordTimings[i].end);
   }
-  return { wordTimings, method };
+  return { wordTimings, method, coverage };
 }
 
 /** Index pairs [a, b] of a longest common subsequence, in order. */

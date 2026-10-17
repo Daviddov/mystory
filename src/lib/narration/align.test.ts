@@ -148,7 +148,7 @@ describe("alignWords", () => {
   });
 
   it("returns nothing for empty text", () => {
-    expect(alignWords("  \n ", perChar("abc"))).toEqual({ wordTimings: [], method: "empty" });
+    expect(alignWords("  \n ", perChar("abc"))).toEqual({ wordTimings: [], method: "empty", coverage: 0 });
   });
 
   it("rejects malformed alignment data", () => {

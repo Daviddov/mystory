@@ -275,6 +275,11 @@ export const RecordingPageSchema = z.object({
   index: z.number().int().min(0),
   /** Media path under books/<bookId>/rec/<recordingId>/. */
   audio: z.string().min(1),
+  /**
+   * One per word of the page text, from speech recognition (scripts/align-recordings.ts).
+   * Missing until then; the reader estimates them meanwhile. A new take drops them.
+   */
+  wordTimings: z.array(WordTimingSchema).optional(),
 });
 export type RecordingPage = z.infer<typeof RecordingPageSchema>;
 

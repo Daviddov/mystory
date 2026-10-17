@@ -428,11 +428,13 @@ function Player({
   const audioSrc = atEnd ? "" : voiceAudio(index);
   const upcomingAudio = index + 1 < pageCount ? voiceAudio(index + 1) : "";
   // The narration is of the translation: its word timings do not fit the original text.
-  // Family recordings have no word timings.
-  const storedTimings = useMemo(
-    () => (current && !inOriginal && voiceId === null ? usableTimings(current) : null),
-    [current, inOriginal, voiceId],
-  );
+  // A family recording has word timings once speech recognition has run on it.
+  const storedTimings = useMemo(() => {
+    if (!current || inOriginal) return null;
+    if (voiceId === null) return usableTimings(current);
+    const take = voice?.pages.find((page) => page.index === index);
+    return take ? usableTimings({ ...current, audio: take.audio, wordTimings: take.wordTimings }) : null;
+  }, [current, inOriginal, voiceId, voice, index]);
   // A recording without timings (a family recording, an uploaded narration) gets an estimate
   // from its pauses. Not for the silent demo audio, which the device voice reads instead.
   const estimatedTimings = useEstimatedTimings({

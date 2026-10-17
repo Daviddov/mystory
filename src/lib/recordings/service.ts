@@ -15,7 +15,7 @@ import { newId } from "../ids";
 import type { Repository } from "../repo/types";
 import { AUDIO_MAX_BYTES } from "../studio/shared";
 import { sniffMedia } from "../studio/upload";
-import { RECORDING_TITLE_MAX, type BookWithPages, type Recording, type RecordingStatus, type User } from "../types";
+import { RECORDING_TITLE_MAX, type BookWithPages, type Recording, type RecordingStatus, type User, type WordTiming } from "../types";
 
 export class RecordingError extends Error {
   constructor(
@@ -46,7 +46,7 @@ export interface RecordingView {
   /** True for the signed-in reader's own recordings. */
   mine: boolean;
   reviewNote?: string;
-  pages: { index: number; audio: string }[];
+  pages: { index: number; audio: string; wordTimings?: WordTiming[] }[];
   updatedAt: string;
 }
 
@@ -62,6 +62,7 @@ export function toRecordingView(recording: Recording, viewer: Pick<User, "id"> |
     pages: recording.pages.map((page) => ({
       index: page.index,
       audio: page.audio,
+      ...(page.wordTimings ? { wordTimings: page.wordTimings } : {}),
     })),
     updatedAt: recording.updatedAt,
   };

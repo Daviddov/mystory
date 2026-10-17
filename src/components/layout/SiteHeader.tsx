@@ -20,9 +20,12 @@ export async function SiteHeader() {
       <div className="container-page flex min-h-16 items-center gap-2">
         <Link
           href={routes.home()}
-          className="flex min-h-touch shrink-0 items-center gap-2 rounded-full pe-2 text-2xl font-extrabold text-primary"
+          className="group flex min-h-touch shrink-0 items-center gap-2 rounded-full pe-2 font-display text-2xl font-bold text-primary"
         >
-          <span aria-hidden="true" className="text-3xl">
+          <span
+            aria-hidden="true"
+            className="flex size-10 items-center justify-center rounded-2xl bg-primary-soft text-2xl shadow-card transition-transform duration-300 group-hover:-rotate-6"
+          >
             📖
           </span>
           <span>הסיפור שלי</span>
@@ -33,7 +36,7 @@ export async function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="inline-flex min-h-11 items-center rounded-full px-3 font-semibold hover:bg-surface-2"
+              className="inline-flex min-h-11 items-center rounded-full px-3.5 font-semibold transition-colors hover:bg-primary-soft hover:text-primary"
             >
               {item.label}
             </Link>

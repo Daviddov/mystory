@@ -37,22 +37,26 @@ export function StartScreen({
       role="dialog"
       aria-modal="true"
       aria-labelledby="reader-start-title"
-      className="absolute inset-0 z-30 flex items-center justify-center overflow-y-auto bg-background p-6"
+      className="absolute inset-0 z-30 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-background p-6"
     >
       {cover ? (
         <img
           src={cover}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 size-full scale-110 object-cover opacity-25 blur-2xl"
+          className="pointer-events-none absolute inset-0 size-full scale-125 object-cover opacity-40 blur-3xl saturate-150 bedtime:opacity-25"
         />
       ) : null}
-      <div className="relative flex w-full max-w-md flex-col items-center gap-5 text-center">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/20 via-background/50 to-background/90"
+      />
+      <div className="relative flex w-full max-w-md flex-col items-center gap-6 text-center">
         {cover ? (
           <img
             src={cover}
             alt=""
-            className="max-h-[38vh] w-auto max-w-[70%] rounded-lg border border-border object-contain shadow-pop"
+            className="max-h-[40vh] w-auto max-w-[70%] -rotate-2 rounded-[1.5rem] object-contain shadow-pop ring-4 ring-surface/80 transition-transform duration-500 hover:rotate-0"
           />
         ) : (
           <p className="text-8xl" aria-hidden="true">
@@ -60,13 +64,13 @@ export function StartScreen({
           </p>
         )}
         <div>
-          <h2 id="reader-start-title" className="text-3xl font-bold leading-tight">
+          <h2 id="reader-start-title" className="text-3xl font-bold leading-tight sm:text-4xl">
             {title}
           </h2>
           {author ? <p className="mt-1 text-lg text-muted">{author}</p> : null}
         </div>
         <div className="flex w-full flex-col gap-3">
-          <Button size="lg" className="min-h-16 w-full text-2xl" autoFocus onClick={onRead}>
+          <Button size="lg" className="min-h-16 w-full text-2xl shadow-lift" autoFocus onClick={onRead}>
             <BookOpen aria-hidden="true" className="size-7" />
             {resumePage > 0 ? `נמשיך מעמוד ${resumePage + 1}` : "בואו נקרא"}
           </Button>

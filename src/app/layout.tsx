@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Frank_Ruhl_Libre, Rubik } from "next/font/google";
+import { Frank_Ruhl_Libre, Fredoka, Rubik } from "next/font/google";
 import Script from "next/script";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -14,6 +14,13 @@ import "./globals.css";
 const uiFont = Rubik({
   subsets: ["hebrew", "latin"],
   variable: "--font-ui",
+  display: "swap",
+});
+
+// Display font for headings: round and playful, with Hebrew glyphs.
+const displayFont = Fredoka({
+  subsets: ["hebrew", "latin"],
+  variable: "--font-display-face",
   display: "swap",
 });
 
@@ -65,7 +72,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="he"
       dir="rtl"
       data-theme="day"
-      className={`${uiFont.variable} ${storyFont.variable} h-full antialiased`}
+      className={`${uiFont.variable} ${displayFont.variable} ${storyFont.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

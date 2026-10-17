@@ -23,7 +23,13 @@ export interface BookCardProps {
   className?: string;
 }
 
-/** Cover (3:4), title, age group and reading time. Works in Server and Client Components. */
+const AGE_TONES: Record<string, string> = {
+  "0-2": "bg-accent-soft",
+  "3-5": "bg-secondary-soft",
+  "6-8": "bg-primary-soft",
+};
+
+/** Cover (3:4), title, and pills for age group and reading time. Works in Server and Client Components. */
 export function BookCard({ book, href, layout = "grid", badge, footer, priority, className }: BookCardProps) {
   const age = getAgeGroup(book.ageGroup);
   const cover = mediaUrl(book.coverImage, book.updatedAt);
@@ -31,16 +37,16 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
     <article className={cn("group relative flex flex-col", layout === "shelf" && "w-40 shrink-0 sm:w-48", className)}>
       <Link
         href={href ?? routes.readStart(book.slug)}
-        className="flex flex-col gap-2 rounded-lg focus-visible:outline-offset-4"
+        className="flex flex-col gap-2.5 rounded-[1.25rem] focus-visible:outline-offset-4"
       >
-        <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-border bg-surface-2 shadow-card transition-transform duration-200 group-hover:-translate-y-1">
+        <div className="relative aspect-[3/4] overflow-hidden rounded-[1.25rem] bg-surface-2 shadow-card ring-1 ring-border/70 transition-[transform,box-shadow] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-lift group-active:scale-[0.98]">
           {cover ? (
             <img
               src={cover}
               alt=""
               loading={priority ? "eager" : "lazy"}
               decoding="async"
-              className="size-full object-cover"
+              className="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
             />
           ) : (
             <div className="flex size-full items-center justify-center text-6xl" aria-hidden="true">
@@ -53,16 +59,21 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
             </span>
           ) : null}
         </div>
-        <h3 className="line-clamp-2 text-lg font-bold leading-snug">{book.title}</h3>
-        <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted">
+        <h3 className="line-clamp-2 px-0.5 text-lg font-semibold leading-snug">{book.title}</h3>
+        <p className="flex flex-wrap items-center gap-1.5 px-0.5">
           {age ? (
-            <span>
-              <span aria-hidden="true">{age.emoji} </span>
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold text-foreground",
+                AGE_TONES[age.slug] ?? "bg-surface-2",
+              )}
+            >
+              <span aria-hidden="true">{age.emoji}</span>
               {age.label}
             </span>
           ) : null}
-          <span className="inline-flex items-center gap-1">
-            <Clock aria-hidden="true" className="size-4" />
+          <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-0.5 text-xs font-semibold text-muted">
+            <Clock aria-hidden="true" className="size-3.5" />
             {readingTimeLabel(book.readingMinutes)}
           </span>
         </p>
@@ -70,11 +81,11 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
       {href === undefined ? (
         <Link
           href={routes.book(book.slug)}
-          className="mt-1 inline-flex min-h-10 w-fit items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+          title="לפרטים"
+          className="absolute end-2 top-2 inline-flex size-10 items-center justify-center rounded-full bg-surface/90 text-foreground opacity-90 shadow-card backdrop-blur-sm transition hover:bg-surface hover:opacity-100"
         >
-          <Info aria-hidden="true" className="size-4" />
-          לפרטים
-          <span className="sr-only"> על {book.title}</span>
+          <Info aria-hidden="true" className="size-5" />
+          <span className="sr-only">לפרטים על {book.title}</span>
         </Link>
       ) : null}
       {footer ? <div className="mt-2">{footer}</div> : null}

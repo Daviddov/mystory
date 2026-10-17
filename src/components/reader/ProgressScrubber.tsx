@@ -67,7 +67,7 @@ export function ProgressScrubber({ index, pageCount, onJump }: ProgressScrubberP
       aria-valuemax={Math.max(pageCount, 1)}
       aria-valuenow={index >= pageCount ? pageCount : index + 1}
       aria-valuetext={index >= pageCount ? "סוף הסיפור" : `עמוד ${index + 1} מתוך ${pageCount}`}
-      className="group relative shrink-0 cursor-pointer touch-none select-none py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      className="group relative mx-3 shrink-0 cursor-pointer touch-none select-none py-2 outline-none focus-visible:ring-2 focus-visible:ring-accent sm:mx-5"
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -75,12 +75,15 @@ export function ProgressScrubber({ index, pageCount, onJump }: ProgressScrubberP
     >
       <div
         className={cn(
-          "relative h-2 overflow-hidden bg-surface-2 transition-[height] duration-150 group-hover:h-3",
+          "relative h-2 overflow-hidden rounded-full bg-surface-2/80 transition-[height] duration-150 group-hover:h-3",
           preview !== null && "h-3",
         )}
       >
         <div
-          className={cn("h-full rounded-e-full bg-accent", preview === null && "transition-[width] duration-300")}
+          className={cn(
+            "h-full rounded-full bg-gradient-to-l from-accent to-primary",
+            preview === null && "transition-[width] duration-300",
+          )}
           style={{ width: `${fillPercent}%` }}
         />
         {segments > 0 ? (

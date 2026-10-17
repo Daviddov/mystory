@@ -1,41 +1,39 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { routes } from "@/lib/routes";
+import { SectionTitle } from "./SectionTitle";
 import { AGE_GROUP_INFO, READING_TIME_BUCKETS } from "@/lib/taxonomy";
 
 const TILE =
-  "group flex h-full min-h-touch-lg items-center gap-4 rounded-lg border border-border p-4 shadow-card " +
-  "transition-transform duration-200 hover:-translate-y-1 active:scale-[0.98]";
+  "group relative flex h-full min-h-touch-lg items-center gap-4 overflow-hidden rounded-[1.5rem] p-5 shadow-card " +
+  "transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-lift active:scale-[0.98]";
 
-function SectionHeading({ id, emoji, children }: { id: string; emoji: string; children: ReactNode }) {
-  return (
-    <h2 id={id} className="text-2xl font-bold sm:text-3xl">
-      <span aria-hidden="true">{emoji} </span>
-      {children}
-    </h2>
-  );
-}
-
-const AGE_TONES = ["bg-accent-soft", "bg-secondary-soft", "bg-primary-soft"];
+const AGE_TONES = [
+  "bg-gradient-to-br from-accent-soft to-surface",
+  "bg-gradient-to-br from-secondary-soft to-surface",
+  "bg-gradient-to-br from-primary-soft to-surface",
+];
 
 /** Three large entry tiles, one per age group. */
 export function AgeTiles({ className }: { className?: string }) {
   return (
     <section aria-labelledby="age-tiles-title" className={cn("flex flex-col gap-4", className)}>
-      <SectionHeading id="age-tiles-title" emoji="🎂">
+      <SectionTitle id="age-tiles-title" emoji="🎂">
         בוחרים לפי גיל
-      </SectionHeading>
-      <ul className="grid gap-3 sm:grid-cols-3">
+      </SectionTitle>
+      <ul className="grid gap-3 sm:grid-cols-3 sm:gap-4">
         {AGE_GROUP_INFO.map((age, index) => (
           <li key={age.slug}>
-            <Link href={routes.age(age.slug)} className={cn(TILE, AGE_TONES[index % AGE_TONES.length])}>
-              <span aria-hidden="true" className="text-5xl leading-none">
+            <Link href={routes.age(age.slug)} className={cn(TILE, "sm:min-h-36", AGE_TONES[index % AGE_TONES.length])}>
+              <span
+                aria-hidden="true"
+                className="flex size-16 shrink-0 items-center justify-center rounded-full bg-surface text-4xl shadow-card transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110 sm:size-20 sm:text-5xl"
+              >
                 {age.emoji}
               </span>
-              <span className="flex flex-col">
-                <span className="text-xl font-extrabold">{age.label}</span>
-                <span className="text-muted">{age.description}</span>
+              <span className="flex flex-col gap-0.5">
+                <span className="font-display text-2xl font-semibold">{age.label}</span>
+                <span className="leading-snug text-muted">{age.description}</span>
               </span>
             </Link>
           </li>
@@ -49,14 +47,20 @@ export function AgeTiles({ className }: { className?: string }) {
 export function TimeTiles({ className }: { className?: string }) {
   return (
     <section aria-labelledby="time-tiles-title" className={cn("flex flex-col gap-4", className)}>
-      <SectionHeading id="time-tiles-title" emoji="⏱️">
+      <SectionTitle id="time-tiles-title" emoji="⏱️">
         כמה זמן יש לנו?
-      </SectionHeading>
-      <ul className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      </SectionTitle>
+      <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {READING_TIME_BUCKETS.map((bucket) => (
           <li key={bucket.slug}>
-            <Link href={routes.time(bucket.slug)} className={cn(TILE, "flex-col justify-center gap-1 bg-surface text-center")}>
-              <span className="text-4xl font-extrabold leading-none text-primary" aria-hidden="true">
+            <Link
+              href={routes.time(bucket.slug)}
+              className={cn(TILE, "flex-col justify-center gap-2 bg-surface text-center ring-1 ring-border/70")}
+            >
+              <span
+                aria-hidden="true"
+                className="flex size-16 items-center justify-center rounded-full border-4 border-primary-soft font-display text-2xl font-bold text-primary transition-colors group-hover:border-primary"
+              >
                 {bucket.slug === "20" ? "20+" : bucket.slug}
               </span>
               <span className="text-lg font-semibold">{bucket.label}</span>

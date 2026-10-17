@@ -70,10 +70,10 @@ function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
 }
 
+/** The book without its pages. The pages are dropped before cloning: they are most of the data. */
 function toBook(full: BookWithPages): Book {
-  const copy: Partial<BookWithPages> = clone(full);
-  delete copy.pages;
-  return copy as Book;
+  const { pages: _pages, ...book } = full;
+  return clone(book);
 }
 
 function normalizePages(pages: Page[]): Page[] {
@@ -95,6 +95,8 @@ export class LocalRepository implements Repository {
   readonly kind = "local" as const;
   private readonly mutex = new Mutex();
   private readonly bookCache = new Map<string, CachedBook>();
+  /** The folder scan in progress, shared by concurrent callers (a page asks for many lists at once). */
+  private bookScan: Promise<CachedBook[]> | null = null;
 
   constructor(private readonly root: string) {}
 
@@ -134,7 +136,14 @@ export class LocalRepository implements Repository {
 
   // --- books: loading --------------------------------------------------------
 
-  private async loadAllBooks(): Promise<CachedBook[]> {
+  private loadAllBooks(): Promise<CachedBook[]> {
+    this.bookScan ??= this.scanBooks().finally(() => {
+      this.bookScan = null;
+    });
+    return this.bookScan;
+  }
+
+  private async scanBooks(): Promise<CachedBook[]> {
     let entries: string[];
     try {
       entries = await fs.readdir(this.booksDir());
@@ -198,6 +207,7 @@ export class LocalRepository implements Repository {
     const valid = BookWithPagesSchema.parse({ ...book, pages: normalizePages(book.pages) });
     await writeJsonAtomic(this.bookFile(valid.slug), valid);
     this.bookCache.delete(valid.slug);
+    this.bookScan = null;
     return valid;
   }
 
@@ -389,6 +399,7 @@ export class LocalRepository implements Repository {
       if (current) {
         await fs.rm(path.dirname(this.bookFile(current.slug)), { recursive: true, force: true });
         this.bookCache.delete(current.slug);
+        this.bookScan = null;
       }
       const favorites = await this.readList("favorites.json", FavoriteSchema);
       if (favorites.some((f) => f.bookId === id)) {

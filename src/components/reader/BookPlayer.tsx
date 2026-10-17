@@ -70,6 +70,7 @@ import { ProgressScrubber } from "./ProgressScrubber";
 import { RecordingPanel } from "./RecordingPanel";
 import { StoryText } from "./StoryText";
 import { useDeviceVoice } from "./useDeviceVoice";
+import { useEstimatedTimings } from "./useEstimatedTimings";
 import { useNarration } from "./useNarration";
 import { useSleepTimer } from "./useSleepTimer";
 import { VoicePicker } from "./VoicePicker";
@@ -137,12 +138,31 @@ const SIDE_BY_SIDE_MAX_RATIO = 1.2;
 const READER_CSS = `
 @keyframes mystory-reader-page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .mystory-reader-spread { animation: mystory-reader-page-in 0.25s ease-out; }
-.mystory-reader-text { max-height: 45%; }
+.mystory-reader-text { max-height: 55%; }
+/* Beside the picture the text may use the full height. Plain CSS here beats the
+   layered Tailwind utilities, so sm:max-h-full alone cannot lift the cap above. */
+@media (min-width: 640px) { .mystory-reader-text-beside { max-height: 100%; } }
+/* A tall picture on a narrow portrait screen keeps its natural height instead of being
+   squeezed by the text; the page scrolls when picture and text together are taller. */
+@media (max-width: 639px) and (orientation: portrait) {
+  .mystory-reader-tall { overflow-y: auto; justify-content: flex-start; }
+  .mystory-reader-tall .mystory-reader-frame {
+    flex: none;
+    height: min(62dvh, calc((100vw - 2rem) / var(--mystory-img-ratio)));
+  }
+  .mystory-reader-tall .mystory-reader-text { max-height: none; overflow: visible; }
+}
 @media (orientation: landscape) and (max-height: 560px) {
   .mystory-reader-spread { flex-direction: row; }
   .mystory-reader-text { max-height: 100%; width: 50%; }
 }
-@media (prefers-reduced-motion: reduce) { .mystory-reader-spread { animation: none; } }
+@keyframes mystory-reader-ambient-in { from { opacity: 0; } }
+.mystory-reader-ambient { animation: mystory-reader-ambient-in 0.6s ease-out; }
+@keyframes mystory-reader-pulse { 0% { box-shadow: 0 0 0 0 var(--secondary); } 100% { box-shadow: 0 0 0 14px transparent; } }
+.mystory-reader-playing { animation: mystory-reader-pulse 1.6s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .mystory-reader-spread, .mystory-reader-ambient, .mystory-reader-playing { animation: none; }
+}
 @keyframes mystory-kb-0 { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.06) translate(-1%, -0.8%); } }
 @keyframes mystory-kb-1 { from { transform: scale(1.06) translate(1%, 0.6%); } to { transform: scale(1) translate(0, 0); } }
 @keyframes mystory-kb-2 { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.06) translate(1%, 0.8%); } }
@@ -409,10 +429,18 @@ function Player({
   const upcomingAudio = index + 1 < pageCount ? voiceAudio(index + 1) : "";
   // The narration is of the translation: its word timings do not fit the original text.
   // Family recordings have no word timings.
-  const timings = useMemo(
+  const storedTimings = useMemo(
     () => (current && !inOriginal && voiceId === null ? usableTimings(current) : null),
     [current, inOriginal, voiceId],
   );
+  // A recording without timings (a family recording, an uploaded narration) gets an estimate
+  // from its pauses. Not for the silent demo audio, which the device voice reads instead.
+  const estimatedTimings = useEstimatedTimings({
+    src: audioSrc,
+    text: current ? pageDisplayText(current, nikudOn) : "",
+    enabled: !!current && !inOriginal && !storedTimings && !(voiceId === null && current.audioSource === "mock"),
+  });
+  const timings = storedTimings ?? estimatedTimings;
   const isLastPage = index === pageCount - 1;
 
   const handlePageEnded = useCallback(() => {
@@ -702,6 +730,7 @@ function Player({
     };
   }, [showVideo, imageReady, imageSrc]);
   const sideBySide = showImage && textLayout === "side" && imageRatio !== null && imageRatio <= SIDE_BY_SIDE_MAX_RATIO;
+  const tallPicture = showImage && showText && imageRatio !== null && imageRatio < 0.95;
   const text = current ? (inOriginal ? originalText : pageDisplayText(current, nikudOn)) : "";
   const textLanguage = inOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
   const title = (showOriginal && book.credits?.originalTitle) || book.title;
@@ -748,7 +777,7 @@ function Player({
   };
 
   const containerClass = cn(
-    "flex flex-col overflow-hidden bg-background text-foreground",
+    "isolate flex flex-col overflow-hidden bg-background text-foreground",
     isPage ? "fixed inset-0 z-40" : "relative h-full min-h-[30rem] w-full rounded-lg border border-border",
     className,
   );
@@ -780,10 +809,21 @@ function Player({
     >
       <style>{READER_CSS}</style>
 
+      {/* Ambient backdrop: the page's picture, blurred, tints the whole reader. */}
+      {showImage && !atEnd && imageReady ? (
+        <img
+          key={imageSrc}
+          src={imageSrc}
+          alt=""
+          aria-hidden="true"
+          className="mystory-reader-ambient pointer-events-none absolute inset-0 -z-10 size-full scale-125 object-cover opacity-30 blur-3xl saturate-150 bedtime:opacity-20"
+        />
+      ) : null}
+
       {/* Top bar */}
       <header className="flex shrink-0 items-center gap-1 px-2 py-1.5 sm:gap-2 sm:px-4">
         {exitControl("icon")}
-        <h1 dir="auto" className="min-w-0 flex-1 truncate px-1 text-start text-lg font-bold sm:text-xl">
+        <h1 dir="auto" className="min-w-0 flex-1 truncate px-1 text-start font-display text-lg font-semibold sm:text-2xl">
           {title}
         </h1>
 
@@ -926,13 +966,15 @@ function Player({
             className={cn(
               "mystory-reader-spread flex h-full min-h-0 flex-col items-center gap-3 px-4 py-3 sm:px-28",
               sideBySide && "sm:flex-row sm:gap-6",
+              tallPicture && "mystory-reader-tall",
             )}
+            style={tallPicture ? ({ "--mystory-img-ratio": imageRatio } as CSSProperties) : undefined}
           >
             {showImage ? (
               <div
                 className={cn(
                   // The frame clips the slow zoom of a living picture.
-                  "flex min-h-0 w-full min-w-0 flex-1 items-center justify-center overflow-hidden",
+                  "mystory-reader-frame flex min-h-0 w-full min-w-0 flex-1 items-center justify-center overflow-hidden",
                   sideBySide && "sm:h-full",
                   !motionActive && "mystory-motion-paused",
                 )}
@@ -996,9 +1038,11 @@ function Player({
             {showText && text.trim() !== "" ? (
               <div
                 className={cn(
-                  "w-full max-w-3xl overflow-y-auto px-2",
-                  showImage ? "mystory-reader-text shrink-0" : "flex min-h-0 flex-1 flex-col justify-center",
-                  sideBySide && "sm:max-h-full sm:w-[40%] sm:max-w-md sm:shrink",
+                  "w-full max-w-4xl overflow-y-auto px-2",
+                  showImage
+                    ? "mystory-reader-text shrink-0 rounded-[1.5rem] bg-surface/80 px-4 py-2 shadow-card ring-1 ring-border/60 backdrop-blur-md sm:px-6"
+                    : "flex min-h-0 flex-1 flex-col justify-center",
+                  sideBySide && "mystory-reader-text-beside sm:w-1/2 sm:max-w-2xl sm:shrink",
                 )}
               >
                 <StoryText
@@ -1023,7 +1067,7 @@ function Player({
             <Button
               variant="outline"
               size="icon-lg"
-              className="absolute start-2 top-1/2 z-10 size-16 -translate-y-1/2 p-0 shadow-card max-sm:bg-surface/85 sm:start-5 sm:size-20"
+              className="absolute start-2 top-1/2 z-10 size-16 -translate-y-1/2 border-transparent bg-surface/80 p-0 shadow-card ring-1 ring-border/60 backdrop-blur-md transition-transform hover:scale-105 active:scale-95 sm:start-5 sm:size-20"
               aria-label="לעמוד הקודם"
               disabled={index === 0}
               onClick={() => turn(-1)}
@@ -1033,7 +1077,7 @@ function Player({
             <Button
               variant="primary"
               size="icon-lg"
-              className="absolute end-2 top-1/2 z-10 size-16 -translate-y-1/2 p-0 sm:end-5 sm:size-20"
+              className="absolute end-2 top-1/2 z-10 size-16 -translate-y-1/2 p-0 shadow-lift transition-transform hover:scale-105 active:scale-95 sm:end-5 sm:size-20"
               aria-label={isLastPage ? "לסוף הסיפור" : "לעמוד הבא"}
               onClick={() => turn(1)}
             >
@@ -1106,8 +1150,13 @@ function Player({
       ) : null}
       {!atEnd && !recordMode ? (
         <footer className="flex shrink-0 items-center justify-center px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-1 sm:px-6">
-          <div className="flex min-w-0 flex-col items-center gap-1">
-            <div className="flex items-center gap-2">
+          <div className="flex min-w-0 flex-col items-center gap-1.5">
+            <div
+              className={cn(
+                "flex items-center gap-2",
+                hasAnyAudio && "rounded-full bg-surface/85 p-1.5 pe-3 shadow-pop ring-1 ring-border/60 backdrop-blur-md",
+              )}
+            >
               {hasAnyAudio ? (
                 <>
                   <Button
@@ -1117,6 +1166,7 @@ function Player({
                     title={audioSrc ? undefined : "לעמוד הזה אין הקראה"}
                     disabled={!audioSrc}
                     onClick={narration.toggle}
+                    className={cn("size-16 rounded-full", narrating && "mystory-reader-playing")}
                   >
                     {narrating ? (
                       <Pause aria-hidden="true" className="size-8" />
@@ -1137,7 +1187,7 @@ function Player({
                 </>
               ) : null}
             </div>
-            <p className="text-sm text-muted" aria-hidden="true">
+            <p className="rounded-full bg-surface/70 px-3 py-0.5 text-sm font-medium text-muted backdrop-blur" aria-hidden="true">
               <span dir="ltr">
                 {index + 1} / {pageCount}
               </span>

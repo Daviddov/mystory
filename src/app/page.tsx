@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
 import { BookRow } from "@/components/BookRow";
 import { CollectionCard } from "@/components/library/CollectionCard";
+import { ContinueReading } from "@/components/library/ContinueReading";
 import { HeroBook } from "@/components/library/HeroBook";
 import { getHomeData } from "@/components/library/queries";
 import { isNewBook } from "@/components/library/recommend";
 import { SearchForm } from "@/components/library/SearchForm";
 import { isInSeason } from "@/components/library/seasons";
+import { SectionTitle } from "@/components/library/SectionTitle";
 import { AgeTiles, TimeTiles } from "@/components/library/Tiles";
 import { JsonLd } from "@/components/JsonLd";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
+import { toPublicBook } from "@/lib/public-book";
 import { routes } from "@/lib/routes";
 import { siteJsonLd } from "@/lib/seo";
 import { THEMES } from "@/lib/taxonomy";
@@ -33,6 +34,17 @@ export const metadata: Metadata = {
   },
 };
 
+/** Greeting by the hour in Israel. */
+function greeting(now: Date): { text: string; emoji: string } {
+  const hour = Number(
+    new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "Asia/Jerusalem" }).format(now),
+  );
+  if (hour >= 5 && hour < 12) return { text: "בוקר טוב!", emoji: "🌤️" };
+  if (hour >= 12 && hour < 17) return { text: "צהריים טובים!", emoji: "☀️" };
+  if (hour >= 17 && hour < 20) return { text: "ערב טוב!", emoji: "🌇" };
+  return { text: "לילה טוב!", emoji: "🌙" };
+}
+
 export default async function HomePage() {
   const data = await getHomeData();
   const today = new Date(data.now);
@@ -50,18 +62,43 @@ export default async function HomePage() {
     );
   }
 
+  const hello = greeting(today);
+  const readableBooks = [
+    ...new Map(
+      [data.bookOfTheWeek, ...data.newest, ...data.popular, ...data.shelves.flatMap((shelf) => shelf.books)]
+        .filter((book) => book !== null)
+        .map((book) => [book.id, toPublicBook(book)]),
+    ).values(),
+  ];
+
   return (
-    <main className="container-page flex flex-col gap-12 py-6 sm:gap-14 sm:py-10">
+    <main className="container-page flex flex-col gap-12 py-6 sm:gap-16 sm:py-10">
       <JsonLd data={siteJsonLd()} />
-      <section className="flex flex-col gap-5">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-extrabold leading-tight sm:text-5xl">סיפורים לקרוא ולשמוע</h1>
-          <p className="max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
-            בוחרים ספר, מדפדפים וקוראים יחד. בלי הרשמה ובלי פרסומות.
-          </p>
+      <section className="relative isolate overflow-hidden rounded-[2rem] bg-surface px-5 py-8 shadow-card sm:px-10 sm:py-12">
+        <div aria-hidden="true" className="hero-washes -z-10" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 hidden select-none sm:block">
+          <span className="float-soft absolute end-[6%] top-[14%] text-6xl">📚</span>
+          <span className="float-soft absolute bottom-[14%] end-[18%] text-5xl [animation-delay:-2s]">🦉</span>
+          <span className="float-soft absolute end-[30%] top-[10%] text-4xl [animation-delay:-3.5s]">⭐</span>
         </div>
-        <SearchForm id="home-search" className="max-w-2xl" />
+        <div className="flex max-w-2xl flex-col gap-5">
+          <p className="inline-flex w-fit items-center gap-2 rounded-full bg-surface/80 px-4 py-1.5 font-semibold shadow-card backdrop-blur">
+            <span aria-hidden="true">{hello.emoji}</span>
+            {hello.text}
+          </p>
+          <div className="flex flex-col gap-3">
+            <h1 className="text-4xl font-bold leading-tight sm:text-6xl">
+              סיפורים לקרוא <span className="text-primary">ולשמוע</span>
+            </h1>
+            <p className="text-lg leading-relaxed text-foreground/75 sm:text-xl">
+              בוחרים ספר, מדפדפים וקוראים יחד. בלי הרשמה ובלי פרסומות.
+            </p>
+          </div>
+          <SearchForm id="home-search" />
+        </div>
       </section>
+
+      <ContinueReading books={readableBooks} />
 
       {data.bookOfTheWeek ? (
         <HeroBook book={data.bookOfTheWeek} label={data.bookOfTheWeekIsChosen ? "ספר השבוע" : "הספר הכי נקרא"} />
@@ -80,30 +117,15 @@ export default async function HomePage() {
         })}
       />
 
-      <BookRow
-        title="הכי פופולריים"
-        emoji="🏆"
-        books={data.popular}
-        href={routes.books({ sort: "popular" })}
-      />
+      <BookRow title="הכי פופולריים" emoji="🏆" books={data.popular} href={routes.books({ sort: "popular" })} />
 
       <TimeTiles />
 
       {data.collections.length > 0 ? (
         <section aria-labelledby="home-collections-title" className="flex flex-col gap-4">
-          <div className="flex items-end justify-between gap-4">
-            <h2 id="home-collections-title" className="text-2xl font-bold sm:text-3xl">
-              <span aria-hidden="true">🧺 </span>
-              אוספים לעונה ולחגים
-            </h2>
-            <Link
-              href={routes.collections()}
-              className="inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full px-3 font-semibold text-secondary hover:bg-surface-2"
-            >
-              לכל האוספים
-              <ChevronLeft aria-hidden="true" className="size-5" />
-            </Link>
-          </div>
+          <SectionTitle id="home-collections-title" emoji="🧺" href={routes.collections()} hrefLabel="לכל האוספים">
+            אוספים לעונה ולחגים
+          </SectionTitle>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.collections.slice(0, 6).map(({ collection, books }) => (
               <li key={collection.id}>
@@ -126,10 +148,9 @@ export default async function HomePage() {
       ))}
 
       <section aria-labelledby="home-themes-title" className="flex flex-col gap-4">
-        <h2 id="home-themes-title" className="text-2xl font-bold sm:text-3xl">
-          <span aria-hidden="true">💬 </span>
+        <SectionTitle id="home-themes-title" emoji="💬">
           על מה נדבר אחרי הסיפור?
-        </h2>
+        </SectionTitle>
         <ul className="flex flex-wrap gap-2">
           {THEMES.map((theme) => (
             <li key={theme.slug}>

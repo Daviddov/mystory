@@ -23,6 +23,16 @@ export interface EndScreenProps {
   staffPanel?: ReactNode;
 }
 
+/** Emoji that fall once behind the "end of story" heading (skipped under reduced motion). */
+const CONFETTI = [
+  { emoji: "⭐", x: 8, delay: 0 },
+  { emoji: "🎈", x: 22, delay: 0.3 },
+  { emoji: "✨", x: 36, delay: 0.1 },
+  { emoji: "🌟", x: 64, delay: 0.4 },
+  { emoji: "🎊", x: 78, delay: 0.2 },
+  { emoji: "⭐", x: 90, delay: 0.5 },
+];
+
 /** Shown after the last page: questions to talk about, read again, and what to read next. */
 export function EndScreen({
   title,
@@ -36,11 +46,25 @@ export function EndScreen({
 }: EndScreenProps) {
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-8">
-      <header className="text-center">
-        <p className="text-6xl" aria-hidden="true">
+      <header className="relative text-center">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-40 overflow-hidden">
+          {CONFETTI.map((piece, i) => (
+            <span
+              key={i}
+              className="mystory-confetti absolute top-0 text-2xl"
+              style={{ insetInlineStart: `${piece.x}%`, animationDelay: `${piece.delay}s` }}
+            >
+              {piece.emoji}
+            </span>
+          ))}
+        </div>
+        <p
+          className="mystory-trophy relative mx-auto flex size-28 items-center justify-center rounded-full bg-accent-soft text-6xl shadow-card"
+          aria-hidden="true"
+        >
           🎉
         </p>
-        <h2 className="mt-2 text-4xl font-bold">סוף הסיפור</h2>
+        <h2 className="relative mt-4 text-4xl font-bold sm:text-5xl">סוף הסיפור</h2>
         <p className="mt-2 text-xl text-muted">קראנו את ״{title}״ עד הסוף. כל הכבוד!</p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <Button size="lg" variant="primary" onClick={onReadAgain}>
@@ -54,7 +78,10 @@ export function EndScreen({
       {staffPanel}
 
       {discussionQuestions.length > 0 ? (
-        <section aria-labelledby="reader-questions-title" className="rounded-xl bg-surface p-6 shadow-card">
+        <section
+          aria-labelledby="reader-questions-title"
+          className="rounded-[1.75rem] bg-surface p-6 shadow-card ring-1 ring-border/60 sm:p-8"
+        >
           <h3 id="reader-questions-title" className="text-2xl font-bold">
             <span aria-hidden="true">💬 </span>
             על מה אפשר לדבר?

@@ -51,6 +51,12 @@
 
   --elev-card: 0 2px 0 rgb(59 47 42 / 0.06), 0 10px 24px -12px rgb(59 47 42 / 0.25);
   --elev-pop: 0 18px 40px -16px rgb(59 47 42 / 0.45);
+  --elev-lift: 0 4px 0 rgb(59 47 42 / 0.05), 0 22px 40px -18px rgb(217 72 15 / 0.45);
+
+  /* Soft colour washes behind the home hero. */
+  --wash-1: #ffd8a8;
+  --wash-2: #c5f0f5;
+  --wash-3: #ffe8a3;
 
   /* Minimum size of anything a child taps. */
   --touch: 3rem;
@@ -101,6 +107,11 @@
 
   --elev-card: 0 2px 0 rgb(0 0 0 / 0.2), 0 10px 24px -12px rgb(0 0 0 / 0.6);
   --elev-pop: 0 18px 40px -16px rgb(0 0 0 / 0.8);
+  --elev-lift: 0 4px 0 rgb(0 0 0 / 0.25), 0 22px 40px -18px rgb(255 184 107 / 0.35);
+
+  --wash-1: #3b2f63;
+  --wash-2: #1f3d5c;
+  --wash-3: #4a3b2a;
 }
 
 @theme inline {
@@ -141,10 +152,12 @@
   --color-overlay: var(--overlay);
 
   --font-sans: var(--font-ui), "Rubik", "Arial Hebrew", Arial, sans-serif;
+  --font-display: var(--font-display-face), var(--font-ui), "Rubik", sans-serif;
   --font-story: var(--font-story-face), "Frank Ruhl Libre", "Times New Roman", serif;
 
   --shadow-card: var(--elev-card);
   --shadow-pop: var(--elev-pop);
+  --shadow-lift: var(--elev-lift);
 
   --spacing-touch: var(--touch);
   --spacing-touch-lg: var(--touch-lg);
@@ -172,6 +185,13 @@
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display-face), var(--font-ui), "Rubik", sans-serif;
+    letter-spacing: -0.005em;
   }
 
   :focus-visible {
@@ -237,7 +257,37 @@
     background: var(--highlight);
     color: var(--highlight-foreground);
     border-radius: 0.35em;
-    box-shadow: 0 0 0 0.15em var(--highlight);
+    box-shadow:
+      0 0 0 0.15em var(--highlight),
+      0 0.25em 0.6em -0.1em rgb(245 183 0 / 0.55);
+  }
+
+  /* End screen: a short one-off celebration. */
+  .mystory-confetti {
+    opacity: 0;
+    animation: mystory-confetti-fall 2.4s ease-in forwards;
+  }
+  @keyframes mystory-confetti-fall {
+    0% {
+      opacity: 0;
+      transform: translateY(-1rem) rotate(0deg);
+    }
+    15% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(9rem) rotate(240deg);
+    }
+  }
+  .mystory-trophy {
+    animation: mystory-trophy-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes mystory-trophy-pop {
+    from {
+      transform: scale(0.4) rotate(-12deg);
+      opacity: 0;
+    }
   }
 
   /* Any page can hide the site header and footer (reader, print view) by
@@ -249,6 +299,47 @@
   .touch-target {
     min-width: var(--touch);
     min-height: var(--touch);
+  }
+
+  /* Round emoji badge in front of a section heading. */
+  .heading-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    font-size: 1.5rem;
+    line-height: 1;
+    background: var(--accent-soft);
+    box-shadow: inset 0 -3px 0 rgb(0 0 0 / 0.06);
+    flex-shrink: 0;
+  }
+
+  /* Blurred colour blobs behind a hero; place inside a relative, overflow-hidden parent. */
+  .hero-washes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(40% 60% at 85% 20%, var(--wash-1), transparent 70%),
+      radial-gradient(35% 55% at 10% 85%, var(--wash-2), transparent 70%),
+      radial-gradient(30% 45% at 45% 0%, var(--wash-3), transparent 70%);
+    opacity: 0.9;
+  }
+
+  /* Gentle bob for decorative emoji. */
+  .float-soft {
+    animation: float-soft 5s ease-in-out infinite;
+  }
+  @keyframes float-soft {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-3deg);
+    }
+    50% {
+      transform: translateY(-8px) rotate(3deg);
+    }
   }
 
   /* Horizontal shelf without a visible scrollbar. */

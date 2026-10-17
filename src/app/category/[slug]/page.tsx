@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = getCategory((await params).slug);
   if (!category) return { title: "הדף לא נמצא", robots: { index: false } };
   return {
-    title: `ספרי ${category.label}`,
-    description: `סיפורים לילדים בקטגוריית ${category.label}${category.description ? `: ${category.description}` : ""}.`,
+    title: category.searchTitle ?? `סיפורי ${category.label} לילדים`,
+    description: `${category.searchTitle ?? `סיפורי ${category.label} לילדים`}${category.description ? `: ${category.description}` : ""}. ספרים מאוירים לקריאה ולהאזנה אונליין, בחינם.`,
     alternates: { canonical: routes.category(category.slug) },
   };
 }

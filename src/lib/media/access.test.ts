@@ -195,6 +195,8 @@ describe("GET /media for a book that is not published", () => {
     const etag = response.headers.get("etag");
     expect(etag).toBeTruthy();
     expect((await get(file, "", { "if-none-match": etag! })).status).toBe(304);
+    // A versioned address (mediaUrl with updatedAt) may be kept for a week.
+    expect((await get(file, "?v=1")).headers.get("cache-control")).toContain("max-age=604800");
 
     await data.repo.updateBook(book.id, { status: "private" });
     expect((await get(file)).status).toBe(404);

@@ -44,10 +44,34 @@ export function cronSecret(): string | undefined {
   return env("CRON_SECRET");
 }
 
-/** Public origin used for absolute links (share links, sitemap). */
+let warnedMissingSiteUrl = false;
+
+/**
+ * Public origin used for absolute links (share links, sitemap, canonical and
+ * Open Graph URLs). NEXT_PUBLIC_SITE_URL wins; on Vercel the production
+ * domain it provides is the fallback. A production server that falls back to
+ * localhost would tell search engines that every page lives on localhost, so
+ * that case is logged loudly.
+ */
 export function siteUrl(): string {
-  return (env("NEXT_PUBLIC_SITE_URL") ?? "http://localhost:3000").replace(/\/+$/, "");
+  const vercelDomain = env("VERCEL_PROJECT_PRODUCTION_URL");
+  const configured = env("NEXT_PUBLIC_SITE_URL") ?? (vercelDomain ? `https://${vercelDomain}` : undefined);
+  if (!configured && process.env.NODE_ENV === "production" && !warnedMissingSiteUrl) {
+    warnedMissingSiteUrl = true;
+    console.error("[config] NEXT_PUBLIC_SITE_URL is not set: canonical URLs and the sitemap point to localhost.");
+  }
+  return (configured ?? "http://localhost:3000").replace(/\/+$/, "");
 }
+
+/** Search engine ownership tokens (the content of their verification meta tags). */
+export const seoEnv = {
+  googleVerification: () => env("GOOGLE_SITE_VERIFICATION"),
+  bingVerification: () => env("BING_SITE_VERIFICATION"),
+  /** Domain registered with Plausible (cookieless analytics). Unset loads no analytics. */
+  plausibleDomain: () => env("NEXT_PUBLIC_PLAUSIBLE_DOMAIN"),
+  /** Script URL of a self-hosted Plausible; defaults to plausible.io. */
+  plausibleSrc: () => env("NEXT_PUBLIC_PLAUSIBLE_SRC"),
+};
 
 export const aiEnv = {
   anthropicApiKey: () => env("ANTHROPIC_API_KEY"),

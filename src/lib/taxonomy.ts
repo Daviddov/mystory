@@ -9,26 +9,28 @@ export interface TaxonomyItem {
   label: string;
   emoji: string;
   description?: string;
+  /** Page title as parents search for it (no nikud), e.g. "סיפורי חיות לילדים". Default: built from the label. */
+  searchTitle?: string;
 }
 
 // --- Categories -------------------------------------------------------------
 
 export const CATEGORIES = [
-  { slug: "adventures", label: "הרפתקאות", emoji: "🗺️", description: "מסעות, תעלומות וגילויים" },
-  { slug: "bedtime", label: "לפני השינה", emoji: "🌙", description: "סיפורים רגועים לסוף היום" },
-  { slug: "animals", label: "חיות", emoji: "🦊", description: "חברים על ארבע, בכנפיים ובסנפירים" },
-  { slug: "fantasy", label: "פנטזיה", emoji: "🦄", description: "קסמים, דרקונים ועולמות דמיוניים" },
-  { slug: "educational", label: "לימודי", emoji: "🔤", description: "אותיות, מספרים, צבעים וידע" },
-  { slug: "home-education", label: "חינוך ביתי", emoji: "🏡", description: "הרגלים, שגרה ועצמאות בבית" },
-  { slug: "transitions", label: "מעברים", emoji: "🎒", description: "גן חדש, אח חדש, דירה חדשה" },
-  { slug: "overcoming", label: "התגברות", emoji: "💪", description: "פחדים, קשיים וניצחונות קטנים" },
-  { slug: "friendship", label: "חברות", emoji: "🤝", description: "חברים, משפחה ולהיות ביחד" },
-  { slug: "nature", label: "טבע", emoji: "🌳", description: "עונות, צמחים, ים ושמיים" },
-  { slug: "humor", label: "הומור", emoji: "😄", description: "סיפורים מצחיקים ושטותיים" },
-  { slug: "values", label: "ערכים", emoji: "💛", description: "כנות, נתינה, סבלנות וכבוד" },
-  { slug: "fables", label: "משלים", emoji: "🦉", description: "סיפורי חיות עם מוסר השכל" },
-  { slug: "parasha", label: "פרשת שבוע", emoji: "📜", description: "סיפורי התורה לפי פרשות השבוע" },
-  { slug: "judaism", label: "יהדות", emoji: "🕯️", description: "שבת, חגים, מסורת וסיפורי חכמים" },
+  { slug: "adventures", searchTitle: "סיפורי הרפתקאות לילדים", label: "הרפתקאות", emoji: "🗺️", description: "מסעות, תעלומות וגילויים" },
+  { slug: "bedtime", searchTitle: "סיפורים לפני השינה לילדים", label: "לפני השינה", emoji: "🌙", description: "סיפורים רגועים לסוף היום" },
+  { slug: "animals", searchTitle: "סיפורי חיות לילדים", label: "חיות", emoji: "🦊", description: "חברים על ארבע, בכנפיים ובסנפירים" },
+  { slug: "fantasy", searchTitle: "סיפורי פנטזיה וקסמים לילדים", label: "פנטזיה", emoji: "🦄", description: "קסמים, דרקונים ועולמות דמיוניים" },
+  { slug: "educational", searchTitle: "ספרים לימודיים לילדים", label: "לימודי", emoji: "🔤", description: "אותיות, מספרים, צבעים וידע" },
+  { slug: "home-education", searchTitle: "סיפורים על הרגלים ושגרה לילדים", label: "חינוך ביתי", emoji: "🏡", description: "הרגלים, שגרה ועצמאות בבית" },
+  { slug: "transitions", searchTitle: "סיפורים על מעברים: גן חדש, אח חדש", label: "מעברים", emoji: "🎒", description: "גן חדש, אח חדש, דירה חדשה" },
+  { slug: "overcoming", searchTitle: "סיפורים על התגברות על פחדים לילדים", label: "התגברות", emoji: "💪", description: "פחדים, קשיים וניצחונות קטנים" },
+  { slug: "friendship", searchTitle: "סיפורים על חברות לילדים", label: "חברות", emoji: "🤝", description: "חברים, משפחה ולהיות ביחד" },
+  { slug: "nature", searchTitle: "סיפורים על הטבע לילדים", label: "טבע", emoji: "🌳", description: "עונות, צמחים, ים ושמיים" },
+  { slug: "humor", searchTitle: "סיפורים מצחיקים לילדים", label: "הומור", emoji: "😄", description: "סיפורים מצחיקים ושטותיים" },
+  { slug: "values", searchTitle: "סיפורים עם ערכים לילדים", label: "ערכים", emoji: "💛", description: "כנות, נתינה, סבלנות וכבוד" },
+  { slug: "fables", searchTitle: "משלים לילדים עם מוסר השכל", label: "משלים", emoji: "🦉", description: "סיפורי חיות עם מוסר השכל" },
+  { slug: "parasha", searchTitle: "סיפורים לפרשת השבוע לילדים", label: "פרשת שבוע", emoji: "📜", description: "סיפורי התורה לפי פרשות השבוע" },
+  { slug: "judaism", searchTitle: "סיפורים לשבת ולחגים לילדים", label: "יהדות", emoji: "🕯️", description: "שבת, חגים, מסורת וסיפורי חכמים" },
 ] as const satisfies readonly TaxonomyItem[];
 
 export type CategorySlug = (typeof CATEGORIES)[number]["slug"];

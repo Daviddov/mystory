@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Frank_Ruhl_Libre, Rubik } from "next/font/google";
+import Script from "next/script";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { AppShellExtras } from "@/components/pwa/AppShellExtras";
-import { siteUrl } from "@/lib/config";
+import { seoEnv, siteUrl } from "@/lib/config";
+import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/seo";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -16,17 +18,39 @@ const uiFont = Rubik({
 });
 
 // Story font: a book face whose vowel points (nikud) sit correctly under the letters.
+// Not preloaded: most pages have no story text above the fold, and every
+// preloaded font competes with the cover image for the first paint (LCP).
 const storyFont = Frank_Ruhl_Libre({
   subsets: ["hebrew", "latin"],
   variable: "--font-story-face",
   display: "swap",
+  preload: false,
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl()),
-  title: { default: "הסיפור שלי: סיפורים לילדים", template: "%s | הסיפור שלי" },
-  description: "סיפורים לילדים בעברית לקרוא ולשמוע, ומקום קל ליצור ולהעלות ספרים משלכם.",
-};
+export function generateMetadata(): Metadata {
+  const google = seoEnv.googleVerification();
+  const bing = seoEnv.bingVerification();
+  return {
+    metadataBase: new URL(siteUrl()),
+    applicationName: SITE_NAME,
+    title: { default: "הסיפור שלי: סיפורים לילדים", template: "%s | הסיפור שלי" },
+    description: SITE_DESCRIPTION,
+    // Defaults for every page; pages that set their own openGraph replace these
+    // fields, while the image comes from the nearest opengraph-image file.
+    openGraph: {
+      siteName: SITE_NAME,
+      type: "website",
+      locale: "he_IL",
+      title: "הסיפור שלי: סיפורים לילדים",
+      description: SITE_DESCRIPTION,
+    },
+    twitter: { card: "summary_large_image" },
+    verification: {
+      google,
+      other: bing ? { "msvalidate.01": bing } : undefined,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -35,6 +59,7 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const plausibleDomain = seoEnv.plausibleDomain();
   return (
     <html
       lang="he"
@@ -59,6 +84,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </div>
         <SiteFooter />
         <AppShellExtras />
+        {plausibleDomain ? (
+          // Cookieless and without personal data, so no consent banner is needed.
+          <Script
+            defer
+            data-domain={plausibleDomain}
+            src={seoEnv.plausibleSrc() ?? "https://plausible.io/js/script.js"}
+            strategy="afterInteractive"
+          />
+        ) : null}
       </body>
     </html>
   );

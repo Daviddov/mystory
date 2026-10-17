@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const theme = getTheme((await params).slug);
   if (!theme) return { title: "הדף לא נמצא", robots: { index: false } };
   return {
-    title: `סיפורים על ${theme.label}`,
+    title: `סיפורים על ${theme.label} לילדים`,
     description: `סיפורים לילדים שפותחים שיחה על ${theme.label}, עם שאלות לשיחה בסוף כל ספר.`,
     alternates: { canonical: routes.theme(theme.slug) },
   };

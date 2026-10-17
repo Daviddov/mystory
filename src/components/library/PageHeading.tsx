@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import type { ReactNode } from "react";
+import { JsonLd } from "@/components/JsonLd";
 import { cn } from "@/lib/cn";
 import { routes } from "@/lib/routes";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export interface Crumb {
   label: string;
@@ -17,15 +19,27 @@ export interface PageHeadingProps {
   description?: ReactNode;
   /** Trail after "דף הבית". The last crumb is the current page. */
   crumbs?: Crumb[];
+  /** Also emit the crumbs as BreadcrumbList structured data. Off for pages search engines must not see (private books). */
+  structuredData?: boolean;
   children?: ReactNode;
   className?: string;
 }
 
-/** Breadcrumbs + h1 + description shared by every library page. */
-export function PageHeading({ title, emoji, eyebrow, description, crumbs, children, className }: PageHeadingProps) {
+/** Breadcrumbs (visible and as BreadcrumbList structured data) + h1 + description shared by every library page. */
+export function PageHeading({
+  title,
+  emoji,
+  eyebrow,
+  description,
+  crumbs,
+  structuredData = true,
+  children,
+  className,
+}: PageHeadingProps) {
   const trail: Crumb[] = [{ label: "דף הבית", href: routes.home() }, ...(crumbs ?? [])];
   return (
     <header className={cn("flex flex-col gap-3", className)}>
+      {crumbs && structuredData ? <JsonLd data={breadcrumbJsonLd(crumbs)} /> : null}
       {crumbs ? (
         <nav aria-label="מיקום באתר">
           <ol className="flex flex-wrap items-center gap-1 text-sm text-muted">

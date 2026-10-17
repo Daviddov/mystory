@@ -49,7 +49,8 @@ export function SiteFooter() {
         <FooterColumn title="נושאים לשיחה" links={THEME_NAV} />
         <FooterColumn title="זמן קריאה ותגיות" links={[...TIME_NAV, ...TAG_NAV]} />
         <FooterColumn title="יוצרים ספרים" links={[...STUDIO_NAV, ...ACCOUNT_NAV]} />
-        <FooterColumn title="מידע" links={[...INFO_NAV, { href: routes.admin(), label: "לוח ניהול" }]} />
+        {/* No admin link: the public footer is on every page search engines crawl. */}
+        <FooterColumn title="מידע" links={INFO_NAV} />
       </div>
       <div className="border-t border-border">
         <p className="container-page py-4 text-sm text-muted">

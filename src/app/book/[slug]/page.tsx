@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { BookOpen, Clock, Headphones, Printer } from "lucide-react";
 import { cache, type ReactNode } from "react";
 import { BookCredits } from "@/components/BookCredits";
+import { BookFullText } from "@/components/BookFullText";
+import { JsonLd } from "@/components/JsonLd";
 import { BookRow } from "@/components/BookRow";
 import { FavoriteButtonSlot } from "@/components/library/FavoriteButtonSlot";
 import { PageHeading } from "@/components/library/PageHeading";
@@ -12,11 +14,11 @@ import { FavoriteButton } from "@/components/personal/FavoriteButton";
 import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { ButtonLink, Card, Chip } from "@/components/ui";
 import { canViewBook, getCurrentUser } from "@/lib/auth";
-import { siteUrl } from "@/lib/config";
 import { isCreativeCommons, LANGUAGE_NAMES_HE } from "@/lib/credits";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
+import { absoluteUrl, plainText } from "@/lib/seo";
 import {
   getAgeGroup,
   getCategory,
@@ -46,11 +48,6 @@ const loadVisibleBook = cache(async (slug: string): Promise<BookWithPages | null
   return book;
 });
 
-function truncate(text: string, max: number): string {
-  const clean = text.replace(/\s+/g, " ").trim();
-  return clean.length <= max ? clean : `${clean.slice(0, max - 1).trimEnd()}…`;
-}
-
 function httpUrl(value: string): string | null {
   try {
     const url = new URL(value.trim());
@@ -69,27 +66,31 @@ const STATUS_NOTES: Record<Exclude<BookStatus, "published">, string> = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = await loadVisibleBook((await params).slug);
   if (!book) return { title: "הספר לא נמצא", robots: { index: false } };
-  const cover = mediaUrl(book.coverImage, book.updatedAt);
   const age = getAgeGroup(book.ageGroup);
+  // Search engines match text without nikud: people type titles without vowel points.
+  const title = plainText(book.title);
+  const hasAudio = book.pages.some((page) => !!page.audio);
   const description =
-    truncate(book.summary, 200) ||
-    `ספר ילדים ל${age?.label ?? "כל הגילים"}, ${readingTimeLabel(book.readingMinutes)} קריאה.`;
+    plainText(book.summary, 155) ||
+    `${title}: סיפור לילדים ל${age?.label ?? "כל הגילים"}, ${readingTimeLabel(book.readingMinutes)} קריאה${hasAudio ? ", עם הקראה" : ""}.`;
   return {
-    title: book.title,
+    title: `${title}: סיפור לילדים${hasAudio ? " עם הקראה" : ""}`,
     description,
     authors: book.author ? [{ name: book.author }] : undefined,
     alternates: { canonical: routes.book(book.slug) },
     robots: book.status === "published" ? undefined : { index: false, follow: false },
+    // The share image is drawn from the cover by ./opengraph-image.ts (PNG, 1200x630).
     openGraph: {
-      title: book.title,
+      title,
       description,
       type: "book",
       locale: "he_IL",
+      siteName: "הסיפור שלי",
       url: routes.book(book.slug),
       authors: book.author ? [book.author] : undefined,
       tags: book.tags,
-      images: cover ? [{ url: cover, alt: `כריכת הספר ${book.title}` }] : undefined,
     },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 
@@ -130,23 +131,37 @@ export default async function BookPage({ params }: Props) {
   // Books from an outside publisher and Creative Commons books get the full credit block.
   const showCredits = !!book.credits || isCreativeCommons(book.license);
   const bookPath = routes.book(book.slug);
+  // "3-5" -> [3, 5]
+  const ageRange = book.ageGroup.split("-").map(Number);
 
   const jsonLd =
     book.status === "published"
       ? {
           "@context": "https://schema.org",
           "@type": "Book",
-          name: book.title,
-          description: book.summary || undefined,
+          "@id": `${absoluteUrl(bookPath)}#book`,
+          name: plainText(book.title),
+          description: plainText(book.summary) || undefined,
           inLanguage: "he",
-          url: `${siteUrl()}${bookPath}`,
-          image: cover ? (cover.startsWith("/") ? `${siteUrl()}${cover}` : cover) : undefined,
+          url: absoluteUrl(bookPath),
+          image: absoluteUrl(cover),
           author: book.author ? { "@type": "Person", name: book.author } : undefined,
           illustrator: book.illustrator ? { "@type": "Person", name: book.illustrator } : undefined,
+          translator: book.credits?.translator ? { "@type": "Person", name: book.credits.translator } : undefined,
+          bookFormat: "https://schema.org/EBook",
+          audience: { "@type": "PeopleAudience", suggestedMinAge: ageRange[0], suggestedMaxAge: ageRange[1] },
+          timeRequired: `PT${Math.max(1, book.readingMinutes)}M`,
+          // Narrated books can be listened to with the text highlighted as it is read.
+          accessMode: hasAudio ? ["textual", "visual", "auditory"] : ["textual", "visual"],
+          accessibilityFeature: hasAudio ? ["synchronizedAudioText"] : undefined,
+          genre: categories.length > 0 ? categories.map((category) => category.label) : undefined,
+          about: themes.length > 0 ? themes.map((theme) => ({ "@type": "Thing", name: theme.label })) : undefined,
+          publisher: { "@type": "Organization", name: "הסיפור שלי", url: absoluteUrl(routes.home()) },
           license: book.license || undefined,
           numberOfPages: book.pages.length || undefined,
           typicalAgeRange: book.ageGroup,
           datePublished: book.publishedAt,
+          dateModified: book.updatedAt,
           keywords: tags.length > 0 ? tags.join(", ") : undefined,
           isAccessibleForFree: true,
         }
@@ -154,13 +169,7 @@ export default async function BookPage({ params }: Props) {
 
   return (
     <main className="container-page flex flex-col gap-10 py-6 sm:py-10">
-      {jsonLd ? (
-        <script
-          type="application/ld+json"
-          // "<" is escaped so book text can never close the script element.
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-        />
-      ) : null}
+      {jsonLd ? <JsonLd data={jsonLd} /> : null}
 
       {book.status !== "published" ? (
         <p role="note" className="rounded-md bg-warning-soft px-4 py-3 text-base">
@@ -198,6 +207,7 @@ export default async function BookPage({ params }: Props) {
         <div className="flex flex-col gap-6">
           <PageHeading
             title={book.title}
+            structuredData={book.status === "published"}
             crumbs={[
               { label: "כל הספרים", href: routes.books() },
               ...(age ? [{ label: age.label, href: routes.age(age.slug) }] : []),
@@ -389,6 +399,8 @@ export default async function BookPage({ params }: Props) {
           </Card>
         ) : null}
       </div>
+
+      {hasPages ? <BookFullText book={book} /> : null}
 
       {showCredits ? <BookCredits book={book} /> : null}
 

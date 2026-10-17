@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const age = getAgeGroup((await params).group);
   if (!age) return { title: "הדף לא נמצא", robots: { index: false } };
   return {
-    title: `ספרים ל${age.label}`,
-    description: `סיפורים לילדים ב${age.label}: ${age.description}.`,
+    title: `סיפורים לילדים ב${age.label}`,
+    description: `סיפורים וספרים לילדים ב${age.label}: ${age.description}. לקריאה ולהאזנה אונליין, בחינם.`,
     alternates: { canonical: routes.age(age.slug) },
   };
 }

@@ -273,7 +273,8 @@ describe("library pages", () => {
 
   it("builds metadata", async () => {
     const meta = await bookMetadata({ params: params({ slug: "snail" }) });
-    expect(meta.title).toBe("השבלול");
+    // Titles are built for search: no nikud, and what the page is.
+    expect(meta.title).toBe("השבלול: סיפור לילדים");
     expect(meta.alternates?.canonical).toBe("/book/snail");
     expect(meta.robots).toBeUndefined();
     expect((await booksMetadata({ searchParams: params({}) })).robots).toBeUndefined();

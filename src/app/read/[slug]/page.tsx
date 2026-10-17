@@ -11,6 +11,7 @@ import { recordingsForReader } from "@/lib/recordings/service";
 import { hasRole } from "@/lib/auth";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
+import { plainText } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -58,10 +59,12 @@ export async function generateMetadata({ params, searchParams }: ReadPageProps):
     // Private books stay out of search engines, and the share token out of Referer headers.
     return { title: `קוראים: ${book.title}`, robots: { index: false, follow: false }, referrer: "no-referrer" };
   }
+  // The book's page carries the same story (full text, details, structured data),
+  // so the reader points search engines there instead of competing with it.
   return {
-    title: `קוראים: ${book.title}`,
-    description: book.summary || undefined,
-    alternates: { canonical: routes.read(book.slug) },
+    title: `קוראים: ${plainText(book.title)}`,
+    description: plainText(book.summary, 155) || undefined,
+    alternates: { canonical: routes.book(book.slug) },
   };
 }
 

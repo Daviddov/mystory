@@ -1,9 +1,11 @@
 import { SlidersHorizontal } from "lucide-react";
 import type { ReactNode } from "react";
 import { BookGrid } from "@/components/BookGrid";
+import { JsonLd } from "@/components/JsonLd";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
 import type { BookFilter } from "@/lib/repo/types";
 import { routes } from "@/lib/routes";
+import { bookListJsonLd } from "@/lib/seo";
 import { AGE_GROUP_INFO } from "@/lib/taxonomy";
 import { bookCountLabel, hrefWith, parseLibraryQuery, type LibraryQuery, type RawSearchParams } from "./filters";
 import { PageHeading, type Crumb } from "./PageHeading";
@@ -74,6 +76,7 @@ export async function BrowseView({
 
   return (
     <main className="container-page flex flex-col gap-8 py-8 sm:py-10">
+      {listing.books.length > 0 ? <JsonLd data={bookListJsonLd(listing.books)} /> : null}
       <PageHeading title={title} emoji={emoji} eyebrow={eyebrow} description={description} crumbs={crumbs} />
 
       {siblings && siblings.length > 0 ? (

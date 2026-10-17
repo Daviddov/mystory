@@ -9,14 +9,16 @@ import { isNewBook } from "@/components/library/recommend";
 import { SearchForm } from "@/components/library/SearchForm";
 import { isInSeason } from "@/components/library/seasons";
 import { AgeTiles, TimeTiles } from "@/components/library/Tiles";
+import { JsonLd } from "@/components/JsonLd";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
 import { routes } from "@/lib/routes";
+import { siteJsonLd } from "@/lib/seo";
 import { THEMES } from "@/lib/taxonomy";
 
 export const dynamic = "force-dynamic";
 
 const DESCRIPTION =
-  "ספריית סיפורים לילדים בעברית: בוחרים ספר לפי גיל, נושא או זמן קריאה, מדפדפים וקוראים יחד. בלי הרשמה ובלי פרסומות.";
+  "סיפורים לילדים בעברית לקרוא ולשמוע: ספרים מאוירים עם ניקוד והקראה, לפי גיל, נושא וזמן קריאה. בחינם, בלי הרשמה ובלי פרסומות.";
 
 export const metadata: Metadata = {
   title: { absolute: "הסיפור שלי: סיפורים לילדים לקרוא ולשמוע" },
@@ -50,6 +52,7 @@ export default async function HomePage() {
 
   return (
     <main className="container-page flex flex-col gap-12 py-6 sm:gap-14 sm:py-10">
+      <JsonLd data={siteJsonLd()} />
       <section className="flex flex-col gap-5">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-extrabold leading-tight sm:text-5xl">סיפורים לקרוא ולשמוע</h1>

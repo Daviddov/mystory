@@ -29,6 +29,13 @@ const SECURITY_HEADERS: Record<string, string> = {
 };
 
 const PUBLIC_CACHE = "public, max-age=0, must-revalidate";
+/**
+ * A versioned address (?v=<updatedAt>, see mediaUrl) changes whenever the
+ * book's files change, so browsers may keep it for a week without asking.
+ * Not "immutable" for a year: a book that is unpublished should drop out of
+ * caches within days.
+ */
+const PUBLIC_VERSIONED_CACHE = "public, max-age=604800, stale-while-revalidate=86400";
 const PRIVATE_CACHE = "private, no-store";
 
 /** Lifetime of a signed URL of a public file, and how long browsers may reuse the redirect to it. */
@@ -119,12 +126,13 @@ async function serve(request: Request, segments: string[], headOnly: boolean): P
   if (!object) return notFound();
 
   const isPublic = access === "public";
+  const versioned = new URL(request.url).searchParams.has("v");
   const etag = `"${object.size.toString(16)}-${Math.floor(object.mtimeMs ?? 0).toString(16)}"`;
   const headers = new Headers({
     ...SECURITY_HEADERS,
     "Content-Type": object.contentType,
     "Accept-Ranges": "bytes",
-    "Cache-Control": isPublic ? PUBLIC_CACHE : PRIVATE_CACHE,
+    "Cache-Control": isPublic ? (versioned ? PUBLIC_VERSIONED_CACHE : PUBLIC_CACHE) : PRIVATE_CACHE,
   });
   if (isPublic) {
     headers.set("ETag", etag);

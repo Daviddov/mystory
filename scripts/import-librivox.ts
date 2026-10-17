@@ -11,8 +11,8 @@
  *   1. Word timings: python -I scripts/librivox/transcribe.py <audio.mp3> scripts/librivox/<name>.words.json
  *      (the manifest's audio.words). The importer aligns them to the page texts.
  *   2. Pictures (optional, pages stay without a picture when missing):
- *      data/media/books/<en.id>/cover.jpg and page-NN.jpg, e.g. from the ai-picture-book
- *      skill's convert-images.py. The Hebrew book gets copies.
+ *      data/media/books/<en.id>/cover and page-NN as .webp or .jpg, e.g. stored from Gemini's
+ *      PNGs by scripts/lib/book-images.ts (as attach-images.ts does). The Hebrew book gets copies.
  *
  * LibriVox recordings are public domain; the manifest names the reader, who is credited.
  * Only the story's text is cut out of the recording: the LibriVox preamble ("Chapter 30
@@ -220,9 +220,10 @@ async function main(): Promise<void> {
 
   // Pictures, shared by both versions.
   const enDir = media.resolve(bookMediaPrefix(manifest.en.id));
-  const has = (file: string) => existsSync(path.join(enDir, file));
-  const pictures = manifest.pages.map((_, i) => (has(pageFile(i, "jpg")) ? pageFile(i, "jpg") : undefined));
-  const cover = has("cover.jpg") ? "cover.jpg" : undefined;
+  const find = (name: (ext: string) => string) =>
+    ["webp", "jpg"].map(name).find((file) => existsSync(path.join(enDir, file)));
+  const pictures = manifest.pages.map((_, i) => find((ext) => pageFile(i, ext)));
+  const cover = find((ext) => `cover.${ext}`);
   const missing = pictures.filter((p) => !p).length;
   if (missing > 0) console.warn(`warning: ${missing} pages have no picture in ${enDir}`);
 

@@ -26,6 +26,7 @@ import { newId } from "./ids";
 import { AUDIO_EXTENSIONS, IMAGE_EXTENSIONS, IMPORT_LIMITS, fileExtension } from "./importers/limits";
 import { checkMediaFile, type MediaKind } from "./importers/media-sniff";
 import { getMediaStore } from "./media";
+import { putImage, prepareImage, type PreparedImage } from "./media/optimize";
 import type { MediaStore } from "./media/types";
 import { bookMediaPath, bookMediaPrefix, isValidMediaPath, safeFileName } from "./media/url";
 import { BOOK_LIMITS } from "./limits";
@@ -368,7 +369,7 @@ export async function importBookPackage(zipBytes: Uint8Array, options: ImportBoo
 
   // 3. Read and check every referenced media file. Nothing is stored yet.
   const bookId = newId("bk");
-  const resolved = new Map<string, { mediaPath: string; bytes: Uint8Array; contentType: string }>();
+  const resolved = new Map<string, PreparedImage>();
   const usedNames = new Set<string>();
   let readTotal = manifestBytes.byteLength;
 
@@ -376,7 +377,7 @@ export async function importBookPackage(zipBytes: Uint8Array, options: ImportBoo
     if (!reference) return undefined;
     const key = `${kind}:${reference}`;
     const known = resolved.get(key);
-    if (known) return known.mediaPath;
+    if (known) return known.path;
 
     const fileName = referencedFileName(reference, kind);
     const entry = zip.file(reference);
@@ -389,10 +390,16 @@ export async function importBookPackage(zipBytes: Uint8Array, options: ImportBoo
     const check = checkMediaFile(kind, fileName, bytes);
     if (!check.ok || !check.contentType) throw new BookPackageError("media-type", `${reference} (${check.reason})`);
 
+    // Pictures become WebP (see ./media/optimize.ts), so the stored name takes
+    // the extension of what is stored.
+    const file: PreparedImage =
+      kind === "image"
+        ? await prepareImage(fileName, bytes, check.contentType)
+        : { path: fileName, bytes, contentType: check.contentType };
     // The stored name never comes straight from the zip. Names are compared
     // case-insensitively because the local store may sit on such a filesystem.
-    const safe = safeFileName(fileName);
-    const ext = fileExtension(fileName);
+    const safe = safeFileName(file.path);
+    const ext = fileExtension(file.path);
     const baseName = fileExtension(safe) === ext ? safe : `file.${ext}`;
     let storedName = baseName;
     for (let n = 2; usedNames.has(storedName.toLowerCase()); n += 1) {
@@ -401,7 +408,8 @@ export async function importBookPackage(zipBytes: Uint8Array, options: ImportBoo
     usedNames.add(storedName.toLowerCase());
 
     const mediaPath = bookMediaPath(bookId, storedName);
-    resolved.set(key, { mediaPath, bytes, contentType: check.contentType });
+    const original = file.original && { ...file.original, path: `${mediaPath.slice(0, -ext.length)}${fileExtension(fileName)}` };
+    resolved.set(key, { path: mediaPath, bytes: file.bytes, contentType: file.contentType, original });
     return mediaPath;
   };
 
@@ -429,7 +437,7 @@ export async function importBookPackage(zipBytes: Uint8Array, options: ImportBoo
   const media = options.media ?? (await getMediaStore());
   const repo = options.repo ?? (await getRepo());
   try {
-    for (const file of resolved.values()) await media.put(file.mediaPath, file.bytes, file.contentType);
+    for (const file of resolved.values()) await putImage(media, file);
     return await repo.createBook({
       id: bookId,
       ownerId: options.ownerId,

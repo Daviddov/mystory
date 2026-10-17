@@ -57,7 +57,8 @@ Steps:
    scenes: no text, scene readable, characters consistent, nothing unsuitable for small kids. Report only; no edits.
 8. When done: stop the receiver task, close the tabs you created. The Gemini chat stays in the user's history.
 
-Images come out 1024×765 PNG; the import step upscales them to 1200 wide JPEG.
+Images come out 1024×765 PNG; the import step stores them as WebP (same size) and keeps the PNGs in
+`data/originals/media/books/<id>/`.
 
 ### Grid mode: four pictures per generation (use it when the daily quota is the limit)
 
@@ -79,12 +80,12 @@ one character in four poses may drift more. Keep a cover as a single full-size p
 Hand this to a background agent with the scratch path. It runs from the project root:
 
 ```bash
-python .claude/skills/ai-picture-book/scripts/convert-images.py "<scratch>/img" data/media/books/<id>
-npx tsx .claude/skills/ai-picture-book/scripts/create-book.ts "<scratch>/spec.json"
+npx tsx .claude/skills/ai-picture-book/scripts/create-book.ts "<scratch>/spec.json" "<scratch>/img"
 npx tsx scripts/narrate.ts <slug>
 ```
 
-- `create-book.ts` creates the book through `LocalRepository.createBook` (validated, published, owner = the user's
+- `create-book.ts` stores `cover.png` and `page-NN.png` from the folder as WebP (`src/lib/media/optimize.ts`, like
+  every picture the site saves), then creates the book through `LocalRepository.createBook` (validated, published, owner = the user's
   account `u_m3ipvar7h1mb`, origin `ai`, same credit wording as the other AI books). It refuses an existing id.
 - `narrate.ts` uses `.env.local` providers: Dicta nikud + ElevenLabs TTS.
 - Then **review the nikud** in `data/books/<slug>/book.json` (`textNikud`) and fix by hand. Dicta's usual mistakes:
@@ -117,7 +118,8 @@ One clip at a time, human pace (Google's terms restrict automated use). Tested o
 2. Flow is a chat agent. Settings (sliders icon under the chat box): video 16:9, x1, model **Omni 1.1 Flash**
    (Veo 3.1 Lite on the free tier only does 8 s). Keep "אישור לפני יצירה: תמיד" (always ask).
 3. **Frame every page as 16:9 first** (otherwise Flow crops the top and bottom, and the reader then crops the sides too):
-   the 4:3 JPEG resized to 964×720, centered on a 1280×720 cream (253,246,231) canvas, saved as `page-NN-16x9.jpg`.
+   the 4:3 original `data/originals/media/books/<id>/page-NN.png` (the served `page-NN.webp` is smaller) resized to
+   964×720, centered on a 1280×720 cream (253,246,231) canvas, saved as `page-NN-16x9.jpg`.
    The reader shows a clip in the picture's 4:3 box with object-cover, so the margins are cut away exactly.
 4. Upload without the native file picker: patch the input in the Flow tab with `javascript_tool`:
    `HTMLInputElement.prototype.click = function(){ if (this.type==='file'){ if(!this.isConnected) document.body.appendChild(this); window.__cap=this; return; } }`

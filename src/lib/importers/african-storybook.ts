@@ -36,6 +36,7 @@
 import { estimateReadingMinutes } from "../hebrew";
 import { BOOK_LIMITS } from "../limits";
 import type { MediaStore } from "../media/types";
+import { putImage, prepareImage, type PreparedImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { Repository } from "../repo/types";
 import { SLUG_PATTERN, type BookCredits, type BookWithPages, type Page } from "../types";
@@ -610,17 +611,18 @@ export async function importAfricanStorybookBook(options: AfricanStorybookImport
   }
 
   // 2. Images: 01 is the cover, picture N + 1 belongs to page N, and one more may follow (the back cover).
-  const files: { path: string; bytes: Uint8Array; contentType: string }[] = [];
-  const keep = (image: { bytes: Uint8Array; contentType: string }, storedBase: string): string => {
+  const files: PreparedImage[] = [];
+  const keep = async (image: { bytes: Uint8Array; contentType: string }, storedBase: string): Promise<string> => {
     const path = bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`);
-    files.push({ path, ...image });
-    return path;
+    const stored = await prepareImage(path, image.bytes, image.contentType);
+    files.push(stored);
+    return stored.path;
   };
 
   say("cover");
   const cover = await client.image(number, AFRICAN_STORYBOOK.coverImage);
   if (!cover) throw new AfricanStorybookError("no-images", `${number} has no pictures in the image bank`);
-  const coverImage = keep(cover, "cover");
+  const coverImage = await keep(cover, "cover");
 
   const pages: Page[] = [];
   for (const [i, text] of parsed.pages.entries()) {
@@ -630,7 +632,7 @@ export async function importAfricanStorybookBook(options: AfricanStorybookImport
     if (!image) {
       throw new AfricanStorybookError("invalid-book", `${number}: ${parsed.pages.length} pages but only ${i + 1} pictures; pages and pictures cannot be matched`);
     }
-    const page: Page = { index: i, text, image: keep(image, label) };
+    const page: Page = { index: i, text, image: await keep(image, label) };
     if (text) page.originalText = text;
     pages.push(page);
   }
@@ -657,7 +659,7 @@ export async function importAfricanStorybookBook(options: AfricanStorybookImport
     await media.deletePrefix(bookMediaPrefix(bookId));
   }
   try {
-    for (const stored of files) await media.put(stored.path, stored.bytes, stored.contentType);
+    for (const stored of files) await putImage(media, stored);
     const book = await repo.createBook({
       id: bookId,
       slug: SLUG_PATTERN.test(slug) && slug.length <= 80 ? slug : bookId,

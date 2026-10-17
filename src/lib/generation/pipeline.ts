@@ -17,6 +17,7 @@
 import type { AiUsage, ImageProvider, ImageReference, TextProvider, TextRequest } from "../ai/types";
 import { countWords, estimateReadingMinutes } from "../hebrew";
 import { newId } from "../ids";
+import { storeImage } from "../media/optimize";
 import type { MediaStore } from "../media/types";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { JobPatch, Repository } from "../repo/types";
@@ -356,7 +357,8 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
       ? [{ bytes: sheetImage.image, contentType: sheetImage.contentType, description: "character sheet of the hero" }]
       : [];
     const characterPath = (
-      await media.put(
+      await storeImage(
+        media,
         bookMediaPath(bookId, `character.${extensionForContentType(sheetImage.contentType)}`),
         sheetImage.image,
         sheetImage.contentType,
@@ -380,7 +382,7 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
       cost.add(result.usage);
       if (result.isMock) usedMock = true;
       const fileName = `page-${String(index + 1).padStart(2, "0")}.${extensionForContentType(result.contentType)}`;
-      const stored = await media.put(bookMediaPath(bookId, fileName), result.image, result.contentType);
+      const stored = await storeImage(media, bookMediaPath(bookId, fileName), result.image, result.contentType);
       finished++;
       await update({
         progress: Math.round(illustrationsStart + ((illustrationsEnd - illustrationsStart) * finished) / totalImages),
@@ -409,7 +411,8 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
     cost.add(cover.usage);
     if (cover.isMock) usedMock = true;
     const coverPath = (
-      await media.put(
+      await storeImage(
+        media,
         bookMediaPath(bookId, `cover.${extensionForContentType(cover.contentType)}`),
         cover.image,
         cover.contentType,

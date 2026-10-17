@@ -9,6 +9,7 @@ import { withBookLock } from "../book-lock";
 import { estimateReadingMinutes, slugify } from "../hebrew";
 import { newId, newShareToken } from "../ids";
 import { BOOK_LIMITS } from "../limits";
+import { storeImage } from "../media/optimize";
 import type { MediaStore } from "../media/types";
 import { bookMediaPath, bookMediaPrefix, contentTypeForPath, isValidMediaPath } from "../media/url";
 import { assertOwnerCanAddBook, BookCapError } from "../owner-books";
@@ -374,8 +375,12 @@ export async function storeUpload(
   }
 
   const path = bookMediaPath(book.id, `${UPLOAD_PREFIX[kind]}-${newId()}.${sniffed.ext}`);
-  const stored = await ctx.media.put(path, bytes, sniffed.contentType);
-  return { path: stored.path, url: stored.url, kind, contentType: sniffed.contentType, size: bytes.byteLength };
+  // Pictures are stored as WebP (see ../media/optimize.ts); the returned path is the one to save.
+  const stored =
+    kind === "audio"
+      ? { ...(await ctx.media.put(path, bytes, sniffed.contentType)), contentType: sniffed.contentType, size: bytes.byteLength }
+      : await storeImage(ctx.media, path, bytes, sniffed.contentType);
+  return { path: stored.path, url: stored.url, kind, contentType: stored.contentType, size: stored.size };
 }
 
 // ---------------------------------------------------------------------------

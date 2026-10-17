@@ -44,6 +44,7 @@
 import { estimateReadingMinutes } from "../hebrew";
 import { BOOK_LIMITS } from "../limits";
 import type { MediaStore } from "../media/types";
+import { putImage, prepareImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { Repository } from "../repo/types";
 import { SLUG_PATTERN, type AgeGroup, type BookCredits, type BookWithPages, type Page } from "../types";
@@ -1083,9 +1084,9 @@ export async function importGutenbergBook(options: GutenbergImportOptions): Prom
     if (known) return known.path;
     say(imagePath);
     const image = await client.image(id, imagePath);
-    const path = bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`);
-    files.set(imagePath, { path, ...image });
-    return path;
+    const stored = await prepareImage(bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`), image.bytes, image.contentType);
+    files.set(imagePath, stored);
+    return stored.path;
   };
 
   const pages: Page[] = [];
@@ -1128,7 +1129,7 @@ export async function importGutenbergBook(options: GutenbergImportOptions): Prom
     await media.deletePrefix(bookMediaPrefix(bookId));
   }
   try {
-    for (const file of files.values()) await media.put(file.path, file.bytes, file.contentType);
+    for (const file of files.values()) await putImage(media, file);
     const book = await repo.createBook({
       id: bookId,
       slug: gutenbergSlug(id, title),
@@ -1229,7 +1230,11 @@ export async function importGutenbergCollection(options: GutenbergImportOptions)
         if (!file) {
           say(source.imagePath);
           const image = await client.image(id, source.imagePath);
-          file = { path: bookMediaPath(bookId, `picture-${files.size + 1}.${extensionForContentType(image.contentType)}`), ...image };
+          file = await prepareImage(
+            bookMediaPath(bookId, `picture-${files.size + 1}.${extensionForContentType(image.contentType)}`),
+            image.bytes,
+            image.contentType,
+          );
           files.set(source.imagePath, file);
         }
         page.image = file.path;
@@ -1249,7 +1254,7 @@ export async function importGutenbergCollection(options: GutenbergImportOptions)
       await media.deletePrefix(bookMediaPrefix(bookId));
     }
     try {
-      for (const file of files.values()) await media.put(file.path, file.bytes, file.contentType);
+      for (const file of files.values()) await putImage(media, file);
       const book = await repo.createBook({
         id: bookId,
         slug: gutenbergSlug(id, story.title),

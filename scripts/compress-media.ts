@@ -13,10 +13,13 @@
  * Safe to run again: WebP files are skipped, and so is any image whose WebP
  * would not be at least 10% smaller (it stays as it is). GIF and SVG are left
  * alone. Only the local data directory is supported.
+ *
+ * New illustrations are converted when they are saved (src/lib/media/optimize.ts,
+ * same settings); this script is for files stored before that.
  */
 import { mkdir, readdir, readFile, rename, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
-import sharp from "sharp";
+import { encodeWebp, WEBP_MAX_RATIO, WEBP_MAX_SIDE, WEBP_QUALITY } from "../src/lib/media/optimize";
 
 const args = process.argv.slice(2);
 const dryRun = args.includes("--dry-run");
@@ -26,8 +29,8 @@ const numberArg = (name: string, fallback: number): number => {
   if (!Number.isFinite(value) || value <= 0) throw new Error(`--${name} must be a positive number`);
   return value;
 };
-const maxSide = numberArg("max", 1600);
-const quality = numberArg("quality", 80);
+const maxSide = numberArg("max", WEBP_MAX_SIDE);
+const quality = numberArg("quality", WEBP_QUALITY);
 
 const dataDir = path.resolve(process.env.DATA_DIR || "data");
 const mediaDir = path.join(dataDir, "media");
@@ -62,12 +65,8 @@ async function compress(file: string): Promise<Result | null> {
     return null;
   }
   const input = await readFile(file);
-  const output = await sharp(input, { failOn: "none" })
-    .rotate()
-    .resize({ width: maxSide, height: maxSide, fit: "inside", withoutEnlargement: true })
-    .webp({ quality, effort: 5 })
-    .toBuffer();
-  if (output.length > input.length * 0.9) return null;
+  const output = await encodeWebp(input, { maxSide, quality });
+  if (output.length > input.length * WEBP_MAX_RATIO) return null;
   if (!dryRun) {
     const archived = path.join(originalsDir, path.relative(mediaDir, file));
     await mkdir(path.dirname(archived), { recursive: true });

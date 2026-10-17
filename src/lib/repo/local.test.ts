@@ -1,4 +1,4 @@
-import { readdir } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { createTempData, type TempData } from "@/test/temp-data";
@@ -126,6 +126,23 @@ describe("LocalRepository books", () => {
     const book = await data.repo.createBook({ title: "ספר", ownerId: "u" });
     await Promise.all(Array.from({ length: 20 }, () => data.repo.incrementViews(book.id)));
     expect((await data.repo.getBookById(book.id))?.viewCount).toBe(20);
+  });
+
+  it("sees a change made while reads are running, and files edited outside it", async () => {
+    const book = await data.repo.createBook({ title: "לפני", ownerId: "u", status: "published", slug: "seen" });
+    const [, , updated] = await Promise.all([
+      data.repo.listBooks(),
+      data.repo.getBookBySlug("seen"),
+      data.repo.updateBook(book.id, { title: "אחרי" }),
+      data.repo.listBooks(),
+    ]);
+    expect(updated.title).toBe("אחרי");
+    expect((await data.repo.listBooks()).books.map((b) => b.title)).toEqual(["אחרי"]);
+
+    const file = path.join(data.dir, "books", "seen", "book.json");
+    const onDisk = JSON.parse(await readFile(file, "utf8"));
+    await writeFile(file, JSON.stringify({ ...onDisk, title: "נערך ביד" }));
+    expect((await data.repo.getBookBySlug("seen"))?.title).toBe("נערך ביד");
   });
 });
 

@@ -12,7 +12,7 @@
  *
  * Writes are atomic (temp file + rename) and serialized by an in-process mutex.
  */
-import { promises as fs } from "node:fs";
+import { promises as fs, statSync } from "node:fs";
 import path from "node:path";
 import { z } from "zod";
 import { estimateReadingMinutes, normalizeForSearch, slugify } from "../hebrew";
@@ -95,7 +95,6 @@ export class LocalRepository implements Repository {
   readonly kind = "local" as const;
   private readonly mutex = new Mutex();
   private readonly bookCache = new Map<string, CachedBook>();
-  /** The folder scan in progress, shared by concurrent callers (a page asks for many lists at once). */
   private bookScan: Promise<CachedBook[]> | null = null;
 
   constructor(private readonly root: string) {}
@@ -136,11 +135,23 @@ export class LocalRepository implements Repository {
 
   // --- books: loading --------------------------------------------------------
 
+  /**
+   * All valid books. Calls made while a scan is running share it: a page asks
+   * for books many times at once (the home page about 20 times).
+   */
   private loadAllBooks(): Promise<CachedBook[]> {
-    this.bookScan ??= this.scanBooks().finally(() => {
-      this.bookScan = null;
+    if (this.bookScan) return this.bookScan;
+    const scan = this.scanBooks().finally(() => {
+      if (this.bookScan === scan) this.bookScan = null;
     });
-    return this.bookScan;
+    this.bookScan = scan;
+    return scan;
+  }
+
+  /** Forget a book folder after this repository changed it, so no running scan is reused. */
+  private forgetBook(slug: string): void {
+    this.bookCache.delete(slug);
+    this.bookScan = null;
   }
 
   private async scanBooks(): Promise<CachedBook[]> {
@@ -156,13 +167,11 @@ export class LocalRepository implements Repository {
     for (const slug of entries) {
       if (!SLUG_PATTERN.test(slug)) continue;
       const file = path.join(this.booksDir(), slug, "book.json");
-      let stat;
-      try {
-        stat = await fs.stat(file);
-      } catch (err) {
-        if (isNotFound(err)) continue;
-        throw err;
-      }
+      // Synchronous on purpose: ~700 stats take about 50 ms this way. Awaiting
+      // each one took several seconds inside `next dev`, where React records
+      // every awaited promise of a Server Component render for its dev tools.
+      const stat = statSync(file, { throwIfNoEntry: false });
+      if (!stat) continue;
       seen.add(slug);
       const cached = this.bookCache.get(slug);
       if (cached && cached.mtimeMs === stat.mtimeMs && cached.size === stat.size) {
@@ -206,8 +215,7 @@ export class LocalRepository implements Repository {
   private async writeBook(book: BookWithPages): Promise<BookWithPages> {
     const valid = BookWithPagesSchema.parse({ ...book, pages: normalizePages(book.pages) });
     await writeJsonAtomic(this.bookFile(valid.slug), valid);
-    this.bookCache.delete(valid.slug);
-    this.bookScan = null;
+    this.forgetBook(valid.slug);
     return valid;
   }
 
@@ -283,7 +291,8 @@ export class LocalRepository implements Repository {
       return true;
     });
 
-    const books = matches.map((entry) => toBook(entry.book));
+    // Sort and page the cached books first: only the page returned is copied.
+    const books = matches.map((entry) => entry.book);
     const byNew = (a: Book, b: Book) => sortKeyNew(b).localeCompare(sortKeyNew(a));
     switch (filter.sort ?? "new") {
       case "popular":
@@ -301,7 +310,7 @@ export class LocalRepository implements Repository {
 
     const offset = Math.max(0, filter.offset ?? 0);
     const end = filter.limit === undefined ? undefined : offset + Math.max(0, filter.limit);
-    return { books: books.slice(offset, end), total: books.length };
+    return { books: books.slice(offset, end).map(toBook), total: books.length };
   }
 
   async getBookById(id: string): Promise<BookWithPages | null> {
@@ -387,7 +396,7 @@ export class LocalRepository implements Repository {
         if (unique !== next.slug) throw new ConflictError(`slug ${next.slug} is already taken`);
         BookWithPagesSchema.parse(next);
         await renameDir(path.dirname(this.bookFile(current.slug)), path.dirname(this.bookFile(next.slug)));
-        this.bookCache.delete(current.slug);
+        this.forgetBook(current.slug);
       }
       return toBook(await this.writeBook(next));
     });
@@ -398,8 +407,7 @@ export class LocalRepository implements Repository {
       const current = await this.findById(id);
       if (current) {
         await fs.rm(path.dirname(this.bookFile(current.slug)), { recursive: true, force: true });
-        this.bookCache.delete(current.slug);
-        this.bookScan = null;
+        this.forgetBook(current.slug);
       }
       const favorites = await this.readList("favorites.json", FavoriteSchema);
       if (favorites.some((f) => f.bookId === id)) {

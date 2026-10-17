@@ -53,3 +53,4 @@ next-env.d.ts
 
 # Full-resolution originals moved aside by scripts/compress-media.ts (print, future use).
 /data/originals/
+

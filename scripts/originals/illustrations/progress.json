@@ -1,0 +1,118 @@
+{
+ "note": "Books whose cover and all pages are attached (draft). Method: ChatGPT free, 3x3 grids, crop-grid.py --aspect 4:3, attach-images.ts.",
+ "done": {
+  "parasha-noach": {
+   "date": "2026-10-15",
+   "route": "chatgpt 3x3 (cover+p1-8, p9-13) + page-09 original",
+   "pictures": 14
+  },
+  "parasha-lech-lecha": {
+   "date": "2026-10-15",
+   "route": "chatgpt 3x3 + 2x2",
+   "pictures": 13
+  },
+  "parasha-vayera": {
+   "date": "2026-10-15/16",
+   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  },
+  "parasha-vayera-akedah": {
+   "date": "2026-10-15/16",
+   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  },
+  "parasha-vayera-sodom": {
+   "date": "2026-10-15/16",
+   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  },
+  "parasha-chayei-sarah": {
+   "date": "2026-10-15/16",
+   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  },
+  "parasha-toldot": {
+   "date": "2026-10-15/16",
+   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  },
+  "parasha-vayetze": {
+   "date": "2026-10-15/16",
+   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  },
+  "parasha-bereshit": {
+   "date": "2026-10-15/16",
+   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  },
+  "parasha-vayishlach": {
+   "date": "2026-10-16",
+   "route": "chatgpt grids"
+  },
+  "parasha-vayishlach-dinah": {
+   "date": "2026-10-16",
+   "route": "chatgpt grids"
+  },
+  "parasha-vayigash": {
+   "date": "2026-10-17",
+   "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
+   "pictures": 14
+  },
+  "parasha-vayeshev": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 2x2)"
+  },
+  "parasha-vayechi": {
+   "date": "2026-10-17",
+   "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
+   "pictures": 13
+  },
+  "parasha-shemot": {
+   "date": "2026-10-17",
+   "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
+   "pictures": 15
+  },
+  "parasha-miketz": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 3x2)"
+  },
+  "parasha-vaera": {
+   "date": "2026-10-17",
+   "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
+   "pictures": 14
+  },
+  "parasha-bo": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 3x2)"
+  },
+  "parasha-beshalach": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 3x2)"
+  },
+  "parasha-yitro": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 2x2)"
+  },
+  "parasha-mishpatim": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 3x2)"
+  },
+  "parasha-terumah": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 2x2)"
+  },
+  "parasha-tetzaveh": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 2,1)"
+  },
+  "parasha-ki-tisa": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 2x2)"
+  },
+  "parasha-vayakhel": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids (3x3 + 2x2)"
+  }
+ },
+ "partial": {},
+ "chatgptLimit": {
+  "hitAt": "2026-10-17 ~21:55 local",
+  "generationsBeforeLimit": 18,
+  "window": "about 1.3 hours (20:40-21:55), limit may be per-window",
+  "message": "You have hit the Free plan limit for image generation requests ... resets in 23 hours (about 2026-10-18 21:00 local)"
+ }
+}

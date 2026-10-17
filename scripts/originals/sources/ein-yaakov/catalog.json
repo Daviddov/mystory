@@ -1,0 +1,15 @@
+[
+  { "slug": "akiva-all-for-good", "title": "כל דעביד רחמנא לטב עביד", "bavli": "ברכות ס ע״ב", "ref": "Berakhot 9:36" },
+  { "slug": "beruriah-and-the-neighbors", "title": "ברוריה והבריונים", "bavli": "ברכות י ע״א", "ref": "Berakhot 1:63" },
+  { "slug": "hillel-patience", "title": "לעולם יהא אדם ענוותן כהלל", "bavli": "שבת ל ע״ב–לא ע״א", "ref": "Shabbat 2:24" },
+  { "slug": "hillel-one-foot", "title": "על רגל אחת", "bavli": "שבת לא ע״א", "ref": "Shabbat 2:24" },
+  { "slug": "joshua-and-the-clever-child", "title": "דרך קצרה וארוכה", "bavli": "עירובין נג ע״ב", "ref": "Eiruvin 5:5" },
+  { "slug": "hillel-on-the-roof", "title": "הלל על הארובה", "bavli": "יומא לה ע״ב", "ref": "Yoma 3:10" },
+  { "slug": "elazar-and-the-craftsman", "title": "לך ואמור לאומן שעשאני", "bavli": "תענית כ ע״א–ע״ב", "ref": "Taanit 3:6" },
+  { "slug": "nachum-gam-zu", "title": "נחום איש גם זו", "bavli": "תענית כא ע״א", "ref": "Taanit 3:10" },
+  { "slug": "honi-carob-tree", "title": "חוני המעגל והחרוב", "bavli": "תענית כג ע״א", "ref": "Taanit 3:19", "glick": "Taanit 3:18" },
+  { "slug": "chanina-vinegar-candles", "title": "מי שאמר לשמן וידלוק", "bavli": "תענית כה ע״א", "ref": "Taanit 3:30" },
+  { "slug": "dama-ben-netina", "title": "דמא בן נתינה", "bavli": "קידושין לא ע״א", "ref": "Kiddushin 1:26" },
+  { "slug": "stones-in-the-road", "title": "לא יסקל אדם מרשותו לרשות הרבים", "bavli": "בבא קמא נ ע״ב", "ref": "Bava Kamma 5:5" },
+  { "slug": "rabbi-and-the-calf", "title": "רבי והעגל", "bavli": "בבא מציעא פה ע״א", "ref": "Bava Metzia 7:6" }
+]

@@ -2,7 +2,9 @@
 // Defines: sendGem(text), go(scene), fin(name), sendImg(index, name), imgCount().
 // Returns the centre of the yellow "OPEN RX" button: click it with the computer
 // tool (a real click) to open the receiver tab before calling fin/sendImg.
+// Set window.RX_PORT before pasting when the receiver is not on 8765 (parallel runs use one port each).
 // Edit PAGE_PREFIX to restate the book's characters in one line.
+window.RX_PORT = window.RX_PORT || 8765;
 window.PAGE_PREFIX =
   "Next picture for the book. Same characters exactly as in the character sheet, same style, landscape 4:3, absolutely no text or letters. SCENE: ";
 
@@ -36,7 +38,7 @@ window.saved = window.saved || {};
 if (!window.__rxListen) {
   window.__rxListen = true;
   addEventListener("message", (e) => {
-    if (e.origin === "http://127.0.0.1:8765") window.saved[e.data.saved] = e.data.bytes;
+    if (e.origin === "http://127.0.0.1:" + window.RX_PORT) window.saved[e.data.saved] = e.data.bytes;
   });
 }
 window.sendImg = async (index, name) => {
@@ -47,7 +49,7 @@ window.sendImg = async (index, name) => {
   c.getContext("2d").drawImage(im, 0, 0);
   const data = c.toDataURL("image/png");
   delete window.saved[name];
-  window.rx.postMessage({ name, blob: data }, "http://127.0.0.1:8765");
+  window.rx.postMessage({ name, blob: data }, "http://127.0.0.1:" + window.RX_PORT);
   for (let k = 0; k < 20 && !window.saved[name]; k++) await new Promise((r) => setTimeout(r, 300));
   return [name, data.length, window.saved[name] || null];
 };
@@ -72,7 +74,7 @@ window.fin = async (name) => {
     b.textContent = "OPEN RX";
     b.style.cssText = "position:fixed;top:5px;left:300px;z-index:99999;padding:10px;background:#ff0;font-size:16px";
     b.onclick = () => {
-      window.rx = window.open("http://127.0.0.1:8765/rx", "rxwin");
+      window.rx = window.open("http://127.0.0.1:" + window.RX_PORT + "/rx", "rxwin" + window.RX_PORT);
     };
     document.body.appendChild(b);
   }

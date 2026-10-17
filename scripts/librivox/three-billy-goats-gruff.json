@@ -1,0 +1,127 @@
+{
+  "audio": {
+    "url": "https://archive.org/download/norsetalesforchildren_2105_librivox/norsetales_30_dasent_128kb.mp3",
+    "reader": "Larry Wilson",
+    "project": "https://librivox.org/norse-tales-for-children-by-sir-george-webbe-dasent/",
+    "words": "three-billy-goats-gruff.words.json"
+  },
+  "textSource": "https://www.gutenberg.org/ebooks/64189",
+  "author": "Peter Christen Asbjørnsen & Jørgen Moe",
+  "translator": "George Webbe Dasent",
+  "ageGroup": "3-5",
+  "categories": ["animals", "humor"],
+  "themes": ["courage"],
+  "style": "warm hand-painted storybook illustration in gouache and colored pencil, soft textured paper, gentle Scandinavian folk-tale feel, green hills, a wooden bridge over a sparkling stream, rounded friendly shapes, rich but soft colors, funny rather than scary. Landscape 4:3. No text, letters, words or numbers anywhere in the picture.",
+  "characters": [
+    "THE LITTLE BILLY-GOAT: a tiny white goat kid with a fluffy coat, very short stubby horns, big shy eyes and a small red bell on a cord around his neck.",
+    "THE MIDDLE BILLY-GOAT: a medium-sized light-brown goat with medium curved horns, a little tuft of beard and a blue scarf around his neck.",
+    "THE BIG BILLY-GOAT: a huge shaggy dark-grey goat, very large curling horns, a long beard, a confident grin, no clothes.",
+    "THE TROLL: a big, lumpy, green-grey troll who lives under the bridge, round saucer-like yellow eyes, a very long pointy nose like a poker, mossy hair with little plants growing in it, a ragged brown tunic. Grumpy and silly, never truly frightening for small children."
+  ],
+  "coverScene": "The three billy-goats Gruff standing in a row on a green hillside by a small wooden bridge over a stream, from little to big; the troll's long nose and round eyes peek out from under the bridge.",
+  "en": {
+    "id": "librivox-three-billy-goats-gruff",
+    "slug": "three-billy-goats-gruff",
+    "title": "The Three Billy-Goats Gruff",
+    "summary": "Three billy-goats named Gruff want to cross a bridge to the green hillside, but a hungry troll lives under it. A classic Norwegian folk tale, with the original LibriVox recording read by Larry Wilson."
+  },
+  "he": {
+    "id": "librivox-three-billy-goats-gruff-he",
+    "slug": "shloshet-hatyashim-graf",
+    "title": "שלושת התיישים גראף",
+    "summary": "שלושה תיישים בשם גראף רוצים לעבור בגשר אל הגבעה הירוקה, אבל מתחת לגשר גר טרול רעב. אגדת עם נורווגית קלאסית על תושייה, אומץ ו\"טִיפּ-טַפּ\" על הגשר.",
+    "tags": ["תיישים", "טרול", "אגדות עם", "גשר", "אומץ"],
+    "discussionQuestions": [
+      "איך התייש הקטן הצליח לעבור את הגשר בלי שהטרול יאכל אותו?",
+      "מה ההבדל בין הקולות של שלושת התיישים כשהם עוברים בגשר?",
+      "למה לדעתך הטרול האמין לתיישים וחיכה לבא אחריהם?",
+      "האם גם לך קרה שחיכית למישהו גדול יותר שיעזור לך?"
+    ]
+  },
+  "pages": [
+    {
+      "en": "ONCE on a time there were three Billy-goats who were to go up to the hill-side to make themselves fat, and the name of all three was “Gruff.”",
+      "he": "פעם היו שלושה תיישים שרצו לעלות אל הגבעה, לאכול שם עשב ולהשמין.\nולשלושתם קראו באותו שם: גראף.",
+      "altEn": "Three billy-goats, small, middle and big, look up at a green hill.",
+      "altHe": "שלושה תיישים, קטן, בינוני וגדול, מביטים אל גבעה ירוקה.",
+      "scene": "Morning in a valley. The three billy-goats stand together, little, middle and big, looking up longingly at a lush green hillside full of grass and flowers far away. Introduce all three clearly."
+    },
+    {
+      "en": "On the way up was a bridge over a burn they had to cross; and under the bridge lived a great ugly Troll, with eyes as big as saucers, and a nose as long as a poker.",
+      "he": "בדרך לגבעה היה גשר מעל נחל, והם היו חייבים לעבור בו.\nומתחת לגשר גר טרול גדול ומכוער, עם עיניים גדולות כמו צלחות, ואף ארוך כמו מוט.",
+      "altEn": "A troll with saucer eyes and a long nose sits under a wooden bridge.",
+      "altHe": "טרול עם עיניים כמו צלחות ואף ארוך יושב מתחת לגשר עץ.",
+      "scene": "A wooden bridge over a sparkling stream. Under the bridge, in the shadow among mossy stones, sits the troll with huge round saucer eyes and an extremely long pointy nose, grumpy, arms crossed. No goats in this picture."
+    },
+    {
+      "en": "So first of all came the youngest billy-goat Gruff to cross the bridge.\n“Trip, trap; trip, trap!” went the bridge.\n“WHO’S THAT tripping over my bridge?” roared the Troll.",
+      "he": "ראשון הגיע התייש הקטן ביותר כדי לעבור בגשר.\n\"טִיפּ-טַפּ, טִיפּ-טַפּ!\" עשה הגשר.\n\"מי זה מטפטף על הגשר שלי?\" שאג הטרול.",
+      "altEn": "The little goat tiptoes onto the bridge while the troll shouts from below.",
+      "altHe": "התייש הקטן פוסע על קצות הרגליים על הגשר, והטרול צועק מלמטה.",
+      "scene": "The little billy-goat tiptoes lightly onto the wooden bridge. The troll's head pops up from under the side of the bridge, mouth wide open, roaring. The little goat freezes mid-step, ears up."
+    },
+    {
+      "en": "“Oh! it is only I, the tiniest billy-goat Gruff; and I’m going up to the hill-side to make myself fat,” said the billy-goat, with such a small voice.\n“Now, I’m coming to gobble you up,” said the Troll.",
+      "he": "\"אוי! זה רק אני, התייש גראף הכי קטן. אני עולה לגבעה להשמין,\" אמר התייש בקול קטן קטן.\n\"עכשיו אני בא לבלוע אותך!\" אמר הטרול.",
+      "altEn": "The tiny goat speaks in a small voice; the troll climbs up, licking his lips.",
+      "altHe": "התייש הקטנטן מדבר בקול קטן, והטרול מטפס למעלה ומלקק את שפתיו.",
+      "scene": "Close-up on the bridge: the tiny billy-goat looks very small and shy, speaking softly. The troll's big hands grip the edge of the bridge as he starts climbing up, licking his lips with a long tongue, looking hungry but silly."
+    },
+    {
+      "en": "“Oh, no! pray don’t take me. I’m too little, that I am,” said the billy-goat; “wait a bit till the second billy-goat Gruff comes, he’s much bigger.”\n“Well! be off with you,” said the Troll.",
+      "he": "\"אוי, לא! בבקשה אל תיקח אותי. אני קטן מדי,\" אמר התייש. \"חכה קצת עד שיבוא התייש גראף השני. הוא הרבה יותר גדול.\"\n\"נו, טוב! לך מפה,\" אמר הטרול.",
+      "altEn": "The little goat skips safely off the bridge toward the green hill.",
+      "altHe": "התייש הקטן מקפץ בשמחה מהגשר אל הגבעה הירוקה.",
+      "scene": "The little billy-goat happily skips off the far end of the bridge toward the green hillside, bell jingling. Behind him the troll waves him away with a big hand, thinking about a bigger meal, a thought bubble with a bigger goat."
+    },
+    {
+      "en": "A little while after came the second billy-goat Gruff to cross the bridge.\n“TRIP, TRAP! TRIP, TRAP! TRIP, TRAP!” went the bridge.\n“WHO’S THAT tripping over my bridge?” roared the Troll.",
+      "he": "אחרי זמן קצר הגיע התייש גראף השני לעבור בגשר.\n\"טִיפּ-טַפּ! טִיפּ-טַפּ! טִיפּ-טַפּ!\" עשה הגשר.\n\"מי זה מטפטף על הגשר שלי?\" שאג הטרול.",
+      "altEn": "The middle goat trots across the bridge as the troll roars again.",
+      "altHe": "התייש האמצעי פוסע על הגשר, והטרול שואג שוב.",
+      "scene": "The middle billy-goat with the blue scarf trots onto the bridge with firmer steps; the planks bounce a little. The troll's head pops up again from the side of the bridge, roaring, saucer eyes wide."
+    },
+    {
+      "en": "“Oh! it’s the second billy-goat Gruff, and I’m going up to the hill-side to make myself fat,” said the billy-goat, who hadn’t such a small voice.\n“Now, I’m coming to gobble you up,” said the Troll.",
+      "he": "\"אוי! זה התייש גראף השני, ואני עולה לגבעה להשמין,\" אמר התייש, שהקול שלו כבר לא היה קטן כל כך.\n\"עכשיו אני בא לבלוע אותך!\" אמר הטרול.",
+      "altEn": "The middle goat faces the troll, who holds a fork and napkin.",
+      "altHe": "התייש האמצעי עומד מול הטרול, שמחזיק מזלג ומפית.",
+      "scene": "The middle billy-goat stands on the bridge facing the troll, a bit nervous but bravely talking. The troll is half climbed onto the bridge, tucking a napkin under his chin and holding a giant fork, comically hungry."
+    },
+    {
+      "en": "“Oh, no! don’t take me, wait a little till the big billy-goat Gruff comes, he’s much bigger.”\n“Very well! be off with you,” said the Troll.",
+      "he": "\"אוי, לא! אל תיקח אותי. חכה קצת עד שיבוא התייש גראף הגדול. הוא הרבה הרבה יותר גדול.\"\n\"טוב מאוד! לך מפה,\" אמר הטרול.",
+      "altEn": "The middle goat joins the little goat on the hillside while the troll waits.",
+      "altHe": "התייש האמצעי מצטרף לתייש הקטן על הגבעה, והטרול מחכה.",
+      "scene": "Wide view: the middle billy-goat trots off the bridge up the hill where the little billy-goat is already munching grass and waving. Under the bridge, the troll rubs his hands together and waits impatiently, looking down the path."
+    },
+    {
+      "en": "But just then up came the big billy-goat Gruff.\n“TRIP, TRAP! TRIP, TRAP! TRIP, TRAP!” went the bridge, for the billy-goat was so heavy that the bridge creaked and groaned under him.",
+      "he": "ואז בדיוק הגיע התייש גראף הגדול.\n\"טְרִיפּ-טְרַאפּ! טְרִיפּ-טְרַאפּ! טְרִיפּ-טְרַאפּ!\" עשה הגשר, כי התייש היה כבד כל כך שהגשר חרק ונאנח תחתיו.",
+      "altEn": "The huge big goat stomps on the bridge, which bends and creaks.",
+      "altHe": "התייש הגדול והענק דורך על הגשר, והגשר מתכופף וחורק.",
+      "scene": "The huge big billy-goat stomps onto the bridge; the wooden planks bend and creak under his weight, little bits of dust and splashes fly. He looks calm and confident. The troll is not visible yet, only his long nose peeking out below."
+    },
+    {
+      "en": "“WHO’S THAT tramping over my bridge?” roared the Troll.\n“IT’S I! THE BIG BILLY-GOAT GRUFF,” said the billy-goat, who had an ugly hoarse voice of his own.\n“Now, I’m coming to gobble you up,” roared the Troll.",
+      "he": "\"מי זה רוקע על הגשר שלי?\" שאג הטרול.\n\"זה אני! התייש גראף הגדול!\" אמר התייש בקול צרוד ועבה.\n\"עכשיו אני בא לבלוע אותך!\" שאג הטרול.",
+      "altEn": "The troll climbs onto the bridge and comes face to face with the big goat.",
+      "altHe": "הטרול מטפס על הגשר ועומד פנים מול פנים מול התייש הגדול.",
+      "scene": "The troll has climbed up onto the bridge and stands nose to nose with the big billy-goat, roaring. The big billy-goat lowers his huge curling horns and grins, not afraid at all. Dramatic but funny face-off."
+    },
+    {
+      "en": "“Well, come along! I’ve got two spears,\nAnd I’ll poke your eyeballs out at your ears;\nI’ve got besides two curling stones,\nAnd I’ll crush you to bits, body and bones.”\nThat was what the big billy-goat said; and so he flew at the Troll and poked his eyes out with his horns, and crushed him to bits, body and bones, and tossed him out into the burn.",
+      "he": "\"נו, בוא כבר! יש לי שתי קרניים חדות,\nואעיף אותך הרחק מעבר לגבעות!\nויש לי גם פרסות כבדות כמו אבנים,\nואפזר אותך כולך לרסיסים קטנים!\"\nכך אמר התייש הגדול. הוא הסתער על הטרול, נגח בו בקרניו, והעיף אותו גבוה גבוה, ישר לתוך הנחל.",
+      "altEn": "The big goat butts the troll with his horns, sending him flying into the stream.",
+      "altHe": "התייש הגדול נוגח בטרול בקרניו ומעיף אותו אל הנחל.",
+      "scene": "Action scene, funny and not violent: the big billy-goat charges with his curling horns and the troll flies through the air in a high arc, arms and legs flailing, toward the stream below with a big splash about to happen. No blood, no injuries shown."
+    },
+    {
+      "en": "And after that he went up to the hill-side. There the billy-goats got so fat they were scarce able to walk home again; and if the fat hasn’t fallen off them, why they’re still fat; and so,—\n“Snip, snap, snout,\nThis tale’s told out.”",
+      "he": "ואחרי זה עלה גם הוא אל הגבעה. שם השמינו התיישים כל כך, שבקושי הצליחו ללכת חזרה הביתה. ואם השומן עוד לא ירד מהם, הם שמנים עד היום.\nוכך,\n\"בִּים, בַּם, בּוֹם,\nהסיפור נגמר היום!\"",
+      "altEn": "Three round, happy, very fat goats rest on the green hill at sunset.",
+      "altHe": "שלושה תיישים שמנים ומרוצים נחים על הגבעה הירוקה בשקיעה.",
+      "scene": "Sunset on the green hillside. The three billy-goats are now hilariously round and fat, lying happily in the flowers with full bellies. Far below, the troll sits soaking wet in the stream with a fish on his head, sulking. Cozy happy ending."
+    }
+  ]
+}

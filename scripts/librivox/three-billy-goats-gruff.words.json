@@ -1,0 +1,2362 @@
+[
+{
+"word": "Chapter",
+"start": 19.4,
+"end": 20.2
+},
+{
+"word": "30",
+"start": 20.2,
+"end": 20.2
+},
+{
+"word": "of",
+"start": 20.2,
+"end": 20.2
+},
+{
+"word": "A",
+"start": 20.2,
+"end": 20.2
+},
+{
+"word": "Selection",
+"start": 20.2,
+"end": 20.42
+},
+{
+"word": "from",
+"start": 20.42,
+"end": 20.78
+},
+{
+"word": "the",
+"start": 20.78,
+"end": 21.16
+},
+{
+"word": "Norse",
+"start": 21.16,
+"end": 21.16
+},
+{
+"word": "Tales",
+"start": 21.16,
+"end": 21.48
+},
+{
+"word": "for",
+"start": 21.48,
+"end": 23.14
+},
+{
+"word": "the",
+"start": 23.14,
+"end": 23.46
+},
+{
+"word": "Use",
+"start": 23.46,
+"end": 23.46
+},
+{
+"word": "of",
+"start": 23.46,
+"end": 24.46
+},
+{
+"word": "Children.",
+"start": 24.46,
+"end": 24.46
+},
+{
+"word": "THE",
+"start": 25.48,
+"end": 25.48
+},
+{
+"word": "THREE",
+"start": 25.48,
+"end": 26.58
+},
+{
+"word": "BILLY",
+"start": 26.58,
+"end": 26.98
+},
+{
+"word": "GOATS",
+"start": 26.98,
+"end": 27.28
+},
+{
+"word": "GRUFF",
+"start": 27.28,
+"end": 27.7
+},
+{
+"word": "Once",
+"start": 28.54,
+"end": 29.1
+},
+{
+"word": "on",
+"start": 29.1,
+"end": 29.4
+},
+{
+"word": "a",
+"start": 29.4,
+"end": 29.56
+},
+{
+"word": "time",
+"start": 29.56,
+"end": 29.86
+},
+{
+"word": "there",
+"start": 29.86,
+"end": 30.14
+},
+{
+"word": "were",
+"start": 30.14,
+"end": 30.38
+},
+{
+"word": "three",
+"start": 30.38,
+"end": 30.7
+},
+{
+"word": "billy",
+"start": 30.7,
+"end": 31.06
+},
+{
+"word": "goats",
+"start": 31.06,
+"end": 31.22
+},
+{
+"word": "who",
+"start": 31.22,
+"end": 31.7
+},
+{
+"word": "were",
+"start": 31.7,
+"end": 31.84
+},
+{
+"word": "to",
+"start": 31.84,
+"end": 32.02
+},
+{
+"word": "go",
+"start": 32.02,
+"end": 32.22
+},
+{
+"word": "up",
+"start": 32.22,
+"end": 32.44
+},
+{
+"word": "to",
+"start": 32.44,
+"end": 32.72
+},
+{
+"word": "the",
+"start": 32.72,
+"end": 32.82
+},
+{
+"word": "hillside",
+"start": 32.82,
+"end": 33.28
+},
+{
+"word": "to",
+"start": 33.28,
+"end": 33.5
+},
+{
+"word": "make",
+"start": 33.5,
+"end": 33.66
+},
+{
+"word": "themselves",
+"start": 33.66,
+"end": 34.06
+},
+{
+"word": "fat,",
+"start": 34.06,
+"end": 34.5
+},
+{
+"word": "and",
+"start": 34.92,
+"end": 35.18
+},
+{
+"word": "the",
+"start": 35.18,
+"end": 35.32
+},
+{
+"word": "name",
+"start": 35.32,
+"end": 35.5
+},
+{
+"word": "of",
+"start": 35.5,
+"end": 35.7
+},
+{
+"word": "all",
+"start": 35.7,
+"end": 35.9
+},
+{
+"word": "three",
+"start": 35.9,
+"end": 36.26
+},
+{
+"word": "was",
+"start": 36.26,
+"end": 36.58
+},
+{
+"word": "Gruff.",
+"start": 36.58,
+"end": 37.1
+},
+{
+"word": "On",
+"start": 38.18,
+"end": 38.6
+},
+{
+"word": "the",
+"start": 38.6,
+"end": 38.76
+},
+{
+"word": "way",
+"start": 38.76,
+"end": 38.96
+},
+{
+"word": "up",
+"start": 38.96,
+"end": 39.22
+},
+{
+"word": "was",
+"start": 39.22,
+"end": 39.46
+},
+{
+"word": "a",
+"start": 39.46,
+"end": 39.66
+},
+{
+"word": "bridge",
+"start": 39.66,
+"end": 39.9
+},
+{
+"word": "over",
+"start": 39.9,
+"end": 40.22
+},
+{
+"word": "a",
+"start": 40.22,
+"end": 40.44
+},
+{
+"word": "burn",
+"start": 40.44,
+"end": 40.64
+},
+{
+"word": "they",
+"start": 40.64,
+"end": 40.92
+},
+{
+"word": "had",
+"start": 40.92,
+"end": 41.1
+},
+{
+"word": "to",
+"start": 41.1,
+"end": 41.3
+},
+{
+"word": "cross,",
+"start": 41.3,
+"end": 41.62
+},
+{
+"word": "and",
+"start": 42.22,
+"end": 42.74
+},
+{
+"word": "under",
+"start": 42.74,
+"end": 43.12
+},
+{
+"word": "the",
+"start": 43.12,
+"end": 43.3
+},
+{
+"word": "bridge",
+"start": 43.3,
+"end": 43.72
+},
+{
+"word": "lived",
+"start": 43.72,
+"end": 44.34
+},
+{
+"word": "a",
+"start": 44.34,
+"end": 44.58
+},
+{
+"word": "great",
+"start": 44.58,
+"end": 45.1
+},
+{
+"word": "ugly",
+"start": 45.1,
+"end": 45.78
+},
+{
+"word": "troll",
+"start": 45.78,
+"end": 46.22
+},
+{
+"word": "with",
+"start": 46.22,
+"end": 47.08
+},
+{
+"word": "eyes",
+"start": 47.08,
+"end": 47.6
+},
+{
+"word": "as",
+"start": 47.6,
+"end": 47.88
+},
+{
+"word": "big",
+"start": 47.88,
+"end": 48.12
+},
+{
+"word": "as",
+"start": 48.12,
+"end": 48.3
+},
+{
+"word": "saucers",
+"start": 48.3,
+"end": 48.8
+},
+{
+"word": "and",
+"start": 48.8,
+"end": 49.38
+},
+{
+"word": "a",
+"start": 49.38,
+"end": 49.52
+},
+{
+"word": "nose",
+"start": 49.52,
+"end": 49.8
+},
+{
+"word": "as",
+"start": 49.8,
+"end": 50.1
+},
+{
+"word": "long",
+"start": 50.1,
+"end": 50.42
+},
+{
+"word": "as",
+"start": 50.42,
+"end": 50.66
+},
+{
+"word": "a",
+"start": 50.66,
+"end": 50.82
+},
+{
+"word": "poker.",
+"start": 50.82,
+"end": 51.04
+},
+{
+"word": "So",
+"start": 52.16,
+"end": 52.48
+},
+{
+"word": "first",
+"start": 52.48,
+"end": 52.8
+},
+{
+"word": "of",
+"start": 52.8,
+"end": 53.0
+},
+{
+"word": "all",
+"start": 53.0,
+"end": 53.28
+},
+{
+"word": "came",
+"start": 53.28,
+"end": 53.54
+},
+{
+"word": "the",
+"start": 53.54,
+"end": 53.78
+},
+{
+"word": "youngest",
+"start": 53.78,
+"end": 54.08
+},
+{
+"word": "billy",
+"start": 54.08,
+"end": 54.46
+},
+{
+"word": "goat",
+"start": 54.46,
+"end": 54.66
+},
+{
+"word": "Gruff",
+"start": 54.66,
+"end": 54.98
+},
+{
+"word": "to",
+"start": 54.98,
+"end": 55.2
+},
+{
+"word": "cross",
+"start": 55.2,
+"end": 55.42
+},
+{
+"word": "the",
+"start": 55.42,
+"end": 55.68
+},
+{
+"word": "bridge.",
+"start": 55.68,
+"end": 56.06
+},
+{
+"word": "Trip,",
+"start": 56.74,
+"end": 57.34
+},
+{
+"word": "trap,",
+"start": 58.06,
+"end": 58.06
+},
+{
+"word": "trip,",
+"start": 58.42,
+"end": 58.58
+},
+{
+"word": "trap,",
+"start": 59.04,
+"end": 59.32
+},
+{
+"word": "went",
+"start": 59.5,
+"end": 59.78
+},
+{
+"word": "the",
+"start": 59.78,
+"end": 60.02
+},
+{
+"word": "bridge.",
+"start": 60.02,
+"end": 60.46
+},
+{
+"word": "Oh,",
+"start": 61.7,
+"end": 62.3
+},
+{
+"word": "that",
+"start": 63.04,
+"end": 63.34
+},
+{
+"word": "tripping",
+"start": 63.34,
+"end": 64.24
+},
+{
+"word": "over",
+"start": 64.24,
+"end": 64.52
+},
+{
+"word": "my",
+"start": 64.52,
+"end": 64.94
+},
+{
+"word": "bridge",
+"start": 64.94,
+"end": 65.58
+},
+{
+"word": "roared",
+"start": 65.58,
+"end": 66.18
+},
+{
+"word": "the",
+"start": 66.18,
+"end": 66.48
+},
+{
+"word": "troll.",
+"start": 66.48,
+"end": 66.76
+},
+{
+"word": "Oh,",
+"start": 67.96,
+"end": 68.52
+},
+{
+"word": "it",
+"start": 68.66,
+"end": 69.04
+},
+{
+"word": "is",
+"start": 69.04,
+"end": 69.32
+},
+{
+"word": "only",
+"start": 69.32,
+"end": 69.66
+},
+{
+"word": "I,",
+"start": 69.66,
+"end": 70.18
+},
+{
+"word": "the",
+"start": 70.76,
+"end": 71.0
+},
+{
+"word": "tiniest",
+"start": 71.0,
+"end": 71.58
+},
+{
+"word": "billy",
+"start": 71.58,
+"end": 71.9
+},
+{
+"word": "goat",
+"start": 71.9,
+"end": 72.08
+},
+{
+"word": "Gruff,",
+"start": 72.08,
+"end": 72.64
+},
+{
+"word": "and",
+"start": 73.26,
+"end": 73.62
+},
+{
+"word": "I'm",
+"start": 73.62,
+"end": 73.88
+},
+{
+"word": "going",
+"start": 73.88,
+"end": 74.06
+},
+{
+"word": "up",
+"start": 74.06,
+"end": 74.28
+},
+{
+"word": "the",
+"start": 74.28,
+"end": 74.5
+},
+{
+"word": "hill",
+"start": 74.5,
+"end": 74.7
+},
+{
+"word": "to",
+"start": 74.7,
+"end": 74.94
+},
+{
+"word": "make",
+"start": 74.94,
+"end": 75.1
+},
+{
+"word": "myself",
+"start": 75.1,
+"end": 75.54
+},
+{
+"word": "fat,",
+"start": 75.54,
+"end": 76.1
+},
+{
+"word": "said",
+"start": 76.46,
+"end": 76.74
+},
+{
+"word": "the",
+"start": 76.74,
+"end": 76.94
+},
+{
+"word": "billy",
+"start": 76.94,
+"end": 77.24
+},
+{
+"word": "goat,",
+"start": 77.24,
+"end": 77.5
+},
+{
+"word": "with",
+"start": 77.64,
+"end": 77.8
+},
+{
+"word": "such",
+"start": 77.8,
+"end": 78.06
+},
+{
+"word": "a",
+"start": 78.06,
+"end": 78.28
+},
+{
+"word": "small",
+"start": 78.28,
+"end": 78.58
+},
+{
+"word": "voice.",
+"start": 78.58,
+"end": 79.06
+},
+{
+"word": "Now",
+"start": 80.18,
+"end": 80.62
+},
+{
+"word": "I'm",
+"start": 80.62,
+"end": 81.2
+},
+{
+"word": "coming",
+"start": 81.2,
+"end": 81.5
+},
+{
+"word": "to",
+"start": 81.5,
+"end": 81.82
+},
+{
+"word": "gobble",
+"start": 81.82,
+"end": 82.46
+},
+{
+"word": "you",
+"start": 82.46,
+"end": 82.68
+},
+{
+"word": "up,",
+"start": 82.68,
+"end": 83.08
+},
+{
+"word": "said",
+"start": 83.18,
+"end": 83.44
+},
+{
+"word": "the",
+"start": 83.44,
+"end": 83.64
+},
+{
+"word": "troll.",
+"start": 83.64,
+"end": 83.94
+},
+{
+"word": "Oh,",
+"start": 83.94,
+"end": 84.22
+},
+{
+"word": "no,",
+"start": 84.72,
+"end": 85.38
+},
+{
+"word": "pray",
+"start": 86.02,
+"end": 86.2
+},
+{
+"word": "don't",
+"start": 86.2,
+"end": 86.58
+},
+{
+"word": "take",
+"start": 86.58,
+"end": 86.8
+},
+{
+"word": "me.",
+"start": 86.8,
+"end": 87.24
+},
+{
+"word": "I'm",
+"start": 88.1,
+"end": 88.58
+},
+{
+"word": "too",
+"start": 88.58,
+"end": 88.9
+},
+{
+"word": "little.",
+"start": 88.9,
+"end": 89.54
+},
+{
+"word": "That",
+"start": 90.44,
+"end": 90.82
+},
+{
+"word": "I",
+"start": 90.82,
+"end": 91.1
+},
+{
+"word": "am,",
+"start": 91.1,
+"end": 91.74
+},
+{
+"word": "said",
+"start": 92.2,
+"end": 92.44
+},
+{
+"word": "the",
+"start": 92.44,
+"end": 92.64
+},
+{
+"word": "billy",
+"start": 92.64,
+"end": 92.96
+},
+{
+"word": "goat.",
+"start": 92.96,
+"end": 93.18
+},
+{
+"word": "Wait",
+"start": 94.06,
+"end": 94.46
+},
+{
+"word": "a",
+"start": 94.46,
+"end": 94.68
+},
+{
+"word": "bit",
+"start": 94.68,
+"end": 94.86
+},
+{
+"word": "till",
+"start": 94.86,
+"end": 95.14
+},
+{
+"word": "the",
+"start": 95.14,
+"end": 95.34
+},
+{
+"word": "second",
+"start": 95.34,
+"end": 95.68
+},
+{
+"word": "billy",
+"start": 95.68,
+"end": 96.06
+},
+{
+"word": "goat",
+"start": 96.06,
+"end": 96.28
+},
+{
+"word": "Gruff",
+"start": 96.28,
+"end": 96.6
+},
+{
+"word": "comes.",
+"start": 96.6,
+"end": 97.08
+},
+{
+"word": "He's",
+"start": 97.76,
+"end": 98.2
+},
+{
+"word": "much",
+"start": 98.2,
+"end": 98.8
+},
+{
+"word": "bigger.",
+"start": 98.8,
+"end": 99.5
+},
+{
+"word": "Well,",
+"start": 100.82,
+"end": 101.46
+},
+{
+"word": "be",
+"start": 102.2,
+"end": 102.68
+},
+{
+"word": "off",
+"start": 102.68,
+"end": 102.94
+},
+{
+"word": "with",
+"start": 102.94,
+"end": 103.18
+},
+{
+"word": "you,",
+"start": 103.18,
+"end": 103.54
+},
+{
+"word": "said",
+"start": 103.7,
+"end": 104.0
+},
+{
+"word": "the",
+"start": 104.0,
+"end": 104.22
+},
+{
+"word": "troll.",
+"start": 104.22,
+"end": 104.44
+},
+{
+"word": "A",
+"start": 105.46,
+"end": 105.68
+},
+{
+"word": "little",
+"start": 105.68,
+"end": 105.84
+},
+{
+"word": "while",
+"start": 105.84,
+"end": 106.2
+},
+{
+"word": "after",
+"start": 106.2,
+"end": 106.64
+},
+{
+"word": "came",
+"start": 106.64,
+"end": 106.92
+},
+{
+"word": "the",
+"start": 106.92,
+"end": 107.14
+},
+{
+"word": "second",
+"start": 107.14,
+"end": 107.42
+},
+{
+"word": "billy",
+"start": 107.42,
+"end": 107.76
+},
+{
+"word": "goat",
+"start": 107.76,
+"end": 107.96
+},
+{
+"word": "Gruff",
+"start": 107.96,
+"end": 108.26
+},
+{
+"word": "to",
+"start": 108.26,
+"end": 108.5
+},
+{
+"word": "cross",
+"start": 108.5,
+"end": 108.7
+},
+{
+"word": "the",
+"start": 108.7,
+"end": 108.98
+},
+{
+"word": "bridge.",
+"start": 108.98,
+"end": 109.26
+},
+{
+"word": "Trip,",
+"start": 110.12,
+"end": 110.76
+},
+{
+"word": "trap,",
+"start": 111.34,
+"end": 111.36
+},
+{
+"word": "trip,",
+"start": 111.72,
+"end": 111.94
+},
+{
+"word": "trap,",
+"start": 112.46,
+"end": 112.52
+},
+{
+"word": "went",
+"start": 112.76,
+"end": 113.5
+},
+{
+"word": "the",
+"start": 113.5,
+"end": 114.3
+},
+{
+"word": "bridge.",
+"start": 114.3,
+"end": 114.74
+},
+{
+"word": "Oh,",
+"start": 115.76,
+"end": 116.4
+},
+{
+"word": "that",
+"start": 117.22,
+"end": 117.6
+},
+{
+"word": "tripping",
+"start": 117.6,
+"end": 118.08
+},
+{
+"word": "over",
+"start": 118.08,
+"end": 118.3
+},
+{
+"word": "my",
+"start": 118.3,
+"end": 118.6
+},
+{
+"word": "bridge",
+"start": 118.6,
+"end": 119.26
+},
+{
+"word": "roared",
+"start": 119.26,
+"end": 120.38
+},
+{
+"word": "the",
+"start": 120.38,
+"end": 120.64
+},
+{
+"word": "troll.",
+"start": 120.64,
+"end": 120.94
+},
+{
+"word": "Oh,",
+"start": 122.28,
+"end": 122.92
+},
+{
+"word": "it's",
+"start": 123.18,
+"end": 123.5
+},
+{
+"word": "the",
+"start": 123.5,
+"end": 123.66
+},
+{
+"word": "second",
+"start": 123.66,
+"end": 123.98
+},
+{
+"word": "billy",
+"start": 123.98,
+"end": 124.3
+},
+{
+"word": "goat",
+"start": 124.3,
+"end": 124.46
+},
+{
+"word": "Gruff,",
+"start": 124.46,
+"end": 124.98
+},
+{
+"word": "and",
+"start": 125.48,
+"end": 125.94
+},
+{
+"word": "I'm",
+"start": 125.94,
+"end": 126.2
+},
+{
+"word": "going",
+"start": 126.2,
+"end": 126.38
+},
+{
+"word": "up",
+"start": 126.38,
+"end": 126.58
+},
+{
+"word": "the",
+"start": 126.58,
+"end": 126.8
+},
+{
+"word": "hillside",
+"start": 126.8,
+"end": 127.26
+},
+{
+"word": "to",
+"start": 127.26,
+"end": 127.48
+},
+{
+"word": "make",
+"start": 127.48,
+"end": 127.66
+},
+{
+"word": "myself",
+"start": 127.66,
+"end": 128.12
+},
+{
+"word": "fat,",
+"start": 128.12,
+"end": 128.64
+},
+{
+"word": "said",
+"start": 128.92,
+"end": 129.2
+},
+{
+"word": "the",
+"start": 129.2,
+"end": 129.38
+},
+{
+"word": "billy",
+"start": 129.38,
+"end": 129.68
+},
+{
+"word": "goat,",
+"start": 129.68,
+"end": 129.9
+},
+{
+"word": "who",
+"start": 129.94,
+"end": 130.12
+},
+{
+"word": "had",
+"start": 130.12,
+"end": 130.3
+},
+{
+"word": "such",
+"start": 130.3,
+"end": 130.68
+},
+{
+"word": "a",
+"start": 130.68,
+"end": 130.94
+},
+{
+"word": "small",
+"start": 130.94,
+"end": 131.26
+},
+{
+"word": "voice.",
+"start": 131.26,
+"end": 131.7
+},
+{
+"word": "Now",
+"start": 133.04,
+"end": 133.68
+},
+{
+"word": "I'm",
+"start": 133.68,
+"end": 134.32
+},
+{
+"word": "coming",
+"start": 134.32,
+"end": 134.74
+},
+{
+"word": "to",
+"start": 134.74,
+"end": 135.02
+},
+{
+"word": "gobble",
+"start": 135.02,
+"end": 135.36
+},
+{
+"word": "you",
+"start": 135.36,
+"end": 135.58
+},
+{
+"word": "up,",
+"start": 135.58,
+"end": 136.1
+},
+{
+"word": "said",
+"start": 136.36,
+"end": 136.76
+},
+{
+"word": "the",
+"start": 136.76,
+"end": 137.0
+},
+{
+"word": "troll.",
+"start": 137.0,
+"end": 137.28
+},
+{
+"word": "Oh,",
+"start": 137.28,
+"end": 138.66
+},
+{
+"word": "no,",
+"start": 138.8,
+"end": 139.1
+},
+{
+"word": "don't",
+"start": 139.8,
+"end": 140.24
+},
+{
+"word": "take",
+"start": 140.24,
+"end": 140.46
+},
+{
+"word": "me.",
+"start": 140.46,
+"end": 140.92
+},
+{
+"word": "Wait",
+"start": 141.42,
+"end": 141.66
+},
+{
+"word": "a",
+"start": 141.66,
+"end": 141.86
+},
+{
+"word": "little",
+"start": 141.86,
+"end": 142.08
+},
+{
+"word": "till",
+"start": 142.08,
+"end": 142.48
+},
+{
+"word": "the",
+"start": 142.48,
+"end": 142.7
+},
+{
+"word": "big",
+"start": 142.7,
+"end": 143.06
+},
+{
+"word": "billy",
+"start": 143.06,
+"end": 143.44
+},
+{
+"word": "goat",
+"start": 143.44,
+"end": 143.6
+},
+{
+"word": "Gruff",
+"start": 143.6,
+"end": 143.96
+},
+{
+"word": "comes.",
+"start": 143.96,
+"end": 144.42
+},
+{
+"word": "He's",
+"start": 144.92,
+"end": 145.18
+},
+{
+"word": "much",
+"start": 145.18,
+"end": 145.74
+},
+{
+"word": "bigger.",
+"start": 145.74,
+"end": 146.64
+},
+{
+"word": "Well,",
+"start": 147.6,
+"end": 148.36
+},
+{
+"word": "be",
+"start": 150.16,
+"end": 150.6
+},
+{
+"word": "off",
+"start": 150.6,
+"end": 150.9
+},
+{
+"word": "with",
+"start": 150.9,
+"end": 151.12
+},
+{
+"word": "you,",
+"start": 151.12,
+"end": 151.44
+},
+{
+"word": "said",
+"start": 151.56,
+"end": 151.82
+},
+{
+"word": "the",
+"start": 151.82,
+"end": 152.06
+},
+{
+"word": "troll.",
+"start": 152.06,
+"end": 152.3
+},
+{
+"word": "But",
+"start": 153.44,
+"end": 153.76
+},
+{
+"word": "just",
+"start": 153.76,
+"end": 153.98
+},
+{
+"word": "then",
+"start": 153.98,
+"end": 154.52
+},
+{
+"word": "came",
+"start": 154.52,
+"end": 155.04
+},
+{
+"word": "up",
+"start": 155.04,
+"end": 155.3
+},
+{
+"word": "the",
+"start": 155.3,
+"end": 155.6
+},
+{
+"word": "big",
+"start": 155.6,
+"end": 155.84
+},
+{
+"word": "billy",
+"start": 155.84,
+"end": 156.28
+},
+{
+"word": "goat",
+"start": 156.28,
+"end": 156.48
+},
+{
+"word": "Gruff.",
+"start": 156.48,
+"end": 157.08
+},
+{
+"word": "Trip,",
+"start": 158.44,
+"end": 158.44
+},
+{
+"word": "trap,",
+"start": 158.88,
+"end": 159.46
+},
+{
+"word": "trip,",
+"start": 159.88,
+"end": 160.18
+},
+{
+"word": "trap,",
+"start": 160.66,
+"end": 160.88
+},
+{
+"word": "trip,",
+"start": 160.98,
+"end": 161.3
+},
+{
+"word": "trap,",
+"start": 161.94,
+"end": 161.94
+},
+{
+"word": "went",
+"start": 162.7,
+"end": 162.72
+},
+{
+"word": "the",
+"start": 162.72,
+"end": 163.1
+},
+{
+"word": "bridge.",
+"start": 163.1,
+"end": 163.52
+},
+{
+"word": "For",
+"start": 163.52,
+"end": 164.1
+},
+{
+"word": "the",
+"start": 164.1,
+"end": 164.52
+},
+{
+"word": "billy",
+"start": 164.52,
+"end": 164.86
+},
+{
+"word": "goat",
+"start": 164.86,
+"end": 165.04
+},
+{
+"word": "was",
+"start": 165.04,
+"end": 165.24
+},
+{
+"word": "so",
+"start": 165.24,
+"end": 165.56
+},
+{
+"word": "heavy",
+"start": 165.56,
+"end": 165.88
+},
+{
+"word": "that",
+"start": 165.88,
+"end": 166.38
+},
+{
+"word": "the",
+"start": 166.38,
+"end": 166.58
+},
+{
+"word": "bridge",
+"start": 166.58,
+"end": 166.82
+},
+{
+"word": "creaked",
+"start": 166.82,
+"end": 167.4
+},
+{
+"word": "and",
+"start": 167.4,
+"end": 167.62
+},
+{
+"word": "groaned",
+"start": 167.62,
+"end": 168.18
+},
+{
+"word": "under",
+"start": 168.18,
+"end": 168.48
+},
+{
+"word": "him.",
+"start": 168.48,
+"end": 168.8
+},
+{
+"word": "Oh,",
+"start": 170.04,
+"end": 170.48
+},
+{
+"word": "that",
+"start": 170.78,
+"end": 171.22
+},
+{
+"word": "tripping",
+"start": 171.22,
+"end": 171.78
+},
+{
+"word": "over",
+"start": 171.78,
+"end": 172.12
+},
+{
+"word": "my",
+"start": 172.12,
+"end": 172.56
+},
+{
+"word": "bridge",
+"start": 172.56,
+"end": 173.24
+},
+{
+"word": "roared",
+"start": 173.24,
+"end": 174.08
+},
+{
+"word": "the",
+"start": 174.08,
+"end": 174.46
+},
+{
+"word": "troll.",
+"start": 174.46,
+"end": 174.8
+},
+{
+"word": "It",
+"start": 176.0,
+"end": 176.68
+},
+{
+"word": "is",
+"start": 176.68,
+"end": 176.9
+},
+{
+"word": "I,",
+"start": 176.9,
+"end": 177.5
+},
+{
+"word": "the",
+"start": 178.14,
+"end": 178.34
+},
+{
+"word": "big",
+"start": 178.34,
+"end": 178.6
+},
+{
+"word": "billy",
+"start": 178.6,
+"end": 179.04
+},
+{
+"word": "goat",
+"start": 179.04,
+"end": 179.26
+},
+{
+"word": "Gruff,",
+"start": 179.26,
+"end": 179.86
+},
+{
+"word": "said",
+"start": 180.18,
+"end": 180.44
+},
+{
+"word": "the",
+"start": 180.44,
+"end": 180.62
+},
+{
+"word": "billy",
+"start": 180.62,
+"end": 180.9
+},
+{
+"word": "goat,",
+"start": 180.9,
+"end": 181.24
+},
+{
+"word": "who",
+"start": 181.52,
+"end": 181.78
+},
+{
+"word": "had",
+"start": 181.78,
+"end": 181.98
+},
+{
+"word": "an",
+"start": 181.98,
+"end": 182.22
+},
+{
+"word": "ugly",
+"start": 182.22,
+"end": 182.58
+},
+{
+"word": "horse",
+"start": 182.58,
+"end": 182.88
+},
+{
+"word": "voice",
+"start": 182.88,
+"end": 183.24
+},
+{
+"word": "of",
+"start": 183.24,
+"end": 183.48
+},
+{
+"word": "his",
+"start": 183.48,
+"end": 183.66
+},
+{
+"word": "own.",
+"start": 183.66,
+"end": 184.04
+},
+{
+"word": "Now",
+"start": 185.26,
+"end": 185.94
+},
+{
+"word": "I'm",
+"start": 185.94,
+"end": 186.62
+},
+{
+"word": "coming",
+"start": 186.62,
+"end": 186.96
+},
+{
+"word": "to",
+"start": 186.96,
+"end": 187.32
+},
+{
+"word": "gobble",
+"start": 187.32,
+"end": 187.64
+},
+{
+"word": "you",
+"start": 187.64,
+"end": 187.82
+},
+{
+"word": "up,",
+"start": 187.82,
+"end": 188.16
+},
+{
+"word": "roared",
+"start": 188.54,
+"end": 188.66
+},
+{
+"word": "the",
+"start": 188.66,
+"end": 188.88
+},
+{
+"word": "troll.",
+"start": 188.88,
+"end": 189.16
+},
+{
+"word": "Well,",
+"start": 189.92,
+"end": 190.4
+},
+{
+"word": "come",
+"start": 190.64,
+"end": 190.82
+},
+{
+"word": "along.",
+"start": 190.82,
+"end": 191.28
+},
+{
+"word": "I've",
+"start": 191.6,
+"end": 191.84
+},
+{
+"word": "got",
+"start": 191.84,
+"end": 192.0
+},
+{
+"word": "two",
+"start": 192.0,
+"end": 192.32
+},
+{
+"word": "spears,",
+"start": 192.32,
+"end": 192.72
+},
+{
+"word": "and",
+"start": 193.0,
+"end": 193.08
+},
+{
+"word": "I'll",
+"start": 193.08,
+"end": 193.34
+},
+{
+"word": "poke",
+"start": 193.34,
+"end": 193.44
+},
+{
+"word": "your",
+"start": 193.44,
+"end": 193.72
+},
+{
+"word": "eyeballs",
+"start": 193.72,
+"end": 194.26
+},
+{
+"word": "out",
+"start": 194.26,
+"end": 194.48
+},
+{
+"word": "at",
+"start": 194.48,
+"end": 194.72
+},
+{
+"word": "your",
+"start": 194.72,
+"end": 194.92
+},
+{
+"word": "ears.",
+"start": 194.92,
+"end": 195.24
+},
+{
+"word": "I've",
+"start": 196.02,
+"end": 196.26
+},
+{
+"word": "got",
+"start": 196.26,
+"end": 196.42
+},
+{
+"word": "besides",
+"start": 196.42,
+"end": 196.84
+},
+{
+"word": "two",
+"start": 196.84,
+"end": 197.26
+},
+{
+"word": "curling",
+"start": 197.26,
+"end": 197.72
+},
+{
+"word": "stones,",
+"start": 197.72,
+"end": 198.1
+},
+{
+"word": "and",
+"start": 198.5,
+"end": 198.74
+},
+{
+"word": "I'll",
+"start": 198.74,
+"end": 198.96
+},
+{
+"word": "crush",
+"start": 198.96,
+"end": 199.16
+},
+{
+"word": "you",
+"start": 199.16,
+"end": 199.4
+},
+{
+"word": "to",
+"start": 199.4,
+"end": 199.58
+},
+{
+"word": "bits,",
+"start": 199.58,
+"end": 199.78
+},
+{
+"word": "body",
+"start": 200.1,
+"end": 200.26
+},
+{
+"word": "and",
+"start": 200.26,
+"end": 200.54
+},
+{
+"word": "bones.",
+"start": 200.54,
+"end": 200.88
+},
+{
+"word": "That",
+"start": 201.44,
+"end": 201.84
+},
+{
+"word": "was",
+"start": 201.84,
+"end": 202.04
+},
+{
+"word": "what",
+"start": 202.04,
+"end": 202.24
+},
+{
+"word": "the",
+"start": 202.24,
+"end": 202.42
+},
+{
+"word": "big",
+"start": 202.42,
+"end": 202.66
+},
+{
+"word": "billy",
+"start": 202.66,
+"end": 202.98
+},
+{
+"word": "goat",
+"start": 202.98,
+"end": 203.12
+},
+{
+"word": "said.",
+"start": 203.12,
+"end": 203.56
+},
+{
+"word": "And",
+"start": 204.18,
+"end": 204.32
+},
+{
+"word": "so",
+"start": 204.32,
+"end": 204.52
+},
+{
+"word": "he",
+"start": 204.52,
+"end": 204.72
+},
+{
+"word": "flew",
+"start": 204.72,
+"end": 205.02
+},
+{
+"word": "at",
+"start": 205.02,
+"end": 205.2
+},
+{
+"word": "the",
+"start": 205.2,
+"end": 205.42
+},
+{
+"word": "troll",
+"start": 205.42,
+"end": 205.66
+},
+{
+"word": "and",
+"start": 205.66,
+"end": 206.28
+},
+{
+"word": "poked",
+"start": 206.28,
+"end": 206.66
+},
+{
+"word": "his",
+"start": 206.66,
+"end": 207.0
+},
+{
+"word": "eyes",
+"start": 207.0,
+"end": 207.2
+},
+{
+"word": "out",
+"start": 207.2,
+"end": 207.5
+},
+{
+"word": "with",
+"start": 207.5,
+"end": 207.72
+},
+{
+"word": "his",
+"start": 207.72,
+"end": 207.92
+},
+{
+"word": "horns,",
+"start": 207.92,
+"end": 208.24
+},
+{
+"word": "and",
+"start": 208.8,
+"end": 208.98
+},
+{
+"word": "crushed",
+"start": 208.98,
+"end": 209.18
+},
+{
+"word": "him",
+"start": 209.18,
+"end": 209.42
+},
+{
+"word": "to",
+"start": 209.42,
+"end": 209.6
+},
+{
+"word": "bits,",
+"start": 209.6,
+"end": 209.88
+},
+{
+"word": "body",
+"start": 210.2,
+"end": 210.3
+},
+{
+"word": "and",
+"start": 210.3,
+"end": 210.56
+},
+{
+"word": "bones,",
+"start": 210.56,
+"end": 210.84
+},
+{
+"word": "and",
+"start": 211.36,
+"end": 211.56
+},
+{
+"word": "tossed",
+"start": 211.56,
+"end": 211.82
+},
+{
+"word": "him",
+"start": 211.82,
+"end": 212.14
+},
+{
+"word": "out",
+"start": 212.14,
+"end": 212.52
+},
+{
+"word": "into",
+"start": 212.52,
+"end": 212.9
+},
+{
+"word": "the",
+"start": 212.9,
+"end": 213.14
+},
+{
+"word": "burn.",
+"start": 213.14,
+"end": 213.34
+},
+{
+"word": "And",
+"start": 214.16,
+"end": 214.38
+},
+{
+"word": "after",
+"start": 214.38,
+"end": 214.66
+},
+{
+"word": "that",
+"start": 214.66,
+"end": 214.92
+},
+{
+"word": "he",
+"start": 214.92,
+"end": 215.12
+},
+{
+"word": "went",
+"start": 215.12,
+"end": 215.34
+},
+{
+"word": "up",
+"start": 215.34,
+"end": 215.52
+},
+{
+"word": "to",
+"start": 215.52,
+"end": 215.72
+},
+{
+"word": "the",
+"start": 215.72,
+"end": 215.88
+},
+{
+"word": "hillside.",
+"start": 215.88,
+"end": 216.36
+},
+{
+"word": "There",
+"start": 216.36,
+"end": 217.36
+},
+{
+"word": "the",
+"start": 217.36,
+"end": 217.62
+},
+{
+"word": "billy",
+"start": 217.62,
+"end": 217.92
+},
+{
+"word": "goats",
+"start": 217.92,
+"end": 218.1
+},
+{
+"word": "got",
+"start": 218.1,
+"end": 218.42
+},
+{
+"word": "so",
+"start": 218.42,
+"end": 218.7
+},
+{
+"word": "fat",
+"start": 218.7,
+"end": 219.0
+},
+{
+"word": "they",
+"start": 219.0,
+"end": 219.26
+},
+{
+"word": "were",
+"start": 219.26,
+"end": 219.42
+},
+{
+"word": "scarce",
+"start": 219.42,
+"end": 219.74
+},
+{
+"word": "able",
+"start": 219.74,
+"end": 220.02
+},
+{
+"word": "to",
+"start": 220.02,
+"end": 220.28
+},
+{
+"word": "walk",
+"start": 220.28,
+"end": 220.58
+},
+{
+"word": "home",
+"start": 220.58,
+"end": 220.94
+},
+{
+"word": "again.",
+"start": 220.94,
+"end": 221.46
+},
+{
+"word": "And",
+"start": 222.42,
+"end": 222.58
+},
+{
+"word": "if",
+"start": 222.58,
+"end": 222.74
+},
+{
+"word": "the",
+"start": 222.74,
+"end": 222.92
+},
+{
+"word": "fat",
+"start": 222.92,
+"end": 223.12
+},
+{
+"word": "hasn't",
+"start": 223.12,
+"end": 223.58
+},
+{
+"word": "fallen",
+"start": 223.58,
+"end": 223.78
+},
+{
+"word": "off",
+"start": 223.78,
+"end": 224.12
+},
+{
+"word": "them,",
+"start": 224.12,
+"end": 224.42
+},
+{
+"word": "why,",
+"start": 224.82,
+"end": 225.0
+},
+{
+"word": "they're",
+"start": 225.14,
+"end": 225.28
+},
+{
+"word": "still",
+"start": 225.28,
+"end": 225.44
+},
+{
+"word": "fat.",
+"start": 225.44,
+"end": 225.86
+},
+{
+"word": "And",
+"start": 226.36,
+"end": 226.54
+},
+{
+"word": "so,",
+"start": 226.54,
+"end": 226.96
+},
+{
+"word": "snip,",
+"start": 227.56,
+"end": 227.7
+},
+{
+"word": "snap,",
+"start": 227.86,
+"end": 228.1
+},
+{
+"word": "snout,",
+"start": 228.38,
+"end": 228.72
+},
+{
+"word": "this",
+"start": 229.0,
+"end": 229.16
+},
+{
+"word": "tale's",
+"start": 229.16,
+"end": 229.78
+},
+{
+"word": "told",
+"start": 229.78,
+"end": 229.94
+},
+{
+"word": "out.",
+"start": 229.94,
+"end": 230.58
+}
+]

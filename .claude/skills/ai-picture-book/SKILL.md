@@ -57,19 +57,20 @@ Steps:
    scenes: no text, scene readable, characters consistent, nothing unsuitable for small kids. Report only; no edits.
 8. When done: stop the receiver task, close the tabs you created. The Gemini chat stays in the user's history.
 
-Images come out 1024×765 PNG; the import step upscales them to 1200 wide JPEG.
+Images come out 1024×765 PNG; the import step stores them as WebP (same size) and keeps the PNGs in
+`data/originals/media/books/<id>/`.
 
 ## 3. Import, nikud, narration (Agent B)
 
 Hand this to a background agent with the scratch path. It runs from the project root:
 
 ```bash
-python .claude/skills/ai-picture-book/scripts/convert-images.py "<scratch>/img" data/media/books/<id>
-npx tsx .claude/skills/ai-picture-book/scripts/create-book.ts "<scratch>/spec.json"
+npx tsx .claude/skills/ai-picture-book/scripts/create-book.ts "<scratch>/spec.json" "<scratch>/img"
 npx tsx scripts/narrate.ts <slug>
 ```
 
-- `create-book.ts` creates the book through `LocalRepository.createBook` (validated, published, owner = the user's
+- `create-book.ts` stores `cover.png` and `page-NN.png` from the folder as WebP (`src/lib/media/optimize.ts`, like
+  every picture the site saves), then creates the book through `LocalRepository.createBook` (validated, published, owner = the user's
   account `u_m3ipvar7h1mb`, origin `ai`, same credit wording as the other AI books). It refuses an existing id.
 - `narrate.ts` uses `.env.local` providers: Dicta nikud + ElevenLabs TTS.
 - Then **review the nikud** in `data/books/<slug>/book.json` (`textNikud`) and fix by hand. Dicta's usual mistakes:
@@ -104,8 +105,8 @@ One clip at a time, human pace (Google's terms restrict automated use). Tested o
 3. Upload the page picture without the native file picker: first patch the input in the Flow tab with
    `javascript_tool`:
    `HTMLInputElement.prototype.click = function(){ if (this.type==='file'){ if(!this.isConnected) document.body.appendChild(this); return; } }`
-   then open **+ (menu for adding media) → העלאה**, `find` the file input and `file_upload` the JPEG from
-   `data/media/books/<id>/page-NN.jpg`.
+   then open **+ (menu for adding media) → העלאה**, `find` the file input and `file_upload` the picture from
+   `data/originals/media/books/<id>/page-NN.png` (the full-size original; the served `page-NN.webp` is smaller).
 4. In the chat, one paragraph (no newlines): "Animate the picture I uploaded into a 4-second video with Omni 1.1 Flash,
    16:9, 720p. Use it as BOTH the first and the last frame so it loops seamlessly. Keep the exact style, framing and colors,
    no camera movement, no new objects, no text. Gentle subtle motion only: <who moves and how>. Silent."

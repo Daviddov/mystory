@@ -29,6 +29,7 @@
 import { estimateReadingMinutes } from "../hebrew";
 import { BOOK_LIMITS } from "../limits";
 import type { MediaStore } from "../media/types";
+import { putImage, prepareImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { Repository } from "../repo/types";
 import { SLUG_PATTERN, type AgeGroup, type BookCredits, type BookLanguage, type BookWithPages, type Page } from "../types";
@@ -535,9 +536,9 @@ export async function importStoryWeaverBook(options: StoryWeaverImportOptions): 
     if (known) return known.path;
     say(storedBase);
     const image = await client.image(url);
-    const path = bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`);
-    files.set(url, { path, ...image });
-    return path;
+    const stored = await prepareImage(bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`), image.bytes, image.contentType);
+    files.set(url, stored);
+    return stored.path;
   };
 
   const pages: Page[] = [];
@@ -584,7 +585,7 @@ export async function importStoryWeaverBook(options: StoryWeaverImportOptions): 
     await media.deletePrefix(bookMediaPrefix(bookId));
   }
   try {
-    for (const file of files.values()) await media.put(file.path, file.bytes, file.contentType);
+    for (const file of files.values()) await putImage(media, file);
     const book = await repo.createBook({
       id: bookId,
       slug: SLUG_PATTERN.test(slug) && slug.length <= 68 ? `storyweaver-${slug}` : bookId,

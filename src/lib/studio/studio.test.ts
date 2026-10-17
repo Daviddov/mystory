@@ -1,3 +1,6 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import sharp from "sharp";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { NotFoundError } from "@/lib/repo/types";
 import type { User } from "@/lib/types";
@@ -197,6 +200,25 @@ describe("studio service", () => {
     const meta = await updateBookMeta(ctx, book.id, { summary: "תקציר" });
     expect(meta.pages).toHaveLength(2);
     expect((await data.repo.getBookById(book.id))?.pages).toHaveLength(2);
+  });
+
+  it("stores an uploaded picture as WebP and keeps the original", { timeout: 60_000 }, async () => {
+    const book = await createStudioBook(ctx, { title: "הספר שלי" });
+    // Gradients with a little grain, like an illustration (pure noise would not shrink as WebP).
+    const raw = Buffer.alloc(900 * 600 * 3);
+    for (let i = 0; i < raw.length; i += 1) {
+      const pixel = Math.floor(i / 3);
+      raw[i] = Math.min(255, ((pixel % 900) * (1 + (i % 3))) / 8 + ((i * 2654435761) % 13));
+    }
+    const picture = new Uint8Array(await sharp(raw, { raw: { width: 900, height: 600, channels: 3 } }).png().toBuffer());
+
+    const stored = await storeUpload(ctx, book.id, "image", picture);
+    expect(stored.path).toMatch(new RegExp(`^books/${book.id}/img-[a-z0-9]+\\.webp$`));
+    expect(stored).toMatchObject({ contentType: "image/webp", url: `/media/${stored.path}` });
+    expect(stored.size).toBeLessThan(picture.byteLength);
+    expect((await data.media.get(stored.path))?.contentType).toBe("image/webp");
+    const original = path.join(data.dir, "originals", "media", ...stored.path.replace(/\.webp$/, ".png").split("/"));
+    expect(new Uint8Array(await readFile(original))).toEqual(picture);
   });
 
   it("validates uploads by size, content and kind", async () => {

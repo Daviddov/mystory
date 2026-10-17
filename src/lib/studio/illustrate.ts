@@ -22,6 +22,7 @@ import {
 } from "../generation/prompts";
 import { getStoryStyle } from "../generation/options";
 import { newId } from "../ids";
+import { storeImage } from "../media/optimize";
 import type { MediaStore } from "../media/types";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { BookWithPages } from "../types";
@@ -118,7 +119,8 @@ export async function createHeroImage(
     aspect: "1:1",
   });
   if (result.isMock) isMock = true;
-  const stored = await deps.media.put(
+  const stored = await storeImage(
+    deps.media,
     bookMediaPath(book.id, `hero-${newId()}.${extensionForContentType(result.contentType)}`),
     result.image,
     result.contentType,
@@ -171,7 +173,8 @@ export async function illustratePage(
     aspect: "4:3",
   });
   if (result.isMock) isMock = true;
-  const stored = await deps.media.put(
+  const stored = await storeImage(
+    deps.media,
     bookMediaPath(book.id, `art-${newId()}.${extensionForContentType(result.contentType)}`),
     result.image,
     result.contentType,

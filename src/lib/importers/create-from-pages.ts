@@ -9,6 +9,7 @@ import { newId } from "../ids";
 import { getMediaStore } from "../media";
 import { assertOwnerCanAddBook } from "../owner-books";
 import type { MediaStore } from "../media/types";
+import { storeImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import { getRepo } from "../repo";
 import type { Repository } from "../repo/types";
@@ -117,8 +118,7 @@ export async function createDraftFromPages(input: PagesImportInput): Promise<Boo
         const image = typed[nextImage];
         nextImage += 1;
         const path = bookMediaPath(bookId, `page-${String(i + 1).padStart(2, "0")}.${image.ext}`);
-        await media.put(path, image.bytes, image.contentType);
-        next.image = path;
+        next.image = (await storeImage(media, path, image.bytes, image.contentType)).path;
       }
       pages.push(next);
     }
@@ -126,8 +126,8 @@ export async function createDraftFromPages(input: PagesImportInput): Promise<Boo
     let coverImage = "";
     if (typed.length > 0) {
       // A separate copy, so replacing or deleting the first page later does not break the cover.
-      coverImage = bookMediaPath(bookId, `cover.${typed[0].ext}`);
-      await media.put(coverImage, typed[0].bytes, typed[0].contentType);
+      const cover = bookMediaPath(bookId, `cover.${typed[0].ext}`);
+      coverImage = (await storeImage(media, cover, typed[0].bytes, typed[0].contentType)).path;
     }
 
     return await repo.createBook({

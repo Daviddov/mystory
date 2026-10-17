@@ -8,9 +8,11 @@ import { contentTypeForPath, InvalidMediaPathError, mediaUrl, normalizeMediaPath
 export class LocalMediaStore implements MediaStore {
   readonly kind = "local" as const;
   private readonly root: string;
+  private readonly originalsRoot: string;
 
   constructor(dataRoot: string) {
     this.root = path.resolve(dataRoot, "media");
+    this.originalsRoot = path.resolve(dataRoot, "originals", "media");
   }
 
   /** Absolute file path for a media path, guaranteed to stay inside the media root. */
@@ -26,6 +28,12 @@ export class LocalMediaStore implements MediaStore {
     const normalized = normalizeMediaPath(mediaPath);
     await writeFileAtomic(this.resolve(normalized), bytes);
     return { path: normalized, url: this.url(normalized) };
+  }
+
+  /** <dataDir>/originals/media/<path>, where scripts/compress-media.ts keeps them too. */
+  async putOriginal(mediaPath: string, bytes: Uint8Array): Promise<void> {
+    const normalized = normalizeMediaPath(mediaPath);
+    await writeFileAtomic(path.join(this.originalsRoot, ...normalized.split("/")), bytes);
   }
 
   async get(mediaPath: string): Promise<MediaObject | null> {

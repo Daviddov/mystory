@@ -18,6 +18,15 @@ export interface MediaStore {
    * so make the extension match `contentType` (see extensionForContentType()).
    */
   put(path: string, bytes: Uint8Array, contentType: string): Promise<{ path: string; url: string }>;
+  /**
+   * Keeps the full-resolution original of an illustration that was stored as
+   * a smaller WebP (see ./optimize.ts). Never served. Only the local store has
+   * it: <dataDir>/originals/media/<path>, git-ignored, kept for print. The
+   * Supabase store skips originals on purpose: storage size is what the move to
+   * WebP saves, and a private originals bucket would cost more than all the
+   * served files together. Deleting a book leaves its originals.
+   */
+  putOriginal?(path: string, bytes: Uint8Array): Promise<void>;
   /** Returns null when the file does not exist. */
   get(path: string): Promise<MediaObject | null>;
   /** Idempotent. */

@@ -1,14 +1,16 @@
 /**
  * Creates a published AI picture book in the local library from a spec file.
  *
- *   npx tsx .claude/skills/ai-picture-book/scripts/create-book.ts <spec.json>
+ *   npx tsx .claude/skills/ai-picture-book/scripts/create-book.ts <spec.json> <img-folder>
  *
- * Run from the project root, after convert-images.py put cover.jpg and
- * page-NN.jpg in data/media/books/<id>/. Refuses an id or slug that exists.
+ * Run from the project root. <img-folder> holds cover.png and page-NN.png (Gemini
+ * output); they are stored as WebP in data/media/books/<id>/ (the PNGs kept in
+ * data/originals/media/books/<id>/). Refuses an id or slug that exists.
  * Spec format: ../references/spec-example.json.
  */
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import path from "node:path";
+import { assertBookImages, bookImageNames, pageImageName, storeBookImages } from "../../../../scripts/lib/book-images";
 import { LocalRepository } from "../../../../src/lib/repo/local";
 
 type Spec = {
@@ -29,21 +31,20 @@ type Spec = {
 const OWNER_ID = "u_m3ipvar7h1mb";
 
 async function main(): Promise<void> {
-  const specPath = process.argv[2];
-  if (!specPath) throw new Error("usage: create-book.ts <spec.json>");
+  const [specPath, imgDir] = process.argv.slice(2);
+  if (!specPath || !imgDir) throw new Error("usage: create-book.ts <spec.json> <img-folder>");
   const spec = JSON.parse(readFileSync(specPath, "utf8")) as Spec;
   if (!/^ai-[a-z0-9-]+$/.test(spec.id)) throw new Error(`id must look like ai-<slug>: ${spec.id}`);
 
   const root = path.join(process.cwd(), "data");
-  const media = path.join(root, "media", "books", spec.id);
-  const pageFile = (i: number) => `page-${String(i + 1).padStart(2, "0")}.jpg`;
-  const missing = ["cover.jpg", ...spec.pages.map((_, i) => pageFile(i))].filter((f) => !existsSync(path.join(media, f)));
-  if (missing.length > 0) throw new Error(`missing images in ${media}: ${missing.join(", ")}`);
+  const names = bookImageNames(spec.pages.length);
+  assertBookImages(imgDir, names);
 
   const repo = new LocalRepository(root);
   if ((await repo.getBookById(spec.id)) || (await repo.getBookBySlug(spec.slug))) {
     throw new Error(`a book with id ${spec.id} or slug ${spec.slug} already exists`);
   }
+  const images = await storeBookImages(root, spec.id, imgDir, names);
 
   const book = await repo.createBook({
     id: spec.id,
@@ -55,7 +56,7 @@ async function main(): Promise<void> {
     license: "לשימוש אישי",
     source: spec.source ?? "נכתב ואויר בעזרת בינה מלאכותית",
     ageGroup: spec.ageGroup,
-    coverImage: `books/${spec.id}/cover.jpg`,
+    coverImage: images.get("cover"),
     status: "published",
     ownerId: OWNER_ID,
     categories: spec.categories,
@@ -68,7 +69,7 @@ async function main(): Promise<void> {
     pages: spec.pages.map((page, index) => ({
       index,
       text: page.text,
-      image: `books/${spec.id}/${pageFile(index)}`,
+      image: images.get(pageImageName(index)),
       imageAlt: page.alt,
     })),
   });

@@ -25,6 +25,7 @@
 import { estimateReadingMinutes } from "../hebrew";
 import { BOOK_LIMITS } from "../limits";
 import type { MediaStore } from "../media/types";
+import { putImage, prepareImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { Repository } from "../repo/types";
 import { SLUG_PATTERN, type BookCredits, type BookWithPages, type Page } from "../types";
@@ -567,9 +568,9 @@ export async function importBookDashBook(options: BookDashImportOptions): Promis
     say(`images/${file}`);
     try {
       const image = await client.image(slug, file);
-      const path = bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`);
-      files.set(file, { path, ...image });
-      return path;
+      const stored = await prepareImage(bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`), image.bytes, image.contentType);
+      files.set(file, stored);
+      return stored.path;
     } catch (err) {
       if (required || !(err instanceof BookDashError) || err.code !== "media") throw err;
       warnings.push(`${file} could not be downloaded: ${err.message}`);
@@ -585,9 +586,9 @@ export async function importBookDashBook(options: BookDashImportOptions): Promis
     say(url.slice(url.lastIndexOf("/") + 1));
     try {
       const image = await fetchBookDashWebImage(url, options.webFetch);
-      const path = bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`);
-      files.set(url, { path, ...image });
-      return path;
+      const stored = await prepareImage(bookMediaPath(bookId, `${storedBase}.${extensionForContentType(image.contentType)}`), image.bytes, image.contentType);
+      files.set(url, stored);
+      return stored.path;
     } catch (err) {
       warnings.push(`${url} could not be downloaded: ${err instanceof Error ? err.message : String(err)}`);
       return undefined;
@@ -646,7 +647,7 @@ export async function importBookDashBook(options: BookDashImportOptions): Promis
     await media.deletePrefix(bookMediaPrefix(bookId));
   }
   try {
-    for (const file of files.values()) await media.put(file.path, file.bytes, file.contentType);
+    for (const file of files.values()) await putImage(media, file);
     const book = await repo.createBook({
       id: bookId,
       slug,

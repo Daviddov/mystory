@@ -38,7 +38,8 @@ import { IdSchema } from "@/lib/types";
 export const dynamic = "force-dynamic";
 // One clip takes one to two minutes with Veo. A run that is cut off can simply
 // be started again: pages that already have a current clip are skipped.
-export const maxDuration = 800;
+// 300 is the most Vercel's Hobby plan allows; a higher value fails the build.
+export const maxDuration = 300;
 
 type Context = { params: Promise<{ id: string }> };
 

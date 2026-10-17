@@ -151,3 +151,13 @@ One clip at a time, human pace (Google's terms restrict automated use). Tested o
 Results so far (2026-10-15, `kacha-ogeret-omeret`): clips are 1280×720, 24 fps, 4.0 s, with a sound track (stripped);
 no visible watermark on the free account (SynthID stays); loops are smooth; with the margin framing the picture
 lines up exactly. Quota: page 13 + pages 1–5 used the day's 50 credits (one failed attempt may also have cost credits).
+
+### Backup when Flow's daily quota runs out: Kling (free, web UI)
+
+Tested 2026-10-17 on page 13 of `kacha-ogeret-omeret`; Flow stays the first choice. `kling.ai/app` (Chrome, user signs in):
+66 free credits. **Video Generation → Keyframes**, model **Kling 2.5 Turbo**, 720p, 5 s, 16:9, first frame only
+(15 credits; a last frame forces 1080p, which is paid, so no seamless loop). Use the same `page-NN-16x9.jpg` framing and
+motion prompt as Flow. Upload via `file_upload` into the First Frame input, then **First Frame → Asset → Uploads**.
+The free queue takes ~8 min. Result: 1280×720, 24 fps, 5 s, gentler motion than Flow, a **"KlingAI" watermark** at the
+bottom right (lands in the cream margin, which the reader crops away, but the free tier is not licensed for commercial use).
+The clip URL is the page's `<video>.currentSrc`; `curl` it, then `attach-clip.ts` as for Flow.

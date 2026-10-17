@@ -73,9 +73,28 @@ rebuild the grids json for each book (never reuse older ones). Check every man a
 Books attached before this date are handled by the user.
 
 ## ElevenLabs as the fallback when ChatGPT's limit is hit (2026-10-17)
-Free plan: ~10,000 credits a month (not daily). Model GPT Image 2.5 Sunburst, aspect 4:3, High, 1 generation, prompt improvement Off:
+Free plan: ~10,000 credits shown BUT a hard DAILY limit applies: after 3 generations (1 test at 1K + 2 grids at 2K on 2026-10-17) it showed "You have reached the daily image generation limit for the free plan" and an upgrade dialog (the "N left" chip still said 21: ignore it). Model GPT Image 2.5 Sunburst, aspect 4:3, High, 1 generation, prompt improvement Off:
 1K = 238 credits, **2K = 423 credits per grid** (≈ 23 grids a month ≈ 11 books); the tooltip on the "N left" chip shows cost and images left.
 At 1K a 3x3 grid gives ~340x250 panels (too small); use 2K (2048x1536, ~680x510 per panel, about like ChatGPT).
 Use `scripts/elevenlabs-driver.js` (autonomous queue, saves `<key>-grid-N.png` through the receiver) and the same crop/attach watcher.
 The history card is a 1024 px thumbnail: open the card, the detail modal has the full 2048x1536 image (this is what the driver saves).
 Sign-in needs the user (done once in Chrome). Credits are monthly: do not burn them early in the month on retries.
+
+**Measured (2026-10-17): ElevenLabs free = about 3 generations a day** (≈ 1 book of 2 grids a day). Never click Subscribe/upgrade.
+The driver's stop rule watches the dialog text ("Upgrade to continue"); close the dialog with its X.
+
+## Gemini app as a fallback (user, 2026-10-17)
+After ChatGPT, ElevenLabs and (optionally) AI Studio: the Gemini app at gemini.google.com/app (signed in, Flash mode, never type newlines).
+Use 2x2 sheets: `node scripts/build-grid-prompts.mjs <id> <folder>/grids-<key>.json --size=4` (the prompt asks for a 4:3 image with four equal
+panels; without it Gemini gives a 16:9 image with an uneven layout). Result 1024x768, panels ~500x380, a warm cartoon style that differs from
+ChatGPT's watercolor (chazal books may look different from the parasha books). A book takes 4 sheets (cover + 13 pages).
+Driver: `scripts/gemini-grid-driver.js` (autonomous queue, canvas -> receiver, stops on a limit message). Record the limit you see.
+Another session ("fork") may already run Gemini for some books: check list_sessions before starting, only one Gemini run at a time.
+
+## Gemini app grid flow (2026-10-17): works, own quota, resets in the morning
+Prompts: `node scripts/build-grid-prompts.mjs <id> <folder>/grids-<key>.json --size=4` (2x2 sheets, asks for 4:3 and equal panels; a
+sheet of 3 or 1 pictures is handled). Driver: `scripts/gemini-grid-driver.js` (two tabs in parallel worked; a page reload loses the JS state).
+Result: sheets of 1024x768, four panels of ~500x380, clean cartoon style (different from ChatGPT's watercolor), uniform layout, head
+coverings mostly present. Measured limit: **13 sheets (~50 pictures)**, then "הגעת למכסה של יצירת התמונות ... המכסה תתאפס ב-Oct 18, 8:16 AM".
+Quota windows differ per tool: Gemini ~08:16, AI Studio ~10:00, ChatGPT ~21:00 (rolling). The Gemini run goes through the queue from the END
+(chazal books first); ChatGPT goes from the start.

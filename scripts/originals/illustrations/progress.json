@@ -106,13 +106,50 @@
   "parasha-vayakhel": {
    "date": "2026-10-17",
    "route": "chatgpt grids (3x3 + 2x2)"
+  },
+  "parasha-pekudei": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids"
+  },
+  "chazal-hillel-patience": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids"
+  },
+  "chazal-old-man-planting-figs": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids"
+  },
+  "chazal-rabbi-and-the-calf": {
+   "date": "2026-10-17",
+   "route": "chatgpt grids"
   }
  },
- "partial": {},
+ "partial": {
+  "chazal-elazar-and-the-craftsman": {
+   "route": "gemini 2x2 (--size=4)",
+   "saved": [
+    "data/media/_partial-grids/gemini/elazar-and-the-craftsman-grid-1.png"
+   ],
+   "missing": "grids 2 and 3 of 3 (grids json in the same folder)"
+  },
+  "chazal-chanina-vinegar-candles": {
+   "route": "gemini 2x2 (--size=4)",
+   "saved": [
+    "data/media/_partial-grids/gemini/chanina-vinegar-candles-grid-1.png",
+    "data/media/_partial-grids/gemini/chanina-vinegar-candles-grid-2.png"
+   ],
+   "missing": "grid 3 of 3"
+  }
+ },
  "chatgptLimit": {
   "hitAt": "2026-10-17 ~21:55 local",
   "generationsBeforeLimit": 18,
   "window": "about 1.3 hours (20:40-21:55), limit may be per-window",
   "message": "You have hit the Free plan limit for image generation requests ... resets in 23 hours (about 2026-10-18 21:00 local)"
+ },
+ "geminiLimit": {
+  "hitAt": "2026-10-17 23:18 local",
+  "generationsBeforeLimit": 13,
+  "message": "Sorry, I can not generate more images today ... quota resets Oct 18, 8:16 AM"
  }
 }

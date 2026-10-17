@@ -12,6 +12,7 @@
     "seed": "tsx scripts/seed.ts && tsx scripts/narrate.ts --seed",
     "narrate": "tsx scripts/narrate.ts",
     "animate": "tsx scripts/animate.ts",
+    "media:compress": "tsx scripts/compress-media.ts",
     "pipeline:status": "tsx scripts/pipeline-status.ts",
     "book-meta": "tsx scripts/book-meta.ts",
     "bookdash:credits": "tsx scripts/bookdash-credits.ts",

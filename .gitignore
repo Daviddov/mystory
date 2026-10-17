@@ -50,3 +50,6 @@ next-env.d.ts
 /data/jobs.json
 /data/**/.*.tmp
 /data/media/tmp/
+
+# Full-resolution originals moved aside by scripts/compress-media.ts (print, future use).
+/data/originals/

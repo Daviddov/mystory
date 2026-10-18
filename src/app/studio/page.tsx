@@ -86,6 +86,7 @@ export default async function StudioPage() {
                         <BookCardActions
                           bookId={book.id}
                           title={book.title}
+                          shareToken={book.shareToken}
                           canDelete={book.status !== "published" || isEditor}
                         />
                       </div>

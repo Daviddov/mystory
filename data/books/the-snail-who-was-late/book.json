@@ -38,7 +38,7 @@
   "origin": "manual",
   "viewCount": 416,
   "createdAt": "2026-09-16T07:00:00.000Z",
-  "updatedAt": "2026-10-14T18:47:02.153Z",
+  "updatedAt": "2026-10-18T22:30:07.737Z",
   "publishedAt": "2026-09-16T07:00:00.000Z",
   "pages": [
     {
@@ -131,205 +131,16 @@
       "text": "״אני איטי,״ אמר שוקי, ״אז אצא כבר עכשיו.״ הוא שם מתנה קטנה על הגב והתחיל לזחול.",
       "textNikud": "״אֲנִי אִיטִּי,״ אָמַר שׁוּקִי, ״אָז אֵצֵא כְּבָר עַכְשָׁיו.״ הוּא שָׂם מַתָּנָה קְטַנָּה עַל הַגַּב וְהִתְחִיל לִזְחוֹל.",
       "image": "books/seed-snail/page-02.svg",
-      "audio": "books/seed-snail/narration-02-eb94955f1c.wav",
-      "wordTimings": [
-        {
-          "word": "״אני",
-          "start": 0,
-          "end": 0.4
-        },
-        {
-          "word": "איטי,״",
-          "start": 0.4,
-          "end": 0.8
-        },
-        {
-          "word": "אמר",
-          "start": 0.8,
-          "end": 1.2
-        },
-        {
-          "word": "שוקי,",
-          "start": 1.2,
-          "end": 1.6
-        },
-        {
-          "word": "״אז",
-          "start": 1.6,
-          "end": 2
-        },
-        {
-          "word": "אצא",
-          "start": 2,
-          "end": 2.4
-        },
-        {
-          "word": "כבר",
-          "start": 2.4,
-          "end": 2.8
-        },
-        {
-          "word": "עכשיו.״",
-          "start": 2.8,
-          "end": 3.2
-        },
-        {
-          "word": "הוא",
-          "start": 3.2,
-          "end": 3.6
-        },
-        {
-          "word": "שם",
-          "start": 3.6,
-          "end": 4
-        },
-        {
-          "word": "מתנה",
-          "start": 4,
-          "end": 4.4
-        },
-        {
-          "word": "קטנה",
-          "start": 4.4,
-          "end": 4.8
-        },
-        {
-          "word": "על",
-          "start": 4.8,
-          "end": 5.2
-        },
-        {
-          "word": "הגב",
-          "start": 5.2,
-          "end": 5.6
-        },
-        {
-          "word": "והתחיל",
-          "start": 5.6,
-          "end": 6
-        },
-        {
-          "word": "לזחול.",
-          "start": 6,
-          "end": 6.4
-        }
-      ],
-      "audioSource": "mock"
+      "audio": "books/seed-snail/narration-02-3e406860dc.mp3",
+      "audioSource": "recorded"
     },
     {
       "index": 2,
       "text": "בדרך פגש נמלה. היא משכה פירור ענק ולא הצליחה להזיז אותו. ״חכי, אני אעזור,״ אמר שוקי, ודחף יחד איתה עד הקן.",
       "textNikud": "בַּדֶּרֶךְ פָּגַשׁ נְמָלָה. הִיא מָשְׁכָה פֵּירוּר עֲנָק וְלֹא הִצְלִיחָה לְהָזִיז אוֹתוֹ. ״חַכִּי, אֲנִי אֶעֱזוֹר,״ אָמַר שׁוּקִי, וְדָחַף יַחַד אִיתָּהּ עַד הַקֵּן.",
       "image": "books/seed-snail/page-03.svg",
-      "audio": "books/seed-snail/narration-03-af30dfb143.wav",
-      "wordTimings": [
-        {
-          "word": "בדרך",
-          "start": 0,
-          "end": 0.4
-        },
-        {
-          "word": "פגש",
-          "start": 0.4,
-          "end": 0.8
-        },
-        {
-          "word": "נמלה.",
-          "start": 0.8,
-          "end": 1.2
-        },
-        {
-          "word": "היא",
-          "start": 1.2,
-          "end": 1.6
-        },
-        {
-          "word": "משכה",
-          "start": 1.6,
-          "end": 2
-        },
-        {
-          "word": "פירור",
-          "start": 2,
-          "end": 2.4
-        },
-        {
-          "word": "ענק",
-          "start": 2.4,
-          "end": 2.8
-        },
-        {
-          "word": "ולא",
-          "start": 2.8,
-          "end": 3.2
-        },
-        {
-          "word": "הצליחה",
-          "start": 3.2,
-          "end": 3.6
-        },
-        {
-          "word": "להזיז",
-          "start": 3.6,
-          "end": 4
-        },
-        {
-          "word": "אותו.",
-          "start": 4,
-          "end": 4.4
-        },
-        {
-          "word": "״חכי,",
-          "start": 4.4,
-          "end": 4.8
-        },
-        {
-          "word": "אני",
-          "start": 4.8,
-          "end": 5.2
-        },
-        {
-          "word": "אעזור,״",
-          "start": 5.2,
-          "end": 5.6
-        },
-        {
-          "word": "אמר",
-          "start": 5.6,
-          "end": 6
-        },
-        {
-          "word": "שוקי,",
-          "start": 6,
-          "end": 6.4
-        },
-        {
-          "word": "ודחף",
-          "start": 6.4,
-          "end": 6.8
-        },
-        {
-          "word": "יחד",
-          "start": 6.8,
-          "end": 7.2
-        },
-        {
-          "word": "איתה",
-          "start": 7.2,
-          "end": 7.6
-        },
-        {
-          "word": "עד",
-          "start": 7.6,
-          "end": 8
-        },
-        {
-          "word": "הקן.",
-          "start": 8,
-          "end": 8.4
-        }
-      ],
-      "audioSource": "mock"
+      "audio": "books/seed-snail/narration-03-0e0a81806a.mp3",
+      "audioSource": "recorded"
     },
     {
       "index": 3,

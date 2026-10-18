@@ -244,6 +244,21 @@ export const FavoriteSchema = z.object({
 });
 export type Favorite = z.infer<typeof FavoriteSchema>;
 
+export const RatingSchema = z.object({
+  userId: z.string(),
+  bookId: z.string(),
+  stars: z.number().int().min(1).max(5),
+  createdAt: IsoDateSchema,
+  updatedAt: IsoDateSchema,
+});
+export type Rating = z.infer<typeof RatingSchema>;
+
+/** What every reader sees: the mean of all ratings (0 when there are none) and how many there are. */
+export interface RatingSummary {
+  average: number;
+  count: number;
+}
+
 export const ProgressSchema = z.object({
   userId: z.string(),
   bookId: z.string(),

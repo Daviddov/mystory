@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 const [id, out] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 // --size=4 builds 2x2 sheets (for Gemini, whose images are smaller); default 9 = 3x3 sheets (ChatGPT).
 const SIZE = Number((process.argv.find((a) => a.startsWith("--size=")) ?? "--size=9").slice(7));
-const md = readFileSync(`scripts/originals/illustrations/prompts/${id}.md`, "utf8");
+const md = readFileSync(`scripts/originals/illustrations/prompts/${id}.md`, "utf8").split("\r").join("");
 const blocks = [...md.matchAll(/^## (Character sheet.*|Cover|Page (\d+))\n[\s\S]*?```text\n([\s\S]*?)\n```/gm)].map((m) => ({
   name: m[2] ? `page-${String(m[2]).padStart(2, "0")}` : m[1].startsWith("Cover") ? "cover" : "sheet",
   text: m[3].replace(/\s*\n\s*/g, " ").trim(),

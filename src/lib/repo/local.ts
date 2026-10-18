@@ -7,6 +7,7 @@
  *   data/users.json               User[]
  *   data/favorites.json           Favorite[]
  *   data/progress.json            Progress[]
+ *   data/ratings.json             Rating[]
  *   data/recordings.json          Recording[]
  *   data/jobs.json                GenerationJob[]
  *
@@ -24,6 +25,7 @@ import {
   FavoriteSchema,
   GenerationJobSchema,
   ProgressSchema,
+  RatingSchema,
   RecordingSchema,
   SiteSettingsSchema,
   SLUG_PATTERN,
@@ -35,6 +37,8 @@ import {
   type GenerationJob,
   type Page,
   type Progress,
+  type Rating,
+  type RatingSummary,
   type Recording,
   type SiteSettings,
   type User,
@@ -413,6 +417,10 @@ export class LocalRepository implements Repository {
       if (favorites.some((f) => f.bookId === id)) {
         await this.writeList("favorites.json", favorites.filter((f) => f.bookId !== id));
       }
+      const ratings = await this.readList("ratings.json", RatingSchema);
+      if (ratings.some((r) => r.bookId === id)) {
+        await this.writeList("ratings.json", ratings.filter((r) => r.bookId !== id));
+      }
       const progress = await this.readList("progress.json", ProgressSchema);
       if (progress.some((p) => p.bookId === id)) {
         await this.writeList("progress.json", progress.filter((p) => p.bookId !== id));
@@ -560,6 +568,49 @@ export class LocalRepository implements Repository {
   async isFavorite(userId: string, bookId: string): Promise<boolean> {
     const favorites = await this.readList("favorites.json", FavoriteSchema);
     return favorites.some((f) => f.userId === userId && f.bookId === bookId);
+  }
+
+  // --- ratings -------------------------------------------------------------------
+
+  setRating(userId: string, bookId: string, stars: number): Promise<Rating> {
+    return this.mutex.run(async () => {
+      const ratings = await this.readList("ratings.json", RatingSchema);
+      const now = nowIso();
+      const existing = ratings.find((r) => r.userId === userId && r.bookId === bookId);
+      const rating: Rating = RatingSchema.parse({
+        userId,
+        bookId,
+        stars,
+        createdAt: existing?.createdAt ?? now,
+        updatedAt: now,
+      });
+      await this.writeList("ratings.json", [
+        ...ratings.filter((r) => !(r.userId === userId && r.bookId === bookId)),
+        rating,
+      ]);
+      return rating;
+    });
+  }
+
+  removeRating(userId: string, bookId: string): Promise<void> {
+    return this.mutex.run(async () => {
+      const ratings = await this.readList("ratings.json", RatingSchema);
+      await this.writeList(
+        "ratings.json",
+        ratings.filter((r) => !(r.userId === userId && r.bookId === bookId)),
+      );
+    });
+  }
+
+  async getRating(userId: string, bookId: string): Promise<Rating | null> {
+    const ratings = await this.readList("ratings.json", RatingSchema);
+    return ratings.find((r) => r.userId === userId && r.bookId === bookId) ?? null;
+  }
+
+  async getRatingSummary(bookId: string): Promise<RatingSummary> {
+    const ratings = (await this.readList("ratings.json", RatingSchema)).filter((r) => r.bookId === bookId);
+    if (!ratings.length) return { average: 0, count: 0 };
+    return { average: ratings.reduce((sum, r) => sum + r.stars, 0) / ratings.length, count: ratings.length };
   }
 
   // --- progress ------------------------------------------------------------------

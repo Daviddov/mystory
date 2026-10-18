@@ -21,6 +21,7 @@ import {
   BookWithPagesSchema,
   CollectionSchema,
   FavoriteSchema,
+  RatingSchema,
   GenerationJobSchema,
   ID_PATTERN,
   PageSchema,
@@ -33,6 +34,8 @@ import {
   type BookWithPages,
   type Collection,
   type Favorite,
+  type Rating,
+  type RatingSummary,
   type GenerationJob,
   type Page,
   type Progress,
@@ -185,6 +188,14 @@ interface FavoriteRow {
   user_id: string;
   book_id: string;
   created_at: string;
+}
+
+interface RatingRow {
+  user_id: string;
+  book_id: string;
+  stars: number;
+  created_at: string;
+  updated_at: string;
 }
 
 interface ProgressRow {
@@ -425,6 +436,16 @@ function userFromRow(row: ProfileRow): User | null {
   if (parsed.success) return parsed.data;
   console.warn(`[repo] skipping invalid user ${row.id}: ${parsed.error.message}`);
   return null;
+}
+
+function ratingFromRow(row: RatingRow): Rating {
+  return RatingSchema.parse({
+    userId: row.user_id,
+    bookId: row.book_id,
+    stars: row.stars,
+    createdAt: iso(row.created_at),
+    updatedAt: iso(row.updated_at),
+  });
 }
 
 function favoriteFromRow(row: FavoriteRow): Favorite {
@@ -950,6 +971,48 @@ export class SupabaseRepository implements Repository {
       .eq("book_id", bookId);
     if (error) fail("read favorite", error);
     return (count ?? 0) > 0;
+  }
+
+  // --- ratings -----------------------------------------------------------------------------
+
+  async setRating(userId: string, bookId: string, stars: number): Promise<Rating> {
+    const { data, error } = await this.db
+      .from("ratings")
+      .upsert(
+        { user_id: userId, book_id: bookId, stars, updated_at: nowIso() },
+        { onConflict: "user_id,book_id" },
+      )
+      .select("user_id,book_id,stars,created_at,updated_at")
+      .single();
+    if (error) {
+      if (error.code === FOREIGN_KEY_VIOLATION) throw new NotFoundError(`book ${bookId}`);
+      fail("set rating", error);
+    }
+    return ratingFromRow(data as RatingRow);
+  }
+
+  async removeRating(userId: string, bookId: string): Promise<void> {
+    const { error } = await this.db.from("ratings").delete().eq("user_id", userId).eq("book_id", bookId);
+    if (error) fail("remove rating", error);
+  }
+
+  async getRating(userId: string, bookId: string): Promise<Rating | null> {
+    const { data, error } = await this.db
+      .from("ratings")
+      .select("user_id,book_id,stars,created_at,updated_at")
+      .eq("user_id", userId)
+      .eq("book_id", bookId)
+      .maybeSingle();
+    if (error) fail("read rating", error);
+    return data ? ratingFromRow(data as RatingRow) : null;
+  }
+
+  async getRatingSummary(bookId: string): Promise<RatingSummary> {
+    const { data, error } = await this.db.from("ratings").select("stars").eq("book_id", bookId).limit(100000);
+    if (error) fail("read ratings", error);
+    const rows = (data ?? []) as { stars: number }[];
+    if (!rows.length) return { average: 0, count: 0 };
+    return { average: rows.reduce((sum, r) => sum + r.stars, 0) / rows.length, count: rows.length };
   }
 
   // --- progress ----------------------------------------------------------------------------

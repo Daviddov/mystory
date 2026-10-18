@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BookRowActions } from "@/components/admin/BookRowActions";
 import { StatusChip } from "@/components/admin/StatusChip";
 import { Button, ButtonLink, EmptyState, Input, Label, Select } from "@/components/ui";
+import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { ageGroupLabel } from "@/lib/taxonomy";
@@ -113,9 +114,26 @@ export default async function AdminBooksPage({
               </tr>
             </thead>
             <tbody>
-              {books.map((book) => (
+              {books.map((book) => {
+                const cover = mediaUrl(book.coverImage, book.updatedAt);
+                return (
                 <tr key={book.id} className="border-t border-border align-top">
                   <th scope="row" className="p-3 text-start font-normal">
+                    <div className="flex items-start gap-3">
+                      {cover ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={cover}
+                          alt=""
+                          loading="lazy"
+                          className="h-20 w-16 shrink-0 rounded-md border border-border object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-20 w-16 shrink-0 items-center justify-center rounded-md border border-border bg-surface-2 text-xl">
+                          📖
+                        </div>
+                      )}
+                      <div className="min-w-0">
                     <Link href={adminPaths.book(book.id)} className="font-semibold underline">
                       {book.title}
                     </Link>
@@ -130,6 +148,8 @@ export default async function AdminBooksPage({
                       <Link href={routes.studioBook(book.id)} className="underline">
                         עריכה בסטודיו
                       </Link>
+                    </div>
+                      </div>
                     </div>
                   </th>
                   <td className="p-3">
@@ -151,7 +171,8 @@ export default async function AdminBooksPage({
                     />
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -122,34 +122,125 @@
   "chazal-rabbi-and-the-calf": {
    "date": "2026-10-17",
    "route": "chatgpt grids"
+  },
+  "parasha-vayikra": {
+   "date": "2026-10-18",
+   "route": "chatgpt grids (3x3 + 2x2)",
+   "pictures": 13
+  },
+  "parasha-tzav": {
+   "date": "2026-10-18",
+   "route": "chatgpt grids (3x3 + 2x2)",
+   "pictures": 13,
+   "note": "grid 2 redone once needlessly (kippah was present); original kept"
+  },
+  "parasha-shemini": {
+   "date": "2026-10-18",
+   "route": "chatgpt grids (3x3 + 2x2)",
+   "pictures": 13
+  },
+  "parasha-shemini-nadav-avihu": {
+   "date": "2026-10-18",
+   "route": "chatgpt grids (3x3 + 2x2)",
+   "pictures": 13
+  },
+  "parasha-balak": {
+   "date": "2026-10-18",
+   "route": "elevenlabs grids (3x3 + 2x2)",
+   "pictures": 13,
+   "note": "page-02 panel has a diagonal split into two scenes (king+envoys / Balaam with gold); grid 2 is rendered in a glossier 3D style than grid 1"
+  },
+  "parasha-tazria": {
+   "date": "2026-10-18",
+   "route": "chatgpt grids (3x3 + 2x2)",
+   "pictures": 13
+  },
+  "parasha-vezot-haberacha": {
+   "date": "2026-10-18/19",
+   "route": "chatgpt grids (session 2, from end of queue)"
+  },
+  "parasha-metzora": {
+   "date": "2026-10-18",
+   "route": "chatgpt grids (3x3 + 2x2)",
+   "pictures": 13
+  },
+  "parasha-haazinu": {
+   "date": "2026-10-18/19",
+   "route": "chatgpt grids (session 2, from end of queue)"
+  },
+  "parasha-acharei-mot": {
+   "date": "2026-10-18",
+   "route": "chatgpt grids (3x3 + 2x2)",
+   "pictures": 13
+  },
+  "chazal-chanina-vinegar-candles": {
+   "date": "2026-10-18",
+   "route": "gemini app grids 2x2 (--size=4)"
+  },
+  "chazal-shimon-ben-shetach-pearl": {
+   "date": "2026-10-18",
+   "route": "gemini app grids 2x2 (--size=4)"
+  },
+  "chazal-akiva-all-for-good": {
+   "date": "2026-10-18",
+   "route": "gemini app grids 2x2 (--size=4)"
+  },
+  "chazal-elazar-and-the-craftsman": {
+   "date": "2026-10-18",
+   "route": "gemini app grids 2x2 (--size=4)"
+  },
+  "chazal-rabbi-tarfon-and-his-mother": {
+   "date": "2026-10-18",
+   "route": "gemini app grids 2x2 (--size=4)"
+  },
+  "chazal-truthful-king-katzia": {
+   "date": "2026-10-18",
+   "route": "gemini app grids 2x2 (--size=4)"
+  },
+  "chazal-hillel-on-the-roof": {
+   "date": "2026-10-18",
+   "route": "gemini app grids 2x2 (--size=4)"
   }
  },
  "partial": {
-  "chazal-elazar-and-the-craftsman": {
-   "route": "gemini 2x2 (--size=4)",
+  "parasha-vayelech": {
+   "route": "chatgpt 3x3 + 2x2",
    "saved": [
-    "data/media/_partial-grids/gemini/elazar-and-the-craftsman-grid-1.png"
+    "data/media/_partial-grids/chatgpt/vayelech-grid-1.png"
    ],
-   "missing": "grids 2 and 3 of 3 (grids json in the same folder)"
+   "missing": "grid 2 of 2 (grids json in the same folder)"
   },
-  "chazal-chanina-vinegar-candles": {
+  "parasha-kedoshim": {
+   "route": "chatgpt 3x3",
+   "saved": [
+    "data/media/_partial-grids/chatgpt/kedoshim-grid-1.png"
+   ],
+   "missing": "grid 2 of 2 (2x2: pages 9-12); grids json in same folder"
+  },
+  "chazal-joshua-and-the-clever-child": {
    "route": "gemini 2x2 (--size=4)",
    "saved": [
-    "data/media/_partial-grids/gemini/chanina-vinegar-candles-grid-1.png",
-    "data/media/_partial-grids/gemini/chanina-vinegar-candles-grid-2.png"
+    "data/media/_partial-grids/gemini/joshua-and-the-clever-child-grid-1.png"
    ],
-   "missing": "grid 3 of 3"
+   "missing": "grids 2 and 3 of 3 (3rd is 2x1; grids json in the same folder)"
   }
  },
  "chatgptLimit": {
-  "hitAt": "2026-10-17 ~21:55 local",
-  "generationsBeforeLimit": 18,
-  "window": "about 1.3 hours (20:40-21:55), limit may be per-window",
-  "message": "You have hit the Free plan limit for image generation requests ... resets in 23 hours (about 2026-10-18 21:00 local)"
+  "hitAt": "2026-10-18 ~23:35 local",
+  "generationsBeforeLimit": 15,
+  "message": "out of image creations; resets tomorrow 2026-10-19 9:58 PM"
  },
  "geminiLimit": {
-  "hitAt": "2026-10-17 23:18 local",
-  "generationsBeforeLimit": 13,
-  "message": "Sorry, I can not generate more images today ... quota resets Oct 18, 8:16 AM"
+  "hitAt": "2026-10-18 ~23:35 local",
+  "generationsBeforeLimit": 19,
+  "message": "quota resets Oct 19, 8:16 AM"
+ },
+ "chatgptLimit2": {
+  "hitAt": "2026-10-18 ~23:28 local",
+  "note": "second ChatGPT agent hit the shared free limit after 5 grids (vezot-haberacha 2, haazinu 2, vayelech 1); resets ~2026-10-19 21:50 local (24h)"
+ },
+ "elevenlabsLimit": {
+  "checkedAt": "2026-10-18 23:40",
+  "message": "daily image generation limit reached on first generation attempt (other sessions used it)"
  }
 }

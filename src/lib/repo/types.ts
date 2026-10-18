@@ -6,6 +6,8 @@ import type {
   BookWithPages,
   Collection,
   Favorite,
+  Rating,
+  RatingSummary,
   GenerationJob,
   JobStatus,
   Page,
@@ -162,6 +164,14 @@ export interface Repository {
   /** Newest first. */
   listFavorites(userId: string): Promise<Favorite[]>;
   isFavorite(userId: string, bookId: string): Promise<boolean>;
+
+  // --- Ratings ---
+  /** Creates or replaces the user's rating (1-5). */
+  setRating(userId: string, bookId: string, stars: number): Promise<Rating>;
+  /** Idempotent. */
+  removeRating(userId: string, bookId: string): Promise<void>;
+  getRating(userId: string, bookId: string): Promise<Rating | null>;
+  getRatingSummary(bookId: string): Promise<RatingSummary>;
 
   // --- Reading progress ---
   getProgress(userId: string, bookId: string): Promise<Progress | null>;

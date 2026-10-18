@@ -11,7 +11,9 @@ import { PageHeading } from "@/components/library/PageHeading";
 import { getRecommendations } from "@/components/library/queries";
 import { MockNotice } from "@/components/MockNotice";
 import { FavoriteButton } from "@/components/personal/FavoriteButton";
+import { StarRating } from "@/components/personal/StarRating";
 import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
+import { ShareButtons } from "@/components/ShareButtons";
 import { ButtonLink, Card, Chip } from "@/components/ui";
 import { canViewBook, getCurrentUser } from "@/lib/auth";
 import { isCreativeCommons, LANGUAGE_NAMES_HE } from "@/lib/credits";
@@ -109,9 +111,11 @@ export default async function BookPage({ params }: Props) {
 
   const user = await getCurrentUser();
   const repo = await getRepo();
-  const [similar, isFavorite] = await Promise.all([
+  const [similar, isFavorite, ratingSummary, myRating] = await Promise.all([
     getRecommendations(book),
     user ? repo.isFavorite(user.id, book.id).catch(() => false) : Promise.resolve(false),
+    repo.getRatingSummary(book.id).catch(() => ({ average: 0, count: 0 })),
+    user ? repo.getRating(user.id, book.id).catch(() => null) : Promise.resolve(null),
   ]);
 
   const cover = mediaUrl(book.coverImage, book.updatedAt);
@@ -312,6 +316,15 @@ export default async function BookPage({ params }: Props) {
                 </>
               ) : null}
             </div>
+            <StarRating
+              bookId={book.id}
+              initialAverage={ratingSummary.average}
+              initialCount={ratingSummary.count}
+              initialMine={myRating?.stars ?? null}
+              signedIn={!!user}
+              loginHref={routes.login(bookPath)}
+            />
+            {book.status === "published" ? <ShareButtons url={absoluteUrl(bookPath) ?? bookPath} title={plainText(book.title)} /> : null}
           </div>
         </div>
       </article>

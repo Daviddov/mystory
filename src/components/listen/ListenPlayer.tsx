@@ -7,7 +7,7 @@
  * locked or the tab is in the background. The Media Session API puts the
  * story title, cover and play / next / previous controls on the lock screen.
  */
-import { Moon, Pause, Play, SkipBack, SkipForward, Timer } from "lucide-react";
+import { Check, Moon, Pause, Play, SkipBack, SkipForward, Timer } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MockNotice } from "@/components/MockNotice";
 import { Button, Card, Chip, EmptyState } from "@/components/ui";
@@ -28,6 +28,8 @@ import {
 const SLEEP_MINUTES = [5, 10, 15, 30, 45, 60] as const;
 /** Consecutive pages that may fail to load before the player gives up. */
 const MAX_ERRORS = 3;
+/** localStorage key of the story ids the listener switched off. */
+const EXCLUDED_KEY = "mystory:listen-excluded";
 
 type Sleep = { mode: "off" } | { mode: "time"; deadline: number; minutes: number } | { mode: "story" };
 
@@ -44,7 +46,10 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
   const [remaining, setRemaining] = useState<number | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
-  const queue = useMemo(() => filterTracks(tracks, age), [tracks, age]);
+  const [excluded, setExcluded] = useState<ReadonlySet<string>>(new Set());
+  // Stories of the chosen age; the queue is those the listener left ticked.
+  const visible = useMemo(() => filterTracks(tracks, age), [tracks, age]);
+  const queue = useMemo(() => visible.filter((track) => !excluded.has(track.id)), [visible, excluded]);
   const current = position ? (queue[position.track] ?? null) : null;
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -58,6 +63,15 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
     positionRef.current = position;
     sleepRef.current = sleep;
   }, [queue, position, sleep]);
+
+  useEffect(() => {
+    try {
+      const saved: unknown = JSON.parse(window.localStorage.getItem(EXCLUDED_KEY) ?? "[]");
+      if (Array.isArray(saved)) setExcluded(new Set(saved.filter((id): id is string => typeof id === "string")));
+    } catch {
+      // Storage unavailable or corrupt: every story stays ticked.
+    }
+  }, []);
 
   const playAt = useCallback((target: QueuePosition) => {
     const audio = audioRef.current;
@@ -186,6 +200,49 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
     setAge(next);
   };
 
+  /** Applies a new set of ticked stories; the player keeps its place if the current story stays in the queue. */
+  const applyExcluded = (next: ReadonlySet<string>) => {
+    const nextQueue = visible.filter((track) => !next.has(track.id));
+    const here = positionRef.current;
+    const currentId = here ? queueRef.current[here.track]?.id : undefined;
+    const newIndex = currentId ? nextQueue.findIndex((track) => track.id === currentId) : -1;
+    queueRef.current = nextQueue;
+    if (here && newIndex >= 0) {
+      positionRef.current = { track: newIndex, page: here.page };
+      setPosition(positionRef.current);
+    } else if (here) {
+      const audio = audioRef.current;
+      if (audio) {
+        audio.pause();
+        audio.removeAttribute("src");
+      }
+      positionRef.current = null;
+      setPosition(null);
+      setPlaying(false);
+    }
+    setExcluded(next);
+    try {
+      window.localStorage.setItem(EXCLUDED_KEY, JSON.stringify([...next]));
+    } catch {
+      // The selection just won't survive a reload.
+    }
+  };
+
+  const toggleTrack = (id: string) => {
+    const next = new Set(excluded);
+    if (!next.delete(id)) next.add(id);
+    applyExcluded(next);
+  };
+
+  const selectAll = (on: boolean) => {
+    const next = new Set(excluded);
+    for (const track of visible) {
+      if (on) next.delete(track.id);
+      else next.add(track.id);
+    }
+    applyExcluded(next);
+  };
+
   const chooseSleep = (next: Sleep) => {
     const audio = audioRef.current;
     if (audio) audio.volume = 1;
@@ -280,7 +337,7 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
 
       {anyMock ? <MockNotice kind="tts" /> : null}
 
-      {queue.length === 0 ? (
+      {visible.length === 0 ? (
         <EmptyState
           icon="🌙"
           title="אין עדיין סיפורים מוקלטים לגיל הזה"
@@ -316,7 +373,9 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
                   <p className="text-muted">
                     {current
                       ? `חלק ${pageNumber} מתוך ${current.pages.length}`
-                      : `${queue.length} סיפורים מחכים ברצף. לוחצים על הכפתור ומתחילים.`}
+                      : queue.length === 0
+                        ? "לא סומן אף סיפור. מסמנים סיפורים ברשימה למטה."
+                        : `${queue.length} סיפורים מחכים ברצף. לוחצים על הכפתור ומתחילים.`}
                   </p>
                 </div>
                 {current ? (
@@ -343,6 +402,7 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
                     size="icon-lg"
                     aria-label={playing ? "השהיה" : "הפעלה"}
                     onClick={toggle}
+                    disabled={queue.length === 0}
                   >
                     {playing ? (
                       <Pause aria-hidden="true" className="size-8" />
@@ -350,7 +410,7 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
                       <Play aria-hidden="true" className="size-8" />
                     )}
                   </Button>
-                  <Button variant="outline" size="icon" aria-label="לסיפור הבא" onClick={goNext}>
+                  <Button variant="outline" size="icon" aria-label="לסיפור הבא" onClick={goNext} disabled={queue.length === 0}>
                     <SkipForward aria-hidden="true" className="size-6" />
                   </Button>
                 </div>
@@ -407,27 +467,60 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
             <h2 id="listen-queue" className="text-xl font-bold">
               הסיפורים ברצף
             </h2>
-            <ol className="flex flex-col gap-2">
-              {queue.map((track, index) => {
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-muted">
+                {queue.length} מתוך {visible.length} סיפורים מסומנים.
+              </p>
+              <Chip onClick={() => selectAll(true)}>סימון הכול</Chip>
+              <Chip onClick={() => selectAll(false)}>ניקוי הסימון</Chip>
+            </div>
+            <ul className="flex flex-col gap-2">
+              {visible.map((track) => {
+                const index = queue.findIndex((item) => item.id === track.id);
+                const included = index >= 0;
                 const isCurrent = current?.id === track.id;
                 return (
-                  <li key={track.id}>
+                  <li key={track.id} className="flex items-stretch gap-2">
                     <button
                       type="button"
-                      onClick={() => playAt({ track: index, page: 0 })}
+                      role="checkbox"
+                      aria-checked={included}
+                      aria-label={`לכלול את ${track.title} ברצף`}
+                      onClick={() => toggleTrack(track.id)}
+                      className={cn(
+                        "flex min-h-touch-lg w-14 shrink-0 items-center justify-center rounded-md border-2 transition-colors",
+                        included ? "border-primary bg-primary text-white" : "border-border bg-surface hover:bg-surface-2",
+                      )}
+                    >
+                      {included ? <Check aria-hidden="true" className="size-6" /> : null}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (included) {
+                          playAt({ track: index, page: 0 });
+                          return;
+                        }
+                        // Playing a story that was switched off brings it back into the queue.
+                        const next = new Set(excluded);
+                        next.delete(track.id);
+                        applyExcluded(next);
+                        playAt({ track: queueRef.current.findIndex((item) => item.id === track.id), page: 0 });
+                      }}
                       aria-current={isCurrent ? "true" : undefined}
                       className={cn(
-                        "flex min-h-touch-lg w-full items-center gap-4 rounded-md border-2 px-4 py-3 text-start transition-colors",
+                        "flex min-h-touch-lg min-w-0 flex-1 items-center gap-4 rounded-md border-2 px-4 py-3 text-start transition-colors",
                         isCurrent
                           ? "border-primary bg-primary-soft"
                           : "border-border bg-surface hover:bg-surface-2",
+                        included ? "" : "opacity-60",
                       )}
                     >
                       <span
                         aria-hidden="true"
                         className="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface-2 font-bold tabular-nums"
                       >
-                        {isCurrent && playing ? "♪" : index + 1}
+                        {isCurrent && playing ? "♪" : included ? index + 1 : "–"}
                       </span>
                       <span className="flex min-w-0 flex-1 flex-col">
                         <span className="truncate text-lg font-semibold">{track.title}</span>
@@ -441,7 +534,7 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
                   </li>
                 );
               })}
-            </ol>
+            </ul>
           </section>
         </>
       )}

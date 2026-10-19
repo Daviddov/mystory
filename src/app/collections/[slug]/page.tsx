@@ -11,7 +11,15 @@ import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { SLUG_PATTERN } from "@/lib/types";
 
-export const dynamic = "force-dynamic";
+// Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
+// Query strings and signed-in visitors go to the dynamic twin in src/app/live.
+export const dynamic = "force-static";
+export const revalidate = 600;
+
+/** Each collection is rendered on its first visit, then cached. */
+export function generateStaticParams(): { slug: string }[] {
+  return [];
+}
 
 interface Props {
   params: Promise<{ slug: string }>;

@@ -6,7 +6,15 @@ import { listTagCounts } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
 import { tagFromSlug, tagSlug } from "@/lib/taxonomy";
 
-export const dynamic = "force-dynamic";
+// Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
+// Query strings and signed-in visitors go to the dynamic twin in src/app/live.
+export const dynamic = "force-static";
+export const revalidate = 600;
+
+/** Tags are open-ended: each tag page is rendered on its first visit, then cached. */
+export function generateStaticParams(): { tag: string }[] {
+  return [];
+}
 
 interface Props {
   params: Promise<{ tag: string }>;

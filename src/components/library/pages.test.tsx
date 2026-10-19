@@ -28,8 +28,10 @@ vi.mock("@/lib/auth", async (importOriginal) => ({
 
 import HomePage from "@/app/page";
 import AgePage from "@/app/age/[group]/page";
-import BookPage, { generateMetadata as bookMetadata } from "@/app/book/[slug]/page";
-import BooksPage, { generateMetadata as booksMetadata } from "@/app/books/page";
+import BookPage, * as bookRoute from "@/app/book/[slug]/page";
+import LivePage, { generateMetadata as liveMetadata } from "@/app/live/[[...path]]/page";
+import BooksPage from "@/app/books/page";
+import { booksMetadata } from "@/app/books/books-view";
 import CategoryPage from "@/app/category/[slug]/page";
 import CollectionPage from "@/app/collections/[slug]/page";
 import CollectionsPage from "@/app/collections/page";
@@ -44,6 +46,13 @@ async function html(node: ReactNode): Promise<string> {
 }
 
 const SECRET_TITLE = "ספר סודי מאוד";
+
+const bookMetadata = bookRoute.generateMetadata;
+/** The dynamic twin of a library page, as src/proxy.ts rewrites signed-in visitors to it. */
+const live = (path: string[], searchParams: Record<string, string> = {}) =>
+  LivePage({ params: Promise.resolve({ path }), searchParams: Promise.resolve(searchParams) });
+const liveMeta = (path: string[]) =>
+  liveMetadata({ params: Promise.resolve({ path }), searchParams: Promise.resolve({}) });
 
 describe("library pages", () => {
   let data: TempData;
@@ -146,7 +155,8 @@ describe("library pages", () => {
       ["theme", ThemePage({ params: params({ slug: "patience" }), searchParams: params({}) })],
       ["time", TimePage({ params: params({ bucket: "5" }), searchParams: params({}) })],
       ["tag", TagPage({ params: params({ tag: encodeURIComponent("גשם") }), searchParams: params({}) })],
-      ["books", BooksPage({ searchParams: params({ status: "any", sort: "popular" }) })],
+      ["books", BooksPage()],
+      ["books (live)", live(["books"], { status: "any", sort: "popular" })],
       ["collections", CollectionsPage()],
       ["collection", CollectionPage({ params: params({ slug: "rainy" }) })],
       ["search", SearchPage({ searchParams: params({ q: "ספר" }) })],
@@ -159,7 +169,7 @@ describe("library pages", () => {
   });
 
   it("combines filters on the all-books page", async () => {
-    const out = await html(await BooksPage({ searchParams: params({ age: "3-5", category: "animals", time: "15" }) }));
+    const out = await html(await live(["books"], { age: "3-5", category: "animals", time: "15" }));
     expect(out).toContain("החתולה");
     expect(out).not.toContain(">השבלול<");
     expect(out).toContain("ספר אחד");
@@ -249,26 +259,84 @@ describe("library pages", () => {
   it("hides a private book from visitors and from its metadata, but shows it to the owner", async () => {
     await expect(BookPage({ params: params({ slug: "secret" }) })).rejects.toThrow("NEXT_NOT_FOUND");
     expect((await bookMetadata({ params: params({ slug: "secret" }) })).title).toBe("הספר לא נמצא");
+    await expect(live(["book", "secret"])).rejects.toThrow("NEXT_NOT_FOUND");
 
     state.user = { id: "u_other", name: "אחר", role: "parent" };
-    await expect(BookPage({ params: params({ slug: "secret" }) })).rejects.toThrow("NEXT_NOT_FOUND");
+    await expect(live(["book", "secret"])).rejects.toThrow("NEXT_NOT_FOUND");
+    expect((await liveMeta(["book", "secret"])).title).toBe("הספר לא נמצא");
 
     state.user = { id: "u_owner", name: "בעלים", role: "parent" };
-    const out = await html(await BookPage({ params: params({ slug: "secret" }) }));
+    const out = await html(await live(["book", "secret"]));
     expect(out).toContain(SECRET_TITLE);
     expect(out).toContain("זה ספר פרטי");
     expect(out).not.toContain("application/ld+json");
-    const meta = await bookMetadata({ params: params({ slug: "secret" }) });
+    const meta = await liveMeta(["book", "secret"]);
     expect(meta.robots).toEqual({ index: false, follow: false });
+  });
+
+  it("never renders an unpublished book on the cached book page, whoever is signed in", async () => {
+    // The page is static and cached: what it renders is served to every
+    // signed-out visitor, so it must not depend on the session at all.
+    expect(bookRoute.dynamic).toBe("force-static");
+    expect(bookRoute.revalidate).toBeGreaterThan(0);
+    for (const user of [
+      { id: "u_owner", name: "בעלים", role: "parent" },
+      { id: "u_editor", name: "עורכת", role: "editor" },
+      { id: "u_admin", name: "מנהל", role: "admin" },
+    ] satisfies User[]) {
+      state.user = user;
+      await expect(BookPage({ params: params({ slug: "secret" }) }), user.role).rejects.toThrow("NEXT_NOT_FOUND");
+      const meta = await bookMetadata({ params: params({ slug: "secret" }) });
+      expect(meta.title, user.role).toBe("הספר לא נמצא");
+      expect(JSON.stringify(meta)).not.toContain(SECRET_TITLE);
+    }
+    // A book unpublished after it was cached is gone at the next render.
+    state.user = null;
+    await html(await BookPage({ params: params({ slug: "snail" }) }));
+    await data.repo.updateBook("pub-snail", { status: "draft" });
+    await expect(BookPage({ params: params({ slug: "snail" }) })).rejects.toThrow("NEXT_NOT_FOUND");
+  });
+
+  it("keeps the signed-in favorite state out of the cached book page", async () => {
+    state.user = { id: "u_reader", name: "קוראת", role: "parent" };
+    await data.repo.upsertUser({ id: "u_reader", name: "קוראת" });
+    await data.repo.addFavorite("u_reader", "pub-snail");
+    const cached = await html(await BookPage({ params: params({ slug: "snail" }) }));
+    expect(cached).not.toContain("במועדפים שלי");
+    expect(cached).toContain('aria-label="הוספה למועדפים: השבלול"');
   });
 
   it("shows the favorite state of the signed-in reader", async () => {
     state.user = { id: "u_reader", name: "קוראת", role: "parent" };
     await data.repo.upsertUser({ id: "u_reader", name: "קוראת" });
     await data.repo.addFavorite("u_reader", "pub-snail");
-    const out = await html(await BookPage({ params: params({ slug: "snail" }) }));
+    const out = await html(await live(["book", "snail"]));
     expect(out).toContain("במועדפים שלי");
     expect(out).toContain('aria-pressed="true"');
+  });
+
+  it("renders every library page through the live twin, with its query string", async () => {
+    const filtered = await html(await live(["books"], { age: "3-5", category: "animals", time: "15" }));
+    expect(filtered).toContain("החתולה");
+    expect(filtered).not.toContain(">השבלול<");
+    expect((await liveMeta(["books"])).alternates?.canonical).toBe("/books");
+    for (const path of [
+      [],
+      ["books"],
+      ["age", "3-5"],
+      ["category", "animals"],
+      ["theme", "patience"],
+      ["time", "5"],
+      ["tag", encodeURIComponent("גשם")],
+      ["collections"],
+      ["collections", "rainy"],
+      ["book", "snail"],
+    ]) {
+      const out = await html(await live(path));
+      expect(out, path.join("/")).not.toContain(SECRET_TITLE);
+    }
+    await expect(live(["admin"])).rejects.toThrow("NEXT_NOT_FOUND");
+    await expect(live(["book", "snail", "extra"])).rejects.toThrow("NEXT_NOT_FOUND");
   });
 
   it("builds metadata", async () => {
@@ -277,8 +345,8 @@ describe("library pages", () => {
     expect(meta.title).toBe("השבלול: סיפור לילדים");
     expect(meta.alternates?.canonical).toBe("/book/snail");
     expect(meta.robots).toBeUndefined();
-    expect((await booksMetadata({ searchParams: params({}) })).robots).toBeUndefined();
-    expect((await booksMetadata({ searchParams: params({ age: "3-5" }) })).robots).toEqual({ index: false, follow: true });
+    expect(booksMetadata({}).robots).toBeUndefined();
+    expect(booksMetadata({ age: "3-5" }).robots).toEqual({ index: false, follow: true });
     expect((await searchMetadata({ searchParams: params({ q: "שבלול" }) })).title).toBe("חיפוש: שבלול");
   });
 });

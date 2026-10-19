@@ -5,7 +5,15 @@ import type { RawSearchParams } from "@/components/library/filters";
 import { routes } from "@/lib/routes";
 import { READING_TIME_BUCKETS, getReadingTimeBucket } from "@/lib/taxonomy";
 
-export const dynamic = "force-dynamic";
+// Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
+// Query strings and signed-in visitors go to the dynamic twin in src/app/live.
+export const dynamic = "force-static";
+export const revalidate = 600;
+
+/** Every reading-time bucket is built at deploy time. */
+export function generateStaticParams(): { bucket: string }[] {
+  return READING_TIME_BUCKETS.map((bucket) => ({ bucket: bucket.slug }));
+}
 
 interface Props {
   params: Promise<{ bucket: string }>;

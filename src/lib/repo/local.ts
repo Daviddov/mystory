@@ -8,6 +8,7 @@
  *   data/favorites.json           Favorite[]
  *   data/progress.json            Progress[]
  *   data/ratings.json             Rating[]
+ *   data/comments.json            Comment[]
  *   data/recordings.json          Recording[]
  *   data/jobs.json                GenerationJob[]
  *
@@ -22,6 +23,7 @@ import { categoryLabel, readingTimeBucket, tagSlug, themeLabel } from "../taxono
 import {
   BookWithPagesSchema,
   CollectionSchema,
+  CommentSchema,
   FavoriteSchema,
   GenerationJobSchema,
   ProgressSchema,
@@ -33,6 +35,7 @@ import {
   type Book,
   type BookWithPages,
   type Collection,
+  type Comment,
   type Favorite,
   type GenerationJob,
   type Page,
@@ -56,6 +59,7 @@ import {
   type JobPatch,
   type NewBookInput,
   type NewCollectionInput,
+  type NewCommentInput,
   type NewJobInput,
   type NewRecordingInput,
   type RecordingFilter,
@@ -421,6 +425,10 @@ export class LocalRepository implements Repository {
       if (ratings.some((r) => r.bookId === id)) {
         await this.writeList("ratings.json", ratings.filter((r) => r.bookId !== id));
       }
+      const comments = await this.readList("comments.json", CommentSchema);
+      if (comments.some((c) => c.bookId === id)) {
+        await this.writeList("comments.json", comments.filter((c) => c.bookId !== id));
+      }
       const progress = await this.readList("progress.json", ProgressSchema);
       if (progress.some((p) => p.bookId === id)) {
         await this.writeList("progress.json", progress.filter((p) => p.bookId !== id));
@@ -611,6 +619,38 @@ export class LocalRepository implements Repository {
     const ratings = (await this.readList("ratings.json", RatingSchema)).filter((r) => r.bookId === bookId);
     if (!ratings.length) return { average: 0, count: 0 };
     return { average: ratings.reduce((sum, r) => sum + r.stars, 0) / ratings.length, count: ratings.length };
+  }
+
+  // --- comments ------------------------------------------------------------------
+
+  addComment(input: NewCommentInput): Promise<Comment> {
+    return this.mutex.run(async () => {
+      if (!(await this.findById(input.bookId))) throw new NotFoundError(`book ${input.bookId}`);
+      const comments = await this.readList("comments.json", CommentSchema);
+      const comment: Comment = CommentSchema.parse({ id: newId("cm"), ...input, createdAt: nowIso() });
+      await this.writeList("comments.json", [...comments, comment]);
+      return comment;
+    });
+  }
+
+  async listComments(bookId: string, limit = 200): Promise<Comment[]> {
+    const comments = (await this.readList("comments.json", CommentSchema)).filter((c) => c.bookId === bookId);
+    // Reversed first so comments written in the same millisecond still come newest first.
+    return comments.reverse().sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, limit);
+  }
+
+  async getComment(id: string): Promise<Comment | null> {
+    const comments = await this.readList("comments.json", CommentSchema);
+    return comments.find((c) => c.id === id) ?? null;
+  }
+
+  deleteComment(id: string): Promise<void> {
+    return this.mutex.run(async () => {
+      const comments = await this.readList("comments.json", CommentSchema);
+      if (comments.some((c) => c.id === id)) {
+        await this.writeList("comments.json", comments.filter((c) => c.id !== id));
+      }
+    });
   }
 
   // --- progress ------------------------------------------------------------------

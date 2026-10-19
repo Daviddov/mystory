@@ -20,6 +20,7 @@ import {
   BookSchema,
   BookWithPagesSchema,
   CollectionSchema,
+  CommentSchema,
   FavoriteSchema,
   RatingSchema,
   GenerationJobSchema,
@@ -33,6 +34,7 @@ import {
   type Book,
   type BookWithPages,
   type Collection,
+  type Comment,
   type Favorite,
   type Rating,
   type RatingSummary,
@@ -55,6 +57,7 @@ import {
   type JobPatch,
   type NewBookInput,
   type NewCollectionInput,
+  type NewCommentInput,
   type NewJobInput,
   type NewRecordingInput,
   type RecordingFilter,
@@ -197,6 +200,17 @@ interface RatingRow {
   created_at: string;
   updated_at: string;
 }
+
+interface CommentRow {
+  id: string;
+  book_id: string;
+  user_id: string;
+  author_name: string;
+  body: string;
+  created_at: string;
+}
+
+const COMMENT_COLUMNS = "id,book_id,user_id,author_name,body,created_at";
 
 interface ProgressRow {
   user_id: string;
@@ -445,6 +459,17 @@ function ratingFromRow(row: RatingRow): Rating {
     stars: row.stars,
     createdAt: iso(row.created_at),
     updatedAt: iso(row.updated_at),
+  });
+}
+
+function commentFromRow(row: CommentRow): Comment {
+  return CommentSchema.parse({
+    id: row.id,
+    bookId: row.book_id,
+    userId: row.user_id,
+    authorName: row.author_name,
+    body: row.body,
+    createdAt: iso(row.created_at),
   });
 }
 
@@ -801,7 +826,7 @@ export class SupabaseRepository implements Repository {
   }
 
   async deleteBook(id: string): Promise<void> {
-    // Pages, favorites and progress cascade; a trigger removes the id from
+    // Pages, favorites, ratings, comments and progress cascade; a trigger removes the id from
     // collections and from the site settings.
     const { error } = await this.db.from("books").delete().eq("id", id);
     if (error) fail("delete book", error);
@@ -1013,6 +1038,51 @@ export class SupabaseRepository implements Repository {
     const rows = (data ?? []) as { stars: number }[];
     if (!rows.length) return { average: 0, count: 0 };
     return { average: rows.reduce((sum, r) => sum + r.stars, 0) / rows.length, count: rows.length };
+  }
+
+  // --- comments ----------------------------------------------------------------------------
+
+  async addComment(input: NewCommentInput): Promise<Comment> {
+    const { data, error } = await this.db
+      .from("comments")
+      .insert({
+        id: newId("cm"),
+        book_id: input.bookId,
+        user_id: input.userId,
+        author_name: input.authorName,
+        body: input.body,
+      })
+      .select(COMMENT_COLUMNS)
+      .single();
+    if (error) {
+      if (error.code === FOREIGN_KEY_VIOLATION) throw new NotFoundError(`book ${input.bookId}`);
+      fail("add comment", error);
+    }
+    return commentFromRow(data as CommentRow);
+  }
+
+  async listComments(bookId: string, limit = 200): Promise<Comment[]> {
+    const { data, error } = await this.db
+      .from("comments")
+      .select(COMMENT_COLUMNS)
+      .eq("book_id", bookId)
+      .order("created_at", { ascending: false })
+      .order("id", { ascending: false })
+      .limit(limit);
+    if (error) fail("list comments", error);
+    return ((data ?? []) as CommentRow[]).map(commentFromRow);
+  }
+
+  async getComment(id: string): Promise<Comment | null> {
+    if (!ID_PATTERN.test(id)) return null;
+    const { data, error } = await this.db.from("comments").select(COMMENT_COLUMNS).eq("id", id).maybeSingle();
+    if (error) fail("read comment", error);
+    return data ? commentFromRow(data as CommentRow) : null;
+  }
+
+  async deleteComment(id: string): Promise<void> {
+    const { error } = await this.db.from("comments").delete().eq("id", id);
+    if (error) fail("delete comment", error);
   }
 
   // --- progress ----------------------------------------------------------------------------

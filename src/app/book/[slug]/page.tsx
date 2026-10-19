@@ -10,12 +10,14 @@ import { FavoriteButtonSlot } from "@/components/library/FavoriteButtonSlot";
 import { PageHeading } from "@/components/library/PageHeading";
 import { getRecommendations } from "@/components/library/queries";
 import { MockNotice } from "@/components/MockNotice";
+import { BookComments } from "@/components/personal/BookComments";
 import { FavoriteButton } from "@/components/personal/FavoriteButton";
 import { StarRating } from "@/components/personal/StarRating";
 import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { ShareButtons } from "@/components/ShareButtons";
 import { ButtonLink, Card, Chip } from "@/components/ui";
 import { canViewBook, getCurrentUser } from "@/lib/auth";
+import { toCommentView } from "@/lib/comments";
 import { isCreativeCommons, LANGUAGE_NAMES_HE } from "@/lib/credits";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
@@ -111,11 +113,12 @@ export default async function BookPage({ params }: Props) {
 
   const user = await getCurrentUser();
   const repo = await getRepo();
-  const [similar, isFavorite, ratingSummary, myRating] = await Promise.all([
+  const [similar, isFavorite, ratingSummary, myRating, comments] = await Promise.all([
     getRecommendations(book),
     user ? repo.isFavorite(user.id, book.id).catch(() => false) : Promise.resolve(false),
     repo.getRatingSummary(book.id).catch(() => ({ average: 0, count: 0 })),
     user ? repo.getRating(user.id, book.id).catch(() => null) : Promise.resolve(null),
+    repo.listComments(book.id).catch(() => []),
   ]);
 
   const cover = mediaUrl(book.coverImage, book.updatedAt);
@@ -438,6 +441,14 @@ export default async function BookPage({ params }: Props) {
           </ol>
         </section>
       ) : null}
+
+      {/* Readers' comments are user content: plain text, and never part of the JSON-LD above. */}
+      <BookComments
+        bookId={book.id}
+        initialComments={comments.map((comment) => toCommentView(comment, user))}
+        signedIn={!!user}
+        loginHref={routes.login(bookPath)}
+      />
 
       <BookRow
         title="עוד ספרים כאלה"

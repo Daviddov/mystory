@@ -236,7 +236,9 @@ describe("library pages", () => {
     }
     expect(out).not.toContain("<script>alert(1)</script>");
     expect(out).not.toContain(SECRET_TITLE);
-    expect(out).not.toContain('href="/login');
+    // The only login link is the comments' "sign in to comment"; reading, favorites and ratings need no sign-in.
+    expect(out.match(/href="\/login[^"]*"/g)).toEqual(['href="/login?next=%2Fbook%2Fsnail"']);
+    expect(out).toContain("התחברו כדי להגיב");
   });
 
   it("offers listening and flags demo audio, and never links a non-http source", async () => {

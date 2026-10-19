@@ -110,6 +110,8 @@ export const RATE_LIMIT_DEFAULTS = {
   ANIMATE: 20,
   /** GET /api/pdf/<slug>. */
   PDF: 60,
+  /** POST /api/comments/<bookId>: one comment on a book. */
+  COMMENTS: 30,
   /** POST /api/views/<bookId>, per IP. */
   VIEWS: 120,
 } as const;

@@ -4,7 +4,7 @@
  *
  *   text   ANTHROPIC_API_KEY       -> providers/claude-text.ts
  *   nikud  NIKUD_PROVIDER=dicta    -> providers/dicta-nikud.ts
- *   tts    TTS_PROVIDER=<vendor>   -> providers/tts.ts
+ *   tts    TTS_PROVIDER=<vendor>   -> providers/tts.ts  (gemini = AI Studio, key TTS_API_KEY or IMAGE_API_KEY; elevenlabs)
  *   image  IMAGE_PROVIDER=<vendor> -> providers/image.ts
  *   video  VIDEO_PROVIDER=<vendor> -> providers/video.ts  (gemini = Veo; key VIDEO_API_KEY or IMAGE_API_KEY)
  *
@@ -34,8 +34,20 @@ import type {
 export * from "./types";
 export { MOCK_STORY, MOCK_VIDEO_SECONDS, evenWordTimings, mockIllustrationSvg, mockVideoMp4, silentWav } from "./mock";
 
+/** Gemini is the site's writer; Claude only when asked for (or as the old fallback), otherwise the mock. */
+function textVendor(): "gemini" | "claude" | "mock" {
+  const chosen = aiEnv.textProvider()?.toLowerCase();
+  if (chosen === "mock") return "mock";
+  if (chosen === "claude") return aiEnv.anthropicApiKey() !== undefined ? "claude" : "mock";
+  if (chosen !== undefined && chosen !== "gemini") return "mock";
+  if (chosen === "gemini") return aiEnv.textApiKey() !== undefined ? "gemini" : "mock";
+  // Unset: a dedicated text key picks Gemini; an existing Claude site stays on Claude; otherwise the image key serves text too.
+  if (aiEnv.ownTextApiKey() !== undefined) return "gemini";
+  if (aiEnv.anthropicApiKey() !== undefined) return "claude";
+  return aiEnv.textApiKey() !== undefined ? "gemini" : "mock";
+}
 function isTextConfigured(): boolean {
-  return aiEnv.anthropicApiKey() !== undefined;
+  return textVendor() !== "mock";
 }
 function isNikudConfigured(): boolean {
   return aiEnv.nikudProvider()?.toLowerCase() === "dicta";
@@ -43,6 +55,10 @@ function isNikudConfigured(): boolean {
 function isTtsConfigured(): boolean {
   const name = aiEnv.ttsProvider()?.toLowerCase();
   return name !== undefined && name !== "mock";
+}
+/** True when the active TTS vendor follows free-text narration notes (Gemini does, ElevenLabs does not). */
+export function ttsHonoursNotes(): boolean {
+  return isTtsConfigured() && aiEnv.ttsProvider()?.toLowerCase() === "gemini";
 }
 function isImageConfigured(): boolean {
   const name = aiEnv.imageProvider()?.toLowerCase();
@@ -54,8 +70,10 @@ function isVideoConfigured(): boolean {
 }
 
 export async function getTextProvider(): Promise<TextProvider> {
-  if (!isTextConfigured()) return mockTextProvider;
-  return (await import("./providers/claude-text")).createClaudeTextProvider();
+  const vendor = textVendor();
+  if (vendor === "mock") return mockTextProvider;
+  if (vendor === "claude") return (await import("./providers/claude-text")).createClaudeTextProvider();
+  return (await import("./providers/gemini-text")).createGeminiTextProvider();
 }
 
 export async function getNikudProvider(): Promise<NikudProvider> {
@@ -80,7 +98,7 @@ export async function getVideoProvider(): Promise<VideoProvider> {
 
 /** Which providers are real and which are mocks, decided from env vars only (no network, no imports). */
 export function getAiStatus(): AiStatus {
-  const text = { name: isTextConfigured() ? "claude" : "mock", isMock: !isTextConfigured() };
+  const text = { name: textVendor(), isMock: !isTextConfigured() };
   const nikud = { name: isNikudConfigured() ? "dicta" : "mock", isMock: !isNikudConfigured() };
   const tts = {
     name: isTtsConfigured() ? (aiEnv.ttsProvider() as string) : "mock",

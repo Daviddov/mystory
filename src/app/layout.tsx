@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Frank_Ruhl_Libre, Fredoka, Rubik } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </div>
         <SiteFooter />
         <AppShellExtras />
+        <Analytics />
         {plausibleDomain ? (
           // Cookieless and without personal data, so no consent banner is needed.
           <Script

@@ -28,6 +28,7 @@ vi.mock("@/lib/auth", async () => {
 
 import { GET, POST } from "./[bookId]/route";
 import { POST as nikudPost } from "./nikud/route";
+import { POST as samplePost } from "./sample/route";
 
 const owner: User = { id: "u_owner", name: "הורה", role: "parent" };
 const stranger: User = { id: "u_other", name: "אחר", role: "parent" };
@@ -127,6 +128,40 @@ describe("narration routes", () => {
     const book = await temp.repo.getBookById(bookId);
     expect(book!.pages[0].audio).toBeUndefined();
     expect(book!.pages[1].audio).toBeDefined();
+  });
+
+  it("accepts a voice from the active provider's catalog and refuses unknown ones", async () => {
+    vi.stubEnv("TTS_PROVIDER", "gemini");
+    vi.stubEnv("IMAGE_API_KEY", "k");
+    vi.stubEnv("TTS_ALLOWED_VOICES", "");
+    // Unknown id: refused before any provider is called (cost control).
+    expect((await POST(post({ voice: "NotAVoice" }), context(bookId))).status).toBe(400);
+    // A catalog voice passes validation (the stubbed provider then fails per page, not the request).
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("{}", { status: 500 })));
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const ok = await POST(post({ voice: "Puck", pages: [0] }), context(bookId));
+    expect(ok.status).toBe(200);
+    await ok.text();
+    // GET lists the voices and says the notes are honoured.
+    const info = await (await GET(post(), context(bookId))).json();
+    expect(info.voices.map((v: { id: string }) => v.id)).toContain("Puck");
+    expect(info.defaultVoice).toBe("Sulafat");
+    expect(info.notesHonoured).toBe(true);
+  });
+
+  it("serves a sample only to signed-in users and only for offered voices", async () => {
+    const request = (body: unknown) =>
+      new Request("http://localhost/api/narration/sample", { method: "POST", body: JSON.stringify(body) });
+    currentUser = null;
+    expect((await samplePost(request({}))).status).toBe(401);
+    currentUser = owner;
+    expect((await samplePost(request({ voice: "Puck" }))).status).toBe(400); // mock provider offers no voices
+    const ok = await samplePost(request({}));
+    expect(ok.status).toBe(200);
+    expect(ok.headers.get("X-Tts-Mock")).toBe("1");
+    vi.stubEnv("TTS_PROVIDER", "gemini");
+    vi.stubEnv("IMAGE_API_KEY", "k");
+    expect((await samplePost(request({ voice: "Nope" }))).status).toBe(400);
   });
 
   it("answers 503 when the configured TTS provider is unusable", async () => {

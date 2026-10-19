@@ -135,6 +135,20 @@ export const BookHeroSchema = z.object({
   style: z.string().max(100).optional(),
   /** Media path of the hero reference image (character sheet). */
   image: z.string().max(300).optional(),
+  /** Free-text illustration notes the user added on top of the style (see generation/presets.ts). */
+  styleNotes: z.string().max(600).optional(),
+  /** Rule packs switched on (RULE_PACKS slugs). */
+  packs: z.array(z.string().max(40)).max(8).optional(),
+  /** Narration style preset slug (NARRATION_STYLES). */
+  narrationStyle: z.string().max(40).optional(),
+  /** Free-text narration notes. */
+  narrationNotes: z.string().max(300).optional(),
+  /** Narration voice id of the active TTS provider (NARRATION_VOICES / TTS_ALLOWED_VOICES). */
+  narrationVoice: z.string().max(64).optional(),
+  /** Last animation motion preset (ANIMATION_MOTIONS slug). */
+  animationMotion: z.string().max(40).optional(),
+  /** Free-text animation instructions for the whole book. */
+  animationNotes: z.string().max(400).optional(),
 });
 export type BookHero = z.infer<typeof BookHeroSchema>;
 

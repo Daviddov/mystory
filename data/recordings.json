@@ -261,5 +261,285 @@
     ],
     "createdAt": "2026-10-16T15:29:03.133Z",
     "updatedAt": "2026-10-16T15:29:21.333Z"
+  },
+  {
+    "id": "8kow0r6fzqwy",
+    "bookId": "chazal-nachum-gam-zu",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p1-mwj0giu56l1p.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p2-6a9gm8otant4.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p3-b7j5reibu3m4.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p4-cb1x2mv5r67g.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p5-dck06ymni5vb.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p6-9yvxpqhswkx9.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p7-9ibujp4ncrs2.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p8-887d3eq6dz1d.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p9-hnohs404xg5m.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p10-w3eor5mphfa7.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/chazal-nachum-gam-zu/rec/8kow0r6fzqwy/p11-xrqc04tbm1mo.webm"
+      }
+    ],
+    "createdAt": "2026-10-19T18:07:26.180Z",
+    "updatedAt": "2026-10-19T18:11:44.507Z"
+  },
+  {
+    "id": "c19y53fvd7uc",
+    "bookId": "librivox-three-billy-goats-gruff-he",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p1-v5nkeb0i1xy9.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p2-qmc2u3gx0yu8.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p3-uc1cg66twa8e.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p4-c0uu4aroyyf6.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p5-yj2w05hgsdp0.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p6-5ix7v7sxhllu.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p7-e74j4nzrsawv.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p8-4cqzhip7dx45.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p9-7ktmogcvl2p1.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p10-f5tlgxf82y8u.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p11-4xcszkr35pow.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/librivox-three-billy-goats-gruff-he/rec/c19y53fvd7uc/p12-7rry06rmvbb0.webm"
+      }
+    ],
+    "createdAt": "2026-10-19T18:15:40.246Z",
+    "updatedAt": "2026-10-19T18:18:40.578Z"
+  },
+  {
+    "id": "mswf5aw2u4rq",
+    "bookId": "gutenberg-14838",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p1-ocdx90pf8i9y.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p2-s07adf6mqoiw.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p3-o21typhitcyp.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p4-3z4d5tzfc68x.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p5-9z0j4gz4adkd.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p6-bgr0fv5rcdy2.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p7-je9tbg02ie9t.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p8-roe7fwfr2du0.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p9-43i6cwbfc2vr.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p10-w1daxk8icp7g.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p11-n2r1qbayw08m.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p12-ir1vgkrwxasl.webm"
+      },
+      {
+        "index": 12,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p13-s6mnnnqz8q62.webm"
+      },
+      {
+        "index": 13,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p14-wb49qlu98r74.webm"
+      },
+      {
+        "index": 14,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p15-gkmb5b2rk1iv.webm"
+      },
+      {
+        "index": 15,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p16-jvoorkdtn1mb.webm"
+      },
+      {
+        "index": 16,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p17-z17h8fr4879b.webm"
+      },
+      {
+        "index": 17,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p18-ea7dko4nxynq.webm"
+      },
+      {
+        "index": 18,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p19-s7vwhe5sgbth.webm"
+      },
+      {
+        "index": 19,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p20-aqlf9zgx67o8.webm"
+      },
+      {
+        "index": 20,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p21-yhmqgrswuprt.webm"
+      },
+      {
+        "index": 21,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p22-3q89rnonlwi5.webm"
+      },
+      {
+        "index": 22,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p23-gxh0d0qzw09n.webm"
+      },
+      {
+        "index": 23,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p24-1k2dngs6gkzi.webm"
+      },
+      {
+        "index": 24,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p25-jir26o21q6xh.webm"
+      },
+      {
+        "index": 25,
+        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p26-kipmnfgoj1fc.webm"
+      }
+    ],
+    "createdAt": "2026-10-19T18:22:19.367Z",
+    "updatedAt": "2026-10-19T18:30:55.045Z"
+  },
+  {
+    "id": "pr8fl0qjz060",
+    "bookId": "chazal-rabbi-tarfon-and-his-mother",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p1-zu44gw9qjbte.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p2-fqrj5mbql1d3.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p3-61kdb3esx696.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p4-g183f1yln2q1.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p5-vt8imb3yue2v.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p6-cjybxllfrvtk.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p7-shce6bo50ipy.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p8-kw6jjhhci91v.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p9-80i0wfw9y1ec.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/chazal-rabbi-tarfon-and-his-mother/rec/pr8fl0qjz060/p10-m3x3ww2oap62.webm"
+      }
+    ],
+    "createdAt": "2026-10-19T18:31:51.565Z",
+    "updatedAt": "2026-10-19T18:34:12.385Z"
   }
 ]

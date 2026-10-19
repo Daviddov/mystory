@@ -37,6 +37,11 @@ export async function readJson(request: Request): Promise<unknown> {
 }
 
 export function studioApiError(err: unknown): Response {
+  // A text/image/video vendor failure (retired model, bad key, quota): say so instead of a bare 500.
+  if (err instanceof Error && /^(GeminiTextError|ImageProviderError|ClaudeTextError)$/.test(err.name)) {
+    console.error(`[studio] AI service failed: ${err.message}`);
+    return jsonError(503, "שירות הבינה המלאכותית לא זמין כרגע או שהוא מוגדר לא נכון. אפשר לעשות את השלב ידנית, או לנסות שוב מאוחר יותר.");
+  }
   if (err instanceof StudioError) return jsonError(err.status, err.message, err.details);
   return apiError(err);
 }

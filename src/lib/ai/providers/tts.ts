@@ -1,6 +1,6 @@
 /**
- * Text to speech with word timings. Selected when TTS_PROVIDER is set.
- * The only vendor implemented is ElevenLabs (TTS_PROVIDER=elevenlabs).
+ * Text to speech. Selected when TTS_PROVIDER is set: "gemini" (Google AI Studio,
+ * ./gemini-tts.ts, estimated word timings) or "elevenlabs" (this file, exact timings).
  *
  * Environment:
  *   TTS_PROVIDER       "elevenlabs"
@@ -22,6 +22,13 @@
  *   200:     { audio_base64, alignment: { characters[], character_start_times_seconds[],
  *              character_end_times_seconds[] } | null, normalized_alignment }
  *
+ * Narration styles (generation/presets.ts) map to `voice_settings`
+ * { stability, style, similarity_boost, speed }. eleven_v3 accepts only the
+ * stability values 0 (creative), 0.5 (natural) and 1 (robust), so the preset's
+ * value is snapped to the nearest. A preset's audio tag (e.g. "[whispers]") is
+ * prepended to the sent text on eleven_v3 only; the tag's characters are dropped
+ * from the alignment again. Free-text `notes` cannot be honoured and are ignored.
+ *
  * `alignment` times the characters of the ORIGINAL text, which is what the
  * word highlighting needs. Hebrew is listed for eleven_v4, eleven_v4_turbo and
  * eleven_v3, and NOT for eleven_multilingual_v2 or eleven_flash_v2_5.
@@ -36,7 +43,8 @@
 import { z } from "zod";
 import { aiEnv } from "../../config";
 import { stripNikud } from "../../hebrew";
-import { alignWords } from "../../narration/align";
+import { getNarrationStyle } from "../../generation/presets";
+import { alignWords, type CharacterAlignment } from "../../narration/align";
 import type { TtsProvider } from "../types";
 
 const DEFAULT_MODEL = "eleven_v3";
@@ -64,6 +72,64 @@ const WithTimestampsResponseSchema = z.object({
   normalized_alignment: AlignmentSchema.nullish(),
 });
 
+/** ElevenLabs accepts a speed between 0.7 and 1.2. */
+const MIN_SPEED = 0.7;
+const MAX_SPEED = 1.2;
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+function snapStability(value: number): number {
+  return [0, 0.5, 1].reduce((best, c) => (Math.abs(c - value) < Math.abs(best - value) ? c : best), 0.5);
+}
+
+/**
+ * The `voice_settings` of a request, or undefined when nothing differs from the
+ * voice's defaults. `speed` is multiplied with the preset's own speed.
+ */
+export function buildVoiceSettings(
+  options: { style?: string; speed?: number } | undefined,
+  model: string,
+): Record<string, number> | undefined {
+  const preset = getNarrationStyle(options?.style);
+  const userSpeed = options?.speed && options.speed > 0 ? options.speed : 1;
+  const speed = clamp((preset?.speed ?? 1) * userSpeed, MIN_SPEED, MAX_SPEED);
+  if (!preset) return speed !== 1 ? { speed } : undefined;
+  const { stability, style, similarityBoost } = preset.voiceSettings;
+  return {
+    stability: model.startsWith("eleven_v3") ? snapStability(stability) : stability,
+    style,
+    ...(similarityBoost !== undefined ? { similarity_boost: similarityBoost } : {}),
+    speed,
+  };
+}
+
+/** The audio tag to prepend for a style, or undefined (only eleven_v3 understands tags). */
+export function audioTagFor(styleSlug: string | undefined, model: string): string | undefined {
+  if (!model.startsWith("eleven_v3")) return undefined;
+  return getNarrationStyle(styleSlug)?.audioTag;
+}
+
+/**
+ * Removes the first `prefix.length` characters from a character alignment (the
+ * audio tag and its space that were sent in front of the real text), so the
+ * rest times the original text.
+ */
+export function dropAlignmentPrefix(alignment: CharacterAlignment, prefix: string): CharacterAlignment {
+  let remaining = prefix.length;
+  let cut = 0;
+  while (cut < alignment.characters.length && remaining > 0) {
+    remaining -= alignment.characters[cut].length;
+    cut++;
+  }
+  return {
+    characters: alignment.characters.slice(cut),
+    startTimes: alignment.startTimes.slice(cut),
+    endTimes: alignment.endTimes.slice(cut),
+  };
+}
+
 export class TtsProviderError extends Error {
   constructor(message: string) {
     super(`TTS: ${message}`);
@@ -86,9 +152,10 @@ function contentTypeForOutputFormat(format: string): string {
 
 export async function createTtsProvider(): Promise<TtsProvider> {
   const vendor = (aiEnv.ttsProvider() ?? "").toLowerCase();
+  if (vendor === "gemini") return (await import("./gemini-tts")).createGeminiTtsProvider();
   if (vendor !== "elevenlabs") {
     throw new TtsProviderError(
-      `TTS_PROVIDER "${vendor}" is not implemented. Use "elevenlabs", or unset it for the demo voice.`,
+      `TTS_PROVIDER "${vendor}" is not implemented. Use "gemini" or "elevenlabs", or unset it for the demo voice.`,
     );
   }
   const apiKey = aiEnv.ttsApiKey();
@@ -112,14 +179,15 @@ export async function createTtsProvider(): Promise<TtsProvider> {
       const voice = options?.voice ?? defaultVoice;
       if (!voice) throw new TtsProviderError("no voice: set TTS_VOICE to an ElevenLabs voice id");
 
+      const tag = audioTagFor(options?.style, model);
+      const prefix = tag ? `${tag} ` : "";
       const body: Record<string, unknown> = {
-        text: sendWithoutNikud ? stripNikud(text) : text,
+        text: prefix + (sendWithoutNikud ? stripNikud(text) : text),
         model_id: model,
       };
       if (!model.includes("multilingual_v2")) body.language_code = "he";
-      if (options?.speed && options.speed > 0 && options.speed !== 1) {
-        body.voice_settings = { speed: options.speed };
-      }
+      const voiceSettings = buildVoiceSettings(options, model);
+      if (voiceSettings) body.voice_settings = voiceSettings;
 
       const url = `${host}/v1/text-to-speech/${encodeURIComponent(voice)}/with-timestamps?output_format=${encodeURIComponent(outputFormat)}`;
       let response: Response;
@@ -149,15 +217,13 @@ export async function createTtsProvider(): Promise<TtsProvider> {
 
       const audio = new Uint8Array(Buffer.from(parsed.data.audio_base64, "base64"));
       const durationSeconds = alignment.character_end_times_seconds.reduce((max, end) => Math.max(max, end), 0);
-      const { wordTimings } = alignWords(
-        text,
-        {
-          characters: alignment.characters,
-          startTimes: alignment.character_start_times_seconds,
-          endTimes: alignment.character_end_times_seconds,
-        },
-        { durationSeconds },
-      );
+      let characters: CharacterAlignment = {
+        characters: alignment.characters,
+        startTimes: alignment.character_start_times_seconds,
+        endTimes: alignment.character_end_times_seconds,
+      };
+      if (prefix) characters = dropAlignmentPrefix(characters, prefix);
+      const { wordTimings } = alignWords(text, characters, { durationSeconds });
 
       return { audio, contentType, wordTimings, durationSeconds, isMock: false };
     },

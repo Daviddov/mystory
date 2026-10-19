@@ -143,9 +143,15 @@ async function narrateLoadedPage(
   // 2. Speech.
   const spokenText = textNikud ?? page.text;
   const words = splitWords(spokenText);
+  const style = options.style ?? book.hero?.narrationStyle;
+  const notes = options.notes ?? book.hero?.narrationNotes;
+  // request voice, then the book's chosen voice; otherwise the provider's own default (TTS_VOICE)
+  const voice = options.voice ?? book.hero?.narrationVoice;
   const speech = await deps.tts.synthesize(spokenText, {
-    ...(options.voice ? { voice: options.voice } : {}),
+    ...(voice ? { voice } : {}),
     ...(options.speed ? { speed: options.speed } : {}),
+    ...(style ? { style } : {}),
+    ...(notes ? { notes } : {}),
   });
   if (speech.wordTimings.length !== words.length) {
     throw new Error(
@@ -158,6 +164,7 @@ async function narrateLoadedPage(
     start: timing.start,
     end: Math.max(timing.start, timing.end),
   }));
+  // Providers without word timings (Gemini) return ESTIMATED ones; the audio is still plain "tts".
   const audioSource = speech.isMock ? "mock" : "tts";
 
   // 3. Store the audio, then attach it to the page if the text is still the same.

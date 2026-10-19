@@ -238,8 +238,19 @@ async function updateBookMetaLocked(
 
   if (patch.hero !== undefined) {
     const hero = patch.hero;
-    // A hero with neither a description nor a picture is no hero.
-    clean.hero = hero && (hero.description || hero.image) ? { ...hero, style: hero.style || undefined } : undefined;
+    // A hero with no description, picture, style notes, packs or narration settings is no hero.
+    const hasContent =
+      hero &&
+      (hero.description ||
+        hero.image ||
+        hero.styleNotes ||
+        hero.packs?.length ||
+        hero.narrationStyle ||
+        hero.narrationNotes ||
+        hero.narrationVoice ||
+        hero.animationMotion ||
+        hero.animationNotes);
+    clean.hero = hero && hasContent ? { ...hero, style: hero.style || undefined } : undefined;
   }
 
   if (clean.coverImage) assertMediaField(book, allMediaReferences(book), clean.coverImage, "image", "תמונת השער");

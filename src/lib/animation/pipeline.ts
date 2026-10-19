@@ -27,6 +27,7 @@ import { createHash } from "node:crypto";
 import { VEO_DEFAULT_MODEL, VEO_PRICE_PER_SECOND_720P } from "../ai/providers/video";
 import { VideoQuotaError, VideoRefusedError, type VideoProvider } from "../ai/types";
 import { withBookLock } from "../book-lock";
+import { animationDirection } from "../generation/presets";
 import type { MediaStore } from "../media/types";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import { NotFoundError, type Repository } from "../repo/types";
@@ -126,16 +127,16 @@ function collapse(text: string, max: number): string {
  * asking for gentle, loopable motion, plus what the picture shows (its
  * alternative text, or the page text). Deterministic: no text model involved.
  */
-export function motionPrompt(page: Pick<Page, "imageAlt" | "text">): string {
-  const scene = collapse(page.imageAlt?.trim() || page.text, 300);
-  const lines = [
+export function motionPrompt(
+  page: Pick<Page, "imageAlt" | "text">,
+  direction: { motion?: string; notes?: string } = {},
+): string {
+  const sceneHint = collapse(page.imageAlt?.trim() || page.text, 300);
+  return [
     "Bring this children's picture-book illustration gently to life as a short, silent, seamlessly looping clip.",
-    "Keep the exact art style, colours, composition, framing and every character exactly as drawn; the first and last frames should match the illustration.",
-    "Only subtle, slow, natural motion: leaves, grass, water, clouds and hair sway or drift softly; characters may blink or breathe.",
-    "No camera movement or zoom, no new objects or characters, no text, no talking, no scene change, nothing fast or scary.",
-  ];
-  if (scene) lines.push(`The picture shows: ${scene}`);
-  return lines.join("\n");
+    "The first and last frames should match the illustration; every character stays exactly as drawn.",
+    animationDirection({ ...direction, sceneHint }),
+  ].join("\n");
 }
 
 /** Estimated cost of one clip in USD. */
@@ -246,7 +247,7 @@ async function animateLoadedPage(
   if (!deps.video.isMock && isPlaceholderIllustration(image.bytes, image.contentType)) {
     return { ...base, reason: "placeholder-image" };
   }
-  const prompt = motionPrompt(page);
+  const prompt = motionPrompt(page, { motion: options.motion, notes: options.notes });
   const contentType = image.contentType.split(";")[0].trim().toLowerCase();
   const needsRaster = !ANIMATABLE_IMAGE_TYPES.includes(contentType);
   if (needsRaster && !deps.rasterize && !deps.video.isMock) {

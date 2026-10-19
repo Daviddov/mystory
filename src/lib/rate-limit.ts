@@ -92,6 +92,8 @@ export function checkRateLimit(scope: string, key: string, rule: RateLimitRule, 
 export const RATE_LIMIT_DEFAULTS = {
   /** POST /api/narration/<bookId>: one run narrates up to a whole book. */
   NARRATION: 30,
+  /** POST /api/narration/sample: one short sample sentence in the chosen voice (a little TTS quota). */
+  SAMPLE: 20,
   /** POST /api/narration/nikud: one call per page ("nikud for all pages" sends one per page). */
   NIKUD: 400,
   /** POST /api/import/ocr: one call per imported page. */
@@ -100,6 +102,12 @@ export const RATE_LIMIT_DEFAULTS = {
   TRANSLATE: 60,
   /** POST /api/studio/books/<id>/illustrate: one hero image or one page illustration. */
   ILLUSTRATE: 60,
+  /** POST /api/studio/books/<id>/write: one whole story (several model calls). */
+  WRITE: 20,
+  /** POST /api/studio/books/<id>/details: one model call that suggests the book details. */
+  DETAILS: 60,
+  /** POST /api/studio/books/<id>/animate (AI): one clip, a few cents per second of video. */
+  ANIMATE: 20,
   /** GET /api/pdf/<slug>. */
   PDF: 60,
   /** POST /api/views/<bookId>, per IP. */

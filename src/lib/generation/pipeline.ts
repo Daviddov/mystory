@@ -3,7 +3,7 @@
  *
  *   outline -> pages (tuned to the age group) -> second-pass quality and
  *   child-safety review (one automatic revision on "major") -> character sheet
- *   (description + reference image) -> one illustration per page + cover ->
+ *   (description + reference image) -> page illustrations (grids of up to 9 panels, cropped) + cover ->
  *   title, summary, tags, themes, discussion questions -> save the book ->
  *   narration (when a narration pipeline is installed).
  *
@@ -27,6 +27,7 @@ import type { WizardInput } from "./input";
 import { cleanFreeText } from "./input";
 import { mockCharacter, mockMetadata, mockOutline, mockPages, mockReview } from "./mock-story";
 import { AGE_WRITING_RULES, getStoryStyle } from "./options";
+import { illustrationDirection } from "./presets";
 import type { EphemeralPhoto } from "./photo";
 import {
   CharacterSchema,
@@ -40,7 +41,6 @@ import {
   coverImagePrompt,
   metadataPrompt,
   outlinePrompt,
-  pageImagePrompt,
   pagesPrompt,
   reviewPrompt,
   revisionPrompt,
@@ -48,6 +48,7 @@ import {
   type StoryPage,
 } from "./prompts";
 import { supportsVision } from "./vision";
+import { planGridLayout, renderGrid } from "../studio/grid";
 
 // --- Steps and progress ------------------------------------------------------------
 
@@ -117,7 +118,9 @@ export interface PipelineResult {
   book: BookWithPages | null;
 }
 
-const IMAGE_CONCURRENCY = 3;
+const IMAGE_CONCURRENCY = 2;
+/** Most pages drawn in one grid image (3x3). */
+const GRID_PAGES = 9;
 const MAX_PAGES = 16;
 const MIN_PAGES = 3;
 
@@ -213,6 +216,15 @@ async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T, index: nu
   const rejected = settled.find((outcome) => outcome.status === "rejected");
   if (rejected) throw rejected.reason;
   return results;
+}
+
+/** Page indexes split into as few, evenly filled grids of at most GRID_PAGES as possible (12 -> 6 + 6). */
+function planGridGroups(pageCount: number): number[][] {
+  const groups = Math.max(1, Math.ceil(pageCount / GRID_PAGES));
+  const size = Math.ceil(pageCount / groups);
+  return Array.from({ length: groups }, (_, g) =>
+    Array.from({ length: Math.max(0, Math.min(size, pageCount - g * size)) }, (_, k) => g * size + k),
+  ).filter((group) => group.length > 0);
 }
 
 function isRaster(contentType: string): boolean {
@@ -365,30 +377,47 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
       )
     ).path;
 
-    // 5. One illustration per page, then the cover. Each uses the character sheet as reference.
+    // 5. The page illustrations, drawn in grids of up to 9 panels (one image call each) and cropped
+    //    into one picture per page, then the cover. Each call uses the character sheet as reference.
     const illustrationsStart = STEP_INFO.get("illustrations")?.progress ?? 52;
     const illustrationsEnd = STEP_INFO.get("details")?.progress ?? 86;
     await enter("illustrations");
     let finished = 0;
     const totalImages = pages.length + 1;
-    const imagePaths = await mapLimit(pages, IMAGE_CONCURRENCY, async (page, index) => {
-      const result = await image.generate({
-        prompt: pageImagePrompt(input.style, character, page.illustrationPrompt),
-        referenceImages: references,
-        style: input.style,
-        caption: page.text,
-        aspect: "4:3",
-      });
-      cost.add(result.usage);
-      if (result.isMock) usedMock = true;
-      const fileName = `page-${String(index + 1).padStart(2, "0")}.${extensionForContentType(result.contentType)}`;
-      const stored = await storeImage(media, bookMediaPath(bookId, fileName), result.image, result.contentType);
-      finished++;
+    const direction = illustrationDirection({ style: input.style });
+    const imagePaths: (string | undefined)[] = new Array(pages.length).fill(undefined);
+    await mapLimit(planGridGroups(pages.length), IMAGE_CONCURRENCY, async (group) => {
+      const draw = async (indexes: number[]) => {
+        const rendered = await renderGrid(
+          { media, image },
+          {
+            bookId,
+            direction,
+            character,
+            scenes: indexes.map((i) => pages[i].illustrationPrompt),
+            captions: indexes.map((i) => pages[i].text),
+            layout: planGridLayout(indexes.length, "3x3"),
+            style: input.style,
+            references,
+            fileName: (k) => `page-${String(indexes[k] + 1).padStart(2, "0")}.png`,
+          },
+        );
+        rendered.usages.forEach((usage) => cost.add(usage));
+        if (rendered.isMock) usedMock = true;
+        for (const panel of rendered.panels) imagePaths[indexes[panel.index]] = panel.path;
+        return rendered;
+      };
+      await draw(group);
+      // A panel that did not come out is drawn again on its own, once.
+      for (const i of group.filter((index) => !imagePaths[index])) {
+        log(`[generation ${jobId}] grid panel ${i + 1} redrawn alone`);
+        await draw([i]);
+      }
+      finished += group.length;
       await update({
         progress: Math.round(illustrationsStart + ((illustrationsEnd - illustrationsStart) * finished) / totalImages),
         message: `מאיירים את העמודים (${finished} מתוך ${pages.length})`,
       });
-      return stored.path;
     });
 
     // 6. Title, summary, tags, themes, discussion questions.

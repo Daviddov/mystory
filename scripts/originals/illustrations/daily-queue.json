@@ -1,559 +1,566 @@
 {
- "note": "Order of work for the free AI Studio quota (~11 images/day). 'shabbat' is the approximate Shabbat the parasha is read in Israel; Bereshit passed on 2026-10-10.",
- "perDay": 11,
- "books": [
-  {
-   "id": "parasha-bereshit",
-   "slug": "avr-hktnh-rvah-at-havlm-nbra",
-   "title": "אור הקטנה רואה את העולם נברא",
-   "pages": 12,
-   "shabbat": "2026-10-10"
-  },
-  {
-   "id": "parasha-noach",
-   "slug": "nch-vhtybh-hgdvlh",
-   "title": "נח והתיבה הגדולה",
-   "pages": 13,
-   "shabbat": "2026-10-17"
-  },
-  {
-   "id": "parasha-lech-lecha",
-   "slug": "abrm-yvtza-ldrk",
-   "title": "אברם יוצא לדרך",
-   "pages": 12,
-   "shabbat": "2026-10-24"
-  },
-  {
-   "id": "parasha-vayera",
-   "slug": "havhl-hptvch-shl-abrhm",
-   "title": "האוהל הפתוח של אברהם",
-   "pages": 12,
-   "shabbat": "2026-10-31"
-  },
-  {
-   "id": "parasha-vayera-akedah",
-   "slug": "abrhm-vytzchk-bhr-hmvryh",
-   "title": "אברהם ויצחק בהר המוריה",
-   "pages": 14,
-   "shabbat": "2026-10-31"
-  },
-  {
-   "id": "parasha-vayera-sodom",
-   "slug": "abrhm-mtpll-al-sdvm",
-   "title": "אברהם מתפלל על סדום",
-   "pages": 13,
-   "shabbat": "2026-10-31"
-  },
-  {
-   "id": "parasha-chayei-sarah",
-   "slug": "rbkh-vhgmlym-htzmaym",
-   "title": "רבקה והגמלים הצמאים",
-   "pages": 13,
-   "shabbat": "2026-11-07"
-  },
-  {
-   "id": "parasha-toldot",
-   "slug": "yakb-ashyv-vsyr-hadshym",
-   "title": "יעקב, עשיו וסיר העדשים",
-   "pages": 12,
-   "shabbat": "2026-11-14"
-  },
-  {
-   "id": "parasha-vayetze",
-   "slug": "yakb-vhsvlm-shbchlvm",
-   "title": "יעקב והסולם שבחלום",
-   "pages": 12,
-   "shabbat": "2026-11-21"
-  },
-  {
-   "id": "parasha-vayishlach",
-   "slug": "yakb-vashyv-npgshym",
-   "title": "יעקב ועשיו נפגשים",
-   "pages": 12,
-   "shabbat": "2026-11-28"
-  },
-  {
-   "id": "parasha-vayishlach-dinah",
-   "slug": "dynh-bt-yakb",
-   "title": "דינה בת יעקב",
-   "pages": 14,
-   "shabbat": "2026-11-28"
-  },
-  {
-   "id": "parasha-vayeshev",
-   "slug": "yvsf-vktvnt-hpsym",
-   "title": "יוסף וכתונת הפסים",
-   "pages": 12,
-   "shabbat": "2026-12-05"
-  },
-  {
-   "id": "parasha-miketz",
-   "slug": "yvsf-vhchlvm-shl-prah",
-   "title": "יוסף והחלום של פרעה",
-   "pages": 13,
-   "shabbat": "2026-12-12"
-  },
-  {
-   "id": "parasha-vayigash",
-   "slug": "any-yvsf",
-   "title": "״אני יוסף!״",
-   "pages": 13,
-   "shabbat": "2026-12-19"
-  },
-  {
-   "id": "parasha-vayechi",
-   "slug": "hbrkh-shl-sba-yakb",
-   "title": "הברכה של סבא יעקב",
-   "pages": 12,
-   "shabbat": "2026-12-26"
-  },
-  {
-   "id": "parasha-shemot",
-   "slug": "mrym-byn-kny-hsvf",
-   "title": "מרים בין קני הסוף",
-   "pages": 14,
-   "shabbat": "2027-01-02"
-  },
-  {
-   "id": "parasha-vaera",
-   "slug": "ahrn-mshh-vhtzprdaym",
-   "title": "אהרן, משה והצפרדעים",
-   "pages": 13,
-   "shabbat": "2027-01-09"
-  },
-  {
-   "id": "parasha-bo",
-   "slug": "nvah-vhlylh-shl-hmtzvt",
-   "title": "נועה והלילה של המצות",
-   "pages": 13,
-   "shabbat": "2027-01-16"
-  },
-  {
-   "id": "parasha-beshalach",
-   "slug": "nchshvn-kvptz-rashvn",
-   "title": "נחשון קופץ ראשון",
-   "pages": 13,
-   "shabbat": "2027-01-23"
-  },
-  {
-   "id": "parasha-yitro",
-   "slug": "sba-ytrv-nvtn-atzh",
-   "title": "סבא יתרו נותן עצה",
-   "pages": 12,
-   "shabbat": "2027-01-30"
-  },
-  {
-   "id": "parasha-mishpatim",
-   "slug": "glad-vhchmvr-shl-hshkn",
-   "title": "גלעד והחמור של השכן",
-   "pages": 13,
-   "shabbat": "2027-02-06"
-  },
-  {
-   "id": "parasha-terumah",
-   "slug": "btzlal-vmtnvt-hlb",
-   "title": "בצלאל ומתנות הלב",
-   "pages": 12,
-   "shabbat": "2027-02-13"
-  },
-  {
-   "id": "parasha-tetzaveh",
-   "slug": "shtym-ashrh-abnym-al-hlb",
-   "title": "שתים עשרה אבנים על הלב",
-   "pages": 11,
-   "shabbat": "2027-02-20"
-  },
-  {
-   "id": "parasha-ki-tisa",
-   "slug": "hlvchvt-hshnyym-shl-mshh",
-   "title": "הלוחות השניים של משה",
-   "pages": 12,
-   "shabbat": "2027-02-27"
-  },
-  {
-   "id": "parasha-vayakhel",
-   "slug": "chnh-vhchvtym-htzbavnyym",
-   "title": "חנה והחוטים הצבעוניים",
-   "pages": 12,
-   "shabbat": "2027-03-06"
-  },
-  {
-   "id": "parasha-pekudei",
-   "slug": "btzlal-svpr-at-kl-hmtnvt",
-   "title": "בצלאל סופר את כל המתנות",
-   "pages": 13,
-   "shabbat": "2027-03-13"
-  },
-  {
-   "id": "parasha-vayikra",
-   "slug": "shty-yvnym-lbnvt",
-   "title": "שתי יונים לבנות",
-   "pages": 12,
-   "shabbat": "2027-03-20"
-  },
-  {
-   "id": "parasha-tzav",
-   "slug": "aytmr-shvmr-al-hash",
-   "title": "איתמר שומר על האש",
-   "pages": 12,
-   "shabbat": "2027-03-27"
-  },
-  {
-   "id": "parasha-shemini",
-   "slug": "tmr-vhzkvkyt-hmgdlt",
-   "title": "תמר והזכוכית המגדלת",
-   "pages": 12,
-   "shabbat": "2027-04-03"
-  },
-  {
-   "id": "parasha-shemini-nadav-avihu",
-   "slug": "hyvm-hshmyny-bmshkn",
-   "title": "היום השמיני במשכן",
-   "pages": 12,
-   "shabbat": "2027-04-03"
-  },
-  {
-   "id": "parasha-tazria",
-   "slug": "tynvk-chdsh-bbyt",
-   "title": "תינוק חדש בבית",
-   "pages": 12,
-   "shabbat": "2027-04-10"
-  },
-  {
-   "id": "parasha-metzora",
-   "slug": "nvtzvt-brvch",
-   "title": "נוצות ברוח",
-   "pages": 12,
-   "shabbat": "2027-04-17"
-  },
-  {
-   "id": "parasha-acharei-mot",
-   "slug": "hbgdym-hlbnym-shl-ahrn",
-   "title": "הבגדים הלבנים של אהרן",
-   "pages": 12,
-   "shabbat": "2027-04-24"
-  },
-  {
-   "id": "parasha-kedoshim",
-   "slug": "hpynh-shl-rvty",
-   "title": "הפינה של רותי",
-   "pages": 12,
-   "shabbat": "2027-05-01"
-  },
-  {
-   "id": "parasha-emor",
-   "slug": "avmr-svpr-ymym",
-   "title": "עומר סופר ימים",
-   "pages": 12,
-   "shabbat": "2027-05-08"
-  },
-  {
-   "id": "parasha-behar",
-   "slug": "hshdh-yvtza-lchvpshh",
-   "title": "השדה יוצא לחופשה",
-   "pages": 12,
-   "shabbat": "2027-05-15"
-  },
-  {
-   "id": "parasha-bechukotai",
-   "slug": "yvab-mchkh-lgshm",
-   "title": "יואב מחכה לגשם",
-   "pages": 12,
-   "shabbat": "2027-05-22"
-  },
-  {
-   "id": "parasha-bamidbar",
-   "slug": "hdgl-shl-shyrh",
-   "title": "הדגל של שירה",
-   "pages": 11,
-   "shabbat": "2027-05-29"
-  },
-  {
-   "id": "parasha-naso",
-   "slug": "hmtnh-shl-ntnal",
-   "title": "המתנה של נתנאל",
-   "pages": 12,
-   "shabbat": "2027-06-05"
-  },
-  {
-   "id": "parasha-behaalotecha",
-   "slug": "shbah-nrvt-vtvdh-acht",
-   "title": "שבעה נרות ותודה אחת",
-   "pages": 11,
-   "shabbat": "2027-06-12"
-  },
-  {
-   "id": "parasha-shelach",
-   "slug": "klb-vhanbym-hankyym",
-   "title": "כלב והענבים הענקיים",
-   "pages": 12,
-   "shabbat": "2027-06-19"
-  },
-  {
-   "id": "parasha-korach",
-   "slug": "hmkl-shprch-blylh",
-   "title": "המקל שפרח בלילה",
-   "pages": 11,
-   "shabbat": "2027-06-26"
-  },
-  {
-   "id": "parasha-korach-punishment",
-   "slug": "kvrch-vhmchlvkt",
-   "title": "קורח והמחלוקת",
-   "pages": 13,
-   "shabbat": "2027-06-26"
-  },
-  {
-   "id": "parasha-chukat",
-   "slug": "hbar-shl-mrym",
-   "title": "הבאר של מרים",
-   "pages": 11,
-   "shabbat": "2027-07-03"
-  },
-  {
-   "id": "parasha-balak",
-   "slug": "hatvn-shdybrh",
-   "title": "האתון שדיברה",
-   "pages": 12,
-   "shabbat": "2027-07-10"
-  },
-  {
-   "id": "parasha-pinchas",
-   "slug": "chmsh-achyvt-amytzvt",
-   "title": "חמש אחיות אמיצות",
-   "pages": 11,
-   "shabbat": "2027-07-17"
-  },
-  {
-   "id": "parasha-matot",
-   "slug": "hhbtchh-shl-ravbn",
-   "title": "ההבטחה של ראובן",
-   "pages": 11,
-   "shabbat": "2027-07-24"
-  },
-  {
-   "id": "parasha-matot-midian",
-   "slug": "kvlm-chzrv-hbyth",
-   "title": "כולם חזרו הביתה",
-   "pages": 14,
-   "shabbat": "2027-07-24"
-  },
-  {
-   "id": "parasha-masei",
-   "slug": "hmph-shl-alvn",
-   "title": "המפה של אלון",
-   "pages": 11,
-   "shabbat": "2027-07-31"
-  },
-  {
-   "id": "parasha-devarim",
-   "slug": "mshh-mspr-sypvr",
-   "title": "משה מספר סיפור",
-   "pages": 12,
-   "shabbat": "2027-08-07"
-  },
-  {
-   "id": "parasha-vaetchanan",
-   "slug": "shma-yshral-shl-yal",
-   "title": "שמע ישראל של יעל",
-   "pages": 12,
-   "shabbat": "2027-08-14"
-  },
-  {
-   "id": "parasha-eikev",
-   "slug": "hsl-shl-bvaz",
-   "title": "הסל של בועז",
-   "pages": 13,
-   "shabbat": "2027-08-21"
-  },
-  {
-   "id": "parasha-reeh",
-   "slug": "aydv-btzvmt",
-   "title": "עידו בצומת",
-   "pages": 11,
-   "shabbat": "2027-08-28"
-  },
-  {
-   "id": "parasha-shoftim",
-   "slug": "hkdvr-shl-shnyhm",
-   "title": "הכדור של שניהם",
-   "pages": 11,
-   "shabbat": "2027-09-04"
-  },
-  {
-   "id": "parasha-ki-tetze",
-   "slug": "hkn-shbshych",
-   "title": "הקן שבשיח",
-   "pages": 12,
-   "shabbat": "2027-09-11"
-  },
-  {
-   "id": "parasha-ki-tavo",
-   "slug": "hsl-shl-mykl-avlh-lyrvshlym",
-   "title": "הסל של מיכל עולה לירושלים",
-   "pages": 12,
-   "shabbat": "2027-09-18"
-  },
-  {
-   "id": "parasha-ki-tavo-curses",
-   "slug": "byn-shny-hhrym",
-   "title": "בין שני ההרים",
-   "pages": 13,
-   "shabbat": "2027-09-18"
-  },
-  {
-   "id": "parasha-nitzavim",
-   "slug": "gm-hktn-byvtr-avmd",
-   "title": "גם הקטן ביותר עומד",
-   "pages": 12,
-   "shabbat": "2027-09-25"
-  },
-  {
-   "id": "parasha-vayelech",
-   "slug": "chzk-vamtz-yhvsha",
-   "title": "חזק ואמץ, יהושע",
-   "pages": 12,
-   "shabbat": "2027-10-02"
-  },
-  {
-   "id": "parasha-haazinu",
-   "slug": "hgvzl-shlmd-lavf",
-   "title": "הגוזל שלמד לעוף",
-   "pages": 12,
-   "shabbat": "2027-10-09"
-  },
-  {
-   "id": "parasha-vezot-haberacha",
-   "slug": "hsvf-shhva-htchlh",
-   "title": "הסוף שהוא התחלה",
-   "pages": 12,
-   "shabbat": "2027-10-16"
-  },
-  {
-   "id": "chazal-hillel-one-foot",
-   "slug": "al-rgl-acht",
-   "title": "על רגל אחת",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-beruriah-and-the-neighbors",
-   "slug": "brvryh-vhshknym-hrashnym",
-   "title": "ברוריה והשכנים הרעשנים",
-   "pages": 9,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-honi-carob-tree",
-   "slug": "chvny-vhchrvb",
-   "title": "חוני והחרוב",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-dama-ben-netina",
-   "slug": "dma-la-hayr-at-aba",
-   "title": "דמא לא העיר את אבא",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-nachum-gam-zu",
-   "slug": "gm-zv-ltvbh",
-   "title": "גם זו לטובה",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-akiva-and-the-stone",
-   "slug": "habn-vhmym",
-   "title": "האבן והמים",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-stones-in-the-road",
-   "slug": "habnym-bdrk",
-   "title": "האבנים בדרך",
-   "pages": 9,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-truthful-king-katzia",
-   "slug": "havtzr-shaf-achd-la-rtzh",
-   "title": "האוצר שאף אחד לא רצה",
-   "pages": 10,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-joshua-and-the-clever-child",
-   "slug": "hdrk-hktzrh-vharvkh",
-   "title": "הדרך הקצרה והארוכה",
-   "pages": 9,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-akiva-all-for-good",
-   "slug": "hkvl-ltvbh",
-   "title": "הכול לטובה",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-hillel-on-the-roof",
-   "slug": "hll-al-hgg",
-   "title": "הלל על הגג",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-shimon-ben-shetach-pearl",
-   "slug": "hmrglyt-shal-tzvvar-hchmvr",
-   "title": "המרגלית שעל צוואר החמור",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-chanina-vinegar-candles",
-   "slug": "hnr-shdlk-mchvmtz",
-   "title": "הנר שדלק מחומץ",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-rabbi-tarfon-and-his-mother",
-   "slug": "hydyym-shl-rby-trpvn",
-   "title": "הידיים של רבי טרפון",
-   "pages": 10,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-old-man-planting-figs",
-   "slug": "hzkn-shnta-tanh",
-   "title": "הזקן שנטע תאנה",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-elazar-and-the-craftsman",
-   "slug": "lk-vamvr-lavmn",
-   "title": "לך ואמור לאומן",
-   "pages": 10,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-hillel-patience",
-   "slug": "my-ytzlych-lhrgyz-at-hll",
-   "title": "מי יצליח להרגיז את הלל?",
-   "pages": 11,
-   "shabbat": null
-  },
-  {
-   "id": "chazal-rabbi-and-the-calf",
-   "slug": "rby-hagl-vhgvrym",
-   "title": "רבי, העגל והגורים",
-   "pages": 11,
-   "shabbat": null
-  }
- ]
+  "note": "Order of work for the free AI Studio quota (~11 images/day). 'shabbat' is the approximate Shabbat the parasha is read in Israel; Bereshit passed on 2026-10-10.",
+  "perDay": 11,
+  "books": [
+    {
+      "id": "parasha-bereshit",
+      "slug": "avr-hktnh-rvah-at-havlm-nbra",
+      "title": "אור הקטנה רואה את העולם נברא",
+      "pages": 12,
+      "shabbat": "2026-10-10"
+    },
+    {
+      "id": "parasha-noach",
+      "slug": "nch-vhtybh-hgdvlh",
+      "title": "נח והתיבה הגדולה",
+      "pages": 13,
+      "shabbat": "2026-10-17"
+    },
+    {
+      "id": "parasha-lech-lecha",
+      "slug": "abrm-yvtza-ldrk",
+      "title": "אברם יוצא לדרך",
+      "pages": 12,
+      "shabbat": "2026-10-24"
+    },
+    {
+      "id": "parasha-vayera",
+      "slug": "havhl-hptvch-shl-abrhm",
+      "title": "האוהל הפתוח של אברהם",
+      "pages": 12,
+      "shabbat": "2026-10-31"
+    },
+    {
+      "id": "parasha-vayera-akedah",
+      "slug": "abrhm-vytzchk-bhr-hmvryh",
+      "title": "אברהם ויצחק בהר המוריה",
+      "pages": 14,
+      "shabbat": "2026-10-31"
+    },
+    {
+      "id": "parasha-vayera-sodom",
+      "slug": "abrhm-mtpll-al-sdvm",
+      "title": "אברהם מתפלל על סדום",
+      "pages": 13,
+      "shabbat": "2026-10-31"
+    },
+    {
+      "id": "parasha-chayei-sarah",
+      "slug": "rbkh-vhgmlym-htzmaym",
+      "title": "רבקה והגמלים הצמאים",
+      "pages": 13,
+      "shabbat": "2026-11-07"
+    },
+    {
+      "id": "parasha-toldot",
+      "slug": "yakb-ashyv-vsyr-hadshym",
+      "title": "יעקב, עשיו וסיר העדשים",
+      "pages": 12,
+      "shabbat": "2026-11-14"
+    },
+    {
+      "id": "parasha-vayetze",
+      "slug": "yakb-vhsvlm-shbchlvm",
+      "title": "יעקב והסולם שבחלום",
+      "pages": 12,
+      "shabbat": "2026-11-21"
+    },
+    {
+      "id": "parasha-vayishlach",
+      "slug": "yakb-vashyv-npgshym",
+      "title": "יעקב ועשיו נפגשים",
+      "pages": 12,
+      "shabbat": "2026-11-28"
+    },
+    {
+      "id": "parasha-vayishlach-dinah",
+      "slug": "dynh-bt-yakb",
+      "title": "דינה בת יעקב",
+      "pages": 14,
+      "shabbat": "2026-11-28"
+    },
+    {
+      "id": "parasha-vayeshev",
+      "slug": "yvsf-vktvnt-hpsym",
+      "title": "יוסף וכתונת הפסים",
+      "pages": 12,
+      "shabbat": "2026-12-05"
+    },
+    {
+      "id": "parasha-miketz",
+      "slug": "yvsf-vhchlvm-shl-prah",
+      "title": "יוסף והחלום של פרעה",
+      "pages": 13,
+      "shabbat": "2026-12-12"
+    },
+    {
+      "id": "parasha-vayigash",
+      "slug": "any-yvsf",
+      "title": "״אני יוסף!״",
+      "pages": 13,
+      "shabbat": "2026-12-19"
+    },
+    {
+      "id": "parasha-vayechi",
+      "slug": "hbrkh-shl-sba-yakb",
+      "title": "הברכה של סבא יעקב",
+      "pages": 12,
+      "shabbat": "2026-12-26"
+    },
+    {
+      "id": "parasha-shemot",
+      "slug": "mrym-byn-kny-hsvf",
+      "title": "מרים בין קני הסוף",
+      "pages": 14,
+      "shabbat": "2027-01-02"
+    },
+    {
+      "id": "parasha-vaera",
+      "slug": "ahrn-mshh-vhtzprdaym",
+      "title": "אהרן, משה והצפרדעים",
+      "pages": 13,
+      "shabbat": "2027-01-09"
+    },
+    {
+      "id": "parasha-bo",
+      "slug": "nvah-vhlylh-shl-hmtzvt",
+      "title": "נועה והלילה של המצות",
+      "pages": 13,
+      "shabbat": "2027-01-16"
+    },
+    {
+      "id": "parasha-beshalach",
+      "slug": "nchshvn-kvptz-rashvn",
+      "title": "נחשון קופץ ראשון",
+      "pages": 13,
+      "shabbat": "2027-01-23"
+    },
+    {
+      "id": "parasha-yitro",
+      "slug": "sba-ytrv-nvtn-atzh",
+      "title": "סבא יתרו נותן עצה",
+      "pages": 12,
+      "shabbat": "2027-01-30"
+    },
+    {
+      "id": "parasha-mishpatim",
+      "slug": "glad-vhchmvr-shl-hshkn",
+      "title": "גלעד והחמור של השכן",
+      "pages": 13,
+      "shabbat": "2027-02-06"
+    },
+    {
+      "id": "parasha-terumah",
+      "slug": "btzlal-vmtnvt-hlb",
+      "title": "בצלאל ומתנות הלב",
+      "pages": 12,
+      "shabbat": "2027-02-13"
+    },
+    {
+      "id": "parasha-tetzaveh",
+      "slug": "shtym-ashrh-abnym-al-hlb",
+      "title": "שתים עשרה אבנים על הלב",
+      "pages": 11,
+      "shabbat": "2027-02-20"
+    },
+    {
+      "id": "parasha-ki-tisa",
+      "slug": "hlvchvt-hshnyym-shl-mshh",
+      "title": "הלוחות השניים של משה",
+      "pages": 12,
+      "shabbat": "2027-02-27"
+    },
+    {
+      "id": "parasha-vayakhel",
+      "slug": "chnh-vhchvtym-htzbavnyym",
+      "title": "חנה והחוטים הצבעוניים",
+      "pages": 12,
+      "shabbat": "2027-03-06"
+    },
+    {
+      "id": "parasha-pekudei",
+      "slug": "btzlal-svpr-at-kl-hmtnvt",
+      "title": "בצלאל סופר את כל המתנות",
+      "pages": 13,
+      "shabbat": "2027-03-13"
+    },
+    {
+      "id": "parasha-vayikra",
+      "slug": "shty-yvnym-lbnvt",
+      "title": "שתי יונים לבנות",
+      "pages": 12,
+      "shabbat": "2027-03-20"
+    },
+    {
+      "id": "parasha-tzav",
+      "slug": "aytmr-shvmr-al-hash",
+      "title": "איתמר שומר על האש",
+      "pages": 12,
+      "shabbat": "2027-03-27"
+    },
+    {
+      "id": "parasha-shemini",
+      "slug": "tmr-vhzkvkyt-hmgdlt",
+      "title": "תמר והזכוכית המגדלת",
+      "pages": 12,
+      "shabbat": "2027-04-03"
+    },
+    {
+      "id": "parasha-shemini-nadav-avihu",
+      "slug": "hyvm-hshmyny-bmshkn",
+      "title": "היום השמיני במשכן",
+      "pages": 12,
+      "shabbat": "2027-04-03"
+    },
+    {
+      "id": "parasha-tazria",
+      "slug": "tynvk-chdsh-bbyt",
+      "title": "תינוק חדש בבית",
+      "pages": 12,
+      "shabbat": "2027-04-10"
+    },
+    {
+      "id": "parasha-metzora",
+      "slug": "nvtzvt-brvch",
+      "title": "נוצות ברוח",
+      "pages": 12,
+      "shabbat": "2027-04-17"
+    },
+    {
+      "id": "parasha-acharei-mot",
+      "slug": "hbgdym-hlbnym-shl-ahrn",
+      "title": "הבגדים הלבנים של אהרן",
+      "pages": 12,
+      "shabbat": "2027-04-24"
+    },
+    {
+      "id": "parasha-kedoshim",
+      "slug": "hpynh-shl-rvty",
+      "title": "הפינה של רותי",
+      "pages": 12,
+      "shabbat": "2027-05-01"
+    },
+    {
+      "id": "parasha-emor",
+      "slug": "avmr-svpr-ymym",
+      "title": "עומר סופר ימים",
+      "pages": 12,
+      "shabbat": "2027-05-08"
+    },
+    {
+      "id": "parasha-behar",
+      "slug": "hshdh-yvtza-lchvpshh",
+      "title": "השדה יוצא לחופשה",
+      "pages": 12,
+      "shabbat": "2027-05-15"
+    },
+    {
+      "id": "parasha-bechukotai",
+      "slug": "yvab-mchkh-lgshm",
+      "title": "יואב מחכה לגשם",
+      "pages": 12,
+      "shabbat": "2027-05-22"
+    },
+    {
+      "id": "parasha-bamidbar",
+      "slug": "hdgl-shl-shyrh",
+      "title": "הדגל של שירה",
+      "pages": 11,
+      "shabbat": "2027-05-29"
+    },
+    {
+      "id": "parasha-naso",
+      "slug": "hmtnh-shl-ntnal",
+      "title": "המתנה של נתנאל",
+      "pages": 12,
+      "shabbat": "2027-06-05"
+    },
+    {
+      "id": "parasha-behaalotecha",
+      "slug": "shbah-nrvt-vtvdh-acht",
+      "title": "שבעה נרות ותודה אחת",
+      "pages": 11,
+      "shabbat": "2027-06-12"
+    },
+    {
+      "id": "parasha-shelach",
+      "slug": "klb-vhanbym-hankyym",
+      "title": "כלב והענבים הענקיים",
+      "pages": 12,
+      "shabbat": "2027-06-19"
+    },
+    {
+      "id": "parasha-korach",
+      "slug": "hmkl-shprch-blylh",
+      "title": "המקל שפרח בלילה",
+      "pages": 11,
+      "shabbat": "2027-06-26"
+    },
+    {
+      "id": "parasha-korach-punishment",
+      "slug": "kvrch-vhmchlvkt",
+      "title": "קורח והמחלוקת",
+      "pages": 13,
+      "shabbat": "2027-06-26"
+    },
+    {
+      "id": "parasha-chukat",
+      "slug": "hbar-shl-mrym",
+      "title": "הבאר של מרים",
+      "pages": 11,
+      "shabbat": "2027-07-03"
+    },
+    {
+      "id": "parasha-balak",
+      "slug": "hatvn-shdybrh",
+      "title": "האתון שדיברה",
+      "pages": 12,
+      "shabbat": "2027-07-10"
+    },
+    {
+      "id": "parasha-pinchas",
+      "slug": "chmsh-achyvt-amytzvt",
+      "title": "חמש אחיות אמיצות",
+      "pages": 11,
+      "shabbat": "2027-07-17"
+    },
+    {
+      "id": "parasha-matot",
+      "slug": "hhbtchh-shl-ravbn",
+      "title": "ההבטחה של ראובן",
+      "pages": 11,
+      "shabbat": "2027-07-24"
+    },
+    {
+      "id": "parasha-matot-midian",
+      "slug": "kvlm-chzrv-hbyth",
+      "title": "כולם חזרו הביתה",
+      "pages": 14,
+      "shabbat": "2027-07-24"
+    },
+    {
+      "id": "parasha-masei",
+      "slug": "hmph-shl-alvn",
+      "title": "המפה של אלון",
+      "pages": 11,
+      "shabbat": "2027-07-31"
+    },
+    {
+      "id": "parasha-devarim",
+      "slug": "mshh-mspr-sypvr",
+      "title": "משה מספר סיפור",
+      "pages": 12,
+      "shabbat": "2027-08-07"
+    },
+    {
+      "id": "parasha-vaetchanan",
+      "slug": "shma-yshral-shl-yal",
+      "title": "שמע ישראל של יעל",
+      "pages": 12,
+      "shabbat": "2027-08-14"
+    },
+    {
+      "id": "parasha-eikev",
+      "slug": "hsl-shl-bvaz",
+      "title": "הסל של בועז",
+      "pages": 13,
+      "shabbat": "2027-08-21"
+    },
+    {
+      "id": "parasha-reeh",
+      "slug": "aydv-btzvmt",
+      "title": "עידו בצומת",
+      "pages": 11,
+      "shabbat": "2027-08-28"
+    },
+    {
+      "id": "parasha-shoftim",
+      "slug": "hkdvr-shl-shnyhm",
+      "title": "הכדור של שניהם",
+      "pages": 11,
+      "shabbat": "2027-09-04"
+    },
+    {
+      "id": "parasha-ki-tetze",
+      "slug": "hkn-shbshych",
+      "title": "הקן שבשיח",
+      "pages": 12,
+      "shabbat": "2027-09-11"
+    },
+    {
+      "id": "parasha-ki-tavo",
+      "slug": "hsl-shl-mykl-avlh-lyrvshlym",
+      "title": "הסל של מיכל עולה לירושלים",
+      "pages": 12,
+      "shabbat": "2027-09-18"
+    },
+    {
+      "id": "parasha-ki-tavo-curses",
+      "slug": "byn-shny-hhrym",
+      "title": "בין שני ההרים",
+      "pages": 13,
+      "shabbat": "2027-09-18"
+    },
+    {
+      "id": "parasha-nitzavim",
+      "slug": "gm-hktn-byvtr-avmd",
+      "title": "גם הקטן ביותר עומד",
+      "pages": 12,
+      "shabbat": "2027-09-25"
+    },
+    {
+      "id": "parasha-vayelech",
+      "slug": "chzk-vamtz-yhvsha",
+      "title": "חזק ואמץ, יהושע",
+      "pages": 12,
+      "shabbat": "2027-10-02"
+    },
+    {
+      "id": "parasha-haazinu",
+      "slug": "hgvzl-shlmd-lavf",
+      "title": "הגוזל שלמד לעוף",
+      "pages": 12,
+      "shabbat": "2027-10-09"
+    },
+    {
+      "id": "parasha-vezot-haberacha",
+      "slug": "hsvf-shhva-htchlh",
+      "title": "הסוף שהוא התחלה",
+      "pages": 12,
+      "shabbat": "2027-10-16"
+    },
+    {
+      "id": "chazal-hillel-one-foot",
+      "slug": "al-rgl-acht",
+      "title": "על רגל אחת",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-beruriah-and-the-neighbors",
+      "slug": "brvryh-vhshknym-hrashnym",
+      "title": "ברוריה והשכנים הרעשנים",
+      "pages": 9,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-honi-carob-tree",
+      "slug": "chvny-vhchrvb",
+      "title": "חוני והחרוב",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-dama-ben-netina",
+      "slug": "dma-la-hayr-at-aba",
+      "title": "דמא לא העיר את אבא",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-nachum-gam-zu",
+      "slug": "gm-zv-ltvbh",
+      "title": "גם זו לטובה",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-akiva-and-the-stone",
+      "slug": "habn-vhmym",
+      "title": "האבן והמים",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-stones-in-the-road",
+      "slug": "habnym-bdrk",
+      "title": "האבנים בדרך",
+      "pages": 9,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-truthful-king-katzia",
+      "slug": "havtzr-shaf-achd-la-rtzh",
+      "title": "האוצר שאף אחד לא רצה",
+      "pages": 10,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-joshua-and-the-clever-child",
+      "slug": "hdrk-hktzrh-vharvkh",
+      "title": "הדרך הקצרה והארוכה",
+      "pages": 9,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-akiva-all-for-good",
+      "slug": "hkvl-ltvbh",
+      "title": "הכול לטובה",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-hillel-on-the-roof",
+      "slug": "hll-al-hgg",
+      "title": "הלל על הגג",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-shimon-ben-shetach-pearl",
+      "slug": "hmrglyt-shal-tzvvar-hchmvr",
+      "title": "המרגלית שעל צוואר החמור",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-chanina-vinegar-candles",
+      "slug": "hnr-shdlk-mchvmtz",
+      "title": "הנר שדלק מחומץ",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-rabbi-tarfon-and-his-mother",
+      "slug": "hydyym-shl-rby-trpvn",
+      "title": "הידיים של רבי טרפון",
+      "pages": 10,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-old-man-planting-figs",
+      "slug": "hzkn-shnta-tanh",
+      "title": "הזקן שנטע תאנה",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-elazar-and-the-craftsman",
+      "slug": "lk-vamvr-lavmn",
+      "title": "לך ואמור לאומן",
+      "pages": 10,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-hillel-patience",
+      "slug": "my-ytzlych-lhrgyz-at-hll",
+      "title": "מי יצליח להרגיז את הלל?",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "chazal-rabbi-and-the-calf",
+      "slug": "rby-hagl-vhgvrym",
+      "title": "רבי, העגל והגורים",
+      "pages": 11,
+      "shabbat": null
+    },
+    {
+      "id": "parasha-chukat-og",
+      "slug": "avg-mlk-hbshn-vhnmlym",
+      "title": "עוג מלך הבשן והנמלים",
+      "pages": 12,
+      "shabbat": null
+    }
+  ]
 }

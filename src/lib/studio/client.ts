@@ -4,7 +4,9 @@
  * The narration endpoints (/api/narration/...) belong to another module and
  * may be missing; those calls report `available: false` instead of throwing.
  */
+import type { NarrationVoice } from "../generation/presets";
 import type { BookWithPages, Page } from "../types";
+import type { DetailSuggestions } from "./details";
 import type { BookMetaPatch, CreateBookInput, PublishProblem, UploadKind } from "./shared";
 
 export class StudioApiError extends Error {
@@ -214,6 +216,86 @@ export async function illustratePage(id: string, page: number, note?: string): P
   );
 }
 
+export type GridLayout = "3x3" | "4x4" | "auto";
+
+export interface GridIllustrationOutcome {
+  panels: { page: number; path: string; url: string }[];
+  layout: string;
+  warnings: string[];
+  isMock: boolean;
+}
+
+/** How many pages one grid picture covers. */
+export function gridCapacity(layout: GridLayout): number {
+  return layout === "4x4" ? 16 : 9;
+}
+
+/** Illustrates up to 9 (3x3) or 16 (4x4) SAVED pages with ONE grid picture that the server crops. Takes about a minute. */
+export async function illustrateGrid(
+  id: string,
+  options: { pages: number[]; layout?: GridLayout; notes?: string },
+): Promise<GridIllustrationOutcome> {
+  const { pages, layout, notes } = options;
+  return request<GridIllustrationOutcome>(
+    `${bookUrl(id)}/illustrate`,
+    json("POST", { target: "grid", pages, ...(layout ? { layout } : {}), ...(notes?.trim() ? { notes: notes.trim() } : {}) }),
+  );
+}
+
+export interface AnimatePageOutcome {
+  status: "animated" | "skipped" | "refused" | "failed";
+  error?: string;
+  reason?: string;
+  videoSource?: "ai" | "mock";
+  /** True when the animation replaced a clip the user had uploaded. */
+  replacedUserClip?: boolean;
+}
+
+/** AI: animates one SAVED page's illustration. Takes a minute or two. */
+export async function animatePageWithAi(
+  id: string,
+  page: number,
+  options: { motion?: string; notes?: string; replace?: boolean } = {},
+): Promise<AnimatePageOutcome> {
+  return request<AnimatePageOutcome>(`${bookUrl(id)}/animate`, json("POST", { page, ...options }));
+}
+
+/** Manual: attaches a clip (MP4 or WebM) you made yourself to a page that has an illustration. */
+export async function attachPageClip(id: string, page: number, file: Blob, fileName = "clip.mp4"): Promise<void> {
+  const form = new FormData();
+  form.set("page", String(page));
+  form.set("file", file, fileName);
+  await request<{ status: string }>(`${bookUrl(id)}/animate`, { method: "POST", body: form });
+}
+
+export async function removePageClip(id: string, page: number): Promise<void> {
+  await request<{ removed: number[] }>(`${bookUrl(id)}/animate`, json("DELETE", { page }));
+}
+
+export interface WriteStoryOutcome {
+  pages: { text: string; illustrationPrompt: string }[];
+  isMock: boolean;
+  notes: string[];
+}
+
+/** Asks the writer for the pages of a story. Nothing is saved: the editor puts the pages in. */
+export async function writeStoryPages(
+  id: string,
+  options: { idea: string; heroName?: string; heroGender?: "boy" | "girl" },
+): Promise<WriteStoryOutcome> {
+  return request<WriteStoryOutcome>(`${bookUrl(id)}/write`, json("POST", options));
+}
+
+export interface DetailsOutcome {
+  suggestions: DetailSuggestions;
+  isMock: boolean;
+}
+
+/** Asks for suggested book details (title, summary, tags...) from the saved pages. Nothing is saved. */
+export async function suggestBookDetails(id: string): Promise<DetailsOutcome> {
+  return request<DetailsOutcome>(`${bookUrl(id)}/details`, json("POST", {}));
+}
+
 // ---------------------------------------------------------------------------
 // Narration module (optional)
 // ---------------------------------------------------------------------------
@@ -256,6 +338,8 @@ export interface NarrationOutcome {
   failed: number;
   /** True when the audio that was produced is the silent demo voice. */
   ttsMock: boolean;
+  /** True when the voice cannot take free-text notes, so only the style button counted. */
+  styleNotesIgnored?: boolean;
   /** Skip reasons and errors by zero-based page index. */
   pages: { pageIndex: number; status: string; reason?: string; error?: string }[];
 }
@@ -264,10 +348,56 @@ interface NarrationLine {
   type?: string;
   error?: string;
   ttsMock?: boolean;
+  styleNotesIgnored?: boolean;
   done?: number;
   total?: number;
   result?: { pageIndex?: number; status?: string; reason?: string; error?: string; audioSource?: string };
-  summary?: { narrated?: number; skipped?: number; failed?: number; ttsMock?: boolean };
+  summary?: { narrated?: number; skipped?: number; failed?: number; ttsMock?: boolean; styleNotesIgnored?: boolean };
+}
+
+/** What the narration stage needs to know about the active voice provider. */
+export interface NarrationInfo {
+  ttsProvider: string;
+  ttsMock: boolean;
+  voices: NarrationVoice[];
+  /** Voice used when the book has none chosen. */
+  defaultVoice?: string;
+  /** False when the provider ignores the free-text notes (ElevenLabs, the demo voice). */
+  notesHonoured: boolean;
+}
+
+/** GET /api/narration/<bookId>; undefined when the narration service is not available. */
+export async function fetchNarrationInfo(bookId: string): Promise<NarrationInfo | undefined> {
+  try {
+    const response = await send(`/api/narration/${encodeURIComponent(bookId)}`, {});
+    if (!response.ok) return undefined;
+    const body = (await readBody(response)) as Record<string, unknown> | undefined;
+    if (!body || !Array.isArray(body.voices)) return undefined;
+    return {
+      ttsProvider: typeof body.ttsProvider === "string" ? body.ttsProvider : "mock",
+      ttsMock: body.ttsMock === true,
+      voices: body.voices as NarrationVoice[],
+      ...(typeof body.defaultVoice === "string" ? { defaultVoice: body.defaultVoice } : {}),
+      notesHonoured: body.notesHonoured === true,
+    };
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * POST /api/narration/sample: one short Hebrew sentence in the chosen voice. Uses
+ * a little TTS quota. Resolves with an object URL of the audio (revoke it when done)
+ * or throws StudioApiError with a Hebrew message.
+ */
+export async function fetchVoiceSample(options: { voice?: string; style?: string }): Promise<{ url: string; isMock: boolean }> {
+  const response = await send("/api/narration/sample", json("POST", options));
+  if (!response.ok) {
+    const body = (await readBody(response)) as { error?: unknown } | undefined;
+    throw new StudioApiError(response.status, typeof body?.error === "string" ? body.error : defaultMessage(response.status));
+  }
+  const blob = await response.blob();
+  return { url: URL.createObjectURL(blob), isMock: response.headers.get("X-Tts-Mock") === "1" };
 }
 
 /**
@@ -278,7 +408,14 @@ interface NarrationLine {
  */
 export async function narrate(
   bookId: string,
-  options: { pages?: number[]; force?: boolean; overwriteRecorded?: boolean },
+  options: {
+    pages?: number[];
+    force?: boolean;
+    overwriteRecorded?: boolean;
+    style?: string;
+    notes?: string;
+    voice?: string;
+  },
   onProgress?: (done: number, total: number) => void,
 ): Promise<NarrationOutcome> {
   const outcome: NarrationOutcome = { available: true, narrated: 0, skipped: 0, failed: 0, ttsMock: false, pages: [] };
@@ -299,7 +436,9 @@ export async function narrate(
 
   let sawSummary = false;
   const handle = (line: NarrationLine) => {
+    if (line.styleNotesIgnored || line.summary?.styleNotesIgnored) outcome.styleNotesIgnored = true;
     if (line.type === "start" && line.ttsMock) outcome.ttsMock = true;
+    if (line.type === "start" && typeof line.total === "number") onProgress?.(0, line.total);
     if (line.type === "page" && line.result) {
       const { pageIndex = -1, status = "", reason, error, audioSource } = line.result;
       outcome.pages.push({ pageIndex, status, reason, error });
@@ -310,6 +449,7 @@ export async function narrate(
     const summary = line.type === "done" ? line.summary : line.type === undefined ? (line as NarrationLine["summary"]) : undefined;
     if (summary && typeof summary.narrated === "number") {
       sawSummary = true;
+      if (summary.styleNotesIgnored) outcome.styleNotesIgnored = true;
       outcome.narrated = summary.narrated;
       outcome.skipped = summary.skipped ?? 0;
       outcome.failed = summary.failed ?? 0;

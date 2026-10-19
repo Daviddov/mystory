@@ -146,6 +146,13 @@ export const BookMetaPatchSchema = z.strictObject({
       description: trimmed(MAX_HERO_DESCRIPTION),
       style: trimmed(100).optional(),
       image: z.string().max(300).optional(),
+      styleNotes: trimmed(600).optional(),
+      packs: z.array(z.string().max(40)).max(8).optional(),
+      narrationStyle: z.string().max(40).optional(),
+      narrationNotes: trimmed(300).optional(),
+      narrationVoice: z.string().max(64).optional(),
+      animationMotion: z.string().max(40).optional(),
+      animationNotes: trimmed(400).optional(),
     })
     .nullable()
     .optional(),

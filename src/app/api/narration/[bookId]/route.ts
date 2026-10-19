@@ -6,7 +6,7 @@
  *
  * POST /api/narration/<bookId>      body (optional JSON):
  *      { force?: boolean, pages?: number[] (zero-based), voice?: string, speed?: number,
- *        overwriteRecorded?: boolean }
+ *        style?: string (narration style slug), notes?: string (<= 300), overwriteRecorded?: boolean }
  *      -> 200 application/x-ndjson, one NarrationEvent per line (see @/lib/narration/types):
  *         start, page (one per page), then done or error.
  *
@@ -17,14 +17,15 @@
  *
  * POST costs money (text to speech), so it is same-origin only, rate limited
  * per user (RATE_LIMIT_NARRATION_PER_HOUR, in-process: see @/lib/rate-limit)
- * and `voice` must be one of the configured voices (TTS_VOICE, TTS_ALLOWED_VOICES).
+ * and `voice` must be one of the active provider's voices (the Gemini catalog, TTS_VOICE, TTS_ALLOWED_VOICES).
  */
 import { z } from "zod";
-import { getAiStatus } from "@/lib/ai";
+import { getAiStatus, ttsHonoursNotes } from "@/lib/ai";
 import { jsonError } from "@/lib/api";
-import { aiEnv } from "@/lib/config";
 import { getNarrationDeps, pageState, type NarrationEvent } from "@/lib/narration";
+import { availableNarrationVoices, fallbackNarrationVoice, isAllowedNarrationVoice } from "@/lib/narration/voices";
 import { narrateBookWith, type NarrationDeps } from "@/lib/narration/pipeline";
+import { cleanFreeText } from "@/lib/generation/input";
 import { rateLimited } from "@/lib/rate-limit";
 import { studioApiError, studioContext } from "@/lib/studio/http";
 import { assertBookWritable, loadEditableBook as loadStudioBook, type StudioContext } from "@/lib/studio/service";
@@ -42,6 +43,13 @@ const BodySchema = z.strictObject({
     .regex(/^[A-Za-z0-9_-]{1,64}$/)
     .optional(),
   speed: z.number().min(0.5).max(2).optional(),
+  /** Narration style preset slug; falls back to the book's hero.narrationStyle. */
+  style: z
+    .string()
+    .regex(/^[a-z0-9-]{1,40}$/)
+    .optional(),
+  /** Free-text wishes, cleaned. Providers that cannot use free text ignore them (see styleNotesIgnored). */
+  notes: z.string().max(1200).transform(cleanFreeText).pipe(z.string().max(300)).optional(),
   overwriteRecorded: z.boolean().optional(),
 });
 
@@ -71,6 +79,9 @@ export async function GET(request: Request, context: RouteParams): Promise<Respo
     const status = getAiStatus();
     return Response.json({
       bookId: book.id,
+      voices: availableNarrationVoices(),
+      defaultVoice: fallbackNarrationVoice() ?? null,
+      notesHonoured: ttsHonoursNotes(),
       ttsProvider: status.tts.name,
       nikudProvider: status.nikud.name,
       ttsMock: status.tts.isMock,
@@ -101,7 +112,7 @@ export async function POST(request: Request, context: RouteParams): Promise<Resp
       }
     }
     options = BodySchema.parse(json);
-    if (options.voice && !aiEnv.ttsAllowedVoices().includes(options.voice)) {
+    if (options.voice && !isAllowedNarrationVoice(options.voice)) {
       return jsonError(400, "הקול שנבחר אינו זמין באתר הזה.");
     }
   } catch (err) {
@@ -116,6 +127,10 @@ export async function POST(request: Request, context: RouteParams): Promise<Resp
   }
 
   const encoder = new TextEncoder();
+  // Always pass an explicit voice: the request's, else the book's if still offered, else the default.
+  const heroVoice = book.hero?.narrationVoice;
+  const voice =
+    options.voice ?? (heroVoice && isAllowedNarrationVoice(heroVoice) ? heroVoice : fallbackNarrationVoice());
   const wanted = options.pages;
   const total = wanted ? book.pages.filter((page) => wanted.includes(page.index)).length : book.pages.length;
 
@@ -138,10 +153,15 @@ export async function POST(request: Request, context: RouteParams): Promise<Resp
         nikudProvider: deps.nikud.name,
         ttsMock: deps.tts.isMock,
         nikudMock: deps.nikud.isMock,
+        // ElevenLabs cannot follow free text; say so instead of pretending (Gemini uses the notes).
+        ...((options.notes || book.hero?.narrationNotes) && !ttsHonoursNotes()
+          ? { styleNotesIgnored: true }
+          : {}),
       });
       try {
         const summary = await narrateBookWith(deps, book.id, {
           ...options,
+          ...(voice ? { voice } : {}),
           signal: request.signal,
           onPage: (result, done, count) => send({ type: "page", done, total: count, result }),
         });

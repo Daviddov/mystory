@@ -97,6 +97,32 @@ npx tsx scripts/narrate.ts <slug>
   `quota_exceeded`, keep the fixed text and tell the user the command to re-run later.
 - `data/books/*` and `data/media/books/*` are git-ignored, so nothing shows in `git status`. Don't commit.
 
+### Free narration with Gemini TTS in AI Studio (when ElevenLabs credits are out, or the user prefers it)
+
+Hebrew works with nikud, and the Style box takes free text (tested 2026-10-19, model Gemini 3.8 Flash TTS, voice Fola;
+the API key's prepaid credits were depleted, the web UI is free). No word timings come out of it, so the pages become
+"recorded" pages and the words are timed afterwards by local speech recognition.
+
+1. `npx tsx .claude/skills/ai-picture-book/scripts/attach-narration.ts <slug> --prepare <dir> [--pages 2,5]` writes `<dir>/narration-<slug>.json`.
+2. `python -I .claude/skills/ai-picture-book/scripts/receiver.py <dir> <port>` (check the port is free: `netstat -ano | grep :<port>`;
+   a second listener on a busy port silently serves the wrong folder).
+3. Open `https://aistudio.google.com/generate-speech`, click "Create new dialog", paste
+   [scripts/aistudio-tts-driver.js](scripts/aistudio-tts-driver.js) with `window.RX_PORT = <port>` first, real-click the yellow OPEN RX button
+   (the first click often does nothing; check `rx.closed` is false), then `await setStyle("...")` and `driver.q = [[slug, 1], [slug, 2], ...]`.
+   It saves `<dir>/<slug>-pNN.wav`; follow `driver.log` / `driver.last`. ~15 s a page. It stops on a quota error and keeps the rest in `driver.q`.
+4. `npx tsx .claude/skills/ai-picture-book/scripts/attach-narration.ts <slug> <dir>` converts to mp3 and attaches (audioSource "recorded").
+5. `STT_PROVIDER=whisper STT_PYTHON="py -3.12" npx tsx scripts/align-recordings.ts --book <slug>` times the words (the first run downloads the model; run it in the background).
+
+**Whole book in one request (preferred, ~16 books before the free quota ended on 2026-10-19 vs ~21 pages one by one):**
+paste [scripts/aistudio-book-driver.js](scripts/aistudio-book-driver.js) instead of the per-page driver, `bookDriver.q = ["<slug>", ...]`.
+It sends the pages joined by a blank line, captures the WAV Blob that the Download button builds, and posts `<slug>-book.wav` to the receiver.
+Then `npx tsx .claude/skills/ai-picture-book/scripts/split-book-audio.ts <slug> <dir>/<slug>-book.wav <dir>/pages` cuts it into pages at the pauses
+(voice detection + the reader's word estimator, no whisper; cuts checked against ffmpeg silencedetect all fell in pauses; pages flagged "no clear pause" need a listen),
+then `attach-narration.ts <slug> <dir>/pages`.
+Pitfalls seen: a stale audio is returned when AI Studio silently ignores a Run (the driver compares blob sizes and waits 90 s before re-running);
+the receiver tab can stop answering (getFile retries); two receivers on one port serve the wrong folder; `Failed to generate` = quota, stop.
+The Download button also saves a "Generated Audio ... .wav" to the browser's Downloads when clicked by hand.
+
 ## 4. Verify
 
 The user's `next dev` is usually already running on port 3000 (a second `next dev` exits). Open

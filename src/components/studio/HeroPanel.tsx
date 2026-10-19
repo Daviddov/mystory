@@ -4,7 +4,7 @@ import { ChevronDown, Paintbrush, Sparkles, Trash2, Upload, UserRound } from "lu
 import { useRef, useState } from "react";
 import { Button, Card, Field, Textarea } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { STORY_STYLES } from "@/lib/generation/options";
+import { ILLUSTRATION_STYLES } from "@/lib/generation/presets";
 import { mediaUrl } from "@/lib/media/url";
 import { DEFAULT_ILLUSTRATION_STYLE, IMAGE_ACCEPT, MAX_HERO_DESCRIPTION } from "@/lib/studio/shared";
 import type { BookHero } from "@/lib/types";
@@ -43,7 +43,7 @@ export function HeroPanel({
   const image = mediaUrl(hero?.image, version);
 
   const change = (patch: Partial<BookHero>) => {
-    const next: BookHero = { description, style, ...(hero?.image ? { image: hero.image } : {}), ...patch };
+    const next: BookHero = { ...hero, description, style, ...patch };
     onChange(next);
   };
 
@@ -130,7 +130,7 @@ export function HeroPanel({
             <fieldset className="flex flex-col gap-2">
               <legend className="mb-1 font-semibold">סגנון האיור</legend>
               <div className="flex flex-wrap gap-2">
-                {STORY_STYLES.map((option) => (
+                {ILLUSTRATION_STYLES.map((option) => (
                   <button
                     key={option.slug}
                     type="button"

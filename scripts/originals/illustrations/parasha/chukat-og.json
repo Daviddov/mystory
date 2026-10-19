@@ -1,0 +1,114 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Og",
+      "description": "Og, king of Bashan, a friendly-looking comic giant, as tall as a house, very broad, warm tan skin, a big round nose, thick dark curly beard, huge hands, wears a large rough brown tunic with a wide leather belt, a big gold-trimmed head cloth tied with a cord on his head, bare feet the size of boats; never frightening, a bit grumpy and funny."
+    },
+    {
+      "name": "Moses",
+      "description": "Moses, older man about 80, tall and lean, weathered olive skin, long grey-white beard, deep calm eyes, simple undyed cream wool robe with a brown cloak, a white prayer shawl (tallit) with dark-blue stripes and tzitzit fringes at the corners worn over his head and shoulders over the cloak, always the same in every picture; holds a tall wooden shepherd's staff."
+    },
+    {
+      "name": "Ants",
+      "description": "A crowd of tiny cheerful cartoon ants, black with big friendly eyes and tiny sturdy jaws, the leader ant wears a little red ribbon on her head; they work together in a line."
+    },
+    {
+      "name": "Israelite children",
+      "description": "A group of Israelite children in simple colorful wool tunics and dresses, boys always with a small cloth cap or hood covering the head, girls with head scarves, curious and a little worried, they stay together near their parents."
+    }
+  ],
+  "cover": {
+    "prompt": "The comic giant Og stands in the desert holding a whole mountain on his head like a big hat, taking big stomping steps (small dust puffs), while a long line of tiny ants climbs up the mountain with great determination and tiny Moses stands at the bottom with his staff looking up, smiling. Bright playful scene, wide shot, warm golden light, a few tents far behind.",
+    "characters": [
+      "Og",
+      "Moses",
+      "Ants"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "The giant Og stomps across a green hilly land, each footstep makes a little cloud of dust and the ground shakes (palm trees tilt, a bird flies away). He is so tall his head is among small white clouds. Funny, playful, not scary, wide shot.",
+      "characters": [
+        "Og"
+      ]
+    },
+    {
+      "prompt": "Og sleeps on an enormous iron bed as long as a river, snoring with puffed cheeks, the snore bends the trees and a mountain in the background seems to wake up with sleepy eyes. Cozy and humorous night scene with moonlight, medium-wide shot.",
+      "characters": [
+        "Og"
+      ]
+    },
+    {
+      "prompt": "A long line of Israelites with tents, sheep and little children walks happily through the desert and stops at the top of a hill, suddenly looking up with wide eyes at a huge giant standing far away on the horizon like a mountain. The children point and gasp, funny surprise.",
+      "characters": [
+        "Israelite children",
+        "Og"
+      ]
+    },
+    {
+      "prompt": "Moses stands alone at the edge of the camp, tallit over his head, staff in hand, looking worried and a little afraid. Above his head a soft dream-cloud bubble shows a small scene from old times: Abraham's tent and a tiny figure of Og bringing news. Moses holds his hand on his chest where his heart beats, little 'beat' lines around him. Gentle, warm, emotional.",
+      "characters": [
+        "Moses",
+        "Og"
+      ]
+    },
+    {
+      "prompt": "Moses lifts his face and a soft warm golden light shines on him from the sky, and golden light rays gently surround him, his shoulders relax and he starts to smile and takes a deep breath. No figure of God, only the warm light and a few drifting white clouds. Tender, hopeful moment.",
+      "characters": [
+        "Moses"
+      ]
+    },
+    {
+      "prompt": "Og stands over the camp of Israel in the distance, pointing at a huge mountain beside him with a proud, silly grin, thinking with a cloud-shaped thought bubble in which he imagines himself holding the mountain over the little camp. Funny comic style, not frightening.",
+      "characters": [
+        "Og"
+      ]
+    },
+    {
+      "prompt": "Og carries a whole mountain on his head like a giant hat, walking towards the camp, the mountain's big shadow covers the tents, while the children look up with wide eyes and hold hands and Moses holds his staff calmly in front of them. Dramatic but friendly, wide shot.",
+      "characters": [
+        "Og",
+        "Moses",
+        "Israelite children"
+      ]
+    },
+    {
+      "prompt": "A long line of tiny ants with big smiles climbs the mountain on Og's head, they drill a round hole through the stone with their tiny jaws, little chips of stone flying, the leader ant with the red ribbon in front. Close, cute and funny, bright colors.",
+      "characters": [
+        "Ants"
+      ]
+    },
+    {
+      "prompt": "The mountain slips down and lands around Og's neck like a giant stone collar, Og sits down surprised on the ground with a funny puzzled face, his head sticking out through the hole in the mountain, the little ants wave from the mountain's top. Funny, harmless, dust puffs and little stars around.",
+      "characters": [
+        "Og",
+        "Ants"
+      ]
+    },
+    {
+      "prompt": "Moses jumps high into the air, his cloak flying, holding his staff, beside the sitting Og, his jump seen from the side with little swoosh lines; Og looks up in amazement, the camp of Israel cheers from afar. Energetic and joyful, bright desert light, nobody hurt.",
+      "characters": [
+        "Moses",
+        "Og"
+      ]
+    },
+    {
+      "prompt": "The Israelites gather in a happy circle, children hugging, Moses smiling kindly, tiny ants held in the open palm of a girl, and in the background Og sits quietly and peacefully by his mountain collar, resting. Warm sunset light, grateful mood.",
+      "characters": [
+        "Moses",
+        "Israelite children",
+        "Ants",
+        "Og"
+      ]
+    },
+    {
+      "prompt": "A quiet calm landscape: an ant carries a tiny crumb of bread to its home next to a huge giant footprint in the sand, and Moses with his staff and a child walk on the path to the Promised Land, in warm evening light. Peaceful, echoing the opening scene, wide shot.",
+      "characters": [
+        "Ants",
+        "Moses",
+        "Israelite children"
+      ]
+    }
+  ]
+}

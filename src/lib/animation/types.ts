@@ -11,6 +11,10 @@ export interface AnimationOptions {
   durationSeconds?: number;
   /** Estimated price of one second of video, in USD. Default DEFAULT_VIDEO_COST_PER_SECOND_USD. */
   costPerSecondUsd?: number;
+  /** Motion preset slug (ANIMATION_MOTIONS); unknown or missing = the gentle default. */
+  motion?: string;
+  /** The author's extra instructions for the motion (capped; never override the fixed rules). */
+  notes?: string;
 }
 
 export type PageAnimationStatus = "animated" | "skipped" | "refused" | "failed";

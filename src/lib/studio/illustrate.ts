@@ -20,7 +20,7 @@ import {
   pageImagePrompt,
   scenePrompt,
 } from "../generation/prompts";
-import { getStoryStyle } from "../generation/options";
+import { getIllustrationStyle } from "../generation/presets";
 import { newId } from "../ids";
 import { storeImage } from "../media/optimize";
 import type { MediaStore } from "../media/types";
@@ -113,9 +113,9 @@ export async function createHeroImage(
 
   await assertRoomForFile(deps.media, book.id);
   const result = await deps.image.generate({
-    prompt: characterSheetImagePrompt(style, description),
+    prompt: characterSheetImagePrompt(style, description, { packs: book.hero?.packs, notes: book.hero?.styleNotes }),
     style,
-    caption: `דף דמות · ${getStoryStyle(style)?.label ?? style}`,
+    caption: `דף דמות · ${getIllustrationStyle(style)?.label ?? style}`,
     aspect: "1:1",
   });
   if (result.isMock) isMock = true;
@@ -166,7 +166,7 @@ export async function illustratePage(
 
   await assertRoomForFile(deps.media, book.id);
   const result = await deps.image.generate({
-    prompt: pageImagePrompt(style, character, scene),
+    prompt: pageImagePrompt(style, character, scene, { packs: hero.packs, notes: hero.styleNotes }),
     referenceImages: references,
     style,
     caption: texts[options.pageIndex],

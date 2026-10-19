@@ -5,43 +5,24 @@
  * five); `prompt` is the English art direction sent to the image model.
  */
 import type { AgeGroup } from "../types";
+import { ILLUSTRATION_STYLES } from "./presets";
 
-export const STORY_STYLES = [
-  {
-    slug: "watercolor",
-    label: "צבעי מים",
-    emoji: "🎨",
-    prompt: "soft watercolor children's book illustration, gentle washes, visible paper texture, warm light",
-  },
-  {
-    slug: "paper-cut",
-    label: "גזירי נייר",
-    emoji: "✂️",
-    prompt: "layered paper-cut collage illustration, flat coloured paper shapes, soft drop shadows",
-  },
-  {
-    slug: "3d-animation",
-    label: "אנימציה תלת־ממדית",
-    emoji: "🧸",
-    prompt: "friendly 3D animated film still, rounded shapes, soft global lighting, expressive faces",
-  },
-  {
-    slug: "crayon",
-    label: "צבעי פנדה",
-    emoji: "🖍️",
-    prompt: "wax crayon drawing as in a child's picture book, rough textured strokes, bright colours",
-  },
-  {
-    slug: "classic-storybook",
-    label: "ספר ילדים קלאסי",
-    emoji: "📖",
-    prompt: "classic storybook illustration, ink outlines with gouache colour, cosy and detailed",
-  },
-] as const;
+/**
+ * The wizard offers only the five original general styles; the Jewish house
+ * styles and the newer general ones are chosen in the studio (they live in
+ * ILLUSTRATION_STYLES, see presets.ts). Slugs and shape are unchanged.
+ */
+const WIZARD_STYLE_SLUGS = ["watercolor", "paper-cut", "3d-animation", "crayon", "classic-storybook"] as const;
 
-export type StoryStyle = (typeof STORY_STYLES)[number]["slug"];
+export type StoryStyle = (typeof WIZARD_STYLE_SLUGS)[number];
 
-export const STORY_STYLE_SLUGS = STORY_STYLES.map((s) => s.slug) as [StoryStyle, ...StoryStyle[]];
+export const STORY_STYLES: readonly { slug: StoryStyle; label: string; emoji: string; prompt: string }[] =
+  WIZARD_STYLE_SLUGS.map((slug) => {
+    const style = ILLUSTRATION_STYLES.find((s) => s.slug === slug)!;
+    return { slug, label: style.label, emoji: style.emoji, prompt: style.prompt };
+  });
+
+export const STORY_STYLE_SLUGS = [...WIZARD_STYLE_SLUGS] as [StoryStyle, ...StoryStyle[]];
 
 export function getStoryStyle(slug: string) {
   return STORY_STYLES.find((s) => s.slug === slug);

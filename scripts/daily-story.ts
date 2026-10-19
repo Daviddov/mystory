@@ -41,8 +41,15 @@ function configured(name: string): string | undefined {
 }
 
 async function textProvider(): Promise<TextProvider> {
-  if (!configured("ANTHROPIC_API_KEY")) return mockTextProvider;
-  return (await import("../src/lib/ai/providers/claude-text")).createClaudeTextProvider();
+  const chosen = configured("TEXT_PROVIDER")?.toLowerCase();
+  if (chosen === "mock") return mockTextProvider;
+  const geminiKey = configured("TEXT_API_KEY") ?? configured("IMAGE_API_KEY");
+  const useClaude = chosen === "claude" || (chosen === undefined && !configured("TEXT_API_KEY") && configured("ANTHROPIC_API_KEY"));
+  if (useClaude && configured("ANTHROPIC_API_KEY")) {
+    return (await import("../src/lib/ai/providers/claude-text")).createClaudeTextProvider();
+  }
+  if (!geminiKey || (chosen !== undefined && chosen !== "gemini")) return mockTextProvider;
+  return (await import("../src/lib/ai/providers/gemini-text")).createGeminiTextProvider();
 }
 
 async function imageProvider(): Promise<ImageProvider> {

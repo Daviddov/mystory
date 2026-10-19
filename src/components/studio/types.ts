@@ -110,5 +110,13 @@ export interface EditorNotice {
   tone: "success" | "error" | "info";
   text: string;
   /** Shows the matching "demo mode" notice under the text. */
-  mock?: "nikud" | "tts" | "translation" | "image";
+  mock?: "nikud" | "tts" | "translation" | "image" | "text" | "video";
+}
+
+/** How complete the book details are (stage 8 of the workbench). */
+export interface DetailsStatus {
+  done: number;
+  total: number;
+  /** Hebrew names of the details still missing. */
+  missing: string[];
 }

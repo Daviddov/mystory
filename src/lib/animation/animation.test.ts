@@ -106,10 +106,17 @@ describe("animation helpers", () => {
   it("builds a gentle, deterministic motion prompt from the alt text or the page text", () => {
     const fromAlt = motionPrompt({ text: "דנה הלכה ליער", imageAlt: "A girl walks in a forest" });
     expect(fromAlt).toContain("The picture shows: A girl walks in a forest");
-    expect(fromAlt).toMatch(/No camera movement/);
+    expect(fromAlt).toContain("Rules that always apply");
     expect(motionPrompt({ text: "דנה הלכה ליער" })).toContain("The picture shows: דנה הלכה ליער");
     expect(motionPrompt({ text: "  " })).not.toContain("The picture shows");
-    expect(motionPrompt({ text: "x".repeat(1000) }).length).toBeLessThan(1000);
+    expect(motionPrompt({ text: "x".repeat(1000) }).length).toBeLessThan(1600);
+  });
+
+  it("puts the chosen motion and the notes into the motion prompt", () => {
+    const prompt = motionPrompt({ text: "דנה" }, { motion: "wind", notes: "הכלב מכשכש בזנב" });
+    expect(prompt).toContain("light breeze");
+    expect(prompt).toContain("הכלב מכשכש בזנב");
+    expect(motionPrompt({ text: "דנה" }, { motion: "nope" })).toBe(motionPrompt({ text: "דנה" }));
   });
 
   it("estimates the cost and reads the price from the environment", () => {

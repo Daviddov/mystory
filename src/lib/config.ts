@@ -74,14 +74,30 @@ export const seoEnv = {
 };
 
 export const aiEnv = {
+  /** "gemini" (the site's writer), "claude", or "mock". Unset: Gemini when a key exists, else Claude, else the mock. */
+  textProvider: () => env("TEXT_PROVIDER"),
+  /** Google AI Studio key for story text. Falls back to IMAGE_API_KEY, so one key serves text and pictures. */
+  textApiKey: () => env("TEXT_API_KEY") ?? env("IMAGE_API_KEY"),
+  /** Only TEXT_API_KEY (no fallback): decides automatic vendor choice without hijacking a Claude site that merely has an image key. */
+  ownTextApiKey: () => env("TEXT_API_KEY"),
+  textModel: () => env("TEXT_MODEL"),
   anthropicApiKey: () => env("ANTHROPIC_API_KEY"),
   anthropicModel: () => env("ANTHROPIC_MODEL"),
   /** "dicta" enables the Dicta provider; anything else (or unset) uses the mock. */
   nikudProvider: () => env("NIKUD_PROVIDER"),
   dictaApiUrl: () => env("DICTA_API_URL"),
-  /** Name of the TTS vendor implemented in providers/tts.ts; unset uses the mock. */
+  /** TTS vendor: "gemini" (Google AI Studio, providers/gemini-tts.ts) or "elevenlabs" (providers/tts.ts); unset uses the mock. */
   ttsProvider: () => env("TTS_PROVIDER"),
   ttsApiKey: () => env("TTS_API_KEY"),
+  /** AI Studio key for Gemini TTS. Falls back to IMAGE_API_KEY, so one Google key serves text, pictures and voice. */
+  geminiTtsApiKey: () => {
+    const own = env("TTS_API_KEY");
+    // An ElevenLabs key (sk_...) left in TTS_API_KEY must never be sent to Google.
+    return own && !own.startsWith("sk_") ? own : env("IMAGE_API_KEY");
+  },
+  /** Model id; each vendor has its own default. */
+  ttsModel: () => env("TTS_MODEL"),
+  /** Default voice: an ElevenLabs voice id, or a Gemini prebuilt voice name (default "Sulafat"). */
   ttsVoice: () => env("TTS_VOICE"),
   /**
    * Voice ids a caller may choose for narration, besides TTS_VOICE (comma

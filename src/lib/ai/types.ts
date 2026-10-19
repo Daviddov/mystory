@@ -89,6 +89,13 @@ export interface TtsOptions {
   voice?: string;
   /** 1 = normal speed. */
   speed?: number;
+  /** Narration style preset slug (NARRATION_STYLES in generation/presets.ts); unknown slugs are ignored. */
+  style?: string;
+  /**
+   * Free-text narration wishes (at most 300 characters, cleaned). Honoured only by a
+   * provider that can take free text; ElevenLabs cannot and ignores them.
+   */
+  notes?: string;
 }
 
 export interface TtsResult {

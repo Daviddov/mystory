@@ -1,246 +1,271 @@
 {
- "note": "Books whose cover and all pages are attached (draft). Method: ChatGPT free, 3x3 grids, crop-grid.py --aspect 4:3, attach-images.ts.",
- "done": {
-  "parasha-noach": {
-   "date": "2026-10-15",
-   "route": "chatgpt 3x3 (cover+p1-8, p9-13) + page-09 original",
-   "pictures": 14
+  "note": "Books whose cover and all pages are attached (draft). Method: ChatGPT free, 3x3 grids, crop-grid.py --aspect 4:3, attach-images.ts.",
+  "done": {
+    "parasha-noach": {
+      "date": "2026-10-15",
+      "route": "chatgpt 3x3 (cover+p1-8, p9-13) + page-09 original",
+      "pictures": 14
+    },
+    "parasha-lech-lecha": {
+      "date": "2026-10-15",
+      "route": "chatgpt 3x3 + 2x2",
+      "pictures": 13
+    },
+    "parasha-vayera": {
+      "date": "2026-10-15/16",
+      "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+    },
+    "parasha-vayera-akedah": {
+      "date": "2026-10-15/16",
+      "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+    },
+    "parasha-vayera-sodom": {
+      "date": "2026-10-15/16",
+      "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+    },
+    "parasha-chayei-sarah": {
+      "date": "2026-10-15/16",
+      "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+    },
+    "parasha-toldot": {
+      "date": "2026-10-15/16",
+      "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+    },
+    "parasha-vayetze": {
+      "date": "2026-10-15/16",
+      "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+    },
+    "parasha-bereshit": {
+      "date": "2026-10-15/16",
+      "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+    },
+    "parasha-vayishlach": {
+      "date": "2026-10-16",
+      "route": "chatgpt grids"
+    },
+    "parasha-vayishlach-dinah": {
+      "date": "2026-10-16",
+      "route": "chatgpt grids"
+    },
+    "parasha-vayigash": {
+      "date": "2026-10-17",
+      "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
+      "pictures": 14
+    },
+    "parasha-vayeshev": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 2x2)"
+    },
+    "parasha-vayechi": {
+      "date": "2026-10-17",
+      "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
+      "pictures": 13
+    },
+    "parasha-shemot": {
+      "date": "2026-10-17",
+      "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
+      "pictures": 15
+    },
+    "parasha-miketz": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 3x2)"
+    },
+    "parasha-vaera": {
+      "date": "2026-10-17",
+      "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
+      "pictures": 14
+    },
+    "parasha-bo": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 3x2)"
+    },
+    "parasha-beshalach": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 3x2)"
+    },
+    "parasha-yitro": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 2x2)"
+    },
+    "parasha-mishpatim": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 3x2)"
+    },
+    "parasha-terumah": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 2x2)"
+    },
+    "parasha-tetzaveh": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 2,1)"
+    },
+    "parasha-ki-tisa": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 2x2)"
+    },
+    "parasha-vayakhel": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids (3x3 + 2x2)"
+    },
+    "parasha-pekudei": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids"
+    },
+    "chazal-hillel-patience": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids"
+    },
+    "chazal-old-man-planting-figs": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids"
+    },
+    "chazal-rabbi-and-the-calf": {
+      "date": "2026-10-17",
+      "route": "chatgpt grids"
+    },
+    "parasha-vayikra": {
+      "date": "2026-10-18",
+      "route": "chatgpt grids (3x3 + 2x2)",
+      "pictures": 13
+    },
+    "parasha-tzav": {
+      "date": "2026-10-18",
+      "route": "chatgpt grids (3x3 + 2x2)",
+      "pictures": 13,
+      "note": "grid 2 redone once needlessly (kippah was present); original kept"
+    },
+    "parasha-shemini": {
+      "date": "2026-10-18",
+      "route": "chatgpt grids (3x3 + 2x2)",
+      "pictures": 13
+    },
+    "parasha-shemini-nadav-avihu": {
+      "date": "2026-10-18",
+      "route": "chatgpt grids (3x3 + 2x2)",
+      "pictures": 13
+    },
+    "parasha-balak": {
+      "date": "2026-10-18",
+      "route": "elevenlabs grids (3x3 + 2x2)",
+      "pictures": 13,
+      "note": "page-02 panel has a diagonal split into two scenes (king+envoys / Balaam with gold); grid 2 is rendered in a glossier 3D style than grid 1"
+    },
+    "parasha-tazria": {
+      "date": "2026-10-18",
+      "route": "chatgpt grids (3x3 + 2x2)",
+      "pictures": 13
+    },
+    "parasha-vezot-haberacha": {
+      "date": "2026-10-18/19",
+      "route": "chatgpt grids (session 2, from end of queue)"
+    },
+    "parasha-metzora": {
+      "date": "2026-10-18",
+      "route": "chatgpt grids (3x3 + 2x2)",
+      "pictures": 13
+    },
+    "parasha-haazinu": {
+      "date": "2026-10-18/19",
+      "route": "chatgpt grids (session 2, from end of queue)"
+    },
+    "parasha-acharei-mot": {
+      "date": "2026-10-18",
+      "route": "chatgpt grids (3x3 + 2x2)",
+      "pictures": 13
+    },
+    "chazal-chanina-vinegar-candles": {
+      "date": "2026-10-18",
+      "route": "gemini app grids 2x2 (--size=4)"
+    },
+    "chazal-shimon-ben-shetach-pearl": {
+      "date": "2026-10-18",
+      "route": "gemini app grids 2x2 (--size=4)"
+    },
+    "chazal-akiva-all-for-good": {
+      "date": "2026-10-18",
+      "route": "gemini app grids 2x2 (--size=4)"
+    },
+    "chazal-elazar-and-the-craftsman": {
+      "date": "2026-10-18",
+      "route": "gemini app grids 2x2 (--size=4)"
+    },
+    "chazal-rabbi-tarfon-and-his-mother": {
+      "date": "2026-10-18",
+      "route": "gemini app grids 2x2 (--size=4)"
+    },
+    "chazal-truthful-king-katzia": {
+      "date": "2026-10-18",
+      "route": "gemini app grids 2x2 (--size=4)"
+    },
+    "chazal-hillel-on-the-roof": {
+      "date": "2026-10-18",
+      "route": "gemini app grids 2x2 (--size=4)"
+    },
+    "chazal-joshua-and-the-clever-child": {
+      "date": "2026-10-19",
+      "route": "gemini app 2x2 grids (--size=4)"
+    },
+    "chazal-stones-in-the-road": {
+      "date": "2026-10-19",
+      "route": "gemini app 2x2 grids (--size=4)"
+    },
+    "chazal-nachum-gam-zu": {
+      "date": "2026-10-19",
+      "route": "gemini app 2x2 grids (--size=4)"
+    },
+    "chazal-akiva-and-the-stone": {
+      "date": "2026-10-19",
+      "route": "gemini app 2x2 grids (--size=4)"
+    },
+    "chazal-dama-ben-netina": {
+      "date": "2026-10-19",
+      "route": "gemini app 2x2 grids (--size=4)"
+    },
+    "chazal-honi-carob-tree": {
+      "date": "2026-10-19",
+      "route": "gemini app 2x2 grids (--size=4)"
+    },
+    "chazal-beruriah-and-the-neighbors": {
+      "date": "2026-10-19",
+      "route": "gemini app 2x2 grids (--size=4)"
+    }
   },
-  "parasha-lech-lecha": {
-   "date": "2026-10-15",
-   "route": "chatgpt 3x3 + 2x2",
-   "pictures": 13
+  "partial": {
+    "parasha-vayelech": {
+      "route": "chatgpt 3x3 + 2x2",
+      "saved": [
+        "data/media/_partial-grids/chatgpt/vayelech-grid-1.png"
+      ],
+      "missing": "grid 2 of 2 (grids json in the same folder)"
+    },
+    "parasha-kedoshim": {
+      "route": "chatgpt 3x3",
+      "saved": [
+        "data/media/_partial-grids/chatgpt/kedoshim-grid-1.png"
+      ],
+      "missing": "grid 2 of 2 (2x2: pages 9-12); grids json in same folder"
+    }
   },
-  "parasha-vayera": {
-   "date": "2026-10-15/16",
-   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  "chatgptLimit": {
+    "hitAt": "2026-10-18 ~23:35 local",
+    "generationsBeforeLimit": 15,
+    "message": "out of image creations; resets tomorrow 2026-10-19 9:58 PM"
   },
-  "parasha-vayera-akedah": {
-   "date": "2026-10-15/16",
-   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  "geminiLimit": {
+    "hitAt": "2026-10-19 ~20:25 local",
+    "generationsBeforeLimit": 20,
+    "message": "quota resets Oct 20, 8:16 AM"
   },
-  "parasha-vayera-sodom": {
-   "date": "2026-10-15/16",
-   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  "chatgptLimit2": {
+    "hitAt": "2026-10-18 ~23:28 local",
+    "note": "second ChatGPT agent hit the shared free limit after 5 grids (vezot-haberacha 2, haazinu 2, vayelech 1); resets ~2026-10-19 21:50 local (24h)"
   },
-  "parasha-chayei-sarah": {
-   "date": "2026-10-15/16",
-   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
+  "elevenlabsLimit": {
+    "checkedAt": "2026-10-18 23:40",
+    "message": "daily image generation limit reached on first generation attempt (other sessions used it)"
   },
-  "parasha-toldot": {
-   "date": "2026-10-15/16",
-   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
-  },
-  "parasha-vayetze": {
-   "date": "2026-10-15/16",
-   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
-  },
-  "parasha-bereshit": {
-   "date": "2026-10-15/16",
-   "route": "chatgpt grids (3x3 + 2x2 / 3x2)"
-  },
-  "parasha-vayishlach": {
-   "date": "2026-10-16",
-   "route": "chatgpt grids"
-  },
-  "parasha-vayishlach-dinah": {
-   "date": "2026-10-16",
-   "route": "chatgpt grids"
-  },
-  "parasha-vayigash": {
-   "date": "2026-10-17",
-   "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
-   "pictures": 14
-  },
-  "parasha-vayeshev": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 2x2)"
-  },
-  "parasha-vayechi": {
-   "date": "2026-10-17",
-   "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
-   "pictures": 13
-  },
-  "parasha-shemot": {
-   "date": "2026-10-17",
-   "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
-   "pictures": 15
-  },
-  "parasha-miketz": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 3x2)"
-  },
-  "parasha-vaera": {
-   "date": "2026-10-17",
-   "route": "aistudio grids (3x3 + 3,2/2x2, flash-lite-image 1K)",
-   "pictures": 14
-  },
-  "parasha-bo": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 3x2)"
-  },
-  "parasha-beshalach": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 3x2)"
-  },
-  "parasha-yitro": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 2x2)"
-  },
-  "parasha-mishpatim": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 3x2)"
-  },
-  "parasha-terumah": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 2x2)"
-  },
-  "parasha-tetzaveh": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 2,1)"
-  },
-  "parasha-ki-tisa": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 2x2)"
-  },
-  "parasha-vayakhel": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids (3x3 + 2x2)"
-  },
-  "parasha-pekudei": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids"
-  },
-  "chazal-hillel-patience": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids"
-  },
-  "chazal-old-man-planting-figs": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids"
-  },
-  "chazal-rabbi-and-the-calf": {
-   "date": "2026-10-17",
-   "route": "chatgpt grids"
-  },
-  "parasha-vayikra": {
-   "date": "2026-10-18",
-   "route": "chatgpt grids (3x3 + 2x2)",
-   "pictures": 13
-  },
-  "parasha-tzav": {
-   "date": "2026-10-18",
-   "route": "chatgpt grids (3x3 + 2x2)",
-   "pictures": 13,
-   "note": "grid 2 redone once needlessly (kippah was present); original kept"
-  },
-  "parasha-shemini": {
-   "date": "2026-10-18",
-   "route": "chatgpt grids (3x3 + 2x2)",
-   "pictures": 13
-  },
-  "parasha-shemini-nadav-avihu": {
-   "date": "2026-10-18",
-   "route": "chatgpt grids (3x3 + 2x2)",
-   "pictures": 13
-  },
-  "parasha-balak": {
-   "date": "2026-10-18",
-   "route": "elevenlabs grids (3x3 + 2x2)",
-   "pictures": 13,
-   "note": "page-02 panel has a diagonal split into two scenes (king+envoys / Balaam with gold); grid 2 is rendered in a glossier 3D style than grid 1"
-  },
-  "parasha-tazria": {
-   "date": "2026-10-18",
-   "route": "chatgpt grids (3x3 + 2x2)",
-   "pictures": 13
-  },
-  "parasha-vezot-haberacha": {
-   "date": "2026-10-18/19",
-   "route": "chatgpt grids (session 2, from end of queue)"
-  },
-  "parasha-metzora": {
-   "date": "2026-10-18",
-   "route": "chatgpt grids (3x3 + 2x2)",
-   "pictures": 13
-  },
-  "parasha-haazinu": {
-   "date": "2026-10-18/19",
-   "route": "chatgpt grids (session 2, from end of queue)"
-  },
-  "parasha-acharei-mot": {
-   "date": "2026-10-18",
-   "route": "chatgpt grids (3x3 + 2x2)",
-   "pictures": 13
-  },
-  "chazal-chanina-vinegar-candles": {
-   "date": "2026-10-18",
-   "route": "gemini app grids 2x2 (--size=4)"
-  },
-  "chazal-shimon-ben-shetach-pearl": {
-   "date": "2026-10-18",
-   "route": "gemini app grids 2x2 (--size=4)"
-  },
-  "chazal-akiva-all-for-good": {
-   "date": "2026-10-18",
-   "route": "gemini app grids 2x2 (--size=4)"
-  },
-  "chazal-elazar-and-the-craftsman": {
-   "date": "2026-10-18",
-   "route": "gemini app grids 2x2 (--size=4)"
-  },
-  "chazal-rabbi-tarfon-and-his-mother": {
-   "date": "2026-10-18",
-   "route": "gemini app grids 2x2 (--size=4)"
-  },
-  "chazal-truthful-king-katzia": {
-   "date": "2026-10-18",
-   "route": "gemini app grids 2x2 (--size=4)"
-  },
-  "chazal-hillel-on-the-roof": {
-   "date": "2026-10-18",
-   "route": "gemini app grids 2x2 (--size=4)"
+  "chatgptLimit3": {
+    "checkedAt": "2026-10-19 ~22:00",
+    "message": "still limited at first prompt of the run; ChatGPT said reset in 59 minutes (~23:00 local)"
   }
- },
- "partial": {
-  "parasha-vayelech": {
-   "route": "chatgpt 3x3 + 2x2",
-   "saved": [
-    "data/media/_partial-grids/chatgpt/vayelech-grid-1.png"
-   ],
-   "missing": "grid 2 of 2 (grids json in the same folder)"
-  },
-  "parasha-kedoshim": {
-   "route": "chatgpt 3x3",
-   "saved": [
-    "data/media/_partial-grids/chatgpt/kedoshim-grid-1.png"
-   ],
-   "missing": "grid 2 of 2 (2x2: pages 9-12); grids json in same folder"
-  },
-  "chazal-joshua-and-the-clever-child": {
-   "route": "gemini 2x2 (--size=4)",
-   "saved": [
-    "data/media/_partial-grids/gemini/joshua-and-the-clever-child-grid-1.png"
-   ],
-   "missing": "grids 2 and 3 of 3 (3rd is 2x1; grids json in the same folder)"
-  }
- },
- "chatgptLimit": {
-  "hitAt": "2026-10-18 ~23:35 local",
-  "generationsBeforeLimit": 15,
-  "message": "out of image creations; resets tomorrow 2026-10-19 9:58 PM"
- },
- "geminiLimit": {
-  "hitAt": "2026-10-18 ~23:35 local",
-  "generationsBeforeLimit": 19,
-  "message": "quota resets Oct 19, 8:16 AM"
- },
- "chatgptLimit2": {
-  "hitAt": "2026-10-18 ~23:28 local",
-  "note": "second ChatGPT agent hit the shared free limit after 5 grids (vezot-haberacha 2, haazinu 2, vayelech 1); resets ~2026-10-19 21:50 local (24h)"
- },
- "elevenlabsLimit": {
-  "checkedAt": "2026-10-18 23:40",
-  "message": "daily image generation limit reached on first generation attempt (other sessions used it)"
- }
 }

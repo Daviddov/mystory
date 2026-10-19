@@ -1,13 +1,14 @@
 "use client";
 
 import { arrayMove } from "@dnd-kit/sortable";
-import { ArrowRight, ClipboardPaste, Clock, Images, Lock, Plus, Sparkles, Wand2, X } from "lucide-react";
+import { ArrowRight, ClipboardPaste, Clock, Images, Lock, Plus, Sparkles, Wand2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, type DragEvent } from "react";
-import { MockNotice } from "@/components/MockNotice";
-import { Button, ButtonLink, Chip, Dialog, Spinner, Textarea } from "@/components/ui";
+import { Button, ButtonLink, Chip, Dialog, Textarea } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { estimateReadingMinutes, hasNikud } from "@/lib/hebrew";
+import type { CostContext } from "@/lib/generation/costs";
+import { countWords, estimateReadingMinutes, hasNikud, stripNikud } from "@/lib/hebrew";
+import { timingsMatchText } from "@/lib/narration/align";
 import { routes } from "@/lib/routes";
 import {
   acceptTranslation,
@@ -15,15 +16,23 @@ import {
   createShareLink,
   deleteBook,
   fetchBook,
+  gridCapacity,
+  fetchNarrationInfo,
+  fetchVoiceSample,
+  illustrateGrid,
   illustratePage,
+  type GridLayout,
+  type NarrationInfo,
   narrate,
   removeShareLink,
   requestNikud,
   setBookStatus,
   shrinkImage,
   StudioApiError,
+  suggestBookDetails,
   translateBookToHebrew,
   uploadMedia,
+  writeStoryPages,
 } from "@/lib/studio/client";
 import {
   IMAGE_ACCEPT,
@@ -36,15 +45,27 @@ import {
   STATUS_TONES,
   type BookMetaPatch,
 } from "@/lib/studio/shared";
+import {
+  describeFilled,
+  detailsCompleteness,
+  mergeCredits,
+  mergeDetails,
+  type AutoFilled,
+  type FilledField,
+} from "@/lib/studio/auto-details";
+import { EXPECTED_SECONDS, toBusy, type BusyInput, type BusyState } from "@/lib/studio/progress";
 import { readingTimeLabel } from "@/lib/taxonomy";
 import type { BookHero, BookStatus, BookWithPages } from "@/lib/types";
+import { BusyOverlay } from "./BusyOverlay";
 import { HeroPanel } from "./HeroPanel";
 import { MetaForm } from "./MetaForm";
+import { NoticeToast } from "./NoticeToast";
 import { PageEditor } from "./PageEditor";
 import { PageList } from "./PageList";
 import { PreviewPane } from "./PreviewPane";
 import { PublishPanel } from "./PublishPanel";
 import { SaveIndicator } from "./SaveIndicator";
+import { StagesPanel, type NarrateAllOptions } from "./StagesPanel";
 import { TranslationPanel } from "./TranslationPanel";
 import {
   composeBook,
@@ -60,12 +81,13 @@ import {
 } from "./types";
 import { useAutosave } from "./useAutosave";
 
-type Tab = "pages" | "translate" | "details" | "preview" | "publish";
+type Tab = "stages" | "pages" | "translate" | "details" | "preview" | "publish";
 
 /** Shown only for a book whose original language is not Hebrew. */
 const TRANSLATE_TAB: { id: Tab; label: string } = { id: "translate", label: "תרגום" };
 
 const TABS: { id: Tab; label: string }[] = [
+  { id: "stages", label: "שלבי היצירה" },
   { id: "pages", label: "עמודים" },
   { id: "details", label: "פרטי הספר" },
   { id: "preview", label: "תצוגה מקדימה" },
@@ -78,6 +100,16 @@ interface ConfirmRequest {
   confirmLabel: string;
   danger?: boolean;
   run: () => void;
+  /** A second way to confirm (e.g. also replace the human recordings). */
+  alt?: { label: string; run: () => void };
+}
+
+/** True when the page's audio belongs to its current text (a human recording always counts). */
+function hasFreshAudio(page: EditorPage): boolean {
+  if (!page.audio) return false;
+  if (page.audioSource === "recorded") return true;
+  const spoken = page.textNikud && countWords(page.textNikud) === countWords(page.text) ? page.textNikud : page.text;
+  return timingsMatchText(page.wordTimings, spoken);
 }
 
 function errorMessage(err: unknown, fallback: string): string {
@@ -101,10 +133,12 @@ export interface StudioEditorProps {
   book: BookWithPages;
   /** True for editors and admins: they may publish directly and edit published books. */
   canPublish: boolean;
+  /** Providers and prices for the cost estimates of the stages tab (no secrets). */
+  costs?: CostContext;
 }
 
 /** The manual book studio: pages, details, live preview, sharing and publication, with autosave. */
-export function StudioEditor({ book, canPublish }: StudioEditorProps) {
+export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
   const router = useRouter();
   const bookId = book.id;
 
@@ -112,8 +146,10 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
   const [pages, setPagesState] = useState<EditorPage[]>(() => book.pages.map(toEditorPage));
   const [info, setInfo] = useState<ServerInfo>(() => pickInfo(book));
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
-  const [tab, setTab] = useState<Tab>("pages");
-  const [busy, setBusy] = useState<string | null>(null);
+  const [tab, setTab] = useState<Tab>(book.pages.some((page) => page.text.trim().length > 0 || page.image) ? "pages" : "stages");
+  const [busy, setBusyState] = useState<BusyState | null>(null);
+  // Accepts a plain label as well as the object form with progress information.
+  const setBusy = useCallback((next: BusyInput) => setBusyState(toBusy(next)), []);
   const [notice, setNotice] = useState<EditorNotice | null>(null);
   const [confirm, setConfirm] = useState<ConfirmRequest | null>(null);
   const [pasteOpen, setPasteOpen] = useState(false);
@@ -144,6 +180,33 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
       urls.clear();
     };
   }, []);
+
+  // Voices of the active narration provider, for the narration stage.
+  const [narrationInfo, setNarrationInfo] = useState<NarrationInfo | undefined>();
+  useEffect(() => {
+    let cancelled = false;
+    void fetchNarrationInfo(bookId).then((info) => {
+      if (!cancelled) setNarrationInfo(info);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [bookId]);
+  const sampleVoice = async (options: { voice?: string; style: string }) => {
+    try {
+      const sample = await fetchVoiceSample(options);
+      if (sample.isMock) {
+        URL.revokeObjectURL(sample.url);
+        setNotice({ tone: "info", text: "אין קול אמיתי מוגדר באתר, ולכן אי אפשר לשמוע דוגמה." });
+        return;
+      }
+      const audio = new Audio(sample.url);
+      audio.addEventListener("ended", () => URL.revokeObjectURL(sample.url), { once: true });
+      await audio.play();
+    } catch (err) {
+      setNotice({ tone: "error", text: errorMessage(err, "הדגמת הקול נכשלה") });
+    }
+  };
 
   // A file dropped outside a drop zone must not make the browser leave the editor.
   useEffect(() => {
@@ -210,11 +273,15 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
 
   const originalLanguage = info.originalLanguage ?? info.language ?? "he";
   const translatable = originalLanguage !== "he";
-  const tabs = translatable ? [TABS[0], TRANSLATE_TAB, ...TABS.slice(1)] : TABS;
+  const tabs = translatable ? [TABS[0], TABS[1], TRANSLATE_TAB, ...TABS.slice(2)] : TABS;
 
   /** The server changes the text, the title and the credits: save first, then take over its version of the book. */
   const runTranslation = async (mode: "translate" | "accept", translator: string) => {
-    setBusy(mode === "translate" ? "מתרגם את כל הספר לעברית. זה יכול לקחת דקה או שתיים…" : "מאשר את התרגום…");
+    setBusy(
+      mode === "translate"
+        ? { label: "מתרגם את כל הספר לעברית…", expectedSeconds: EXPECTED_SECONDS.translate }
+        : { label: "מאשר את התרגום…", expectedSeconds: EXPECTED_SECONDS.acceptTranslation },
+    );
     setUntranslatedPages([]);
     try {
       if (!(await flush())) {
@@ -439,12 +506,22 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
           ? `הטקסט חולק לעמודים, אבל ${left} קטעים לא נכנסו כי בספר אפשר עד ${MAX_PAGES} עמודים.`
           : `הטקסט חולק ל-${texts.length} עמודים.`,
     });
+    void detailsAfterPaste();
   };
 
   // ---- Nikud and narration ---------------------------------------------------
 
   const autoNikud = async (keys: string[], overwrite: boolean) => {
-    setBusy("מנקד את הטקסט…");
+    const todo = keys.filter((key) => {
+      const page = pagesRef.current.find((candidate) => candidate.key === key);
+      return !!page && page.text.trim().length > 0 && (overwrite || !page.textNikud || !hasNikud(page.textNikud));
+    });
+    const nikudBusy = (at: number): BusyState => ({
+      label: todo.length > 1 ? `מנקד עמוד ${Math.min(at + 1, todo.length)} מתוך ${todo.length}…` : "מנקד את הטקסט…",
+      steps: { done: at, total: Math.max(1, todo.length) },
+      expectedSeconds: EXPECTED_SECONDS.nikudPage,
+    });
+    setBusy(nikudBusy(0));
     let done = 0;
     let mock = false;
     let failure: string | null = null;
@@ -453,6 +530,7 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
         const page = pagesRef.current.find((candidate) => candidate.key === key);
         if (!page || page.text.trim().length === 0) continue;
         if (!overwrite && page.textNikud && hasNikud(page.textNikud)) continue;
+        setBusy(nikudBusy(done));
         const outcome = await requestNikud(page.text);
         if (!outcome.available) {
           failure = outcome.message;
@@ -476,8 +554,14 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
   };
 
   /** Narration is stored by the server inside the book, so: save first, narrate, then reload the audio fields. */
-  const autoNarrate = async (pageIndexes: number[] | undefined, replaceRecording: boolean) => {
-    setBusy("מכין הקראה…");
+  const autoNarrate = async (
+    pageIndexes: number[] | undefined,
+    replaceRecording: boolean,
+    voice?: { style?: string; notes?: string; voice?: string },
+    /** Narrate again even where the audio is up to date. Default: only when pages are listed explicitly. */
+    force: boolean = pageIndexes !== undefined,
+  ): Promise<{ styleNotesIgnored?: boolean } | void> => {
+    setBusy({ label: "מכין הקראה…", expectedSeconds: EXPECTED_SECONDS.upload });
     try {
       if (!(await flush())) {
         setNotice({ tone: "error", text: "אי אפשר להקריא לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
@@ -485,8 +569,20 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
       }
       const outcome = await narrate(
         bookId,
-        { pages: pageIndexes, force: pageIndexes !== undefined, overwriteRecorded: replaceRecording },
-        (done, total) => setBusy(`מקריא עמוד ${Math.min(done + 1, total)} מתוך ${total}…`),
+        {
+          pages: pageIndexes,
+          force,
+          overwriteRecorded: replaceRecording,
+          ...(voice?.style ? { style: voice.style } : {}),
+          ...(voice?.notes?.trim() ? { notes: voice.notes.trim() } : {}),
+          ...(voice?.voice ? { voice: voice.voice } : {}),
+        },
+        (done, total) =>
+          setBusy({
+            label: done >= total ? "שומרים את ההקראה…" : `מקריא עמוד ${done + 1} מתוך ${total}…`,
+            steps: { done, total },
+            expectedSeconds: EXPECTED_SECONDS.narrationPage,
+          }),
       );
       if (!outcome.available) {
         setNotice({ tone: "error", text: outcome.message ?? "ההקראה האוטומטית לא זמינה כרגע." });
@@ -508,23 +604,76 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
       commitPages(merged);
       applyServerBook(fresh);
 
-      const parts = [`הוקראו ${outcome.narrated} עמודים`];
+      const pagesLabel = (count: number) => (count === 1 ? "עמוד אחד" : `${count} עמודים`);
+      const parts = [`${outcome.narrated === 1 ? "הוקרא" : "הוקראו"} ${pagesLabel(outcome.narrated)}`];
       if (outcome.skipped > 0) parts.push(`${outcome.skipped} דולגו`);
       if (outcome.failed > 0) parts.push(`${outcome.failed} נכשלו`);
-      const firstError = outcome.pages.find((p) => p.status === "failed")?.error;
+      const rawError = outcome.pages.find((p) => p.status === "failed")?.error;
+      // Vendor errors come in English (often raw JSON): show a short Hebrew reason instead.
+      const firstError = rawError
+        ? /quota|credit|402|429|limit/i.test(rawError)
+          ? "מכסת ההקראה אצל ספק הקול נגמרה. אפשר לנסות שוב מאוחר יותר או לבחור ספק אחר."
+          : /401|403|api key|unauthor/i.test(rawError)
+            ? "ספק הקול דחה את המפתח. בדקו את TTS_API_KEY."
+            : /[֐-׿]/.test(rawError)
+              ? rawError
+              : "שירות ההקראה נכשל. נסו שוב בעוד רגע."
+        : undefined;
       setNotice({
         tone: outcome.failed > 0 ? "error" : outcome.narrated > 0 ? "success" : "info",
         text:
           outcome.narrated === 0 && outcome.failed === 0
-            ? "לא היה מה להקריא: לכל העמודים עם טקסט כבר יש הקראה עדכנית או הקלטה שלכם."
+            ? force
+              ? "לא הוקרא אף עמוד: עמודים עם הקלטה שלכם לא מוחלפים, ועמודים בלי טקסט מדולגים."
+              : "לא היה מה להקריא: לכל העמודים עם טקסט כבר יש הקראה עדכנית או הקלטה שלכם. כדי להקריא שוב בקול אחר, בחרו \"הקראה מחדש של כל הספר\"."
             : `${parts.join(", ")}.${firstError ? ` (${firstError})` : ""}`,
         mock: outcome.ttsMock ? "tts" : undefined,
       });
+      return { styleNotesIgnored: outcome.styleNotesIgnored };
     } catch (err) {
       setNotice({ tone: "error", text: errorMessage(err, "ההקראה נכשלה") });
     } finally {
       setBusy(null);
     }
+  };
+
+  /** Stage 5: only the pages without narration, or every page with text again in the chosen voice and style. */
+  const narrateAll = (options: NarrateAllOptions): Promise<{ styleNotesIgnored?: boolean } | void> | void => {
+    const voice = { style: options.style, notes: options.notes, voice: options.voice };
+    if (options.scope === "missing") return autoNarrate(undefined, false, voice);
+    if (pagesRef.current.some((candidate) => candidate.uploading)) {
+      setNotice({ tone: "info", text: "חכו רגע לסיום העלאת התמונות, ואז נסו שוב." });
+      return;
+    }
+    const indexes = pagesRef.current.flatMap((page, index) => (page.text.trim().length > 0 ? [index] : []));
+    if (indexes.length === 0) {
+      setNotice({ tone: "info", text: "אין עמודים עם טקסט להקריא." });
+      return;
+    }
+    const recorded = indexes.filter((index) => {
+      const page = pagesRef.current[index];
+      return !!page.audio && page.audioSource === "recorded";
+    }).length;
+    const replaced = indexes.length - recorded;
+    const description =
+      `ההקראה של ${replaced === 1 ? "עמוד אחד" : `${replaced} עמודים`} תוחלף בקול ובסגנון שנבחרו, ויש לכך עלות לפי אורך הטקסט.` +
+      (recorded > 0
+        ? ` ב-${recorded === 1 ? "עמוד אחד" : `${recorded} עמודים`} יש הקלטה בקול שלכם: כברירת מחדל היא נשארת.`
+        : "");
+    setConfirm({
+      title: "להקריא מחדש את כל הספר?",
+      description,
+      confirmLabel: recorded > 0 ? "הקראה מחדש, בלי לגעת בהקלטות" : "הקראה מחדש",
+      ...(recorded > 0
+        ? {
+            alt: {
+              label: "הקראה מחדש, כולל ההקלטות שלי",
+              run: () => void autoNarrate(indexes, true, voice, true),
+            },
+          }
+        : {}),
+      run: () => void autoNarrate(indexes, false, voice, true),
+    });
   };
 
   const narratePage = (key: string) => {
@@ -553,14 +702,18 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
 
   /** The server may write the description from the story, so the story is saved first. */
   const generateHero = async (description: string, style: string) => {
-    setBusy(description ? "מצייר את הגיבור…" : "כותב תיאור של הגיבור לפי הסיפור ומצייר אותו…");
+    setBusy(
+      description
+        ? { label: "מצייר את הגיבור…", expectedSeconds: EXPECTED_SECONDS.hero }
+        : { label: "כותב תיאור של הגיבור לפי הסיפור ומצייר אותו…", expectedSeconds: EXPECTED_SECONDS.heroWithDescription },
+    );
     try {
       if (!(await flush())) {
         setNotice({ tone: "error", text: "אי אפשר ליצור את הגיבור לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
         return;
       }
       const outcome = await createHeroImage(bookId, { description: description || undefined, style });
-      setHero({ description: outcome.description, style: outcome.style, image: outcome.path });
+      setHero({ ...metaRef.current.hero, description: outcome.description, style: outcome.style, image: outcome.path });
       setNotice({
         tone: "success",
         text: outcome.descriptionWritten
@@ -580,11 +733,11 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
       setNotice({ tone: "error", text: "אפשר לבחור רק קובץ תמונה." });
       return;
     }
-    setBusy("מעלה את תמונת הגיבור…");
+    setBusy({ label: "מעלה את תמונת הגיבור…", expectedSeconds: EXPECTED_SECONDS.upload });
     try {
       const upload = await uploadMedia(bookId, "image", await shrinkImage(file), file.name);
       const current = metaRef.current.hero;
-      setHero({ description: current?.description ?? "", style: current?.style, image: upload.path });
+      setHero({ ...current, description: current?.description ?? "", image: upload.path });
     } catch (err) {
       setNotice({ tone: "error", text: errorMessage(err, "העלאת התמונה נכשלה") });
     } finally {
@@ -594,7 +747,11 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
 
   /** Illustrations are drawn from the SAVED book: save first, then one page at a time. */
   const illustrate = async (keys: string[], note?: string) => {
-    setBusy("מאייר את העמוד…");
+    const illustrateBusy = (at: number): BusyState =>
+      keys.length > 1
+        ? { label: `מאייר עמוד ${at + 1} מתוך ${keys.length}…`, steps: { done: at, total: keys.length }, expectedSeconds: EXPECTED_SECONDS.illustratePage }
+        : { label: "מאייר את העמוד…", expectedSeconds: EXPECTED_SECONDS.illustratePage };
+    setBusy(illustrateBusy(0));
     let done = 0;
     let mock = false;
     try {
@@ -605,15 +762,16 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
       for (const [i, key] of keys.entries()) {
         const index = pagesRef.current.findIndex((page) => page.key === key);
         if (index < 0) continue;
-        if (keys.length > 1) setBusy(`מאייר עמוד ${i + 1} מתוך ${keys.length}…`);
+        setBusy(illustrateBusy(i));
         const outcome = await illustratePage(bookId, index, note);
         updatePage(key, { image: outcome.path, preview: undefined, uploadError: undefined });
         if (outcome.isMock) mock = true;
         done += 1;
       }
+      const credit = done > 0 && !mock ? await afterPictures() : "";
       setNotice({
         tone: "success",
-        text: done === 1 ? "האיור מוכן. אם הוא לא מתאים, אפשר ליצור איור חדש." : `אוירו ${done} עמודים.`,
+        text: `${done === 1 ? "האיור מוכן. אם הוא לא מתאים, אפשר ליצור איור חדש." : `אוירו ${done} עמודים.`}${credit ? ` ${credit}` : ""}`,
         mock: mock ? "image" : undefined,
       });
     } catch (err) {
@@ -639,17 +797,219 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
     void illustrate([key], note);
   };
 
-  const illustrateMissing = () => {
+  /** Pictures for many pages, one grid image per request (9 or 16 pages), saved first and applied page by page. */
+  const illustrateGrids = async (keys: string[], options: { layout: GridLayout; notes?: string }) => {
+    const size = gridCapacity(options.layout);
+    const chunks: string[][] = [];
+    for (let i = 0; i < keys.length; i += size) chunks.push(keys.slice(i, i + size));
+    let done = 0;
+    let mock = false;
+    const warnings: string[] = [];
+    const gridBusy = (at: number): BusyState => ({
+      label: chunks.length > 1 ? `מאיירים רשת ${at + 1} מתוך ${chunks.length}…` : "מאיירים את העמודים ברשת אחת…",
+      steps: { done: at, total: chunks.length },
+      expectedSeconds: EXPECTED_SECONDS.grid,
+    });
+    setBusy(gridBusy(0));
+    try {
+      if (!(await flush())) {
+        setNotice({ tone: "error", text: "אי אפשר לאייר לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        return;
+      }
+      for (const [i, chunk] of chunks.entries()) {
+        setBusy(gridBusy(i));
+        const indexes = chunk.map((key) => pagesRef.current.findIndex((page) => page.key === key)).filter((index) => index >= 0);
+        if (indexes.length === 0) continue;
+        const outcome = await illustrateGrid(bookId, { pages: indexes, layout: options.layout, notes: options.notes });
+        for (const panel of outcome.panels) {
+          const target = pagesRef.current[panel.page];
+          if (!target) continue;
+          updatePage(target.key, { image: panel.path, preview: undefined, uploadError: undefined });
+          done += 1;
+        }
+        if (outcome.isMock) mock = true;
+        warnings.push(...outcome.warnings);
+      }
+      const credit = done > 0 && !mock ? await afterPictures() : "";
+      const extra = (warnings.length > 0 ? ` ${warnings.join(" ")}` : "") + (credit ? ` ${credit}` : "");
+      setNotice({
+        tone: done > 0 ? "success" : "info",
+        text: done > 0 ? `אוירו ${done} עמודים. אם איור לא מתאים, אפשר ליצור לעמוד איור חדש.${extra}` : `לא נוצרו איורים.${extra}`,
+        mock: mock ? "image" : undefined,
+      });
+    } catch (err) {
+      const prefix = done > 0 ? `אוירו ${done} עמודים, ואז ` : "";
+      setNotice({ tone: "error", text: `${prefix}${errorMessage(err, "יצירת האיורים נכשלה")}`, mock: mock ? "image" : undefined });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const illustrateMissing = (options: { layout?: GridLayout; notes?: string } = {}) => {
     const keys = pagesRef.current
       .filter((page) => !page.image && !page.preview && page.text.trim().length > 0)
       .map((page) => page.key);
-    if (keys.length > 0) void illustrate(keys);
+    if (keys.length > 0) void illustrateGrids(keys, { layout: options.layout ?? "3x3", notes: options.notes });
+  };
+
+  // ---- Book details that fill themselves --------------------------------------
+
+  /** What the last automatic fill wrote, so a detail nobody touched can be refreshed later. */
+  const autoFilledRef = useRef<AutoFilled>({});
+
+  /** Credit lines for the parts AI made; only into empty fields. Returns the sentence for the notice. */
+  const fillCredits = (made: { aiWrote?: boolean; aiIllustrated?: boolean }): { patch: Partial<EditorMeta>; filled: FilledField[] } => {
+    const credits = mergeCredits({ meta: metaRef.current, ...made });
+    return credits;
+  };
+
+  /**
+   * Asks for the details from the saved story and merges them into the empty
+   * fields. Never throws: a failure here must not spoil the step that called it.
+   * Returns a sentence for the notice ("" when nothing was filled).
+   */
+  const fillDetails = async (options: { replace?: boolean; aiWrote?: boolean } = {}): Promise<string> => {
+    try {
+      if (!(await flush())) return "";
+      const outcome = await suggestBookDetails(bookId);
+      if (outcome.isMock) return "פרטי הספר לא מולאו, כי שירות הכתיבה לא מחובר.";
+      const merged = mergeDetails({
+        meta: metaRef.current,
+        suggestions: outcome.suggestions,
+        autoFilled: autoFilledRef.current,
+        replaceAll: options.replace,
+      });
+      const credits = options.aiWrote ? fillCredits({ aiWrote: true }) : { patch: {}, filled: [] as FilledField[] };
+      const patch: Partial<EditorMeta> = { ...merged.patch, ...credits.patch };
+      const filled = [...merged.filled, ...credits.filled];
+      autoFilledRef.current = merged.autoFilled;
+      if (filled.length === 0) return options.replace || !options.aiWrote ? "כל פרטי הספר כבר מלאים, ולא שינינו אותם." : "";
+      updateMeta(patch);
+      return describeFilled(filled, patch);
+    } catch (err) {
+      return `פרטי הספר לא מולאו: ${errorMessage(err, "השירות לא זמין")} אפשר להשלים אותם בלשונית פרטי הספר.`;
+    }
+  };
+
+  /** Explicit button of stage 8. */
+  const runAutoDetails = async (options: { replace: boolean }) => {
+    setBusy({ label: "קוראים את הסיפור וממלאים את פרטי הספר…", expectedSeconds: EXPECTED_SECONDS.details });
+    try {
+      const text = await fillDetails({ replace: options.replace });
+      setNotice({ tone: text ? "success" : "info", text: text || "אין פרטים חדשים למלא." });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  /** After pictures: the illustrator credit (empty field only) and the cover the server chose. Returns a notice sentence. */
+  const afterPictures = async (): Promise<string> => {
+    const credits = fillCredits({ aiIllustrated: true });
+    if (credits.filled.length > 0) updateMeta(credits.patch);
+    try {
+      if (await flush()) applyServerBook(await fetchBook(bookId));
+    } catch {
+      // The cover is picked up on the next save or reload.
+    }
+    return credits.filled.length > 0 ? describeFilled(credits.filled, credits.patch) : "";
+  };
+
+  /** A pasted story with no summary and no tags yet gets its details too. */
+  const detailsAfterPaste = async () => {
+    const current = metaRef.current;
+    if (current.summary.trim().length > 0 || current.tags.length > 0) return;
+    setBusy({ label: "ממלאים את פרטי הספר לפי הסיפור…", expectedSeconds: EXPECTED_SECONDS.details });
+    try {
+      const text = await fillDetails();
+      if (text) setNotice({ tone: "success", text });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  // ---- Writing the story with AI ---------------------------------------------
+
+  /** The story is written from the idea alone; the pages that exist keep their pictures but get the new text. */
+  const runWriteStory = async (options: { idea: string; heroName: string; heroGender: "boy" | "girl" }) => {
+    setBusy({ label: "כותבים את הסיפור…", expectedSeconds: EXPECTED_SECONDS.story });
+    try {
+      if (!(await flush())) {
+        setNotice({ tone: "error", text: "אי אפשר לכתוב לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        return;
+      }
+      const outcome = await writeStoryPages(bookId, {
+        idea: options.idea,
+        ...(options.heroName.trim() ? { heroName: options.heroName.trim() } : {}),
+        heroGender: options.heroGender,
+      });
+      const current = pagesRef.current;
+      const fresh = (page: EditorPage): EditorPage => ({
+        ...page,
+        textNikud: undefined,
+        audio: undefined,
+        audioSource: undefined,
+        wordTimings: undefined,
+        imageAlt: undefined,
+        originalText: undefined,
+      });
+      const next: EditorPage[] = outcome.pages.map((written, index) => {
+        const old = current[index];
+        return old ? { ...fresh(old), text: written.text } : { key: newPageKey(), text: written.text };
+      });
+      // Old pages beyond the new story survive only when they carry a picture.
+      for (const old of current.slice(outcome.pages.length)) {
+        if (old.image || old.preview) next.push({ ...fresh(old), text: "" });
+      }
+      commitPages(next.slice(0, MAX_PAGES));
+      setSelectedKey(null);
+      // Sample text is never catalogued: the details wait for a real writer.
+      const filledText = outcome.isMock ? "" : await fillDetails({ aiWrote: true });
+      setNotice({
+        tone: "success",
+        text: `נכתב סיפור של ${outcome.pages.length} עמודים. קראו אותו בקול, תקנו מה שצריך, ואז המשיכו לשלב הבא.${filledText ? ` ${filledText}` : ""}`,
+        mock: outcome.isMock ? "text" : undefined,
+      });
+    } catch (err) {
+      setNotice({ tone: "error", text: errorMessage(err, "כתיבת הסיפור נכשלה") });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const requestWriteStory = (options: { idea: string; heroName: string; heroGender: "boy" | "girl" }) => {
+    if (!pagesRef.current.some((page) => page.text.trim().length > 0)) {
+      void runWriteStory(options);
+      return;
+    }
+    setConfirm({
+      title: "להחליף את הטקסט של הספר?",
+      description: "הסיפור החדש יחליף את הטקסט בכל העמודים, וגם את הניקוד וההקראה שלהם. התמונות נשארות.",
+      confirmLabel: "כתיבת סיפור חדש",
+      danger: true,
+      run: () => void runWriteStory(options),
+    });
+  };
+
+  const pickImages = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = IMAGE_ACCEPT;
+    input.multiple = true;
+    input.hidden = true;
+    // Attached to the page while it is open: some mobile browsers drop the change event of a detached input.
+    input.onchange = () => {
+      const files = Array.from(input.files ?? []);
+      input.remove();
+      if (files.length > 0) void addImagesAsPages(files);
+    };
+    document.body.appendChild(input);
+    input.click();
   };
 
   // ---- Book actions -----------------------------------------------------------
 
   const runBookAction = async (label: string, action: () => Promise<BookWithPages>, success: string) => {
-    setBusy(label);
+    setBusy({ label, expectedSeconds: EXPECTED_SECONDS.bookAction });
     try {
       if (!locked && !(await flush())) {
         setNotice({ tone: "error", text: "השינויים האחרונים לא נשמרו, ולכן הפעולה לא בוצעה. נסו שוב." });
@@ -675,7 +1035,7 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
   };
 
   const removeBook = async () => {
-    setBusy("מוחק את הספר…");
+    setBusy({ label: "מוחק את הספר…", expectedSeconds: EXPECTED_SECONDS.bookAction });
     try {
       await flush();
       await deleteBook(bookId);
@@ -794,32 +1154,76 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
         </div>
       </header>
 
-      {notice ? (
-        <div
-          role={notice.tone === "error" ? "alert" : "status"}
-          className={cn(
-            "flex flex-col gap-2 rounded-md p-4",
-            notice.tone === "error" && "bg-danger-soft",
-            notice.tone === "success" && "bg-success-soft",
-            notice.tone === "info" && "bg-secondary-soft",
-          )}
-        >
-          <div className="flex items-start gap-3">
-            <p className="flex-1 font-medium">{notice.text}</p>
-            <button
-              type="button"
-              aria-label="סגירת ההודעה"
-              onClick={() => setNotice(null)}
-              className="flex size-8 shrink-0 items-center justify-center rounded-full hover:bg-surface"
-            >
-              <X aria-hidden="true" className="size-5" />
-            </button>
-          </div>
-          {notice.mock ? <MockNotice kind={notice.mock} /> : null}
-        </div>
-      ) : null}
-
       <div id="studio-tabpanel" role="tabpanel" aria-labelledby={`studio-tab-${tab}`} inert={busy !== null}>
+        {tab === "stages" ? (
+          <div inert={locked} className={cn(locked && "opacity-60")}>
+            <StagesPanel
+              bookId={bookId}
+              version={info.updatedAt}
+              hero={meta.hero}
+              costs={costs}
+              counts={{
+                textChars: pages.reduce((sum, page) => sum + stripNikud(page.text).length, 0),
+                audioMissingChars: pages.reduce(
+                  (sum, page) => sum + (page.text.trim().length > 0 && !hasFreshAudio(page) ? stripNikud(page.text).length : 0),
+                  0,
+                ),
+                pages: pages.length,
+                withText: pages.filter((page) => page.text.trim().length > 0).length,
+                withImage: pages.filter((page) => page.image || page.preview).length,
+                withNikud: pages.filter((page) => page.text.trim().length > 0 && page.textNikud && hasNikud(page.textNikud)).length,
+                withAudio: pages.filter((page) => page.text.trim().length > 0 && page.audio).length,
+                withFreshAudio: pages.filter((page) => page.text.trim().length > 0 && hasFreshAudio(page)).length,
+              }}
+              disabled={locked}
+              illustratedPages={pages.flatMap((page, index) => (page.image && !page.uploading ? [index] : []))}
+              onHeroChange={setHero}
+              onHeroGenerate={(description, style) => void generateHero(description, style)}
+              onHeroUpload={(file) => void uploadHero(file)}
+              onWriteStory={requestWriteStory}
+              onPasteStory={() => setPasteOpen(true)}
+              onGoToPages={() => setTab("pages")}
+              onGoToPage={(index) => {
+                const target = pagesRef.current[index];
+                if (target) setSelectedKey(target.key);
+                setTab("pages");
+              }}
+              created={{
+                title: meta.title,
+                summary: meta.summary,
+                tags: meta.tags,
+                categories: meta.categories,
+                pages: pages.map((page, index) => ({
+                  index,
+                  text: page.text,
+                  textNikud: page.textNikud,
+                  image: page.image || page.preview || undefined,
+                  audio: page.audio,
+                  video: page.video,
+                })),
+              }}
+              onGoToDetails={() => setTab("details")}
+              details={detailsCompleteness(meta)}
+              onAutoDetails={(options) => void runAutoDetails(options)}
+              onUploadImages={pickImages}
+              onIllustrateGrid={(options) => illustrateMissing(options)}
+              onNikudAll={() =>
+                void autoNikud(
+                  pagesRef.current.map((page) => page.key),
+                  false,
+                )
+              }
+              onNarrateAll={narrateAll}
+              narrationInfo={narrationInfo}
+              onSampleVoice={narrationInfo && !narrationInfo.ttsMock ? sampleVoice : undefined}
+              onFlush={flush}
+              onNotice={setNotice}
+              onBusy={setBusy}
+              onConfirm={(request) => setConfirm(request)}
+            />
+          </div>
+        ) : null}
+
         {tab === "pages" ? (
           <div
             inert={locked}
@@ -888,7 +1292,7 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
               onChange={setHero}
               onGenerate={(description, style) => void generateHero(description, style)}
               onUpload={(file) => void uploadHero(file)}
-              onIllustrateMissing={illustrateMissing}
+              onIllustrateMissing={() => illustrateMissing()}
             />
             <p className="text-muted">
               אפשר לגרור לכאן כמה תמונות בבת אחת: כל תמונה תהפוך לעמוד, לפי סדר שמות הקבצים.
@@ -999,14 +1403,9 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
         ) : null}
       </div>
 
-      {busy ? (
-        <div role="status" className="fixed inset-0 z-50 flex items-center justify-center bg-overlay">
-          <div className="flex items-center gap-3 rounded-lg bg-surface px-6 py-4 text-lg font-semibold shadow-pop">
-            <Spinner label="" />
-            {busy}
-          </div>
-        </div>
-      ) : null}
+      {busy ? <BusyOverlay busy={busy} /> : null}
+
+      {notice ? <NoticeToast notice={notice} onClose={() => setNotice(null)} /> : null}
 
       <Dialog
         open={confirm !== null}
@@ -1019,6 +1418,18 @@ export function StudioEditor({ book, canPublish }: StudioEditorProps) {
             <Button variant="outline" onClick={() => setConfirm(null)}>
               ביטול
             </Button>
+            {confirm?.alt ? (
+              <Button
+                variant="danger"
+                onClick={() => {
+                  const request = confirm;
+                  setConfirm(null);
+                  request?.alt?.run();
+                }}
+              >
+                {confirm.alt.label}
+              </Button>
+            ) : null}
             <Button
               variant={confirm?.danger ? "danger" : "primary"}
               onClick={() => {

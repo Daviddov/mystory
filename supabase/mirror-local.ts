@@ -9,11 +9,17 @@
  *   npx tsx supabase/mirror-local.ts --yes        apply without asking
  *
  *   --no-delete   never delete anything in Supabase (only add / update)
+ *   --force       also overwrite books that were edited in Supabase after
+ *                 their local copy (by default those are skipped)
  *   --deep        also compare the bytes of media files that exist on both
  *                 sides (downloads every remote file; slow)
  *
- * Not touched: users, favorites, ratings, progress, recordings, jobs, and
- * viewCount (Supabase keeps its own counter).
+ * Not touched: users, favorites, ratings, progress, recordings (and their
+ * media under books/<id>/rec/), jobs, viewCount (Supabase keeps its own
+ * counter), share links and review notes (deleting a book still removes
+ * everything under it, as the site's own delete does). Books owned by a user (not
+ * "system") that exist only in Supabase are never deleted, and their review
+ * status is left as the site set it.
  * Needs NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY and
  * SUPABASE_SERVICE_ROLE_KEY in the environment.
  */
@@ -32,9 +38,20 @@ const DRY_RUN = args.has("--dry-run");
 const ASSUME_YES = args.has("--yes");
 const NO_DELETE = args.has("--no-delete");
 const DEEP = args.has("--deep");
+const FORCE = args.has("--force");
+
+/** Owner of the library's own books; anything else belongs to a site user. */
+const SYSTEM_OWNER = "system";
 
 /** Fields the mirror never compares or writes. */
-const IGNORED_BOOK_FIELDS = new Set(["id", "createdAt", "updatedAt", "viewCount", "pages"]);
+const IGNORED_BOOK_FIELDS = new Set(["id", "createdAt", "updatedAt", "viewCount", "pages", "shareToken", "reviewNote"]);
+/** Set by editors on the site; mirrored only for the library's own books. */
+const SITE_REVIEWED_FIELDS = new Set(["status"]);
+
+/** Family recordings are user data stored under the book's folder. */
+function isRecordingMedia(path: string): boolean {
+  return path.split("/")[2] === "rec";
+}
 
 function stable(value: unknown): string {
   return JSON.stringify(value, (_key, v) => {
@@ -54,6 +71,7 @@ function changedBookFields(local: BookWithPages, remote: BookWithPages): string[
   const changed: string[] = [];
   for (const key of keys) {
     if (IGNORED_BOOK_FIELDS.has(key)) continue;
+    if (SITE_REVIEWED_FIELDS.has(key) && local.ownerId !== SYSTEM_OWNER) continue;
     const a = (local as unknown as Record<string, unknown>)[key];
     const b = (remote as unknown as Record<string, unknown>)[key];
     if (stable(a) !== stable(b)) changed.push(key);
@@ -105,6 +123,7 @@ async function main(): Promise<void> {
   // --- books ---------------------------------------------------------------------
   const toCreate: BookWithPages[] = [];
   const toUpdate: BookUpdate[] = [];
+  const newerRemote: BookWithPages[] = [];
   let same = 0;
   for (const book of localBooks.values()) {
     const existing = remoteBooks.get(book.id);
@@ -114,10 +133,16 @@ async function main(): Promise<void> {
     }
     const fields = changedBookFields(book, existing);
     const pages = changedPageIndexes(book, existing);
-    if (fields.length || pages.length) toUpdate.push({ local: book, fields, pages });
-    else same++;
+    if (!fields.length && !pages.length) same++;
+    else if (!FORCE && Date.parse(existing.updatedAt) > Date.parse(book.updatedAt)) newerRemote.push(existing);
+    else toUpdate.push({ local: book, fields, pages });
   }
-  const toDelete = NO_DELETE ? [] : [...remoteBooks.values()].filter((b) => !localBooks.has(b.id));
+  const onlyRemote = [...remoteBooks.values()].filter((b) => !localBooks.has(b.id));
+  const keptUserBooks = onlyRemote.filter((b) => b.ownerId !== SYSTEM_OWNER);
+  const toDelete = NO_DELETE ? [] : onlyRemote.filter((b) => b.ownerId === SYSTEM_OWNER);
+  if (localBooks.size === 0 && toDelete.length > 0) {
+    throw new Error(`No books found in ${dataDir()}; refusing to delete ${toDelete.length} Supabase books.`);
+  }
 
   // --- media ---------------------------------------------------------------------
   const mediaUpload: string[] = [];
@@ -144,7 +169,7 @@ async function main(): Promise<void> {
     }
     if (!NO_DELETE) {
       const localSet = new Set(localPaths);
-      for (const path of remotePaths) if (!localSet.has(path)) mediaDelete.push(path);
+      for (const path of remotePaths) if (!localSet.has(path) && !isRecordingMedia(path)) mediaDelete.push(path);
     }
   }
 
@@ -188,10 +213,15 @@ async function main(): Promise<void> {
       ),
     );
   }
+  if (newerRemote.length) {
+    console.log(`  ! skip    ${newerRemote.length} edited in Supabase after the local copy (use --force to overwrite)`);
+    console.log(listLimited(newerRemote.map((b) => `${b.id} "${b.title}" (Supabase ${b.updatedAt})`)));
+  }
   console.log(`  - DELETE  ${toDelete.length}${NO_DELETE ? " (skipped: --no-delete)" : ""}`);
   if (toDelete.length) {
-    console.log(listLimited(toDelete.map((b) => `${b.id} "${b.title}" [${b.status}, owner ${b.ownerId}]`), 40));
+    console.log(listLimited(toDelete.map((b) => `${b.id} "${b.title}" [${b.status}]`), 40));
   }
+  if (keptUserBooks.length) console.log(`  = keep    ${keptUserBooks.length} user books that exist only in Supabase`);
   console.log(`\nMedia: ${mediaSame} identical`);
   console.log(`  + upload  ${mediaUpload.length}`);
   if (mediaUpload.length) console.log(listLimited(mediaUpload));

@@ -19,6 +19,8 @@ import { assertSameOrigin } from "@/lib/same-origin";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
+/** Stops the TTS call (with its retry) in time to answer with our own message before maxDuration. */
+const SAMPLE_DEADLINE_MS = 50_000;
 
 /** The fixed sample, with nikud so every voice reads it the same way. */
 export const SAMPLE_TEXT = "שָׁלוֹם יְלָדִים, הָיָה הָיָה סִפּוּר יָפֶה, וְהוּא מַתְחִיל עַכְשָׁיו.";
@@ -63,6 +65,7 @@ export async function POST(request: Request): Promise<Response> {
     const result = await synthesize(SAMPLE_TEXT, {
       ...(voice ? { voice } : {}),
       ...(body.style ? { style: body.style } : {}),
+      signal: AbortSignal.any([request.signal, AbortSignal.timeout(SAMPLE_DEADLINE_MS)]),
     });
     return new Response(Buffer.from(result.audio), {
       headers: {

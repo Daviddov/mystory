@@ -57,7 +57,7 @@ import {
 import { DEFAULT_ILLUSTRATION_STYLE, IMAGE_ACCEPT, MAX_HERO_DESCRIPTION } from "@/lib/studio/shared";
 import type { NarrationInfo } from "@/lib/studio/client";
 import { EXPECTED_SECONDS, type BusyInput } from "@/lib/studio/progress";
-import type { BookHero } from "@/lib/types";
+import type { BookHero, BookWithPages } from "@/lib/types";
 import {
   AnimationPreview,
   PageClipThumb,
@@ -138,6 +138,8 @@ export interface StagesPanelProps {
   onSampleVoice?: (options: { voice?: string; style: string }) => Promise<void>;
   /** Saves the pending edits; false when they could not be saved. */
   onFlush: () => Promise<boolean>;
+  /** Takes over a book the server changed on its own (a clip added or removed), so later saves are based on it. */
+  onServerBook?: (book: BookWithPages) => void;
   onNotice: (notice: EditorNotice) => void;
   onBusy: (busy: BusyInput) => void;
   /** Asks the user before something that replaces their own work. Without it the action runs at once. */
@@ -281,6 +283,7 @@ export function StagesPanel(props: StagesPanelProps) {
     narrationInfo,
     onSampleVoice,
     onFlush,
+    onServerBook,
     onNotice,
     onBusy,
     onConfirm,
@@ -326,25 +329,55 @@ export function StagesPanel(props: StagesPanelProps) {
     if (result && result.styleNotesIgnored) setNarrationIgnored(true);
   };
 
-  // Clips live on the server book; fetched once here for both the stage-7 actions and the previews.
-  const [clipPaths, setClipPaths] = useState<Map<number, string>>(new Map());
-  // Clips with no videoSource were uploaded by the user, not made by the AI.
-  const [ownClips, setOwnClips] = useState<Set<number>>(new Set());
+  // Clips live on the server book. They follow their picture (the server keeps a clip with its
+  // image when pages move), so they are keyed by image path and mapped onto the editor's order.
+  const [serverClips, setServerClips] = useState<Map<string, { video: string; own: boolean }> | null>(null);
+  const takeClips = useCallback((book: BookWithPages) => {
+    const next = new Map<string, { video: string; own: boolean }>();
+    // Clips with no videoSource were uploaded by the user, not made by the AI.
+    for (const page of book.pages) if (page.image && page.video) next.set(page.image, { video: page.video, own: !page.videoSource });
+    setServerClips(next);
+  }, []);
+  /** Re-reads the clips after a stage-7 action and hands the changed book to the editor. */
   const refreshClips = useCallback(async () => {
     try {
       const book = await fetchBook(bookId);
-      setClipPaths(new Map(book.pages.flatMap((page) => (page.video ? [[page.index, page.video] as [number, string]] : []))));
-      setOwnClips(new Set(book.pages.filter((page) => page.video && !page.videoSource).map((page) => page.index)));
+      takeClips(book);
+      onServerBook?.(book);
     } catch {
       // The status is informative only; the actions report their own errors.
     }
-  }, [bookId]);
+  }, [bookId, takeClips, onServerBook]);
+  const imagesKey = created.pages.map((page) => page.image ?? "").join("|");
   useEffect(() => {
-    void refreshClips();
-  }, [refreshClips, illustratedPages.length]);
+    let cancelled = false;
+    fetchBook(bookId).then(
+      (book) => {
+        if (!cancelled) takeClips(book);
+      },
+      () => {
+        // The status is informative only; the actions report their own errors.
+      },
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [bookId, takeClips, imagesKey]);
+  const { clipPaths, ownClips } = useMemo(() => {
+    const paths = new Map<number, string>();
+    const own = new Set<number>();
+    for (const page of created.pages) {
+      const clip = page.image ? serverClips?.get(page.image) : undefined;
+      if (!clip) continue;
+      paths.set(page.index, clip.video);
+      if (clip.own) own.add(page.index);
+    }
+    return { clipPaths: paths, ownClips: own };
+  }, [created.pages, serverClips]);
   const previewPages = useMemo(
-    () => created.pages.map((page) => ({ ...page, video: clipPaths.get(page.index) ?? page.video })),
-    [created.pages, clipPaths],
+    // Until the server answered, the editor's own copy is the best guess; afterwards the server decides.
+    () => created.pages.map((page) => ({ ...page, video: serverClips ? clipPaths.get(page.index) : page.video })),
+    [created.pages, clipPaths, serverClips],
   );
 
   // Open/closed cards (this component only). Unset: finished stages are collapsed, the rest open.
@@ -1159,6 +1192,11 @@ function AnimationStage({
   const attach = async (page: number, file: File) => {
     onBusy({ label: "מעלה את הקליפ…", expectedSeconds: EXPECTED_SECONDS.upload });
     try {
+      // The server addresses pages by their saved order, so a pending reorder must land first.
+      if (!(await onFlush())) {
+        onNotice({ tone: "error", text: "אי אפשר להעלות קליפ לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        return;
+      }
       await attachPageClip(bookId, page, file, file.name);
       onNotice({ tone: "success", text: `הקליפ נשמר בעמוד ${page + 1}.` });
     } catch (err) {
@@ -1172,6 +1210,10 @@ function AnimationStage({
   const remove = async (page: number) => {
     onBusy({ label: "מסיר את ההנפשה…", expectedSeconds: EXPECTED_SECONDS.bookAction });
     try {
+      if (!(await onFlush())) {
+        onNotice({ tone: "error", text: "אי אפשר להסיר את הקליפ לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        return;
+      }
       await removePageClip(bookId, page);
     } catch (err) {
       fail(err, "הסרת ההנפשה נכשלה");

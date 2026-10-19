@@ -96,6 +96,8 @@ export interface TtsOptions {
    * provider that can take free text; ElevenLabs cannot and ignores them.
    */
   notes?: string;
+  /** Cancels the call (the caller's own deadline, or a request the user abandoned). */
+  signal?: AbortSignal;
 }
 
 export interface TtsResult {

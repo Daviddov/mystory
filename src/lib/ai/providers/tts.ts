@@ -196,7 +196,9 @@ export async function createTtsProvider(): Promise<TtsProvider> {
           method: "POST",
           headers: { "xi-api-key": apiKey, "Content-Type": "application/json" },
           body: JSON.stringify(body),
-          signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+          signal: options?.signal
+            ? AbortSignal.any([AbortSignal.timeout(REQUEST_TIMEOUT_MS), options.signal])
+            : AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         });
       } catch (err) {
         throw new TtsProviderError(`request failed (${err instanceof Error ? err.message : String(err)})`);

@@ -25,6 +25,7 @@ import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../medi
 import { NotFoundError, type Repository } from "../repo/types";
 import type { BookWithPages, Page, WordTiming } from "../types";
 import { timingsMatchText } from "./align";
+import { isAllowedNarrationVoice } from "./voices";
 import type {
   BookNarrationSummary,
   NarrationOptions,
@@ -145,8 +146,10 @@ async function narrateLoadedPage(
   const words = splitWords(spokenText);
   const style = options.style ?? book.hero?.narrationStyle;
   const notes = options.notes ?? book.hero?.narrationNotes;
-  // request voice, then the book's chosen voice; otherwise the provider's own default (TTS_VOICE)
-  const voice = options.voice ?? book.hero?.narrationVoice;
+  // request voice, then the book's chosen voice if the active provider still offers it;
+  // otherwise the provider's own default (TTS_VOICE). A voice picked under another provider would fail every page.
+  const heroVoice = book.hero?.narrationVoice;
+  const voice = options.voice ?? (heroVoice && isAllowedNarrationVoice(heroVoice) ? heroVoice : undefined);
   const speech = await deps.tts.synthesize(spokenText, {
     ...(voice ? { voice } : {}),
     ...(options.speed ? { speed: options.speed } : {}),

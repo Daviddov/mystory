@@ -1217,6 +1217,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
               narrationInfo={narrationInfo}
               onSampleVoice={narrationInfo && !narrationInfo.ttsMock ? sampleVoice : undefined}
               onFlush={flush}
+              onServerBook={applyServerBook}
               onNotice={setNotice}
               onBusy={setBusy}
               onConfirm={(request) => setConfirm(request)}

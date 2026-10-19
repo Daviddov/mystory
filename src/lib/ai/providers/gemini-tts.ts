@@ -264,7 +264,9 @@ export async function createGeminiTtsProvider(): Promise<TtsProvider> {
           method: "POST",
           headers: { "x-goog-api-key": apiKey, "Content-Type": "application/json" },
           body: JSON.stringify(body),
-          signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+          signal: options?.signal
+            ? AbortSignal.any([AbortSignal.timeout(REQUEST_TIMEOUT_MS), options.signal])
+            : AbortSignal.timeout(REQUEST_TIMEOUT_MS),
         });
 
       let response: Response;

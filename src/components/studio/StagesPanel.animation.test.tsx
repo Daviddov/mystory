@@ -53,6 +53,17 @@ async function openStage7(user: ReturnType<typeof userEvent.setup>) {
   if (toggle.getAttribute("aria-expanded") !== "true") await user.click(toggle);
 }
 
+const CREATED: NonNullable<StagesPanelProps["created"]> = {
+  title: "",
+  summary: "",
+  tags: [],
+  categories: [],
+  pages: [
+    { index: 0, text: "א", image: "books/bk_test/p1.webp" },
+    { index: 1, text: "ב", image: "books/bk_test/p2.webp" },
+  ],
+};
+
 describe("animation stage: one picture at a time", () => {
   beforeEach(() => {
     animatePageWithAi.mockReset();
@@ -89,10 +100,10 @@ describe("animation stage: one picture at a time", () => {
   it("replaces an AI clip with replace:true and asks first for a clip the user uploaded", async () => {
     const user = userEvent.setup();
     storedPages = [
-      { index: 0, text: "א", video: "books/bk_test/animation-01-a.mp4", videoSource: "ai" },
-      { index: 1, text: "ב", video: "books/bk_test/animation-02-b.mp4" },
+      { index: 0, text: "א", image: "books/bk_test/p1.webp", video: "books/bk_test/animation-01-a.mp4", videoSource: "ai" },
+      { index: 1, text: "ב", image: "books/bk_test/p2.webp", video: "books/bk_test/animation-02-b.mp4" },
     ];
-    const props = setup();
+    const props = setup({ created: CREATED });
     await screen.findByText("2 מתוך 2 איורים מונפשים");
     await openStage7(user);
     const redo = await screen.findAllByRole("button", { name: /^הנפשה מחדש של עמוד/ });
@@ -106,5 +117,28 @@ describe("animation stage: one picture at a time", () => {
     expect(props.onConfirm).toHaveBeenCalledWith(expect.objectContaining({ title: "להחליף את הקליפ שהעליתם?" }));
     await waitFor(() => expect(animatePageWithAi).toHaveBeenCalledTimes(2));
     expect(animatePageWithAi.mock.calls[1][2]).toMatchObject({ replace: true });
+  });
+
+  it("keeps a clip with its picture when the pages are reordered before saving", async () => {
+    const user = userEvent.setup();
+    storedPages = [
+      { index: 0, text: "א", image: "books/bk_test/p1.webp", video: "books/bk_test/animation-01-a.mp4", videoSource: "ai" },
+      { index: 1, text: "ב", image: "books/bk_test/p2.webp", video: "books/bk_test/animation-02-b.mp4" },
+    ];
+    // The editor shows p2 first now; the user's own clip moves with it.
+    const props = setup({ created: { ...CREATED, pages: [{ ...CREATED.pages[1], index: 0 }, { ...CREATED.pages[0], index: 1 }] } });
+    await screen.findByText("2 מתוך 2 איורים מונפשים");
+    await openStage7(user);
+    await user.click(await screen.findByRole("button", { name: /^הנפשה מחדש של עמוד 1/ }));
+    expect(props.onConfirm).toHaveBeenCalledWith(expect.objectContaining({ title: "להחליף את הקליפ שהעליתם?" }));
+  });
+
+  it("hands the changed book to the editor after an animation", async () => {
+    const user = userEvent.setup();
+    const onServerBook = vi.fn();
+    setup({ onServerBook });
+    await openStage7(user);
+    await user.click(screen.getByRole("button", { name: /^הנפשה של עמוד 1/ }));
+    await waitFor(() => expect(onServerBook).toHaveBeenCalledWith(expect.objectContaining({ pages: storedPages })));
   });
 });

@@ -123,6 +123,7 @@ export async function writeStory(deps: { text: TextProvider }, request: WriteSto
     });
     if (revised.isMock) isMock = true;
     pages = clean(revised.data.pages);
+    if (pages.length === 0) throw new WriteStoryError("לא הצלחנו לכתוב סיפור. נסו שוב.");
     verdict = await review(pages);
     if (verdict.verdict === "major") {
       throw new WriteStoryError("הסיפור שנכתב לא עבר את בדיקת האיכות וההתאמה לילדים. נסו לנסח את הרעיון אחרת.");

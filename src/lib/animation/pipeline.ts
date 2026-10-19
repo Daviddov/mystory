@@ -293,6 +293,16 @@ async function animateLoadedPage(
         warnings: [...base.warnings, "the illustration changed while it was animated"],
       };
     }
+    // A clip attached meanwhile (e.g. the user's own upload) was not part of the replace decision: keep it.
+    if (current.video !== page.video) {
+      if (!stillReferenced(videoPath)) await deps.media.delete(videoPath);
+      return {
+        ...base,
+        reason: "stale",
+        costUsd,
+        warnings: [...base.warnings, "another clip was attached to the page while it was animated"],
+      };
+    }
 
     const pages = fresh.pages.map((p) =>
       p.index === page.index ? { ...p, video: videoPath, videoImageHash: hash, videoSource } : p,

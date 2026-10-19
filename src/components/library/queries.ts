@@ -4,13 +4,14 @@
  * stated explicitly so a later change of the default cannot leak drafts).
  */
 import "server-only";
+import { groupBooksByOccasion } from "@/lib/occasions";
 import { getRepo } from "@/lib/repo";
 import type { BookFilter } from "@/lib/repo/types";
 import { CATEGORIES, tagSlug, type TaxonomyItem } from "@/lib/taxonomy";
 import type { Book, Collection } from "@/lib/types";
 import { toBookFilter, totalPages, type LibraryQuery } from "./filters";
 import { rankSimilar } from "./recommend";
-import { sortCollectionsBySeason } from "./seasons";
+import { normalizeSeason, sortCollectionsBySeason } from "./seasons";
 
 const PUBLISHED = "published" as const;
 const SHELF_SIZE = 12;
@@ -184,4 +185,17 @@ export async function listPopularBooks(limit: number = SHELF_SIZE): Promise<Book
   const repo = await getRepo();
   const { books } = await repo.listBooks({ status: PUBLISHED, sort: "popular", limit });
   return books;
+}
+
+/**
+ * Ids of the published books of every parasha and holiday page (see lib/occasions.ts).
+ * Reads every published book (without pages), like listTagCounts().
+ */
+export async function listOccasionBookIds(): Promise<Map<string, string[]>> {
+  const repo = await getRepo();
+  const [{ books }, collections] = await Promise.all([repo.listBooks({ status: PUBLISHED }), repo.listCollections()]);
+  return groupBooksByOccasion(
+    books,
+    collections.map((collection) => ({ season: normalizeSeason(collection.season), bookIds: collection.bookIds })),
+  );
 }

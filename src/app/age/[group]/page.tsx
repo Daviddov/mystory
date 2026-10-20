@@ -5,7 +5,15 @@ import type { RawSearchParams } from "@/components/library/filters";
 import { routes } from "@/lib/routes";
 import { AGE_GROUP_INFO, getAgeGroup } from "@/lib/taxonomy";
 
-export const dynamic = "force-dynamic";
+// Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
+// Query strings and signed-in visitors go to the dynamic twin in src/app/live.
+export const dynamic = "force-static";
+export const revalidate = 600;
+
+/** Every age group is built at deploy time. */
+export function generateStaticParams(): { group: string }[] {
+  return AGE_GROUP_INFO.map((age) => ({ group: age.slug }));
+}
 
 interface Props {
   params: Promise<{ group: string }>;

@@ -6,7 +6,10 @@ import { isInSeason } from "@/components/library/seasons";
 import { ButtonLink, EmptyState } from "@/components/ui";
 import { routes } from "@/lib/routes";
 
-export const dynamic = "force-dynamic";
+// Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
+// Query strings and signed-in visitors go to the dynamic twin in src/app/live.
+export const dynamic = "force-static";
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: "אוספים",

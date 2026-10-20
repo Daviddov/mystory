@@ -3,6 +3,7 @@ import { BookRow } from "@/components/BookRow";
 import { CollectionCard } from "@/components/library/CollectionCard";
 import { ContinueReading } from "@/components/library/ContinueReading";
 import { HeroBook } from "@/components/library/HeroBook";
+import { Greeting } from "@/components/library/Greeting";
 import { getHomeData } from "@/components/library/queries";
 import { isNewBook } from "@/components/library/recommend";
 import { SearchForm } from "@/components/library/SearchForm";
@@ -16,7 +17,10 @@ import { routes } from "@/lib/routes";
 import { siteJsonLd } from "@/lib/seo";
 import { THEMES } from "@/lib/taxonomy";
 
-export const dynamic = "force-dynamic";
+// Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
+// Query strings and signed-in visitors go to the dynamic twin in src/app/live.
+export const dynamic = "force-static";
+export const revalidate = 600;
 
 const DESCRIPTION =
   "סיפורים לילדים בעברית לקרוא ולשמוע: ספרים מאוירים עם ניקוד והקראה, לפי גיל, נושא וזמן קריאה. בחינם, בלי הרשמה ובלי פרסומות.";
@@ -33,17 +37,6 @@ export const metadata: Metadata = {
     url: routes.home(),
   },
 };
-
-/** Greeting by the hour in Israel. */
-function greeting(now: Date): { text: string; emoji: string } {
-  const hour = Number(
-    new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: "Asia/Jerusalem" }).format(now),
-  );
-  if (hour >= 5 && hour < 12) return { text: "בוקר טוב!", emoji: "🌤️" };
-  if (hour >= 12 && hour < 17) return { text: "צהריים טובים!", emoji: "☀️" };
-  if (hour >= 17 && hour < 20) return { text: "ערב טוב!", emoji: "🌇" };
-  return { text: "לילה טוב!", emoji: "🌙" };
-}
 
 export default async function HomePage() {
   const data = await getHomeData();
@@ -62,7 +55,6 @@ export default async function HomePage() {
     );
   }
 
-  const hello = greeting(today);
   const readableBooks = [
     ...new Map(
       [data.bookOfTheWeek, ...data.newest, ...data.popular, ...data.shelves.flatMap((shelf) => shelf.books)]
@@ -83,8 +75,7 @@ export default async function HomePage() {
         </div>
         <div className="flex max-w-2xl flex-col gap-5">
           <p className="inline-flex w-fit items-center gap-2 rounded-full bg-surface/80 px-4 py-1.5 font-semibold shadow-card backdrop-blur">
-            <span aria-hidden="true">{hello.emoji}</span>
-            {hello.text}
+            <Greeting />
           </p>
           <div className="flex flex-col gap-3">
             <h1 className="text-4xl font-bold leading-tight sm:text-6xl">

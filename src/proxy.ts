@@ -1,10 +1,11 @@
 /**
  * Proxy (the Next.js 16 name of middleware).
  *
- * Local mode (no Supabase env vars): does nothing. Pages protect themselves
- * with requireUserPage() / requireRolePage().
+ * Both modes: picks the static or the dynamic version of a library page (see
+ * libraryRewrite below and src/app/live). Pages protect themselves with
+ * requireUserPage() / requireRolePage().
  *
- * Supabase mode:
+ * Supabase mode, in addition:
  *  1. Refreshes an expiring session and writes the new cookies, which Server
  *     Components cannot do.
  *  2. Sends signed-out visitors of /studio, /create, /me and /admin to the
@@ -30,10 +31,66 @@ function isProtected(pathname: string): boolean {
   return PROTECTED_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
 }
 
+/** Prefix of the dynamic twin of the library pages (src/app/live). */
+export const LIVE_PREFIX = "/live";
+
+/** Session cookie of the local (development) login. Same value as SESSION_COOKIE in src/lib/auth/session.ts. */
+export const LOCAL_SESSION_COOKIE = "mystory_session";
+
+/** Query-string keys the library listings read (src/components/library/filters.ts). */
+export const LIBRARY_QUERY_KEYS: readonly string[] = ["age", "category", "theme", "time", "tag", "q", "sort", "page"];
+
+/** Library pages that are static for signed-out visitors. */
+const LIBRARY_PAGE = /^\/(?:books|collections|(?:book|age|category|theme|time|tag|collections)\/[^/]+)?$/;
+/** Of those, the listings whose content depends on the query string. */
+const LIBRARY_LISTING = /^\/(?:books|(?:age|category|theme|time|tag)\/[^/]+)$/;
+
+/**
+ * The library pages are static and cached (ISR), so their HTML must be the
+ * same for every signed-out visitor. A request that needs more than that is
+ * rewritten to the dynamic twin under /live:
+ *   - any library page, when the visitor is signed in;
+ *   - a listing with a library query (filters, sort, page).
+ * Other query strings (utm_*, _rsc, ...) keep the static page.
+ * Returns the rewrite target, or null to serve the page as it is.
+ */
+export function libraryRewrite(pathname: string, searchParams: URLSearchParams, signedIn: boolean): string | null {
+  if (!LIBRARY_PAGE.test(pathname)) return null;
+  const queried = LIBRARY_LISTING.test(pathname) && LIBRARY_QUERY_KEYS.some((key) => searchParams.has(key));
+  if (!signedIn && !queried) return null;
+  return pathname === "/" ? LIVE_PREFIX : `${LIVE_PREFIX}${pathname}`;
+}
+
+function isLivePath(pathname: string): boolean {
+  return pathname === LIVE_PREFIX || pathname.startsWith(`${LIVE_PREFIX}/`);
+}
+
+/** The /live twin is reached only through a rewrite. */
+function notFound(): NextResponse {
+  return new NextResponse("Not found", { status: 404, headers: { "Cache-Control": "private, no-store" } });
+}
+
+function rewriteTo(request: NextRequest, pathname: string): URL {
+  const target = request.nextUrl.clone();
+  target.pathname = pathname;
+  return target;
+}
+
 export async function proxy(request: NextRequest): Promise<NextResponse> {
+  if (isLivePath(request.nextUrl.pathname)) return notFound();
+
   const url = env("NEXT_PUBLIC_SUPABASE_URL");
   const anonKey = env("NEXT_PUBLIC_SUPABASE_ANON_KEY");
-  if (!url || !anonKey) return NextResponse.next();
+  if (!url || !anonKey) {
+    // Local mode: a session cookie is enough to send the visitor to the live
+    // page, which then checks the session itself.
+    const live = libraryRewrite(
+      request.nextUrl.pathname,
+      request.nextUrl.searchParams,
+      request.cookies.has(LOCAL_SESSION_COOKIE),
+    );
+    return live ? NextResponse.rewrite(rewriteTo(request, live)) : NextResponse.next();
+  }
 
   let response = NextResponse.next({ request });
   const supabase = createServerClient(url, anonKey, {
@@ -71,7 +128,18 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     target = new URL(SIGN_IN_PATH, request.url);
     target.searchParams.set("next", `${pathname}${search}`);
   }
-  if (!target) return response;
+  if (!target) {
+    const live = libraryRewrite(pathname, request.nextUrl.searchParams, signedIn);
+    if (!live) return response;
+    // Same request (with any refreshed session cookies), rendered by the live route.
+    const rewritten = NextResponse.rewrite(rewriteTo(request, live), { request });
+    for (const cookie of response.cookies.getAll()) rewritten.cookies.set(cookie);
+    for (const name of ["cache-control", "expires", "pragma"]) {
+      const value = response.headers.get(name);
+      if (value) rewritten.headers.set(name, value);
+    }
+    return rewritten;
+  }
 
   // Keep any refreshed session cookies on the redirect.
   const redirectResponse = NextResponse.redirect(target);

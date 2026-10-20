@@ -47,6 +47,7 @@ next-env.d.ts
 /data/users.json
 /data/favorites.json
 /data/progress.json
+/data/comments.json
 /data/jobs.json
 /data/**/.*.tmp
 /data/media/tmp/

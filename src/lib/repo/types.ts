@@ -5,6 +5,7 @@ import type {
   BookStatus,
   BookWithPages,
   Collection,
+  Comment,
   Favorite,
   Rating,
   RatingSummary,
@@ -97,6 +98,15 @@ export interface RecordingFilter {
 export type NewRecordingInput = Pick<Recording, "bookId" | "userId" | "title">;
 export type RecordingPatch = Partial<Omit<Recording, "id" | "bookId" | "userId" | "createdAt" | "updatedAt">>;
 
+export interface NewCommentInput {
+  bookId: string;
+  userId: string;
+  /** The author's display name (never the e-mail). */
+  authorName: string;
+  /** Plain text, already trimmed and validated (1-1000 characters). */
+  body: string;
+}
+
 export interface UpsertUserInput {
   /** When omitted, an existing user with the same email is reused, otherwise a new id is generated. */
   id?: string;
@@ -180,6 +190,15 @@ export interface Repository {
   addWaitlistEntry(email: string, interests: WaitlistInterest[]): Promise<{ entry: WaitlistEntry; created: boolean }>;
   /** Oldest first. */
   listWaitlist(): Promise<WaitlistEntry[]>;
+
+  // --- Comments ---
+  /** Throws NotFoundError when the book does not exist. */
+  addComment(input: NewCommentInput): Promise<Comment>;
+  /** Newest first, at most `limit` (default 200). */
+  listComments(bookId: string, limit?: number): Promise<Comment[]>;
+  getComment(id: string): Promise<Comment | null>;
+  /** Idempotent. */
+  deleteComment(id: string): Promise<void>;
 
   // --- Reading progress ---
   getProgress(userId: string, bookId: string): Promise<Progress | null>;

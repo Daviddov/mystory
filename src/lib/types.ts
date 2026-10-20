@@ -286,6 +286,25 @@ export const WaitlistEntrySchema = z.object({
 });
 export type WaitlistEntry = z.infer<typeof WaitlistEntrySchema>;
 
+export const COMMENT_MAX_LENGTH = 1000;
+
+/** What a signed-in reader may write: trimmed plain text, 1-1000 characters. */
+export const CommentBodySchema = z.string().trim().min(1).max(COMMENT_MAX_LENGTH);
+
+/**
+ * A reader's comment on a book. Plain text; never rendered as HTML.
+ * `authorName` is the display name at the time of writing (never the e-mail).
+ */
+export const CommentSchema = z.object({
+  id: IdSchema,
+  bookId: z.string(),
+  userId: z.string(),
+  authorName: z.string().min(1).max(100),
+  body: CommentBodySchema,
+  createdAt: IsoDateSchema,
+});
+export type Comment = z.infer<typeof CommentSchema>;
+
 export const ProgressSchema = z.object({
   userId: z.string(),
   bookId: z.string(),

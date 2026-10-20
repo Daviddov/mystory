@@ -14,7 +14,7 @@
  *   --deep        also compare the bytes of media files that exist on both
  *                 sides (downloads every remote file; slow)
  *
- * Not touched: users, favorites, ratings, progress, recordings (and their
+ * Not touched: users, favorites, ratings, comments, progress, recordings (and their
  * media under books/<id>/rec/), jobs, viewCount (Supabase keeps its own
  * counter), share links and review notes (deleting a book still removes
  * everything under it, as the site's own delete does). Books owned by a user (not

@@ -63,6 +63,9 @@ export function withLibraryRevalidation(repo: Repository): Repository {
     updateCollection: after(repo.updateCollection.bind(repo)),
     deleteCollection: after(repo.deleteCollection.bind(repo)),
     setSettings: after(repo.setSettings.bind(repo)),
+    // The cached book page lists readers' comments; they are rare, so a new or deleted one refreshes it at once.
+    addComment: after(repo.addComment.bind(repo)),
+    deleteComment: after(repo.deleteComment.bind(repo)),
   };
 
   return new Proxy(repo, {

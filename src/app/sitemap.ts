@@ -37,6 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry(routes.books(), { changeFrequency: "daily", priority: 0.9 }),
     entry(routes.collections(), { changeFrequency: "weekly", priority: 0.7 }),
     entry(routes.listen(), { changeFrequency: "weekly", priority: 0.7 }),
+    entry(routes.personalBook(), { changeFrequency: "monthly", priority: 0.8 }),
     entry(routes.about(), { changeFrequency: "monthly", priority: 0.4 }),
     entry(routes.faq(), { changeFrequency: "monthly", priority: 0.4 }),
     // /privacy and /terms are noindex, so they are not listed.

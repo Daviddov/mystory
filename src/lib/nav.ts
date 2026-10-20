@@ -12,7 +12,7 @@ export const MAIN_NAV: NavLink[] = [
   { href: routes.books(), label: "כל הספרים", emoji: "📚" },
   { href: routes.collections(), label: "אוספים", emoji: "🧺" },
   { href: routes.listen(), label: "האזנה לפני השינה", emoji: "🎧" },
-  { href: routes.create(), label: "יצירת ספר אישי", emoji: "✨" },
+  { href: routes.personalBook(), label: "יצירת ספר אישי", emoji: "✨" },
   { href: routes.studio(), label: "הסטודיו", emoji: "🎨" },
 ];
 

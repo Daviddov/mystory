@@ -22,6 +22,7 @@ import {
   CollectionSchema,
   FavoriteSchema,
   RatingSchema,
+  WaitlistEntrySchema,
   GenerationJobSchema,
   ID_PATTERN,
   PageSchema,
@@ -36,6 +37,8 @@ import {
   type Favorite,
   type Rating,
   type RatingSummary,
+  type WaitlistEntry,
+  type WaitlistInterest,
   type GenerationJob,
   type Page,
   type Progress,
@@ -1013,6 +1016,46 @@ export class SupabaseRepository implements Repository {
     const rows = (data ?? []) as { stars: number }[];
     if (!rows.length) return { average: 0, count: 0 };
     return { average: rows.reduce((sum, r) => sum + r.stars, 0) / rows.length, count: rows.length };
+  }
+
+  // --- waiting list ------------------------------------------------------------------------
+
+  async addWaitlistEntry(
+    email: string,
+    interests: WaitlistInterest[],
+  ): Promise<{ entry: WaitlistEntry; created: boolean }> {
+    const key = email.trim().toLowerCase();
+    const { data: existing, error: readError } = await this.db
+      .from("waitlist")
+      .select("email,interests,created_at")
+      .eq("email", key)
+      .maybeSingle();
+    if (readError) fail("read waitlist entry", readError);
+    const row = existing as { email: string; interests: string[]; created_at: string } | null;
+    const merged = [...new Set([...(row?.interests ?? []), ...interests])];
+    const { data, error } = await this.db
+      .from("waitlist")
+      .upsert({ email: key, interests: merged }, { onConflict: "email" })
+      .select("email,interests,created_at")
+      .single();
+    if (error) fail("add waitlist entry", error);
+    const saved = data as { email: string; interests: string[]; created_at: string };
+    return {
+      entry: WaitlistEntrySchema.parse({ email: saved.email, interests: saved.interests, createdAt: iso(saved.created_at) }),
+      created: !row,
+    };
+  }
+
+  async listWaitlist(): Promise<WaitlistEntry[]> {
+    const { data, error } = await this.db
+      .from("waitlist")
+      .select("email,interests,created_at")
+      .order("created_at", { ascending: true })
+      .limit(100000);
+    if (error) fail("list waitlist", error);
+    return ((data ?? []) as { email: string; interests: string[]; created_at: string }[]).map((row) =>
+      WaitlistEntrySchema.parse({ email: row.email, interests: row.interests, createdAt: iso(row.created_at) }),
+    );
   }
 
   // --- progress ----------------------------------------------------------------------------

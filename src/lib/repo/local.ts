@@ -8,6 +8,7 @@
  *   data/favorites.json           Favorite[]
  *   data/progress.json            Progress[]
  *   data/ratings.json             Rating[]
+ *   data/waitlist.json            WaitlistEntry[]
  *   data/recordings.json          Recording[]
  *   data/jobs.json                GenerationJob[]
  *
@@ -26,6 +27,7 @@ import {
   GenerationJobSchema,
   ProgressSchema,
   RatingSchema,
+  WaitlistEntrySchema,
   RecordingSchema,
   SiteSettingsSchema,
   SLUG_PATTERN,
@@ -39,6 +41,8 @@ import {
   type Progress,
   type Rating,
   type RatingSummary,
+  type WaitlistEntry,
+  type WaitlistInterest,
   type Recording,
   type SiteSettings,
   type User,
@@ -568,6 +572,28 @@ export class LocalRepository implements Repository {
   async isFavorite(userId: string, bookId: string): Promise<boolean> {
     const favorites = await this.readList("favorites.json", FavoriteSchema);
     return favorites.some((f) => f.userId === userId && f.bookId === bookId);
+  }
+
+  // --- waiting list --------------------------------------------------------------
+
+  addWaitlistEntry(email: string, interests: WaitlistInterest[]): Promise<{ entry: WaitlistEntry; created: boolean }> {
+    return this.mutex.run(async () => {
+      const list = await this.readList("waitlist.json", WaitlistEntrySchema);
+      const key = email.trim().toLowerCase();
+      const existing = list.find((e) => e.email === key);
+      const entry = WaitlistEntrySchema.parse({
+        email: key,
+        interests: [...new Set([...(existing?.interests ?? []), ...interests])],
+        createdAt: existing?.createdAt ?? nowIso(),
+      });
+      await this.writeList("waitlist.json", [...list.filter((e) => e.email !== key), entry]);
+      return { entry, created: !existing };
+    });
+  }
+
+  async listWaitlist(): Promise<WaitlistEntry[]> {
+    const list = await this.readList("waitlist.json", WaitlistEntrySchema);
+    return list.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
   }
 
   // --- ratings -------------------------------------------------------------------

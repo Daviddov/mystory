@@ -45,6 +45,8 @@ export const routes = {
   studioImport: () => "/studio/import",
   /** AI creation wizard. */
   create: () => "/create",
+  /** Public landing page for personal books and printed books (with the waiting list). */
+  personalBook: () => "/personal-book",
   me: () => "/me",
   favorites: () => "/me/favorites",
   share: (token: string) => `/share/${token}`,

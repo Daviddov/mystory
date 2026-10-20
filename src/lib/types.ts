@@ -273,6 +273,19 @@ export interface RatingSummary {
   count: number;
 }
 
+/** What a visitor asked to be told about on the "personal book" page. */
+export const WAITLIST_INTERESTS = ["credits", "personal-book", "print"] as const;
+export const WaitlistInterestSchema = z.enum(WAITLIST_INTERESTS);
+export type WaitlistInterest = z.infer<typeof WaitlistInterestSchema>;
+
+/** One e-mail on the waiting list (lower-cased); a second sign-up only adds interests. */
+export const WaitlistEntrySchema = z.object({
+  email: z.string().email().max(254),
+  interests: z.array(WaitlistInterestSchema).min(1),
+  createdAt: IsoDateSchema,
+});
+export type WaitlistEntry = z.infer<typeof WaitlistEntrySchema>;
+
 export const ProgressSchema = z.object({
   userId: z.string(),
   bookId: z.string(),

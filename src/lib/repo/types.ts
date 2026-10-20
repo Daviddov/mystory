@@ -17,6 +17,8 @@ import type {
   SiteSettings,
   User,
   UserRole,
+  WaitlistEntry,
+  WaitlistInterest,
 } from "../types";
 import type { ReadingTimeBucket } from "../taxonomy";
 
@@ -172,6 +174,12 @@ export interface Repository {
   removeRating(userId: string, bookId: string): Promise<void>;
   getRating(userId: string, bookId: string): Promise<Rating | null>;
   getRatingSummary(bookId: string): Promise<RatingSummary>;
+
+  // --- Waiting list (demand test for paid credits and printed books) ---
+  /** Adds the e-mail, or merges the interests into its existing entry. `created` tells which. */
+  addWaitlistEntry(email: string, interests: WaitlistInterest[]): Promise<{ entry: WaitlistEntry; created: boolean }>;
+  /** Oldest first. */
+  listWaitlist(): Promise<WaitlistEntry[]>;
 
   // --- Reading progress ---
   getProgress(userId: string, bookId: string): Promise<Progress | null>;

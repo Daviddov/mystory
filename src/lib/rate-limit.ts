@@ -112,6 +112,8 @@ export const RATE_LIMIT_DEFAULTS = {
   PDF: 60,
   /** POST /api/views/<bookId>, per IP. */
   VIEWS: 120,
+  /** POST /api/waitlist, per IP. */
+  WAITLIST: 10,
 } as const;
 export type RateLimitName = keyof typeof RATE_LIMIT_DEFAULTS;
 

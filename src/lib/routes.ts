@@ -18,6 +18,11 @@ export const routes = {
   tag: (tag: string) => `/tag/${encodeURIComponent(tagSlug(tag))}`,
   time: (bucket: string) => `/time/${bucket}`,
   theme: (slug: string) => `/theme/${slug}`,
+  /** Weekly Torah portion pages (lib/occasions.ts). */
+  parashot: () => "/parasha",
+  parasha: (slug: string) => `/parasha/${slug}`,
+  holidays: () => "/holidays",
+  holiday: (slug: string) => `/holidays/${slug}`,
   collections: () => "/collections",
   collection: (slug: string) => `/collections/${slug}`,
   search: (query?: string) => withQuery("/search", { q: query }),

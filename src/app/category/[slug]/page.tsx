@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { BrowseView } from "@/components/library/BrowseView";
 import type { RawSearchParams } from "@/components/library/filters";
 import { routes } from "@/lib/routes";
@@ -45,6 +46,23 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       }))}
       refineHref={routes.books({ category: category.slug })}
       emptyTitle="עוד אין ספרים בקטגוריה הזאת"
-    />
+    >
+      {category.slug === "parasha" || category.slug === "judaism" ? <OccasionLinks /> : null}
+    </BrowseView>
+  );
+}
+
+/** The parasha and holiday landing pages, from the Jewish categories. */
+function OccasionLinks() {
+  const link = "font-semibold text-primary underline-offset-4 hover:underline";
+  return (
+    <p className="flex flex-wrap gap-x-6 gap-y-2">
+      <Link href={routes.parashot()} className={link}>
+        📜 סיפור לכל פרשה בתורה
+      </Link>
+      <Link href={routes.holidays()} className={link}>
+        🕯️ סיפורים לשבת ולחגים
+      </Link>
+    </p>
   );
 }

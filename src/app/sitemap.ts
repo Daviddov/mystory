@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
+import { normalizeSeason } from "@/components/library/seasons";
 import { siteUrl } from "@/lib/config";
+import { OCCASIONS, groupBooksByOccasion, occasionBookIds, occasionHref, occasionIndexable } from "@/lib/occasions";
 import { getRepo } from "@/lib/repo";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
@@ -36,6 +38,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry(routes.home(), { changeFrequency: "daily", priority: 1 }),
     entry(routes.books(), { changeFrequency: "daily", priority: 0.9 }),
     entry(routes.collections(), { changeFrequency: "weekly", priority: 0.7 }),
+    entry(routes.parashot(), { changeFrequency: "weekly", priority: 0.7 }),
+    entry(routes.holidays(), { changeFrequency: "weekly", priority: 0.7 }),
     entry(routes.listen(), { changeFrequency: "weekly", priority: 0.7 }),
     entry(routes.personalBook(), { changeFrequency: "monthly", priority: 0.8 }),
     entry(routes.about(), { changeFrequency: "monthly", priority: 0.4 }),
@@ -77,6 +81,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const book of books) for (const tag of book.tags) if (tag.trim()) tags.add(tag.trim());
     for (const tag of [...tags].sort((a, b) => a.localeCompare(b, "he"))) {
       entries.push(entry(routes.tag(tag), { changeFrequency: "weekly", priority: 0.4 }));
+    }
+
+    // Parasha and holiday pages are noindex until they have a book, so only those with books are listed.
+    const seasons = collections.map((c) => ({ season: normalizeSeason(c.season), bookIds: c.bookIds }));
+    const occasionBooks = groupBooksByOccasion(books, seasons);
+    for (const occasion of OCCASIONS) {
+      if (!occasionIndexable(occasionBookIds(occasionBooks, occasion).length)) continue;
+      entries.push(entry(occasionHref(occasion), { changeFrequency: "weekly", priority: 0.6 }));
     }
   } catch (err) {
     // The fixed pages are still worth listing when the data store is unavailable.

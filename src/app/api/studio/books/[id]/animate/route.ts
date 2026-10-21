@@ -27,7 +27,7 @@ import { ANIMATION_NOTES_MAX } from "@/lib/generation/presets";
 import { bookMediaPath } from "@/lib/media/url";
 import { rateLimited } from "@/lib/rate-limit";
 import { readJson, studioApiError, studioContext } from "@/lib/studio/http";
-import { assertBookWritable, loadEditableBook, StudioError } from "@/lib/studio/service";
+import { assertAdminForAi, assertBookWritable, loadEditableBook, StudioError } from "@/lib/studio/service";
 
 export const dynamic = "force-dynamic";
 /** One clip takes one to two minutes with Veo. */
@@ -127,6 +127,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
       return jsonOk({ status: "attached", pageIndex, video: videoPath }, { status: 201 });
     }
 
+    assertAdminForAi(ctx.user);
     const replacing = !!page.video;
     const replacesUserClip = replacing && !page.videoSource; // no source: a clip the user uploaded
     if (replacing && !ai?.replace) {

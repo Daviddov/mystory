@@ -29,7 +29,7 @@ import { rateLimited } from "@/lib/rate-limit";
 import { readJson, studioApiError, studioContext } from "@/lib/studio/http";
 import { illustrateGrid } from "@/lib/studio/grid";
 import { createHeroImage, IllustrateError, illustratePage } from "@/lib/studio/illustrate";
-import { assertBookWritable, loadEditableBook } from "@/lib/studio/service";
+import { assertAdminForAi, assertBookWritable, loadEditableBook } from "@/lib/studio/service";
 import { MAX_HERO_DESCRIPTION, MAX_ILLUSTRATION_NOTE } from "@/lib/studio/shared";
 
 export const dynamic = "force-dynamic";
@@ -62,6 +62,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   try {
     const { id } = await params;
     const ctx = await studioContext(request, { mutating: true });
+    assertAdminForAi(ctx.user);
     const body = BodySchema.parse(await readJson(request));
     const book = await loadEditableBook(ctx, id);
     assertBookWritable(book, ctx.user);

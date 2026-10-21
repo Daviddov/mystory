@@ -210,6 +210,18 @@ describe("studio write and animate routes", () => {
   });
 
   describe("animate: AI", () => {
+    beforeEach(() => {
+      currentUser = { id: "u_admin", name: "מנהל", role: "admin" };
+    });
+
+    it("is admin-only: the book's own parent is refused", async () => {
+      const book = await makeBook();
+      currentUser = owner;
+      const res = await animatePage(jsonRequest("POST", { page: 0 }), ctx(book.id));
+      expect(res.status).toBe(403);
+      expect((await temp.repo.getBookById(book.id))!.pages[0].video).toBeFalsy();
+    });
+
     it("animates with the mock video provider, labelled mock", async () => {
       const book = await makeBook();
       const res = await animatePage(jsonRequest("POST", { page: 0 }), ctx(book.id));

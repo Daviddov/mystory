@@ -92,6 +92,11 @@ export function assertBookWritable(book: Pick<Book, "status">, user: User): void
 }
 const assertContentEditable = assertBookWritable;
 
+/** AI illustration and animation spend money: admins only. */
+export function assertAdminForAi(user: User): void {
+  if (!hasRole(user, "admin")) throw new StudioError(403, "יצירת איורים והנפשות באמצעות בינה מלאכותית זמינה כרגע למנהלים בלבד.");
+}
+
 /** Refuses a save that was based on an older version of the book than the stored one. */
 function assertFreshVersion(book: Pick<Book, "updatedAt">, options: SaveOptions): void {
   if (options.baseUpdatedAt !== undefined && options.baseUpdatedAt !== book.updatedAt) {

@@ -13,7 +13,7 @@ describe("TTS provider selection", () => {
 
   it("treats gemini as a first-class value that uses free-text notes", async () => {
     vi.stubEnv("TTS_PROVIDER", "gemini");
-    vi.stubEnv("IMAGE_API_KEY", "k");
+    vi.stubEnv("TTS_API_KEY", "k");
     expect(getAiStatus().tts).toEqual({ name: "gemini", isMock: false });
     expect(ttsHonoursNotes()).toBe(true);
     const provider = await getTtsProvider();

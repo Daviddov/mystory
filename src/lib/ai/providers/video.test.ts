@@ -222,12 +222,14 @@ describe("createVideoProvider", () => {
     expect(() => createVideoProvider()).toThrow(ProviderNotImplementedError);
   });
 
-  it("requires a key and falls back to IMAGE_API_KEY", () => {
+  it("requires its own key and ignores IMAGE_API_KEY", () => {
     vi.stubEnv("VIDEO_PROVIDER", "gemini");
     vi.stubEnv("VIDEO_API_KEY", "");
     vi.stubEnv("IMAGE_API_KEY", "");
     expect(() => createVideoProvider()).toThrow(/VIDEO_API_KEY/);
     vi.stubEnv("IMAGE_API_KEY", "img-key");
+    expect(() => createVideoProvider()).toThrow(/VIDEO_API_KEY/);
+    vi.stubEnv("VIDEO_API_KEY", "vid-key");
     expect(createVideoProvider().name).toBe("gemini");
   });
 });

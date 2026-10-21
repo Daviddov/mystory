@@ -3,7 +3,7 @@
  *
  * Environment:
  *   TTS_PROVIDER   "gemini"
- *   TTS_API_KEY    AI Studio key; falls back to IMAGE_API_KEY, so one Google key serves text, pictures and voice
+ *   TTS_API_KEY    AI Studio key, used for voice only (no fallback to other services' keys)
  *   TTS_MODEL      default "gemini-3.8-flash-tts"
  *   TTS_VOICE      default prebuilt voice (default "Sulafat"); more via NARRATION voices / TTS_ALLOWED_VOICES
  *
@@ -236,7 +236,7 @@ function isQuotaBody(body: InteractionResponse | null): boolean {
 /** Maps an error response to a Hebrew message. Exported for tests. */
 export function geminiTtsErrorFor(status: number, body: InteractionResponse | null): GeminiTtsError {
   if (status === 401 || status === 403) {
-    return new GeminiTtsError("auth", "Google דחתה את מפתח ה-API של ההקראה (TTS_API_KEY או IMAGE_API_KEY). פנו למנהל האתר.");
+    return new GeminiTtsError("auth", "Google דחתה את מפתח ה-API של ההקראה (TTS_API_KEY). פנו למנהל האתר.");
   }
   if (status === 402) {
     return new GeminiTtsError("billing", "אין מכסה או חיוב פעילים בחשבון Google של ההקראה. פנו למנהל האתר.");
@@ -249,7 +249,7 @@ export function geminiTtsErrorFor(status: number, body: InteractionResponse | nu
 
 export async function createGeminiTtsProvider(): Promise<TtsProvider> {
   const apiKey = aiEnv.geminiTtsApiKey();
-  if (!apiKey) throw new GeminiTtsError("auth", "TTS_API_KEY (או IMAGE_API_KEY) לא הוגדר, ולכן אין הקראה של Gemini.");
+  if (!apiKey) throw new GeminiTtsError("auth", "TTS_API_KEY לא הוגדר, ולכן אין הקראה של Gemini.");
   const model = aiEnv.ttsModel() ?? DEFAULT_GEMINI_TTS_MODEL;
   const defaultVoice = aiEnv.ttsVoice() ?? DEFAULT_GEMINI_VOICE;
 

@@ -122,7 +122,7 @@ describe("errors and requests", () => {
 
   it("synthesizes with a mocked fetch, retrying once on 503", async () => {
     vi.stubEnv("TTS_PROVIDER", "gemini");
-    vi.stubEnv("TTS_API_KEY", "");
+    vi.stubEnv("TTS_API_KEY", "tts-key");
     vi.stubEnv("IMAGE_API_KEY", "image-key");
     vi.stubEnv("TTS_VOICE", "");
     vi.useFakeTimers();
@@ -143,7 +143,7 @@ describe("errors and requests", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
     const [url, init] = fetchMock.mock.calls[1] as [string, RequestInit];
     expect(url).toContain("generativelanguage.googleapis.com");
-    expect((init.headers as Record<string, string>)["x-goog-api-key"]).toBe("image-key");
+    expect((init.headers as Record<string, string>)["x-goog-api-key"]).toBe("tts-key");
     expect(JSON.parse(init.body as string).generation_config.speech_config[0].voice).toBe("Puck");
     expect(result.contentType).toBe("audio/wav");
     expect(result.durationSeconds).toBeCloseTo(1, 5);

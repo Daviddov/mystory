@@ -1,7 +1,7 @@
 /**
  * Gemini text provider: the one story writer of the site. Selected by
  * src/lib/ai/index.ts when TEXT_PROVIDER=gemini, or when a Google key
- * (TEXT_API_KEY, else IMAGE_API_KEY) is set and TEXT_PROVIDER is not.
+ * (TEXT_API_KEY) is set and TEXT_PROVIDER is not.
  * The model is TEXT_MODEL or gemini-3.8-flash (gemini-2.5-flash was retired for new keys).
  *
  * Structured output: the caller's Zod schema is sent as `responseJsonSchema`
@@ -114,7 +114,7 @@ function usageOf(body: GeminiResponse): AiUsage {
 
 export async function createGeminiTextProvider(): Promise<VisionTextProvider> {
   const apiKey = aiEnv.textApiKey();
-  if (!apiKey) throw new GeminiTextError("auth", "Gemini text needs TEXT_API_KEY (or IMAGE_API_KEY).");
+  if (!apiKey) throw new GeminiTextError("auth", "Gemini text needs TEXT_API_KEY.");
   const model = aiEnv.textModel() ?? DEFAULT_MODEL;
 
   async function run<T>(request: TextRequest<T>, images: VisionImage[]): Promise<TextResult<T>> {

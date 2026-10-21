@@ -76,10 +76,8 @@ export const seoEnv = {
 export const aiEnv = {
   /** "gemini" (the site's writer), "claude", or "mock". Unset: Gemini when a key exists, else Claude, else the mock. */
   textProvider: () => env("TEXT_PROVIDER"),
-  /** Google AI Studio key for story text. Falls back to IMAGE_API_KEY, so one key serves text and pictures. */
-  textApiKey: () => env("TEXT_API_KEY") ?? env("IMAGE_API_KEY"),
-  /** Only TEXT_API_KEY (no fallback): decides automatic vendor choice without hijacking a Claude site that merely has an image key. */
-  ownTextApiKey: () => env("TEXT_API_KEY"),
+  /** Google AI Studio key for story text only. No fallback: every service has its own key so each bill stays separate. */
+  textApiKey: () => env("TEXT_API_KEY"),
   textModel: () => env("TEXT_MODEL"),
   anthropicApiKey: () => env("ANTHROPIC_API_KEY"),
   anthropicModel: () => env("ANTHROPIC_MODEL"),
@@ -89,11 +87,11 @@ export const aiEnv = {
   /** TTS vendor: "gemini" (Google AI Studio, providers/gemini-tts.ts) or "elevenlabs" (providers/tts.ts); unset uses the mock. */
   ttsProvider: () => env("TTS_PROVIDER"),
   ttsApiKey: () => env("TTS_API_KEY"),
-  /** AI Studio key for Gemini TTS. Falls back to IMAGE_API_KEY, so one Google key serves text, pictures and voice. */
+  /** AI Studio key for Gemini TTS only, no fallback to another service's key. */
   geminiTtsApiKey: () => {
     const own = env("TTS_API_KEY");
     // An ElevenLabs key (sk_...) left in TTS_API_KEY must never be sent to Google.
-    return own && !own.startsWith("sk_") ? own : env("IMAGE_API_KEY");
+    return own && !own.startsWith("sk_") ? own : undefined;
   },
   /** Model id; each vendor has its own default. */
   ttsModel: () => env("TTS_MODEL"),
@@ -115,7 +113,7 @@ export const aiEnv = {
   imageModel: () => env("IMAGE_MODEL"),
   /** Name of the video vendor implemented in providers/video.ts ("gemini" = Veo); unset uses the mock. */
   videoProvider: () => env("VIDEO_PROVIDER"),
-  /** Defaults to IMAGE_API_KEY when the image vendor is the same. */
+  /** Video only (Veo), no fallback to IMAGE_API_KEY. */
   videoApiKey: () => env("VIDEO_API_KEY"),
   videoModel: () => env("VIDEO_MODEL"),
 };

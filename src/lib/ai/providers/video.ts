@@ -3,7 +3,7 @@
  * src/lib/ai/index.ts when VIDEO_PROVIDER is set to something other than "mock".
  *
  * Implemented vendor: VIDEO_PROVIDER=gemini (Google Veo through the Gemini
- * API), with VIDEO_API_KEY (falls back to IMAGE_API_KEY) and optional
+ * API), with VIDEO_API_KEY (no fallback) and optional
  * VIDEO_MODEL (default veo-3.1-lite-generate-preview). Any other value fails
  * loudly instead of returning the placeholder clip.
  *
@@ -343,7 +343,7 @@ export function createVideoProvider(): VideoProvider {
     // Unknown vendor: fail loudly rather than silently returning the placeholder clip.
     throw new ProviderNotImplementedError(vendor || "video", "src/lib/ai/providers/video.ts");
   }
-  const apiKey = aiEnv.videoApiKey() ?? aiEnv.imageApiKey();
-  if (!apiKey) throw new VideoProviderError("VIDEO_PROVIDER=gemini requires VIDEO_API_KEY (or IMAGE_API_KEY).");
+  const apiKey = aiEnv.videoApiKey();
+  if (!apiKey) throw new VideoProviderError("VIDEO_PROVIDER=gemini requires VIDEO_API_KEY.");
   return createGeminiVideoProvider(apiKey, aiEnv.videoModel() ?? VEO_DEFAULT_MODEL);
 }

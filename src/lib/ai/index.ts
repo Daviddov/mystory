@@ -4,9 +4,9 @@
  *
  *   text   ANTHROPIC_API_KEY       -> providers/claude-text.ts
  *   nikud  NIKUD_PROVIDER=dicta    -> providers/dicta-nikud.ts
- *   tts    TTS_PROVIDER=<vendor>   -> providers/tts.ts  (gemini = AI Studio, key TTS_API_KEY or IMAGE_API_KEY; elevenlabs)
+ *   tts    TTS_PROVIDER=<vendor>   -> providers/tts.ts  (gemini = AI Studio, key TTS_API_KEY; elevenlabs)
  *   image  IMAGE_PROVIDER=<vendor> -> providers/image.ts
- *   video  VIDEO_PROVIDER=<vendor> -> providers/video.ts  (gemini = Veo; key VIDEO_API_KEY or IMAGE_API_KEY)
+ *   video  VIDEO_PROVIDER=<vendor> -> providers/video.ts  (gemini = Veo; key VIDEO_API_KEY)
  *
  * Results always carry `isMock`; surface it in the UI.
  */
@@ -41,10 +41,9 @@ function textVendor(): "gemini" | "claude" | "mock" {
   if (chosen === "claude") return aiEnv.anthropicApiKey() !== undefined ? "claude" : "mock";
   if (chosen !== undefined && chosen !== "gemini") return "mock";
   if (chosen === "gemini") return aiEnv.textApiKey() !== undefined ? "gemini" : "mock";
-  // Unset: a dedicated text key picks Gemini; an existing Claude site stays on Claude; otherwise the image key serves text too.
-  if (aiEnv.ownTextApiKey() !== undefined) return "gemini";
-  if (aiEnv.anthropicApiKey() !== undefined) return "claude";
-  return aiEnv.textApiKey() !== undefined ? "gemini" : "mock";
+  // Unset: a text key picks Gemini; an existing Claude site stays on Claude; otherwise the mock.
+  if (aiEnv.textApiKey() !== undefined) return "gemini";
+  return aiEnv.anthropicApiKey() !== undefined ? "claude" : "mock";
 }
 function isTextConfigured(): boolean {
   return textVendor() !== "mock";

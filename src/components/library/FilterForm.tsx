@@ -38,7 +38,7 @@ export function FilterForm({ query }: FilterFormProps) {
   }
 
   function onChange(event: FormEvent<HTMLFormElement>) {
-    if (event.target instanceof HTMLSelectElement) apply(event.currentTarget);
+    if (event.target instanceof HTMLSelectElement || (event.target instanceof HTMLInputElement && event.target.type === "checkbox")) apply(event.currentTarget);
   }
 
   // Remount when the URL changes so the controls follow back/forward navigation.
@@ -127,6 +127,22 @@ export function FilterForm({ query }: FilterFormProps) {
           ))}
         </Select>
       </div>
+
+      <fieldset className="col-span-2 flex flex-wrap items-center gap-x-5 gap-y-2 md:col-span-3 lg:col-span-6">
+        <legend className="sr-only">סוג התוכן</legend>
+        {(
+          [
+            ["audio", "🔊 עם השמעה", query.audio],
+            ["nikud", "אָ עם ניקוד", query.nikud],
+            ["anim", "🎬 עם הנפשות", query.anim],
+          ] as const
+        ).map(([name, label, checked]) => (
+          <label key={name} className="inline-flex cursor-pointer items-center gap-2 font-medium">
+            <input type="checkbox" name={name} value="1" defaultChecked={checked === true} className="size-5 accent-primary" />
+            {label}
+          </label>
+        ))}
+      </fieldset>
 
       {/* A tag arrives from a tag link; keep it while the other filters change. */}
       {query.tag ? <input type="hidden" name="tag" value={query.tag} /> : null}

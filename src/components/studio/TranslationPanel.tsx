@@ -82,7 +82,7 @@ export function TranslationPanel({
         <Field
           label="שם המתרגם או המתרגמת"
           htmlFor="translation-translator"
-          hint={`יופיע בקרדיט של הספר. בלי שם, תרגום אוטומטי ייחתם: ${MACHINE_TRANSLATOR_CREDIT}.`}
+          hint={`יופיע בקרדיט של הספר. בלי שם, התרגום ייחתם: ${MACHINE_TRANSLATOR_CREDIT}.`}
           className="max-w-md"
         >
           <Input

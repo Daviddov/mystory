@@ -8,7 +8,7 @@
 import type { Repository } from "../repo/types";
 import { SYSTEM_OWNER_ID, type AgeGroup, type GenerationJob } from "../types";
 import { WizardInputSchema, type WizardInput } from "./input";
-import { STORY_STYLE_SLUGS } from "./options";
+import { DAILY_STYLE_SLUGS } from "./options";
 import { runGeneration, type PipelineDeps, type PipelineResult } from "./pipeline";
 import { isJobStale, settleStaleJob } from "./stale";
 
@@ -58,7 +58,7 @@ export function dailyInput(day: string): WizardInput {
     idea: seed.idea,
     ageGroup: AGE_ROTATION[Math.abs(n) % AGE_ROTATION.length],
     category: seed.category,
-    style: STORY_STYLE_SLUGS[Math.abs(n) % STORY_STYLE_SLUGS.length],
+    style: DAILY_STYLE_SLUGS[Math.abs(n) % DAILY_STYLE_SLUGS.length],
   });
 }
 

@@ -146,7 +146,7 @@ describe("studio translation tab", () => {
   });
 
   it("translates the whole book in one request and shows the Hebrew beside the original", async () => {
-    translateAnswer = (body) => Response.json({ status: "translated", isMock: false, book: hebrewBook(body.translator || "הסיפור שלי (תרגום מכונה)") });
+    translateAnswer = (body) => Response.json({ status: "translated", isMock: false, book: hebrewBook(body.translator || "Dov Bar") });
     const user = userEvent.setup();
     render(<StudioEditor book={englishBook()} canPublish={false} />);
     await user.click(screen.getByRole("tab", { name: "תרגום" }));

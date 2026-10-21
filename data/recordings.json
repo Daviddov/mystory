@@ -244,25 +244,6 @@
     "updatedAt": "2026-10-16T15:22:17.747Z"
   },
   {
-    "id": "5zey1mjwrxsu",
-    "bookId": "letsread-3102cdca-d1a5-405d-b2ca-feaefa90a7e5",
-    "userId": "u_m3ipvar7h1mb",
-    "title": "ההקלטה שלי",
-    "status": "private",
-    "pages": [
-      {
-        "index": 0,
-        "audio": "books/letsread-3102cdca-d1a5-405d-b2ca-feaefa90a7e5/rec/5zey1mjwrxsu/p1-j1vb4eol8av3.webm"
-      },
-      {
-        "index": 1,
-        "audio": "books/letsread-3102cdca-d1a5-405d-b2ca-feaefa90a7e5/rec/5zey1mjwrxsu/p2-cvp7e37eaa8v.webm"
-      }
-    ],
-    "createdAt": "2026-10-16T15:29:03.133Z",
-    "updatedAt": "2026-10-16T15:29:21.333Z"
-  },
-  {
     "id": "8kow0r6fzqwy",
     "bookId": "chazal-nachum-gam-zu",
     "userId": "u_m3ipvar7h1mb",
@@ -377,121 +358,6 @@
     "updatedAt": "2026-10-19T18:18:40.578Z"
   },
   {
-    "id": "mswf5aw2u4rq",
-    "bookId": "gutenberg-14838",
-    "userId": "u_m3ipvar7h1mb",
-    "title": "ההקלטה שלי",
-    "status": "private",
-    "pages": [
-      {
-        "index": 0,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p1-ocdx90pf8i9y.webm"
-      },
-      {
-        "index": 1,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p2-s07adf6mqoiw.webm"
-      },
-      {
-        "index": 2,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p3-o21typhitcyp.webm"
-      },
-      {
-        "index": 3,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p4-3z4d5tzfc68x.webm"
-      },
-      {
-        "index": 4,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p5-9z0j4gz4adkd.webm"
-      },
-      {
-        "index": 5,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p6-bgr0fv5rcdy2.webm"
-      },
-      {
-        "index": 6,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p7-je9tbg02ie9t.webm"
-      },
-      {
-        "index": 7,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p8-roe7fwfr2du0.webm"
-      },
-      {
-        "index": 8,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p9-43i6cwbfc2vr.webm"
-      },
-      {
-        "index": 9,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p10-w1daxk8icp7g.webm"
-      },
-      {
-        "index": 10,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p11-n2r1qbayw08m.webm"
-      },
-      {
-        "index": 11,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p12-ir1vgkrwxasl.webm"
-      },
-      {
-        "index": 12,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p13-s6mnnnqz8q62.webm"
-      },
-      {
-        "index": 13,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p14-wb49qlu98r74.webm"
-      },
-      {
-        "index": 14,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p15-gkmb5b2rk1iv.webm"
-      },
-      {
-        "index": 15,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p16-jvoorkdtn1mb.webm"
-      },
-      {
-        "index": 16,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p17-z17h8fr4879b.webm"
-      },
-      {
-        "index": 17,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p18-ea7dko4nxynq.webm"
-      },
-      {
-        "index": 18,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p19-s7vwhe5sgbth.webm"
-      },
-      {
-        "index": 19,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p20-aqlf9zgx67o8.webm"
-      },
-      {
-        "index": 20,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p21-yhmqgrswuprt.webm"
-      },
-      {
-        "index": 21,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p22-3q89rnonlwi5.webm"
-      },
-      {
-        "index": 22,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p23-gxh0d0qzw09n.webm"
-      },
-      {
-        "index": 23,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p24-1k2dngs6gkzi.webm"
-      },
-      {
-        "index": 24,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p25-jir26o21q6xh.webm"
-      },
-      {
-        "index": 25,
-        "audio": "books/gutenberg-14838/rec/mswf5aw2u4rq/p26-kipmnfgoj1fc.webm"
-      }
-    ],
-    "createdAt": "2026-10-19T18:22:19.367Z",
-    "updatedAt": "2026-10-19T18:30:55.045Z"
-  },
-  {
     "id": "pr8fl0qjz060",
     "bookId": "chazal-rabbi-tarfon-and-his-mother",
     "userId": "u_m3ipvar7h1mb",
@@ -541,5 +407,123 @@
     ],
     "createdAt": "2026-10-19T18:31:51.565Z",
     "updatedAt": "2026-10-19T18:34:12.385Z"
+  },
+  {
+    "id": "c69g1uls1ii8",
+    "bookId": "parasha-shelach",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p1-1q8n8puyqdh7.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p2-o8orf1tfj9f9.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p3-l5559xfx8kuk.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p4-35ts0fei56et.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p5-0icjp687pyyo.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p6-eae0c08vlbb0.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p7-1bitjg3zyc9k.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p8-cpzlwep8tsbu.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p9-20u934hi6zny.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p10-sv3o0jom6e0r.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p11-yft8zj8hl3an.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/parasha-shelach/rec/c69g1uls1ii8/p12-k4jntqgo42q6.webm"
+      }
+    ],
+    "createdAt": "2026-10-21T17:52:27.540Z",
+    "updatedAt": "2026-10-21T17:56:33.178Z"
+  },
+  {
+    "id": "9u9ln1kqf2mq",
+    "bookId": "parasha-naso",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p1-e5yeh55zh5ak.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p2-ms3r3jg3xagn.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p3-ln9yu46g2ouw.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p4-exk4ze2bf72p.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p5-g1qng2hasjcy.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p6-frqmhu1mheyr.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p7-kp9vit4ermw1.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p8-tlcr495g3mno.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p9-do0s1j47yb8c.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p10-nlvr6ygegvv9.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p11-yvaxx38zhr0g.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/parasha-naso/rec/9u9ln1kqf2mq/p12-87umgrkcyps3.webm"
+      }
+    ],
+    "createdAt": "2026-10-21T17:57:39.237Z",
+    "updatedAt": "2026-10-21T18:00:15.016Z"
   }
 ]

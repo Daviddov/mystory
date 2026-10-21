@@ -324,8 +324,8 @@ async function main(): Promise<void> {
       originalLanguage: "en",
       credits: {
         ...credits,
-        translator: "Claude (תרגום בעזרת בינה מלאכותית)",
-        adaptation: "Translation into Hebrew by Claude (תרגום בעזרת בינה מלאכותית), narrated with a synthetic voice",
+        translator: "Dov Bar",
+        adaptation: "Translation into Hebrew by Dov Bar, narrated with a synthetic voice",
       },
       pages,
     });

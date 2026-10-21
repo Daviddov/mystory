@@ -9,13 +9,14 @@
 import { z } from "zod";
 import { CATEGORY_SLUGS } from "../taxonomy";
 import { AgeGroupSchema } from "../types";
-import { STORY_STYLE_SLUGS } from "./options";
+import { STORY_MOOD_SLUGS, STORY_STYLE_SLUGS } from "./options";
 
 export const INPUT_LIMITS = {
   childName: 30,
   hobby: 30,
   hobbies: 5,
   appearance: 200,
+  dedication: 120,
   ideaMin: 3,
   idea: 300,
   childAgeMin: 0,
@@ -66,6 +67,10 @@ export const WizardInputSchema = z
       .default([]),
     /** How the child looks, in the parent's words. Used when no photo is given. */
     appearance: freeText(INPUT_LIMITS.appearance).default(""),
+    /** A personal dedication printed at the start of the book. Shown as-is; never sent to the model. */
+    dedication: freeText(INPUT_LIMITS.dedication).default(""),
+    /** The feeling the story should leave the child with. Optional. */
+    mood: z.enum(STORY_MOOD_SLUGS).optional(),
     idea: freeText(INPUT_LIMITS.idea).pipe(z.string().min(INPUT_LIMITS.ideaMin)),
     ageGroup: AgeGroupSchema,
     category: z.string().refine((slug) => CATEGORY_SLUGS.includes(slug), "unknown category"),

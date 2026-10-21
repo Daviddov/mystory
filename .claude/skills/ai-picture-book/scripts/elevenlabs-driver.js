@@ -16,7 +16,13 @@ window.sendText = async (text) => {
   const b = document.querySelector('button[aria-label="Generate"]'); if (!b || b.disabled) return "no generate button"; b.click(); return "sent";
 };
 window.state = { old: new Set() };
-window.startGrid = async (book, i) => { const g = JSON.parse(await getFile("grids-" + book + ".json"))[i]; const r = await sendText(g.prompt); await new Promise((r) => setTimeout(r, 5000)); state.old = new Set(genImgs().map((x) => x.src)); return [r, g.names.join(","), g.grid, left()]; };
+// Grid 2+ prompts are written for a ChatGPT chat ("Great, the same again ... Same style."): ElevenLabs has no chat memory,
+// so make them standalone with grid 1's style (without it, 2026-10-21 gave a semi-realistic picture with a bare-headed man).
+window.standalone = (gs, i) => { const p = gs[i].prompt; if (!/^Great, the same again/.test(p)) return p; const style = (gs[0].prompt.match(/Style: (.*?) HEAD COVERING/) || [])[1] || "";
+  return p.replace(/^Great, the same again: ONE single landscape image, /, "Create ONE single landscape image for a children's picture book: ").replace("Same style. ", "Style: " + style + " "); };
+// Only a card whose alt text starts like this prompt counts as the result: the history lazy-loads older cards while scrolling,
+// and on 2026-10-21 an old card from another book was saved as the result.
+window.startGrid = async (book, i) => { const gs = JSON.parse(await getFile("grids-" + book + ".json")); const g = gs[i]; const prompt = standalone(gs, i); state.prefix = prompt.slice(0, 20); scrollTo(0, 0); state.old = new Set(genImgs().map((x) => x.src)); const r = await sendText(prompt); await new Promise((r) => setTimeout(r, 5000)); for (const x of genImgs()) state.old.add(x.src); return [r, g.names.join(","), g.grid, left()]; };
 window.saveBlobImg = async (im, fname) => { const b = await (await fetch(im.src)).blob(); const data = await new Promise((r) => { const f = new FileReader(); f.onload = () => r(f.result); f.readAsDataURL(b); }); delete saved[fname]; rx.postMessage({ name: fname, blob: data }, RX); for (let k = 0; k < 60 && !saved[fname]; k++) await new Promise((r) => setTimeout(r, 300)); return [fname, im.naturalWidth + "x" + im.naturalHeight, saved[fname] || null]; };
 window.closeModal = async () => { const c = [...document.querySelectorAll("button")].find((b) => /close/i.test(b.getAttribute("aria-label") || "")); if (c) c.click(); else document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", keyCode: 27, bubbles: true })); await new Promise((r) => setTimeout(r, 1200)); };
 // queue: [[bookKey, gridIndex], ...]; start with: driver.q = [["pekudei",0],["pekudei",1],...]; then the autonomous timer below runs it.
@@ -28,11 +34,11 @@ window.tick = async () => {
     await closeModal(); const r = await startGrid(n[0], n[1]); d.cur = { book: n[0], gi: n[1], t: Date.now() };
     if (r[0] !== "sent") { d.stopped = "send failed: " + r[0]; return ["STOP", d.stopped]; } d.log.push([n, "sent", r[3]]); return ["sent", n, r[3]];
   }
-  const c = d.cur; const fresh = genImgs().filter((i) => !state.old.has(i.src));
+  const c = d.cur; const fresh = genImgs().filter((i) => !state.old.has(i.src) && (i.alt || "").startsWith(state.prefix));
   const bad = document.body.innerText.match(/not enough credits|insufficient credits|upgrade to continue|generation failed/i); if (bad) { d.stopped = "error text: " + bad[0]; return ["STOP", bad[0]]; }
   if (!fresh.length) { if (Date.now() - c.t > 240000) { d.stopped = "timeout waiting for image"; return ["STOP", "timeout"]; } return ["waiting", c.book, c.gi + 1]; }
   await new Promise((r) => setTimeout(r, 2500)); fresh[0].click();
-  let full = null; for (let k = 0; k < 30 && !full; k++) { await new Promise((r) => setTimeout(r, 500)); full = [...document.querySelectorAll("img")].find((i) => i.naturalWidth >= 2000 && i.complete && /storage\.googleapis/.test(i.src)); }
+  let full = null; for (let k = 0; k < 30 && !full; k++) { await new Promise((r) => setTimeout(r, 500)); full = [...document.querySelectorAll("img")].find((i) => i.naturalWidth >= 2000 && i.complete && /storage\.googleapis/.test(i.src) && (i.alt || "").startsWith(state.prefix) && i.getBoundingClientRect().width > 500); }
   if (!full) { d.errs++; await closeModal(); if (d.errs > 4) d.stopped = "no full-res image"; return ["no full-res yet"]; }
   const r = await saveBlobImg(full, c.book + "-grid-" + (c.gi + 1) + ".png"); for (const i of genImgs()) state.old.add(i.src);
   await closeModal(); d.log.push([c.book, c.gi + 1, r[1], r[2]]); d.cur = null; return ["saved", c.book, c.gi + 1, r[1]];

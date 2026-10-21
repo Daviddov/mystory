@@ -26,7 +26,7 @@ export function defaultFontStep(ageGroup: AgeGroup): number {
   return ageGroup === "6-8" ? 1 : 2;
 }
 
-export const PLAYBACK_RATES = [0.75, 1, 1.25] as const;
+export const PLAYBACK_RATES = [0.9, 1, 1.1] as const;
 export const SLEEP_TIMER_MINUTES = [5, 10, 15, 30] as const;
 
 export function clamp(value: number, min: number, max: number): number {

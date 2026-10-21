@@ -295,6 +295,10 @@ export class LocalRepository implements Repository {
       if (filter.ownerId && b.ownerId !== filter.ownerId) return false;
       if (filter.origin && b.origin !== filter.origin) return false;
       if (filter.timeBucket && readingTimeBucket(b.readingMinutes) !== filter.timeBucket) return false;
+      if (filter.author !== undefined && b.author !== filter.author) return false;
+      if (filter.hasAudio && !b.pages.some((p) => p.audio)) return false;
+      if (filter.hasNikud && !b.pages.some((p) => p.textNikud)) return false;
+      if (filter.hasAnimation && !b.pages.some((p) => p.video)) return false;
       if (wantedTag && !b.tags.some((t) => tagSlug(t) === wantedTag)) return false;
       if (tokens.length > 0) {
         const hay = this.haystack(entry);
@@ -315,6 +319,15 @@ export class LocalRepository implements Repository {
         break;
       case "updated":
         books.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+        break;
+      case "author":
+        // Books without an author come last.
+        books.sort(
+          (a, b) =>
+            Number(!a.author.trim()) - Number(!b.author.trim()) ||
+            a.author.trim().localeCompare(b.author.trim(), "he") ||
+            a.title.localeCompare(b.title, "he"),
+        );
         break;
       default:
         books.sort((a, b) => byNew(a, b) || a.title.localeCompare(b.title, "he"));

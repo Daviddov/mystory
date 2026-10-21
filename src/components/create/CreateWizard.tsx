@@ -13,7 +13,14 @@ import { MockNotice } from "@/components/MockNotice";
 import { Button, ButtonLink, Card, Chip, Field, Input, Select, Spinner, Textarea } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { INPUT_LIMITS, PHOTO_LIMITS, type ChildGender, type WizardInputDraft } from "@/lib/generation/input";
-import { HOBBY_SUGGESTIONS, IDEA_SUGGESTIONS, STORY_STYLES, type StoryStyle } from "@/lib/generation/options";
+import {
+  HOBBY_SUGGESTIONS,
+  IDEA_SUGGESTIONS,
+  STORY_MOODS,
+  STORY_STYLES,
+  type StoryMood,
+  type StoryStyle,
+} from "@/lib/generation/options";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { AGE_GROUP_INFO, CATEGORIES } from "@/lib/taxonomy";
@@ -143,6 +150,8 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
   const [photoError, setPhotoError] = useState("");
   // Step 2
   const [idea, setIdea] = useState("");
+  const [mood, setMood] = useState<StoryMood | null>(null);
+  const [dedication, setDedication] = useState("");
   // Step 3
   const [ageGroup, setAgeGroup] = useState<AgeGroup | null>(null);
   const [category, setCategory] = useState<string>("adventures");
@@ -293,6 +302,8 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
       hobbies,
       appearance: photo ? "" : appearance,
       idea,
+      ...(mood ? { mood } : {}),
+      ...(dedication.trim() ? { dedication } : {}),
       ageGroup: effectiveAgeGroup,
       category,
       style,
@@ -519,6 +530,30 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
               <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-bold text-foreground outline-none">
                 על מה הסיפור?
               </h2>
+              <fieldset className="flex flex-col gap-2">
+                <legend className="mb-1.5 text-base font-semibold text-foreground">איזו הרגשה הסיפור ישאיר?</legend>
+                <div className="flex flex-wrap gap-2">
+                  {STORY_MOODS.map((item) => (
+                    <Chip
+                      key={item.slug}
+                      tone="accent"
+                      selected={mood === item.slug}
+                      onClick={() => {
+                        if (mood === item.slug) {
+                          setMood(null);
+                          return;
+                        }
+                        const previous = STORY_MOODS.find((m) => m.slug === mood);
+                        setMood(item.slug);
+                        // Seeds the idea box, but never overwrites something the parent wrote.
+                        if (idea.trim() === "" || idea === previous?.idea) setIdea(item.idea);
+                      }}
+                    >
+                      <span aria-hidden="true">{item.emoji}</span> {item.label}
+                    </Chip>
+                  ))}
+                </div>
+              </fieldset>
               <Field
                 label="הרעיון בכמה מילים"
                 htmlFor="story-idea"
@@ -553,6 +588,19 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                   ))}
                 </div>
               </div>
+              <Field
+                label="הקדשה (לא חובה)"
+                htmlFor="book-dedication"
+                hint="תופיע במסך הפתיחה של הספר. למשל: לנועם, באהבה, סבתא"
+              >
+                <Input
+                  id="book-dedication"
+                  value={dedication}
+                  onChange={(event) => setDedication(event.target.value)}
+                  maxLength={INPUT_LIMITS.dedication}
+                  autoComplete="off"
+                />
+              </Field>
             </>
           ) : null}
 

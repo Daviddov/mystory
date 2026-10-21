@@ -33,10 +33,12 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "כתמי צבע רכים ואור חם, כמו ספר ילדים מצויר ביד",
     group: "general",
     prompt:
-      "Soft hand-painted watercolor children's book illustration: gentle transparent washes that bleed softly into each other, " +
-      "visible cold-press paper texture, delicate pencil under-drawing, small pigment blooms, and warm golden light. " +
-      "Rounded friendly shapes, expressive eyes, a harmonious palette of warm yellows, soft greens and sky blues with white paper left bare for highlights. " +
-      "Backgrounds are loose and airy so the characters stay the clear focus. " +
+      "Museum-quality hand-painted watercolor children's book illustration: luminous transparent glazes that bleed wet-in-wet into each other, " +
+      "granulating pigments pooling in the grain of heavy cold-press paper, visible deckled paper texture, delicate graphite under-drawing left showing, " +
+      "small pigment blooms and back-runs, salt-speckle and splatter accents, crisp wet-on-dry edges on the focal characters. " +
+      "Warm golden-hour backlight with coloured shadows (violet and teal, never grey), rim-lit hair and fur, tiny storytelling details tucked into the scene. " +
+      "Rounded friendly shapes, expressive eyes with a bright catch-light, a harmonious palette of warm yellows, soft greens, rose and sky blues with white paper left bare for highlights. " +
+      "Backgrounds dissolve loosely into soft washes so the characters stay the clear focus. " +
       WARM_FINISH,
   },
   {
@@ -46,9 +48,11 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "קולאז' שכבות של נייר צבעוני עם צללים עדינים",
     group: "general",
     prompt:
-      "Layered paper-cut collage illustration: every shape is cut from coloured card and textured craft paper, stacked in several visible layers " +
-      "with soft realistic drop shadows between them, slightly irregular hand-cut edges, a few torn-paper accents and subtle paper fibres. " +
-      "Flat, bold, saturated but harmonious colours, simple geometric characters with dot eyes, and a tactile handmade feel as if photographed on a table. " +
+      "Layered paper-cut diorama illustration, like a handmade shadow-box photographed from above: every shape is cut from coloured card, handmade fibre paper, crepe and glitter-free textured craft paper, " +
+      "stacked in five or more distinct depth layers with soft realistic drop shadows and ambient occlusion between them, slightly irregular scissor-cut edges, " +
+      "a few torn-paper accents, embossed and punched-hole details, subtle visible paper fibres and a gentle warm light from one side. " +
+      "Flat, bold, saturated but harmonious colours, simple geometric characters with dot eyes and tiny hand-drawn pencil details, " +
+      "foreground silhouettes that frame the scene, a tactile handmade feel. " +
       WARM_FINISH,
   },
   {
@@ -58,9 +62,62 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "דמויות עגולות וחמודות כמו בסרט אנימציה",
     group: "general",
     prompt:
-      "Friendly 3D animated feature-film still: smooth rounded character designs with big expressive eyes and soft squash-and-stretch shapes, " +
-      "stylised felt, clay and plush-like materials, soft global illumination with warm key light and gentle rim light, shallow depth of field, " +
-      "rich but cosy colour palette and a tidy, uncluttered set. Charming and expressive acting in the pose and face. " +
+      "Premium 3D animated feature-film still in the quality of a major animation studio's cinema release: stylised caricature proportions (large head, big round eyes with glossy corneas and strong catch-lights, " +
+      "small expressive nose, oversized hands and feet, simplified shapes with a sculpted, appealing silhouette), soft squash-and-stretch, believable subsurface-scattering skin, " +
+      "fine fabric weave with visible stitching and wear, individually shaded hair or fur strands, slightly imperfect hand-sculpted surfaces rather than plastic perfection, " +
+      "cinematic lighting: warm key light, cool bounce fill, gentle rim light, soft global illumination, volumetric light rays and dust motes, " +
+      "a film-like camera with a chosen lens (low or wide angle for drama), shallow depth of field with creamy bokeh, rich colour script with a complementary warm/cool contrast, " +
+      "and a beautifully dressed, lived-in set with story-telling props, worn textures and a clear layered depth. Charming, emotionally readable acting in the pose and face. " +
+      WARM_FINISH,
+  },
+  {
+    slug: "3d-clay",
+    label: "פלסטלינה תלת־ממדית",
+    emoji: "🫶",
+    description: "דמויות מפלסטלינה עם טביעות אצבעות, כמו אנימציית סטופ־מושן",
+    group: "general",
+    prompt:
+      "Handmade claymation stop-motion still: characters and props sculpted from soft plasticine with visible fingerprints, tool marks and tiny seams, " +
+      "slightly wobbly asymmetric proportions, glossy bead eyes, hair made of rolled clay threads, sets built from real miniature cardboard, moss, fabric and painted wood. " +
+      "Warm studio lighting from a practical lamp with soft real shadows, shallow tilt-shift depth of field, a faint lens grain and the gentle imperfection of a real photographed miniature set. " +
+      "Saturated yet cosy colours, chunky rounded shapes. " +
+      WARM_FINISH,
+  },
+  {
+    slug: "3d-plush",
+    label: "בובות פרווה ובד",
+    emoji: "🪆",
+    description: "צעצועי בד ופרווה רכים עם תפרים, כמו ממש בחדר ילדים",
+    group: "general",
+    prompt:
+      "3D render of a world made entirely of soft toys: characters are plush and felt dolls with visible stitched seams, embroidered faces, button eyes, fuzzy minky-fur and wool-felt textures with tiny fibres catching the light, " +
+      "stuffed puffy proportions, knitted clothes, and a set built from fabric, felt, yarn and cardboard, like a nursery come to life. " +
+      "Soft diffused window light with warm bounce, macro-lens shallow depth of field, gentle bokeh of fairy lights in the background, delicate dust-free cosy atmosphere. " +
+      "Pastel-leaning palette with a few warm accents. " +
+      WARM_FINISH,
+  },
+  {
+    slug: "3d-miniature",
+    label: "עולם מיניאטורי",
+    emoji: "🏘️",
+    description: "דיורמה קטנה ומוארת, כאילו הכול צולם מקרוב על שולחן",
+    group: "general",
+    prompt:
+      "Enchanting 3D miniature-world diorama: a tiny hand-built scene on a tabletop with tilt-shift macro photography, shallow depth of field and a dreamy blurred foreground, " +
+      "small wooden, ceramic and painted-resin figurines with smooth rounded forms, tiny glowing windows and lanterns, grass made of fine flock, trees of sponge and wire, water of glossy resin. " +
+      "Warm practical lights, soft shadows, a subtle golden haze, detailed handcrafted props and gentle scale-play that makes the world feel huge to its little hero. " +
+      WARM_FINISH,
+  },
+  {
+    slug: "3d-vinyl",
+    label: "צעצועי ויניל מבריקים",
+    emoji: "🎎",
+    description: "דמויות מבריקות כמו בובות אספנות, צבעים עזים וצללים רכים",
+    group: "general",
+    prompt:
+      "Glossy designer-vinyl toy 3D render: characters shaped like collectible toy figures with simple big heads, tiny bodies, smooth matte-to-glossy vinyl and soft rubber materials, " +
+      "crisp clean highlights, pastel and candy colours with one bold accent, soft studio softbox lighting, gentle contact shadows on a clean gradient backdrop, " +
+      "playful sculpted details such as little hats, bobbles and stickers, and a bright joyful toy-shop feel. " +
       WARM_FINISH,
   },
   {
@@ -70,9 +127,10 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "ציור בצבעי שעווה, צבעוני ושמח כמו של ילד",
     group: "general",
     prompt:
-      "Wax crayon and oil-pastel drawing as in a joyful child's picture book: waxy textured strokes, visible paper grain showing through, " +
-      "layered scribbled colour fills that go slightly outside the lines, thick confident outlines, bright primary colours with a few soft blends. " +
-      "Naive, playful proportions, simple shapes, big smiles. " +
+      "Rich wax-crayon and oil-pastel drawing as in a joyful hand-made picture book: waxy textured strokes with visible paper tooth showing through, " +
+      "layered scribbled colour fills built from several overlapping hues (yellow under orange, blue under green), sgraffito scratched-out details, " +
+      "thick confident outlines that wobble and go slightly outside the lines, bright primary colours with a few soft smudged blends and white-crayon resist highlights. " +
+      "Naive, playful proportions, simple shapes, big smiles, patterned backgrounds of dots, zigzags and swirls. " +
       WARM_FINISH,
   },
   {
@@ -82,9 +140,10 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "קווי דיו ועבודת גואש עשירה בפרטים, כמו ספרי פעם",
     group: "general",
     prompt:
-      "Classic storybook illustration in the tradition of golden-age picture books: fine ink pen outlines with delicate cross-hatching, " +
-      "filled with opaque gouache and watercolour in rich, slightly muted colours, cosy detailed interiors and landscapes, decorative little details in the corners, " +
-      "gentle storytelling composition with clear foreground, middle ground and background. " +
+      "Classic golden-age storybook illustration painted like a treasured vintage picture book: fine dip-pen ink outlines with delicate cross-hatching and stippled shading, " +
+      "filled with opaque gouache and watercolour in rich, slightly muted colours on warm cream paper with a faint aged tone, " +
+      "cosy detailed interiors and landscapes full of period props, ornamental borders and decorative little vignettes in the corners, " +
+      "gentle storytelling composition with clear foreground, middle ground and atmospheric background, soft lamplight or sunlit glow. " +
       WARM_FINISH,
   },
   {
@@ -94,10 +153,25 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "קווי דיו מתפתלים, צורות מוגזמות וצבעים בוהקים",
     group: "general",
     prompt:
-      "Whimsical exaggerated cartoon picture-book illustration in the spirit of Dr. Seuss: wobbly, loopy black ink outlines of varied thickness, " +
-      "impossible curvy leaning buildings and noodle-like trees, long rubbery limbs, tall crooked hats, huge expressive eyebrows and wide grins, " +
-      "dynamic diagonal composition and energetic poses, flat bright colour fills with a limited punchy palette (red, turquoise, yellow, lime, a little pink) over a clean pale background. " +
+      "Whimsical picture-book illustration in the style of classic Dr. Seuss: hand-drawn black ink outlines with wobbly, uneven line weight and slightly overshooting strokes, loose short hatch ticks for fur and grass. " +
+      "Characters have pear-shaped or round bodies, very long noodle-thin limbs, oversized feet, lopsided ears and tails, tall crooked hats, huge thick expressive eyebrows, simple round dot-eyes and wide crooked grins. " +
+      "Impossible leaning buildings with spiralling roofs, noodle-trunk trees with puffball tops, rolling empty hills and a low horizon. Dynamic diagonal composition, exaggerated scale contrast. " +
+      "Flat solid colour fills with no gradients or shading, limited punchy palette (tomato red, turquoise, sunshine yellow, lime green, a touch of pink), slightly misregistered like vintage offset printing, over a clean off-white background with generous empty space. " +
       "Invent original characters; do not copy any existing character. Playful, funny and never scary.",
+  },
+  {
+    slug: "rey-gouache",
+    label: "הרפתקה צבעונית (בסגנון גורג' הסקרן)",
+    emoji: "🐒",
+    description: "גואש שטוח ובהיר, קו מכחול פשוט, עיר ושמיים כחולים",
+    group: "general",
+    prompt:
+      "Mid-century American picture-book illustration in the spirit of the classic 1940s-60s Curious George books by H. A. and Margret Rey: opaque flat gouache and watercolor in clean, uniform colour areas with no gradients, " +
+      "loose thin brush-and-ink outlines in dark brown or black that do not quite meet the colour, a bright limited palette of sunny yellow, tomato red, leaf green, sky blue and orange on warm white paper with visible printing grain. " +
+      "Very simple, round, friendly characters with dot eyes, minimal faces and short expressive limbs; the action is clear at a glance, with small figures moving through wide airy spaces: " +
+      "a tall-hatted grown-up in a bright flat suit, a sunny city street, a green jungle with big simple leaves, a bright blue sky with a round yellow sun, red-and-white striped details. " +
+      "Clean, uncluttered compositions with plenty of white space, bold shapes, tiny playful visual jokes, and a vertical flow from page to page. " +
+      "Invent original characters; do not copy George, the Man in the Yellow Hat or any existing character. Cheerful, curious and never scary.",
   },
   {
     slug: "soft-pastel",
@@ -106,9 +180,10 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "גוונים עדינים ואור ירח, מושלם לסיפור לפני השינה",
     group: "general",
     prompt:
-      "Soft pastel bedtime illustration: chalk-pastel and gentle gouache texture with smoothly blended edges, a dreamy muted palette of lavender, powder blue, " +
-      "peach and cream, glowing moonlight and warm lamp light, round pillowy shapes, tiny twinkling stars, sleepy half-closed eyes, " +
-      "quiet uncluttered compositions with lots of calm space. Hushed, cosy, comforting mood.",
+      "Dreamy soft-pastel bedtime illustration: velvety chalk-pastel and gentle gouache texture with smoothly blended, finger-smudged edges and a fine paper grain, " +
+      "a hushed palette of lavender, powder blue, peach, rose and cream deepening into midnight indigo, glowing moonlight with a soft halo, warm lamp light spilling from windows, " +
+      "round pillowy shapes, drifting clouds, tiny twinkling stars and fireflies, sleepy half-closed eyes, " +
+      "quiet uncluttered compositions with lots of calm space and a gentle vignette. Hushed, cosy, comforting mood.",
   },
   {
     slug: "cozy-collage",
@@ -117,8 +192,9 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "בדים, נייר מודפס וצורות פשוטות ביחד",
     group: "general",
     prompt:
-      "Cozy mixed-media collage picture-book illustration: patterned fabric scraps, printed wrapping paper, stitched thread lines, buttons and hand-painted details, " +
-      "simple folk-art shapes with slightly uneven edges, warm earthy colours with accents of mustard, teal and coral, subtle linocut-print texture. " +
+      "Cozy mixed-media collage picture-book illustration: patterned fabric scraps, vintage printed wrapping paper, hand-stitched thread lines in running stitch, buttons, lace and torn tissue, " +
+      "layered with hand-painted gouache details and pencil scribbles, simple folk-art shapes with slightly uneven edges, " +
+      "warm earthy colours with accents of mustard, teal and coral, a subtle linocut-print texture and soft overlapping shadows between layers. " +
       "Handmade, homely and friendly. " +
       WARM_FINISH,
   },
@@ -130,9 +206,10 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "אוהלים, מדבר וגבעות באור זהוב, בגדי צמר ופשתן",
     group: "jewish",
     prompt:
-      "Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy Middle-Eastern palette " +
-      "(sand, olive green, terracotta, sky blue), rounded friendly faces with expressive eyes, ancient Near-East setting of the Torah era: tents, desert hills, " +
-      "stone villages, wells and flocks, simple wool and linen robes, head coverings, sandals. " +
+      "Rich children's picture-book illustration, hand-painted watercolor and opaque gouache with gentle pencil lines and fine paper grain, glowing golden-hour light with long soft shadows, " +
+      "earthy Middle-Eastern palette (sand, olive green, terracotta, indigo, sky blue), rounded friendly faces with expressive eyes, " +
+      "ancient Near-East setting of the Torah era: woven goat-hair tents, desert hills with layered haze, stone villages, wells and flocks, " +
+      "hand-woven wool and linen robes with striped borders, head coverings, sandals, clay jars and baskets painted with loving detail. " +
       WARM_FINISH,
   },
   {
@@ -142,9 +219,10 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "בתי אבן, בית מדרש ופנסי שמן בארץ ישראל ובבבל",
     group: "jewish",
     prompt:
-      "Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy palette (stone beige, olive green, terracotta, deep blue), " +
-      "rounded friendly faces with expressive eyes, the Land of Israel and Babylon in the time of the Mishnah and Talmud (Roman era): stone houses with flat roofs, oil lamps, " +
-      "study halls with low benches and scrolls, markets, olive and carob trees. Jewish sages with beards, tunics and simple robes; women in modest long dresses and head coverings. " +
+      "Rich children's picture-book illustration, hand-painted watercolor and opaque gouache with gentle pencil lines and fine paper grain, warm lamplit and golden light, " +
+      "earthy palette (stone beige, olive green, terracotta, deep blue), rounded friendly faces with expressive eyes, " +
+      "the Land of Israel and Babylon in the time of the Mishnah and Talmud (Roman era): stone houses with flat roofs and arched doorways, glowing oil lamps, " +
+      "study halls with low benches and scrolls, bustling markets with striped awnings, olive and carob trees. Jewish sages with beards, tunics and simple robes; women in modest long dresses and head coverings. " +
       WARM_FINISH,
   },
   {
@@ -154,8 +232,9 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
     description: "דירה עם מרפסת, גן ילדים, נרות שבת ומזוזה",
     group: "jewish",
     prompt:
-      "Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, bright friendly palette, rounded friendly faces with expressive eyes, " +
-      "present-day Israel: apartments with balconies, kindergartens, moshav fields, Jerusalem stone, a warm Jewish family home " +
+      "Rich children's picture-book illustration, hand-painted watercolor and opaque gouache with gentle pencil lines and fine paper grain, warm sunlit Mediterranean glow, bright friendly palette, " +
+      "rounded friendly faces with expressive eyes, present-day Israel: apartments with balconies and hanging plants, kindergartens with colourful drawings on the walls, moshav fields, " +
+      "Jerusalem stone, bougainvillea and lemon trees, a warm lived-in Jewish family home " +
       "(Shabbat candles, mezuzah, bookshelf with holy books). " +
       WARM_FINISH,
   },

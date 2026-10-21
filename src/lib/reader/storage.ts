@@ -27,7 +27,8 @@ const ReaderPrefsSchema = z.object({
   original: z.boolean().optional(),
   rate: z
     .number()
-    .refine((value) => (PLAYBACK_RATES as readonly number[]).includes(value))
+    // Speeds saved before the rates changed (0.75, 1.25) still load, then show no chip selected.
+    .refine((value) => (PLAYBACK_RATES as readonly number[]).includes(value) || value === 0.75 || value === 1.25)
     .optional(),
   autoAdvance: z.boolean().optional(),
   /** Where the text sits next to the picture, or hidden to look at the pictures only. */

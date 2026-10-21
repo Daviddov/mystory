@@ -170,6 +170,7 @@ interface BookRow {
   original_language?: string | null;
   credits?: unknown;
   hero?: unknown;
+  dedication?: string | null;
   pages?: PageRow[] | null;
 }
 
@@ -287,6 +288,7 @@ const BOOK_COLUMN_OF: Record<keyof Book, string> = {
   originalLanguage: "original_language",
   credits: "credits",
   hero: "hero",
+  dedication: "dedication",
 };
 
 const BOOK_COLUMNS = Object.values(BOOK_COLUMN_OF).join(",");
@@ -381,6 +383,7 @@ function bookObjectFromRow(row: BookRow): Record<string, unknown> {
     originalLanguage: row.original_language,
     credits: row.credits,
     hero: row.hero,
+    dedication: row.dedication,
   });
 }
 
@@ -620,7 +623,18 @@ export class SupabaseRepository implements Repository {
     if ((statuses && statuses.length === 0) || (ids && ids.length === 0)) return { books: [], total: 0 };
 
     const build = (head: boolean) => {
-      let query = this.db.from("books").select(BOOK_COLUMNS, { count: "exact", head });
+      // Inner embeds keep only books with a matching page (the embed itself is not used).
+      const embeds = [
+        filter.hasAudio ? "has_audio:pages!inner(page_index)" : "",
+        filter.hasNikud ? "has_nikud:pages!inner(page_index)" : "",
+        filter.hasAnimation ? "has_video:pages!inner(page_index)" : "",
+      ].filter(Boolean);
+      let query = this.db
+        .from("books")
+        .select([BOOK_COLUMNS, ...embeds].join(","), { count: "exact", head });
+      if (filter.hasAudio) query = query.not("has_audio.audio", "is", null);
+      if (filter.hasNikud) query = query.not("has_nikud.text_nikud", "is", null).neq("has_nikud.text_nikud", "");
+      if (filter.hasAnimation) query = query.not("has_video.video", "is", null);
       if (statuses) query = query.in("status", statuses);
       if (ids) query = query.in("id", ids);
       if (excluded.length > 0) query = query.not("id", "in", `(${excluded.join(",")})`);
@@ -628,6 +642,7 @@ export class SupabaseRepository implements Repository {
       if (filter.category) query = query.contains("categories", arrayLiteral(filter.category));
       if (filter.theme) query = query.contains("themes", arrayLiteral(filter.theme));
       if (filter.tag) query = query.contains("tag_slugs", arrayLiteral(tagSlug(filter.tag)));
+      if (filter.author !== undefined) query = query.eq("author", filter.author);
       if (filter.ownerId) query = query.eq("owner_id", filter.ownerId);
       if (filter.origin) query = query.eq("origin", filter.origin);
       switch (filter.timeBucket) {
@@ -669,6 +684,10 @@ export class SupabaseRepository implements Repository {
         break;
       case "updated":
         query = query.order("updated_at", { ascending: false });
+        break;
+      case "author":
+        // author_sort is null without an author (migration 20261023000000), so those come last.
+        query = query.order("author_sort", { ascending: true, nullsFirst: false }).order("title", { ascending: true });
         break;
       default:
         query = query.order("sort_date", { ascending: false }).order("title", { ascending: true });

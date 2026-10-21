@@ -196,6 +196,8 @@ export const BookSchema = z.object({
   originalLanguage: BookLanguageSchema.optional(),
   credits: BookCreditsSchema.optional(),
   hero: BookHeroSchema.optional(),
+  /** A personal dedication shown on the start screen ("לנועם, באהבה, סבתא"). */
+  dedication: z.string().max(200).optional(),
 });
 export type Book =z.infer<typeof BookSchema>;
 

@@ -473,6 +473,7 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
       themes: Array.from(new Set(meta.themes.filter((slug) => THEME_SLUGS.includes(slug)))).slice(0, 3),
       discussionQuestions: clampList(meta.discussionQuestions, 4, 200),
       origin: "ai",
+      ...(input.dedication ? { dedication: input.dedication } : {}),
       // The studio redraws pages from this hero.
       hero: { description: character, style: input.style, image: characterPath },
       ...(cost.value() !== undefined ? { costUsd: cost.value() } : {}),

@@ -59,6 +59,7 @@ function toInput(request: WriteStoryRequest): WizardInput {
     childGender: request.heroGender ?? "boy",
     hobbies: [],
     appearance: "",
+    dedication: "",
     idea: cleanFreeText(request.idea),
     ageGroup: request.ageGroup,
     category: request.category ?? "adventures",

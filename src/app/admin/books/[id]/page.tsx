@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AnimationPanel } from "@/components/admin/AnimationPanel";
 import { BookRowActions } from "@/components/admin/BookRowActions";
+import { PushToSupabasePanel } from "@/components/admin/PushToSupabasePanel";
 import { ReviewActions } from "@/components/admin/ReviewActions";
 import { StatusChip } from "@/components/admin/StatusChip";
 import { MockNotice } from "@/components/MockNotice";
@@ -10,6 +11,7 @@ import { animateBook, animationLicenseCheck, type BookAnimationSummary } from "@
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
+import { isBookPushAvailable } from "@/lib/sync/push-book";
 import { ageGroupLabel, categoryLabel, readingTimeLabel, themeLabel } from "@/lib/taxonomy";
 import { IdSchema, SYSTEM_OWNER_ID } from "@/lib/types";
 import { requireAdminPage } from "../../_lib/guard";
@@ -119,6 +121,13 @@ export default async function AdminBookPreviewPage({ params }: { params: Promise
           canWaiveCredits={viewer.role === "admin"}
         />
       </Card>
+
+      {viewer.role === "admin" && (await isBookPushAvailable()) && (
+        <Card className="flex flex-col gap-4">
+          <CardTitle>עדכון ב-Supabase</CardTitle>
+          <PushToSupabasePanel bookId={book.id} />
+        </Card>
+      )}
 
       <Card className="flex flex-col gap-4">
         <CardTitle>הנפשת איורים</CardTitle>

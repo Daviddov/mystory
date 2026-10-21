@@ -42,13 +42,17 @@ export interface LibraryQuery {
   time?: ReadingTimeBucket;
   tag?: string;
   q?: string;
+  /** Only books with narration / vocalized text / animated pages. */
+  audio?: true;
+  nikud?: true;
+  anim?: true;
   sort: LibrarySort;
   /** 1-based. */
   page: number;
 }
 
-export type LibraryFilterKey = "age" | "category" | "theme" | "time" | "tag" | "q";
-export const FILTER_KEYS: readonly LibraryFilterKey[] = ["age", "category", "theme", "time", "tag", "q"];
+export type LibraryFilterKey = "age" | "category" | "theme" | "time" | "tag" | "q" | "audio" | "nikud" | "anim";
+export const FILTER_KEYS: readonly LibraryFilterKey[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim"];
 
 const trimmed = (max: number) =>
   z
@@ -58,6 +62,12 @@ const trimmed = (max: number) =>
 
 const oneOf = (allowed: readonly string[]) => z.string().refine((value) => allowed.includes(value));
 
+const flag = z
+  .literal("1")
+  .transform((): true => true)
+  .optional()
+  .catch(undefined);
+
 const LibraryQuerySchema = z.object({
   age: z.enum(AGE_GROUPS).optional().catch(undefined),
   category: oneOf(CATEGORY_SLUGS).optional().catch(undefined),
@@ -65,6 +75,9 @@ const LibraryQuerySchema = z.object({
   time: oneOf(READING_TIME_SLUGS).optional().catch(undefined),
   tag: trimmed(MAX_TAG_LENGTH).optional().catch(undefined),
   q: trimmed(MAX_QUERY_LENGTH).optional().catch(undefined),
+  audio: flag,
+  nikud: flag,
+  anim: flag,
   sort: z
     .enum(SORT_OPTIONS.map((option) => option.value) as [LibrarySort, ...LibrarySort[]])
     .catch(DEFAULT_SORT),
@@ -86,6 +99,9 @@ export function parseLibraryQuery(raw: RawSearchParams | undefined | null): Libr
     time: first(source.time),
     tag: first(source.tag),
     q: first(source.q),
+    audio: first(source.audio),
+    nikud: first(source.nikud),
+    anim: first(source.anim),
     sort: first(source.sort) ?? DEFAULT_SORT,
     page: first(source.page) ?? 1,
   });
@@ -105,6 +121,9 @@ export function toBookFilter(query: LibraryQuery, base: BookFilter = {}, pageSiz
     timeBucket: query.time,
     tag: query.tag,
     query: query.q,
+    hasAudio: query.audio,
+    hasNikud: query.nikud,
+    hasAnimation: query.anim,
     ...base,
     status: "published",
     sort: query.sort,
@@ -122,6 +141,9 @@ export function toParams(query: Partial<LibraryQuery>): Record<string, string | 
     time: query.time,
     tag: query.tag,
     q: query.q,
+    audio: query.audio ? "1" : undefined,
+    nikud: query.nikud ? "1" : undefined,
+    anim: query.anim ? "1" : undefined,
     sort: query.sort && query.sort !== DEFAULT_SORT ? query.sort : undefined,
     page: query.page && query.page > 1 ? query.page : undefined,
   };
@@ -170,6 +192,9 @@ export function describeActiveFilters(query: LibraryQuery): ActiveFilter[] {
   if (query.time) active.push({ key: "time", label: getReadingTimeBucket(query.time)?.label ?? query.time });
   if (query.theme) active.push({ key: "theme", label: `נושא: ${themeLabel(query.theme)}` });
   if (query.tag) active.push({ key: "tag", label: `תגית: ${query.tag}` });
+  if (query.audio) active.push({ key: "audio", label: "עם השמעה", emoji: "🔊" });
+  if (query.nikud) active.push({ key: "nikud", label: "עם ניקוד", emoji: "אָ" });
+  if (query.anim) active.push({ key: "anim", label: "עם הנפשות", emoji: "🎬" });
   return active;
 }
 

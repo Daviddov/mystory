@@ -16,7 +16,17 @@ export const adminPaths = {
   home: () => base,
   queue: () => `${base}/queue`,
   pipeline: (view?: string) => withQuery(`${base}/pipeline`, { view }),
-  books: (params: { q?: string; status?: string; page?: number } = {}) => withQuery(`${base}/books`, params),
+  books: (
+    params: {
+      q?: string;
+      status?: string;
+      author?: string;
+      sort?: string;
+      audio?: string; nikud?: string;
+      anim?: string;
+      page?: number;
+    } = {},
+  ) => withQuery(`${base}/books`, params),
   book: (id: string) => `${base}/books/${encodeURIComponent(id)}`,
   collections: () => `${base}/collections`,
   taxonomy: () => `${base}/taxonomy`,
@@ -29,6 +39,7 @@ export const adminApi = {
   booksBulk: () => "/api/admin/books/bulk",
   bookReview: (id: string) => `/api/admin/books/${encodeURIComponent(id)}/review`,
   bookAnimate: (id: string) => `/api/admin/books/${encodeURIComponent(id)}/animate`,
+  bookPush: (id: string) => `/api/admin/books/${encodeURIComponent(id)}/push`,
   recordingReview: (id: string) => `/api/admin/recordings/${encodeURIComponent(id)}/review`,
   collections: () => "/api/admin/collections",
   collection: (id: string) => `/api/admin/collections/${encodeURIComponent(id)}`,

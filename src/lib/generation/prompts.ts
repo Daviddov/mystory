@@ -12,7 +12,7 @@
 import { z } from "zod";
 import { CATEGORIES, THEMES, categoryLabel } from "../taxonomy";
 import type { WizardInput } from "./input";
-import { AGE_WRITING_RULES } from "./options";
+import { AGE_WRITING_RULES, getStoryMood } from "./options";
 import { illustrationDirection } from "./presets";
 import { SEUSS_PRINCIPLES, SEUSS_REVIEW_NOTE } from "./seuss";
 
@@ -93,12 +93,14 @@ const HEBREW_RULES =
   "Use correct grammatical gender for the hero throughout. Do not use English words or emoji in the story text.";
 
 function parentRequestBlock(input: WizardInput): string {
+  const mood = input.mood ? getStoryMood(input.mood) : undefined;
   const data = {
     heroName: input.childName,
     heroGender: input.childGender === "girl" ? "girl (feminine Hebrew forms)" : "boy (masculine Hebrew forms)",
     heroAge: input.childAge ?? null,
     hobbies: input.hobbies,
     storyIdea: input.idea,
+    ...(mood ? { desiredTone: mood.tone } : {}),
   };
   return `<parent_request>\n${JSON.stringify(data, null, 2)}\n</parent_request>`;
 }

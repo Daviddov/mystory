@@ -11,7 +11,7 @@ const TEXT_LAYOUTS: { value: TextLayout; label: string }[] = [
   { value: "hidden", label: "בלי טקסט" },
 ];
 
-const RATE_LABELS: Record<number, string> = { 0.75: "לאט", 1: "רגיל", 1.25: "מהר" };
+const RATE_LABELS: Record<number, string> = { 0.9: "לאט", 1: "רגיל", 1.1: "מהר" };
 
 export function rateLabel(rate: number): string {
   return RATE_LABELS[rate] ?? `×${rate}`;

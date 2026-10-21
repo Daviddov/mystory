@@ -15,12 +15,8 @@ export type CreditBook = Pick<
 export const LANGUAGE_NAMES_HE: Record<BookLanguage, string> = { he: "עברית", en: "אנגלית" };
 export const LANGUAGE_NAMES_EN: Record<BookLanguage, string> = { he: "Hebrew", en: "English" };
 
-/**
- * The translator credit of a machine translation when no person was named.
- * It does not say "edited": nobody has edited the text at that moment. Whoever
- * reviews the translation puts their own name in the field.
- */
-export const MACHINE_TRANSLATOR_CREDIT = "הסיפור שלי (תרגום מכונה)";
+/** The translator credit of a translation when no other person was named. */
+export const MACHINE_TRANSLATOR_CREDIT = "Dov Bar";
 
 /**
  * The public deed of a Creative Commons license named like "CC BY 4.0",

@@ -39,6 +39,7 @@ const ASSUME_YES = args.has("--yes");
 const NO_DELETE = args.has("--no-delete");
 const DEEP = args.has("--deep");
 const FORCE = args.has("--force");
+const INCLUDE_UNPUBLISHED = args.has("--include-unpublished");
 
 /** Owner of the library's own books; anything else belongs to a site user. */
 const SYSTEM_OWNER = "system";
@@ -58,7 +59,7 @@ function stable(value: unknown): string {
     if (v && typeof v === "object" && !Array.isArray(v)) {
       return Object.fromEntries(
         Object.entries(v as Record<string, unknown>)
-          .filter(([, x]) => x !== undefined)
+          .filter(([, x]) => x !== undefined && x !== null)
           .sort(([a], [b]) => a.localeCompare(b)),
       );
     }
@@ -94,6 +95,18 @@ interface BookUpdate {
   pages: number[];
 }
 
+/** Supabase answers "Too many connections" under load; wait and try again. */
+async function retry<T>(fn: () => Promise<T>, attempts = 10): Promise<T> {
+  for (let i = 1; ; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (i >= attempts) throw err;
+      await new Promise((r) => setTimeout(r, 3000 * i));
+    }
+  }
+}
+
 async function confirm(question: string): Promise<boolean> {
   const rl = createInterface({ input: process.stdin, output: process.stdout });
   try {
@@ -125,7 +138,16 @@ async function main(): Promise<void> {
   const toUpdate: BookUpdate[] = [];
   const newerRemote: BookWithPages[] = [];
   let same = 0;
-  for (const book of localBooks.values()) {
+  // Only approved books are sent to Supabase: a local book that is not
+  // published is skipped unless Supabase already has it (then its status and
+  // content are still updated, e.g. when it was un-published locally).
+  const syncBooks = [...localBooks.values()].filter(
+    (b) => INCLUDE_UNPUBLISHED || b.status === "published" || b.status === "private" || remoteBooks.has(b.id),
+  );
+  console.log(
+    `${syncBooks.length} of ${localBooks.size} local books are in scope (published, private, or already in Supabase).`,
+  );
+  for (const book of syncBooks) {
     const existing = remoteBooks.get(book.id);
     if (!existing) {
       toCreate.push(book);
@@ -149,10 +171,10 @@ async function main(): Promise<void> {
   const mediaDelete: string[] = [];
   const mediaChanged: string[] = [];
   let mediaSame = 0;
-  for (const book of localBooks.values()) {
+  for (const book of syncBooks) {
     const prefix = bookMediaPrefix(book.id);
     const localPaths = await localMedia.list(prefix);
-    const remotePaths = new Set(await remoteMedia.list(prefix));
+    const remotePaths = new Set(await retry(() => remoteMedia.list(prefix)));
     for (const path of localPaths) {
       if (!remotePaths.has(path)) {
         mediaUpload.push(path);
@@ -254,7 +276,7 @@ async function main(): Promise<void> {
     for (const path of paths) {
       const object = await localMedia.get(path);
       if (!object) continue;
-      await remoteMedia.put(path, object.bytes, contentTypeForPath(path));
+      await retry(() => remoteMedia.put(path, object.bytes, contentTypeForPath(path)));
     }
   };
   await putMedia([...mediaUpload, ...mediaChanged]);

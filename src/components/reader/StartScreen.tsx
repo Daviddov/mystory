@@ -8,6 +8,8 @@ import { Button } from "@/components/ui";
 export interface StartScreenProps {
   title: string;
   author?: string;
+  /** Personal dedication, shown under the title. */
+  dedication?: string;
   /** Cover URL, already resolved through mediaUrl. */
   cover: string;
   /** Saved position to continue from (zero-based), shown on the read button. */
@@ -25,6 +27,7 @@ export interface StartScreenProps {
 export function StartScreen({
   title,
   author,
+  dedication,
   cover,
   resumePage,
   onRead,
@@ -68,6 +71,9 @@ export function StartScreen({
             {title}
           </h2>
           {author ? <p className="mt-1 text-lg text-muted">{author}</p> : null}
+          {dedication ? (
+            <p className="mt-3 text-xl font-semibold italic leading-relaxed text-foreground">{dedication}</p>
+          ) : null}
         </div>
         <div className="flex w-full flex-col gap-3">
           <Button size="lg" className="min-h-16 w-full text-2xl shadow-lift" autoFocus onClick={onRead}>

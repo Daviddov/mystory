@@ -133,7 +133,7 @@ export interface BookPlayerProps {
 }
 
 /** Width / height up to which a picture counts as square or tall and gets the text beside it. */
-const SIDE_BY_SIDE_MAX_RATIO = 1.2;
+const SIDE_BY_SIDE_MAX_RATIO = 2;
 
 const READER_CSS = `
 @keyframes mystory-reader-page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -154,7 +154,7 @@ const READER_CSS = `
 }
 @media (orientation: landscape) and (max-height: 560px) {
   .mystory-reader-spread { flex-direction: row; }
-  .mystory-reader-text { max-height: 100%; width: 50%; }
+  .mystory-reader-text { max-height: 100%; width: 33%; }
 }
 @keyframes mystory-reader-ambient-in { from { opacity: 0; } }
 .mystory-reader-ambient { animation: mystory-reader-ambient-in 0.6s ease-out; }
@@ -966,8 +966,10 @@ function Player({
           <div
             key={index}
             className={cn(
-              "mystory-reader-spread flex h-full min-h-0 flex-col items-center gap-3 px-4 py-3 sm:px-28",
+              "mystory-reader-spread flex h-full min-h-0 flex-col items-center gap-2 px-2 py-1 sm:px-24",
               sideBySide && "sm:flex-row sm:gap-6",
+              // The floating controls sit over the bottom edge; keep stacked text clear of them.
+              !sideBySide && showImage && showText && "pb-28",
               tallPicture && "mystory-reader-tall",
             )}
             style={tallPicture ? ({ "--mystory-img-ratio": imageRatio } as CSSProperties) : undefined}
@@ -1044,7 +1046,7 @@ function Player({
                   showImage
                     ? "mystory-reader-text shrink-0 rounded-[1.5rem] bg-surface/80 px-4 py-2 shadow-card ring-1 ring-border/60 backdrop-blur-md sm:px-6"
                     : "flex min-h-0 flex-1 flex-col justify-center",
-                  sideBySide && "mystory-reader-text-beside sm:w-1/2 sm:max-w-2xl sm:shrink",
+                  sideBySide && "mystory-reader-text-beside sm:w-1/3 sm:max-w-md sm:shrink-0",
                 )}
               >
                 <StoryText
@@ -1151,8 +1153,8 @@ function Player({
         />
       ) : null}
       {!atEnd && !recordMode ? (
-        <footer className="flex shrink-0 items-center justify-center px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-1 sm:px-6">
-          <div className="flex min-w-0 flex-col items-center gap-1.5">
+        <footer className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-center justify-center px-3 pb-[max(0.375rem,env(safe-area-inset-bottom))] pt-0.5 sm:px-6">
+          <div className="pointer-events-auto flex min-w-0 flex-col items-center gap-1.5">
             <div
               className={cn(
                 "flex items-center gap-2",
@@ -1242,6 +1244,7 @@ function Player({
         <StartScreen
           title={book.title}
           author={book.author}
+          dedication={book.dedication}
           cover={mediaUrl(book.coverImage, book.updatedAt, shareToken)}
           resumePage={index}
           onRead={() => setChoosing(false)}

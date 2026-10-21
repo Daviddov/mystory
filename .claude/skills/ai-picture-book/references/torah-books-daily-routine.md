@@ -98,3 +98,18 @@ Result: sheets of 1024x768, four panels of ~500x380, clean cartoon style (differ
 coverings mostly present. Measured limit: **13 sheets (~50 pictures)**, then "הגעת למכסה של יצירת התמונות ... המכסה תתאפס ב-Oct 18, 8:16 AM".
 Quota windows differ per tool: Gemini ~08:16, AI Studio ~10:00, ChatGPT ~21:00 (rolling). The Gemini run goes through the queue from the END
 (chazal books first); ChatGPT goes from the start.
+2026-10-21 run: limit again after **20 sheets**, now in English: "Sorry, I can't generate more images for you today, but come back tomorrow"
+(no reset time; the driver's limitText now matches it). Seen in this run: a finished picture can arrive as a direct
+`lh3.googleusercontent.com` URL instead of a blob (canvas is tainted): clicking the picture turns it into a blob that can be saved;
+a reply can hang in "generating" (stop button, no send button): stop it, reload the chat and re-paste the driver.
+The ChatGPT run also takes books from the end and does not check progress.json, so the same book can get done twice (the later attach wins).
+
+
+## Lessons from 2026-10-21
+- ChatGPT: after "New chat" the old (hidden) composer stays in the DOM; pick the *visible* `.ProseMirror` and Send button
+  (filter by `getBoundingClientRect().width > 0`), otherwise the send fails with "no send button". Limit hit after 23 grids (22:00, reset next day 20:28).
+- ElevenLabs: grid 2+ prompts ("Great, the same again ... Same style.") must be made standalone with grid 1's style (no chat memory);
+  the history page lazy-loads old cards, so only accept a result whose `alt` starts like the prompt. Both are now in `elevenlabs-driver.js`.
+  Daily limit came after 2 generations this time.
+- AI Studio flash-lite-image: fine for short 2x2/3-panel sheets of simple scenes, but on a long prompt it wrote the prompt text into panels
+  as captions and dropped head coverings (parasha-chukat-og): leave such books for ChatGPT. A single-picture prompt is the cleanest way to replace one bad page.

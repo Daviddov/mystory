@@ -15,6 +15,7 @@ import { FavoriteButton } from "@/components/personal/FavoriteButton";
 import { StarRating } from "@/components/personal/StarRating";
 import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { ShareButtons } from "@/components/ShareButtons";
+import { BookVideoButton } from "@/components/video/BookVideoButton";
 import { ButtonLink, Card, Chip } from "@/components/ui";
 import { canViewBook } from "@/lib/auth";
 import { toCommentView } from "@/lib/comments";
@@ -320,6 +321,21 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
                     הדפסה ו-PDF
                   </ButtonLink>
                   <OfflineDownloadButton bookId={book.id} title={book.title} />
+                  {book.status === "published" ? (
+                    <BookVideoButton
+                      title={plainText(book.title)}
+                      slug={book.slug}
+                      coverImage={book.coverImage}
+                      version={book.updatedAt}
+                      pages={book.pages.map(({ text, textNikud, image, audio, audioSource }) => ({
+                        text,
+                        textNikud,
+                        image,
+                        audio,
+                        audioSource,
+                      }))}
+                    />
+                  ) : null}
                 </>
               ) : null}
             </div>
@@ -366,7 +382,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
           {book.origin === "ai" ? (
             <p className="rounded-md bg-surface-2 px-4 py-3 text-base">
               <span aria-hidden="true">✨ </span>
-              הספר הזה נוצר בעזרת בינה מלאכותית.
+              הספר הזה נוצר על ידי דב בר
             </p>
           ) : null}
         </Card>

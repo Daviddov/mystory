@@ -39,8 +39,9 @@ describe("presets", () => {
     expect(getRulePack("jewish-story")?.prompt).toMatch(/ALWAYS has his head covered/);
   });
 
-  it("keeps the wizard's five original slugs", () => {
-    expect([...STORY_STYLE_SLUGS]).toEqual(["watercolor", "paper-cut", "3d-animation", "crayon", "classic-storybook"]);
+  it("offers every illustration style in the wizard, the five original slugs first", () => {
+    expect([...STORY_STYLE_SLUGS].slice(0, 5)).toEqual(["watercolor", "paper-cut", "3d-animation", "crayon", "classic-storybook"]);
+    expect([...STORY_STYLE_SLUGS].sort()).toEqual(ILLUSTRATION_STYLES.map((s) => s.slug).sort());
     expect(STORY_STYLES.map((s) => s.slug)).toEqual([...STORY_STYLE_SLUGS]);
     expect(getStoryStyle("crayon")?.prompt).toBe(getIllustrationStyle("crayon")?.prompt);
   });

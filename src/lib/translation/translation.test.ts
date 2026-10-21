@@ -159,8 +159,7 @@ describe("book translation", () => {
     await translateBook({ repo: data.repo, text: fakeProvider([goodOutput()]) }, book.id);
     const stored = await data.repo.getBookById(book.id);
     expect(stored?.credits?.translator).toBe(MACHINE_TRANSLATOR_CREDIT);
-    expect(stored?.credits?.translator).toMatch(/תרגום מכונה/);
-    expect(stored?.credits?.adaptation).toBe(`Translation into Hebrew by ${MACHINE_TRANSLATOR_CREDIT}`);
+      expect(stored?.credits?.adaptation).toBe(`Translation into Hebrew by ${MACHINE_TRANSLATOR_CREDIT}`);
   });
 
   it("retries once when the page count is wrong, telling the model what was wrong", async () => {

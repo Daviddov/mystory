@@ -23,7 +23,7 @@ import type {
 } from "../types";
 import type { ReadingTimeBucket } from "../taxonomy";
 
-export type BookSort = "new" | "popular" | "title" | "updated";
+export type BookSort = "new" | "popular" | "title" | "updated" | "author";
 
 export interface BookFilter {
   /**
@@ -39,6 +39,14 @@ export interface BookFilter {
   /** Discussion theme slug. */
   theme?: string;
   timeBucket?: ReadingTimeBucket;
+  /** Exact author as stored; '' matches books without an author. */
+  author?: string;
+  /** Only books where at least one page has narration audio. */
+  hasAudio?: boolean;
+  /** Only books where at least one page has vocalized text. */
+  hasNikud?: boolean;
+  /** Only books where at least one page has an animation clip. */
+  hasAnimation?: boolean;
   ownerId?: string;
   origin?: BookOrigin;
   /** Free text; matches title, summary, author, illustrator, tags and category/theme labels. Nikud-insensitive. */

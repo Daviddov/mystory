@@ -20,7 +20,7 @@ window.sendGem = async (text) => {
 };
 window.gstate = { old: new Set() };
 window.startGrid = async (book, i) => { const g = JSON.parse(await getFile("grids-" + book + ".json"))[i]; gstate.old = new Set(imgs().map((x) => x.src)); return [await sendGem(g.prompt), g.names.join(","), g.grid]; };
-window.limitText = () => { const t = document.body.innerText.slice(-700); const m = t.match(/(reached|exceeded|הגעת|חרגת)[^.]{0,70}(limit|מגבלה|מכסה|תמונות)[^.]*\./i); return m ? m[0] : null; };
+window.limitText = () => { const t = document.body.innerText.slice(-700); const m = t.match(/(reached|exceeded|הגעת|חרגת)[^.]{0,70}(limit|מגבלה|מכסה|תמונות)[^.]*\./i) || t.match(/can.t generate more images[^.]*\./i); return m ? m[0] : null; };
 window.finishGrid = async (fname, ms = 34000) => {
   const t = Date.now(); let fresh = [];
   while (Date.now() - t < ms) { fresh = imgs().filter((i) => !gstate.old.has(i.src) && i.complete); if (fresh.length) break; await new Promise((r) => setTimeout(r, 2000)); }

@@ -7,9 +7,9 @@ import { PLAYBACK_RATES } from "@/lib/reader/logic";
 import { rateLabel } from "./ReaderSettings";
 
 const ICONS: Record<number, ReactNode> = {
-  0.75: <Turtle aria-hidden="true" className="size-6" />,
+  0.9: <Turtle aria-hidden="true" className="size-6" />,
   1: <span className="text-base font-bold">1×</span>,
-  1.25: <Rabbit aria-hidden="true" className="size-6" />,
+  1.1:<Rabbit aria-hidden="true" className="size-6" />,
 };
 
 export interface SpeedControlProps {

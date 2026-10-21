@@ -8,11 +8,28 @@ import type { AgeGroup } from "../types";
 import { ILLUSTRATION_STYLES } from "./presets";
 
 /**
- * The wizard offers only the five original general styles; the Jewish house
- * styles and the newer general ones are chosen in the studio (they live in
- * ILLUSTRATION_STYLES, see presets.ts). Slugs and shape are unchanged.
+ * The wizard offers every style in ILLUSTRATION_STYLES (see presets.ts). The
+ * five original slugs come first, in their original order; keep this list in
+ * sync with presets.ts (a test checks it).
  */
-const WIZARD_STYLE_SLUGS = ["watercolor", "paper-cut", "3d-animation", "crayon", "classic-storybook"] as const;
+const WIZARD_STYLE_SLUGS = [
+  "watercolor",
+  "paper-cut",
+  "3d-animation",
+  "crayon",
+  "classic-storybook",
+  "3d-clay",
+  "3d-plush",
+  "3d-miniature",
+  "3d-vinyl",
+  "seuss-ink",
+  "rey-gouache",
+  "soft-pastel",
+  "cozy-collage",
+  "biblical",
+  "sages",
+  "modern-israel",
+] as const;
 
 export type StoryStyle = (typeof WIZARD_STYLE_SLUGS)[number];
 
@@ -24,8 +41,32 @@ export const STORY_STYLES: readonly { slug: StoryStyle; label: string; emoji: st
 
 export const STORY_STYLE_SLUGS = [...WIZARD_STYLE_SLUGS] as [StoryStyle, ...StoryStyle[]];
 
+/** The styles the daily story rotates through (the Jewish house styles are never picked at random). */
+export const DAILY_STYLE_SLUGS: readonly StoryStyle[] = ["watercolor", "paper-cut", "3d-animation", "crayon", "classic-storybook"];
+
 export function getStoryStyle(slug: string) {
   return STORY_STYLES.find((s) => s.slug === slug);
+}
+
+/**
+ * The feeling a story should leave the child with. Picking one in step 2 fills
+ * the idea box with a starting idea (editable) and tells the writer which tone
+ * to aim for. `tone` is English guidance for the model; label and idea are shown.
+ */
+export const STORY_MOODS = [
+  { slug: "sleep", emoji: "🌙", label: "לילה טוב", idea: "הלילה שבו הירח נעלם", tone: "A slow, soothing bedtime story: calm rhythm, soft imagery, repeated gentle phrases, and an ending where the hero feels safe and falls asleep." },
+  { slug: "courage", emoji: "🦁", label: "אומץ", idea: "דרקון קטן שמפחד מאש", tone: "A story about finding inner courage: a small, gentle fear faced step by step, a warm victory, and pride at the end." },
+  { slug: "confidence", emoji: "🌟", label: "ביטחון עצמי", idea: "הכוח המיוחד שהיה שם כל הזמן", tone: "A story about believing in yourself: the hero discovers a strength they already had, and others notice it kindly." },
+  { slug: "new-sibling", emoji: "🍼", label: "אח או אחות חדשים", idea: "אח קטן חדש מגיע הביתה", tone: "A reassuring story about a new baby in the family: mixed feelings are named gently, and the hero keeps a special place and role." },
+  { slug: "friendship", emoji: "🤝", label: "חברות", idea: "חבר חדש בגן", tone: "A story about making friends and sharing: a small misunderstanding, an apology or kind gesture, and a joyful ending together." },
+  { slug: "adventure", emoji: "🚀", label: "הרפתקה", idea: "מסע לחלל בחללית מקרטון", tone: "A playful adventure full of imagination and surprises, with a safe, happy return home." },
+] as const;
+
+export type StoryMood = (typeof STORY_MOODS)[number]["slug"];
+export const STORY_MOOD_SLUGS = STORY_MOODS.map((m) => m.slug) as unknown as [StoryMood, ...StoryMood[]];
+
+export function getStoryMood(slug: string) {
+  return STORY_MOODS.find((m) => m.slug === slug);
 }
 
 /** Suggestion chips for step 2. Picking one fills the idea box; it stays editable. */

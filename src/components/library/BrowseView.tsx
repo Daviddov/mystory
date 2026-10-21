@@ -131,7 +131,11 @@ export async function BrowseView({
 
         <BookGrid
           books={listing.books}
-          cardProps={(book) => (isNewBook(book, listing.now) ? { badge: "חדש" } : {})}
+          cardProps={(book) => ({
+            showTags: true,
+            hideTag: base.tag,
+            ...(isNewBook(book, listing.now) ? { badge: "חדש" } : {}),
+          })}
           empty={
             <EmptyState
               title={emptyTitle}

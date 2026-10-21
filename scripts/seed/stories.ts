@@ -57,7 +57,7 @@ const garden: SeedStory = {
   tags: ["גינה", "חתולים", "ציפורים", "צבעים"],
   themes: ["curiosity"],
   discussionQuestions: ["איזו חיה מצאנו על הפרח?", "איפה עוד אפשר להתחבא בגינה?", "איזה קול עושה הצפרדע?"],
-  viewCount: 148,
+  viewCount: 0,
   publishedAt: "2026-09-02T07:00:00.000Z",
   cover: a.cover(
     "מי מתחבא בגינה?",
@@ -131,7 +131,7 @@ const star: SeedStory = {
   tags: ["שינה", "לילה", "ירח", "כוכבים"],
   themes: ["feelings"],
   discussionQuestions: ["למי הכוכב אמר לילה טוב?", "למי אנחנו רוצים לומר לילה טוב היום?"],
-  viewCount: 231,
+  viewCount: 0,
   publishedAt: "2026-09-09T07:00:00.000Z",
   cover: a.cover(
     "הכוכב הקטן הולך לישון",
@@ -213,7 +213,7 @@ const snail: SeedStory = {
     "מתי עזרת למישהו גם כשמיהרת?",
     "מה החברים עשו כדי לשמח את שוקי?",
   ],
-  viewCount: 412,
+  viewCount: 0,
   publishedAt: "2026-09-16T07:00:00.000Z",
   cover: a.cover(
     "השבלול שאיחר למסיבה",
@@ -304,7 +304,7 @@ const bootsStory: SeedStory = {
     "מה עוזר לך כשמשהו מפחיד?",
     "איך תמר הרגישה בסוף הסיפור?",
   ],
-  viewCount: 287,
+  viewCount: 0,
   publishedAt: "2026-09-23T07:00:00.000Z",
   cover: a.cover(
     "המגפיים הצהובים של תמר",
@@ -403,7 +403,7 @@ const map: SeedStory = {
     "למה נוגה ענתה לסבתא ״סוד״?",
     "איזה מקום ליד הבית שלכם השתנה מאז שהייתם קטנים?",
   ],
-  viewCount: 356,
+  viewCount: 0,
   publishedAt: "2026-09-30T07:00:00.000Z",
   cover: a.cover(
     "המפה של סבתא רות",
@@ -496,7 +496,7 @@ const robotStory: SeedStory = {
     "האם אפשר ללמד מישהו לצחוק? למה?",
     "מה פירוש ״שגוי וגם נעים״? יש לכם דוגמה?",
   ],
-  viewCount: 198,
+  viewCount: 0,
   publishedAt: "2026-10-07T07:00:00.000Z",
   cover: a.cover(
     "הרובוט שלא ידע לצחוק",
@@ -562,7 +562,7 @@ export const STORIES: SeedStory[] = [garden, star, snail, bootsStory, map, robot
 
 export const SEED_AUTHOR = "מערכת הסיפור שלי";
 export const SEED_ILLUSTRATOR = "מערכת הסיפור שלי";
-export const SEED_LICENSE = "CC BY 4.0";
+export const SEED_LICENSE = "כל הזכויות שמורות. מותר לשימוש אישי";
 export const SEED_SOURCE = "סיפור מקורי שנכתב ואויר במיוחד לאתר, בעזרת בינה מלאכותית";
 
 export const SEED_COLLECTIONS = [

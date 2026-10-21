@@ -28,7 +28,7 @@ const ROOT = path.join(process.cwd(), "scripts", "originals");
 const FOLDERS = ["parasha", "chazal"] as const;
 
 const AUTHOR = "מערכת הסיפור שלי";
-const LICENSE = "CC BY 4.0";
+const LICENSE = "כל הזכויות שמורות. מותר לשימוש אישי";
 const SOURCE = "סיפור מקורי שנכתב במיוחד לאתר, בעזרת בינה מלאכותית";
 
 export const OriginalStorySchema = z

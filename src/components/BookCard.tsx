@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
-import { getAgeGroup, readingTimeLabel } from "@/lib/taxonomy";
+import { getAgeGroup, readingTimeLabel, tagSlug } from "@/lib/taxonomy";
 import type { PublicBook } from "@/lib/public-book";
 
 export interface BookCardProps {
@@ -20,6 +20,10 @@ export interface BookCardProps {
   footer?: ReactNode;
   /** Load the cover eagerly (for the first row of a page). */
   priority?: boolean;
+  /** Show one line of the book's tags under the pills, as many as fit. */
+  showTags?: boolean;
+  /** A tag left out of that line, e.g. the tag of the tag page itself (compared with tagSlug()). */
+  hideTag?: string;
   className?: string;
 }
 
@@ -30,9 +34,12 @@ const AGE_TONES: Record<string, string> = {
 };
 
 /** Cover (3:4), title, and pills for age group and reading time. Works in Server and Client Components. */
-export function BookCard({ book, href, layout = "grid", badge, footer, priority, className }: BookCardProps) {
+export function BookCard({ book, href, layout = "grid", badge, footer, priority, showTags, hideTag, className }: BookCardProps) {
   const age = getAgeGroup(book.ageGroup);
   const cover = mediaUrl(book.coverImage, book.updatedAt);
+  const tags = showTags
+    ? book.tags.filter((tag) => hideTag === undefined || tagSlug(tag) !== tagSlug(hideTag))
+    : [];
   return (
     <article className={cn("group relative flex flex-col", layout === "shelf" && "w-40 shrink-0 sm:w-48", className)}>
       <Link
@@ -77,6 +84,19 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
             {readingTimeLabel(book.readingMinutes)}
           </span>
         </p>
+        {tags.length > 0 ? (
+          // One line: tags that do not fit wrap to a hidden second line.
+          <p className="flex max-h-6 flex-wrap gap-1 overflow-hidden px-0.5" aria-label={`תגיות: ${tags.join(", ")}`}>
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex h-6 items-center rounded-full border border-border px-2 text-xs text-muted"
+              >
+                #{tag}
+              </span>
+            ))}
+          </p>
+        ) : null}
       </Link>
       {href === undefined ? (
         <Link

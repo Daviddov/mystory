@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock, Info } from "lucide-react";
+import { Check, Clock, Headphones, Info } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { mediaUrl } from "@/lib/media/url";
@@ -24,6 +24,8 @@ export interface BookCardProps {
   showTags?: boolean;
   /** A tag left out of that line, e.g. the tag of the tag page itself (compared with tagSlug()). */
   hideTag?: string;
+  /** The signed-in viewer finished this book: shows a check mark on the cover. */
+  read?: boolean;
   className?: string;
 }
 
@@ -34,7 +36,7 @@ const AGE_TONES: Record<string, string> = {
 };
 
 /** Cover (3:4), title, and pills for age group and reading time. Works in Server and Client Components. */
-export function BookCard({ book, href, layout = "grid", badge, footer, priority, showTags, hideTag, className }: BookCardProps) {
+export function BookCard({ book, href, layout = "grid", badge, footer, priority, showTags, hideTag, read, className }: BookCardProps) {
   const age = getAgeGroup(book.ageGroup);
   const cover = mediaUrl(book.coverImage, book.updatedAt);
   const tags = showTags
@@ -60,6 +62,24 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
               📖
             </div>
           )}
+          {book.hasAudio ? (
+            <span
+              title="יש הקראה"
+              className="absolute bottom-2 end-2 inline-flex size-9 items-center justify-center rounded-full bg-surface/90 text-foreground shadow-card backdrop-blur-sm"
+            >
+              <Headphones aria-hidden="true" className="size-5" />
+              <span className="sr-only">יש הקראה</span>
+            </span>
+          ) : null}
+          {read ? (
+            <span
+              title="קראתם את הספר"
+              className="absolute bottom-2 start-2 inline-flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card"
+            >
+              <Check aria-hidden="true" className="size-5" />
+              <span className="sr-only">קראתם את הספר</span>
+            </span>
+          ) : null}
           {badge ? (
             <span className="absolute start-2 top-2 rounded-full bg-accent px-3 py-1 text-sm font-bold text-accent-foreground shadow-card">
               {badge}

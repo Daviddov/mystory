@@ -38,7 +38,7 @@ export const LIVE_PREFIX = "/live";
 export const LOCAL_SESSION_COOKIE = "mystory_session";
 
 /** Query-string keys the library listings read (src/components/library/filters.ts). */
-export const LIBRARY_QUERY_KEYS: readonly string[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim", "sort", "page"];
+export const LIBRARY_QUERY_KEYS: readonly string[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim", "read", "sort", "page"];
 
 /** Library pages that are static for signed-out visitors. */
 const LIBRARY_PAGE = /^\/(?:books|collections|(?:book|age|category|theme|time|tag|collections)\/[^/]+)?$/;

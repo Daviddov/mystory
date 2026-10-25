@@ -1,6 +1,6 @@
 "use client";
 
-import { AArrowDown, AArrowUp, Timer } from "lucide-react";
+import { AArrowDown, AArrowUp, Moon, Timer } from "lucide-react";
 import { Button, Chip, Dialog } from "@/components/ui";
 import { FONT_SIZES_REM, PLAYBACK_RATES, SLEEP_TIMER_MINUTES, formatCountdown } from "@/lib/reader/logic";
 import type { TextLayout } from "@/lib/reader/storage";
@@ -29,6 +29,12 @@ export interface ReaderSettingsProps {
   onLiveImages: (value: boolean) => void;
   /** The device asks for less motion, which keeps the pictures still whatever this setting says. */
   reducedMotion?: boolean;
+  /** The book has a vocalized version; without one the nikud switch is disabled. */
+  nikudAvailable: boolean;
+  nikud: boolean;
+  onNikud: (value: boolean) => void;
+  /** Starts the "listening before sleep" mode: dim theme, narration and a sleep timer. */
+  onBedtimeListen: () => void;
   hasAudio: boolean;
   rate: number;
   onRate: (rate: number) => void;
@@ -51,6 +57,10 @@ export function ReaderSettings({
   liveImages,
   onLiveImages,
   reducedMotion = false,
+  nikudAvailable,
+  nikud,
+  onNikud,
+  onBedtimeListen,
   hasAudio,
   rate,
   onRate,
@@ -98,6 +108,23 @@ export function ReaderSettings({
               <AArrowUp aria-hidden="true" />
             </Button>
           </div>
+        </section>
+
+        <section aria-labelledby="reader-nikud-title">
+          <h3 id="reader-nikud-title" className="mb-2 text-lg font-bold">
+            ניקוד
+          </h3>
+          <label className={`flex min-h-touch items-center gap-3 ${nikudAvailable ? "cursor-pointer" : "opacity-60"}`}>
+            <input
+              type="checkbox"
+              className="size-6 accent-[var(--secondary)]"
+              checked={nikudAvailable && nikud}
+              disabled={!nikudAvailable}
+              onChange={(event) => onNikud(event.target.checked)}
+            />
+            <span>להציג ניקוד</span>
+          </label>
+          {nikudAvailable ? null : <p className="mt-1 text-sm text-muted">לספר הזה אין גרסה מנוקדת.</p>}
         </section>
 
         <section aria-labelledby="reader-layout-title">
@@ -166,6 +193,19 @@ export function ReaderSettings({
             <p className="text-muted">לספר הזה אין עדיין הקראה. אפשר לקרוא אותו יחד בקול.</p>
           )}
         </section>
+
+        {hasAudio ? (
+          <section aria-labelledby="reader-bedtime-title">
+            <h3 id="reader-bedtime-title" className="mb-2 flex items-center gap-2 text-lg font-bold">
+              <Moon aria-hidden="true" className="size-5" />
+              האזנה לפני השינה
+            </h3>
+            <p className="mb-3 text-muted">מצב לילה, הקראה רציפה עם התמונות וטיימר שינה של 30 דקות. הבקרים זמינים גם במסך הנעילה.</p>
+            <Button variant="secondary" onClick={onBedtimeListen}>
+              להתחיל להאזין
+            </Button>
+          </section>
+        ) : null}
 
         <section aria-labelledby="reader-sleep-title">
           <h3 id="reader-sleep-title" className="mb-2 flex items-center gap-2 text-lg font-bold">

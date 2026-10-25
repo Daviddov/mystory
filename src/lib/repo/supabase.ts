@@ -37,6 +37,7 @@ import {
   type Collection,
   type Comment,
   type Favorite,
+  type PlaylistItem,
   type Rating,
   type RatingSummary,
   type WaitlistEntry,
@@ -257,7 +258,7 @@ interface JobRow {
 }
 
 /** Book property -> column. id and createdAt are handled separately. */
-const BOOK_COLUMN_OF: Record<keyof Book, string> = {
+const BOOK_COLUMN_OF: Record<Exclude<keyof Book, "hasAudio">, string> = {
   id: "id",
   slug: "slug",
   title: "title",
@@ -704,6 +705,26 @@ export class SupabaseRepository implements Repository {
       fail("list books", error);
     }
     const books = (data as unknown as BookRow[]).map(bookFromRow).filter((b): b is Book => b !== null);
+    if (books.length > 0) {
+      // Which of these books have narration: the cards show a listen icon.
+      const narrated = new Set<string>();
+      if (filter.hasAudio) {
+        for (const book of books) narrated.add(book.id);
+      } else {
+        const ids = books.map((book) => book.id);
+        for (let from = 0; from < ids.length; from += 200) {
+          const { data: rows, error: audioError } = await this.db
+            .from("pages")
+            .select("book_id")
+            .in("book_id", ids.slice(from, from + 200))
+            .not("audio", "is", null)
+            .limit(5000);
+          if (audioError) fail("list narrated books", audioError);
+          for (const row of (rows ?? []) as unknown as { book_id: string }[]) narrated.add(row.book_id);
+        }
+      }
+      for (const book of books) book.hasAudio = narrated.has(book.id);
+    }
     return { books, total: count ?? books.length };
   }
 
@@ -776,7 +797,8 @@ export class SupabaseRepository implements Repository {
         search_text: searchText(meta, book.pages.map((p) => p.text)),
       };
       for (const [key, value] of Object.entries(meta)) {
-        row[BOOK_COLUMN_OF[key as keyof Book]] = value;
+        const column = (BOOK_COLUMN_OF as Record<string, string | undefined>)[key];
+        if (column) row[column] = value;
       }
 
       const { error } = await this.db.from("books").insert(row);
@@ -825,7 +847,7 @@ export class SupabaseRepository implements Repository {
       search_text: searchText(valid, current.pages.map((p) => p.text)),
     };
     for (const key of Object.keys(patch) as (keyof Book)[]) {
-      const column = BOOK_COLUMN_OF[key];
+      const column = (BOOK_COLUMN_OF as Record<string, string | undefined>)[key];
       if (!column || key === "id" || key === "createdAt" || key === "updatedAt") continue;
       // books.language is NOT NULL (default 'he'): removing the field means Hebrew.
       row[column] = valid[key] ?? (key === "language" ? "he" : null);
@@ -1018,6 +1040,45 @@ export class SupabaseRepository implements Repository {
       .eq("book_id", bookId);
     if (error) fail("read favorite", error);
     return (count ?? 0) > 0;
+  }
+
+  // --- listening playlist ----------------------------------------------------------------
+
+  async addToPlaylist(userId: string, bookId: string): Promise<PlaylistItem> {
+    const { error } = await this.db
+      .from("listen_playlist")
+      .upsert(
+        { user_id: userId, book_id: bookId, created_at: nowIso() },
+        { onConflict: "user_id,book_id", ignoreDuplicates: true },
+      );
+    if (error) {
+      if (error.code === FOREIGN_KEY_VIOLATION) throw new NotFoundError(`book ${bookId}`);
+      fail("add to playlist", error);
+    }
+    const { data, error: readError } = await this.db
+      .from("listen_playlist")
+      .select("user_id,book_id,created_at")
+      .eq("user_id", userId)
+      .eq("book_id", bookId)
+      .maybeSingle();
+    if (readError) fail("read playlist item", readError);
+    if (!data) throw new NotFoundError(`playlist ${userId}/${bookId}`);
+    return favoriteFromRow(data as FavoriteRow);
+  }
+
+  async removeFromPlaylist(userId: string, bookId: string): Promise<void> {
+    const { error } = await this.db.from("listen_playlist").delete().eq("user_id", userId).eq("book_id", bookId);
+    if (error) fail("remove from playlist", error);
+  }
+
+  async listPlaylist(userId: string): Promise<PlaylistItem[]> {
+    const { data, error } = await this.db
+      .from("listen_playlist")
+      .select("user_id,book_id,created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true });
+    if (error) fail("list playlist", error);
+    return (data as FavoriteRow[]).map(favoriteFromRow);
   }
 
   // --- ratings -----------------------------------------------------------------------------

@@ -10,7 +10,7 @@
   "ageGroup": "0-2",
   "readingMinutes": 2,
   "coverImage": "books/seed-star/cover.svg",
-  "status": "published",
+  "status": "draft",
   "ownerId": "system",
   "categories": [
     "bedtime",
@@ -31,9 +31,9 @@
     "למי אנחנו רוצים לומר לילה טוב היום?"
   ],
   "origin": "manual",
-  "viewCount": 0,
+  "viewCount": 1,
   "createdAt": "2026-09-09T07:00:00.000Z",
-  "updatedAt": "2026-10-14T18:46:23.001Z",
+  "updatedAt": "2026-10-25T18:28:16.860Z",
   "publishedAt": "2026-09-09T07:00:00.000Z",
   "pages": [
     {

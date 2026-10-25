@@ -46,13 +46,18 @@ export interface LibraryQuery {
   audio?: true;
   nikud?: true;
   anim?: true;
+  /** Per signed-in user: only books they finished ('read') or have not finished ('unread'). */
+  read?: ReadFilter;
   sort: LibrarySort;
   /** 1-based. */
   page: number;
 }
 
-export type LibraryFilterKey = "age" | "category" | "theme" | "time" | "tag" | "q" | "audio" | "nikud" | "anim";
-export const FILTER_KEYS: readonly LibraryFilterKey[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim"];
+export const READ_FILTERS = ["read", "unread"] as const;
+export type ReadFilter = (typeof READ_FILTERS)[number];
+
+export type LibraryFilterKey = "age" | "category" | "theme" | "time" | "tag" | "q" | "audio" | "nikud" | "anim" | "read";
+export const FILTER_KEYS: readonly LibraryFilterKey[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim", "read"];
 
 const trimmed = (max: number) =>
   z
@@ -78,6 +83,7 @@ const LibraryQuerySchema = z.object({
   audio: flag,
   nikud: flag,
   anim: flag,
+  read: oneOf(READ_FILTERS).optional().catch(undefined),
   sort: z
     .enum(SORT_OPTIONS.map((option) => option.value) as [LibrarySort, ...LibrarySort[]])
     .catch(DEFAULT_SORT),
@@ -102,10 +108,15 @@ export function parseLibraryQuery(raw: RawSearchParams | undefined | null): Libr
     audio: first(source.audio),
     nikud: first(source.nikud),
     anim: first(source.anim),
+    read: first(source.read),
     sort: first(source.sort) ?? DEFAULT_SORT,
     page: first(source.page) ?? 1,
   });
-  return { ...parsed, time: parsed.time as ReadingTimeBucket | undefined };
+  return {
+    ...parsed,
+    time: parsed.time as ReadingTimeBucket | undefined,
+    read: parsed.read as ReadFilter | undefined,
+  };
 }
 
 /**
@@ -144,6 +155,7 @@ export function toParams(query: Partial<LibraryQuery>): Record<string, string | 
     audio: query.audio ? "1" : undefined,
     nikud: query.nikud ? "1" : undefined,
     anim: query.anim ? "1" : undefined,
+    read: query.read,
     sort: query.sort && query.sort !== DEFAULT_SORT ? query.sort : undefined,
     page: query.page && query.page > 1 ? query.page : undefined,
   };
@@ -195,6 +207,9 @@ export function describeActiveFilters(query: LibraryQuery): ActiveFilter[] {
   if (query.audio) active.push({ key: "audio", label: "עם השמעה", emoji: "🔊" });
   if (query.nikud) active.push({ key: "nikud", label: "עם ניקוד", emoji: "אָ" });
   if (query.anim) active.push({ key: "anim", label: "עם הנפשות", emoji: "🎬" });
+  if (query.read) {
+    active.push({ key: "read", label: query.read === "read" ? "ספרים שנקראו" : "ספרים שעוד לא נקראו", emoji: "✅" });
+  }
   return active;
 }
 

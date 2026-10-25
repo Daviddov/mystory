@@ -10,6 +10,8 @@ import { buildHref, parseLibraryQuery, toParams, SORT_OPTIONS, type LibraryQuery
 export interface FilterFormProps {
   /** The query currently shown; used as the initial value of every control. */
   query: LibraryQuery;
+  /** The "read" filter is per user, so it is offered to signed-in visitors only. */
+  signedIn?: boolean;
 }
 
 /**
@@ -17,7 +19,7 @@ export interface FilterFormProps {
  * it works without JavaScript; with JavaScript every select applies at once
  * and the URL stays free of empty parameters.
  */
-export function FilterForm({ query }: FilterFormProps) {
+export function FilterForm({ query, signedIn = false }: FilterFormProps) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
@@ -116,6 +118,17 @@ export function FilterForm({ query }: FilterFormProps) {
           ))}
         </Select>
       </div>
+
+      {signedIn ? (
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="filter-read">סטטוס קריאה</Label>
+          <Select id="filter-read" name="read" defaultValue={query.read ?? ""}>
+            <option value="">הכול</option>
+            <option value="unread">עוד לא נקראו</option>
+            <option value="read">נקראו</option>
+          </Select>
+        </div>
+      ) : null}
 
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="filter-sort">סדר</Label>

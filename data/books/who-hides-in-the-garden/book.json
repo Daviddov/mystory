@@ -10,7 +10,7 @@
   "ageGroup": "0-2",
   "readingMinutes": 2,
   "coverImage": "books/seed-garden/cover.svg",
-  "status": "published",
+  "status": "draft",
   "ownerId": "system",
   "categories": [
     "animals",
@@ -33,9 +33,9 @@
     "איזה קול עושה הצפרדע?"
   ],
   "origin": "manual",
-  "viewCount": 0,
+  "viewCount": 1,
   "createdAt": "2026-09-02T07:00:00.000Z",
-  "updatedAt": "2026-10-21T19:51:56.009Z",
+  "updatedAt": "2026-10-25T18:17:36.792Z",
   "publishedAt": "2026-09-02T07:00:00.000Z",
   "pages": [
     {

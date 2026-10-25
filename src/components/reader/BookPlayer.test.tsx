@@ -187,20 +187,30 @@ describe("BookPlayer", () => {
       pages: [{ index: 0, text: "לילה טוב", textNikud: "לַיְלָה טוֹב" }],
     });
     render(<BookPlayer book={book} />);
-    const toggle = screen.getByRole("button", { name: "ניקוד" });
-    expect(toggle).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(screen.getByRole("button", { name: "הגדרות קריאה" }));
+    const toggle = screen.getByRole("checkbox", { name: "להציג ניקוד" });
+    expect(toggle).toBeChecked();
     expect(screen.getByText("לַיְלָה")).toBeInTheDocument();
     fireEvent.click(toggle);
-    expect(toggle).toHaveAttribute("aria-pressed", "false");
+    expect(toggle).not.toBeChecked();
     expect(screen.getByText("לילה")).toBeInTheDocument();
   });
 
-  it("disables the nikud toggle with an explanation when the book has none", () => {
+  it("disables the nikud switch in the settings when the book has none", () => {
     render(<BookPlayer book={makeBook()} />);
-    const toggle = screen.getByRole("button", { name: "ניקוד" });
-    expect(toggle).toHaveAttribute("aria-disabled", "true");
+    fireEvent.click(screen.getByRole("button", { name: "הגדרות קריאה" }));
+    expect(screen.getByRole("checkbox", { name: "להציג ניקוד" })).toBeDisabled();
+    expect(screen.getByText("לספר הזה אין גרסה מנוקדת.")).toBeInTheDocument();
+  });
+
+  it("hides and shows the text with the header button", () => {
+    render(<BookPlayer book={makeBook()} />);
+    const toggle = screen.getByRole("button", { name: "הצגת הטקסט" });
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
     fireEvent.click(toggle);
-    expect(screen.getByRole("status")).toHaveTextContent("לספר הזה אין גרסה מנוקדת");
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
   });
 
   it("switches a translated book between Hebrew and its original language", () => {
@@ -219,7 +229,6 @@ describe("BookPlayer", () => {
     fireEvent.click(screen.getByRole("button", { name: "להציג את הסיפור באנגלית" }));
     expect(screen.getByText("Good").closest("[lang]")).toHaveAttribute("dir", "ltr");
     expect(screen.getByRole("heading", { name: "Test Book" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "ניקוד" })).not.toBeInTheDocument();
 
     // A page without source text stays in Hebrew.
     fireEvent.click(screen.getByRole("button", { name: "לעמוד הבא" }));

@@ -7,9 +7,11 @@
  * locked or the tab is in the background. The Media Session API puts the
  * story title, cover and play / next / previous controls on the lock screen.
  */
-import { Check, Moon, Pause, Play, SkipBack, SkipForward, Timer } from "lucide-react";
+import { BookOpen, Check, ListMusic, ListPlus, Moon, Pause, Play, SkipBack, SkipForward, Timer } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MockNotice } from "@/components/MockNotice";
+import { ListenWatch } from "./ListenWatch";
+import { setInPlaylist } from "./playlist";
 import { Button, Card, Chip, EmptyState } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { AGE_GROUP_INFO, ageGroupLabel, readingTimeLabel } from "@/lib/taxonomy";
@@ -36,10 +38,15 @@ type Sleep = { mode: "off" } | { mode: "time"; deadline: number; minutes: number
 export interface ListenPlayerProps {
   tracks: ListenTrack[];
   initialAge?: AgeFilter;
+  /** Book ids in the signed-in user's playlist; null when nobody is signed in (no playlist features). */
+  playlistIds?: string[] | null;
 }
 
-export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) {
+export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }: ListenPlayerProps) {
   const [age, setAge] = useState<AgeFilter>(initialAge);
+  const [playlist, setPlaylist] = useState<ReadonlySet<string>>(() => new Set(playlistIds ?? []));
+  // Start on the user's own playlist when it has books.
+  const [mineOnly, setMineOnly] = useState(() => (playlistIds?.length ?? 0) > 0);
   const [position, setPosition] = useState<QueuePosition | null>(null);
   const [playing, setPlaying] = useState(false);
   const [sleep, setSleep] = useState<Sleep>({ mode: "off" });
@@ -48,7 +55,10 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
 
   const [excluded, setExcluded] = useState<ReadonlySet<string>>(new Set());
   // Stories of the chosen age; the queue is those the listener left ticked.
-  const visible = useMemo(() => filterTracks(tracks, age), [tracks, age]);
+  const visible = useMemo(() => {
+    const byAge = filterTracks(tracks, age);
+    return mineOnly ? byAge.filter((track) => playlist.has(track.id)) : byAge;
+  }, [tracks, age, mineOnly, playlist]);
   const queue = useMemo(() => visible.filter((track) => !excluded.has(track.id)), [visible, excluded]);
   const current = position ? (queue[position.track] ?? null) : null;
 
@@ -186,6 +196,32 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
     if (target) playAt(target);
   }, [playAt]);
 
+  /** Id of the book shown with pictures in the reader, or null. */
+  const [watchingId, setWatchingId] = useState<string | null>(null);
+  const startWatching = () => {
+    const target = current ?? queue[0];
+    if (!target) return;
+    audioRef.current?.pause();
+    setWatchingId(target.id);
+  };
+  const stopWatching = () => {
+    const index = queue.findIndex((track) => track.id === watchingId);
+    if (index >= 0) {
+      // The list shows the story that was open; nothing plays until the next tap.
+      const audio = audioRef.current;
+      if (audio) audio.removeAttribute("src");
+      positionRef.current = { track: index, page: 0 };
+      setPosition(positionRef.current);
+    }
+    setWatchingId(null);
+  };
+  const watchNext = () => {
+    const index = queue.findIndex((track) => track.id === watchingId);
+    const target = nextStory(queue, { track: index, page: 0 });
+    if (target) setWatchingId(queue[target.track].id);
+    else setWatchingId(null);
+  };
+
   const chooseAge = (next: AgeFilter) => {
     if (next === age) return;
     const audio = audioRef.current;
@@ -198,6 +234,40 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
     setPlaying(false);
     setMessage(null);
     setAge(next);
+  };
+
+  const stopPlayback = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.removeAttribute("src");
+    }
+    positionRef.current = null;
+    setPosition(null);
+    setPlaying(false);
+    setMessage(null);
+  };
+
+  const chooseMine = (next: boolean) => {
+    if (next === mineOnly) return;
+    stopPlayback();
+    setMineOnly(next);
+  };
+
+  const togglePlaylist = async (id: string) => {
+    const wanted = !playlist.has(id);
+    if (!(await setInPlaylist(id, wanted))) {
+      setMessage("לא הצלחנו לעדכן את רשימת ההשמעה. נסו שוב בעוד רגע.");
+      return;
+    }
+    // A story leaving the list while only the list is shown also leaves the queue.
+    if (!wanted && mineOnly) stopPlayback();
+    setPlaylist((previous) => {
+      const next = new Set(previous);
+      if (wanted) next.add(id);
+      else next.delete(id);
+      return next;
+    });
   };
 
   /** Applies a new set of ticked stories; the player keeps its place if the current story stays in the queue. */
@@ -319,6 +389,8 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
         className="hidden"
       />
 
+      {watchingId ? <ListenWatch bookId={watchingId} onExit={stopWatching} onFinished={watchNext} /> : null}
+
       <section aria-labelledby="listen-age" className="flex flex-col gap-3">
         <h2 id="listen-age" className="text-xl font-bold">
           למי מקריאים הערב?
@@ -335,15 +407,39 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
         </div>
       </section>
 
+      {playlistIds !== null ? (
+        <section aria-labelledby="listen-source" className="flex flex-col gap-3">
+          <h2 id="listen-source" className="text-xl font-bold">
+            מה להשמיע?
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            <Chip icon="🎵" onClick={() => chooseMine(true)} selected={mineOnly}>
+              רשימת ההשמעה שלי ({playlist.size})
+            </Chip>
+            <Chip onClick={() => chooseMine(false)} selected={!mineOnly}>
+              כל הסיפורים
+            </Chip>
+          </div>
+        </section>
+      ) : null}
+
       {anyMock ? <MockNotice kind="tts" /> : null}
 
       {visible.length === 0 ? (
         <EmptyState
           icon="🌙"
-          title="אין עדיין סיפורים מוקלטים לגיל הזה"
-          description="אפשר לבחור גיל אחר, או לחזור אחרי שיתווספו הקלטות."
+          title={mineOnly ? "רשימת ההשמעה שלכם ריקה" : "אין עדיין סיפורים מוקלטים לגיל הזה"}
+          description={
+            mineOnly
+              ? "אפשר להוסיף סיפורים עם כפתור הרשימה ליד כל סיפור ב'כל הסיפורים', או מעמוד הספר."
+              : "אפשר לבחור גיל אחר, או לחזור אחרי שיתווספו הקלטות."
+          }
           action={
-            age !== "all" ? (
+            mineOnly ? (
+              <Button variant="secondary" onClick={() => chooseMine(false)}>
+                לכל הסיפורים
+              </Button>
+            ) : age !== "all" ? (
               <Button variant="secondary" onClick={() => chooseAge("all")}>
                 להציג את כל הגילים
               </Button>
@@ -414,6 +510,10 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
                     <SkipForward aria-hidden="true" className="size-6" />
                   </Button>
                 </div>
+                <Button variant="secondary" onClick={startWatching} disabled={queue.length === 0}>
+                  <BookOpen aria-hidden="true" />
+                  לצפות בסיפורים עם התמונות
+                </Button>
               </div>
             </div>
             <p role="status" className={cn("text-center text-base sm:text-start", message ? "text-foreground" : "sr-only")}>
@@ -531,6 +631,31 @@ export function ListenPlayer({ tracks, initialAge = "all" }: ListenPlayerProps) 
                       </span>
                       {isCurrent ? <span className="shrink-0 text-sm font-semibold">{playing ? "מתנגן" : "מושהה"}</span> : null}
                     </button>
+                    {playlistIds !== null ? (
+                      <button
+                        type="button"
+                        aria-pressed={playlist.has(track.id)}
+                        aria-label={
+                          playlist.has(track.id)
+                            ? `הסרת ${track.title} מרשימת ההשמעה`
+                            : `הוספת ${track.title} לרשימת ההשמעה`
+                        }
+                        title={playlist.has(track.id) ? "הסרה מרשימת ההשמעה" : "הוספה לרשימת ההשמעה"}
+                        onClick={() => void togglePlaylist(track.id)}
+                        className={cn(
+                          "flex min-h-touch-lg w-14 shrink-0 items-center justify-center rounded-md border-2 transition-colors",
+                          playlist.has(track.id)
+                            ? "border-primary bg-primary-soft text-primary"
+                            : "border-border bg-surface hover:bg-surface-2",
+                        )}
+                      >
+                        {playlist.has(track.id) ? (
+                          <ListMusic aria-hidden="true" className="size-6" />
+                        ) : (
+                          <ListPlus aria-hidden="true" className="size-6" />
+                        )}
+                      </button>
+                    ) : null}
                   </li>
                 );
               })}

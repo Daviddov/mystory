@@ -7,6 +7,8 @@ import { BookFullText } from "@/components/BookFullText";
 import { JsonLd } from "@/components/JsonLd";
 import { BookRow } from "@/components/BookRow";
 import { FavoriteButtonSlot } from "@/components/library/FavoriteButtonSlot";
+import { PlaylistButton } from "@/components/listen/PlaylistButton";
+import { ReadToggleButton } from "@/components/library/ReadToggleButton";
 import { PageHeading } from "@/components/library/PageHeading";
 import { getRecommendations } from "@/components/library/queries";
 import { MockNotice } from "@/components/MockNotice";
@@ -117,9 +119,13 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
   if (!book) notFound();
 
   const repo = await getRepo();
-  const [similar, isFavorite, ratingSummary, myRating, comments] = await Promise.all([
+  const [similar, isFavorite, inPlaylist, myProgress, ratingSummary, myRating, comments] = await Promise.all([
     getRecommendations(book),
     user ? repo.isFavorite(user.id, book.id).catch(() => false) : Promise.resolve(false),
+    user
+      ? repo.listPlaylist(user.id).then((items) => items.some((item) => item.bookId === book.id), () => false)
+      : Promise.resolve(false),
+    user ? repo.getProgress(user.id, book.id).catch(() => null) : Promise.resolve(null),
     repo.getRatingSummary(book.id).catch(() => ({ average: 0, count: 0 })),
     // Only on the per-request route: the cached page has no viewer, so it never holds anyone's rating.
     user ? repo.getRating(user.id, book.id).catch(() => null) : Promise.resolve(null),
@@ -304,12 +310,24 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
             {hasMockAudio ? <MockNotice kind="tts" /> : null}
             <div className="flex flex-wrap items-start gap-3">
               {user ? (
-                <FavoriteButtonSlot
-                  bookId={book.id}
-                  initialFavorite={isFavorite}
-                  signedIn
-                  loginHref={routes.login(bookPath)}
-                />
+                <>
+                  <FavoriteButtonSlot
+                    bookId={book.id}
+                    initialFavorite={isFavorite}
+                    signedIn
+                    loginHref={routes.login(bookPath)}
+                  />
+                  {hasAudio && book.status === "published" ? (
+                    <PlaylistButton bookId={book.id} initialInPlaylist={inPlaylist} />
+                  ) : null}
+                  {hasPages ? (
+                    <ReadToggleButton
+                      bookId={book.id}
+                      initialRead={!!myProgress?.completed}
+                      pageIndex={myProgress?.pageIndex ?? 0}
+                    />
+                  ) : null}
+                </>
               ) : (
                 // Signed-out readers keep favorites on this device; they move into the account at sign-in.
                 <FavoriteButton bookId={book.id} title={book.title} variant="label" />

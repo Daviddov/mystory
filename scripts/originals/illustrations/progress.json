@@ -360,15 +360,7 @@
       "pictures": 12
     }
   },
-  "partial": {
-    "parasha-devarim": {
-      "date": "2026-10-21",
-      "route": "gemini app 2x2 sheets (--size=4)",
-      "have": "nothing usable",
-      "missing": "grids 1-4",
-      "note": "grid 1 rejected: the boy in blue is bare-headed in 3 panels (kept as devarim-grid-1-REJECT-bare-head.png)"
-    }
-  },
+  "partial": {},
   "chatgptLimit": {
     "hitAt": "2026-10-18 ~23:35 local",
     "generationsBeforeLimit": 15,
@@ -409,5 +401,35 @@
   "aistudioRun20261021": {
     "generations": 7,
     "note": "hillel p9-11 OK, vaetchanan p9-12 OK + p12 single redo; chukat-og 3x3 and two 2x2 sheets REJECTED (prompt text written into panels as captions, Og bare-headed, Moses bare-headed): flash-lite cannot handle that book, leave it for ChatGPT. No quota message seen."
+  },
+  "geminiRun20261022": {
+    "date": "2026-10-22",
+    "generations": 0,
+    "note": "queue exhausted: 79 of 80 books in done; the only other one, parasha-chukat-og, already has 12 page pictures attached on 2026-10-20 (heads covered, 9 of them small ~370x280) and AI Studio notes leave it for ChatGPT, so nothing was generated. Removed the stale partial entry for parasha-devarim (finished by ChatGPT on 2026-10-21)."
+  },
+  "geminiRun20261023": {
+    "date": "2026-10-23",
+    "generations": 0,
+    "note": "queue still exhausted: 79 of 80 in done, parasha-chukat-og already illustrated (left as is per user); no partial books; the only parasha/chazal book outside the queue, chazal-honi-seventy-years, already has a cover and 14 page pictures. Gemini not opened."
+  },
+  "geminiRun20261024": {
+    "date": "2026-10-24",
+    "generations": 0,
+    "note": "queue still exhausted: 79 of 80 in done, parasha-chukat-og already illustrated (12 pages + cover); only other parasha/chazal book, chazal-honi-seventy-years, already has pictures; no partial books. Gemini not opened."
+  },
+  "chatgptRun20261024": {
+    "date": "2026-10-24",
+    "generations": 0,
+    "note": "queue still exhausted (79 of 80 in done). Found that parasha-chukat-og has 12 page pictures but an EMPTY coverImage; planned one ChatGPT cover (prompt = panel 1 of grid 1 from build-grid-prompts), but Claude in Chrome was not connected (no browsers listed), so nothing was generated."
+  },
+  "chatgptRun20261024b": {
+    "date": "2026-10-24",
+    "generations": 0,
+    "note": "second run of the day: queue still exhausted (79 of 80 in done); parasha-chukat-og still has an empty coverImage (12 page pictures attached). Claude in Chrome again not connected (no browsers listed, two tries), so no ChatGPT/ElevenLabs/Gemini/AI Studio generation was possible."
+  },
+  "chatgptRun20261025": {
+    "date": "2026-10-25",
+    "generations": 0,
+    "note": "queue still exhausted (79 of 80 in done); parasha-chukat-og still has an EMPTY coverImage (12 page pictures attached). Claude in Chrome not connected (no browsers listed, two tries), so no ChatGPT/ElevenLabs/Gemini/AI Studio generation was possible."
   }
 }

@@ -7,6 +7,7 @@ import type {
   Collection,
   Comment,
   Favorite,
+  PlaylistItem,
   Rating,
   RatingSummary,
   GenerationJob,
@@ -184,6 +185,12 @@ export interface Repository {
   /** Newest first. */
   listFavorites(userId: string): Promise<Favorite[]>;
   isFavorite(userId: string, bookId: string): Promise<boolean>;
+
+  // --- Listening playlist (/listen) ---
+  addToPlaylist(userId: string, bookId: string): Promise<PlaylistItem>;
+  removeFromPlaylist(userId: string, bookId: string): Promise<void>;
+  /** In the order the books were added. */
+  listPlaylist(userId: string): Promise<PlaylistItem[]>;
 
   // --- Ratings ---
   /** Creates or replaces the user's rating (1-5). */

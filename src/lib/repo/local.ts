@@ -26,6 +26,7 @@ import {
   CollectionSchema,
   CommentSchema,
   FavoriteSchema,
+  PlaylistItemSchema,
   GenerationJobSchema,
   ProgressSchema,
   RatingSchema,
@@ -39,6 +40,7 @@ import {
   type Collection,
   type Comment,
   type Favorite,
+  type PlaylistItem,
   type GenerationJob,
   type Page,
   type Progress,
@@ -308,7 +310,7 @@ export class LocalRepository implements Repository {
     });
 
     // Sort and page the cached books first: only the page returned is copied.
-    const books = matches.map((entry) => entry.book);
+    const books = matches.map((entry) => ({ ...entry.book, hasAudio: entry.book.pages.some((p) => !!p.audio) }));
     const byNew = (a: Book, b: Book) => sortKeyNew(b).localeCompare(sortKeyNew(a));
     switch (filter.sort ?? "new") {
       case "popular":
@@ -437,6 +439,10 @@ export class LocalRepository implements Repository {
       const favorites = await this.readList("favorites.json", FavoriteSchema);
       if (favorites.some((f) => f.bookId === id)) {
         await this.writeList("favorites.json", favorites.filter((f) => f.bookId !== id));
+      }
+      const playlist = await this.readList("playlist.json", PlaylistItemSchema);
+      if (playlist.some((f) => f.bookId === id)) {
+        await this.writeList("playlist.json", playlist.filter((f) => f.bookId !== id));
       }
       const ratings = await this.readList("ratings.json", RatingSchema);
       if (ratings.some((r) => r.bookId === id)) {
@@ -593,6 +599,34 @@ export class LocalRepository implements Repository {
   async isFavorite(userId: string, bookId: string): Promise<boolean> {
     const favorites = await this.readList("favorites.json", FavoriteSchema);
     return favorites.some((f) => f.userId === userId && f.bookId === bookId);
+  }
+
+  // --- listening playlist --------------------------------------------------------
+
+  addToPlaylist(userId: string, bookId: string): Promise<PlaylistItem> {
+    return this.mutex.run(async () => {
+      const items = await this.readList("playlist.json", PlaylistItemSchema);
+      const existing = items.find((f) => f.userId === userId && f.bookId === bookId);
+      if (existing) return existing;
+      const item: PlaylistItem = { userId, bookId, createdAt: nowIso() };
+      await this.writeList("playlist.json", [...items, item]);
+      return item;
+    });
+  }
+
+  removeFromPlaylist(userId: string, bookId: string): Promise<void> {
+    return this.mutex.run(async () => {
+      const items = await this.readList("playlist.json", PlaylistItemSchema);
+      await this.writeList(
+        "playlist.json",
+        items.filter((f) => !(f.userId === userId && f.bookId === bookId)),
+      );
+    });
+  }
+
+  async listPlaylist(userId: string): Promise<PlaylistItem[]> {
+    const items = await this.readList("playlist.json", PlaylistItemSchema);
+    return items.filter((f) => f.userId === userId).sort((a, b) => a.createdAt.localeCompare(b.createdAt));
   }
 
   // --- waiting list --------------------------------------------------------------

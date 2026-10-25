@@ -5,6 +5,7 @@ import { logoutAction } from "@/lib/auth/actions";
 import { ACCOUNT_NAV, AGE_NAV, MAIN_NAV } from "@/lib/nav";
 import { routes } from "@/lib/routes";
 import { ThemeToggle } from "../ThemeToggle";
+import { HeaderMenu } from "./HeaderMenu";
 
 const ICON_LINK =
   "inline-flex size-touch shrink-0 items-center justify-center rounded-full text-foreground hover:bg-surface-2";
@@ -50,14 +51,17 @@ export async function SiteHeader() {
           <ThemeToggle />
 
           {user ? (
-            <details className="relative hidden lg:block">
-              <summary
-                className="flex min-h-touch list-none items-center gap-2 rounded-full px-3 font-semibold hover:bg-surface-2 [&::-webkit-details-marker]:hidden"
-                aria-label={`החשבון של ${user.name}`}
-              >
-                <UserRound aria-hidden="true" />
-                <span className="max-w-32 truncate">{user.name}</span>
-              </summary>
+            <HeaderMenu
+              className="relative hidden lg:block"
+              summaryClassName="flex min-h-touch list-none items-center gap-2 rounded-full px-3 font-semibold hover:bg-surface-2 [&::-webkit-details-marker]:hidden"
+              summaryLabel={`החשבון של ${user.name}`}
+              summary={
+                <>
+                  <UserRound aria-hidden="true" />
+                  <span className="max-w-32 truncate">{user.name}</span>
+                </>
+              }
+            >
               <div className="absolute end-0 top-full z-50 mt-2 flex w-60 flex-col rounded-lg border border-border bg-surface p-2 shadow-pop">
                 {ACCOUNT_NAV.map((item) => (
                   <Link key={item.href} href={item.href} className={MENU_LINK}>
@@ -77,7 +81,7 @@ export async function SiteHeader() {
                   </button>
                 </form>
               </div>
-            </details>
+            </HeaderMenu>
           ) : (
             <Link
               href={routes.login()}
@@ -88,10 +92,12 @@ export async function SiteHeader() {
             </Link>
           )}
 
-          <details className="lg:hidden">
-            <summary className={`${ICON_LINK} list-none [&::-webkit-details-marker]:hidden`} aria-label="תפריט">
-              <Menu aria-hidden="true" />
-            </summary>
+          <HeaderMenu
+            className="lg:hidden"
+            summaryClassName={`${ICON_LINK} list-none [&::-webkit-details-marker]:hidden`}
+            summaryLabel="תפריט"
+            summary={<Menu aria-hidden="true" />}
+          >
             <nav
               aria-label="תפריט"
               className="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-border bg-surface p-3 shadow-pop"
@@ -151,7 +157,7 @@ export async function SiteHeader() {
                 )}
               </ul>
             </nav>
-          </details>
+          </HeaderMenu>
         </div>
       </div>
     </header>

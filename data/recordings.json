@@ -525,5 +525,55 @@
     ],
     "createdAt": "2026-10-21T17:57:39.237Z",
     "updatedAt": "2026-10-21T18:00:15.016Z"
+  },
+  {
+    "id": "gyt3n16cidrr",
+    "bookId": "ai-eliezer-hanoten",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/ai-eliezer-hanoten/rec/gyt3n16cidrr/p1-6gafdjkuonnz.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/ai-eliezer-hanoten/rec/gyt3n16cidrr/p2-ywtjo25pjspd.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/ai-eliezer-hanoten/rec/gyt3n16cidrr/p3-wcq7h8c9mznt.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/ai-eliezer-hanoten/rec/gyt3n16cidrr/p4-z0lj8zuaeoim.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/ai-eliezer-hanoten/rec/gyt3n16cidrr/p5-bpy0ihfnd6ak.webm"
+      }
+    ],
+    "createdAt": "2026-10-23T14:32:21.202Z",
+    "updatedAt": "2026-10-23T14:34:29.884Z"
+  },
+  {
+    "id": "i7pvbj3tufy2",
+    "bookId": "ai-habeitza-hamevushelet",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/ai-habeitza-hamevushelet/rec/i7pvbj3tufy2/p1-9ktgdsyiphn4.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/ai-habeitza-hamevushelet/rec/i7pvbj3tufy2/p2-3wfzh22gw45j.webm"
+      }
+    ],
+    "createdAt": "2026-10-23T14:36:39.661Z",
+    "updatedAt": "2026-10-23T14:36:59.336Z"
   }
 ]

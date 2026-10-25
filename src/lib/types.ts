@@ -198,6 +198,8 @@ export const BookSchema = z.object({
   hero: BookHeroSchema.optional(),
   /** A personal dedication shown on the start screen ("לנועם, באהבה, סבתא"). */
   dedication: z.string().max(200).optional(),
+  /** Set by listBooks(): at least one page has narration. Derived from the pages, never stored. */
+  hasAudio: z.boolean().optional(),
 });
 export type Book =z.infer<typeof BookSchema>;
 
@@ -259,6 +261,10 @@ export const FavoriteSchema = z.object({
   createdAt: IsoDateSchema,
 });
 export type Favorite = z.infer<typeof FavoriteSchema>;
+
+/** A book the user added to their own listening playlist (/listen). Same shape as a favorite. */
+export const PlaylistItemSchema = FavoriteSchema;
+export type PlaylistItem = Favorite;
 
 export const RatingSchema = z.object({
   userId: z.string(),

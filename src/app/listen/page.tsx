@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { ListenPlayer } from "@/components/listen/ListenPlayer";
 import { buildListenTracks, parseAgeFilter } from "@/components/listen/tracks";
 import { ButtonLink, EmptyState } from "@/components/ui";
+import { getCurrentUser } from "@/lib/auth";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import type { BookWithPages } from "@/lib/types";
@@ -38,6 +39,14 @@ export default async function ListenPage({
   const params = await searchParams;
   const rawAge = Array.isArray(params.age) ? params.age[0] : params.age;
   const tracks = buildListenTracks(await loadNarratedBooks());
+  // The playlist is per user; null means nobody is signed in and the playlist features are hidden.
+  const user = await getCurrentUser();
+  const playlistIds = user
+    ? await (await getRepo())
+        .listPlaylist(user.id)
+        .then((items) => items.map((item) => item.bookId))
+        .catch(() => [])
+    : null;
 
   return (
     <main className="container-page flex flex-col gap-8 py-8">
@@ -59,7 +68,7 @@ export default async function ListenPage({
           action={<ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>}
         />
       ) : (
-        <ListenPlayer tracks={tracks} initialAge={parseAgeFilter(rawAge)} />
+        <ListenPlayer tracks={tracks} initialAge={parseAgeFilter(rawAge)} playlistIds={playlistIds} />
       )}
     </main>
   );

@@ -6,6 +6,9 @@
 // How the audio is read: the page's <audio> is only a stub for long speech. The Download button builds one WAV Blob, so a Blob
 // wrapper keeps the last big one and the page posts it to the receiver. NOTE the click still saves "Generated Audio ....wav"
 // in the browser's Downloads folder; move those away afterwards (the receiver copy is the one used).
+// AI Studio plays the generated speech aloud as soon as it is ready; keep every media element muted and paused so the
+// narration run is silent (the WAV comes from the Download button, not from playback). Also mute the tab by hand if needed.
+if (!window.__muteTimer) window.__muteTimer = setInterval(() => document.querySelectorAll("audio, video").forEach((m) => { m.muted = true; m.volume = 0; if (!m.paused) m.pause(); }), 300);
 window.RX = "http://127.0.0.1:" + (window.RX_PORT || 8861); window.saved = window.saved || {}; window.GOT = window.GOT || {};
 if (!window.__l2) { window.__l2 = 1; addEventListener("message", (e) => { if (e.origin !== RX) return; if (e.data.got) GOT[e.data.got] = e.data.text; if (e.data.saved) saved[e.data.saved] = e.data.bytes; }); }
 window.sleep = (ms) => new Promise((r) => setTimeout(r, ms));

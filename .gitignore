@@ -55,3 +55,12 @@ next-env.d.ts
 # Full-resolution originals moved aside by scripts/compress-media.ts (print, future use).
 /data/originals/
 
+/data/playlist.json
+
+# Local-only working material for books (AI specs, generated pictures, source
+# scans; hundreds of MB). Kept on disk, never committed.
+/scripts/sources/
+
+# Python bytecode
+__pycache__/
+*.pyc

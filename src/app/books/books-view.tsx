@@ -15,7 +15,9 @@ import { Pagination } from "@/components/library/Pagination";
 import { listLibraryBooks } from "@/components/library/queries";
 import { isNewBook } from "@/components/library/recommend";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
+import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
+import type { User } from "@/lib/types";
 
 /**
  * The all-books listing, shared by /books (./page.tsx: static and cached, no
@@ -34,9 +36,22 @@ export function booksMetadata(searchParams: RawSearchParams): Metadata {
   };
 }
 
-export async function BooksView({ searchParams }: { searchParams: RawSearchParams }) {
-  const query = parseLibraryQuery(searchParams);
-  const listing = await listLibraryBooks(query);
+export async function BooksView({ searchParams, viewer = null }: { searchParams: RawSearchParams; viewer?: User | null }) {
+  const parsed = parseLibraryQuery(searchParams);
+  // "Read" is per user: without a signed-in viewer the filter does not apply.
+  const query = viewer ? parsed : { ...parsed, read: undefined };
+  const readIds = viewer
+    ? new Set(
+        (await (await getRepo()).listProgress(viewer.id).catch(() => [])).filter((p) => p.completed).map((p) => p.bookId),
+      )
+    : new Set<string>();
+  const listing =
+    query.read === "read" && readIds.size === 0
+      ? { books: [], total: 0, page: 1, pages: 1, now: Date.now() }
+      : await listLibraryBooks(
+          query,
+          query.read === "read" ? { ids: [...readIds] } : query.read === "unread" ? { excludeIds: [...readIds] } : {},
+        );
   const shown = { ...query, page: listing.page };
   const active = describeActiveFilters(shown);
   const path = routes.books();
@@ -50,7 +65,7 @@ export async function BooksView({ searchParams }: { searchParams: RawSearchParam
         crumbs={[{ label: "כל הספרים" }]}
       />
 
-      <FilterForm query={shown} />
+      <FilterForm query={shown} signedIn={!!viewer} />
 
       <section aria-label="רשימת הספרים" className="flex flex-col gap-6">
         <div className="flex flex-wrap items-center gap-2">
@@ -79,7 +94,10 @@ export async function BooksView({ searchParams }: { searchParams: RawSearchParam
 
         <BookGrid
           books={listing.books}
-          cardProps={(book) => (isNewBook(book, listing.now) ? { badge: "חדש" } : {})}
+          cardProps={(book) => ({
+            ...(isNewBook(book, listing.now) ? { badge: "חדש" } : {}),
+            ...(readIds.has(book.id) ? { read: true } : {}),
+          })}
           empty={
             <EmptyState
               icon="🔍"

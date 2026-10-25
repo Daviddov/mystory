@@ -49,7 +49,7 @@ function resolve(path: readonly string[], searchParams: Promise<RawSearchParams>
   if (param === undefined) {
     if (section === "books") {
       return {
-        page: async () => BooksView({ searchParams: await searchParams }),
+        page: async () => BooksView({ searchParams: await searchParams, viewer: await getCurrentUser() }),
         metadata: async () => booksMetadata(await searchParams),
       };
     }

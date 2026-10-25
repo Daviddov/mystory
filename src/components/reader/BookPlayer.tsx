@@ -14,6 +14,7 @@ import {
   Settings,
   Sun,
   Timer,
+  Type,
 } from "lucide-react";
 import {
   useCallback,
@@ -129,6 +130,8 @@ export interface BookPlayerProps {
   countView?: boolean;
   /** Shown on the end screen under its header: the publish panel for an editor reading an unpublished book. */
   endScreenStaffPanel?: ReactNode;
+  /** Called once when the reader reaches the end of the book (the bedtime queue then opens the next book). */
+  onFinished?: () => void;
   className?: string;
 }
 
@@ -308,6 +311,7 @@ function Player({
   downloadControl,
   countView = false,
   endScreenStaffPanel,
+  onFinished,
   className,
 }: BookPlayerProps) {
   const isPage = variant === "page";
@@ -562,6 +566,58 @@ function Player({
       // Fullscreen is a nicety; the reader works the same without it.
     }
   }, []);
+
+  const onFinishedRef = useRef(onFinished);
+  useEffect(() => {
+    onFinishedRef.current = onFinished;
+  });
+  useEffect(() => {
+    if (atEnd) onFinishedRef.current?.();
+  }, [atEnd]);
+
+  // ---- Lock screen: the same controls as the bedtime listening page ---------
+  const mediaActionsRef = useRef({ toggle: toggleNarration, turn });
+  useEffect(() => {
+    mediaActionsRef.current = { toggle: toggleNarration, turn };
+  });
+  const hasMediaSession = isPage && hasAnyAudio && typeof navigator !== "undefined" && "mediaSession" in navigator;
+  useEffect(() => {
+    if (!hasMediaSession) return;
+    const session = navigator.mediaSession;
+    if (typeof MediaMetadata !== "undefined") {
+      session.metadata = new MediaMetadata({
+        title: book.title,
+        artist: book.author || "הסיפור שלי",
+        album: "האזנה לפני השינה",
+        artwork: book.coverImage
+          ? [{ src: mediaUrl(book.coverImage, book.updatedAt, shareToken), sizes: "600x800" }]
+          : [],
+      });
+    }
+    const handlers: [MediaSessionAction, MediaSessionActionHandler][] = [
+      ["play", () => mediaActionsRef.current.toggle()],
+      ["pause", () => mediaActionsRef.current.toggle()],
+      ["nexttrack", () => mediaActionsRef.current.turn(1)],
+      ["previoustrack", () => mediaActionsRef.current.turn(-1)],
+    ];
+    for (const [action, handler] of handlers) {
+      try {
+        session.setActionHandler(action, handler);
+      } catch {
+        // The browser does not support this action.
+      }
+    }
+    return () => {
+      for (const [action] of handlers) {
+        try {
+          session.setActionHandler(action, null);
+        } catch {
+          // Nothing to undo.
+        }
+      }
+      session.metadata = null;
+    };
+  }, [hasMediaSession, book.title, book.author, book.coverImage, book.updatedAt, shareToken]);
 
   // ---- Saving the position ------------------------------------------------
   const savedIndex = useRef(start.index);
@@ -844,27 +900,21 @@ function Player({
 
         <button
           type="button"
-          hidden={showOriginal}
-          aria-pressed={nikudOn}
-          aria-disabled={!nikudAvailable}
-          title={nikudAvailable ? "הצגת ניקוד" : "לספר הזה אין גרסה מנוקדת"}
-          onClick={() => {
-            if (!nikudAvailable) {
-              showNotice("לספר הזה אין גרסה מנוקדת, ולכן אי אפשר להציג ניקוד.");
-              return;
-            }
-            updatePrefs({ nikud: !nikudOn });
-          }}
+          aria-pressed={textLayout !== "hidden"}
+          aria-label="הצגת הטקסט"
+          title={textLayout === "hidden" ? "להציג את הטקסט" : "להסתיר את הטקסט"}
+          onClick={() => updatePrefs({ textLayout: textLayout === "hidden" ? "side" : "hidden" })}
           className={cn(
-            "inline-flex min-h-touch shrink-0 items-center rounded-full border-2 px-3 font-story text-lg font-bold transition-colors",
-            nikudOn
+            "inline-flex min-h-touch shrink-0 items-center gap-1 rounded-full border-2 px-3 text-base font-bold transition-colors",
+            textLayout !== "hidden"
               ? "border-secondary bg-secondary text-secondary-foreground"
               : "border-border-strong bg-surface text-foreground hover:bg-surface-2",
-            !nikudAvailable && "cursor-not-allowed opacity-50",
           )}
         >
-          <span aria-hidden="true">נִקּוּד</span>
-          <span className="sr-only">ניקוד</span>
+          <Type aria-hidden="true" className="size-5" />
+          <span aria-hidden="true" className="max-sm:hidden">
+            {textLayout === "hidden" ? "בלי טקסט" : "עם טקסט"}
+          </span>
         </button>
 
         {sleep.remaining !== null ? (
@@ -1272,7 +1322,19 @@ function Player({
         liveImages={liveImages}
         onLiveImages={(value) => updatePrefs({ liveImages: value })}
         reducedMotion={reducedMotion}
+        nikudAvailable={nikudAvailable}
+        nikud={nikudOn}
+        onNikud={(value) => updatePrefs({ nikud: value })}
         hasAudio={hasAnyAudio}
+        onBedtimeListen={() => {
+          // The listening-before-sleep mode: dim theme, narration on, pages turning by themselves, a timer.
+          applyTheme("bedtime");
+          updatePrefs({ autoAdvance: true });
+          sleep.start(30);
+          setSettingsOpen(false);
+          showNotice("מצב האזנה לפני השינה: ההקראה תיעצר בעוד 30 דקות.");
+          if (audioSrc && !narrating) toggleNarration();
+        }}
         rate={rate}
         onRate={(value) => updatePrefs({ rate: value })}
         autoAdvance={autoAdvance}

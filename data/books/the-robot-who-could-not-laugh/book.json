@@ -10,7 +10,7 @@
   "ageGroup": "6-8",
   "readingMinutes": 8,
   "coverImage": "books/seed-robot/cover.svg",
-  "status": "published",
+  "status": "draft",
   "ownerId": "system",
   "categories": [
     "humor",
@@ -35,9 +35,9 @@
     "מה פירוש ״שגוי וגם נעים״? יש לכם דוגמה?"
   ],
   "origin": "manual",
-  "viewCount": 0,
+  "viewCount": 1,
   "createdAt": "2026-10-07T07:00:00.000Z",
-  "updatedAt": "2026-10-21T19:51:53.539Z",
+  "updatedAt": "2026-10-25T18:18:11.783Z",
   "publishedAt": "2026-10-07T07:00:00.000Z",
   "pages": [
     {

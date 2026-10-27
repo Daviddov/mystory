@@ -20,5 +20,112 @@
       "seed-snail"
     ],
     "season": "winter"
+  },
+  {
+    "id": "col-chelm",
+    "slug": "chachmei-chelm",
+    "title": "חכמי חלם",
+    "description": "סיפורים מצחיקים על חכמי העיירה חלם, שתמיד מוצאים את הפתרון הכי מוזר לכל בעיה: הירח בחבית, השלג הלבן ועוד. סיפורי עם יהודיים לילדים, עם ניקוד והקראה.",
+    "bookIds": [
+      "ai-chelm-yareach-bechavit",
+      "ai-chelm-hasheleg-halavan",
+      "ai-neevadti-bayaar",
+      "ai-chelm-cold-fence",
+      "ai-chelm-long-beams",
+      "ai-chelm-half-beam",
+      "ai-chelm-watchman-coat",
+      "ai-chelm-butter-ovens",
+      "ai-chelm-hachala",
+      "ai-chelm-hadag",
+      "ai-chelm-hazricha",
+      "ai-chelm-hashor",
+      "ai-chelm-hatrisim",
+      "storyweaver-319930"
+    ]
+  },
+  {
+    "id": "col-hershele",
+    "slug": "hershele-ostropoler",
+    "title": "הרשל׳ה אוסטרופולר",
+    "description": "הרשל׳ה, הבדחן העני והפיקח מאוסטרופול, יוצא מכל צרה עם חיוך ותשובה שנונה. סיפורי עם יהודיים מצחיקים לילדים.",
+    "bookIds": [
+      "ai-hershele-vehapanim-haavudot",
+      "ai-hershele-vehashabbat-hareeva",
+      "ai-hershele-rabi-leyom-echad",
+      "ai-hershele-utrufat-hakapiyot",
+      "ai-hershele-vehameil-sheaf",
+      "ai-hershele-veyom-hashuk"
+    ]
+  },
+  {
+    "id": "col-baal-shem-tov",
+    "slug": "baal-shem-tov",
+    "title": "סיפורי הבעל שם טוב",
+    "description": "סיפורים ומשלים על הבעל שם טוב, מתוך שבחי הבעש״ט וספר בעל שם טוב, בעיבוד חדש לילדים: על נתינה, אמונה ושמחה במעשים קטנים.",
+    "bookIds": [
+      "ai-tuk-tuk-tuk-balayla",
+      "ai-berel-habeigel",
+      "ai-hamatbea-hamitgalgel",
+      "ai-flap-flap-hanaal",
+      "ai-haresen-haganuv",
+      "ai-haroe-vehamapa-halevana"
+    ]
+  },
+  {
+    "id": "col-chazal",
+    "slug": "sipurei-chazal",
+    "title": "סיפורי חכמים מהתלמוד",
+    "description": "אגדות חז״ל לילדים: הלל הזקן, נחום איש גם זו, רבי טרפון, ברוריה, אבא חלקיה ועוד. סיפורים מהתלמוד והמדרש על סבלנות, כבוד הורים, יושר וחסד.",
+    "bookIds": [
+      "chazal-hillel-on-the-roof",
+      "chazal-hillel-patience",
+      "chazal-hillel-one-foot",
+      "chazal-nachum-gam-zu",
+      "chazal-akiva-all-for-good",
+      "chazal-rabbi-tarfon-and-his-mother",
+      "chazal-dama-ben-netina",
+      "chazal-beruriah-and-the-neighbors",
+      "chazal-shimon-ben-shetach-pearl",
+      "chazal-truthful-king-katzia",
+      "chazal-old-man-planting-figs",
+      "chazal-honi-carob-tree",
+      "chazal-honi-seventy-years",
+      "chazal-stones-in-the-road",
+      "chazal-joshua-and-the-clever-child",
+      "chazal-elazar-and-the-craftsman",
+      "chazal-chanina-vinegar-candles",
+      "chazal-rabbi-and-the-calf",
+      "ai-abba-hilkiah",
+      "ai-yosef-mokir-shabbat",
+      "ai-eliezer-hanoten"
+    ]
+  },
+  {
+    "id": "col-hanukkah",
+    "slug": "hanukkah-stories",
+    "title": "סיפורים לחנוכה",
+    "description": "סיפורי חנוכה לילדים בחרוזים: נרות שנגמרים, סביבון שלא עוצר, השמש שלא נח רגע וסופגניות עם שפם של אבקת סוכר.",
+    "bookIds": [
+      "ai-oy-nigmeru-hanerot",
+      "ai-hasevivon-lo-otzer",
+      "ai-hashamash-lo-nach",
+      "ai-hatul-shel-chalonot",
+      "ai-safam-shel-sukar"
+    ],
+    "season": "hanukkah"
+  },
+  {
+    "id": "col-folk-tales",
+    "slug": "folk-tales-and-fables",
+    "title": "משלים וסיפורי עם",
+    "description": "סיפורי עם ומשלים מכל העולם לילדים: מוכר הכובעים והקופים, שלושת התיישים גראף, שני תיישים גאוותנים ועוד, עם מוסר השכל קטן בסוף.",
+    "bookIds": [
+      "storyweaver-245752",
+      "letsread-9b6722ab-f47a-48a2-b6e1-4c7c02e96e8e",
+      "librivox-three-billy-goats-gruff-he",
+      "storyweaver-228950",
+      "ai-saba-eliezer-carrot",
+      "gdl-13937"
+    ]
   }
 ]

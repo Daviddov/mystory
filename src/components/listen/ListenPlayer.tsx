@@ -14,7 +14,7 @@ import { ListenWatch } from "./ListenWatch";
 import { setInPlaylist } from "./playlist";
 import { Button, Card, Chip, EmptyState } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { AGE_GROUP_INFO, ageGroupLabel, readingTimeLabel } from "@/lib/taxonomy";
+import { AGE_GROUP_INFO, ageGroupsLabel, readingTimeLabel } from "@/lib/taxonomy";
 import {
   fadeVolume,
   filterTracks,
@@ -625,7 +625,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                       <span className="flex min-w-0 flex-1 flex-col">
                         <span className="truncate text-lg font-semibold">{track.title}</span>
                         <span className="text-sm text-muted">
-                          {ageGroupLabel(track.ageGroup)} · {readingTimeLabel(track.readingMinutes)}
+                          {ageGroupsLabel(track.ageGroups)} · {readingTimeLabel(track.readingMinutes)}
                           {track.hasMockAudio ? " · קול הדגמה" : ""}
                         </span>
                       </span>

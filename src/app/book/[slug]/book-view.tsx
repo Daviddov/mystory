@@ -28,6 +28,8 @@ import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { absoluteUrl, plainText } from "@/lib/seo";
 import {
+  ageGroupsLabel,
+  ageSpan,
   getAgeGroup,
   getCategory,
   getReadingTimeBucket,
@@ -35,7 +37,7 @@ import {
   readingTimeBucket,
   readingTimeLabel,
 } from "@/lib/taxonomy";
-import { bookLanguage, SLUG_PATTERN, type BookStatus, type BookWithPages, type User } from "@/lib/types";
+import { bookAgeGroups, bookLanguage, SLUG_PATTERN, type BookStatus, type BookWithPages, type User } from "@/lib/types";
 
 /**
  * The book page, shared by two routes:
@@ -79,13 +81,14 @@ export async function bookMetadata(slug: string, viewer: User | null): Promise<M
   const book = await loadVisibleBook(slug, viewer);
   if (!book) return { title: "הספר לא נמצא", robots: { index: false } };
   const age = getAgeGroup(book.ageGroup);
+  const agesLabel = ageGroupsLabel(bookAgeGroups(book));
   // Search engines match text without nikud: people type titles without vowel points.
   const title = plainText(book.title);
   const hasAudio = book.pages.some((page) => !!page.audio);
   const voweled = book.pages.some((page) => hasNikud(page.text));
   // "סיפור ילדים לקריאה", "...להאזנה", "...עם ניקוד": the phrases parents search with.
   const kind = `סיפור ילדים לקריאה${hasAudio ? " ולהאזנה" : ""}${voweled ? " עם ניקוד" : ""}`;
-  const details = `${kind} ל${age?.label ?? "כל הגילים"}, ${readingTimeLabel(book.readingMinutes)} קריאה.`;
+  const details = `${kind} ל${age ? agesLabel : "כל הגילים"}, ${readingTimeLabel(book.readingMinutes)} קריאה.`;
   const summary = plainText(book.summary, 155).replace(/[.…!?\s]+$/, "");
   // A short summary leaves room for the details; a long one is the description on its own.
   const description = !summary
@@ -143,6 +146,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
 
   const cover = mediaUrl(book.coverImage, book.updatedAt);
   const age = getAgeGroup(book.ageGroup);
+  const ageGroups = bookAgeGroups(book).flatMap((slug) => getAgeGroup(slug) ?? []);
   const timeBucket = getReadingTimeBucket(readingTimeBucket(book.readingMinutes));
   const narratedPages = book.pages.filter((page) => !!page.audio);
   const hasAudio = narratedPages.length > 0;
@@ -158,8 +162,8 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
   // Books from an outside publisher and Creative Commons books get the full credit block.
   const showCredits = !!book.credits || isCreativeCommons(book.license);
   const bookPath = routes.book(book.slug);
-  // "3-5" -> [3, 5]
-  const ageRange = book.ageGroup.split("-").map(Number);
+  // ["0-2", "3-5"] -> [0, 5]
+  const ageRange = ageSpan(bookAgeGroups(book));
 
   const jsonLd =
     book.status === "published"
@@ -186,7 +190,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
           publisher: { "@type": "Organization", name: "הסיפור שלי", url: absoluteUrl(routes.home()) },
           license: book.license || undefined,
           numberOfPages: book.pages.length || undefined,
-          typicalAgeRange: book.ageGroup,
+          typicalAgeRange: `${ageRange[0]}-${ageRange[1]}`,
           datePublished: book.publishedAt,
           dateModified: book.updatedAt,
           keywords: tags.length > 0 ? tags.join(", ") : undefined,
@@ -254,13 +258,13 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
               </p>
             ) : null}
             <ul className="flex flex-wrap gap-2">
-              {age ? (
-                <li>
-                  <Chip href={routes.age(age.slug)} icon={age.emoji} tone="accent">
-                    {age.label}
+              {ageGroups.map((group) => (
+                <li key={group.slug}>
+                  <Chip href={routes.age(group.slug)} icon={group.emoji} tone="accent">
+                    {group.label}
                   </Chip>
                 </li>
-              ) : null}
+              ))}
               <li>
                 <Chip
                   href={timeBucket ? routes.time(timeBucket.slug) : undefined}
@@ -387,7 +391,9 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
           <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {book.author ? <Fact label="כתיבה">{book.author}</Fact> : null}
             {book.illustrator ? <Fact label="איור">{book.illustrator}</Fact> : null}
-            {age ? <Fact label="גיל מומלץ">{age.label}</Fact> : null}
+            {ageGroups.length > 0 ? (
+              <Fact label="גיל מומלץ">{ageGroupsLabel(ageGroups.map((group) => group.slug))}</Fact>
+            ) : null}
             <Fact label="זמן קריאה">{readingTimeLabel(book.readingMinutes)}</Fact>
             <Fact label="רישיון">{book.license || "לא צוין"}</Fact>
             <Fact label="מקור">

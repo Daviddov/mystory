@@ -160,6 +160,21 @@ export const ILLUSTRATION_STYLES: IllustrationStyle[] = [
       "Invent original characters; do not copy any existing character. Playful, funny and never scary.",
   },
   {
+    slug: "storybook-cartoon",
+    label: "קריקטורה שובבה של פעם",
+    emoji: "🍭",
+    description: "קווי דיו עבים ומתנדנדים, צבעים בוהקים ושטוחים על נייר קרם, דמויות מוגזמות ומלאות אנרגיה",
+    group: "general",
+    prompt:
+      "Whimsical classic mid-century picture-book cartoon, in the house style of this library's funny rhyming books: bold wobbly black ink outlines with uneven line weight, " +
+      "bright flat opaque colours (tomato red, turquoise, sunny yellow, bubblegum pink, mint, honey brown) on a warm creamy paper background with a faint printing grain, " +
+      "curvy crooked houses, furniture and trees, playful exaggerated proportions and bouncy poses, big round expressive eyes and wide grins, " +
+      "lots of energy and humour, tiny visual jokes hidden in each picture that the text does not say, and a warm, safe mood. " +
+      "Give every character one or two unmistakable signature props or clothes and keep them identical on every page. " +
+      "Cosy home scenes are slightly muted (warm browns, soft greens); imaginary worlds explode in saturated colour. " +
+      "Landscape 4:3. No text, letters, words or numbers anywhere in the picture.",
+  },
+  {
     slug: "rey-gouache",
     label: "הרפתקה צבעונית (בסגנון גורג' הסקרן)",
     emoji: "🐒",

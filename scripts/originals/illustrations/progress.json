@@ -358,6 +358,11 @@
       "date": "2026-10-21",
       "route": "chatgpt 3x3 (cover + p1-8) + AI Studio flash-lite-image 3-panel sheet (p9-11)",
       "pictures": 12
+    },
+    "parasha-chukat-og": {
+      "date": "2026-10-27",
+      "route": "pages earlier (AI Studio/ChatGPT); cover 2026-10-27 ElevenLabs GPT Image 2.5 Sunburst 2K single 4:3 picture",
+      "pictures": 13
     }
   },
   "partial": {},
@@ -431,5 +436,18 @@
     "date": "2026-10-25",
     "generations": 0,
     "note": "queue still exhausted (79 of 80 in done); parasha-chukat-og still has an EMPTY coverImage (12 page pictures attached). Claude in Chrome not connected (no browsers listed, two tries), so no ChatGPT/ElevenLabs/Gemini/AI Studio generation was possible."
+  },
+  "chatgptRun20261026": {
+    "date": "2026-10-26",
+    "generations": 0,
+    "note": "queue still exhausted (79 of 80 in done); parasha-chukat-og still has an EMPTY coverImage (12 page pictures attached). Claude in Chrome not connected (no browsers listed, two tries), so no ChatGPT/ElevenLabs/Gemini/AI Studio generation was possible."
+  },
+  "chatgptRun20261027": {
+    "date": "2026-10-27",
+    "generations": {
+      "chatgpt": 0,
+      "elevenlabs": 1
+    },
+    "note": "Claude in Chrome connected. ChatGPT free: \"You are out of image creations\" at the first try (~20:30, shared account used by another session), resets 22:31. ElevenLabs made the missing cover of parasha-chukat-og (one 2048x1536 picture, head coverings OK, no text) and it was attached as cover.webp (draft). Queue now fully done: 80 of 80."
   }
 }

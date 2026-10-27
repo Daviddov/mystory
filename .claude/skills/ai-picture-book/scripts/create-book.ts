@@ -57,7 +57,7 @@ async function main(): Promise<void> {
     source: spec.source ?? "נכתב ואויר בעזרת בינה מלאכותית",
     ageGroup: spec.ageGroup,
     coverImage: images.get("cover"),
-    status: "published",
+    status: process.env.BOOK_STATUS === "draft" ? "draft" : "published",
     ownerId: OWNER_ID,
     categories: spec.categories,
     themes: spec.themes,

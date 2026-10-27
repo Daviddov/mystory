@@ -92,6 +92,19 @@ export function ageGroupLabel(slug: string): string {
   return getAgeGroup(slug)?.label ?? slug;
 }
 
+/** Ages covered by several age groups, e.g. ["0-2", "3-5"] -> [0, 5]. */
+export function ageSpan(groups: readonly string[]): [number, number] {
+  const bounds = groups.flatMap((group) => group.split("-").map(Number)).filter(Number.isFinite);
+  return [Math.min(...bounds), Math.max(...bounds)];
+}
+
+/** "גילאי 0 עד 5" for a book in several age groups; one group keeps its own label. */
+export function ageGroupsLabel(groups: readonly string[]): string {
+  if (groups.length === 1) return ageGroupLabel(groups[0]);
+  const [min, max] = ageSpan(groups);
+  return `גילאי ${min} עד ${max}`;
+}
+
 // --- Reading time buckets -----------------------------------------------------
 
 export const READING_TIME_BUCKETS = [

@@ -23,6 +23,7 @@ const WIZARD_STYLE_SLUGS = [
   "3d-miniature",
   "3d-vinyl",
   "seuss-ink",
+  "storybook-cartoon",
   "rey-gouache",
   "soft-pastel",
   "cozy-collage",

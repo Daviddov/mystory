@@ -18,7 +18,7 @@ os.makedirs(OUT, exist_ok=True)
 
 RX = """<!doctype html><title>rx</title><body>receiver<script>
 addEventListener('message', function (e) {
-  var ok = ['https://gemini.google.com', 'https://aistudio.google.com', 'https://chatgpt.com', 'https://elevenlabs.io', 'https://flow.google.com', 'https://labs.google'];
+  var ok = ['https://gemini.google.com', 'https://aistudio.google.com', 'https://chatgpt.com', 'https://grok.com', 'https://elevenlabs.io', 'https://flow.google.com', 'https://labs.google'];
   if (ok.indexOf(e.origin) < 0) return;
   var src = e.source, from = e.origin;
   if (e.data.get) {  // the page asks for a text file from the output folder (prompts), e.g. {get: 'grids.json'}

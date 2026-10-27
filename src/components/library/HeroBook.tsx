@@ -3,8 +3,8 @@ import { BookOpen, Clock } from "lucide-react";
 import { ButtonLink, Chip } from "@/components/ui";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
-import { getAgeGroup, readingTimeLabel } from "@/lib/taxonomy";
-import type { Book } from "@/lib/types";
+import { ageGroupsLabel, getAgeGroup, readingTimeLabel } from "@/lib/taxonomy";
+import { bookAgeGroups, type Book } from "@/lib/types";
 
 export interface HeroBookProps {
   book: Book;
@@ -15,7 +15,8 @@ export interface HeroBookProps {
 /** The large "book of the week" banner at the top of the home page. */
 export function HeroBook({ book, label }: HeroBookProps) {
   const cover = mediaUrl(book.coverImage, book.updatedAt);
-  const age = getAgeGroup(book.ageGroup);
+  const ages = bookAgeGroups(book);
+  const age = getAgeGroup(ages[0]);
   return (
     <section
       aria-labelledby="hero-book-title"
@@ -78,7 +79,7 @@ export function HeroBook({ book, label }: HeroBookProps) {
                   size="sm"
                   className="min-h-9 bg-surface"
                 >
-                  {age.label}
+                  {ageGroupsLabel(ages)}
                 </Chip>
               </li>
             ) : null}

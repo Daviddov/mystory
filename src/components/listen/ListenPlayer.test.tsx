@@ -11,6 +11,7 @@ function makeTrack(id: string, overrides: Partial<ListenTrack> = {}): ListenTrac
     title: `סיפור ${id}`,
     author: "מחברת",
     ageGroup: "3-5",
+    ageGroups: [overrides.ageGroup ?? "3-5"],
     readingMinutes: 3,
     coverUrl: "",
     coverType: "",

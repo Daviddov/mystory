@@ -149,6 +149,32 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                 ))}
               </Select>
             </Field>
+            <fieldset className="flex flex-col gap-2 sm:col-span-2">
+              <legend className="font-semibold">
+                מתאים גם ל <span className="text-sm font-normal text-muted">(הספר יוצג גם בגילים האלה)</span>
+              </legend>
+              <div className="flex flex-wrap gap-2">
+                {AGE_GROUP_INFO.filter((age) => age.slug !== meta.ageGroup).map((age) => {
+                  const extra = meta.extraAgeGroups ?? [];
+                  return (
+                    <Chip
+                      key={age.slug}
+                      icon={age.emoji}
+                      selected={extra.includes(age.slug)}
+                      onClick={() =>
+                        onChange({
+                          extraAgeGroups: extra.includes(age.slug)
+                            ? extra.filter((slug) => slug !== age.slug)
+                            : [...extra, age.slug],
+                        })
+                      }
+                    >
+                      {age.label}
+                    </Chip>
+                  );
+                })}
+              </div>
+            </fieldset>
           </div>
         </Card>
 

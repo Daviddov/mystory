@@ -3,7 +3,7 @@
  * the page builds the tracks on the server, the player walks through them.
  */
 import { contentTypeForPath, mediaUrl } from "@/lib/media/url";
-import { AGE_GROUPS, type AgeGroup, type BookWithPages } from "@/lib/types";
+import { AGE_GROUPS, bookAgeGroups, type AgeGroup, type BookWithPages } from "@/lib/types";
 
 export interface ListenPage {
   /** 1-based page number in the book (pages without audio are skipped, so numbers may jump). */
@@ -17,6 +17,8 @@ export interface ListenTrack {
   title: string;
   author: string;
   ageGroup: AgeGroup;
+  /** Every age group the book suits (see bookAgeGroups()). */
+  ageGroups: AgeGroup[];
   readingMinutes: number;
   /** Browser URL of the cover, or "" when the book has none. */
   coverUrl: string;
@@ -40,6 +42,7 @@ export function buildListenTracks(books: BookWithPages[]): ListenTrack[] {
       title: book.title,
       author: book.author,
       ageGroup: book.ageGroup,
+      ageGroups: bookAgeGroups(book),
       readingMinutes: book.readingMinutes,
       coverUrl: mediaUrl(book.coverImage, book.updatedAt),
       coverType: book.coverImage ? contentTypeForPath(book.coverImage) : "",
@@ -60,7 +63,7 @@ export function parseAgeFilter(value: string | null | undefined): AgeFilter {
 }
 
 export function filterTracks(tracks: ListenTrack[], age: AgeFilter): ListenTrack[] {
-  return age === "all" ? tracks : tracks.filter((track) => track.ageGroup === age);
+  return age === "all" ? tracks : tracks.filter((track) => track.ageGroups.includes(age));
 }
 
 /** Where the player is: a story in the queue and a narrated page inside it. */

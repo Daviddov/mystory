@@ -114,7 +114,7 @@ describe("createHeroImage", () => {
     );
     expect(result.descriptionWritten).toBe(true);
     expect(result.description.length).toBeGreaterThan(10);
-    expect(result.style).toBe("watercolor");
+    expect(result.style).toBe("storybook-cartoon");
     expect(text.prompts[0]).toContain("היא קפצה בשלוליות.");
   });
 

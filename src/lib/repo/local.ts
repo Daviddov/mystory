@@ -22,6 +22,7 @@ import { estimateReadingMinutes, normalizeForSearch, slugify } from "../hebrew";
 import { newId } from "../ids";
 import { categoryLabel, readingTimeBucket, tagSlug, themeLabel } from "../taxonomy";
 import {
+  bookAgeGroups,
   BookWithPagesSchema,
   CollectionSchema,
   CommentSchema,
@@ -291,7 +292,7 @@ export class LocalRepository implements Repository {
       if (statuses && !statuses.includes(b.status)) return false;
       if (ids && !ids.has(b.id)) return false;
       if (excluded && excluded.has(b.id)) return false;
-      if (filter.ageGroup && b.ageGroup !== filter.ageGroup) return false;
+      if (filter.ageGroup && !bookAgeGroups(b).includes(filter.ageGroup)) return false;
       if (filter.category && !b.categories.includes(filter.category)) return false;
       if (filter.theme && !b.themes.includes(filter.theme)) return false;
       if (filter.ownerId && b.ownerId !== filter.ownerId) return false;

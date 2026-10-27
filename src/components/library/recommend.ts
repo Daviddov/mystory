@@ -1,8 +1,8 @@
 /** "More like this" ranking and small date helpers. Pure and client-safe. */
 import { readingTimeBucket, tagSlug } from "@/lib/taxonomy";
-import type { Book } from "@/lib/types";
+import { bookAgeGroups, type Book } from "@/lib/types";
 
-type Comparable = Pick<Book, "id" | "ageGroup" | "categories" | "themes" | "tags" | "readingMinutes" | "viewCount">;
+type Comparable = Pick<Book, "id" | "ageGroup" | "extraAgeGroups" | "categories" | "themes" | "tags" | "readingMinutes" | "viewCount">;
 
 function shared(a: readonly string[], b: readonly string[]): number {
   const set = new Set(a);
@@ -12,7 +12,7 @@ function shared(a: readonly string[], b: readonly string[]): number {
 /** Higher means more alike. Zero means the books have nothing in common. */
 export function similarityScore(book: Comparable, other: Comparable): number {
   let score = 0;
-  if (book.ageGroup === other.ageGroup) score += 3;
+  if (bookAgeGroups(other).includes(book.ageGroup)) score += 3;
   score += 2 * shared(book.categories, other.categories);
   score += 1.5 * shared(book.themes, other.themes);
   score += shared(book.tags.map(tagSlug), other.tags.map(tagSlug));

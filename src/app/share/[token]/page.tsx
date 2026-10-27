@@ -7,8 +7,8 @@ import { ButtonLink, Card, Chip } from "@/components/ui";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
-import { getAgeGroup, readingTimeLabel } from "@/lib/taxonomy";
-import type { BookWithPages } from "@/lib/types";
+import { ageGroupsLabel, getAgeGroup, readingTimeLabel } from "@/lib/taxonomy";
+import { bookAgeGroups, type BookWithPages } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -42,7 +42,8 @@ export default async function SharePage({ params }: Props) {
 
   // The cover of an unpublished book is served only with the share token (see /media).
   const cover = mediaUrl(book.coverImage, book.updatedAt, book.status === "published" ? undefined : token);
-  const age = getAgeGroup(book.ageGroup);
+  const ages = bookAgeGroups(book);
+  const age = getAgeGroup(ages[0]);
   const isPublic = book.status === "published";
   // The reader receives the token so it can show a book that is not published.
   const readHref = isPublic
@@ -67,7 +68,7 @@ export default async function SharePage({ params }: Props) {
           <h1 className="text-4xl font-extrabold leading-tight">{book.title}</h1>
           {book.author ? <p className="text-lg text-muted">מאת {book.author}</p> : null}
           <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
-            {age ? <Chip icon={age.emoji}>{age.label}</Chip> : null}
+            {age ? <Chip icon={age.emoji}>{ageGroupsLabel(ages)}</Chip> : null}
             <Chip icon={<Clock aria-hidden="true" className="size-4" />}>{readingTimeLabel(book.readingMinutes)}</Chip>
             <Chip>{book.pages.length} עמודים</Chip>
           </div>

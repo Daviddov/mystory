@@ -4,8 +4,9 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
-import { getAgeGroup, readingTimeLabel, tagSlug } from "@/lib/taxonomy";
+import { ageGroupsLabel, getAgeGroup, readingTimeLabel, tagSlug } from "@/lib/taxonomy";
 import type { PublicBook } from "@/lib/public-book";
+import { bookAgeGroups } from "@/lib/types";
 
 export interface BookCardProps {
   /** A full Book works too. Client Components must pass a PublicBook (see @/lib/public-book). */
@@ -37,7 +38,8 @@ const AGE_TONES: Record<string, string> = {
 
 /** Cover (3:4), title, and pills for age group and reading time. Works in Server and Client Components. */
 export function BookCard({ book, href, layout = "grid", badge, footer, priority, showTags, hideTag, read, className }: BookCardProps) {
-  const age = getAgeGroup(book.ageGroup);
+  const ages = bookAgeGroups(book);
+  const age = getAgeGroup(ages[0]);
   const cover = mediaUrl(book.coverImage, book.updatedAt);
   const tags = showTags
     ? book.tags.filter((tag) => hideTag === undefined || tagSlug(tag) !== tagSlug(hideTag))
@@ -96,7 +98,7 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
               )}
             >
               <span aria-hidden="true">{age.emoji}</span>
-              {age.label}
+              {ageGroupsLabel(ages)}
             </span>
           ) : null}
           <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-0.5 text-xs font-semibold text-muted">

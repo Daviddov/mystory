@@ -74,7 +74,11 @@ export function extractGeminiImage(body: GeminiInteraction): { data: string; mim
 }
 
 /** Request body for one illustration. Exported for tests. */
-export function buildGeminiRequest(model: string, request: ImageRequest): Record<string, unknown> {
+export function buildGeminiRequest(
+  model: string,
+  request: ImageRequest,
+  imageSize: "1K" | "2K" | "4K" = aiEnv.imageSize(),
+): Record<string, unknown> {
   const references = (request.referenceImages ?? [])
     .filter((reference) => REFERENCE_TYPES.has(reference.contentType))
     .slice(0, MAX_REFERENCES);
@@ -95,7 +99,7 @@ export function buildGeminiRequest(model: string, request: ImageRequest): Record
         data: Buffer.from(reference.bytes).toString("base64"),
       })),
     ],
-    response_format: { type: "image", aspect_ratio: request.aspect ?? "4:3", image_size: "1K" },
+    response_format: { type: "image", aspect_ratio: request.aspect ?? "4:3", image_size: imageSize },
     store: false,
   };
 }

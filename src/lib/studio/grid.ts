@@ -40,6 +40,14 @@ export const GRID_SIZES: Record<GridLayout, { cols: number; rows: number; cells:
 };
 const ORDER: GridLayout[] = ["1x1", "2x2", "3x3", "4x4"];
 
+/**
+ * Said first in every picture prompt. Without it, some models print the scene description (captions,
+ * "BOOK COVER", names) inside the picture, which ruins a page.
+ */
+export const ONLY_PICTURES_RULE =
+  "ABSOLUTE RULE: the output must contain ONLY drawn pictures. Do NOT write any words, letters, captions, labels, titles, " +
+  "speech or numbers anywhere, in any language. Everything below is a description for you to read, never text to print.";
+
 /** Most pages a single grid of the requested layout can hold. */
 export function gridCapacity(requested: RequestedGridLayout): number {
   return requested === "4x4" ? 16 : 9;
@@ -103,6 +111,7 @@ export function gridPrompt(opts: { direction: string; character: string; scenes:
   const panels = opts.scenes.map((scene, i) => `${i + 1}: ${scene}`).join(" ");
   const blank = cells - opts.scenes.length;
   return [
+    ONLY_PICTURES_RULE,
     `Create ONE single image, landscape 4:3 aspect ratio: a ${cols}x${rows} grid of ${cells} SEPARATE illustrations for a children's picture book ` +
       `(${cols} columns, ${rows} rows). All panels exactly the same size and perfectly aligned, plain white gutters between and around the panels, ` +
       "no frames, no borders, no captions, no text, letters or numbers anywhere, and no picture running across two panels.",
@@ -118,6 +127,7 @@ export function gridPrompt(opts: { direction: string; character: string; scenes:
 /** The prompt of a single (1x1) picture: the same direction, no grid. */
 export function singlePrompt(opts: { direction: string; character: string; scene: string }): string {
   return [
+    ONLY_PICTURES_RULE,
     "Create ONE single picture for a children's picture book, landscape 4:3, no text, letters or numbers anywhere.",
     opts.direction,
     `The hero, drawn exactly as in the reference image: ${opts.character}`,

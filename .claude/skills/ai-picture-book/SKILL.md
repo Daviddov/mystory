@@ -113,6 +113,12 @@ the API key's prepaid credits were depleted, the web UI is free). No word timing
 4. `npx tsx .claude/skills/ai-picture-book/scripts/attach-narration.ts <slug> <dir>` converts to mp3 and attaches (audioSource "recorded").
 5. `STT_PROVIDER=whisper STT_PYTHON="py -3.12" npx tsx scripts/align-recordings.ts --book <slug>` times the words (the first run downloads the model; run it in the background).
 
+**Gotcha (2026-10-27, Gemini 3.8 Flash TTS, 2nd book in the same dialog):** after one book is generated, the next Run in the same dialog
+silently does nothing and the driver then "saves" the previous audio (same byte size; it stops with `implausible audio`).
+Open a fresh dialog per book: `+` (top right) → Create new dialog → pick the voice again (speaker dropdown, search the name) → `await setStyle(...)` →
+`bookDriver.stopped=null; bookDriver.cur=null; bookDriver.q=[slug]`. Delete any `<slug>-book.wav` that is byte-identical to another book's.
+Also: the page's CSP blocks inline `<script>` and eval, so paste the driver through `javascript_tool` text, not via the receiver.
+
 **Whole book in one request (preferred, ~16 books before the free quota ended on 2026-10-19 vs ~21 pages one by one):**
 paste [scripts/aistudio-book-driver.js](scripts/aistudio-book-driver.js) instead of the per-page driver, `bookDriver.q = ["<slug>", ...]`.
 It sends the pages joined by a blank line, captures the WAV Blob that the Download button builds, and posts `<slug>-book.wav` to the receiver.

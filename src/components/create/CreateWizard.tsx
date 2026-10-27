@@ -155,7 +155,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
   // Step 3
   const [ageGroup, setAgeGroup] = useState<AgeGroup | null>(null);
   const [category, setCategory] = useState<string>("adventures");
-  const [style, setStyle] = useState<StoryStyle>("watercolor");
+  const [style, setStyle] = useState<StoryStyle>("storybook-cartoon");
   // Step 4
   const [jobId, setJobId] = useState<string | null>(activeJobId ?? null);
   const [job, setJob] = useState<JobView | null>(null);

@@ -20,6 +20,7 @@ export type EditorMeta = Pick<
   | "license"
   | "source"
   | "ageGroup"
+  | "extraAgeGroups"
   | "categories"
   | "tags"
   | "themes"
@@ -59,6 +60,7 @@ export function pickMeta(book: Book): EditorMeta {
     license: book.license,
     source: book.source,
     ageGroup: book.ageGroup,
+    extraAgeGroups: book.extraAgeGroups,
     categories: book.categories,
     tags: book.tags,
     themes: book.themes,

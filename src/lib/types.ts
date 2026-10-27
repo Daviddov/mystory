@@ -164,6 +164,8 @@ export const BookSchema = z.object({
   /** Where the book came from (URL or free text). */
   source: z.string().max(500),
   ageGroup: AgeGroupSchema,
+  /** More age groups the book also suits; it is listed under each of them too (see bookAgeGroups()). */
+  extraAgeGroups: z.array(AgeGroupSchema).max(AGE_GROUPS.length).optional(),
   readingMinutes: z.number().min(1).max(240),
   /** Media path of the cover. Empty string when the book has no cover yet. */
   coverImage: z.string(),
@@ -202,6 +204,12 @@ export const BookSchema = z.object({
   hasAudio: z.boolean().optional(),
 });
 export type Book =z.infer<typeof BookSchema>;
+
+/** Every age group a book suits: its main ageGroup plus extraAgeGroups, youngest first. */
+export function bookAgeGroups(book: Pick<Book, "ageGroup" | "extraAgeGroups">): AgeGroup[] {
+  const groups = new Set<AgeGroup>([book.ageGroup, ...(book.extraAgeGroups ?? [])]);
+  return AGE_GROUPS.filter((group) => groups.has(group));
+}
 
 /** The language of a book's text; books stored before the field existed are Hebrew. */
 export function bookLanguage(book: Pick<Book, "language">): BookLanguage {

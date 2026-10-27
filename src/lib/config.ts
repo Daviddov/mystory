@@ -111,6 +111,11 @@ export const aiEnv = {
   imageProvider: () => env("IMAGE_PROVIDER"),
   imageApiKey: () => env("IMAGE_API_KEY"),
   imageModel: () => env("IMAGE_MODEL"),
+  /** "1K", "2K" or "4K" (IMAGE_SIZE). Anything else, or unset, means the default 1K. */
+  imageSize: (): "1K" | "2K" | "4K" => {
+    const value = env("IMAGE_SIZE")?.toUpperCase();
+    return value === "2K" || value === "4K" ? value : "1K";
+  },
   /** Name of the video vendor implemented in providers/video.ts ("gemini" = Veo); unset uses the mock. */
   videoProvider: () => env("VIDEO_PROVIDER"),
   /** Video only (Veo), no fallback to IMAGE_API_KEY. */

@@ -150,6 +150,7 @@ interface BookRow {
   license: string;
   source: string;
   age_group: string;
+  extra_age_groups?: string[] | null;
   reading_minutes: number | string;
   cover_image: string;
   status: string;
@@ -268,6 +269,7 @@ const BOOK_COLUMN_OF: Record<Exclude<keyof Book, "hasAudio">, string> = {
   license: "license",
   source: "source",
   ageGroup: "age_group",
+  extraAgeGroups: "extra_age_groups",
   readingMinutes: "reading_minutes",
   coverImage: "cover_image",
   status: "status",
@@ -363,6 +365,7 @@ function bookObjectFromRow(row: BookRow): Record<string, unknown> {
     license: row.license,
     source: row.source,
     ageGroup: row.age_group,
+    extraAgeGroups: row.extra_age_groups?.length ? row.extra_age_groups : null,
     readingMinutes: Number(row.reading_minutes),
     coverImage: row.cover_image,
     status: row.status,
@@ -639,7 +642,9 @@ export class SupabaseRepository implements Repository {
       if (statuses) query = query.in("status", statuses);
       if (ids) query = query.in("id", ids);
       if (excluded.length > 0) query = query.not("id", "in", `(${excluded.join(",")})`);
-      if (filter.ageGroup) query = query.eq("age_group", filter.ageGroup);
+      if (filter.ageGroup) {
+        query = query.or(`age_group.eq.${filter.ageGroup},extra_age_groups.cs.{${filter.ageGroup}}`);
+      }
       if (filter.category) query = query.contains("categories", arrayLiteral(filter.category));
       if (filter.theme) query = query.contains("themes", arrayLiteral(filter.theme));
       if (filter.tag) query = query.contains("tag_slugs", arrayLiteral(tagSlug(filter.tag)));

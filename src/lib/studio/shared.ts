@@ -33,7 +33,7 @@ export const MAX_HERO_DESCRIPTION = 1000;
 /** Optional art direction typed for one page illustration. */
 export const MAX_ILLUSTRATION_NOTE = 300;
 /** Illustration style used when the book's hero does not name one (a STORY_STYLES slug). */
-export const DEFAULT_ILLUSTRATION_STYLE = "watercolor";
+export const DEFAULT_ILLUSTRATION_STYLE = "storybook-cartoon";
 
 export const IMAGE_MAX_BYTES = 10 * 1024 * 1024;
 export const AUDIO_MAX_BYTES = 25 * 1024 * 1024;
@@ -98,6 +98,8 @@ export const BookMetaPatchSchema = z.strictObject({
   license: trimmed(200).optional(),
   source: trimmed(500).optional(),
   ageGroup: AgeGroupSchema.optional(),
+  /** Age groups the book also suits (the whole list; [] clears it). */
+  extraAgeGroups: z.array(AgeGroupSchema).max(3).transform((list) => Array.from(new Set(list))).optional(),
   categories: z
     .array(z.string().refine((slug) => CATEGORY_SLUGS.includes(slug), "קטגוריה לא מוכרת"))
     .max(MAX_CATEGORIES)

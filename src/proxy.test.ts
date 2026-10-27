@@ -29,13 +29,18 @@ describe("libraryRewrite", () => {
     expect(libraryRewrite("/book/snail", query(), true)).toBe("/live/book/snail");
     expect(libraryRewrite("/books", query(), true)).toBe("/live/books");
     expect(libraryRewrite("/collections/rainy", query(), true)).toBe("/live/collections/rainy");
+    expect(libraryRewrite("/holidays/hanukkah", query(), true)).toBe("/live/holidays/hanukkah");
+    expect(libraryRewrite("/listen", query(), true)).toBe("/live/listen");
   });
 
   it("sends listings with a library query to the live twin, and ignores other query strings", () => {
     expect(libraryRewrite("/books", query("age=3-5"), false)).toBe("/live/books");
     expect(libraryRewrite("/category/animals", query("page=2"), false)).toBe("/live/category/animals");
     expect(libraryRewrite("/tag/x", query("sort=popular"), false)).toBe("/live/tag/x");
+    expect(libraryRewrite("/parasha/noach", query("page=2"), false)).toBe("/live/parasha/noach");
+    expect(libraryRewrite("/listen", query("age=0-2"), false)).toBe("/live/listen");
     expect(libraryRewrite("/books", query("utm_source=news&_rsc=abc"), false)).toBeNull();
+    expect(libraryRewrite("/parasha", query("page=2"), false)).toBeNull();
     // Pages that read no query string stay static.
     expect(libraryRewrite("/", query("q=x"), false)).toBeNull();
     expect(libraryRewrite("/book/snail", query("page=2"), false)).toBeNull();

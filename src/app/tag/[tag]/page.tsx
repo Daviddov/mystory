@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { BrowseView } from "@/components/library/BrowseView";
 import { MAX_TAG_LENGTH, type RawSearchParams } from "@/components/library/filters";
 import { listTagCounts } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
-import { tagFromSlug, tagSlug } from "@/lib/taxonomy";
+import { tagFromSlug, tagIndexable, tagSlug } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -29,24 +30,34 @@ function readTag(segment: string): string | null {
   return label;
 }
 
+/** Every tag with its book count, most used first. One read per request, shared by generateMetadata and the page. */
+const allTagCounts = cache(() => listTagCounts(Number.POSITIVE_INFINITY));
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const label = readTag((await params).tag);
   if (!label) return { title: "הדף לא נמצא", robots: { index: false } };
-  return pageMetadata({
-    title: `סיפורים לילדים: ${label}`,
-    description: `סיפורי ילדים שקשורים ל${label}: ספרים מאוירים עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`,
-    path: routes.tag(label),
-  });
+  const wanted = tagSlug(label);
+  const count = (await allTagCounts()).find((tag) => tagSlug(tag.label) === wanted)?.count ?? 0;
+  return {
+    ...pageMetadata({
+      title: `סיפורים לילדים: ${label}`,
+      description: `סיפורי ילדים שקשורים ל${label}: ספרים מאוירים עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`,
+      path: routes.tag(label),
+    }),
+    // A tag with a book or two is a thin listing: visitors can browse it, search engines skip it.
+    ...(tagIndexable(count) ? {} : { robots: { index: false, follow: true } }),
+  };
 }
 
 export default async function TagPage({ params, searchParams }: Props) {
   const fromUrl = readTag((await params).tag);
   if (!fromUrl) notFound();
 
-  const tags = await listTagCounts(24);
+  const allTags = await allTagCounts();
   // Prefer the spelling stored on the books ("סבא וסבתא") over the one rebuilt from the URL.
   const wanted = tagSlug(fromUrl);
-  const label = tags.find((tag) => tagSlug(tag.label) === wanted)?.label ?? fromUrl;
+  const label = allTags.find((tag) => tagSlug(tag.label) === wanted)?.label ?? fromUrl;
+  const tags = allTags.slice(0, 24);
 
   return (
     <BrowseView

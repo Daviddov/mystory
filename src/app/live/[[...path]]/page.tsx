@@ -1,8 +1,8 @@
 /**
  * The dynamic twin of the public library pages.
  *
- * The library pages (/, /books, /book/[slug], the browse pages and the
- * collections) are static and cached (ISR) for signed-out visitors. Two kinds
+ * The library pages (/, /books, /book/[slug], the browse pages, the
+ * collections, the parasha and holiday pages and /listen) are static and cached (ISR) for signed-out visitors. Two kinds
  * of request need a per-request render instead, and src/proxy.ts rewrites them
  * here, keeping the address in the browser:
  *   - a signed-in visitor (header with the account menu, server-known favorites,
@@ -25,6 +25,11 @@ import { BooksView, booksMetadata } from "../../books/books-view";
 import CategoryPage, { generateMetadata as categoryMetadata } from "../../category/[slug]/page";
 import CollectionPage, { generateMetadata as collectionMetadata } from "../../collections/[slug]/page";
 import CollectionsPage, { metadata as collectionsMetadata } from "../../collections/page";
+import HolidayPage, { generateMetadata as holidayMetadata } from "../../holidays/[slug]/page";
+import HolidaysPage, { metadata as holidaysMetadata } from "../../holidays/page";
+import { ListenView, metadata as listenMetadata } from "../../listen/page";
+import ParashaPage, { generateMetadata as parashaMetadata } from "../../parasha/[slug]/page";
+import ParashotPage, { metadata as parashotMetadata } from "../../parasha/page";
 import TagPage, { generateMetadata as tagMetadata } from "../../tag/[tag]/page";
 import ThemePage, { generateMetadata as themeMetadata } from "../../theme/[slug]/page";
 import TimePage, { generateMetadata as timeMetadata } from "../../time/[bucket]/page";
@@ -54,6 +59,17 @@ function resolve(path: readonly string[], searchParams: Promise<RawSearchParams>
       };
     }
     if (section === "collections") return { page: () => CollectionsPage(), metadata: () => collectionsMetadata };
+    if (section === "parasha") return { page: () => ParashotPage(), metadata: () => parashotMetadata };
+    if (section === "holidays") return { page: () => HolidaysPage(), metadata: () => holidaysMetadata };
+    if (section === "listen") {
+      return {
+        page: async () => {
+          const age = (await searchParams).age;
+          return ListenView({ age: Array.isArray(age) ? age[0] : age, viewer: await getCurrentUser() });
+        },
+        metadata: () => listenMetadata,
+      };
+    }
     return null;
   }
   switch (section) {
@@ -88,6 +104,20 @@ function resolve(path: readonly string[], searchParams: Promise<RawSearchParams>
     case "collections": {
       const params = p({ slug: param });
       return { page: () => CollectionPage({ params }), metadata: () => collectionMetadata({ params }) };
+    }
+    case "parasha": {
+      const params = p({ slug: param });
+      return {
+        page: () => ParashaPage({ params, searchParams }),
+        metadata: () => parashaMetadata({ params, searchParams }),
+      };
+    }
+    case "holidays": {
+      const params = p({ slug: param });
+      return {
+        page: () => HolidayPage({ params, searchParams }),
+        metadata: () => holidayMetadata({ params, searchParams }),
+      };
     }
     default:
       return null;

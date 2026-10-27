@@ -226,6 +226,17 @@ export function tagFromSlug(slug: string): string {
   return decoded.replace(/-/g, " ").trim();
 }
 
+/**
+ * Fewest published books for a tag page to be indexed and listed in the
+ * sitemap. Most tags belong to one or two books, and hundreds of such
+ * near-empty listings are thin content that drags down the whole site.
+ */
+export const MIN_INDEXED_TAG_BOOKS = 3;
+
+export function tagIndexable(bookCount: number): boolean {
+  return bookCount >= MIN_INDEXED_TAG_BOOKS;
+}
+
 // --- Illustration styles (AI wizard and mock placeholders) ---------------------
 
 export const ILLUSTRATION_STYLES = [

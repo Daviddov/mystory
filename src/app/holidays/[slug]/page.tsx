@@ -4,7 +4,15 @@ import { OccasionView, occasionMetadata } from "@/components/library/OccasionPag
 import type { RawSearchParams } from "@/components/library/filters";
 import { getOccasion } from "@/lib/occasions";
 
-export const dynamic = "force-dynamic";
+// Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
+// Query strings and signed-in visitors go to the dynamic twin in src/app/live.
+export const dynamic = "force-static";
+export const revalidate = 600;
+
+/** Each page is rendered on its first visit, then cached. */
+export function generateStaticParams(): { slug: string }[] {
+  return [];
+}
 
 interface Props {
   params: Promise<{ slug: string }>;

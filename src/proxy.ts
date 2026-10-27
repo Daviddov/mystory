@@ -41,9 +41,10 @@ export const LOCAL_SESSION_COOKIE = "mystory_session";
 export const LIBRARY_QUERY_KEYS: readonly string[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim", "read", "sort", "page"];
 
 /** Library pages that are static for signed-out visitors. */
-const LIBRARY_PAGE = /^\/(?:books|collections|(?:book|age|category|theme|time|tag|collections)\/[^/]+)?$/;
+const LIBRARY_PAGE =
+  /^\/(?:books|collections|parasha|holidays|listen|(?:book|age|category|theme|time|tag|collections|parasha|holidays)\/[^/]+)?$/;
 /** Of those, the listings whose content depends on the query string. */
-const LIBRARY_LISTING = /^\/(?:books|(?:age|category|theme|time|tag)\/[^/]+)$/;
+const LIBRARY_LISTING = /^\/(?:books|listen|(?:age|category|theme|time|tag|parasha|holidays)\/[^/]+)$/;
 
 /**
  * The library pages are static and cached (ISR), so their HTML must be the

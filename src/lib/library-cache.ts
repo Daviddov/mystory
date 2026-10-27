@@ -2,7 +2,7 @@
  * Cache of the public library pages.
  *
  * The library pages (/, /books, /book/[slug], /age, /category, /theme, /time,
- * /tag, /collections) are static for signed-out visitors (force-static) and
+ * /tag, /collections, /parasha, /holidays, /listen) are static for signed-out visitors (force-static) and
  * kept fresh two ways:
  *   - time-based: each page is rebuilt in the background at most every
  *     10 minutes (`export const revalidate = 600` on each page), which is what

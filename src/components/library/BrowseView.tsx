@@ -45,6 +45,8 @@ export interface BrowseViewProps {
   emptyTitle?: string;
   /** Extra content between the heading and the list. */
   children?: ReactNode;
+  /** Content after the list, such as a guide for search engines and parents. */
+  footer?: ReactNode;
   /**
    * Which listing this is, for loading more pages while scrolling. Default:
    * told from `base` (age, category, theme, time, tag). Pages whose base is a
@@ -72,6 +74,7 @@ export async function BrowseView({
   refineHref,
   emptyTitle = "עוד אין כאן ספרים",
   children,
+  footer,
   scope,
 }: BrowseViewProps) {
   const parsed = parseLibraryQuery(searchParams);
@@ -190,6 +193,8 @@ export async function BrowseView({
           </>
         )}
       </section>
+
+      {footer}
     </main>
   );
 }

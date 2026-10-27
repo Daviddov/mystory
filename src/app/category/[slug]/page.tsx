@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { BedtimeGuide } from "@/components/library/BedtimeGuide";
 import { BrowseView } from "@/components/library/BrowseView";
 import type { RawSearchParams } from "@/components/library/filters";
 import { routes } from "@/lib/routes";
@@ -43,7 +44,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       searchParams={await searchParams}
       base={{ category: category.slug }}
       eyebrow="קטגוריה"
-      title={category.label}
+      // The heading parents search for ("סיפורים לפני השינה לילדים"), not the short chip label.
+      title={category.searchTitle ?? category.label}
       emoji={category.emoji}
       description={category.description}
       crumbs={[{ label: "כל הספרים", href: routes.books() }, { label: category.label }]}
@@ -56,6 +58,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       }))}
       refineHref={routes.books({ category: category.slug })}
       emptyTitle="עוד אין ספרים בקטגוריה הזאת"
+      footer={category.slug === "bedtime" ? <BedtimeGuide /> : null}
     >
       {category.slug === "parasha" || category.slug === "judaism" ? <OccasionLinks /> : null}
     </BrowseView>

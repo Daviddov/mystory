@@ -25,6 +25,7 @@ import {
   useSyncExternalStore,
   type CSSProperties,
   type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
@@ -65,7 +66,6 @@ import type { PublicBook } from "@/lib/public-book";
 import { bookLanguage, type BookLanguage } from "@/lib/types";
 import { EndScreen } from "./EndScreen";
 import { ReaderSettings } from "./ReaderSettings";
-import { SpeedControl } from "./SpeedControl";
 import { StartScreen } from "./StartScreen";
 import { ProgressScrubber } from "./ProgressScrubber";
 import { RecordingPanel } from "./RecordingPanel";
@@ -138,6 +138,9 @@ export interface BookPlayerProps {
 /** Width / height up to which a picture counts as square or tall and gets the text beside it. */
 const SIDE_BY_SIDE_MAX_RATIO = 2;
 
+/** How long the text waits for the picture's shape before it is shown anyway. */
+const SHAPE_WAIT_MS = 1200;
+
 const READER_CSS = `
 @keyframes mystory-reader-page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .mystory-reader-spread { animation: mystory-reader-page-in 0.25s ease-out; }
@@ -157,7 +160,29 @@ const READER_CSS = `
 }
 @media (orientation: landscape) and (max-height: 560px) {
   .mystory-reader-spread { flex-direction: row; }
+  /* In a row the picture's frame takes the full height, or a tall picture would spill over the bars. */
+  .mystory-reader-frame { height: 100%; }
   .mystory-reader-text { max-height: 100%; width: 33%; }
+}
+/* A phone on its side: every pixel of height goes to the page. Slimmer bars, a smaller play
+   button, the page count beside the controls instead of under them, smaller page turners. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .mystory-reader-header { padding-top: 0; padding-bottom: 0; }
+  .mystory-reader-header h1 { font-size: 1.125rem; }
+  .mystory-reader-spread { gap: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem; }
+  .mystory-reader-text { width: 38%; max-width: 26rem; padding-top: 0.25rem; padding-bottom: 0.25rem; }
+  .mystory-reader-controls { flex-direction: row; justify-content: center; gap: 0.75rem; padding-top: 0; }
+  .mystory-reader-pill { padding: 0.25rem; }
+  .mystory-reader-play { width: 3rem; height: 3rem; }
+  .mystory-reader-play svg { width: 1.5rem; height: 1.5rem; }
+  .mystory-reader-turn { width: 3.25rem; height: 3.25rem; }
+  .mystory-reader-turn svg { width: 2rem; height: 2rem; }
+}
+/* Wide enough for floating page turners: keep the page clear of them. */
+@media (orientation: landscape) and (max-height: 500px) and (min-width: 640px) {
+  .mystory-reader-spread { padding-inline: 4.5rem; }
+  .mystory-reader-turn-prev { inset-inline-start: 0.75rem; }
+  .mystory-reader-turn-next { inset-inline-end: 0.75rem; }
 }
 @keyframes mystory-reader-ambient-in { from { opacity: 0; } }
 .mystory-reader-ambient { animation: mystory-reader-ambient-in 0.6s ease-out; }
@@ -782,11 +807,25 @@ function Player({
         setImageShape({ src: imageSrc, ratio: probe.naturalWidth / probe.naturalHeight });
       }
     };
+    probe.onerror = () => {
+      // Unknown shape: settle on a wide picture so the text is not held back.
+      if (live) setImageShape({ src: imageSrc, ratio: 1.5 });
+    };
     probe.src = imageSrc;
     return () => {
       live = false;
     };
   }, [showVideo, imageReady, imageSrc]);
+  // The text never waits on the shape for long: a clip without a still picture has nothing to
+  // measure, and a slow picture lets the text in under it after a moment.
+  const shapeKey = imageSrc || videoSrc;
+  const [shapeGaveUp, setShapeGaveUp] = useState<string | null>(null);
+  useEffect(() => {
+    if (!showImage || imageRatio !== null) return;
+    const id = window.setTimeout(() => setShapeGaveUp(shapeKey), SHAPE_WAIT_MS);
+    return () => window.clearTimeout(id);
+  }, [showImage, imageRatio, shapeKey]);
+  const shapeSettled = imageRatio !== null || !imageReady || shapeGaveUp === shapeKey;
   const sideBySide = showImage && textLayout === "side" && imageRatio !== null && imageRatio <= SIDE_BY_SIDE_MAX_RATIO;
   const tallPicture = showImage && showText && imageRatio !== null && imageRatio < 0.95;
   const text = current ? (inOriginal ? originalText : pageDisplayText(current, nikudOn)) : "";
@@ -794,12 +833,42 @@ function Player({
   const title = (showOriginal && book.credits?.originalTitle) || book.title;
   const otherLanguage = showOriginal ? bookLanguage(book) : originalLanguage;
 
+  // The play button and the voice picker; recording mode has its own panel instead.
+  const audioControls = hasAnyAudio && !recordMode;
+  const pageCounter = (
+    <p
+      className="min-w-0 truncate rounded-full bg-surface/70 px-3 py-0.5 text-center text-sm font-medium text-muted backdrop-blur"
+      aria-hidden="true"
+    >
+      <span dir="ltr">
+        {index + 1} / {pageCount}
+      </span>
+      {hasAnyAudio ? (audioSrc ? null : " · לעמוד הזה אין הקראה") : " · לספר הזה אין הקראה"}
+    </p>
+  );
+
   const readAgain = () => {
     stopNarration();
     jump(0);
   };
 
   const resolvedExitHref = exitHref === undefined ? (isPage ? routes.book(book.slug) : null) : exitHref;
+  // Leaving returns to the page the reader came from (shelf, search, book page); the link is the fallback.
+  const goBackIfPossible = (event: ReactMouseEvent) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+    let cameFromSite = false;
+    try {
+      cameFromSite = document.referrer === "" || new URL(document.referrer).origin === window.location.origin;
+    } catch {
+      // Unparseable referrer: use the link.
+    }
+    if (cameFromSite && window.history.length > 1) {
+      event.preventDefault();
+      window.history.back();
+    }
+  };
   const exitControl = (size: "icon" | "lg"): ReactNode => {
     const content =
       size === "icon" ? (
@@ -826,6 +895,7 @@ function Player({
           size={size}
           aria-label={label}
           title={label}
+          onClick={isPage ? goBackIfPossible : undefined}
         >
           {content}
         </ButtonLink>
@@ -879,7 +949,7 @@ function Player({
       ) : null}
 
       {/* Top bar */}
-      <header className="flex shrink-0 items-center gap-1 px-2 py-1.5 sm:gap-2 sm:px-4">
+      <header className="mystory-reader-header flex shrink-0 items-center gap-1 px-2 py-1.5 sm:gap-2 sm:px-4">
         {exitControl("icon")}
         <h1 dir="auto" className="min-w-0 flex-1 truncate px-1 text-start font-display text-lg font-semibold sm:text-2xl">
           {title}
@@ -1016,10 +1086,10 @@ function Player({
           <div
             key={index}
             className={cn(
-              "mystory-reader-spread flex h-full min-h-0 flex-col items-center gap-2 px-2 py-1 sm:px-24",
+              // Nothing floats over the page: the controls have their own row under it, and on wider
+              // screens the side padding keeps the page clear of the page turners.
+              "mystory-reader-spread flex h-full min-h-0 flex-col items-center gap-2 px-2 py-1 sm:px-28",
               sideBySide && "sm:flex-row sm:gap-6",
-              // The floating controls sit over the bottom edge; keep stacked text clear of them.
-              !sideBySide && showImage && showText && "pb-28",
               tallPicture && "mystory-reader-tall",
             )}
             style={tallPicture ? ({ "--mystory-img-ratio": imageRatio } as CSSProperties) : undefined}
@@ -1073,12 +1143,10 @@ function Player({
                     onError={() => setBrokenImage(imageSrc)}
                     onLoad={(event) => {
                       const { naturalWidth, naturalHeight } = event.currentTarget;
-                      if (naturalWidth > 0 && naturalHeight > 0) {
-                        setImageShape({
-                          src: imageSrc,
-                          ratio: naturalWidth / naturalHeight,
-                        });
-                      }
+                      setImageShape({
+                        src: imageSrc,
+                        ratio: naturalWidth > 0 && naturalHeight > 0 ? naturalWidth / naturalHeight : 1.5,
+                      });
                     }}
                     className={cn(
                       "size-full select-none object-contain bedtime:opacity-90",
@@ -1089,7 +1157,8 @@ function Player({
                 )}
               </div>
             ) : null}
-            {showText && text.trim() !== "" ? (
+            {/* The text waits for the picture's shape: it decides beside or under, so showing it earlier would make it jump. */}
+            {showText && text.trim() !== "" && (!showImage || shapeSettled) ? (
               <div
                 className={cn(
                   "w-full max-w-4xl overflow-y-auto px-2",
@@ -1114,31 +1183,6 @@ function Player({
             ) : null}
           </div>
         )}
-
-        {/* Page turners, centred on each side. In RTL start is right: previous is right, next is left. */}
-        {!atEnd ? (
-          <>
-            <Button
-              variant="outline"
-              size="icon-lg"
-              className="absolute start-2 top-1/2 z-10 size-16 -translate-y-1/2 border-transparent bg-surface/80 p-0 shadow-card ring-1 ring-border/60 backdrop-blur-md transition-transform hover:scale-105 active:scale-95 sm:start-5 sm:size-20"
-              aria-label="לעמוד הקודם"
-              disabled={index === 0}
-              onClick={() => turn(-1)}
-            >
-              <ChevronRight aria-hidden="true" className="size-9 sm:size-11" />
-            </Button>
-            <Button
-              variant="primary"
-              size="icon-lg"
-              className="absolute end-2 top-1/2 z-10 size-16 -translate-y-1/2 p-0 shadow-lift transition-transform hover:scale-105 active:scale-95 sm:end-5 sm:size-20"
-              aria-label={isLastPage ? "לסוף הסיפור" : "לעמוד הבא"}
-              onClick={() => turn(1)}
-            >
-              <ChevronLeft aria-hidden="true" className="size-9 sm:size-11" />
-            </Button>
-          </>
-        ) : null}
 
         {notice !== null ? (
           <div
@@ -1180,7 +1224,66 @@ function Player({
         </p>
       ) : null}
 
-      {/* Bottom controls. In RTL the first item sits on the right: previous is right, next is left. */}
+      {/* Bottom controls, in their own row so they never cover the words. In RTL the first item
+          sits on the right: previous is right, next is left. */}
+      {!atEnd ? (
+        <footer
+          className={cn(
+            "mystory-reader-controls z-10 flex shrink-0 flex-col items-center gap-1 px-2 pt-1 sm:px-6",
+            !recordMode && "pb-[max(0.375rem,env(safe-area-inset-bottom))]",
+          )}
+        >
+          {/* On a phone the page turners share this row; from sm up they float at the sides of the page. */}
+          <div className="flex w-full min-w-0 items-center justify-between gap-2 sm:w-auto sm:justify-center">
+            <Button
+              variant="outline"
+              size="icon-lg"
+              className="mystory-reader-turn mystory-reader-turn-prev size-14 shrink-0 border-transparent bg-surface/80 p-0 shadow-card ring-1 ring-border/60 backdrop-blur-md transition-transform hover:scale-105 active:scale-95 sm:absolute sm:start-5 sm:top-1/2 sm:size-20 sm:-translate-y-1/2"
+              aria-label="לעמוד הקודם"
+              disabled={index === 0}
+              onClick={() => turn(-1)}
+            >
+              <ChevronRight aria-hidden="true" className="size-8 sm:size-11" />
+            </Button>
+            {audioControls ? (
+              <div className="mystory-reader-pill flex min-w-0 items-center gap-2 rounded-full bg-surface/85 p-1.5 pe-3 shadow-pop ring-1 ring-border/60 backdrop-blur-md">
+                <Button
+                  variant="secondary"
+                  size="icon-lg"
+                  aria-label={narrating ? "להשהות את ההקראה" : "להשמיע את הסיפור"}
+                  title={audioSrc ? undefined : "לעמוד הזה אין הקראה"}
+                  disabled={!audioSrc}
+                  onClick={narration.toggle}
+                  className={cn("mystory-reader-play size-16 shrink-0 rounded-full", narrating && "mystory-reader-playing")}
+                >
+                  {narrating ? <Pause aria-hidden="true" className="size-8" /> : <Play aria-hidden="true" className="size-8" />}
+                </Button>
+                <VoicePicker
+                  hasOriginal={hasOriginalAudio}
+                  versions={versions}
+                  value={voiceId}
+                  onChange={(id) => {
+                    stopNarration();
+                    setVoiceId(id);
+                  }}
+                />
+              </div>
+            ) : (
+              pageCounter
+            )}
+            <Button
+              variant="primary"
+              size="icon-lg"
+              className="mystory-reader-turn mystory-reader-turn-next size-14 shrink-0 p-0 shadow-lift transition-transform hover:scale-105 active:scale-95 sm:absolute sm:end-5 sm:top-1/2 sm:size-20 sm:-translate-y-1/2"
+              aria-label={isLastPage ? "לסוף הסיפור" : "לעמוד הבא"}
+              onClick={() => turn(1)}
+            >
+              <ChevronLeft aria-hidden="true" className="size-8 sm:size-11" />
+            </Button>
+          </div>
+          {audioControls ? pageCounter : null}
+        </footer>
+      ) : null}
       {!atEnd && recordMode && recorder ? (
         <RecordingPanel
           bookId={book.id}
@@ -1201,54 +1304,6 @@ function Player({
           onSaved={() => turn(1)}
           onClose={() => setRecordMode(false)}
         />
-      ) : null}
-      {!atEnd && !recordMode ? (
-        <footer className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-center justify-center px-3 pb-[max(0.375rem,env(safe-area-inset-bottom))] pt-0.5 sm:px-6">
-          <div className="pointer-events-auto flex min-w-0 flex-col items-center gap-1.5">
-            <div
-              className={cn(
-                "flex items-center gap-2",
-                hasAnyAudio && "rounded-full bg-surface/85 p-1.5 pe-3 shadow-pop ring-1 ring-border/60 backdrop-blur-md",
-              )}
-            >
-              {hasAnyAudio ? (
-                <>
-                  <Button
-                    variant="secondary"
-                    size="icon-lg"
-                    aria-label={narrating ? "להשהות את ההקראה" : "להשמיע את הסיפור"}
-                    title={audioSrc ? undefined : "לעמוד הזה אין הקראה"}
-                    disabled={!audioSrc}
-                    onClick={narration.toggle}
-                    className={cn("size-16 rounded-full", narrating && "mystory-reader-playing")}
-                  >
-                    {narrating ? (
-                      <Pause aria-hidden="true" className="size-8" />
-                    ) : (
-                      <Play aria-hidden="true" className="size-8" />
-                    )}
-                  </Button>
-                  <SpeedControl rate={rate} onRate={(value) => updatePrefs({ rate: value })} />
-                  <VoicePicker
-                    hasOriginal={hasOriginalAudio}
-                    versions={versions}
-                    value={voiceId}
-                    onChange={(id) => {
-                      stopNarration();
-                      setVoiceId(id);
-                    }}
-                  />
-                </>
-              ) : null}
-            </div>
-            <p className="rounded-full bg-surface/70 px-3 py-0.5 text-sm font-medium text-muted backdrop-blur" aria-hidden="true">
-              <span dir="ltr">
-                {index + 1} / {pageCount}
-              </span>
-              {hasAnyAudio ? (audioSrc ? null : " · לעמוד הזה אין הקראה") : " · לספר הזה אין הקראה"}
-            </p>
-          </div>
-        </footer>
       ) : null}
 
       {/* One audio element for the whole book; see useNarration. */}

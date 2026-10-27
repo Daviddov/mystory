@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { X } from "lucide-react";
-import { BookGrid } from "@/components/BookGrid";
 import { FilterForm } from "@/components/library/FilterForm";
 import {
   bookCountLabel,
@@ -8,15 +7,17 @@ import {
   hasActiveFilters,
   hrefWith,
   parseLibraryQuery,
+  toParams,
   type RawSearchParams,
 } from "@/components/library/filters";
+import { InfiniteBookGrid } from "@/components/library/InfiniteBookGrid";
+import { listingApiUrl, type ListingScope } from "@/components/library/infinite";
+import { toListingItems } from "@/components/library/listing";
 import { PageHeading } from "@/components/library/PageHeading";
-import { Pagination } from "@/components/library/Pagination";
-import { listLibraryBooks } from "@/components/library/queries";
-import { isNewBook } from "@/components/library/recommend";
+import { listBooksForViewer } from "@/components/library/queries";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
-import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
+import { pageMetadata } from "@/lib/seo";
 import type { User } from "@/lib/types";
 
 /**
@@ -28,33 +29,25 @@ export function booksMetadata(searchParams: RawSearchParams): Metadata {
   const query = parseLibraryQuery(searchParams);
   const filtered = hasActiveFilters(query);
   return {
-    title: "כל הספרים",
-    description: "כל ספרי הילדים בספרייה, עם סינון לפי גיל, קטגוריה, זמן קריאה ונושא לשיחה.",
-    alternates: { canonical: routes.books() },
+    ...pageMetadata({
+      title: "כל ספרי הילדים: סיפורים לקריאה ולהאזנה",
+      description:
+        "כל ספרי הילדים בספרייה, לקריאה בחינם: סיפורים מאוירים עם ניקוד והקראה, עם סינון לפי גיל, קטגוריה, זמן קריאה ונושא לשיחה.",
+      path: routes.books(),
+    }),
     // Filter combinations are endless; only the plain listing is indexed.
     robots: filtered || query.page > 1 ? { index: false, follow: true } : undefined,
   };
 }
 
 export async function BooksView({ searchParams, viewer = null }: { searchParams: RawSearchParams; viewer?: User | null }) {
-  const parsed = parseLibraryQuery(searchParams);
   // "Read" is per user: without a signed-in viewer the filter does not apply.
-  const query = viewer ? parsed : { ...parsed, read: undefined };
-  const readIds = viewer
-    ? new Set(
-        (await (await getRepo()).listProgress(viewer.id).catch(() => [])).filter((p) => p.completed).map((p) => p.bookId),
-      )
-    : new Set<string>();
-  const listing =
-    query.read === "read" && readIds.size === 0
-      ? { books: [], total: 0, page: 1, pages: 1, now: Date.now() }
-      : await listLibraryBooks(
-          query,
-          query.read === "read" ? { ids: [...readIds] } : query.read === "unread" ? { excludeIds: [...readIds] } : {},
-        );
+  const { query, listing, readIds } = await listBooksForViewer(parseLibraryQuery(searchParams), viewer);
   const shown = { ...query, page: listing.page };
   const active = describeActiveFilters(shown);
   const path = routes.books();
+  const scope: ListingScope = { kind: "books" };
+  const listParams = toParams({ ...shown, page: undefined });
 
   return (
     <main className="container-page flex flex-col gap-8 py-8 sm:py-10">
@@ -92,23 +85,25 @@ export async function BooksView({ searchParams, viewer = null }: { searchParams:
           ) : null}
         </div>
 
-        <BookGrid
-          books={listing.books}
-          cardProps={(book) => ({
-            ...(isNewBook(book, listing.now) ? { badge: "חדש" } : {}),
-            ...(readIds.has(book.id) ? { read: true } : {}),
-          })}
-          empty={
-            <EmptyState
-              icon="🔍"
-              title="לא מצאנו ספרים שמתאימים לכל הסינונים"
-              description="נסו להסיר אחד מהסינונים, או התחילו מחדש."
-              action={<ButtonLink href={routes.books()}>ניקוי כל הסינונים</ButtonLink>}
-            />
-          }
-        />
-
-        <Pagination page={listing.page} pages={listing.pages} hrefFor={(page) => hrefWith(path, shown, { page })} />
+        {listing.books.length > 0 ? (
+          <InfiniteBookGrid
+            // A new filter or sort order starts over instead of keeping the loaded pages.
+            key={listingApiUrl(scope, listParams, 1)}
+            scope={scope}
+            path={path}
+            params={listParams}
+            initialItems={toListingItems(listing.books, listing.now, readIds)}
+            page={listing.page}
+            pages={listing.pages}
+          />
+        ) : (
+          <EmptyState
+            icon="🔍"
+            title="לא מצאנו ספרים שמתאימים לכל הסינונים"
+            description="נסו להסיר אחד מהסינונים, או התחילו מחדש."
+            action={<ButtonLink href={routes.books()}>ניקוי כל הסינונים</ButtonLink>}
+          />
+        )}
       </section>
     </main>
   );

@@ -185,6 +185,10 @@
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
+    /* Safety net only: a stray wide element must never make phones zoom out or
+       scroll sideways. Fix the element itself; clip (unlike hidden) keeps
+       position: sticky working and creates no scroll container. */
+    overflow-x: clip;
   }
 
   h1,

@@ -2,20 +2,15 @@
 
 import { AArrowDown, AArrowUp, Moon, Timer } from "lucide-react";
 import { Button, Chip, Dialog } from "@/components/ui";
-import { FONT_SIZES_REM, PLAYBACK_RATES, SLEEP_TIMER_MINUTES, formatCountdown } from "@/lib/reader/logic";
+import { FONT_SIZES_REM, SLEEP_TIMER_MINUTES, formatCountdown } from "@/lib/reader/logic";
 import type { TextLayout } from "@/lib/reader/storage";
+import { SpeedControl } from "./SpeedControl";
 
 const TEXT_LAYOUTS: { value: TextLayout; label: string }[] = [
   { value: "side", label: "ליד התמונה" },
   { value: "below", label: "תמיד מתחת לתמונה" },
   { value: "hidden", label: "בלי טקסט" },
 ];
-
-const RATE_LABELS: Record<number, string> = { 0.9: "לאט", 1: "רגיל", 1.1: "מהר" };
-
-export function rateLabel(rate: number): string {
-  return RATE_LABELS[rate] ?? `×${rate}`;
-}
 
 export interface ReaderSettingsProps {
   open: boolean;
@@ -171,13 +166,11 @@ export function ReaderSettings({
           </h3>
           {hasAudio ? (
             <div className="flex flex-col gap-3">
-              <div className="flex flex-wrap items-center gap-2" role="group" aria-label="מהירות ההקראה">
-                <span className="text-muted">מהירות:</span>
-                {PLAYBACK_RATES.map((value) => (
-                  <Chip key={value} selected={rate === value} tone="secondary" onClick={() => onRate(value)}>
-                    {rateLabel(value)}
-                  </Chip>
-                ))}
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="text-muted" aria-hidden="true">
+                  מהירות:
+                </span>
+                <SpeedControl rate={rate} onRate={onRate} />
               </div>
               <label className="flex min-h-touch cursor-pointer items-center gap-3">
                 <input

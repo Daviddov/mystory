@@ -4,12 +4,17 @@ import { Rabbit, Turtle } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { PLAYBACK_RATES } from "@/lib/reader/logic";
-import { rateLabel } from "./ReaderSettings";
+
+const RATE_LABELS: Record<number, string> = { 0.9: "לאט", 1: "רגיל", 1.1: "מהר" };
+
+export function rateLabel(rate: number): string {
+  return RATE_LABELS[rate] ?? `×${rate}`;
+}
 
 const ICONS: Record<number, ReactNode> = {
   0.9: <Turtle aria-hidden="true" className="size-6" />,
   1: <span className="text-base font-bold">1×</span>,
-  1.1:<Rabbit aria-hidden="true" className="size-6" />,
+  1.1: <Rabbit aria-hidden="true" className="size-6" />,
 };
 
 export interface SpeedControlProps {
@@ -17,7 +22,7 @@ export interface SpeedControlProps {
   onRate: (rate: number) => void;
 }
 
-/** Narration speed as three side-by-side buttons: turtle (slow), normal, rabbit (fast). */
+/** Narration speed as three side-by-side buttons: turtle (slow), normal, rabbit (fast). Lives in the reader settings. */
 export function SpeedControl({ rate, onRate }: SpeedControlProps) {
   return (
     <div

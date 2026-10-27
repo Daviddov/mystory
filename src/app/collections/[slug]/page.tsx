@@ -9,6 +9,7 @@ import { seasonInfo } from "@/components/library/seasons";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
+import { pageMetadata, plainText } from "@/lib/seo";
 import { SLUG_PATTERN } from "@/lib/types";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -35,20 +36,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!found) return { title: "האוסף לא נמצא", robots: { index: false } };
   const { collection, books } = found;
   const cover = books[0] ? mediaUrl(books[0].coverImage, books[0].updatedAt) : "";
-  const description = collection.description || `אוסף ספרים לילדים: ${collection.title}.`;
-  return {
-    title: `${collection.title} (אוסף)`,
+  const name = plainText(collection.title);
+  const intro = plainText(collection.description, 110).replace(/[.…!?\s]+$/, "");
+  const description = intro
+    ? `${intro}. אוסף סיפורי ילדים עם ניקוד והקראה, בחינם.`
+    : `${name}: אוסף סיפורי ילדים מאוירים עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`;
+  const page = pageMetadata({
+    title: `${name}: אוסף סיפורים לילדים`,
+    shareTitle: name,
     description,
-    alternates: { canonical: routes.collection(collection.slug) },
-    openGraph: {
-      title: collection.title,
-      description,
-      type: "website",
-      locale: "he_IL",
-      url: routes.collection(collection.slug),
-      images: cover ? [{ url: cover }] : undefined,
-    },
-  };
+    path: routes.collection(collection.slug),
+  });
+  return { ...page, openGraph: { ...page.openGraph, images: cover ? [{ url: cover }] : undefined } };
 }
 
 export default async function CollectionPage({ params }: Props) {

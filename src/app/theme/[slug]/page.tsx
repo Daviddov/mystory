@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { BrowseView } from "@/components/library/BrowseView";
 import type { RawSearchParams } from "@/components/library/filters";
 import { routes } from "@/lib/routes";
+import { pageMetadata } from "@/lib/seo";
 import { THEMES, getTheme } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -23,11 +24,11 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const theme = getTheme((await params).slug);
   if (!theme) return { title: "הדף לא נמצא", robots: { index: false } };
-  return {
+  return pageMetadata({
     title: `סיפורים על ${theme.label} לילדים`,
-    description: `סיפורים לילדים שפותחים שיחה על ${theme.label}, עם שאלות לשיחה בסוף כל ספר.`,
-    alternates: { canonical: routes.theme(theme.slug) },
-  };
+    description: `סיפורי ילדים שפותחים שיחה על ${theme.label}: ספרים מאוירים עם ניקוד והקראה, ושאלות לשיחה בסוף כל ספר. לקריאה ולהאזנה בחינם.`,
+    path: routes.theme(theme.slug),
+  });
 }
 
 export default async function ThemePage({ params, searchParams }: Props) {

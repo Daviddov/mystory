@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
-import { BookGrid } from "@/components/BookGrid";
 import { BookRow } from "@/components/BookRow";
-import { bookCountLabel, hrefWith, parseLibraryQuery, type LibraryQuery, type RawSearchParams } from "@/components/library/filters";
+import {
+  bookCountLabel,
+  hrefWith,
+  parseLibraryQuery,
+  toParams,
+  type LibraryQuery,
+  type RawSearchParams,
+} from "@/components/library/filters";
+import { InfiniteBookGrid } from "@/components/library/InfiniteBookGrid";
+import { listingApiUrl, type ListingScope } from "@/components/library/infinite";
+import { toListingItems } from "@/components/library/listing";
 import { PageHeading } from "@/components/library/PageHeading";
-import { Pagination } from "@/components/library/Pagination";
 import { listLibraryBooks, listPopularBooks, listTagCounts } from "@/components/library/queries";
 import { SearchForm } from "@/components/library/SearchForm";
 import { SortChips } from "@/components/library/SortChips";
@@ -78,6 +86,8 @@ export default async function SearchPage({ searchParams }: Props) {
   const path = routes.search();
   const listing = query.q ? await listLibraryBooks(query) : null;
   const shown: LibraryQuery = { ...query, page: listing?.page ?? 1 };
+  const scope: ListingScope = { kind: "search" };
+  const listParams = toParams({ ...shown, page: undefined });
 
   return (
     <main className="container-page flex flex-col gap-8 py-8 sm:py-10">
@@ -102,18 +112,25 @@ export default async function SearchPage({ searchParams }: Props) {
               <SortChips current={shown.sort} hrefFor={(sort) => hrefWith(path, shown, { sort })} />
             ) : null}
           </div>
-          <BookGrid
-            books={listing.books}
-            empty={
-              <EmptyState
-                icon="🔍"
-                title="אין תוצאות"
-                description="נסו מילה אחרת או קצרה יותר, או בחרו אחת מההצעות למטה."
-                action={<ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>}
-              />
-            }
-          />
-          <Pagination page={listing.page} pages={listing.pages} hrefFor={(page) => hrefWith(path, shown, { page })} />
+          {listing.books.length > 0 ? (
+            <InfiniteBookGrid
+              // A new search text or sort order starts over instead of keeping the loaded pages.
+              key={listingApiUrl(scope, listParams, 1)}
+              scope={scope}
+              path={path}
+              params={listParams}
+              initialItems={toListingItems(listing.books, listing.now)}
+              page={listing.page}
+              pages={listing.pages}
+            />
+          ) : (
+            <EmptyState
+              icon="🔍"
+              title="אין תוצאות"
+              description="נסו מילה אחרת או קצרה יותר, או בחרו אחת מההצעות למטה."
+              action={<ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>}
+            />
+          )}
         </section>
       ) : null}
 

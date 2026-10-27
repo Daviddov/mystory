@@ -203,6 +203,41 @@ describe("BookPlayer", () => {
     expect(screen.getByText("לספר הזה אין גרסה מנוקדת.")).toBeInTheDocument();
   });
 
+  it("shows the text by default, and keeps a reader's explicit choice to hide it", () => {
+    const pages: PlayerBook["pages"] = [{ index: 0, text: "עמוד עם תמונה", image: "books/bk_test/page-1.png" }];
+    const { container, unmount } = render(<BookPlayer book={makeBook({ pages })} />);
+    expect(screen.getByRole("button", { name: "הצגת הטקסט" })).toHaveAttribute("aria-pressed", "true");
+    fireEvent.load(container.querySelector("main img")!);
+    expect(screen.getByText("תמונה")).toBeInTheDocument();
+    unmount();
+
+    window.localStorage.setItem("mystory:reader-prefs", JSON.stringify({ textLayout: "hidden" }));
+    const hidden = render(<BookPlayer book={makeBook({ pages })} />);
+    fireEvent.load(hidden.container.querySelector("main img")!);
+    expect(screen.queryByText("תמונה")).toBeNull();
+  });
+
+  it("does not hold the text back when the picture's shape never arrives", () => {
+    vi.useFakeTimers();
+    const pages: PlayerBook["pages"] = [{ index: 0, text: "עמוד עם תמונה איטית", image: "books/bk_test/slow.png" }];
+    render(<BookPlayer book={makeBook({ pages })} />);
+    expect(screen.queryByText("איטית")).toBeNull();
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    expect(screen.getByText("איטית")).toBeInTheDocument();
+  });
+
+  it("keeps the page turners and the play button out of the story area", () => {
+    const { container } = render(<BookPlayer book={makeBook({ pages: narratedPages })} />);
+    const stage = container.querySelector("main")!;
+    expect(stage.querySelector("button")).toBeNull();
+    const controls = container.querySelector("footer")!;
+    expect(controls).toContainElement(screen.getByRole("button", { name: "לעמוד הבא" }));
+    expect(controls).toContainElement(screen.getByRole("button", { name: "לעמוד הקודם" }));
+    expect(controls).toContainElement(screen.getByRole("button", { name: "להשמיע את הסיפור" }));
+  });
+
   it("hides and shows the text with the header button", () => {
     render(<BookPlayer book={makeBook()} />);
     const toggle = screen.getByRole("button", { name: "הצגת הטקסט" });
@@ -351,12 +386,22 @@ describe("BookPlayer: starting, navigating and voices", () => {
     expect(screen.getByText("שלישי")).toBeInTheDocument();
   });
 
-  it("sets the narration speed with the turtle and the rabbit", () => {
-    render(<BookPlayer book={makeBook({ pages: narratedPages })} />);
+  it("sets the narration speed with the turtle and the rabbit in the settings, and remembers it", () => {
+    const { unmount } = render(<BookPlayer book={makeBook({ pages: narratedPages })} />);
+    // The control bar stays uncluttered: the speed lives in the settings only.
+    expect(screen.queryByRole("radiogroup", { name: "מהירות ההקראה" })).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "הגדרות קריאה" }));
     const fast = screen.getByRole("radio", { name: "מהר" });
     fireEvent.click(fast);
     expect(fast).toHaveAttribute("aria-checked", "true");
     expect(screen.getByRole("radio", { name: "רגיל" })).toHaveAttribute("aria-checked", "false");
+    expect(JSON.parse(window.localStorage.getItem("mystory:reader-prefs") ?? "{}")).toMatchObject({ rate: 1.1 });
+
+    unmount();
+    render(<BookPlayer book={makeBook({ pages: narratedPages })} />);
+    fireEvent.click(screen.getByRole("button", { name: "הגדרות קריאה" }));
+    expect(screen.getByRole("radio", { name: "מהר" })).toHaveAttribute("aria-checked", "true");
   });
 
   it("plays a family recording picked as the voice", () => {

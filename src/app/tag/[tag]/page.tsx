@@ -4,6 +4,7 @@ import { BrowseView } from "@/components/library/BrowseView";
 import { MAX_TAG_LENGTH, type RawSearchParams } from "@/components/library/filters";
 import { listTagCounts } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
+import { pageMetadata } from "@/lib/seo";
 import { tagFromSlug, tagSlug } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -31,11 +32,11 @@ function readTag(segment: string): string | null {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const label = readTag((await params).tag);
   if (!label) return { title: "הדף לא נמצא", robots: { index: false } };
-  return {
-    title: `ספרים עם התגית ${label}`,
-    description: `סיפורים לילדים שקשורים ל${label}.`,
-    alternates: { canonical: routes.tag(label) },
-  };
+  return pageMetadata({
+    title: `סיפורים לילדים: ${label}`,
+    description: `סיפורי ילדים שקשורים ל${label}: ספרים מאוירים עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`,
+    path: routes.tag(label),
+  });
 }
 
 export default async function TagPage({ params, searchParams }: Props) {

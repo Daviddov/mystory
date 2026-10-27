@@ -18,18 +18,18 @@ export async function SiteHeader() {
 
   return (
     <header className="site-chrome sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur print:hidden">
-      <div className="container-page flex min-h-16 items-center gap-2">
+      <div className="container-page flex min-h-16 items-center gap-1 sm:gap-2">
         <Link
           href={routes.home()}
-          className="group flex min-h-touch shrink-0 items-center gap-2 rounded-full pe-2 font-display text-2xl font-bold text-primary"
+          className="group flex min-h-touch min-w-0 items-center gap-1.5 rounded-full pe-1 font-display text-xl font-bold text-primary sm:shrink-0 sm:gap-2 sm:pe-2 sm:text-2xl"
         >
           <span
             aria-hidden="true"
-            className="flex size-10 items-center justify-center rounded-2xl bg-primary-soft text-2xl shadow-card transition-transform duration-300 group-hover:-rotate-6"
+            className="flex size-9 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-xl shadow-card transition-transform duration-300 group-hover:-rotate-6 sm:size-10 sm:text-2xl"
           >
             📖
           </span>
-          <span>הסיפור שלי</span>
+          <span className="truncate">הסיפור שלי</span>
         </Link>
 
         <nav aria-label="ניווט ראשי" className="ms-4 hidden items-center gap-1 lg:flex">
@@ -44,7 +44,7 @@ export async function SiteHeader() {
           ))}
         </nav>
 
-        <div className="ms-auto flex items-center gap-1">
+        <div className="ms-auto flex shrink-0 items-center sm:gap-1">
           <Link href={routes.search()} className={ICON_LINK} aria-label="חיפוש" title="חיפוש">
             <Search aria-hidden="true" />
           </Link>

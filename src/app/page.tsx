@@ -14,7 +14,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
 import { toPublicBook } from "@/lib/public-book";
 import { routes } from "@/lib/routes";
-import { siteJsonLd } from "@/lib/seo";
+import { pageMetadata, SITE_TITLE, siteJsonLd } from "@/lib/seo";
 import { THEMES } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -22,21 +22,12 @@ import { THEMES } from "@/lib/taxonomy";
 export const dynamic = "force-static";
 export const revalidate = 600;
 
+const TITLE = "סיפורי ילדים לקריאה ולהאזנה, עם ניקוד ובחינם | הסיפור שלי";
 const DESCRIPTION =
-  "סיפורים לילדים בעברית לקרוא ולשמוע: ספרים מאוירים עם ניקוד והקראה, לפי גיל, נושא וזמן קריאה. בחינם, בלי הרשמה ובלי פרסומות.";
+  "סיפורי ילדים לקריאה ולהאזנה בעברית: ספרים מאוירים עם ניקוד והקראה, סיפורים לפני השינה ולגיל הרך, לפי גיל, נושא וזמן קריאה. בחינם, בלי הרשמה ובלי פרסומות.";
 
-export const metadata: Metadata = {
-  title: { absolute: "הסיפור שלי: סיפורים לילדים לקרוא ולשמוע" },
-  description: DESCRIPTION,
-  alternates: { canonical: routes.home() },
-  openGraph: {
-    title: "הסיפור שלי: סיפורים לילדים לקרוא ולשמוע",
-    description: DESCRIPTION,
-    type: "website",
-    locale: "he_IL",
-    url: routes.home(),
-  },
-};
+const page = pageMetadata({ title: TITLE, description: DESCRIPTION, path: routes.home(), shareTitle: SITE_TITLE });
+export const metadata: Metadata = { ...page, title: { absolute: TITLE } };
 
 export default async function HomePage() {
   const data = await getHomeData();
@@ -45,7 +36,7 @@ export default async function HomePage() {
   if (data.totalBooks === 0) {
     return (
       <main className="container-page flex flex-col gap-8 py-10">
-        <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl">סיפורים לקרוא ולשמוע</h1>
+        <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl">סיפורי ילדים לקרוא ולשמוע</h1>
         <EmptyState
           title="הספרייה עוד ריקה"
           description="עוד לא פורסמו ספרים. אפשר ליצור את הספר הראשון בסטודיו."
@@ -79,10 +70,10 @@ export default async function HomePage() {
           </p>
           <div className="flex flex-col gap-3">
             <h1 className="text-4xl font-bold leading-tight sm:text-6xl">
-              סיפורים לקרוא <span className="text-primary">ולשמוע</span>
+              סיפורי ילדים לקרוא <span className="text-primary">ולשמוע</span>
             </h1>
             <p className="text-lg leading-relaxed text-foreground/75 sm:text-xl">
-              בוחרים ספר, מדפדפים וקוראים יחד. בלי הרשמה ובלי פרסומות.
+              ספרים מאוירים עם ניקוד והקראה, לפני השינה ובכל שעה. בוחרים ספר, מדפדפים וקוראים יחד. בלי הרשמה ובלי פרסומות.
             </p>
           </div>
           <SearchForm id="home-search" />

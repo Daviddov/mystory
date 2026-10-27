@@ -22,6 +22,7 @@ import { ButtonLink, Card, Chip } from "@/components/ui";
 import { canViewBook } from "@/lib/auth";
 import { toCommentView } from "@/lib/comments";
 import { isCreativeCommons, LANGUAGE_NAMES_HE } from "@/lib/credits";
+import { hasNikud } from "@/lib/hebrew";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
@@ -81,11 +82,19 @@ export async function bookMetadata(slug: string, viewer: User | null): Promise<M
   // Search engines match text without nikud: people type titles without vowel points.
   const title = plainText(book.title);
   const hasAudio = book.pages.some((page) => !!page.audio);
-  const description =
-    plainText(book.summary, 155) ||
-    `${title}: סיפור לילדים ל${age?.label ?? "כל הגילים"}, ${readingTimeLabel(book.readingMinutes)} קריאה${hasAudio ? ", עם הקראה" : ""}.`;
+  const voweled = book.pages.some((page) => hasNikud(page.text));
+  // "סיפור ילדים לקריאה", "...להאזנה", "...עם ניקוד": the phrases parents search with.
+  const kind = `סיפור ילדים לקריאה${hasAudio ? " ולהאזנה" : ""}${voweled ? " עם ניקוד" : ""}`;
+  const details = `${kind} ל${age?.label ?? "כל הגילים"}, ${readingTimeLabel(book.readingMinutes)} קריאה.`;
+  const summary = plainText(book.summary, 155).replace(/[.…!?\s]+$/, "");
+  // A short summary leaves room for the details; a long one is the description on its own.
+  const description = !summary
+    ? `${title}: ${details}`
+    : summary.length <= 90
+      ? `${summary}. ${details}`
+      : plainText(book.summary, 155);
   return {
-    title: `${title}: סיפור לילדים${hasAudio ? " עם הקראה" : ""}`,
+    title: `${title}: ${kind}`,
     description,
     authors: book.author ? [{ name: book.author }] : undefined,
     alternates: { canonical: routes.book(book.slug) },

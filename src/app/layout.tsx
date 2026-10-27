@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { AppShellExtras } from "@/components/pwa/AppShellExtras";
 import { seoEnv, siteUrl } from "@/lib/config";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/seo";
+import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TITLE } from "@/lib/seo";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -41,18 +41,21 @@ export function generateMetadata(): Metadata {
   return {
     metadataBase: new URL(siteUrl()),
     applicationName: SITE_NAME,
-    title: { default: "הסיפור שלי: סיפורים לילדים", template: "%s | הסיפור שלי" },
+    title: { default: SITE_TITLE, template: `%s | ${SITE_NAME}` },
     description: SITE_DESCRIPTION,
+    keywords: SITE_KEYWORDS,
+    category: "סיפורי ילדים",
     // Defaults for every page; pages that set their own openGraph replace these
-    // fields, while the image comes from the nearest opengraph-image file.
+    // fields (pageMetadata() in lib/seo builds them), while the image comes
+    // from the nearest opengraph-image file.
     openGraph: {
       siteName: SITE_NAME,
       type: "website",
       locale: "he_IL",
-      title: "הסיפור שלי: סיפורים לילדים",
+      title: SITE_TITLE,
       description: SITE_DESCRIPTION,
     },
-    twitter: { card: "summary_large_image" },
+    twitter: { card: "summary_large_image", title: SITE_TITLE, description: SITE_DESCRIPTION },
     verification: {
       google,
       other: bing ? { "msvalidate.01": bing } : undefined,
@@ -82,7 +85,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sr-only z-50 rounded-full bg-primary px-5 py-3 font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:start-4 focus:top-4"
+          className="sr-only z-50 rounded-full bg-primary font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:px-5 focus:py-3"
         >
           דילוג לתוכן
         </a>

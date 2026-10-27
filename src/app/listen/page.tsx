@@ -11,15 +11,17 @@ import { ButtonLink, EmptyState } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
+import { pageMetadata } from "@/lib/seo";
 import type { BookWithPages } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "האזנה לפני השינה",
-  description: "רצף סיפורים מוקראים לפני השינה: בוחרים גיל, מכוונים טיימר שינה ומקשיבים בעיניים עצומות.",
-  alternates: { canonical: "/listen" },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "סיפורים לפני השינה להאזנה: סיפורי ילדים מוקלטים",
+  description:
+    "סיפורי ילדים לשמיעה בחינם: רצף סיפורים מוקלטים להאזנה לפני השינה. בוחרים גיל, מכוונים טיימר שינה ומקשיבים בעיניים עצומות.",
+  path: routes.listen(),
+});
 
 /** Upper bound on the queue, so the page stays light. */
 const MAX_BOOKS = 150;
@@ -53,7 +55,7 @@ export default async function ListenPage({
       <header className="flex flex-col gap-3">
         <h1 className="text-3xl font-bold sm:text-4xl">
           <span aria-hidden="true">🎧 </span>
-          האזנה לפני השינה
+          סיפורים להאזנה לפני השינה
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted">
           סיפור אחרי סיפור, בלי לגעת במסך. אפשר לכבות את המסך והסיפורים ימשיכו להתנגן, עד שטיימר השינה יעצור אותם.

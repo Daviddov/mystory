@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { BrowseView } from "@/components/library/BrowseView";
 import type { RawSearchParams } from "@/components/library/filters";
 import { routes } from "@/lib/routes";
+import { pageMetadata } from "@/lib/seo";
 import { AGE_GROUP_INFO, getAgeGroup } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -20,14 +21,33 @@ interface Props {
   searchParams: Promise<RawSearchParams>;
 }
 
+/** Titles and descriptions in the words parents search with ("סיפורים לגיל 3", "סיפורים לגיל הרך", "לגן"). */
+const AGE_SEARCH: Record<string, { title: string; description: string }> = {
+  "0-2": {
+    title: "סיפורים לפעוטות ולגיל הרך: גילאי 0 עד 2",
+    description:
+      "סיפורי ילדים לתינוקות ופעוטות, לגיל שנה ולגיל שנתיים: משפטים קצרים, חזרות וצלילים, עם איורים גדולים, ניקוד והקראה. לקריאה ולהאזנה, בחינם.",
+  },
+  "3-5": {
+    title: "סיפורים לגיל הרך ולגן: גילאי 3 עד 5",
+    description:
+      "סיפורי ילדים לגיל 3, לגיל 4 ולגיל 5, לבית ולגן: סיפורים פשוטים עם התחלה, אמצע וסוף, עם ניקוד והקראה. לקריאה ולהאזנה לפני השינה, בחינם.",
+  },
+  "6-8": {
+    title: "סיפורי ילדים לגילאי 6 עד 8 ולכיתה א",
+    description:
+      "סיפורי ילדים לגיל 6, 7 ו-8: עלילה עשירה לקוראים מתחילים, עם ניקוד מלא לקריאה עצמאית בכיתה א ו-ב, והקראה להאזנה. בחינם.",
+  },
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const age = getAgeGroup((await params).group);
   if (!age) return { title: "הדף לא נמצא", robots: { index: false } };
-  return {
-    title: `סיפורים לילדים ב${age.label}`,
-    description: `סיפורים וספרים לילדים ב${age.label}: ${age.description}. לקריאה ולהאזנה אונליין, בחינם.`,
-    alternates: { canonical: routes.age(age.slug) },
+  const search = AGE_SEARCH[age.slug] ?? {
+    title: `סיפורי ילדים ל${age.label}`,
+    description: `סיפורי ילדים ל${age.label}: ${age.description}. עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`,
   };
+  return pageMetadata({ ...search, path: routes.age(age.slug) });
 }
 
 export default async function AgePage({ params, searchParams }: Props) {
@@ -41,7 +61,7 @@ export default async function AgePage({ params, searchParams }: Props) {
       base={{ ageGroup: age.slug }}
       ageFilter={false}
       eyebrow="ספרים לפי גיל"
-      title={age.label}
+      title={`סיפורים ל${age.label}`}
       emoji={age.emoji}
       description={age.description}
       crumbs={[{ label: "כל הספרים", href: routes.books() }, { label: age.label }]}

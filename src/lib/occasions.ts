@@ -178,7 +178,8 @@ export function occasionDescription(occasion: Occasion): string {
     const book = occasion.book ? ` (ספר ${TORAH_BOOKS[occasion.book]})` : "";
     return `סיפורים מאוירים לילדים על פרשת ${occasion.name}${book}: לקריאה ולהאזנה לפני שבת, עם ניקוד, הקראה ושאלות לשיחה בשולחן השבת. בחינם.`;
   }
-  return `סיפורים מאוירים לילדים ל${occasion.name}: ${occasion.blurb ?? ""} לקריאה ולהאזנה אונליין, עם ניקוד והקראה. בחינם.`
+  // "סיפורי חנוכה" and "סיפורים לחנוכה" are both searched: the title has one, the description the other.
+  return `סיפורי ${occasion.name} לילדים: ${occasion.blurb ?? ""} סיפורים מאוירים לקריאה ולהאזנה אונליין, עם ניקוד והקראה. בחינם.`
     .replace(/\s+/g, " ")
     .trim();
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { BrowseView } from "@/components/library/BrowseView";
 import type { RawSearchParams } from "@/components/library/filters";
 import { routes } from "@/lib/routes";
+import { pageMetadata } from "@/lib/seo";
 import { READING_TIME_BUCKETS, getReadingTimeBucket } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -27,14 +28,25 @@ const DESCRIPTIONS: Record<string, string> = {
   "20": "סיפורים ארוכים, לערב רגוע בלי למהר.",
 };
 
+/** Page titles as parents search for them ("סיפורים קצרים לילדים"). */
+const SEARCH_TITLES: Record<string, string> = {
+  "5": "סיפורים קצרים לילדים: עד 5 דקות קריאה",
+  "10": "סיפורים קצרים לילדים: עד 10 דקות קריאה",
+  "15": "סיפורים לילדים לפני השינה: עד 15 דקות קריאה",
+  "20": "סיפורים ארוכים לילדים: 20 דקות ויותר",
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const bucket = getReadingTimeBucket((await params).bucket);
   if (!bucket) return { title: "הדף לא נמצא", robots: { index: false } };
-  return {
-    title: `סיפורים של ${bucket.label}`,
-    description: `סיפורים לילדים לפי זמן קריאה: ${bucket.label}. ${DESCRIPTIONS[bucket.slug] ?? ""}`.trim(),
-    alternates: { canonical: routes.time(bucket.slug) },
-  };
+  return pageMetadata({
+    title: SEARCH_TITLES[bucket.slug] ?? `סיפורים לילדים: ${bucket.label} קריאה`,
+    description:
+      `סיפורי ילדים לפי זמן קריאה: ${bucket.label}. ${DESCRIPTIONS[bucket.slug] ?? ""} עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`
+        .replace(/\s+/g, " ")
+        .trim(),
+    path: routes.time(bucket.slug),
+  });
 }
 
 export default async function TimePage({ params, searchParams }: Props) {

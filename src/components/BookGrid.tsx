@@ -13,18 +13,16 @@ export interface BookGridProps {
   className?: string;
 }
 
+/** Columns of the book grid, shared with InfiniteBookGrid. */
+export const BOOK_GRID_CLASSES = "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6";
+
 /** Responsive grid of book cards: 2 columns on phones up to 6 on wide screens. */
 export function BookGrid({ books, empty, cardProps, className }: BookGridProps) {
   if (books.length === 0) {
     return <>{empty ?? <EmptyState title="לא מצאנו ספרים" description="נסו לשנות את הסינון או לחפש משהו אחר." />}</>;
   }
   return (
-    <ul
-      className={cn(
-        "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
-        className,
-      )}
-    >
+    <ul className={cn(BOOK_GRID_CLASSES, className)}>
       {books.map((book, index) => (
         <li key={book.id}>
           <BookCard book={book} priority={index < 6} {...cardProps?.(book, index)} />

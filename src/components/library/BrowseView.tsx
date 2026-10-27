@@ -7,7 +7,10 @@ import type { BookFilter } from "@/lib/repo/types";
 import { routes } from "@/lib/routes";
 import { bookListJsonLd } from "@/lib/seo";
 import { AGE_GROUP_INFO } from "@/lib/taxonomy";
-import { bookCountLabel, hrefWith, parseLibraryQuery, type LibraryQuery, type RawSearchParams } from "./filters";
+import { bookCountLabel, hrefWith, parseLibraryQuery, toParams, type LibraryQuery, type RawSearchParams } from "./filters";
+import { InfiniteBookGrid } from "./InfiniteBookGrid";
+import { listingApiUrl, scopeForBase, type ListingScope } from "./infinite";
+import { toListingItems } from "./listing";
 import { PageHeading, type Crumb } from "./PageHeading";
 import { Pagination } from "./Pagination";
 import { listLibraryBooks } from "./queries";
@@ -42,6 +45,12 @@ export interface BrowseViewProps {
   emptyTitle?: string;
   /** Extra content between the heading and the list. */
   children?: ReactNode;
+  /**
+   * Which listing this is, for loading more pages while scrolling. Default:
+   * told from `base` (age, category, theme, time, tag). Pages whose base is a
+   * list of ids (parasha, holidays) must pass it.
+   */
+  scope?: ListingScope;
 }
 
 /**
@@ -63,6 +72,7 @@ export async function BrowseView({
   refineHref,
   emptyTitle = "עוד אין כאן ספרים",
   children,
+  scope,
 }: BrowseViewProps) {
   const parsed = parseLibraryQuery(searchParams);
   // Only sort, page and (optionally) age are honoured here; the rest belongs to /books.
@@ -73,6 +83,8 @@ export async function BrowseView({
   };
   const listing = await listLibraryBooks(query, base);
   const shown: LibraryQuery = { ...query, page: listing.page };
+  const listScope = scope ?? scopeForBase(base);
+  const listParams = toParams({ ...shown, page: undefined });
 
   return (
     <main className="container-page flex flex-col gap-8 py-8 sm:py-10">
@@ -129,37 +141,54 @@ export async function BrowseView({
           </p>
         </div>
 
-        <BookGrid
-          books={listing.books}
-          cardProps={(book) => ({
-            showTags: true,
-            hideTag: base.tag,
-            ...(isNewBook(book, listing.now) ? { badge: "חדש" } : {}),
-          })}
-          empty={
-            <EmptyState
-              title={emptyTitle}
-              description={
-                shown.age
-                  ? "אין ספרים לגיל שבחרתם. נסו גיל אחר או הציגו את כל הגילים."
-                  : "ספרים חדשים מתווספים כל הזמן. בינתיים אפשר לעיין בכל הספרייה."
-              }
-              action={
-                shown.age ? (
-                  <ButtonLink href={hrefWith(path, shown, { age: undefined })}>כל הגילים</ButtonLink>
-                ) : (
-                  <ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>
-                )
+        {listScope && listing.books.length > 0 ? (
+          <InfiniteBookGrid
+            // A new listing (age, sort) starts over instead of keeping the loaded pages.
+            key={listingApiUrl(listScope, listParams, 1)}
+            scope={listScope}
+            path={path}
+            params={listParams}
+            initialItems={toListingItems(listing.books, listing.now)}
+            page={listing.page}
+            pages={listing.pages}
+            showTags
+            hideTag={base.tag}
+          />
+        ) : (
+          <>
+            <BookGrid
+              books={listing.books}
+              cardProps={(book) => ({
+                showTags: true,
+                hideTag: base.tag,
+                ...(isNewBook(book, listing.now) ? { badge: "חדש" } : {}),
+              })}
+              empty={
+                <EmptyState
+                  title={emptyTitle}
+                  description={
+                    shown.age
+                      ? "אין ספרים לגיל שבחרתם. נסו גיל אחר או הציגו את כל הגילים."
+                      : "ספרים חדשים מתווספים כל הזמן. בינתיים אפשר לעיין בכל הספרייה."
+                  }
+                  action={
+                    shown.age ? (
+                      <ButtonLink href={hrefWith(path, shown, { age: undefined })}>כל הגילים</ButtonLink>
+                    ) : (
+                      <ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>
+                    )
+                  }
+                />
               }
             />
-          }
-        />
 
-        <Pagination
-          page={listing.page}
-          pages={listing.pages}
-          hrefFor={(page) => hrefWith(path, shown, { page })}
-        />
+            <Pagination
+              page={listing.page}
+              pages={listing.pages}
+              hrefFor={(page) => hrefWith(path, shown, { page })}
+            />
+          </>
+        )}
       </section>
     </main>
   );

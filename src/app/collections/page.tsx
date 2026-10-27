@@ -5,17 +5,19 @@ import { listCollectionsWithBooks } from "@/components/library/queries";
 import { isInSeason } from "@/components/library/seasons";
 import { ButtonLink, EmptyState } from "@/components/ui";
 import { routes } from "@/lib/routes";
+import { pageMetadata } from "@/lib/seo";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
 export const dynamic = "force-static";
 export const revalidate = 600;
 
-export const metadata: Metadata = {
-  title: "אוספים",
-  description: "אוספי ספרים ערוכים לילדים: לעונות השנה, לחגים ולרגעים מיוחדים כמו השעה שלפני השינה.",
-  alternates: { canonical: routes.collections() },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "אוספי סיפורי ילדים",
+  description:
+    "אוספי סיפורי ילדים ערוכים: לעונות השנה, לחגים ולרגעים מיוחדים כמו השעה שלפני השינה. ספרים מאוירים עם ניקוד והקראה, בחינם.",
+  path: routes.collections(),
+});
 
 export default async function CollectionsPage() {
   const today = new Date();

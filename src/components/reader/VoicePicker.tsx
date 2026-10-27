@@ -26,13 +26,13 @@ export function VoicePicker({ hasOriginal, versions, value, onChange }: VoicePic
   const count = versions.length + (hasOriginal ? 1 : 0);
   if (count < 2) return null;
   return (
-    <label className="inline-flex min-h-touch items-center gap-1.5 rounded-full bg-surface-2 ps-3 pe-1 text-sm font-semibold">
+    <label className="inline-flex min-h-touch min-w-0 items-center gap-1.5 rounded-full bg-surface-2 ps-3 pe-1 text-sm font-semibold">
       <AudioLines aria-hidden="true" className="size-4 shrink-0" />
       <span className="sr-only">מי מקריא</span>
       <select
         value={value ?? ORIGINAL}
         onChange={(event) => onChange(event.target.value === ORIGINAL ? null : event.target.value)}
-        className="max-w-44 cursor-pointer truncate rounded-full bg-transparent py-2 pe-2 outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="min-w-0 max-w-44 cursor-pointer truncate rounded-full bg-transparent py-2 pe-2 outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         {hasOriginal ? <option value={ORIGINAL}>הקראה מקורית</option> : null}
         {versions.map((version) => (

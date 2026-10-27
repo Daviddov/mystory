@@ -8,7 +8,7 @@ import { groupBooksByOccasion } from "@/lib/occasions";
 import { getRepo } from "@/lib/repo";
 import type { BookFilter } from "@/lib/repo/types";
 import { CATEGORIES, tagSlug, type TaxonomyItem } from "@/lib/taxonomy";
-import type { Book, Collection } from "@/lib/types";
+import type { Book, Collection, User } from "@/lib/types";
 import { toBookFilter, totalPages, type LibraryQuery } from "./filters";
 import { rankSimilar } from "./recommend";
 import { normalizeSeason, sortCollectionsBySeason } from "./seasons";
@@ -37,6 +37,33 @@ export async function listLibraryBooks(query: LibraryQuery, base: BookFilter = {
     result = await repo.listBooks(toBookFilter({ ...query, page }, base));
   }
   return { books: result.books, total: result.total, page, pages, now: Date.now() };
+}
+
+export interface ViewerListing {
+  /** The query actually applied: the "read" filter is dropped without a signed-in viewer. */
+  query: LibraryQuery;
+  listing: BookListing;
+  /** Books the viewer finished (empty without a viewer), for the "read" check mark. */
+  readIds: Set<string>;
+}
+
+/** One page of the all-books listing, honouring the per-user "read" filter. */
+export async function listBooksForViewer(parsed: LibraryQuery, viewer: User | null): Promise<ViewerListing> {
+  // "Read" is per user: without a signed-in viewer the filter does not apply.
+  const query = viewer ? parsed : { ...parsed, read: undefined };
+  const readIds = viewer
+    ? new Set(
+        (await (await getRepo()).listProgress(viewer.id).catch(() => [])).filter((p) => p.completed).map((p) => p.bookId),
+      )
+    : new Set<string>();
+  const listing =
+    query.read === "read" && readIds.size === 0
+      ? { books: [], total: 0, page: 1, pages: 1, now: Date.now() }
+      : await listLibraryBooks(
+          query,
+          query.read === "read" ? { ids: [...readIds] } : query.read === "unread" ? { excludeIds: [...readIds] } : {},
+        );
+  return { query, listing, readIds };
 }
 
 export interface CollectionWithBooks {

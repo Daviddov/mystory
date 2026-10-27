@@ -344,11 +344,16 @@ describe("library pages", () => {
   it("builds metadata", async () => {
     const meta = await bookMetadata({ params: params({ slug: "snail" }) });
     // Titles are built for search: no nikud, and what the page is.
-    expect(meta.title).toBe("השבלול: סיפור לילדים");
+    expect(meta.title).toBe("השבלול: סיפור ילדים לקריאה");
     expect(meta.alternates?.canonical).toBe("/book/snail");
     expect(meta.robots).toBeUndefined();
     expect(booksMetadata({}).robots).toBeUndefined();
     expect(booksMetadata({ age: "3-5" }).robots).toEqual({ index: false, follow: true });
     expect((await searchMetadata({ searchParams: params({ q: "שבלול" }) })).title).toBe("חיפוש: שבלול");
+    // Browsing pages share with their own text, not the home page's (the root openGraph is replaced, not merged).
+    const age = await liveMeta(["age", "3-5"]);
+    expect(age.title).toBe("סיפורים לגיל הרך ולגן: גילאי 3 עד 5");
+    expect(age.openGraph?.title).toBe(age.title);
+    expect(age.openGraph?.url).toBe("/age/3-5");
   });
 });

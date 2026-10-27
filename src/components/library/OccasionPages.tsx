@@ -22,7 +22,7 @@ import {
   type OccasionKind,
 } from "@/lib/occasions";
 import { routes } from "@/lib/routes";
-import { plainText } from "@/lib/seo";
+import { pageMetadata, plainText } from "@/lib/seo";
 import { BrowseView } from "./BrowseView";
 import type { RawSearchParams } from "./filters";
 import { PageHeading, type Crumb } from "./PageHeading";
@@ -37,17 +37,17 @@ const INDEX = {
   parasha: {
     href: routes.parashot,
     crumb: "פרשת השבוע",
-    title: "סיפור לכל פרשת שבוע לילדים, מבראשית ועד וזאת הברכה",
+    title: "סיפורי פרשת השבוע לילדים: סיפור לכל פרשה, מבראשית ועד וזאת הברכה",
     description:
-      "סיפור לכל פרשה בתורה, מבראשית ועד וזאת הברכה: סיפורים מאוירים לילדים עם ניקוד והקראה, לקריאה לפני שבת ולשיחה בשולחן השבת. בחינם.",
+      "סיפורי פרשת השבוע לילדים, סיפור לכל פרשה בתורה: סיפורים מאוירים עם ניקוד והקראה, לקריאה לפני שבת ולשיחה בשולחן השבת. בחינם.",
     emoji: "📜",
   },
   holiday: {
     href: routes.holidays,
     crumb: "חגים",
-    title: "סיפורים לחגי ישראל ולשבת לילדים",
+    title: "סיפורי חגים לילדים: סיפורים לשבת ולחגי ישראל",
     description:
-      "סיפורים מאוירים לילדים לשבת ולחגים: ראש השנה, סוכות, חנוכה, ט״ו בשבט, פורים, פסח ושבועות. עם ניקוד והקראה, בחינם.",
+      "סיפורי חגים לילדים: סיפורים מאוירים לשבת, לראש השנה, סוכות, חנוכה, ט״ו בשבט, פורים, פסח ושבועות. עם ניקוד והקראה, בחינם.",
     emoji: "🕯️",
   },
 } as const;
@@ -59,9 +59,11 @@ export async function occasionMetadata(kind: OccasionKind, slug: string): Promis
   if (!occasion) return { title: "הדף לא נמצא", robots: { index: false } };
   const count = occasionBookIds(await occasionBooks(), occasion).length;
   return {
-    title: plainText(occasionSearchTitle(occasion)),
-    description: plainText(occasionDescription(occasion), 160),
-    alternates: { canonical: occasionHref(occasion) },
+    ...pageMetadata({
+      title: plainText(occasionSearchTitle(occasion)),
+      description: plainText(occasionDescription(occasion), 160),
+      path: occasionHref(occasion),
+    }),
     // Until a book is published for it, the page is a thin "coming soon": keep it out of the index.
     ...(occasionIndexable(count) ? {} : { robots: { index: false, follow: true } }),
   };
@@ -84,6 +86,7 @@ export async function OccasionView({ occasion, searchParams }: { occasion: Occas
       path={occasionHref(occasion)}
       searchParams={searchParams}
       base={{ ids }}
+      scope={{ kind: occasion.kind, value: occasion.slug }}
       eyebrow={occasion.kind === "parasha" ? "פרשת השבוע" : "חגים ומועדים"}
       title={occasion.kind === "parasha" ? `סיפורים לפרשת ${occasion.name}` : `סיפורים ל${occasion.name}`}
       emoji={occasion.emoji}
@@ -119,11 +122,7 @@ export async function OccasionView({ occasion, searchParams }: { occasion: Occas
 
 export function occasionIndexMetadata(kind: OccasionKind): Metadata {
   const index = INDEX[kind];
-  return {
-    title: index.title,
-    description: index.description,
-    alternates: { canonical: index.href() },
-  };
+  return pageMetadata({ title: index.title, description: index.description, path: index.href() });
 }
 
 function OccasionLink({ occasion, count, highlight }: { occasion: Occasion; count: number; highlight?: boolean }) {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BedtimeGuide } from "@/components/library/BedtimeGuide";
 import { BrowseView } from "@/components/library/BrowseView";
 import type { RawSearchParams } from "@/components/library/filters";
+import { listingRobots } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
 import { CATEGORIES, getCategory } from "@/lib/taxonomy";
@@ -27,11 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = getCategory((await params).slug);
   if (!category) return { title: "הדף לא נמצא", robots: { index: false } };
   const title = category.searchTitle ?? `סיפורי ${category.label} לילדים`;
-  return pageMetadata({
+  const page = pageMetadata({
     title,
     description: `${title}${category.description ? `: ${category.description}` : ""}. סיפורי ילדים מאוירים עם ניקוד והקראה, לקריאה ולהאזנה אונליין, בחינם.`,
     path: routes.category(category.slug),
   });
+  return { ...page, robots: await listingRobots({ category: category.slug }) };
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {

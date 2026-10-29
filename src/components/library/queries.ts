@@ -4,10 +4,11 @@
  * stated explicitly so a later change of the default cannot leak drafts).
  */
 import "server-only";
+import type { Metadata } from "next";
 import { groupBooksByOccasion } from "@/lib/occasions";
 import { getRepo } from "@/lib/repo";
 import type { BookFilter } from "@/lib/repo/types";
-import { CATEGORIES, tagSlug, type TaxonomyItem } from "@/lib/taxonomy";
+import { CATEGORIES, listingIndexable, tagSlug, type TaxonomyItem } from "@/lib/taxonomy";
 import type { Book, Collection, User } from "@/lib/types";
 import { toBookFilter, totalPages, type LibraryQuery } from "./filters";
 import { rankSimilar } from "./recommend";
@@ -206,6 +207,19 @@ export async function listTagCounts(limit: number = 24): Promise<TagCount[]> {
     .slice(0, limit);
 }
 
+
+/**
+ * robots for an age, category, theme or reading-time page with this filter:
+ * noindex,follow when listingIndexable() says it is thin or repeats /books.
+ */
+export async function listingRobots(base: BookFilter): Promise<Metadata["robots"]> {
+  const repo = await getRepo();
+  const [listing, library] = await Promise.all([
+    repo.listBooks({ ...base, status: PUBLISHED, limit: 1 }),
+    repo.listBooks({ status: PUBLISHED, limit: 1 }),
+  ]);
+  return listingIndexable(listing.total, library.total) ? undefined : { index: false, follow: true };
+}
 
 /** The most read published books. */
 export async function listPopularBooks(limit: number = SHELF_SIZE): Promise<Book[]> {

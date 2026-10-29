@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BrowseView } from "@/components/library/BrowseView";
 import type { RawSearchParams } from "@/components/library/filters";
+import { listingRobots } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
 import { READING_TIME_BUCKETS, getReadingTimeBucket } from "@/lib/taxonomy";
@@ -39,7 +40,7 @@ const SEARCH_TITLES: Record<string, string> = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const bucket = getReadingTimeBucket((await params).bucket);
   if (!bucket) return { title: "הדף לא נמצא", robots: { index: false } };
-  return pageMetadata({
+  const page = pageMetadata({
     title: SEARCH_TITLES[bucket.slug] ?? `סיפורים לילדים: ${bucket.label} קריאה`,
     description:
       `סיפורי ילדים לפי זמן קריאה: ${bucket.label}. ${DESCRIPTIONS[bucket.slug] ?? ""} עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`
@@ -47,6 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         .trim(),
     path: routes.time(bucket.slug),
   });
+  return { ...page, robots: await listingRobots({ timeBucket: bucket.slug }) };
 }
 
 export default async function TimePage({ params, searchParams }: Props) {

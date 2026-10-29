@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BrowseView } from "@/components/library/BrowseView";
 import type { RawSearchParams } from "@/components/library/filters";
+import { listingRobots } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
 import { AGE_GROUP_INFO, getAgeGroup } from "@/lib/taxonomy";
@@ -47,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `סיפורי ילדים ל${age.label}`,
     description: `סיפורי ילדים ל${age.label}: ${age.description}. עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`,
   };
-  return pageMetadata({ ...search, path: routes.age(age.slug) });
+  return { ...pageMetadata({ ...search, path: routes.age(age.slug) }), robots: await listingRobots({ ageGroup: age.slug }) };
 }
 
 export default async function AgePage({ params, searchParams }: Props) {

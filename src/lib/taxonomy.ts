@@ -237,6 +237,16 @@ export function tagIndexable(bookCount: number): boolean {
   return bookCount >= MIN_INDEXED_TAG_BOOKS;
 }
 
+/**
+ * Whether an age, category, theme or reading-time page is indexed and listed
+ * in the sitemap. Under MIN_INDEXED_TAG_BOOKS books it is thin; holding every
+ * published book it only repeats /books. Either way visitors can still browse
+ * it, and it comes back by itself once the library changes.
+ */
+export function listingIndexable(bookCount: number, libraryTotal: number): boolean {
+  return bookCount >= MIN_INDEXED_TAG_BOOKS && bookCount < libraryTotal;
+}
+
 // --- Illustration styles (AI wizard and mock placeholders) ---------------------
 
 export const ILLUSTRATION_STYLES = [

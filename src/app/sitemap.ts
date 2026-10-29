@@ -6,7 +6,7 @@ import { getRepo } from "@/lib/repo";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { absoluteUrl } from "@/lib/seo";
-import { AGE_GROUP_INFO, CATEGORIES, READING_TIME_BUCKETS, THEMES, readingTimeBucket, tagIndexable, tagSlug } from "@/lib/taxonomy";
+import { AGE_GROUP_INFO, CATEGORIES, READING_TIME_BUCKETS, THEMES, listingIndexable, readingTimeBucket, tagIndexable, tagSlug } from "@/lib/taxonomy";
 import { bookAgeGroups, type Book, type Collection } from "@/lib/types";
 
 // Books are published at any time, so the sitemap is built on request.
@@ -75,35 +75,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const byId = new Map(books.map((book) => [book.id, book]));
   const newestOf = (ids: readonly string[]) => newest(ids.map((id) => byId.get(id)).filter((book): book is Book => !!book));
 
+  // Age, category, theme and reading-time pages that are thin or repeat /books are noindex (see listingIndexable).
+  const listing = (path: string, matching: Book[], priority: number): Entry[] =>
+    listingIndexable(matching.length, books.length)
+      ? [entry(path, { lastModified: newest(matching), changeFrequency: "weekly", priority })]
+      : [];
+
   const entries: Entry[] = [
     ...fixed(newest(books)),
-    ...AGE_GROUP_INFO.map((age) =>
-      entry(routes.age(age.slug), {
-        lastModified: newest(books.filter((book) => bookAgeGroups(book).includes(age.slug))),
-        changeFrequency: "weekly",
-        priority: 0.8,
-      }),
+    ...AGE_GROUP_INFO.flatMap((age) =>
+      listing(routes.age(age.slug), books.filter((book) => bookAgeGroups(book).includes(age.slug)), 0.8),
     ),
-    ...CATEGORIES.map((category) =>
-      entry(routes.category(category.slug), {
-        lastModified: newest(books.filter((book) => book.categories.includes(category.slug))),
-        changeFrequency: "weekly",
-        priority: 0.7,
-      }),
+    ...CATEGORIES.flatMap((category) =>
+      listing(routes.category(category.slug), books.filter((book) => book.categories.includes(category.slug)), 0.7),
     ),
-    ...THEMES.map((theme) =>
-      entry(routes.theme(theme.slug), {
-        lastModified: newest(books.filter((book) => book.themes.includes(theme.slug))),
-        changeFrequency: "weekly",
-        priority: 0.5,
-      }),
+    ...THEMES.flatMap((theme) =>
+      listing(routes.theme(theme.slug), books.filter((book) => book.themes.includes(theme.slug)), 0.5),
     ),
-    ...READING_TIME_BUCKETS.map((bucket) =>
-      entry(routes.time(bucket.slug), {
-        lastModified: newest(books.filter((book) => readingTimeBucket(book.readingMinutes) === bucket.slug)),
-        changeFrequency: "weekly",
-        priority: 0.5,
-      }),
+    ...READING_TIME_BUCKETS.flatMap((bucket) =>
+      listing(routes.time(bucket.slug), books.filter((book) => readingTimeBucket(book.readingMinutes) === bucket.slug), 0.5),
     ),
   ];
 

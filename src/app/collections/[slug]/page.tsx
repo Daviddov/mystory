@@ -47,7 +47,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     path: routes.collection(collection.slug),
   });
-  return { ...page, openGraph: { ...page.openGraph, images: cover ? [{ url: cover }] : undefined } };
+  return {
+    ...page,
+    openGraph: { ...page.openGraph, images: cover ? [{ url: cover }] : undefined },
+    // An empty collection is left out of the sitemap too: nothing to index until a book is added.
+    robots: books.length > 0 ? undefined : { index: false, follow: true },
+  };
 }
 
 export default async function CollectionPage({ params }: Props) {

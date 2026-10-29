@@ -37,7 +37,7 @@ export function CollectionCard({ collection, books, inSeason, className }: Colle
               <div
                 key={book.id}
                 className={cn(
-                  "aspect-[3/4] h-full overflow-hidden rounded-t-md border border-b-0 border-border bg-surface shadow-card",
+                  "aspect-[3/4] h-full min-w-0 shrink overflow-hidden rounded-t-md border border-b-0 border-border bg-surface shadow-card",
                   index === 1 && covers.length > 1 ? "translate-y-0" : "translate-y-3",
                 )}
               >

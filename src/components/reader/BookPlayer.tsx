@@ -74,6 +74,7 @@ import { useDeviceVoice } from "./useDeviceVoice";
 import { useEstimatedTimings } from "./useEstimatedTimings";
 import { useNarration } from "./useNarration";
 import { useSleepTimer } from "./useSleepTimer";
+import { useWakeLock } from "./useWakeLock";
 import { VoicePicker } from "./VoicePicker";
 
 export interface BookPlayerProps {
@@ -592,6 +593,9 @@ function Player({
     }
   }, []);
 
+  // Narration counts as activity: keep the screen on as a video would.
+  useWakeLock(narrating && !asleep && !atEnd);
+
   const onFinishedRef = useRef(onFinished);
   useEffect(() => {
     onFinishedRef.current = onFinished;
@@ -949,9 +953,9 @@ function Player({
       ) : null}
 
       {/* Top bar */}
-      <header className="mystory-reader-header flex shrink-0 items-center gap-1 px-2 py-1.5 sm:gap-2 sm:px-4">
+      <header className="mystory-reader-header flex shrink-0 items-center gap-0.5 px-1 py-1.5 sm:gap-2 sm:px-4">
         {exitControl("icon")}
-        <h1 dir="auto" className="min-w-0 flex-1 truncate px-1 text-start font-display text-lg font-semibold sm:text-2xl">
+        <h1 dir="auto" className="min-w-0 flex-1 truncate px-1 text-start font-display text-base font-semibold sm:text-2xl">
           {title}
         </h1>
 
@@ -961,10 +965,12 @@ function Player({
             aria-label={`להציג את הסיפור ב${LANGUAGE_NAMES_HE[otherLanguage]}`}
             title={`להציג את הסיפור ב${LANGUAGE_NAMES_HE[otherLanguage]}`}
             onClick={() => updatePrefs({ original: !showOriginal })}
-            className="inline-flex min-h-touch shrink-0 items-center gap-1 rounded-full border-2 border-border-strong bg-surface px-3 text-base font-bold text-foreground transition-colors hover:bg-surface-2"
+            className="inline-flex min-h-touch shrink-0 items-center gap-1 rounded-full border-2 border-border-strong bg-surface px-2.5 text-base font-bold text-foreground transition-colors hover:bg-surface-2 sm:px-3"
           >
             <Languages aria-hidden="true" className="size-5" />
-            <span aria-hidden="true">{LANGUAGE_CODES[otherLanguage]}</span>
+            <span aria-hidden="true" className="max-sm:hidden">
+              {LANGUAGE_CODES[otherLanguage]}
+            </span>
           </button>
         ) : null}
 
@@ -975,7 +981,7 @@ function Player({
           title={textLayout === "hidden" ? "להציג את הטקסט" : "להסתיר את הטקסט"}
           onClick={() => updatePrefs({ textLayout: textLayout === "hidden" ? "side" : "hidden" })}
           className={cn(
-            "inline-flex min-h-touch shrink-0 items-center gap-1 rounded-full border-2 px-3 text-base font-bold transition-colors",
+            "inline-flex min-h-touch shrink-0 items-center gap-1 rounded-full border-2 px-2.5 text-base font-bold transition-colors sm:px-3",
             textLayout !== "hidden"
               ? "border-secondary bg-secondary text-secondary-foreground"
               : "border-border-strong bg-surface text-foreground hover:bg-surface-2",

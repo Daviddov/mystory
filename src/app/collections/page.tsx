@@ -39,7 +39,7 @@ export default async function CollectionsPage() {
           action={<ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>}
         />
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {collections.map(({ collection, books }) => (
             <li key={collection.id}>
               <CollectionCard collection={collection} books={books} inSeason={isInSeason(collection, today)} />

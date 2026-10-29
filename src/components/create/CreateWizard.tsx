@@ -451,6 +451,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                 </div>
                 <div className="flex gap-2">
                   <Input
+                    className="min-w-0"
                     aria-label="תחביב אחר"
                     placeholder="משהו אחר?"
                     value={hobbyDraft}

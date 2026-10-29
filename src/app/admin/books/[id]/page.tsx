@@ -141,7 +141,7 @@ export default async function AdminBookPreviewPage({ params }: { params: Promise
         />
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-[14rem_1fr]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[14rem_1fr]">
         <div className="aspect-[3/4] w-56 max-w-full overflow-hidden rounded-lg bg-surface-2">
           {book.coverImage ? (
             <img
@@ -155,11 +155,11 @@ export default async function AdminBookPreviewPage({ params }: { params: Promise
         </div>
         <div className="flex flex-col gap-4">
           {book.summary ? <p className="text-lg leading-relaxed">{book.summary}</p> : null}
-          <dl className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+          <dl className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
             {details.map(([label, value]) => (
               <div key={label}>
                 <dt className="text-sm text-muted">{label}</dt>
-                <dd className="break-words font-medium">{value}</dd>
+                <dd className="font-medium [overflow-wrap:anywhere]">{value}</dd>
               </div>
             ))}
           </dl>

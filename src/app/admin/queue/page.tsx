@@ -135,7 +135,7 @@ export default async function AdminQueuePage() {
                       <Chip>{readingTimeLabel(book.readingMinutes)}</Chip>
                       <Chip tone={book.origin === "ai" ? "warning" : "neutral"}>{ORIGIN_LABELS[book.origin]}</Chip>
                     </div>
-                    <dl className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
+                    <dl className="grid grid-cols-1 gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
                       <div>
                         <dt className="inline text-muted">יוצר: </dt>
                         <dd className="inline">{owner}</dd>
@@ -150,7 +150,7 @@ export default async function AdminQueuePage() {
                       </div>
                       <div>
                         <dt className="inline text-muted">מקור: </dt>
-                        <dd className="inline break-words">{book.source || "חסר"}</dd>
+                        <dd className="inline [overflow-wrap:anywhere]">{book.source || "חסר"}</dd>
                       </div>
                     </dl>
                   </div>

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { MockNotice } from "@/components/MockNotice";
 import { saveProgress } from "@/components/personal/local-store";
 import { Button, EmptyState, Spinner, buttonClasses } from "@/components/ui";
+import { useWakeLock } from "@/components/reader/useWakeLock";
 import { cn } from "@/lib/cn";
 import { splitWords } from "@/lib/hebrew";
 import { getDownload, offlineReadPath, type OfflineBook } from "./offline-store";
@@ -31,6 +32,7 @@ export function OfflineReader() {
   const [activeWord, setActiveWord] = useState(-1);
   const [audioFailed, setAudioFailed] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  useWakeLock(playing);
 
   useEffect(() => {
     let cancelled = false;

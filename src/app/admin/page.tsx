@@ -96,7 +96,7 @@ export default async function AdminDashboardPage() {
         </p>
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card as="section" aria-labelledby="views-heading" className="flex flex-col gap-4">
           <CardTitle id="views-heading">הספרים הנצפים ביותר</CardTitle>
           {stats.mostViewed.length === 0 ? (

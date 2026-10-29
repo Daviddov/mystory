@@ -108,7 +108,7 @@ export default async function HomePage() {
           <SectionTitle id="home-collections-title" emoji="🧺" href={routes.collections()} hrefLabel="לכל האוספים">
             אוספים לעונה ולחגים
           </SectionTitle>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.collections.slice(0, 6).map(({ collection, books }) => (
               <li key={collection.id}>
                 <CollectionCard collection={collection} books={books} inSeason={isInSeason(collection, today)} />

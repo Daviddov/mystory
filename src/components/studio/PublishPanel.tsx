@@ -59,7 +59,7 @@ export function PublishPanel({
   };
 
   return (
-    <div className="grid gap-5 lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
       <Card className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-3">
           <h2 className="text-2xl font-bold">מצב הספר</h2>
@@ -159,6 +159,7 @@ export function PublishPanel({
               <p>כל מי שמקבל את הקישור יכול לקרוא את הספר, גם בלי להתחבר.</p>
               <div className="flex gap-2">
                 <Input
+                  className="min-w-0"
                   readOnly
                   dir="ltr"
                   aria-label="קישור השיתוף"

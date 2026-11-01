@@ -125,6 +125,7 @@ export function ownMediaReferences(book: BookWithPages): Set<string> {
   for (const page of book.pages) {
     add(page.image);
     add(page.audio);
+    add(page.translation?.audio);
   }
   return refs;
 }
@@ -137,6 +138,7 @@ function allMediaReferences(book: BookWithPages): Set<string> {
     if (page.image) refs.add(page.image);
     if (page.audio) refs.add(page.audio);
     if (page.video) refs.add(page.video);
+    if (page.translation?.audio) refs.add(page.translation.audio);
   }
   return refs;
 }
@@ -293,7 +295,7 @@ async function saveBookPagesLocked(
   assertContentEditable(book, ctx.user);
   assertFreshVersion(book, options);
 
-  const pages: Page[] = keepAnimations(book.pages, sanitizePages(payload.pages));
+  const pages: Page[] = keepTranslations(book.pages, keepAnimations(book.pages, sanitizePages(payload.pages)));
   const known = allMediaReferences(book);
   pages.forEach((page, i) => {
     if (page.image) assertMediaField(book, known, page.image, "image", `האיור בעמוד ${i + 1}`);
@@ -322,6 +324,17 @@ function keepAnimations(before: Page[], pages: Page[]): Page[] {
     const old = page.image ? byImage.get(page.image) : undefined;
     if (!old) return page;
     return { ...page, video: old.video, videoImageHash: old.videoImageHash, videoSource: old.videoSource };
+  });
+}
+
+/**
+ * The editor does not send the second-language version either, so every page
+ * keeps the one it had at the same position.
+ */
+function keepTranslations(before: Page[], pages: Page[]): Page[] {
+  return pages.map((page, index) => {
+    const translation = before[index]?.translation;
+    return translation ? { ...page, translation } : page;
   });
 }
 

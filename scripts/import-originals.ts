@@ -1,7 +1,8 @@
 /**
  * Creates the original stories written for the site as DRAFTS without pictures:
- * the weekly Torah portion (scripts/originals/parasha) and stories of the Sages
- * retold for children (scripts/originals/chazal). One JSON file per story.
+ * the weekly Torah portion (scripts/originals/parasha), stories of the Sages
+ * retold for children (scripts/originals/chazal) and holiday and fast-day stories
+ * (scripts/originals/holidays). One JSON file per story.
  *
  *   npm run import:originals              create the stories that are not in the library yet
  *   npm run import:originals -- --force   also rewrite the ones already there (never a published one)
@@ -25,7 +26,7 @@ import { CATEGORY_SLUGS, THEME_SLUGS } from "../src/lib/taxonomy";
 import { SYSTEM_OWNER_ID } from "../src/lib/types";
 
 const ROOT = path.join(process.cwd(), "scripts", "originals");
-const FOLDERS = ["parasha", "chazal"] as const;
+const FOLDERS = ["parasha", "chazal", "holidays"] as const;
 
 const AUTHOR = "מערכת הסיפור שלי";
 const LICENSE = "כל הזכויות שמורות. מותר לשימוש אישי";

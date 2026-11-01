@@ -134,6 +134,7 @@ interface PageRow {
   word_timings: unknown;
   audio_source: string | null;
   original_text?: string | null;
+  translation?: unknown;
   image_alt?: string | null;
   video?: string | null;
   video_image_hash?: string | null;
@@ -173,6 +174,7 @@ interface BookRow {
   credits?: unknown;
   hero?: unknown;
   dedication?: string | null;
+  translation?: unknown;
   pages?: PageRow[] | null;
 }
 
@@ -292,10 +294,11 @@ const BOOK_COLUMN_OF: Record<Exclude<keyof Book, "hasAudio">, string> = {
   credits: "credits",
   hero: "hero",
   dedication: "dedication",
+  translation: "translation",
 };
 
 const BOOK_COLUMNS = Object.values(BOOK_COLUMN_OF).join(",");
-const PAGE_COLUMNS = "page_index,text,text_nikud,image,audio,word_timings,audio_source,original_text,image_alt,video,video_image_hash,video_source";
+const PAGE_COLUMNS = "page_index,text,text_nikud,image,audio,word_timings,audio_source,original_text,image_alt,video,video_image_hash,video_source,translation";
 const BOOK_WITH_PAGES_COLUMNS = `${BOOK_COLUMNS},pages(${PAGE_COLUMNS})`;
 const COLLECTION_COLUMNS = "id,slug,title,description,book_ids,season";
 const PROFILE_COLUMNS = "id,name,email,role,created_at";
@@ -347,6 +350,7 @@ function pageFromRow(row: PageRow): Page {
     wordTimings: row.word_timings,
     audioSource: row.audio_source,
     originalText: row.original_text,
+    translation: row.translation,
     imageAlt: row.image_alt,
     video: row.video,
     videoImageHash: row.video_image_hash,
@@ -388,6 +392,7 @@ function bookObjectFromRow(row: BookRow): Record<string, unknown> {
     credits: row.credits,
     hero: row.hero,
     dedication: row.dedication,
+    translation: row.translation,
   });
 }
 

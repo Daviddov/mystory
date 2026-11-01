@@ -2,7 +2,9 @@
  * Cuts one narration of a whole book (made in one Gemini TTS run in AI Studio, pages separated by a blank line)
  * into one WAV per page, named <slug>-pNN.wav, ready for attach-narration.ts.
  *
- *   npx tsx .claude/skills/ai-picture-book/scripts/split-book-audio.ts <slug> <book.wav> <out-folder> [--pages 1,3]
+ *   npx tsx .claude/skills/ai-picture-book/scripts/split-book-audio.ts <slug> <book.wav> <out-folder> [--pages 1,3] [--translation]
+ *
+ * --translation: the audio reads the book's second-language version (Page.translation.text), for scripts/add-translation.ts --audio.
  *
  * No speech recognition: the voice activity is detected in the audio (detectSpeech) and the words of the whole
  * text are spread over it (estimateWordTimings, the reader's own estimator, ~77% of words within 0.3 s). Each cut falls in the
@@ -22,15 +24,17 @@ const RATE = 16000;
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const [slug, wav, outDir] = args;
-  if (!slug || !wav || !outDir) throw new Error("usage: split-book-audio.ts <slug> <book.wav> <out-folder> [--pages 1,3]");
+  if (!slug || !wav || !outDir) throw new Error("usage: split-book-audio.ts <slug> <book.wav> <out-folder> [--pages 1,3] [--translation]");
+  const translation = args.includes("--translation");
   const pagesIdx = args.indexOf("--pages");
   const only = pagesIdx >= 0 ? (args[pagesIdx + 1] ?? "").split(",").map(Number) : undefined;
 
   const repo = new LocalRepository(path.join(process.cwd(), "data"));
   const book = await repo.getBookBySlug(slug);
   if (!book) throw new Error(`no book with slug ${slug}`);
-  const pages = book.pages.filter((p) => splitWords(p.text).length > 0 && (!only || only.includes(p.index + 1)));
-  const texts = pages.map((p) => narrationText(p));
+  const spoken = (p: (typeof book.pages)[number]) => (translation ? (p.translation?.text ?? "") : narrationText(p));
+  const pages = book.pages.filter((p) => splitWords(spoken(p)).length > 0 && (!only || only.includes(p.index + 1)));
+  const texts = pages.map(spoken);
   const counts = texts.map((t) => splitWords(t).length);
 
   const raw = execFileSync("ffmpeg", ["-v", "error", "-i", wav, "-f", "f32le", "-ac", "1", "-ar", String(RATE), "-"], {

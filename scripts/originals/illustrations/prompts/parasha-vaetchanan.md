@@ -98,7 +98,7 @@ Rules: No text, letters, words or numbers anywhere in the picture (no signs, no 
 
 ## Page 5
 
-> ״ומי אמר את המילים האלה ראשון?״ שאלה יעל. ״משה,״ ענתה אמא. ״לפני הרבה מאוד שנים, הוא אמר אותן לכל העם.״
+> ״ומי אמר את המילים האלה ראשון?״ שאלה יעל. ״הבנים של יעקב אבינו,״ ענתה אמא. ״ליעקב קראו גם ישראל. כשהיה זקן, הם אמרו לו: ׳שמע, ישראל אבא שלנו, ה' אלוהינו, ה' אחד׳. אחרי הרבה שנים, משה אמר אותן לכל העם, והן נכתבו בתורה.״
 
 ```text
 Illustration for page 5 of a children's picture book. Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, bright friendly palette, rounded friendly faces with expressive eyes, present-day Israel: apartments with balconies, kindergartens, moshav fields, Jerusalem stone, a warm Jewish family home (Shabbat candles, mezuzah, bookshelf with holy books). Calm, warm, safe mood.

@@ -25,6 +25,9 @@ Write `spec.json` (format: [references/spec-example.json](references/spec-exampl
   `categories` (from `CATEGORIES` in `src/lib/taxonomy.ts`), `themes` (from `THEMES`), Hebrew `tags`, 3–4 `discussionQuestions`, `ageGroup`.
 - `style`, `characters` and `coverScene`: the fixed English description sent to Gemini (see the example). Give each character
   1–2 unmistakable props (bow, glasses, whistle, polka dots) and fixed clothes per setting.
+  **Never give a Jewish character (or any person) a long, big, hooked or red nose**, or other caricatured features: that is an
+  antisemitic stereotype (a "long red nose" on Yokel in the Chelm specs produced one, 2026-11-01). Write "a small round nose";
+  make funny characters funny through props, poses and clothes, not faces.
 
 ## 2. Pictures in Gemini (Claude in Chrome)
 
@@ -117,6 +120,8 @@ the API key's prepaid credits were depleted, the web UI is free). No word timing
 silently does nothing and the driver then "saves" the previous audio (same byte size; it stops with `implausible audio`).
 Open a fresh dialog per book: `+` (top right) → Create new dialog → pick the voice again (speaker dropdown, search the name) → `await setStyle(...)` →
 `bookDriver.stopped=null; bookDriver.cur=null; bookDriver.q=[slug]`. Delete any `<slug>-book.wav` that is byte-identical to another book's.
+Since 2026-10-28 aistudio-book-driver.js does this by itself (`newDialog()` before every book after the first, default voice, `window.STYLE` set again),
+so a whole queue runs unattended (25 books before the free quota ended). A fresh dialog has the default voice, so a book in another voice runs alone: pick the voice by hand, then `bookDriver.fresh=true; bookDriver.q=[slug]`.
 Also: the page's CSP blocks inline `<script>` and eval, so paste the driver through `javascript_tool` text, not via the receiver.
 
 **Whole book in one request (preferred, ~16 books before the free quota ended on 2026-10-19 vs ~21 pages one by one):**
@@ -128,6 +133,14 @@ then `attach-narration.ts <slug> <dir>/pages`.
 Pitfalls seen: a stale audio is returned when AI Studio silently ignores a Run (the driver compares blob sizes and waits 90 s before re-running);
 the receiver tab can stop answering (getFile retries); two receivers on one port serve the wrong folder; `Failed to generate` = quota, stop.
 The Download button also saves a "Generated Audio ... .wav" to the browser's Downloads when clicked by hand.
+
+### A second language (English text + English narration next to the Hebrew)
+
+Write `scripts/originals/translations/<slug>.en.json` (`{language, title, summary, pages: [one text per page]}`), then
+`npx tsx scripts/add-translation.ts <file> --prepare <dir>` stores the text (the reader gets an EN/עב switch) and writes
+`<dir>/narration-<slug>-en.json`. Narrate it like a Hebrew book with the book driver, queue `"<slug>-en"`, then
+`split-book-audio.ts <slug> <dir>/<slug>-en-book.wav <dir>/pages --translation` and
+`npx tsx scripts/add-translation.ts <file> --audio <dir>/pages`. With a TTS API key, `--narrate` does it in one step.
 
 ## 4. Verify
 

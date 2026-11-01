@@ -1,0 +1,130 @@
+{
+  "style": "biblical",
+  "characters": [
+    {
+      "name": "Noa",
+      "description": "Girl about 7 years old, light olive skin, freckles on her nose, long dark-brown hair in two braids tied with yellow hair ties, big brown eyes; wears long-sleeved lilac pajamas with little white clouds and fuzzy grey slippers; signature item: the yellow hair ties."
+    },
+    {
+      "name": "Tamar",
+      "description": "Noa's little sister, about 4 years old, round face, light olive skin, short curly light-brown hair with a small red clip, long-sleeved pink pajamas with tiny strawberries."
+    },
+    {
+      "name": "Saba",
+      "description": "The girls' grandfather, about 70, warm and gentle, light olive skin, neat short white beard, round gold-rimmed glasses, kind smiling brown eyes; a navy-blue knitted kippah on his head at all times, a warm grey wool cardigan over a white shirt, dark trousers; signature item: the round glasses and navy kippah."
+    },
+    {
+      "name": "Ima",
+      "description": "The girls' mother, about 38, slim, light olive skin, warm brown eyes, hair fully tucked under a soft mustard-yellow headscarf, long-sleeved cream sweater and a long dark-green skirt."
+    },
+    {
+      "name": "Jeremiah",
+      "description": "The prophet Jeremiah, about 45, thin, serious and caring, olive skin, deep-set dark eyes, a dark-brown beard, an undyed rough wool robe over a plain tunic, the hood of his robe always drawn over his head, a leather belt, sandals."
+    },
+    {
+      "name": "King Zedekiah",
+      "description": "King Zedekiah of Judah, about 30, olive skin, short black beard, a simple gold circlet worn over a white head-cloth that covers his head, a deep-purple royal robe with a gold-embroidered hem over a white tunic."
+    },
+    {
+      "name": "Nebuchadnezzar",
+      "description": "Nebuchadnezzar king of Babylon, about 40, stern but not monstrous, bronze skin, a long black beard in neat Babylonian rows of curls, a tall dark-blue and gold Babylonian royal cap, a long fringed royal-blue robe with gold patterns, golden armbands; stands proudly on a war chariot pulled by two horses."
+    },
+    {
+      "name": "Ezekiel",
+      "description": "The prophet Ezekiel among the exiles in Babylon, about 40, olive skin, warm dark eyes, a full black beard, a tallit-like white wool mantle with dark-blue stripes drawn over his head, a sand-colored robe, sitting by a river with palm trees, holding a reed pen and a small parchment that shows only abstract marks."
+    }
+  ],
+  "cover": {
+    "prompt": "Split composition joined softly in the middle like a memory. On the right, a warm modern Jerusalem kitchen on a winter morning: Saba sits at the table with nothing in front of him, his arm around Noa, who looks up at him with curious eyes. On the left, in the soft colors of the past, the golden stone walls of ancient Jerusalem on a hill with the First Temple glowing at the top, and many small dark tents of an army camp in the valley around the walls under a cold grey-blue winter sky. Gentle, thoughtful mood, not scary.",
+    "characters": [
+      "Noa",
+      "Saba"
+    ]
+  },
+  "pages": [
+    {
+      "prompt": "A cozy modern Jerusalem kitchen on a winter morning, pale sunlight through a window with a view of Jerusalem-stone buildings. A wooden table with cups of chocolate milk and slices of bread in front of Ima and Tamar, but an empty place in front of Saba, who sits smiling calmly. Noa in her pajamas stands at the kitchen doorway, looking at Saba's empty place with a worried, puzzled face.",
+      "characters": [
+        "Noa",
+        "Tamar",
+        "Saba",
+        "Ima"
+      ],
+      "style": "modern"
+    },
+    {
+      "prompt": "In the same cozy living room by a window with Jerusalem-stone buildings outside, Saba sits on a soft armchair and pats the seat beside him; Noa climbs up to sit close to him, looking up with big curious eyes. A bookshelf with holy books and a mezuzah on the doorframe in the background. Warm lamp light, intimate storytelling mood.",
+      "characters": [
+        "Noa",
+        "Saba"
+      ],
+      "style": "modern"
+    },
+    {
+      "prompt": "Ancient Jerusalem on a hill in golden light: stone houses with flat roofs, city walls, and the First Temple shining at the top. In a busy stone square below, Jeremiah stands on a low step and speaks with open, pleading hands to a small crowd of townspeople; some listen, some turn away. King Zedekiah watches from a palace balcony in the background.",
+      "characters": [
+        "Jeremiah",
+        "King Zedekiah"
+      ]
+    },
+    {
+      "prompt": "Far away in Babylon: a grand city with blue-glazed brick gates, palm trees and a stepped ziggurat tower in the distance. Nebuchadnezzar stands proudly on his chariot in front of rows and rows of soldiers with tall shields and banners, horses and chariots stretching to the horizon. Weapons are held still and upright, nobody fights. Hot dusty light, impressive and a little cold.",
+      "characters": [
+        "Nebuchadnezzar"
+      ]
+    },
+    {
+      "prompt": "A cold winter day with a grey-blue sky: seen from on top of the stone wall of ancient Jerusalem, a few townspeople with their heads covered peek over the wall with worried faces. Below, all around the city in the valleys, hundreds of tents of the Babylonian army camp spread out, with banners, horses and campfire smoke. Nebuchadnezzar's chariot stands small in the distance. No fighting.",
+      "characters": [
+        "Nebuchadnezzar"
+      ]
+    },
+    {
+      "prompt": "Wide view from above: ancient Jerusalem on its hill closed in by a ring of earth ramps and wooden siege walls built by the Babylonian army, the city gates shut and barred from inside. Inside the walls, a mother and a boy with a head-cloth stand at the closed gate looking at it sadly. Cold winter light, a feeling of being shut in, nothing violent.",
+      "characters": []
+    },
+    {
+      "prompt": "Far away in Babylon, by a wide river lined with palm trees, Ezekiel sits on a rock among a few Jewish exiles in head coverings. A soft warm light falls on him from above (no figure in the sky). He writes carefully with a reed pen on a small parchment that shows only abstract marks, looking up thoughtfully toward the west, as if he can feel what is happening in faraway Jerusalem.",
+      "characters": [
+        "Ezekiel"
+      ]
+    },
+    {
+      "prompt": "Aftermath in a gentle way: a long line of Jewish families, men and boys with cloaks over their heads, women in head coverings, carrying bundles and small children, walking slowly on a road away from Jerusalem. In the far distance behind them, the city on the hill under a pale sky with a thin haze of smoke where the Temple stood. Some people look back sadly; a father holds his son's hand. Quiet, sad but tender mood, no flames up close, no injuries.",
+      "characters": []
+    },
+    {
+      "prompt": "Back in the cozy modern Jerusalem living room: Noa sits beside Saba on the armchair with a thoughtful face, her finger on her chin as she asks a question. Saba answers gently, one hand on his heart. Winter sunlight through the window.",
+      "characters": [
+        "Noa",
+        "Saba"
+      ],
+      "style": "modern"
+    },
+    {
+      "prompt": "At the modern kitchen table: Noa, smiling, breaks her slice of bread in two and hands one half to her little sister Tamar, who reaches for it happily. Saba watches from his chair with a proud, warm smile. A cup of chocolate milk on the table, morning light.",
+      "characters": [
+        "Noa",
+        "Tamar",
+        "Saba"
+      ],
+      "style": "modern"
+    },
+    {
+      "prompt": "In the modern living room, Saba's eyes twinkle as he gestures toward the window, and Noa follows his gaze with hope. Outside the window, like a soft daydream bubble in pale golden light, families in festive clothes dance happily in a circle near the ancient Jerusalem walls, with musicians playing tambourines and harps.",
+      "characters": [
+        "Noa",
+        "Saba"
+      ],
+      "style": "modern"
+    },
+    {
+      "prompt": "Noa and Saba stand together at a big window looking out at the golden Jerusalem-stone rooftops and the Old City walls shining in winter sunshine. Saba hugs Noa warmly from the side; Noa spreads her arms wide as if describing a huge cake. Hopeful, loving, bright ending.",
+      "characters": [
+        "Noa",
+        "Saba"
+      ],
+      "style": "modern"
+    }
+  ]
+}

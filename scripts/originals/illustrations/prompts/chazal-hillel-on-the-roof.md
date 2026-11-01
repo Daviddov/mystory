@@ -131,7 +131,7 @@ Rules: No text, letters, words or numbers anywhere in the picture (no signs, no 
 
 ## Page 7
 
-> בבוקר, בשבת, ישבו שמעיה ואבטליון בבית המדרש. שמעיה הרים את הראש ואמר: ״אבטליון אחי, כל יום הבית מאיר, והיום הוא אפל. אולי היום מעונן?״ הם הסתכלו למעלה, אל החלון שבתקרה, וראו שם… צורה של אדם!
+> בבוקר, בשבת, ישבו שמעיה ואבטליון בבית המדרש. שמעיה הרים את הראש ואמר: ״אבטליון ידידי, כל יום הבית מאיר, והיום הוא אפל. אולי היום מעונן?״ הם הסתכלו למעלה, אל החלון שבתקרה, וראו שם… צורה של אדם!
 
 ```text
 Illustration for page 7 of a children's picture book. Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy palette (stone beige, olive green, terracotta, deep blue), rounded friendly faces with expressive eyes, the Land of Israel and Babylon in the time of the Mishnah and Talmud (Roman era): stone houses with flat roofs, oil lamps, study halls with low benches and scrolls, markets, olive and carob trees. Jewish sages with beards, tunics and simple robes; women in modest long dresses and head coverings. Calm, warm, safe mood.

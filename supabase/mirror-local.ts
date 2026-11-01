@@ -8,6 +8,7 @@
  *   npx tsx supabase/mirror-local.ts --dry-run    show the plan only
  *   npx tsx supabase/mirror-local.ts --yes        apply without asking
  *
+ *   --collections-only  only collections and the book of the week
  *   --no-delete   never delete anything in Supabase (only add / update)
  *   --force       also overwrite books that were edited in Supabase after
  *                 their local copy (by default those are skipped)
@@ -39,6 +40,7 @@ const ASSUME_YES = args.has("--yes");
 const NO_DELETE = args.has("--no-delete");
 const DEEP = args.has("--deep");
 const FORCE = args.has("--force");
+const COLLECTIONS_ONLY = args.has("--collections-only");
 const INCLUDE_UNPUBLISHED = args.has("--include-unpublished");
 
 /** Owner of the library's own books; anything else belongs to a site user. */
@@ -142,7 +144,9 @@ async function main(): Promise<void> {
   // published is skipped unless Supabase already has it (then its status and
   // content are still updated, e.g. when it was un-published locally).
   const syncBooks = [...localBooks.values()].filter(
-    (b) => INCLUDE_UNPUBLISHED || b.status === "published" || b.status === "private" || remoteBooks.has(b.id),
+    (b) =>
+      !COLLECTIONS_ONLY &&
+      (INCLUDE_UNPUBLISHED || b.status === "published" || b.status === "private" || remoteBooks.has(b.id)),
   );
   console.log(
     `${syncBooks.length} of ${localBooks.size} local books are in scope (published, private, or already in Supabase).`,
@@ -161,7 +165,7 @@ async function main(): Promise<void> {
   }
   const onlyRemote = [...remoteBooks.values()].filter((b) => !localBooks.has(b.id));
   const keptUserBooks = onlyRemote.filter((b) => b.ownerId !== SYSTEM_OWNER);
-  const toDelete = NO_DELETE ? [] : onlyRemote.filter((b) => b.ownerId === SYSTEM_OWNER);
+  const toDelete = NO_DELETE || COLLECTIONS_ONLY ? [] : onlyRemote.filter((b) => b.ownerId === SYSTEM_OWNER);
   if (localBooks.size === 0 && toDelete.length > 0) {
     throw new Error(`No books found in ${dataDir()}; refusing to delete ${toDelete.length} Supabase books.`);
   }

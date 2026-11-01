@@ -449,5 +449,10 @@
       "elevenlabs": 1
     },
     "note": "Claude in Chrome connected. ChatGPT free: \"You are out of image creations\" at the first try (~20:30, shared account used by another session), resets 22:31. ElevenLabs made the missing cover of parasha-chukat-og (one 2048x1536 picture, head coverings OK, no text) and it was attached as cover.webp (draft). Queue now fully done: 80 of 80."
+  },
+  "chatgptRun20261028": {
+    "date": "2026-10-28",
+    "generations": 0,
+    "note": "queue fully done (80 of 80 in done, partial empty); only chazal-honi-seventy-years is outside the queue and belongs to another session. No browser work, no generations."
   }
 }

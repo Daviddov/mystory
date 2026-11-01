@@ -60,6 +60,19 @@ export const WordTimingSchema = z.object({
 });
 export type WordTiming = z.infer<typeof WordTimingSchema>;
 
+/**
+ * A page of the book's second-language version (see Book.translation): its own
+ * text and, when it was narrated, its own audio. Never vocalized.
+ */
+export const PageTranslationSchema = z.object({
+  text: z.string(),
+  /** Media path of the narration in the second language. */
+  audio: z.string().optional(),
+  wordTimings: z.array(WordTimingSchema).optional(),
+  audioSource: AudioSourceSchema.optional(),
+});
+export type PageTranslation = z.infer<typeof PageTranslationSchema>;
+
 export const PageSchema = z.object({
   /** Zero-based position inside the book. Pages are always stored sorted and contiguous. */
   index: z.number().int().min(0),
@@ -75,6 +88,8 @@ export const PageSchema = z.object({
   audioSource: AudioSourceSchema.optional(),
   /** The page text in the book's original language, kept next to a translation. */
   originalText: z.string().optional(),
+  /** The page in the book's second language (Book.translation), with its own narration. */
+  translation: PageTranslationSchema.optional(),
   /** Description of the illustration (alternative text), in the language it was written in. */
   imageAlt: z.string().max(1000).optional(),
   /**
@@ -152,6 +167,18 @@ export const BookHeroSchema = z.object({
 });
 export type BookHero = z.infer<typeof BookHeroSchema>;
 
+/**
+ * A second-language version that lives next to the book's own text (e.g. an
+ * English version of a Hebrew book). The pages carry their texts and narration
+ * in Page.translation; the reader switches between the two languages.
+ */
+export const BookTranslationSchema = z.object({
+  language: BookLanguageSchema,
+  title: z.string().min(1).max(200),
+  summary: z.string().max(2000).optional(),
+});
+export type BookTranslation = z.infer<typeof BookTranslationSchema>;
+
 export const BookSchema = z.object({
   id: IdSchema,
   slug: SlugSchema,
@@ -197,6 +224,8 @@ export const BookSchema = z.object({
   /** Language the book was written in, when it is (or will be) a translation. */
   originalLanguage: BookLanguageSchema.optional(),
   credits: BookCreditsSchema.optional(),
+  /** A second language the book can also be read and heard in. */
+  translation: BookTranslationSchema.optional(),
   hero: BookHeroSchema.optional(),
   /** A personal dedication shown on the start screen ("לנועם, באהבה, סבתא"). */
   dedication: z.string().max(200).optional(),

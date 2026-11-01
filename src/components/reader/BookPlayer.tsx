@@ -44,6 +44,7 @@ import {
   defaultFontStep,
   formatCountdown,
   keyToAction,
+  otherLanguageText,
   pageDisplayText,
   resolveStartPage,
   swipeToAction,
@@ -373,7 +374,8 @@ function Player({
   const voiceAudio = (pageIndex: number): string => {
     if (!voice) {
       const page = book.pages[pageIndex];
-      return page?.audio ? mediaUrl(page.audio, book.updatedAt, shareToken) : "";
+      const audio = inSecondVoice ? page?.translation?.audio : page?.audio;
+      return audio ? mediaUrl(audio, book.updatedAt, shareToken) : "";
     }
     const take = voice.pages.find((page) => page.index === pageIndex);
     return take ? mediaUrl(take.audio, voice.updatedAt, shareToken) : "";
@@ -430,8 +432,10 @@ function Player({
   const originalLanguage = useMemo(() => switchableOriginalLanguage(book), [book]);
   const showOriginal = originalLanguage !== null && (prefs.original ?? false);
   // A page without source text (added after the translation) stays in the book's language.
-  const originalText = showOriginal ? (current?.originalText ?? "").trim() : "";
+  const originalText = showOriginal && current ? otherLanguageText(current) : "";
   const inOriginal = originalText !== "";
+  // A book with a second-language version reads that language in its own voice (or not at all, never in the other language).
+  const inSecondVoice = showOriginal && !!book.translation && voiceId === null;
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [notice, setNotice] = useState<ReactNode>(() =>
@@ -458,19 +462,29 @@ function Player({
   const audioSrc = atEnd ? "" : voiceAudio(index);
   const upcomingAudio = index + 1 < pageCount ? voiceAudio(index + 1) : "";
   // The narration is of the translation: its word timings do not fit the original text.
+  // A second-language version has its own narration and timings.
   // A family recording has word timings once speech recognition has run on it.
   const storedTimings = useMemo(() => {
-    if (!current || inOriginal) return null;
+    if (!current) return null;
+    if (inSecondVoice) {
+      const second = current.translation;
+      return second?.audio ? usableTimings({ text: second.text, audio: second.audio, wordTimings: second.wordTimings }) : null;
+    }
+    if (inOriginal) return null;
     if (voiceId === null) return usableTimings(current);
     const take = voice?.pages.find((page) => page.index === index);
     return take ? usableTimings({ ...current, audio: take.audio, wordTimings: take.wordTimings }) : null;
-  }, [current, inOriginal, voiceId, voice, index]);
+  }, [current, inOriginal, inSecondVoice, voiceId, voice, index]);
   // A recording without timings (a family recording, an uploaded narration) gets an estimate
   // from its pauses. Not for the silent demo audio, which the device voice reads instead.
   const estimatedTimings = useEstimatedTimings({
     src: audioSrc,
-    text: current ? pageDisplayText(current, nikudOn) : "",
-    enabled: !!current && !inOriginal && !storedTimings && !(voiceId === null && current.audioSource === "mock"),
+    text: current ? (inSecondVoice ? originalText : pageDisplayText(current, nikudOn)) : "",
+    enabled:
+      !!current &&
+      (!inOriginal || inSecondVoice) &&
+      !storedTimings &&
+      !(voiceId === null && (inSecondVoice ? current.translation?.audioSource : current.audioSource) === "mock"),
   });
   const timings = storedTimings ?? estimatedTimings;
   const isLastPage = index === pageCount - 1;
@@ -483,7 +497,7 @@ function Player({
   }, [autoAdvance, clearAdvance, turn]);
 
   // The demo recording is silent. When the device has a Hebrew voice, it reads the page instead.
-  const isDemoAudio = voiceId === null && !!current?.audio && current.audioSource === "mock";
+  const isDemoAudio = voiceId === null && !inSecondVoice && !!current?.audio && current.audioSource === "mock";
   const deviceVoice = useDeviceVoice(hasAnyAudio);
   const speech = useMemo(
     () => (isDemoAudio && deviceVoice && current ? { text: current.text, voice: deviceVoice } : null),
@@ -834,7 +848,7 @@ function Player({
   const tallPicture = showImage && showText && imageRatio !== null && imageRatio < 0.95;
   const text = current ? (inOriginal ? originalText : pageDisplayText(current, nikudOn)) : "";
   const textLanguage = inOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
-  const title = (showOriginal && book.credits?.originalTitle) || book.title;
+  const title = (showOriginal && (book.translation?.title || book.credits?.originalTitle)) || book.title;
   const otherLanguage = showOriginal ? bookLanguage(book) : originalLanguage;
 
   // The play button and the voice picker; recording mode has its own panel instead.
@@ -1353,7 +1367,7 @@ function Player({
 
       {choosing && !atEnd ? (
         <StartScreen
-          title={book.title}
+          title={title}
           author={book.author}
           dedication={book.dedication}
           cover={mediaUrl(book.coverImage, book.updatedAt, shareToken)}

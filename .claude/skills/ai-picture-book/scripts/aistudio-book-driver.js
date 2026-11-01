@@ -19,26 +19,54 @@ window.setStyle = async (text) => {
   let ta = document.querySelector('textarea[aria-label="Describe the voice style"]');
   if (!ta) { btn(/^Style/)?.click(); await sleep(700); ta = document.querySelector('textarea[aria-label="Describe the voice style"]'); }
   if (!ta) return "no style box";
-  setValue(ta, text); await sleep(400);
+  window.STYLE = text; setValue(ta, text); await sleep(400);
   document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", keyCode: 27, bubbles: true })); await sleep(500);
   return "style set";
 };
 if (!window.__blobHook) { window.__blobHook = 1; const OB = window.Blob; window.Blob = function (parts, opt) { const b = new OB(parts, opt); if (b.size > 100000) window.__bigblob = b; return b; }; window.Blob.prototype = OB.prototype; }
-window.isRunning = () => [...document.querySelectorAll("button")].some((b) => /Stop/.test(b.innerText) && !/Run/.test(b.innerText));
+// A second book in the same dialog silently returns the previous audio, so every book after the first gets a fresh dialog
+// ("New chat" + "Create new dialog", default voice) with window.STYLE set again (set STYLE before queuing; setStyle sets it too).
+window.closeMenus = () => document.querySelectorAll(".cdk-overlay-backdrop").forEach((b) => b.click());
+window.newDialog = async () => {
+  const nc = document.querySelector('button[aria-label="New chat"]'); if (!nc) return "no New chat button"; nc.click(); await sleep(2500);
+  const card = [...document.querySelectorAll("button, div, a")].filter((e) => /^\s*(add\s*)?Create new dialog\s*$/.test(e.innerText || "")).pop();
+  if (!card) return "no Create new dialog card"; card.click(); await sleep(2500);
+  if (!document.querySelector('textarea[aria-label="Speech block text"]')) return "no text box";
+  if (window.STYLE) await setStyle(STYLE); closeMenus(); await sleep(800);
+  if (window.VOICE) { const v = await pickVoice(VOICE); if (v !== "ok") return v; }
+  return "ok";
+};
+// window.VOICE = "Charon" makes every fresh dialog switch from the default voice to that one (search box in the speaker panel).
+window.pickVoice = async (name) => {
+  const chip = () => document.querySelector("button.voice-chip");
+  if (!chip()) return "no voice chip";
+  if (chip().innerText.includes(name)) return "ok";
+  if (!document.querySelector('input[aria-label="Search voices"]')) { chip().click(); await sleep(1200); }
+  const inp = document.querySelector('input[aria-label="Search voices"]'); if (!inp) return "no voice search box";
+  Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(inp, name);
+  inp.dispatchEvent(new Event("input", { bubbles: true })); await sleep(1800);
+  const card = [...document.querySelectorAll("button.voice-card-content")].find((b) => b.innerText.trim().split("\n")[0].trim() === name && !b.closest(".active-voice-card"));
+  if (card) { card.click(); await sleep(1000); }
+  document.querySelector('button[aria-label="Close panel"]')?.click(); await sleep(700);
+  return chip()?.innerText.includes(name) ? "ok" : "voice not set: " + chip()?.innerText;
+};
+window.isRunning =() => [...document.querySelectorAll("button")].some((b) => /Stop/.test(b.innerText) && !/Run/.test(b.innerText));
 window.ERRRE = /Quota limit reached|exceeded|RESOURCE_EXHAUSTED|rate limit|something went wrong|failed to generate|An internal error|daily limit/i;
-window.bookDriver = { q: [], cur: null, pending: null, stopped: null, log: [], errs: 0, sizes: [] };
+window.bookDriver = { q: [], cur: null, pending: null, stopped: null, log: [], errs: 0, sizes: [], fresh: true };
 window.bookTick = async () => {
   const d = bookDriver; if (d.stopped) return ["STOPPED", d.stopped];
-  const bad = document.body.innerText.match(ERRRE);
+  let bad = document.body.innerText.match(ERRRE);
   if (!d.cur) {
-    const slug = d.q.shift(); if (!slug) return ["QUEUE EMPTY"]; d.pending = slug;
+    if (!d.q.length) return ["QUEUE EMPTY"];
+    if (!d.fresh && !bad) { const r = await newDialog(); if (r !== "ok") { d.stopped = "new dialog failed: " + r; return ["STOP", d.stopped]; } d.fresh = true; bad = document.body.innerText.match(ERRRE); }
+    const slug = d.q.shift(); d.pending = slug;
     if (bad) { d.stopped = "error text: " + bad[0]; d.q.unshift(slug); d.pending = null; return ["STOP", bad[0]]; }
     const f = await getFile("narration-" + slug + ".json"); if (!f) { d.stopped = "no narration-" + slug + ".json from the receiver"; return ["STOP", d.stopped]; }
     const text = JSON.parse(f).map((p) => p.text).join("\n\n");
     const ta = document.querySelector('textarea[aria-label="Speech block text"]'); if (!ta) { d.stopped = "no text box"; d.q.unshift(slug); return ["STOP", d.stopped]; }
     setValue(ta, text); await sleep(800); window.__bigblob = null;
     const run = btn(/^Run/); if (!run || run.disabled) { d.stopped = "no run button"; d.q.unshift(slug); return ["STOP", d.stopped]; }
-    run.click(); d.cur = { slug, t: Date.now(), chars: text.length }; d.pending = null; return ["sent", slug, text.length];
+    run.click(); d.cur = { slug, t: Date.now(), chars: text.length }; d.pending = null; d.fresh = false; return ["sent", slug, text.length];
   }
   const c = d.cur; await sleep(500);
   if (bad) { d.stopped = "error text: " + bad[0]; d.q.unshift(c.slug); d.cur = null; return ["STOP", bad[0]]; }

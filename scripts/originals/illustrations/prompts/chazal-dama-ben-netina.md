@@ -104,7 +104,7 @@ Rules: No text, letters, words or numbers anywhere in the picture (no signs, no 
 
 ## Page 5
 
-> ״אם אוציא את המפתח, אבא יתעורר,״ חשב דמא. ״והוא כל כך עייף.״ הוא חזר אל החכמים ואמר: ״אני מצטער, אני לא יכול למכור לכם עכשיו.״ החכמים לא יכלו לחכות, והלכו לקנות במקום אחר. ודמא? הוא לא העיר את אבא.
+> ״אם אוציא את המפתח, אבא יתעורר,״ חשב דמא. ״והוא כל כך עייף.״ הוא חזר אל החכמים ואמר: ״אני מצטער, אבא שלי ישן. בבקשה, חכו קצת.״ החכמים חיכו. ככל שהזמן עבר, הם חשבו שדמא רוצה מחיר גבוה יותר, והציעו לו עוד ועוד כסף. אבל דמא לא התעניין בכסף. הוא רצה רק שאבא ימשיך לישון.
 
 ```text
 Illustration for page 5 of a children's picture book. Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy palette (stone beige, olive green, terracotta, deep blue), rounded friendly faces with expressive eyes, the Land of Israel and Babylon in the time of the Mishnah and Talmud (Roman era): stone houses with flat roofs, oil lamps, study halls with low benches and scrolls, markets, olive and carob trees. Jewish sages with beards, tunics and simple robes; women in modest long dresses and head coverings. Calm, warm, safe mood.
@@ -123,7 +123,7 @@ Rules: No text, letters, words or numbers anywhere in the picture (no signs, no 
 
 ## Page 6
 
-> דמא הפסיד הון עתק. אולי השכנים חשבו שהוא טיפש. אבל בלב שלו היה שקט. כשאבא התעורר מהשינה, דמא חייך אליו והביא לו כוס מים קרים. הוא אפילו לא סיפר לו מה הפסיד בגללו.
+> אולי השכנים חשבו שדמא מתעכב בלי סיבה. אבל בלב שלו היה שקט. כשאבא התעורר מהשינה, דמא חייך אליו והביא לו כוס מים קרים. רק אחר כך הלך להביא את האבנים ומכר אותן לחכמים. את הכסף הנוסף, שהציעו לו בזמן ההמתנה, הוא לא לקח.
 
 ```text
 Illustration for page 6 of a children's picture book. Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy palette (stone beige, olive green, terracotta, deep blue), rounded friendly faces with expressive eyes, the Land of Israel and Babylon in the time of the Mishnah and Talmud (Roman era): stone houses with flat roofs, oil lamps, study halls with low benches and scrolls, markets, olive and carob trees. Jewish sages with beards, tunics and simple robes; women in modest long dresses and head coverings. Calm, warm, safe mood.
@@ -176,7 +176,7 @@ Rules: No text, letters, words or numbers anywhere in the picture (no signs, no 
 
 ## Page 9
 
-> מה זה אומר? דמא לא רצה להרוויח יותר. הוא ביקש רק את הכסף שהפסיד בשנה שעברה, כשבחר לתת לאבא שלו לישון. כאילו אמר: ״מה שוויתרתי עליו בשביל אבא שלי – חזר אליי. וזה מספיק לי.״
+> מה זה אומר? דמא לא רצה להרוויח יותר. הוא ביקש רק את הכסף שוויתר עליו בשנה שעברה, כשבחר לתת לאבא שלו לישון. כאילו אמר: ״מה שוויתרתי עליו בשביל אבא שלי – חזר אליי. וזה מספיק לי.״
 
 ```text
 Illustration for page 9 of a children's picture book. Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy palette (stone beige, olive green, terracotta, deep blue), rounded friendly faces with expressive eyes, the Land of Israel and Babylon in the time of the Mishnah and Talmud (Roman era): stone houses with flat roofs, oil lamps, study halls with low benches and scrolls, markets, olive and carob trees. Jewish sages with beards, tunics and simple robes; women in modest long dresses and head coverings. Calm, warm, safe mood.

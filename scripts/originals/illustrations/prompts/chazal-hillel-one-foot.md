@@ -63,7 +63,7 @@ Rules: No text, letters, words or numbers anywhere in the picture (no signs, no 
 
 ## Page 3
 
-> קודם הלך האיש אל שמאי החכם. שמאי היה בנאי, ובדיוק החזיק ביד מקל מדידה. ״כל התורה על רגל אחת? אי אפשר!״ אמר שמאי, ושלח אותו משם.
+> קודם הלך האיש אל שמאי החכם. שמאי החזיק בידו ׳אמת הבניין׳, מקל מדידה ארוך של בנאים. ״כל התורה על רגל אחת? אי אפשר!״ אמר שמאי, ודחף אותו משם עם המקל.
 
 ```text
 Illustration for page 3 of a children's picture book. Children's picture-book illustration, soft watercolor and gouache with gentle pencil lines, warm golden light, earthy palette (stone beige, olive green, terracotta, deep blue), rounded friendly faces with expressive eyes, the Land of Israel and Babylon in the time of the Mishnah and Talmud (Roman era): stone houses with flat roofs, oil lamps, study halls with low benches and scrolls, markets, olive and carob trees. Jewish sages with beards, tunics and simple robes; women in modest long dresses and head coverings. Calm, warm, safe mood.

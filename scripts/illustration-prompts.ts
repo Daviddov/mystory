@@ -20,7 +20,7 @@ import { z } from "zod";
 const ROOT = path.join(process.cwd(), "scripts", "originals");
 const ART = path.join(ROOT, "illustrations");
 const OUT = path.join(ART, "prompts");
-const FOLDERS = ["parasha", "chazal"] as const;
+const FOLDERS = ["parasha", "chazal", "holidays"] as const;
 
 const StyleSchema = z.object({
   aspectRatio: z.string(),

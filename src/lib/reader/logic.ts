@@ -121,16 +121,27 @@ export function pageDisplayText(page: Pick<Page, "text" | "textNikud">, nikud: b
 }
 
 /**
- * The language a translated book was written in, when its source text was
- * kept: the reader can then switch between the translation and the original.
- * Null for a book that is not a translation or has no source text.
+ * The other language the reader can switch to: the book's second-language
+ * version (Book.translation), or else the language a translated book was
+ * written in, when its source text was kept. Null when there is neither.
  */
 export function switchableOriginalLanguage(
-  book: Pick<BookWithPages, "language" | "originalLanguage"> & { pages: Pick<Page, "originalText">[] },
+  book: Pick<BookWithPages, "language" | "originalLanguage" | "translation"> & {
+    pages: Pick<Page, "originalText" | "translation">[];
+  },
 ): BookLanguage | null {
+  const second = book.translation?.language;
+  if (second && second !== bookLanguage(book) && book.pages.some((page) => (page.translation?.text ?? "").trim() !== "")) {
+    return second;
+  }
   const original = book.originalLanguage;
   if (!original || original === bookLanguage(book)) return null;
   return book.pages.some((page) => (page.originalText ?? "").trim() !== "") ? original : null;
+}
+
+/** A page's text in the other language (see switchableOriginalLanguage), or "" when it has none. */
+export function otherLanguageText(page: Pick<Page, "originalText" | "translation">): string {
+  return (page.translation?.text ?? page.originalText ?? "").trim();
 }
 
 export interface TextLine {

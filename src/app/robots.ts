@@ -26,12 +26,19 @@ const PRIVATE_PATHS = [
  */
 const AI_SEARCH_BOTS = ["OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "Claude-SearchBot", "Claude-User"];
 
+/**
+ * Content Signals (contentsignals.org): appear in search and in AI answers that
+ * cite the page, but no use of the stories for model training. Repeated in
+ * every group, because a crawler reads only the group that matches it.
+ */
+const CONTENT_SIGNAL = { "Content-Signal": "search=yes, ai-input=yes, ai-train=no" };
+
 export default function robots(): MetadataRoute.Robots {
   const base = siteUrl();
   return {
     rules: [
-      { userAgent: "*", allow: "/", disallow: PRIVATE_PATHS },
-      { userAgent: AI_SEARCH_BOTS, allow: "/", disallow: PRIVATE_PATHS },
+      { userAgent: "*", allow: "/", disallow: PRIVATE_PATHS, other: CONTENT_SIGNAL },
+      { userAgent: AI_SEARCH_BOTS, allow: "/", disallow: PRIVATE_PATHS, other: CONTENT_SIGNAL },
     ],
     sitemap: `${base}/sitemap.xml`,
     host: base,

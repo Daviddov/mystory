@@ -32,7 +32,7 @@ import type { MediaStore } from "../media/types";
 import { putImage, prepareImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { Repository } from "../repo/types";
-import { SLUG_PATTERN, type AgeGroup, type BookCredits, type BookLanguage, type BookWithPages, type Page } from "../types";
+import { SLUG_PATTERN, textDirection, type AgeGroup, type BookCredits, type BookLanguage, type BookWithPages, type Page } from "../types";
 import type { FetchLike } from "./bookdash";
 import { getCcLicense } from "./cc";
 import { IMPORT_LIMITS } from "./limits";
@@ -49,7 +49,7 @@ export const STORYWEAVER = {
   /** The only host illustrations are downloaded from. */
   imageBase: "https://storage.googleapis.com/static.storyweaver.org.in/",
   /** Languages this site can hold, by their StoryWeaver name. */
-  languages: { Hebrew: "he", English: "en" } as Readonly<Record<string, BookLanguage>>,
+  languages: { Hebrew: "he", English: "en", Arabic: "ar" } as Readonly<Record<string, BookLanguage>>,
 } as const;
 
 const MAX_TEXT_BYTES = 4 * 1024 * 1024;
@@ -87,7 +87,7 @@ const USER_MESSAGES: Record<StoryWeaverErrorCode, string> = {
   "invalid-book": "הספר במאגר אינו במבנה הצפוי, ולכן לא יובא.",
   "no-text": "לספר הזה יש רק איורים, בלי טקסט, ולכן אי אפשר לייבא אותו.",
   license: "הרישיון של הספר (או של אחד האיורים) אינו מתיר עיבוד ותרגום, ולכן הוא לא יובא.",
-  language: "אפשר לייבא מ-StoryWeaver רק ספרים בעברית או באנגלית.",
+  language: "אפשר לייבא מ-StoryWeaver רק ספרים בעברית, באנגלית או בערבית.",
   media: "אחת התמונות של הספר חסרה, גדולה מדי או אינה תמונה תקינה.",
 };
 
@@ -128,7 +128,7 @@ function inlineText(html: string): string {
 }
 
 /**
- * Translators typing Hebrew in a left-to-right editor often put the full stop
+ * Translators typing Hebrew (or Arabic) in a left-to-right editor often put the full stop
  * where it LOOKED right, which stores it before the sentence (".זהו מלך שמן").
  * A single closing mark at the start of a line that has none at its end moves
  * to the end. An ellipsis ("...ואז") is left alone.
@@ -147,7 +147,7 @@ function pageText(html: string, language: BookLanguage): string {
     .split("\n")
     .map(inlineText)
     .filter((line) => line !== "");
-  return (language === "he" ? lines.map(fixLeadingPunctuation) : lines).join("\n");
+  return (textDirection(language) === "rtl" ? lines.map(fixLeadingPunctuation) : lines).join("\n");
 }
 
 /**
@@ -599,8 +599,9 @@ export async function importStoryWeaverBook(options: StoryWeaverImportOptions): 
       license: parsed.license,
       source: storyWeaverSourceUrl(slug),
       ageGroup: ageGroupForLevel(details.level),
-      // A story in English waits for translation; a Hebrew one is a finished translation or an original.
-      ...(language === "he" ? {} : { language, originalLanguage: language }),
+      // A story in English waits for translation; a Hebrew one is a finished translation or an original;
+      // an Arabic one is published in Arabic.
+      ...(language === "he" ? {} : language === "ar" ? { language } : { language, originalLanguage: language }),
       credits,
       coverImage,
       readingMinutes: estimateReadingMinutes(pages.map((page) => page.text)),

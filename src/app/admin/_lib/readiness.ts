@@ -8,7 +8,7 @@ import type { AgeGroup, BookStatus, BookWithPages } from "@/lib/types";
 
 /** Short labels of the publication checklist codes (see publishProblems). */
 const PROBLEM_LABELS: Record<string, string> = {
-  language: "לא בעברית",
+  language: "לא תורגם",
   translator: "חסר מתרגם",
   title: "חסר שם",
   summary: "חסר תקציר",

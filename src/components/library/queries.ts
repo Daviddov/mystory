@@ -9,12 +9,14 @@ import { groupBooksByOccasion } from "@/lib/occasions";
 import { getRepo } from "@/lib/repo";
 import type { BookFilter } from "@/lib/repo/types";
 import { CATEGORIES, listingIndexable, tagSlug, type TaxonomyItem } from "@/lib/taxonomy";
-import type { Book, Collection, User } from "@/lib/types";
+import { bookLanguage, type Book, type Collection, type User } from "@/lib/types";
 import { toBookFilter, totalPages, type LibraryQuery } from "./filters";
 import { rankSimilar } from "./recommend";
 import { normalizeSeason, sortCollectionsBySeason } from "./seasons";
 
 const PUBLISHED = "published" as const;
+/** The home page, shelves and tag lists are the Hebrew library; Arabic books have their own listing (lang=ar). */
+const HEBREW = "he" as const;
 const SHELF_SIZE = 12;
 
 export interface BookListing {
@@ -125,12 +127,13 @@ export async function getHomeData(): Promise<HomeData> {
   const now = new Date();
   const [settings, newest, popular, shelves, collections] = await Promise.all([
     repo.getSettings(),
-    repo.listBooks({ status: PUBLISHED, sort: "new", limit: SHELF_SIZE }),
-    repo.listBooks({ status: PUBLISHED, sort: "popular", limit: SHELF_SIZE }),
+    repo.listBooks({ status: PUBLISHED, language: HEBREW, sort: "new", limit: SHELF_SIZE }),
+    repo.listBooks({ status: PUBLISHED, language: HEBREW, sort: "popular", limit: SHELF_SIZE }),
     Promise.all(
       CATEGORIES.map(async (category): Promise<CategoryShelf> => {
         const result = await repo.listBooks({
           status: PUBLISHED,
+          language: HEBREW,
           category: category.slug,
           sort: "popular",
           limit: SHELF_SIZE,
@@ -167,7 +170,7 @@ export async function getHomeData(): Promise<HomeData> {
  */
 export async function getRecommendations(book: Book, limit: number = 6): Promise<Book[]> {
   const repo = await getRepo();
-  const common = { status: PUBLISHED, excludeIds: [book.id], sort: "popular" as const, limit: 40 };
+  const common = { status: PUBLISHED, language: bookLanguage(book), excludeIds: [book.id], sort: "popular" as const, limit: 40 };
   const lists = await Promise.all([
     repo.listBooks({ ...common, ageGroup: book.ageGroup }),
     ...book.categories.slice(0, 4).map((category) => repo.listBooks({ ...common, category })),
@@ -191,7 +194,7 @@ export interface TagCount {
  */
 export async function listTagCounts(limit: number = 24): Promise<TagCount[]> {
   const repo = await getRepo();
-  const { books } = await repo.listBooks({ status: PUBLISHED });
+  const { books } = await repo.listBooks({ status: PUBLISHED, language: HEBREW });
   const counts = new Map<string, TagCount>();
   for (const book of books) {
     for (const tag of book.tags) {
@@ -215,8 +218,8 @@ export async function listTagCounts(limit: number = 24): Promise<TagCount[]> {
 export async function listingRobots(base: BookFilter): Promise<Metadata["robots"]> {
   const repo = await getRepo();
   const [listing, library] = await Promise.all([
-    repo.listBooks({ ...base, status: PUBLISHED, limit: 1 }),
-    repo.listBooks({ status: PUBLISHED, limit: 1 }),
+    repo.listBooks({ language: HEBREW, ...base, status: PUBLISHED, limit: 1 }),
+    repo.listBooks({ status: PUBLISHED, language: HEBREW, limit: 1 }),
   ]);
   return listingIndexable(listing.total, library.total) ? undefined : { index: false, follow: true };
 }
@@ -224,7 +227,7 @@ export async function listingRobots(base: BookFilter): Promise<Metadata["robots"
 /** The most read published books. */
 export async function listPopularBooks(limit: number = SHELF_SIZE): Promise<Book[]> {
   const repo = await getRepo();
-  const { books } = await repo.listBooks({ status: PUBLISHED, sort: "popular", limit });
+  const { books } = await repo.listBooks({ status: PUBLISHED, language: HEBREW, sort: "popular", limit });
   return books;
 }
 

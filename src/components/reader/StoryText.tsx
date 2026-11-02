@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, type MouseEvent } from "react";
 import { cn } from "@/lib/cn";
 import { layoutWords } from "@/lib/reader/logic";
+import { textDirection, type BookLanguage } from "@/lib/types";
 
 export interface StoryTextProps {
   text: string;
@@ -12,7 +13,7 @@ export interface StoryTextProps {
   onWordTap?: (index: number) => void;
   className?: string;
   /** Language of the text. Default 'he'. An imported book that was not translated yet is left-to-right. */
-  lang?: "he" | "en";
+  lang?: BookLanguage;
 }
 
 /**
@@ -42,7 +43,7 @@ export function StoryText({ text, activeWord, onWordTap, className, lang = "he" 
     <div
       ref={rootRef}
       lang={lang}
-      dir={lang === "he" ? "rtl" : "ltr"}
+      dir={textDirection(lang)}
       onClick={handleClick}
       className={cn("story-text text-center text-foreground", className)}
     >

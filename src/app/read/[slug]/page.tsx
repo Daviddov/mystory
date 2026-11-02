@@ -6,11 +6,12 @@ import { ReaderPublishPanel } from "@/components/admin/ReaderPublishPanel";
 import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { BookPlayer } from "@/components/reader";
 import { loadBookForReader, loadServerProgress, recommendBooks } from "@/lib/reader/access";
-import { toPlayerBook } from "@/lib/reader/logic";
+import { switchableLanguages, toPlayerBook } from "@/lib/reader/logic";
 import { recordingsForReader } from "@/lib/recordings/service";
 import { hasRole } from "@/lib/auth";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
+import { BookLanguageSchema } from "@/lib/types";
 import { plainText } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -33,6 +34,8 @@ const QuerySchema = z.object({
   voice: z.string().regex(/^[A-Za-z0-9_-]{1,64}$/).optional().catch(undefined),
   /** "1" when opened from the book's card: ask how to start. */
   start: z.literal("1").optional().catch(undefined),
+  /** Open in this language when the book has it as its second language (a link from the Arabic shelf). */
+  lang: BookLanguageSchema.optional().catch(undefined),
 });
 
 function first(value: string | string[] | undefined): string | undefined {
@@ -46,6 +49,7 @@ function parseQuery(searchParams: SearchParams) {
     listen: first(searchParams.listen) || undefined,
     start: first(searchParams.start) || undefined,
     voice: first(searchParams.voice) || undefined,
+    lang: first(searchParams.lang) || undefined,
   });
 }
 
@@ -112,6 +116,7 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
       syncProgress={user !== null}
       recordings={recordings}
       initialVoice={query.voice}
+      startLanguage={query.lang && switchableLanguages(book).includes(query.lang) ? query.lang : undefined}
       recorder={{
         signedIn: user !== null,
         loginHref: routes.login(routes.read(book.slug)),

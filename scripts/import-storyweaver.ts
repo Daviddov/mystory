@@ -4,7 +4,7 @@
  *   npm run import:storyweaver -- --list                 show the catalogue and what is already imported
  *   npm run import:storyweaver -- <slug> [<slug> ...]    import these stories
  *   npm run import:storyweaver -- --all                  import every story of the catalogue
- *     --language <name> the StoryWeaver language of --list and --all: Hebrew (default) or English
+ *     --language <name> the StoryWeaver language of --list and --all: Hebrew (default), English or Arabic
  *     --limit <n>       at most n stories of the catalogue (English has many thousands)
  *     --owner <email>   the user who will own the drafts (created when missing).
  *                       Default: the library owner ("system"), whose books
@@ -13,6 +13,9 @@
  *                       its narration and edits
  *
  * A story that was imported before is skipped (found by its StoryWeaver id).
+ * --all also skips the stories in scripts/sources/storyweaver-excluded.json:
+ * books removed after a content review, which must not come back. Naming one
+ * explicitly still imports it.
  * Hebrew stories arrive in Hebrew; English ones stay in English until someone
  * translates them in the studio. A story whose license forbids adaptations is refused.
  *
@@ -20,6 +23,7 @@
  * local data directory (DATA_DIR or ./data). tsx does not read .env.local, so
  * export the variables in the shell first.
  */
+import fs from "node:fs";
 import path from "node:path";
 import { StoryWeaverClient, StoryWeaverError, STORYWEAVER, findStoryWeaverBook, importStoryWeaverBook } from "../src/lib/importers/storyweaver";
 import { LocalMediaStore } from "../src/lib/media/local";
@@ -34,7 +38,15 @@ function env(name: string): string | undefined {
 }
 
 const USAGE =
-  "usage: tsx scripts/import-storyweaver.ts <slug> [...] | --all | --list  [--language Hebrew|English] [--limit <n>] [--owner <email>] [--force]";
+  "usage: tsx scripts/import-storyweaver.ts <slug> [...] | --all | --list  [--language Hebrew|English|Arabic] [--limit <n>] [--owner <email>] [--force]";
+
+/** Book ids ("storyweaver-<id>") that a content review removed; --all leaves them out. */
+const EXCLUDED_FILE = path.join(__dirname, "sources", "storyweaver-excluded.json");
+
+function excludedIds(): Set<string> {
+  if (!fs.existsSync(EXCLUDED_FILE)) return new Set();
+  return new Set(Object.keys(JSON.parse(fs.readFileSync(EXCLUDED_FILE, "utf8")) as Record<string, unknown>));
+}
 
 /** Pause between stories, so a full import is gentle on StoryWeaver's servers. */
 const PAUSE_MS = 500;
@@ -114,7 +126,12 @@ async function main(): Promise<void> {
 
   const owner = await resolveOwner(repo, ownerEmail);
   console.log(`owner:   ${owner.label}`);
-  const targets = all ? (await client.catalogue(language, limit)).map((entry) => entry.slug) : slugs;
+  const excluded = excludedIds();
+  const catalogue = all ? (await client.catalogue(language, limit)).map((entry) => entry.slug) : [];
+  const targets = all ? catalogue.filter((slug) => !excluded.has(`storyweaver-${slug.split("-")[0]}`)) : slugs;
+  if (all && targets.length < catalogue.length) {
+    console.log(`excluded: ${catalogue.length - targets.length} removed after a content review (${path.relative(process.cwd(), EXCLUDED_FILE)})`);
+  }
 
   let failed = 0;
   let created = 0;

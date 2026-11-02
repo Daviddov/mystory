@@ -67,8 +67,8 @@ export const CcCreditSchema = z.object({
   attributionLine: z.string().trim().max(500).optional(),
   /** What was changed from the original, e.g. "Translation into Hebrew by ...". */
   adaptation: z.string().trim().max(500).optional(),
-  /** Language of the uploaded text. A book that is not in Hebrew stays a draft until it is translated. */
-  language: z.enum(["he", "en"]).optional(),
+  /** Language of the uploaded text. An English book stays a draft until it is translated; Arabic is published as it is. */
+  language: z.enum(["he", "en", "ar"]).optional(),
 });
 export type CcCredit = z.infer<typeof CcCreditSchema>;
 
@@ -83,8 +83,9 @@ export function ccBookCredits(credit: CcCredit): BookCredits | undefined {
   return Object.keys(credits).length > 0 ? credits : undefined;
 }
 
-/** Language fields of an imported book: an English text is marked as waiting for translation. */
+/** Language fields of an imported book: an English text is marked as waiting for translation, an Arabic one as Arabic. */
 export function ccBookLanguage(credit: CcCredit | undefined): { language?: BookLanguage; originalLanguage?: BookLanguage } {
   if (!credit?.language || credit.language === "he") return {};
+  if (credit.language === "ar") return { language: "ar" };
   return { language: credit.language, originalLanguage: credit.language };
 }

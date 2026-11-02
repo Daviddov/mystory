@@ -31,6 +31,10 @@ export interface ReaderSettingsProps {
   /** Starts the "listening before sleep" mode: dim theme, narration and a sleep timer. */
   onBedtimeListen: () => void;
   hasAudio: boolean;
+  /** The book has background music under its narration. */
+  hasSoundtrack?: boolean;
+  soundtrack?: boolean;
+  onSoundtrack?: (value: boolean) => void;
   rate: number;
   onRate: (rate: number) => void;
   autoAdvance: boolean;
@@ -57,6 +61,9 @@ export function ReaderSettings({
   onNikud,
   onBedtimeListen,
   hasAudio,
+  hasSoundtrack = false,
+  soundtrack = false,
+  onSoundtrack,
   rate,
   onRate,
   autoAdvance,
@@ -181,6 +188,17 @@ export function ReaderSettings({
                 />
                 <span>לעבור לעמוד הבא לבד בסוף ההקראה</span>
               </label>
+              {hasSoundtrack ? (
+                <label className="flex min-h-touch cursor-pointer items-center gap-3">
+                  <input
+                    type="checkbox"
+                    className="size-6 accent-[var(--secondary)]"
+                    checked={soundtrack}
+                    onChange={(event) => onSoundtrack?.(event.target.checked)}
+                  />
+                  <span>מוזיקת רקע מתחת להקראה</span>
+                </label>
+              ) : null}
             </div>
           ) : (
             <p className="text-muted">לספר הזה אין עדיין הקראה. אפשר לקרוא אותו יחד בקול.</p>

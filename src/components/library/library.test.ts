@@ -96,6 +96,12 @@ describe("toBookFilter", () => {
     expect(filter.category).toBe("animals");
     expect(filter.status).toBe("published");
   });
+
+  it("lists the Hebrew books unless lang=ar asks for the Arabic ones", () => {
+    expect(toBookFilter(parseLibraryQuery({})).language).toBe("he");
+    expect(toBookFilter(parseLibraryQuery({ lang: "ar" })).language).toBe("ar");
+    expect(toBookFilter(parseLibraryQuery({ lang: "en" })).language).toBe("he");
+  });
 });
 
 describe("links", () => {

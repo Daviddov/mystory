@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Frank_Ruhl_Libre, Fredoka, Rubik } from "next/font/google";
+import { Frank_Ruhl_Libre, Fredoka, Noto_Naskh_Arabic, Rubik } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import type { ReactNode } from "react";
@@ -31,6 +31,15 @@ const displayFont = Fredoka({
 const storyFont = Frank_Ruhl_Libre({
   subsets: ["hebrew", "latin"],
   variable: "--font-story-face",
+  display: "swap",
+  preload: false,
+});
+
+// Arabic books (text marked lang="ar"): a Naskh face whose vowel marks (harakat)
+// stay clear at reading sizes. Not preloaded: only Arabic pages use it.
+const arabicFont = Noto_Naskh_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-arabic-face",
   display: "swap",
   preload: false,
 });
@@ -76,7 +85,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="he"
       dir="rtl"
       data-theme="day"
-      className={`${uiFont.variable} ${displayFont.variable} ${storyFont.variable} h-full antialiased`}
+      className={`${uiFont.variable} ${displayFont.variable} ${storyFont.variable} ${arabicFont.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

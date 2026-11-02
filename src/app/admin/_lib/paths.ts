@@ -24,6 +24,7 @@ export const adminPaths = {
       sort?: string;
       audio?: string; nikud?: string;
       anim?: string;
+      lang?: string;
       page?: number;
     } = {},
   ) => withQuery(`${base}/books`, params),

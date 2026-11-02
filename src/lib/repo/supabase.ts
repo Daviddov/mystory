@@ -135,6 +135,7 @@ interface PageRow {
   audio_source: string | null;
   original_text?: string | null;
   translation?: unknown;
+  extra_translations?: unknown;
   image_alt?: string | null;
   video?: string | null;
   video_image_hash?: string | null;
@@ -175,6 +176,7 @@ interface BookRow {
   hero?: unknown;
   dedication?: string | null;
   translation?: unknown;
+  extra_translations?: unknown;
   pages?: PageRow[] | null;
 }
 
@@ -295,10 +297,11 @@ const BOOK_COLUMN_OF: Record<Exclude<keyof Book, "hasAudio">, string> = {
   hero: "hero",
   dedication: "dedication",
   translation: "translation",
+  extraTranslations: "extra_translations",
 };
 
 const BOOK_COLUMNS = Object.values(BOOK_COLUMN_OF).join(",");
-const PAGE_COLUMNS = "page_index,text,text_nikud,image,audio,word_timings,audio_source,original_text,image_alt,video,video_image_hash,video_source,translation";
+const PAGE_COLUMNS = "page_index,text,text_nikud,image,audio,word_timings,audio_source,original_text,image_alt,video,video_image_hash,video_source,translation,extra_translations";
 const BOOK_WITH_PAGES_COLUMNS = `${BOOK_COLUMNS},pages(${PAGE_COLUMNS})`;
 const COLLECTION_COLUMNS = "id,slug,title,description,book_ids,season";
 const PROFILE_COLUMNS = "id,name,email,role,created_at";
@@ -351,6 +354,7 @@ function pageFromRow(row: PageRow): Page {
     audioSource: row.audio_source,
     originalText: row.original_text,
     translation: row.translation,
+    extraTranslations: row.extra_translations,
     imageAlt: row.image_alt,
     video: row.video,
     videoImageHash: row.video_image_hash,
@@ -393,6 +397,7 @@ function bookObjectFromRow(row: BookRow): Record<string, unknown> {
     hero: row.hero,
     dedication: row.dedication,
     translation: row.translation,
+    extraTranslations: row.extra_translations,
   });
 }
 
@@ -656,6 +661,7 @@ export class SupabaseRepository implements Repository {
       if (filter.author !== undefined) query = query.eq("author", filter.author);
       if (filter.ownerId) query = query.eq("owner_id", filter.ownerId);
       if (filter.origin) query = query.eq("origin", filter.origin);
+      if (filter.language) query = query.contains("reading_languages", [filter.language]);
       switch (filter.timeBucket) {
         case "5":
           query = query.lte("reading_minutes", 5);

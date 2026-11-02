@@ -4,7 +4,16 @@
  */
 import { hasNikud, splitWords, timingWordsMatch } from "../hebrew";
 import { toPublicBookWithPages, type PublicBookWithPages } from "../public-book";
-import { bookLanguage, type AgeGroup, type BookLanguage, type BookWithPages, type Page, type WordTiming } from "../types";
+import {
+  bookLanguage,
+  bookVersions,
+  pageVersion,
+  type AgeGroup,
+  type BookLanguage,
+  type BookWithPages,
+  type Page,
+  type WordTiming,
+} from "../types";
 
 /** The book shape the player needs. Fields a reader must never see are left out (see ../public-book). */
 export type PlayerBook = PublicBookWithPages;
@@ -120,28 +129,35 @@ export function pageDisplayText(page: Pick<Page, "text" | "textNikud">, nikud: b
   return (nikud ? usableNikud(page) : null) ?? page.text;
 }
 
+type VersionBook = Pick<BookWithPages, "language" | "originalLanguage" | "translation" | "extraTranslations">;
+type VersionPage = Pick<Page, "originalText" | "translation" | "extraTranslations">;
+
 /**
- * The other language the reader can switch to: the book's second-language
- * version (Book.translation), or else the language a translated book was
- * written in, when its source text was kept. Null when there is neither.
+ * The other languages the reader can switch to, in order: the book's
+ * second-language versions (Book.translation, then Book.extraTranslations),
+ * then the language a translated book was written in, when its source text
+ * was kept. Empty when there is none.
  */
-export function switchableOriginalLanguage(
-  book: Pick<BookWithPages, "language" | "originalLanguage" | "translation"> & {
-    pages: Pick<Page, "originalText" | "translation">[];
-  },
-): BookLanguage | null {
-  const second = book.translation?.language;
-  if (second && second !== bookLanguage(book) && book.pages.some((page) => (page.translation?.text ?? "").trim() !== "")) {
-    return second;
+export function switchableLanguages(book: VersionBook & { pages: VersionPage[] }): BookLanguage[] {
+  const own = bookLanguage(book);
+  const languages: BookLanguage[] = [];
+  for (const version of bookVersions(book)) {
+    const language = version.language;
+    if (language === own || languages.includes(language)) continue;
+    if (book.pages.some((page) => (pageVersion(book, page, language)?.text ?? "").trim() !== "")) languages.push(language);
   }
   const original = book.originalLanguage;
-  if (!original || original === bookLanguage(book)) return null;
-  return book.pages.some((page) => (page.originalText ?? "").trim() !== "") ? original : null;
+  if (original && original !== own && !languages.includes(original) && book.pages.some((page) => (page.originalText ?? "").trim() !== "")) {
+    languages.push(original);
+  }
+  return languages;
 }
 
-/** A page's text in the other language (see switchableOriginalLanguage), or "" when it has none. */
-export function otherLanguageText(page: Pick<Page, "originalText" | "translation">): string {
-  return (page.translation?.text ?? page.originalText ?? "").trim();
+/** A page's text in one of the other languages (see switchableLanguages), or "" when it has none. */
+export function otherLanguageText(book: VersionBook, page: VersionPage, language: BookLanguage): string {
+  const version = pageVersion(book, page, language);
+  if (version) return version.text.trim();
+  return language === book.originalLanguage ? (page.originalText ?? "").trim() : "";
 }
 
 export interface TextLine {

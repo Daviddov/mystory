@@ -13,6 +13,7 @@ describe("hebrew helpers", () => {
     expect(hasNikud("שַׁבְּלוּל")).toBe(true);
     expect(hasNikud("שבלול")).toBe(false);
     expect(normalizeForSearch("  שָׁלוֹם,  עוֹלָם! ")).toBe("שלום עולם");
+    expect(normalizeForSearch("النَّحْلَةُ، والفِيلُ؟")).toBe("النحلة والفيل");
   });
 
   it("splits words and builds slugs", () => {

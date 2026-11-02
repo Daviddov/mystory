@@ -16,6 +16,7 @@ import {
   Timer,
   Type,
 } from "lucide-react";
+import Link from "next/link";
 import {
   useCallback,
   useEffect,
@@ -48,7 +49,7 @@ import {
   pageDisplayText,
   resolveStartPage,
   swipeToAction,
-  switchableOriginalLanguage,
+  switchableLanguages,
   usableTimings,
   type PlayerBook,
   type ReaderAction,
@@ -64,7 +65,7 @@ import {
 import { routes } from "@/lib/routes";
 import { applyTheme } from "@/lib/theme";
 import type { PublicBook } from "@/lib/public-book";
-import { bookLanguage, type BookLanguage } from "@/lib/types";
+import { bookLanguage, bookVersions, pageVersion, type BookLanguage } from "@/lib/types";
 import { EndScreen } from "./EndScreen";
 import { ReaderSettings } from "./ReaderSettings";
 import { StartScreen } from "./StartScreen";
@@ -75,6 +76,7 @@ import { useDeviceVoice } from "./useDeviceVoice";
 import { useEstimatedTimings } from "./useEstimatedTimings";
 import { useNarration } from "./useNarration";
 import { useSleepTimer } from "./useSleepTimer";
+import { SOUNDTRACK_LEVEL, useSoundtrack } from "./useSoundtrack";
 import { useWakeLock } from "./useWakeLock";
 import { VoicePicker } from "./VoicePicker";
 
@@ -124,6 +126,8 @@ export interface BookPlayerProps {
   recorder?: { signedIn: boolean; loginHref: string; canShare: boolean };
   /** Recording id to start with (a "listen" link from the shelf). */
   initialVoice?: string;
+  /** Open in one of the book's other languages (see switchableLanguages), e.g. Arabic from the Arabic shelf. */
+  startLanguage?: BookLanguage;
   /** Open on a cover screen that asks how to start: read, listen or download (books opened from their card). */
   startScreen?: boolean;
   /** The download control offered on the start screen. */
@@ -257,7 +261,7 @@ function usePageHidden(): boolean {
 }
 
 /** Short label of the language switch: the language it switches to. */
-const LANGUAGE_CODES: Record<BookLanguage, string> = { he: "עב", en: "EN" };
+const LANGUAGE_CODES: Record<BookLanguage, string> = { he: "עב", en: "EN", ar: "عر" };
 
 const subscribeNever = () => () => {};
 
@@ -335,6 +339,7 @@ function Player({
   recordings,
   recorder,
   initialVoice,
+  startLanguage,
   downloadControl,
   countView = false,
   endScreenStaffPanel,
@@ -374,7 +379,7 @@ function Player({
   const voiceAudio = (pageIndex: number): string => {
     if (!voice) {
       const page = book.pages[pageIndex];
-      const audio = inSecondVoice ? page?.translation?.audio : page?.audio;
+      const audio = inSecondVoice && originalLanguage ? (page && pageVersion(book, page, originalLanguage))?.audio : page?.audio;
       return audio ? mediaUrl(audio, book.updatedAt, shareToken) : "";
     }
     const take = voice.pages.find((page) => page.index === pageIndex);
@@ -411,7 +416,10 @@ function Player({
   );
 
   // ---- Settings -----------------------------------------------------------
-  const [prefs, setPrefs] = useState<ReaderPrefs>(() => (remember ? loadReaderPrefs() : {}));
+  const [prefs, setPrefs] = useState<ReaderPrefs>(() => ({
+    ...(remember ? loadReaderPrefs() : {}),
+    ...(startLanguage ? { original: true, secondLanguage: startLanguage } : {}),
+  }));
   const updatePrefs = (patch: ReaderPrefs) => {
     const next = { ...prefs, ...patch };
     setPrefs(next);
@@ -428,14 +436,19 @@ function Player({
   const nikudAvailable = useMemo(() => bookHasNikud(book), [book]);
   // Vocalized text is the default wherever a book has it.
   const nikudOn = nikudAvailable && (prefs.nikud ?? true);
-  // A translated book that kept its source text can be read in either language.
-  const originalLanguage = useMemo(() => switchableOriginalLanguage(book), [book]);
+  // A book with versions in other languages, or a translated book that kept its source text,
+  // can be read in any of them; `originalLanguage` is the other language currently chosen.
+  const otherLanguages = useMemo(() => switchableLanguages(book), [book]);
+  const originalLanguage: BookLanguage | null =
+    prefs.secondLanguage && otherLanguages.includes(prefs.secondLanguage) ? prefs.secondLanguage : (otherLanguages[0] ?? null);
   const showOriginal = originalLanguage !== null && (prefs.original ?? false);
   // A page without source text (added after the translation) stays in the book's language.
-  const originalText = showOriginal && current ? otherLanguageText(current) : "";
+  const originalText = showOriginal && current && originalLanguage ? otherLanguageText(book, current, originalLanguage) : "";
   const inOriginal = originalText !== "";
-  // A book with a second-language version reads that language in its own voice (or not at all, never in the other language).
-  const inSecondVoice = showOriginal && !!book.translation && voiceId === null;
+  // A second-language version reads in its own voice (or not at all, never in the other language).
+  const shownVersion = showOriginal && current && originalLanguage ? pageVersion(book, current, originalLanguage) : undefined;
+  const inSecondVoice =
+    showOriginal && !!originalLanguage && bookVersions(book).some((version) => version.language === originalLanguage) && voiceId === null;
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [notice, setNotice] = useState<ReactNode>(() =>
@@ -467,14 +480,14 @@ function Player({
   const storedTimings = useMemo(() => {
     if (!current) return null;
     if (inSecondVoice) {
-      const second = current.translation;
+      const second = shownVersion;
       return second?.audio ? usableTimings({ text: second.text, audio: second.audio, wordTimings: second.wordTimings }) : null;
     }
     if (inOriginal) return null;
     if (voiceId === null) return usableTimings(current);
     const take = voice?.pages.find((page) => page.index === index);
     return take ? usableTimings({ ...current, audio: take.audio, wordTimings: take.wordTimings }) : null;
-  }, [current, inOriginal, inSecondVoice, voiceId, voice, index]);
+  }, [current, shownVersion, inOriginal, inSecondVoice, voiceId, voice, index]);
   // A recording without timings (a family recording, an uploaded narration) gets an estimate
   // from its pauses. Not for the silent demo audio, which the device voice reads instead.
   const estimatedTimings = useEstimatedTimings({
@@ -484,7 +497,7 @@ function Player({
       !!current &&
       (!inOriginal || inSecondVoice) &&
       !storedTimings &&
-      !(voiceId === null && (inSecondVoice ? current.translation?.audioSource : current.audioSource) === "mock"),
+      !(voiceId === null && (inSecondVoice ? shownVersion?.audioSource : current.audioSource) === "mock"),
   });
   const timings = storedTimings ?? estimatedTimings;
   const isLastPage = index === pageCount - 1;
@@ -513,7 +526,22 @@ function Player({
     onPageEnded: handlePageEnded,
     speech,
   });
-  const { narrating, stop: stopNarration, audioRef, toggle: toggleNarration } = narration;
+  const { narrating, stop: stopNarration, audioRef } = narration;
+
+  // Background music under the narration; the sleep timer fades it out with the voice.
+  const hasSoundtrack = !!book.soundtrack;
+  const soundtrackOn = hasSoundtrack && (prefs.soundtrack ?? true);
+  const [sleepFade, setSleepFade] = useState(1);
+  const { audioRef: soundtrackRef, unlock: unlockSoundtrack } = useSoundtrack(
+    hasSoundtrack ? mediaUrl(book.soundtrack, book.updatedAt, shareToken) : "",
+    narrating && !atEnd && !recordMode,
+    soundtrackOn ? SOUNDTRACK_LEVEL * sleepFade : 0,
+  );
+  const { toggle: toggleVoice } = narration;
+  const toggleNarration = useCallback(() => {
+    if (!narrating) unlockSoundtrack();
+    toggleVoice();
+  }, [narrating, unlockSoundtrack, toggleVoice]);
 
   // Recording mode continues the own recording that is playing, or the latest own one.
   const enterRecordMode = () => {
@@ -571,7 +599,9 @@ function Player({
       const audio = audioRef.current;
       if (!audio) return;
       // Fade out over the last ten seconds instead of cutting off mid-word.
-      audio.volume = secondsLeft !== null && secondsLeft < 10 ? Math.max(0.05, secondsLeft / 10) : 1;
+      const fade = secondsLeft !== null && secondsLeft < 10 ? Math.max(0.05, secondsLeft / 10) : 1;
+      audio.volume = fade;
+      setSleepFade(fade);
     },
     [audioRef],
   );
@@ -711,7 +741,7 @@ function Player({
         jump(pageCount - 1);
         break;
       case "toggle-audio":
-        if (audioSrc) narration.toggle();
+        if (audioSrc) toggleNarration();
         else turn(1);
         break;
       case "fullscreen":
@@ -848,8 +878,12 @@ function Player({
   const tallPicture = showImage && showText && imageRatio !== null && imageRatio < 0.95;
   const text = current ? (inOriginal ? originalText : pageDisplayText(current, nikudOn)) : "";
   const textLanguage = inOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
-  const title = (showOriginal && (book.translation?.title || book.credits?.originalTitle)) || book.title;
-  const otherLanguage = showOriginal ? bookLanguage(book) : originalLanguage;
+  const shownTitle = originalLanguage ? bookVersions(book).find((version) => version.language === originalLanguage)?.title : undefined;
+  const title = (showOriginal && (shownTitle || book.credits?.originalTitle)) || book.title;
+  // The language button steps through the book's own language and every other one, in order.
+  const languageCycle = [bookLanguage(book), ...otherLanguages];
+  const shownLanguage = showOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
+  const otherLanguage = otherLanguages.length > 0 ? languageCycle[(languageCycle.indexOf(shownLanguage) + 1) % languageCycle.length] : null;
 
   // The play button and the voice picker; recording mode has its own panel instead.
   const audioControls = hasAnyAudio && !recordMode;
@@ -969,6 +1003,22 @@ function Player({
       {/* Top bar */}
       <header className="mystory-reader-header flex shrink-0 items-center gap-0.5 px-1 py-1.5 sm:gap-2 sm:px-4">
         {exitControl("icon")}
+        {/* The full-page reader hides the site header, so its logo leads home from here. */}
+        {isPage ? (
+          <Link
+            href={routes.home()}
+            aria-label="הסיפור שלי: לדף הבית"
+            title="לדף הבית"
+            className="group inline-flex size-touch shrink-0 items-center justify-center rounded-full"
+          >
+            <span
+              aria-hidden="true"
+              className="flex size-9 items-center justify-center rounded-2xl bg-primary-soft text-xl shadow-card transition-transform duration-300 group-hover:-rotate-6 sm:size-10 sm:text-2xl"
+            >
+              📖
+            </span>
+          </Link>
+        ) : null}
         <h1 dir="auto" className="min-w-0 flex-1 truncate px-1 text-start font-display text-base font-semibold sm:text-2xl">
           {title}
         </h1>
@@ -978,7 +1028,9 @@ function Player({
             type="button"
             aria-label={`להציג את הסיפור ב${LANGUAGE_NAMES_HE[otherLanguage]}`}
             title={`להציג את הסיפור ב${LANGUAGE_NAMES_HE[otherLanguage]}`}
-            onClick={() => updatePrefs({ original: !showOriginal })}
+            onClick={() =>
+              updatePrefs(otherLanguage === bookLanguage(book) ? { original: false } : { original: true, secondLanguage: otherLanguage })
+            }
             className="inline-flex min-h-touch shrink-0 items-center gap-1 rounded-full border-2 border-border-strong bg-surface px-2.5 text-base font-bold text-foreground transition-colors hover:bg-surface-2 sm:px-3"
           >
             <Languages aria-hidden="true" className="size-5" />
@@ -1273,7 +1325,7 @@ function Player({
                   aria-label={narrating ? "להשהות את ההקראה" : "להשמיע את הסיפור"}
                   title={audioSrc ? undefined : "לעמוד הזה אין הקראה"}
                   disabled={!audioSrc}
-                  onClick={narration.toggle}
+                  onClick={toggleNarration}
                   className={cn("mystory-reader-play size-16 shrink-0 rounded-full", narrating && "mystory-reader-playing")}
                 >
                   {narrating ? <Pause aria-hidden="true" className="size-8" /> : <Play aria-hidden="true" className="size-8" />}
@@ -1328,6 +1380,9 @@ function Player({
 
       {/* One audio element for the whole book; see useNarration. */}
       <audio ref={audioRef} src={audioSrc || undefined} preload="auto" {...narration.audioEvents} />
+      {hasSoundtrack ? (
+        <audio ref={soundtrackRef} src={mediaUrl(book.soundtrack, book.updatedAt, shareToken)} loop preload="none" />
+      ) : null}
 
       {/* Warm the cache for the next page. */}
       {upcoming?.image ? (
@@ -1401,6 +1456,9 @@ function Player({
         nikud={nikudOn}
         onNikud={(value) => updatePrefs({ nikud: value })}
         hasAudio={hasAnyAudio}
+        hasSoundtrack={hasSoundtrack && hasAnyAudio}
+        soundtrack={soundtrackOn}
+        onSoundtrack={(value) => updatePrefs({ soundtrack: value })}
         onBedtimeListen={() => {
           // The listening-before-sleep mode: dim theme, narration on, pages turning by themselves, a timer.
           applyTheme("bedtime");

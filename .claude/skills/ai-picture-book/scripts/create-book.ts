@@ -24,7 +24,8 @@ type Spec = {
   tags: string[];
   discussionQuestions: string[];
   source?: string;
-  pages: { text: string; alt: string }[];
+  // textNikud: an optional hand-checked vocalization; narration keeps it instead of asking Dicta.
+  pages: { text: string; alt: string; textNikud?: string }[];
 };
 
 // The account that owns the AI books made for the site.
@@ -69,6 +70,7 @@ async function main(): Promise<void> {
     pages: spec.pages.map((page, index) => ({
       index,
       text: page.text,
+      ...(page.textNikud ? { textNikud: page.textNikud } : {}),
       image: images.get(pageImageName(index)),
       imageAlt: page.alt,
     })),

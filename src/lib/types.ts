@@ -32,10 +32,26 @@ export const AUDIO_SOURCES = ["tts", "recorded", "mock"] as const;
 export const AudioSourceSchema = z.enum(AUDIO_SOURCES);
 export type AudioSource = z.infer<typeof AudioSourceSchema>;
 
-/** Languages a book's text can be in. Only 'he' books may enter the public library. */
-export const BOOK_LANGUAGES = ["he", "en"] as const;
+/** Languages a book's text can be in. Only LIBRARY_LANGUAGES may enter the public library. */
+export const BOOK_LANGUAGES = ["he", "en", "ar"] as const;
 export const BookLanguageSchema = z.enum(BOOK_LANGUAGES);
 export type BookLanguage = z.infer<typeof BookLanguageSchema>;
+
+/**
+ * Languages the public library publishes in: Hebrew, and Arabic books read as
+ * they are. Any other language (English) waits for a Hebrew translation.
+ */
+export const LIBRARY_LANGUAGES = ["he", "ar"] as const satisfies readonly BookLanguage[];
+export type LibraryLanguage = (typeof LIBRARY_LANGUAGES)[number];
+
+export function isLibraryLanguage(language: BookLanguage): language is LibraryLanguage {
+  return (LIBRARY_LANGUAGES as readonly BookLanguage[]).includes(language);
+}
+
+/** Writing direction of a language's text. */
+export function textDirection(language: BookLanguage): "rtl" | "ltr" {
+  return language === "en" ? "ltr" : "rtl";
+}
 
 /** Lowercase latin letters, digits and single dashes. Also used as a folder name. */
 export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -90,6 +106,8 @@ export const PageSchema = z.object({
   originalText: z.string().optional(),
   /** The page in the book's second language (Book.translation), with its own narration. */
   translation: PageTranslationSchema.optional(),
+  /** The page in each further language (Book.extraTranslations), by language. */
+  extraTranslations: z.partialRecord(BookLanguageSchema, PageTranslationSchema).optional(),
   /** Description of the illustration (alternative text), in the language it was written in. */
   imageAlt: z.string().max(1000).optional(),
   /**
@@ -176,6 +194,10 @@ export const BookTranslationSchema = z.object({
   language: BookLanguageSchema,
   title: z.string().min(1).max(200),
   summary: z.string().max(2000).optional(),
+  /** Who translated the text of this version, when it came from elsewhere (credited next to the book's own translator). */
+  translator: z.string().max(200).optional(),
+  /** Attribution the license of this version asks for, e.g. "Arabic text from StoryWeaver, CC BY 4.0: <url>". */
+  attributionLine: z.string().max(500).optional(),
 });
 export type BookTranslation = z.infer<typeof BookTranslationSchema>;
 
@@ -226,6 +248,8 @@ export const BookSchema = z.object({
   credits: BookCreditsSchema.optional(),
   /** A second language the book can also be read and heard in. */
   translation: BookTranslationSchema.optional(),
+  /** Further languages beyond `translation` (e.g. Arabic next to an English version); pages carry them in Page.extraTranslations. */
+  extraTranslations: z.array(BookTranslationSchema).optional(),
   hero: BookHeroSchema.optional(),
   /** A personal dedication shown on the start screen ("לנועם, באהבה, סבתא"). */
   dedication: z.string().max(200).optional(),
@@ -245,9 +269,60 @@ export function bookLanguage(book: Pick<Book, "language">): BookLanguage {
   return book.language ?? "he";
 }
 
-/** True for a book whose text is not Hebrew yet (an imported book waiting for translation). */
+/** The book's versions in other languages: Book.translation first, then Book.extraTranslations. */
+export function bookVersions(book: Pick<Book, "translation" | "extraTranslations">): BookTranslation[] {
+  return [...(book.translation ? [book.translation] : []), ...(book.extraTranslations ?? [])];
+}
+
+/** One page of the book's version in `language` (Page.translation or Page.extraTranslations), if there is one. */
+export function pageVersion(
+  book: Pick<Book, "translation">,
+  page: Pick<Page, "translation" | "extraTranslations">,
+  language: BookLanguage,
+): PageTranslation | undefined {
+  return book.translation?.language === language ? page.translation : page.extraTranslations?.[language];
+}
+
+/**
+ * The book's version fields with `version` added or replaced: it takes
+ * Book.translation when that is free or in the same language, else a place in
+ * Book.extraTranslations. Pass the result to updateBook.
+ */
+export function withBookVersion(
+  book: Pick<Book, "translation" | "extraTranslations">,
+  version: BookTranslation,
+): Pick<Book, "translation" | "extraTranslations"> {
+  if (!book.translation || book.translation.language === version.language) {
+    return { translation: version, extraTranslations: book.extraTranslations };
+  }
+  const others = (book.extraTranslations ?? []).filter((v) => v.language !== version.language);
+  return { translation: book.translation, extraTranslations: [...others, version] };
+}
+
+/**
+ * A page with its version in `language` set (or removed, for undefined), in the
+ * slot withBookVersion() gives that language: Page.translation when the book's
+ * Book.translation is (or will be) that language, else Page.extraTranslations.
+ */
+export function withPageVersion(
+  book: Pick<Book, "translation">,
+  page: Page,
+  language: BookLanguage,
+  version: PageTranslation | undefined,
+): Page {
+  if (!book.translation || book.translation.language === language) {
+    const { translation: _old, ...rest } = page;
+    return version ? { ...rest, translation: version } : rest;
+  }
+  const { [language]: _old, ...others } = page.extraTranslations ?? {};
+  const extra = version ? { ...others, [language]: version } : others;
+  const { extraTranslations: _all, ...rest } = page;
+  return Object.keys(extra).length > 0 ? { ...rest, extraTranslations: extra } : rest;
+}
+
+/** True for a book whose text is not in a library language yet (an imported book waiting for translation). */
 export function needsTranslation(book: Pick<Book, "language">): boolean {
-  return bookLanguage(book) !== "he";
+  return !isLibraryLanguage(bookLanguage(book));
 }
 
 export const BookWithPagesSchema = BookSchema.extend({

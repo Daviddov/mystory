@@ -164,6 +164,7 @@ export async function BrowseView({
               cardProps={(book) => ({
                 showTags: true,
                 hideTag: base.tag,
+                ...(shown.lang ? { language: shown.lang } : {}),
                 ...(isNewBook(book, listing.now) ? { badge: "חדש" } : {}),
               })}
               empty={

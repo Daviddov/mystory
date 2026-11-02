@@ -2,6 +2,7 @@
 
 import { Field, Input, Select } from "@/components/ui";
 import { CC_LICENSES, getCcLicense } from "@/lib/importers/cc";
+import { BookLanguageSchema, type BookLanguage } from "@/lib/types";
 
 export interface CreditValues {
   license: string;
@@ -17,7 +18,7 @@ export interface CreditValues {
   attributionLine: string;
   adaptation: string;
   /** Language of the text being uploaded. */
-  language: "he" | "en";
+  language: BookLanguage;
 }
 
 export const EMPTY_CREDIT: CreditValues = {
@@ -85,7 +86,7 @@ export interface CreditFieldsProps {
  */
 export function CreditFields({ value, onChange, errors = {}, disabled }: CreditFieldsProps) {
   const set = (key: keyof CreditValues, next: string) => onChange({ ...value, [key]: next });
-  const untranslated = value.language !== "he";
+  const untranslated = value.language === "en";
   const license = getCcLicense(value.license);
 
   return (
@@ -179,16 +180,17 @@ export function CreditFields({ value, onChange, errors = {}, disabled }: CreditF
       <Field
         label="שפת הטקסט שמעלים"
         htmlFor="cc-language"
-        hint="ספר שאינו בעברית נשמר כטיוטה, ומתרגמים אותו בעורך לפני שאפשר לפרסם."
+        hint="ספר באנגלית נשמר כטיוטה, ומתרגמים אותו בעורך לפני שאפשר לפרסם. ספר בערבית מתפרסם בערבית."
       >
         <Select
           id="cc-language"
           value={value.language}
           disabled={disabled}
-          onChange={(event) => onChange({ ...value, language: event.target.value === "en" ? "en" : "he" })}
+          onChange={(event) => onChange({ ...value, language: BookLanguageSchema.catch("he").parse(event.target.value) })}
         >
           <option value="he">עברית</option>
           <option value="en">אנגלית (יתורגם בעורך)</option>
+          <option value="ar">ערבית</option>
         </Select>
       </Field>
       {untranslated && license && !license.allowsAdaptation ? (

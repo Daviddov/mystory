@@ -35,6 +35,8 @@ import {
   RecordingSchema,
   SiteSettingsSchema,
   SLUG_PATTERN,
+  bookLanguage,
+  bookVersions,
   UserSchema,
   type Book,
   type BookWithPages,
@@ -297,6 +299,9 @@ export class LocalRepository implements Repository {
       if (filter.theme && !b.themes.includes(filter.theme)) return false;
       if (filter.ownerId && b.ownerId !== filter.ownerId) return false;
       if (filter.origin && b.origin !== filter.origin) return false;
+      if (filter.language && bookLanguage(b) !== filter.language && !bookVersions(b).some((version) => version.language === filter.language)) {
+        return false;
+      }
       if (filter.timeBucket && readingTimeBucket(b.readingMinutes) !== filter.timeBucket) return false;
       if (filter.author !== undefined && b.author !== filter.author) return false;
       if (filter.hasAudio && !b.pages.some((p) => p.audio)) return false;

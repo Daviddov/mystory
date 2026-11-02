@@ -1,15 +1,17 @@
 import { describe, expect, it } from "vitest";
-import type { BookWithPages, WordTiming } from "../types";
+import { pageVersion, withBookVersion, withPageVersion, type BookWithPages, type WordTiming } from "../types";
 import {
   activeWordIndex,
   bookHasNikud,
   formatCountdown,
   keyToAction,
   layoutWords,
+  otherLanguageText,
   pageDisplayText,
   progressPercent,
   resolveStartPage,
   swipeToAction,
+  switchableLanguages,
   toPlayerBook,
   usableNikud,
   usableTimings,
@@ -172,5 +174,59 @@ describe("helpers", () => {
     expect(stripped.reviewNote).toBeUndefined();
     expect(stripped.costUsd).toBeUndefined();
     expect(stripped.title).toBe("ספר");
+  });
+});
+
+describe("books in several languages", () => {
+  const base = { language: "he" as const, originalLanguage: "en" as const };
+  const he = { index: 0, text: "שלום", originalText: "Hello" };
+
+  it("lists the second-language versions, then the kept original language", () => {
+    const book = {
+      ...base,
+      translation: { language: "en" as const, title: "Hi" },
+      extraTranslations: [{ language: "ar" as const, title: "مرحبا" }],
+      pages: [{ ...he, translation: { text: "Hello!" }, extraTranslations: { ar: { text: "مرحبا" } } }],
+    };
+    expect(switchableLanguages(book)).toEqual(["en", "ar"]);
+    expect(otherLanguageText(book, book.pages[0], "ar")).toBe("مرحبا");
+    expect(otherLanguageText(book, book.pages[0], "en")).toBe("Hello!");
+  });
+
+  it("offers the original language next to an extra version", () => {
+    const book = {
+      ...base,
+      extraTranslations: [{ language: "ar" as const, title: "مرحبا" }],
+      pages: [{ ...he, extraTranslations: { ar: { text: "مرحبا" } } }],
+    };
+    expect(switchableLanguages(book)).toEqual(["ar", "en"]);
+    expect(otherLanguageText(book, book.pages[0], "en")).toBe("Hello");
+  });
+
+  it("leaves out a version without any page text", () => {
+    const book = { ...base, originalLanguage: undefined, translation: { language: "ar" as const, title: "x" }, pages: [{ index: 0, text: "שלום", translation: { text: " " } }] };
+    expect(switchableLanguages(book)).toEqual([]);
+  });
+});
+
+describe("version slots", () => {
+  const page = { index: 0, text: "שלום" };
+
+  it("puts the first other language in translation and the next ones in extraTranslations", () => {
+    const first = withBookVersion({}, { language: "en", title: "Hi" });
+    expect(first).toEqual({ translation: { language: "en", title: "Hi" }, extraTranslations: undefined });
+    const second = withBookVersion(first, { language: "ar", title: "مرحبا" });
+    expect(second.translation?.language).toBe("en");
+    expect(second.extraTranslations).toEqual([{ language: "ar", title: "مرحبا" }]);
+    expect(withBookVersion(second, { language: "ar", title: "أهلا" }).extraTranslations).toEqual([{ language: "ar", title: "أهلا" }]);
+  });
+
+  it("writes and removes a page's version in the same slot", () => {
+    const book = { translation: { language: "en" as const, title: "Hi" } };
+    const withAr = withPageVersion(book, page, "ar", { text: "مرحبا" });
+    expect(withAr.extraTranslations).toEqual({ ar: { text: "مرحبا" } });
+    expect(pageVersion(book, withAr, "ar")?.text).toBe("مرحبا");
+    expect(withPageVersion(book, withAr, "ar", undefined)).toEqual(page);
+    expect(withPageVersion(book, page, "en", { text: "Hello" }).translation).toEqual({ text: "Hello" });
   });
 });

@@ -3,6 +3,7 @@
  * or blocked storage and corrupt values, so the reader works in private mode.
  */
 import { z } from "zod";
+import { BookLanguageSchema } from "../types";
 import { FONT_SIZES_REM, PLAYBACK_RATES, type StoredProgress } from "./logic";
 
 const PROGRESS_PREFIX = "mystory:progress:";
@@ -25,6 +26,8 @@ const ReaderPrefsSchema = z.object({
   nikud: z.boolean().optional(),
   /** Show a translated book in the language it was written in. */
   original: z.boolean().optional(),
+  /** Which other language `original` shows, when a book has several (see switchableLanguages). */
+  secondLanguage: BookLanguageSchema.optional(),
   rate: z
     .number()
     // Speeds saved before the rates changed (0.75, 1.25) still load, then show no chip selected.
@@ -39,6 +42,8 @@ const ReaderPrefsSchema = z.object({
    * reduced-motion setting turns it off regardless.
    */
   liveImages: z.boolean().optional(),
+  /** Background music under the narration, in books that have it. Missing = on. */
+  soundtrack: z.boolean().optional(),
 });
 export type ReaderPrefs = z.infer<typeof ReaderPrefsSchema>;
 export type TextLayout = NonNullable<ReaderPrefs["textLayout"]>;

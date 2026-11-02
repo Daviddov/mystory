@@ -24,6 +24,7 @@ import {
   type SiteSettings,
   type User,
   type UserRole,
+  needsTranslation,
 } from "@/lib/types";
 import type { CollectionCreateInput, CollectionUpdateInput, ReviewInput } from "./schemas";
 
@@ -55,7 +56,7 @@ export function missingPublishCredits(
 ): string[] {
   const missing: string[] = [];
   const hebrew = (book.language ?? "he") === "he";
-  if (!hebrew) missing.push("הספר עדיין לא בעברית, והספרייה הציבורית מיועדת לספרים בעברית.");
+  if (needsTranslation(book)) missing.push("הספר עדיין לא בעברית, והספרייה הציבורית מיועדת לספרים בעברית ובערבית.");
   const translated = hebrew && !!book.originalLanguage && book.originalLanguage !== "he";
   if (translated && !book.credits?.translator?.trim()) missing.push("חסר שם המתרגם או המתרגמת.");
   if (!book.license.trim()) missing.push("חסר רישיון.");

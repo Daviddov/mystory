@@ -4,14 +4,35 @@
     {
       "name": "mystory",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
     },
     {
       "name": "mystory-prod",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start", "--", "-p", "3005"],
+      "runtimeArgs": [
+        "run",
+        "start",
+        "--",
+        "-p",
+        "3005"
+      ],
       "port": 3005
+    },
+    {
+      "name": "mystory-alt",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--",
+        "-p",
+        "3011"
+      ],
+      "port": 3011
     }
   ]
 }

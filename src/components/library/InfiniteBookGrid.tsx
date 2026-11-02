@@ -155,6 +155,7 @@ export function InfiniteBookGrid({
               priority={index < 6}
               showTags={showTags}
               hideTag={hideTag}
+              {...(params.lang === "ar" ? { language: "ar" as const } : {})}
               {...(item.isNew ? { badge: "חדש" } : {})}
               {...(item.read ? { read: true } : {})}
             />

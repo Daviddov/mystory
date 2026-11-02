@@ -32,7 +32,7 @@ const MAX_BOOKS = 150;
 
 async function loadNarratedBooks(): Promise<BookWithPages[]> {
   const repo = await getRepo();
-  const { books } = await repo.listBooks({ status: "published", sort: "popular", limit: MAX_BOOKS });
+  const { books } = await repo.listBooks({ status: "published", language: "he", sort: "popular", limit: MAX_BOOKS });
   const full = await Promise.all(books.map((book) => repo.getBookById(book.id)));
   return full.filter((book): book is BookWithPages => book !== null);
 }

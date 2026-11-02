@@ -5,7 +5,7 @@ import { z } from "zod";
 import { canEditBook, canViewBook, getCurrentUser } from "../auth";
 import { toPublicBook, type PublicBook } from "../public-book";
 import { getRepo } from "../repo";
-import { SlugSchema, type Book, type BookWithPages, type User } from "../types";
+import { bookLanguage, SlugSchema, type Book, type BookWithPages, type User } from "../types";
 import type { StoredProgress } from "./logic";
 
 const TokenSchema = z.string().min(1).max(128);
@@ -62,6 +62,7 @@ export async function recommendBooks(book: Book, limit = 4): Promise<PublicBook[
   try {
     const repo = await getRepo();
     const sameAge = await repo.listBooks({
+      language: bookLanguage(book),
       ageGroup: book.ageGroup,
       excludeIds: [book.id],
       sort: "popular",
@@ -74,6 +75,7 @@ export async function recommendBooks(book: Book, limit = 4): Promise<PublicBook[
     const ranked = [...sameAge.books].sort((a, b) => overlap(b) - overlap(a)).slice(0, limit);
     if (ranked.length >= limit) return ranked.map(toPublicBook);
     const more = await repo.listBooks({
+      language: bookLanguage(book),
       excludeIds: [book.id, ...ranked.map((entry) => entry.id)],
       sort: "popular",
       limit: limit - ranked.length,

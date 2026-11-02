@@ -11,11 +11,15 @@ export function hasNikud(text: string): boolean {
   return /[ְ-ׇּׁׂ]/.test(text);
 }
 
-/** Lowercase, strip nikud and punctuation, collapse whitespace. For free-text search. */
+/** Arabic vowel marks (harakat U+064B-U+065F, dagger alef U+0670) and the tatweel stretch (U+0640). */
+const ARABIC_MARKS_RE = /[ً-ٰٟـ]/g;
+
+/** Lowercase, strip nikud, Arabic harakat and punctuation, collapse whitespace. For free-text search. */
 export function normalizeForSearch(text: string): string {
   return stripNikud(text)
+    .replace(ARABIC_MARKS_RE, "")
     .toLowerCase()
-    .replace(/[־\-_.,;:!?"'`׳״()[\]{}…–—]/g, " ")
+    .replace(/[־\-_.,;:!?"'`׳״()[\]{}…–—،؛؟]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }

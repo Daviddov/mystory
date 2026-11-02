@@ -1,6 +1,8 @@
 /**
- * Adds a second-language version to a book (Book.translation / Page.translation)
- * and narrates it, in the local data directory (default ./data).
+ * Adds a version in another language to a book and narrates it, in the local
+ * data directory (default ./data). The first other language goes into
+ * Book.translation / Page.translation, further ones into Book.extraTranslations /
+ * Page.extraTranslations (see withBookVersion in src/lib/types.ts).
  *
  *   npx tsx scripts/add-translation.ts <file.json> [--slug <slug>] [--narrate] [--force]
  *     --slug      the book; default the file name up to the first dot
@@ -36,7 +38,15 @@ import { bookMediaPath, extensionForContentType } from "../src/lib/media/url";
 import { isAllowedNarrationVoice } from "../src/lib/narration/voices";
 import { detectSpeech, estimateWordTimings } from "../src/lib/reader/estimate-timings";
 import { LocalRepository } from "../src/lib/repo/local";
-import { BookLanguageSchema, type Page, type PageTranslation } from "../src/lib/types";
+import {
+  BookLanguageSchema,
+  pageVersion,
+  withBookVersion,
+  withPageVersion,
+  type BookLanguage,
+  type Page,
+  type PageTranslation,
+} from "../src/lib/types";
 
 const TranslationFileSchema = z.object({
   language: BookLanguageSchema,
@@ -112,22 +122,26 @@ async function main(): Promise<void> {
   const dropped: string[] = [];
   await withBookLock(book.id, async () => {
     const fresh = (await repo.getBookById(book.id)) ?? book;
+    const old = fresh.translation?.language === input.language ? fresh.translation : fresh.extraTranslations?.find((v) => v.language === input.language);
+    const versions = withBookVersion(fresh, {
+      ...old,
+      language: input.language,
+      title: input.title,
+      ...(input.summary ? { summary: input.summary } : {}),
+    });
     const pages: Page[] = fresh.pages.map((page, i) => {
       const text = cleanText(input.pages[i]);
-      const old = page.translation;
+      const before = pageVersion(versions, page, input.language);
       if (!text) {
-        if (old?.audio) dropped.push(old.audio);
-        const { translation: _translation, ...rest } = page;
-        return rest;
+        if (before?.audio) dropped.push(before.audio);
+        return withPageVersion(versions, page, input.language, undefined);
       }
-      if (old && old.text === text) return page;
-      if (old?.audio) dropped.push(old.audio);
-      return { ...page, translation: { text } };
+      if (before && before.text === text) return page;
+      if (before?.audio) dropped.push(before.audio);
+      return withPageVersion(versions, page, input.language, { text });
     });
     await repo.replacePages(book.id, pages);
-    await repo.updateBook(book.id, {
-      translation: { language: input.language, title: input.title, ...(input.summary ? { summary: input.summary } : {}) },
-    });
+    await repo.updateBook(book.id, versions);
   });
   for (const audio of dropped) await media.delete(audio).catch(() => undefined);
   console.log(`${slug}: ${input.language} text stored (${dropped.length} old narration file(s) dropped)`);
@@ -152,8 +166,9 @@ async function main(): Promise<void> {
   console.log(`tts:   ${tts.name}${tts.isMock ? ' (mock: SILENT demo audio, stored as audioSource "mock")' : ""}${voice ? `, voice ${voice}` : ""}, style ${style}`);
   let failed = 0;
   for (let i = 0; i < book.pages.length; i++) {
-    const current = (await repo.getBookById(book.id))?.pages[i];
-    const translation = current?.translation;
+    const latest = await repo.getBookById(book.id);
+    const current = latest?.pages[i];
+    const translation = latest && current ? pageVersion(latest, current, input.language) : undefined;
     if (!translation?.text) continue;
     if (translation.audio && !force && !(translation.audioSource === "mock" && !tts.isMock)) {
       console.log(`  page ${i + 1}: kept`);
@@ -177,8 +192,13 @@ async function main(): Promise<void> {
       };
       await withBookLock(book.id, async () => {
         const fresh = await repo.getBookById(book.id);
-        if (!fresh || fresh.pages[i]?.translation?.text !== translation.text) throw new Error("the page changed meanwhile");
-        await repo.replacePages(book.id, fresh.pages.map((page, p) => (p === i ? { ...page, translation: next } : page)));
+        if (!fresh || pageVersion(fresh, fresh.pages[i], input.language)?.text !== translation.text) {
+          throw new Error("the page changed meanwhile");
+        }
+        await repo.replacePages(
+          book.id,
+          fresh.pages.map((page, p) => (p === i ? withPageVersion(fresh, page, input.language, next) : page)),
+        );
       });
       if (translation.audio && translation.audio !== audioPath) await media.delete(translation.audio).catch(() => undefined);
       console.log(`  page ${i + 1}: ${audioPath} (${speech.durationSeconds.toFixed(1)}s)`);
@@ -199,7 +219,7 @@ async function attachAudio(
   media: LocalMediaStore,
   bookId: string,
   slug: string,
-  language: string,
+  language: BookLanguage,
   dir: string,
 ): Promise<void> {
   const RATE = 16000;
@@ -209,7 +229,7 @@ async function attachAudio(
   for (const page of book.pages) {
     const n = String(page.index + 1).padStart(2, "0");
     const wav = path.join(dir, `${slug}-p${n}.wav`);
-    const text = page.translation?.text;
+    const text = pageVersion(book, page, language)?.text;
     if (!text || !existsSync(wav)) continue;
     const mp3 = execFileSync("ffmpeg", ["-v", "error", "-i", wav, "-codec:a", "libmp3lame", "-b:a", "96k", "-f", "mp3", "-"], {
       maxBuffer: 1 << 28,
@@ -232,9 +252,10 @@ async function attachAudio(
     if (!fresh) throw new Error(`book ${bookId} disappeared`);
     const pages = fresh.pages.map((page) => {
       const next = attached.get(page.index);
-      if (!next || page.translation?.text !== next.text) return page;
-      if (page.translation.audio && page.translation.audio !== next.audio) old.push(page.translation.audio);
-      return { ...page, translation: next };
+      const before = pageVersion(fresh, page, language);
+      if (!next || before?.text !== next.text) return page;
+      if (before.audio && before.audio !== next.audio) old.push(before.audio);
+      return withPageVersion(fresh, page, language, next);
     });
     await repo.replacePages(bookId, pages);
   });

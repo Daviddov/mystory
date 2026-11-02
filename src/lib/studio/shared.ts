@@ -9,6 +9,7 @@ import { CATEGORY_SLUGS, THEME_SLUGS } from "../taxonomy";
 import {
   AgeGroupSchema,
   AudioSourceSchema,
+  needsTranslation,
   WordTimingSchema,
   type BookStatus,
   type BookWithPages,
@@ -307,14 +308,14 @@ type PublishCheckBook = Pick<
   "title" | "summary" | "license" | "author" | "categories" | "pages" | "language" | "originalLanguage" | "credits"
 >;
 
-/** Shown wherever an untranslated book is refused: the public library is Hebrew only. */
+/** Shown wherever an untranslated book is refused: the public library is in Hebrew (and Arabic) only. */
 export const NOT_HEBREW_MESSAGE =
-  "הספר עדיין לא בעברית. הספרייה הציבורית היא בעברית בלבד: תרגמו את הספר ואשרו את התרגום לפני ההגשה.";
+  "הספר עדיין לא בעברית. הספרייה הציבורית היא בעברית ובערבית בלבד: תרגמו את הספר ואשרו את התרגום לפני ההגשה.";
 
 /** Everything that must be fixed before a book can be submitted for publication. Empty when it is ready. */
 export function publishProblems(book: PublishCheckBook): PublishProblem[] {
   const problems: PublishProblem[] = [];
-  if ((book.language ?? "he") !== "he") problems.push({ code: "language", message: NOT_HEBREW_MESSAGE });
+  if (needsTranslation(book)) problems.push({ code: "language", message: NOT_HEBREW_MESSAGE });
   else if (book.originalLanguage && book.originalLanguage !== "he" && !book.credits?.translator?.trim()) {
     // A published adaptation must say who made it (required by the Creative Commons licenses).
     problems.push({ code: "translator", message: "חסר שם המתרגם או המתרגמת (בלשונית פרטי הספר)" });

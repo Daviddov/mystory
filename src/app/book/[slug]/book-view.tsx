@@ -37,7 +37,7 @@ import {
   readingTimeBucket,
   readingTimeLabel,
 } from "@/lib/taxonomy";
-import { bookAgeGroups, bookLanguage, SLUG_PATTERN, type BookStatus, type BookWithPages, type User } from "@/lib/types";
+import { bookAgeGroups, bookLanguage, needsTranslation, SLUG_PATTERN, type BookStatus, type BookWithPages, type User } from "@/lib/types";
 
 /**
  * The book page, shared by two routes:
@@ -107,7 +107,7 @@ export async function bookMetadata(slug: string, viewer: User | null): Promise<M
       title,
       description,
       type: "book",
-      locale: "he_IL",
+      locale: bookLanguage(book) === "ar" ? "ar_AR" : "he_IL",
       siteName: "הסיפור שלי",
       url: routes.book(book.slug),
       authors: book.author ? [book.author] : undefined,
@@ -173,7 +173,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
           "@id": `${absoluteUrl(bookPath)}#book`,
           name: plainText(book.title),
           description: plainText(book.summary) || undefined,
-          inLanguage: "he",
+          inLanguage: language,
           url: absoluteUrl(bookPath),
           image: absoluteUrl(cover),
           author: book.author ? { "@type": "Person", name: book.author } : undefined,
@@ -208,7 +208,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
         </p>
       ) : null}
 
-      {language !== "he" ? (
+      {needsTranslation(book) ? (
         <p role="note" className="rounded-md bg-warning-soft px-4 py-3 text-base">
           הספר הזה עדיין ב{LANGUAGE_NAMES_HE[language]} ולא תורגם לעברית. הוא לא יכול להתפרסם בספרייה עד שיתורגם.
         </p>
@@ -237,7 +237,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
 
         <div className="flex flex-col gap-6">
           <PageHeading
-            title={book.title}
+            title={language === "he" ? book.title : <span lang={language}>{book.title}</span>}
             structuredData={book.status === "published"}
             crumbs={[
               { label: "כל הספרים", href: routes.books() },
@@ -283,7 +283,11 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
             </ul>
           </PageHeading>
 
-          {book.summary ? <p className="max-w-2xl text-xl leading-relaxed">{book.summary}</p> : null}
+          {book.summary ? (
+            <p lang={language} className="max-w-2xl text-xl leading-relaxed">
+              {book.summary}
+            </p>
+          ) : null}
 
           <div className="flex flex-col gap-3">
             {hasPages ? (

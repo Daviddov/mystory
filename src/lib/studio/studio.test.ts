@@ -141,6 +141,19 @@ describe("shared helpers", () => {
     }).map((p) => p.code);
     expect(codes).toEqual(["summary", "author", "license", "categories", "blank-page", "no-text"]);
   });
+
+  it("publishProblems lets an Arabic book in and keeps an English one out", () => {
+    const book = {
+      title: "النحلة والفيل",
+      summary: "قصة",
+      license: "CC BY 4.0",
+      author: "Dana Thabet",
+      categories: ["animals"],
+      pages: [{ index: 0, text: "كَانَتِ النَّحْلَةُ صَغِيرَةً" }],
+    };
+    expect(publishProblems({ ...book, language: "ar" }).map((p) => p.code)).toEqual([]);
+    expect(publishProblems({ ...book, language: "en", originalLanguage: "en" }).map((p) => p.code)).toContain("language");
+  });
 });
 
 describe("studio service", () => {

@@ -23,7 +23,7 @@ import { countWords, hasNikud, splitWords } from "../hebrew";
 import type { MediaStore } from "../media/types";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import { NotFoundError, type Repository } from "../repo/types";
-import type { BookWithPages, Page, WordTiming } from "../types";
+import { bookLanguage, type BookWithPages, type Page, type WordTiming } from "../types";
 import { timingsMatchText } from "./align";
 import { isAllowedNarrationVoice } from "./voices";
 import type {
@@ -123,13 +123,14 @@ async function narrateLoadedPage(
   }
 
   // 1. Nikud. Keep a usable existing vocalization; otherwise ask the provider.
+  // Only Hebrew gets nikud: an Arabic text keeps the harakat it was written with.
   let textNikud: string | undefined =
     page.textNikud && countWords(page.textNikud) === base.wordCount ? page.textNikud : undefined;
   let nikudAdded = false;
   if (page.textNikud && !textNikud) {
     base.warnings.push("the stored textNikud has a different word count than the text and was ignored");
   }
-  if (!textNikud && !deps.nikud.isMock) {
+  if (!textNikud && !deps.nikud.isMock && bookLanguage(book) === "he") {
     const vocalized = await deps.nikud.addNikud(page.text);
     if (vocalized.isMock || !hasNikud(vocalized.text)) {
       base.warnings.push("the nikud provider returned text without nikud");

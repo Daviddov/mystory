@@ -260,6 +260,15 @@
     text-wrap: pretty;
   }
 
+  /* Arabic book text (titles, summaries, pages; marked lang="ar"): a Naskh face, with room for the harakat. */
+  :lang(ar) {
+    font-family: var(--font-arabic-face), "Noto Naskh Arabic", "Arial", sans-serif;
+  }
+  .story-text:lang(ar) {
+    line-height: 2.2;
+    letter-spacing: 0;
+  }
+
   /* The word currently being narrated (reader). */
   .word-highlight {
     background: var(--highlight);

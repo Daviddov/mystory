@@ -6,7 +6,7 @@ import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { ageGroupsLabel, getAgeGroup, readingTimeLabel, tagSlug } from "@/lib/taxonomy";
 import type { PublicBook } from "@/lib/public-book";
-import { bookAgeGroups } from "@/lib/types";
+import { bookAgeGroups, bookLanguage, bookVersions, type BookLanguage } from "@/lib/types";
 
 export interface BookCardProps {
   /** A full Book works too. Client Components must pass a PublicBook (see @/lib/public-book). */
@@ -27,6 +27,11 @@ export interface BookCardProps {
   hideTag?: string;
   /** The signed-in viewer finished this book: shows a check mark on the cover. */
   read?: boolean;
+  /**
+   * The language of the shelf (e.g. 'ar' on the Arabic shelf): a book that has it as its
+   * second language shows that title, and the reader opens in it.
+   */
+  language?: BookLanguage;
   className?: string;
 }
 
@@ -37,7 +42,10 @@ const AGE_TONES: Record<string, string> = {
 };
 
 /** Cover (3:4), title, and pills for age group and reading time. Works in Server and Client Components. */
-export function BookCard({ book, href, layout = "grid", badge, footer, priority, showTags, hideTag, read, className }: BookCardProps) {
+export function BookCard({ book, href, layout = "grid", badge, footer, priority, showTags, hideTag, read, language, className }: BookCardProps) {
+  const version = language && language !== bookLanguage(book) ? bookVersions(book).find((v) => v.language === language) : undefined;
+  const inSecondLanguage = !!version;
+  const title = version ? version.title : book.title;
   const ages = bookAgeGroups(book);
   const age = getAgeGroup(ages[0]);
   const cover = mediaUrl(book.coverImage, book.updatedAt);
@@ -47,7 +55,7 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
   return (
     <article className={cn("group relative flex flex-col", layout === "shelf" && "w-40 shrink-0 sm:w-48", className)}>
       <Link
-        href={href ?? routes.readStart(book.slug)}
+        href={href ?? (inSecondLanguage ? `${routes.readStart(book.slug)}&lang=${language}` : routes.readStart(book.slug))}
         className="flex flex-col gap-2.5 rounded-[1.25rem] focus-visible:outline-offset-4"
       >
         <div className="relative aspect-[3/4] overflow-hidden rounded-[1.25rem] bg-surface-2 shadow-card ring-1 ring-border/70 transition-[transform,box-shadow] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-lift group-active:scale-[0.98]">
@@ -88,7 +96,9 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
             </span>
           ) : null}
         </div>
-        <h3 className="line-clamp-2 px-0.5 text-lg font-semibold leading-snug">{book.title}</h3>
+        <h3 lang={inSecondLanguage ? language : bookLanguage(book)} className="line-clamp-2 px-0.5 text-lg font-semibold leading-snug">
+          {title}
+        </h3>
         <p className="flex flex-wrap items-center gap-1.5 px-0.5">
           {age ? (
             <span
@@ -127,7 +137,7 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
           className="absolute end-2 top-2 inline-flex size-10 items-center justify-center rounded-full bg-surface/90 text-foreground opacity-90 shadow-card backdrop-blur-sm transition hover:bg-surface hover:opacity-100"
         >
           <Info aria-hidden="true" className="size-5" />
-          <span className="sr-only">לפרטים על {book.title}</span>
+          <span className="sr-only">לפרטים על {title}</span>
         </Link>
       ) : null}
       {footer ? <div className="mt-2">{footer}</div> : null}

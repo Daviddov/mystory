@@ -126,6 +126,7 @@ export function ownMediaReferences(book: BookWithPages): Set<string> {
     add(page.image);
     add(page.audio);
     add(page.translation?.audio);
+    for (const version of Object.values(page.extraTranslations ?? {})) add(version?.audio);
   }
   return refs;
 }
@@ -139,6 +140,7 @@ function allMediaReferences(book: BookWithPages): Set<string> {
     if (page.audio) refs.add(page.audio);
     if (page.video) refs.add(page.video);
     if (page.translation?.audio) refs.add(page.translation.audio);
+    for (const version of Object.values(page.extraTranslations ?? {})) if (version?.audio) refs.add(version.audio);
   }
   return refs;
 }
@@ -328,13 +330,13 @@ function keepAnimations(before: Page[], pages: Page[]): Page[] {
 }
 
 /**
- * The editor does not send the second-language version either, so every page
- * keeps the one it had at the same position.
+ * The editor does not send the other-language versions either, so every page
+ * keeps the ones it had at the same position.
  */
 function keepTranslations(before: Page[], pages: Page[]): Page[] {
   return pages.map((page, index) => {
-    const translation = before[index]?.translation;
-    return translation ? { ...page, translation } : page;
+    const { translation, extraTranslations } = before[index] ?? {};
+    return { ...page, ...(translation ? { translation } : {}), ...(extraTranslations ? { extraTranslations } : {}) };
   });
 }
 

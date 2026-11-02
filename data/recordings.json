@@ -575,5 +575,64 @@
     ],
     "createdAt": "2026-10-23T14:36:39.661Z",
     "updatedAt": "2026-10-23T14:36:59.336Z"
+  },
+  {
+    "id": "0uulhg8jq8i6",
+    "bookId": "ai-hershele-matbea-al-kol-piyuk",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p1-7730fbxymvlg.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p2-xad5i2dil4qz.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p3-x7iyejtdlh2s.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p4-bmmbibkx9tlh.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p5-ttjth7dq3mh4.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p6-te7h3xn8s04o.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p7-y0depehb79yg.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p8-hhueplh8kyhz.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p9-h76g51xhuqyi.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p10-yx7y60liruxo.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p11-60xynw8a29ku.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/ai-hershele-matbea-al-kol-piyuk/rec/0uulhg8jq8i6/p12-hegfgth7m4pr.webm"
+      }
+    ],
+    "createdAt": "2026-10-29T18:09:55.238Z",
+    "updatedAt": "2026-10-29T18:14:07.149Z"
   }
 ]

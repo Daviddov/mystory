@@ -5,15 +5,16 @@
  * A Creative Commons book must show who made it, who published it first,
  * under which license, and what was changed (e.g. "translated into Hebrew by").
  */
-import type { Book, BookLanguage } from "./types";
+import { bookVersions, type Book, type BookLanguage } from "./types";
 
 export type CreditBook = Pick<
   Book,
   "author" | "illustrator" | "license" | "source" | "credits" | "language" | "originalLanguage"
->;
+> &
+  Partial<Pick<Book, "translation" | "extraTranslations">>;
 
-export const LANGUAGE_NAMES_HE: Record<BookLanguage, string> = { he: "עברית", en: "אנגלית" };
-export const LANGUAGE_NAMES_EN: Record<BookLanguage, string> = { he: "Hebrew", en: "English" };
+export const LANGUAGE_NAMES_HE: Record<BookLanguage, string> = { he: "עברית", en: "אנגלית", ar: "ערבית" };
+export const LANGUAGE_NAMES_EN: Record<BookLanguage, string> = { he: "Hebrew", en: "English", ar: "Arabic" };
 
 /** The translator credit of a translation when no other person was named. */
 export const MACHINE_TRANSLATOR_CREDIT = "Dov Bar";
@@ -101,11 +102,20 @@ export function creditPeople(book: CreditBook): CreditLine[] {
       label: (book.language ?? "he") === "he" ? "תרגום לעברית" : "תרגום",
       value: credits.translator ?? "",
     },
+    ...bookVersions(book).map((version) => ({
+      key: `translator-${version.language}`,
+      label: `תרגום ל${LANGUAGE_NAMES_HE[version.language]}`,
+      value: version.translator ?? "",
+    })),
   ];
   return lines.filter((line) => line.value.trim() !== "");
 }
 
 /** Attribution and adaptation statements, in the wording the license holder asked for. */
 export function creditStatements(book: CreditBook): string[] {
-  return [book.credits?.attributionLine ?? "", book.credits?.adaptation ?? ""].filter((line) => line.trim() !== "");
+  return [
+    book.credits?.attributionLine ?? "",
+    book.credits?.adaptation ?? "",
+    ...bookVersions(book).map((version) => version.attributionLine ?? ""),
+  ].filter((line) => line.trim() !== "");
 }

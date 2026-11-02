@@ -1,4 +1,5 @@
 import type {
+  BookLanguage,
   AgeGroup,
   Book,
   BookOrigin,
@@ -56,6 +57,11 @@ export interface BookFilter {
   ids?: string[];
   /** Exclude these book ids (e.g. the current book in "more like this"). */
   excludeIds?: string[];
+  /**
+   * Only books that can be read in this language: their text (Book.language,
+   * absent = 'he') or their second-language version (Book.translation). Default: any language.
+   */
+  language?: BookLanguage;
   /** Default 'new' (publishedAt, falling back to createdAt, newest first). */
   sort?: BookSort;
   limit?: number;

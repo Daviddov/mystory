@@ -8,7 +8,8 @@ import { getRepo } from "@/lib/repo";
 import type { BookSort } from "@/lib/repo/types";
 import { routes } from "@/lib/routes";
 import { ageGroupLabel } from "@/lib/taxonomy";
-import { BOOK_STATUSES, BookStatusSchema, SYSTEM_OWNER_ID } from "@/lib/types";
+import { BOOK_LANGUAGES, BOOK_STATUSES, BookLanguageSchema, BookStatusSchema, SYSTEM_OWNER_ID } from "@/lib/types";
+import { LANGUAGE_NAMES_HE } from "@/lib/credits";
 import { requireAdminPage } from "../_lib/guard";
 import { formatDate, ORIGIN_LABELS, STATUS_LABELS } from "../_lib/labels";
 import { adminPaths } from "../_lib/paths";
@@ -50,6 +51,8 @@ export default async function AdminBooksPage({
   const audio = first(params.audio) === "1";
   const nikud = first(params.nikud) === "1";
   const anim = first(params.anim) === "1";
+  const langParam = BookLanguageSchema.safeParse(first(params.lang));
+  const language = langParam.success ? langParam.data : undefined;
   const pageParam = Number.parseInt(first(params.page), 10);
   const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
 
@@ -62,6 +65,7 @@ export default async function AdminBooksPage({
       hasAudio: audio || undefined,
       hasNikud: nikud || undefined,
       hasAnimation: anim || undefined,
+      language,
       sort,
       limit: PAGE_SIZE,
       offset: (page - 1) * PAGE_SIZE,
@@ -74,7 +78,7 @@ export default async function AdminBooksPage({
     (a, b) => a.localeCompare(b, "he"),
   );
   const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  const filtered = query !== "" || status !== undefined || authorParam !== "" || audio || nikud || anim;
+  const filtered = query !== "" || status !== undefined || authorParam !== "" || audio || nikud || anim || language !== undefined;
   const linkParams = {
     q: query,
     status,
@@ -83,6 +87,7 @@ export default async function AdminBooksPage({
     audio: audio ? "1" : undefined,
     nikud: nikud ? "1" : undefined,
     anim: anim ? "1" : undefined,
+    lang: language,
   };
 
   return (
@@ -115,6 +120,17 @@ export default async function AdminBooksPage({
             {authors.map((name) => (
               <option key={name} value={name}>
                 {name}
+              </option>
+            ))}
+          </Select>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="books-lang">שפה</Label>
+          <Select id="books-lang" name="lang" defaultValue={language ?? ""} className="w-auto">
+            <option value="">כל השפות</option>
+            {BOOK_LANGUAGES.map((code) => (
+              <option key={code} value={code}>
+                {LANGUAGE_NAMES_HE[code]}
               </option>
             ))}
           </Select>
@@ -215,7 +231,7 @@ export default async function AdminBooksPage({
                         </div>
                       )}
                       <div className="min-w-0">
-                    <Link href={adminPaths.book(book.id)} className="font-semibold underline">
+                    <Link href={adminPaths.book(book.id)} lang={book.language ?? "he"} className="font-semibold underline">
                       {book.title}
                     </Link>
                     <div className="text-sm text-muted">

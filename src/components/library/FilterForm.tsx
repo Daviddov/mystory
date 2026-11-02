@@ -155,6 +155,15 @@ export function FilterForm({ query, signedIn = false }: FilterFormProps) {
             {label}
           </label>
         ))}
+        <label className="inline-flex cursor-pointer items-center gap-2 font-medium">
+          <input type="checkbox" name="lang" value="ar" defaultChecked={query.lang === "ar"} className="size-5 accent-primary" />
+          <span>
+            ספרים בערבית{" "}
+            <span lang="ar" className="text-muted">
+              (كتب بالعربية)
+            </span>
+          </span>
+        </label>
       </fieldset>
 
       {/* A tag arrives from a tag link; keep it while the other filters change. */}

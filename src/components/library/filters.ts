@@ -2,7 +2,8 @@
  * URL <-> library query. Client-safe and pure, so it is unit tested.
  *
  * Every browse page reads the same query-string keys:
- *   age, category, theme, time, tag, q, sort, page
+ *   age, category, theme, time, tag, q, lang, sort, page
+ * Listings are in Hebrew unless lang=ar asks for the Arabic books.
  * Unknown or invalid values are dropped instead of failing the page.
  */
 import { z } from "zod";
@@ -17,7 +18,7 @@ import {
   themeLabel,
   type ReadingTimeBucket,
 } from "@/lib/taxonomy";
-import { AGE_GROUPS, type AgeGroup } from "@/lib/types";
+import { AGE_GROUPS, type AgeGroup, type LibraryLanguage } from "@/lib/types";
 
 export const PAGE_SIZE = 24;
 export const MAX_QUERY_LENGTH = 100;
@@ -48,6 +49,8 @@ export interface LibraryQuery {
   anim?: true;
   /** Per signed-in user: only books they finished ('read') or have not finished ('unread'). */
   read?: ReadFilter;
+  /** The Arabic shelf instead of the Hebrew one (the default). */
+  lang?: Exclude<LibraryLanguage, "he">;
   sort: LibrarySort;
   /** 1-based. */
   page: number;
@@ -56,8 +59,8 @@ export interface LibraryQuery {
 export const READ_FILTERS = ["read", "unread"] as const;
 export type ReadFilter = (typeof READ_FILTERS)[number];
 
-export type LibraryFilterKey = "age" | "category" | "theme" | "time" | "tag" | "q" | "audio" | "nikud" | "anim" | "read";
-export const FILTER_KEYS: readonly LibraryFilterKey[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim", "read"];
+export type LibraryFilterKey = "age" | "category" | "theme" | "time" | "tag" | "q" | "audio" | "nikud" | "anim" | "read" | "lang";
+export const FILTER_KEYS: readonly LibraryFilterKey[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim", "read", "lang"];
 
 const trimmed = (max: number) =>
   z
@@ -84,6 +87,7 @@ const LibraryQuerySchema = z.object({
   nikud: flag,
   anim: flag,
   read: oneOf(READ_FILTERS).optional().catch(undefined),
+  lang: z.literal("ar").optional().catch(undefined),
   sort: z
     .enum(SORT_OPTIONS.map((option) => option.value) as [LibrarySort, ...LibrarySort[]])
     .catch(DEFAULT_SORT),
@@ -109,6 +113,7 @@ export function parseLibraryQuery(raw: RawSearchParams | undefined | null): Libr
     nikud: first(source.nikud),
     anim: first(source.anim),
     read: first(source.read),
+    lang: first(source.lang),
     sort: first(source.sort) ?? DEFAULT_SORT,
     page: first(source.page) ?? 1,
   });
@@ -135,6 +140,7 @@ export function toBookFilter(query: LibraryQuery, base: BookFilter = {}, pageSiz
     hasAudio: query.audio,
     hasNikud: query.nikud,
     hasAnimation: query.anim,
+    language: query.lang ?? "he",
     ...base,
     status: "published",
     sort: query.sort,
@@ -156,6 +162,7 @@ export function toParams(query: Partial<LibraryQuery>): Record<string, string | 
     nikud: query.nikud ? "1" : undefined,
     anim: query.anim ? "1" : undefined,
     read: query.read,
+    lang: query.lang,
     sort: query.sort && query.sort !== DEFAULT_SORT ? query.sort : undefined,
     page: query.page && query.page > 1 ? query.page : undefined,
   };
@@ -207,6 +214,7 @@ export function describeActiveFilters(query: LibraryQuery): ActiveFilter[] {
   if (query.audio) active.push({ key: "audio", label: "עם השמעה", emoji: "🔊" });
   if (query.nikud) active.push({ key: "nikud", label: "עם ניקוד", emoji: "אָ" });
   if (query.anim) active.push({ key: "anim", label: "עם הנפשות", emoji: "🎬" });
+  if (query.lang === "ar") active.push({ key: "lang", label: "ספרים בערבית", emoji: "ع" });
   if (query.read) {
     active.push({ key: "read", label: query.read === "read" ? "ספרים שנקראו" : "ספרים שעוד לא נקראו", emoji: "✅" });
   }

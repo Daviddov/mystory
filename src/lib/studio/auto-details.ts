@@ -33,6 +33,20 @@ export function isPlaceholderTitle(title: string): boolean {
   return clean.length === 0 || PLACEHOLDER_TITLES.has(clean);
 }
 
+/** Interface language of the sentences below (same values as Locale in src/lib/i18n/locale.ts). */
+type DetailsLocale = "he" | "en";
+
+const LABELS_EN: Record<FilledField, string> = {
+  title: "title",
+  summary: "summary",
+  categories: "categories",
+  themes: "values",
+  tags: "tags",
+  discussionQuestions: "discussion questions",
+  author: "writing",
+  illustrator: "illustration",
+};
+
 const LABELS: Record<FilledField, string> = {
   title: "כותרת",
   summary: "תקציר",
@@ -113,8 +127,21 @@ export function mergeCredits(options: {
 }
 
 /** "מילאנו אוטומטית: כותרת, תקציר, 4 תגיות". */
-export function describeFilled(filled: FilledField[], patch: Partial<DetailsMeta>): string {
+export function describeFilled(filled: FilledField[], patch: Partial<DetailsMeta>, locale: DetailsLocale = "he"): string {
   if (filled.length === 0) return "";
+  if (locale === "en") {
+    const parts = filled.map((field) => {
+      const value = patch[field as keyof DetailsMeta];
+      if (field === "tags" && Array.isArray(value)) return value.length === 1 ? "one tag" : `${value.length} tags`;
+      if (field === "discussionQuestions" && Array.isArray(value)) {
+        return value.length === 1 ? "one discussion question" : `${value.length} discussion questions`;
+      }
+      if (field === "author") return "writing credit";
+      if (field === "illustrator") return "illustration credit";
+      return LABELS_EN[field];
+    });
+    return `Filled in automatically: ${parts.join(", ")}.`;
+  }
   const parts = filled.map((field) => {
     const value = patch[field as keyof DetailsMeta];
     if (field === "tags" && Array.isArray(value)) return value.length === 1 ? "תגית אחת" : `${value.length} תגיות`;
@@ -127,13 +154,17 @@ export function describeFilled(filled: FilledField[], patch: Partial<DetailsMeta
 }
 
 /** How complete the details are, for the stage card. */
-export function detailsCompleteness(meta: DetailsMeta): { done: number; total: number; missing: string[] } {
+export function detailsCompleteness(
+  meta: DetailsMeta,
+  locale: DetailsLocale = "he",
+): { done: number; total: number; missing: string[] } {
+  const en = locale === "en";
   const checks: [string, boolean][] = [
-    ["כותרת", !isPlaceholderTitle(meta.title)],
-    ["תקציר", meta.summary.trim().length > 0],
-    ["קטגוריה", meta.categories.length > 0],
-    ["תגיות", meta.tags.length > 0],
-    ["שאלות לשיחה", meta.discussionQuestions.length > 0],
+    [en ? "title" : "כותרת", !isPlaceholderTitle(meta.title)],
+    [en ? "summary" : "תקציר", meta.summary.trim().length > 0],
+    [en ? "category" : "קטגוריה", meta.categories.length > 0],
+    [en ? "tags" : "תגיות", meta.tags.length > 0],
+    [en ? "discussion questions" : "שאלות לשיחה", meta.discussionQuestions.length > 0],
   ];
   return { done: checks.filter(([, ok]) => ok).length, total: checks.length, missing: checks.filter(([, ok]) => !ok).map(([n]) => n) };
 }

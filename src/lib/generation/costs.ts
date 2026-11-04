@@ -221,9 +221,14 @@ export interface CostEstimate {
   confirmed: boolean;
   /** Plain Hebrew: what the number covers. */
   covers: string;
+  /** The same in English, for the English interface. */
+  coversEn?: string;
 }
 
-const NONE = (covers: string, free = true): CostEstimate => ({ usd: 0, mock: false, free, confirmed: true, covers });
+/** Interface language of the formatted lines (same values as Locale in src/lib/i18n/locale.ts). */
+type CostLocale = "he" | "en";
+
+const NONE = (covers: string, coversEn: string, free = true): CostEstimate => ({ usd: 0, mock: false, free, confirmed: true, covers, coversEn });
 
 export function tokensOf(chars: number): number {
   return Math.ceil(Math.max(0, chars) / HEBREW_CHARS_PER_TOKEN);
@@ -241,7 +246,7 @@ export function gridCalls(pages: number, layout: "3x3" | "4x4"): number {
 export function estimateHero(ctx: CostContext, o: { hasDescription: boolean; storyChars: number }): CostEstimate {
   const imageMock = ctx.image.mock;
   const textMock = !o.hasDescription || ctx.text.mock;
-  if (imageMock && textMock) return { ...NONE("תמונה אחת של הגיבור", false), mock: true };
+  if (imageMock && textMock) return { ...NONE("תמונה אחת של הגיבור", "One picture of the hero", false), mock: true };
   const textUsd = o.hasDescription || ctx.text.mock ? 0 : textCallUsd(ctx, 400 + tokensOf(Math.min(o.storyChars, 6000)), 300);
   const imageUsd = imageMock ? 0 : ctx.image.perImage;
   return {
@@ -252,12 +257,15 @@ export function estimateHero(ctx: CostContext, o: { hasDescription: boolean; sto
     covers: o.hasDescription
       ? "ציור תמונת הגיבור אחת לפי התיאור שכתבתם."
       : "כתיבת תיאור לגיבור לפי הסיפור, וציור תמונה אחת שלו.",
+    coversEn: o.hasDescription
+      ? "Drawing one picture of the hero from the description you wrote."
+      : "Writing a description of the hero from the story, and drawing one picture of them.",
   };
 }
 
 /** Stage 2: outline, pages, review and a probable revision = 4 text calls. */
 export function estimateStory(ctx: CostContext): CostEstimate {
-  if (ctx.text.mock) return { ...NONE("כתיבת סיפור", false), mock: true };
+  if (ctx.text.mock) return { ...NONE("כתיבת סיפור", "Writing a story", false), mock: true };
   const calls = 4;
   return {
     usd: calls * textCallUsd(ctx, 3000, 2500),
@@ -265,11 +273,15 @@ export function estimateStory(ctx: CostContext): CostEstimate {
     free: false,
     confirmed: ctx.text.confirmed,
     covers: "ארבע פניות לכותב: תכנון העלילה, כתיבת העמודים, בדיקה ותיקון.",
+    coversEn: "Four calls to the writer: planning the plot, writing the pages, review and revision.",
   };
 }
 
 export function estimateStyle(): CostEstimate {
-  return NONE("בחירת סגנון היא בחינם: אין בה בינה מלאכותית. העלות באה רק כשמציירים.");
+  return NONE(
+    "בחירת סגנון היא בחינם: אין בה בינה מלאכותית. העלות באה רק כשמציירים.",
+    "Choosing a style is free: it uses no AI. The cost comes only when drawing.",
+  );
 }
 
 /** Stage 4: one text call for the scenes plus ceil(pages / cells) grid pictures. */
@@ -278,8 +290,8 @@ export function estimatePictures(
   o: { missingPages: number; layout: "3x3" | "4x4"; textChars: number },
 ): CostEstimate {
   const calls = gridCalls(o.missingPages, o.layout);
-  if (calls === 0) return NONE("אין עמודים לאייר", true);
-  if (ctx.image.mock) return { ...NONE("איורים", false), mock: true };
+  if (calls === 0) return NONE("אין עמודים לאייר", "No pages to illustrate", true);
+  if (ctx.image.mock) return { ...NONE("איורים", "Illustrations", false), mock: true };
   const textUsd = ctx.text.mock ? 0 : textCallUsd(ctx, 1500 + tokensOf(o.textChars), 2000 + o.missingPages * 120);
   return {
     usd: textUsd + calls * ctx.image.perImage,
@@ -287,13 +299,14 @@ export function estimatePictures(
     free: false,
     confirmed: ctx.image.confirmed && ctx.text.confirmed,
     covers: `${calls === 1 ? "תמונת רשת אחת" : `${calls} תמונות רשת`} (${o.layout === "3x3" ? "3×3" : "4×4"}) שנחתכות לעמודים, ופנייה אחת לכותב לתיאור הסצנות.`,
+    coversEn: `${calls === 1 ? "One grid picture" : `${calls} grid pictures`} (${o.layout === "3x3" ? "3×3" : "4×4"}) cut into pages, and one call to the writer to describe the scenes.`,
   };
 }
 
 /** Stage 5: characters of text still without narration. */
 export function estimateNarration(ctx: CostContext, o: { chars: number }): CostEstimate {
-  if (ctx.tts.mock) return { ...NONE("הקראה", false), mock: true };
-  if (o.chars <= 0) return NONE("אין טקסט להקריא", true);
+  if (ctx.tts.mock) return { ...NONE("הקראה", "Narration", false), mock: true };
+  if (o.chars <= 0) return NONE("אין טקסט להקריא", "No text to narrate", true);
   return {
     usd: (o.chars / 1000) * ctx.tts.per1kChars,
     mock: false,
@@ -303,19 +316,23 @@ export function estimateNarration(ctx: CostContext, o: { chars: number }): CostE
       ctx.tts.provider === "elevenlabs"
         ? `הקראה של כ-${o.chars} תווים בקול של ElevenLabs, לפי מספר התווים.`
         : `הקראה של כ-${o.chars} תווים בקול של Gemini, לפי אורך הטקסט והאודיו שנוצר.`,
+    coversEn:
+      ctx.tts.provider === "elevenlabs"
+        ? `Narrating about ${o.chars} characters in an ElevenLabs voice, priced by character.`
+        : `Narrating about ${o.chars} characters in a Gemini voice, priced by text and audio length.`,
   };
 }
 
 /** Stage 6: Dicta Nakdan is a free public service. */
 export function estimateNikud(ctx: CostContext): CostEstimate {
-  if (ctx.nikud.mock) return { ...NONE("ניקוד", false), mock: true };
-  return NONE("הניקוד האוטומטי (דיקטה) הוא שירות חינמי.");
+  if (ctx.nikud.mock) return { ...NONE("ניקוד", "Nikud", false), mock: true };
+  return NONE("הניקוד האוטומטי (דיקטה) הוא שירות חינמי.", "Automatic nikud (Dicta) is a free service.");
 }
 
 /** Stage 7: clips x seconds x price per second. */
 export function estimateAnimation(ctx: CostContext, o: { clips: number; seconds?: number }): CostEstimate {
-  if (o.clips <= 0) return NONE("אין איורים להנפיש", true);
-  if (ctx.video.mock) return { ...NONE("הנפשה", false), mock: true };
+  if (o.clips <= 0) return NONE("אין איורים להנפיש", "No pictures to animate", true);
+  if (ctx.video.mock) return { ...NONE("הנפשה", "Animation", false), mock: true };
   const seconds = o.seconds ?? ctx.video.clipSeconds;
   return {
     usd: o.clips * seconds * ctx.video.perSecond,
@@ -323,18 +340,20 @@ export function estimateAnimation(ctx: CostContext, o: { clips: number; seconds?
     free: false,
     confirmed: ctx.video.confirmed,
     covers: `${o.clips === 1 ? "קליפ אחד" : `${o.clips} קליפים`} של ${seconds} שניות, לפי מחיר לשנייה.`,
+    coversEn: `${o.clips === 1 ? "One clip" : `${o.clips} clips`} of ${seconds} seconds, priced per second.`,
   };
 }
 
 /** Stage 8: one small text call that reads the story and writes the details. */
 export function estimateDetails(ctx: CostContext, o: { textChars: number }): CostEstimate {
-  if (ctx.text.mock) return { ...NONE("פרטי הספר", false), mock: true };
+  if (ctx.text.mock) return { ...NONE("פרטי הספר", "Book details", false), mock: true };
   return {
     usd: textCallUsd(ctx, 600 + tokensOf(Math.min(o.textChars, 12000)), 400),
     mock: false,
     free: false,
     confirmed: ctx.text.confirmed,
     covers: "פנייה אחת לכותב: קריאת הסיפור וכתיבת כותרת, תקציר, תגיות ושאלות לשיחה.",
+    coversEn: "One call to the writer: reading the story and writing a title, summary, tags and discussion questions.",
   };
 }
 
@@ -349,37 +368,68 @@ export function sumEstimates(list: CostEstimate[]): { usd: number; confirmed: bo
 }
 
 // ---------------------------------------------------------------------------
-// Formatting (Hebrew)
+// Formatting (Hebrew by default; English for the English interface)
 // ---------------------------------------------------------------------------
 
+const FORMAT = {
+  he: {
+    underCent: "פחות מסנט",
+    about: (usd: string, ils: string) => `כ-$${usd} (כ-${ils} ₪)`,
+    freeDemo: "ללא עלות (מצב הדגמה)",
+    free: "ללא עלות",
+    estimate: (text: string) => `עלות משוערת: ${text}`,
+    unconfirmed: "המחיר של המודל הזה לא אומת, ולכן ההערכה פחות מדויקת.",
+    noRetries: "ההערכה לא כוללת ניסיונות חוזרים.",
+    total: (text: string) => `עלות משוערת לכל הספר: ${text}`,
+  },
+  en: {
+    underCent: "under a cent",
+    about: (usd: string, ils: string) => `about $${usd} (about ₪${ils})`,
+    freeDemo: "free (demo mode)",
+    free: "free",
+    estimate: (text: string) => `Estimated cost: ${text}`,
+    unconfirmed: "This model's price is not verified, so the estimate is less precise.",
+    noRetries: "The estimate does not include retries.",
+    total: (text: string) => `Estimated cost for the whole book: ${text}`,
+  },
+} satisfies Record<CostLocale, unknown>;
+
 /** "כ-$0.04 (כ-0.15 ₪)"; under half a cent: "פחות מסנט". */
-export function formatUsdIls(usd: number, usdToIls: number): string {
-  if (usd < 0.005) return "פחות מסנט";
+export function formatUsdIls(usd: number, usdToIls: number, locale: CostLocale = "he"): string {
+  const t = FORMAT[locale];
+  if (usd < 0.005) return t.underCent;
   const ils = usd * usdToIls;
-  return `כ-$${usd.toFixed(2)} (כ-${ils.toFixed(2)} ₪)`;
+  return t.about(usd.toFixed(2), ils.toFixed(2));
 }
 
-export function formatEstimate(e: CostEstimate, ctx: Pick<CostContext, "usdToIls">): string {
-  if (e.mock) return "ללא עלות (מצב הדגמה)";
-  if (e.free && e.usd === 0) return "ללא עלות";
-  return formatUsdIls(e.usd, ctx.usdToIls);
+export function formatEstimate(e: CostEstimate, ctx: Pick<CostContext, "usdToIls">, locale: CostLocale = "he"): string {
+  const t = FORMAT[locale];
+  if (e.mock) return t.freeDemo;
+  if (e.free && e.usd === 0) return t.free;
+  return formatUsdIls(e.usd, ctx.usdToIls, locale);
 }
 
 /** The muted line under an AI action. */
-export function costLine(e: CostEstimate, ctx: Pick<CostContext, "usdToIls">): string {
-  return `עלות משוערת: ${formatEstimate(e, ctx)}`;
+export function costLine(e: CostEstimate, ctx: Pick<CostContext, "usdToIls">, locale: CostLocale = "he"): string {
+  return FORMAT[locale].estimate(formatEstimate(e, ctx, locale));
 }
 
 /** Tooltip / aria-description text. */
-export function costDescription(e: CostEstimate): string {
-  const parts = [e.covers];
-  if (!e.confirmed) parts.push("המחיר של המודל הזה לא אומת, ולכן ההערכה פחות מדויקת.");
-  parts.push("ההערכה לא כוללת ניסיונות חוזרים.");
+export function costDescription(e: CostEstimate, locale: CostLocale = "he"): string {
+  const t = FORMAT[locale];
+  const parts = [locale === "en" && e.coversEn ? e.coversEn : e.covers];
+  if (!e.confirmed) parts.push(t.unconfirmed);
+  parts.push(t.noRetries);
   return parts.join(" ");
 }
 
-export function totalLine(sum: { usd: number; allMock: boolean }, ctx: Pick<CostContext, "usdToIls">): string {
-  if (sum.allMock) return "עלות משוערת לכל הספר: ללא עלות (מצב הדגמה)";
-  if (sum.usd === 0) return "עלות משוערת לכל הספר: ללא עלות";
-  return `עלות משוערת לכל הספר: ${formatUsdIls(sum.usd, ctx.usdToIls)}`;
+export function totalLine(
+  sum: { usd: number; allMock: boolean },
+  ctx: Pick<CostContext, "usdToIls">,
+  locale: CostLocale = "he",
+): string {
+  const t = FORMAT[locale];
+  if (sum.allMock) return t.total(t.freeDemo);
+  if (sum.usd === 0) return t.total(t.free);
+  return t.total(formatUsdIls(sum.usd, ctx.usdToIls, locale));
 }

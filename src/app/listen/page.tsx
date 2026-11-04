@@ -12,6 +12,8 @@ import type { Metadata } from "next";
 import { ListenPlayer } from "@/components/listen/ListenPlayer";
 import { buildListenTracks, parseAgeFilter } from "@/components/listen/tracks";
 import { ButtonLink, EmptyState } from "@/components/ui";
+import { libraryMessages } from "@/lib/i18n/library";
+import { getLocale } from "@/lib/i18n/server";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
@@ -51,25 +53,24 @@ export async function ListenView({ age, viewer }: { age: string | undefined; vie
         .then((items) => items.map((item) => item.bookId))
         .catch(() => [])
     : null;
+  const t = libraryMessages(await getLocale()).listen;
 
   return (
     <main className="container-page flex flex-col gap-8 py-8">
       <header className="flex flex-col gap-3">
         <h1 className="text-3xl font-bold sm:text-4xl">
           <span aria-hidden="true">🎧 </span>
-          סיפורים להאזנה לפני השינה
+          {t.title}
         </h1>
-        <p className="max-w-2xl text-lg leading-relaxed text-muted">
-          סיפור אחרי סיפור, בלי לגעת במסך. אפשר לכבות את המסך והסיפורים ימשיכו להתנגן, עד שטיימר השינה יעצור אותם.
-        </p>
+        <p className="max-w-2xl text-lg leading-relaxed text-muted">{t.lead}</p>
       </header>
 
       {tracks.length === 0 ? (
         <EmptyState
           icon="🌙"
-          title="עדיין אין סיפורים מוקלטים"
-          description="הרצף מתמלא מספרים בספרייה שיש להם הקראה, ועדיין לא הוקלט אף ספר. בינתיים אפשר לקרוא יחד מהספרייה."
-          action={<ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>}
+          title={t.emptyTitle}
+          description={t.emptyDescription}
+          action={<ButtonLink href={routes.books()}>{t.allBooks}</ButtonLink>}
         />
       ) : (
         <ListenPlayer tracks={tracks} initialAge={parseAgeFilter(age)} playlistIds={playlistIds} />

@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { LocaleProvider } from "@/components/i18n/LocaleProvider";
 import type { PlayerBook } from "@/lib/reader/logic";
 import { BookPlayer } from "./BookPlayer";
 
@@ -118,6 +119,35 @@ describe("BookPlayer", () => {
     expect(screen.getByText("שלישי")).toBeInTheDocument();
     fireEvent.keyDown(window, { key: "ArrowRight" });
     expect(screen.getByText("שני")).toBeInTheDocument();
+  });
+
+  it("keeps a Hebrew book right to left when the interface is English", () => {
+    const { container } = render(
+      <LocaleProvider locale="en">
+        <BookPlayer book={makeBook()} />
+      </LocaleProvider>,
+    );
+    expect(screen.getByRole("button", { name: "Next page" })).toBeInTheDocument();
+    expect(container.querySelector("footer")).toHaveAttribute("dir", "rtl");
+    expect(screen.getByRole("slider")).toHaveAttribute("dir", "rtl");
+    fireEvent.keyDown(window, { key: "ArrowLeft" });
+    expect(screen.getByText("שני")).toBeInTheDocument();
+  });
+
+  it("turns an English book left to right", () => {
+    const book = makeBook({
+      language: "en",
+      pages: [
+        { index: 0, text: "First page" },
+        { index: 1, text: "Second page" },
+      ],
+    });
+    const { container } = render(<BookPlayer book={book} />);
+    expect(container.querySelector("footer")).toHaveAttribute("dir", "ltr");
+    fireEvent.keyDown(window, { key: "ArrowRight" });
+    expect(screen.getByText("Second")).toBeInTheDocument();
+    fireEvent.keyDown(window, { key: "ArrowLeft" });
+    expect(screen.getByText("First")).toBeInTheDocument();
   });
 
   it("turns forward when the page is swiped to the right", () => {

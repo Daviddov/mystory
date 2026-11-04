@@ -18,7 +18,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Card, Chip, Field, Input, Textarea, type ChipProps } from "@/components/ui";
+import { STUDIO_STAGES } from "@/lib/i18n/studio-stages";
 import { cn } from "@/lib/cn";
 import {
   ANIMATION_MOTIONS,
@@ -148,25 +150,12 @@ export interface StagesPanelProps {
 
 type StageState = "empty" | "partial" | "done";
 
-const STATE_LABEL: Record<StageState, string> = { empty: "עוד לא התחיל", partial: "בתהליך", done: "מוכן" };
 const STATE_TONE: Record<StageState, NonNullable<ChipProps["tone"]>> = { empty: "neutral", partial: "warning", done: "success" };
 
 function stateOf(done: number, total: number): StageState {
   if (total <= 0 || done <= 0) return "empty";
   return done >= total ? "done" : "partial";
 }
-
-/** Short names for the progress stepper. */
-const STEP_NAMES: Record<number, string> = {
-  1: "דמות",
-  2: "סיפור",
-  3: "סגנון",
-  4: "תמונות",
-  5: "הקראה",
-  6: "ניקוד",
-  7: "הנפשה",
-  8: "פרטים",
-};
 
 function scrollToStage(number: number) {
   const element = document.getElementById(`stage-${number}`);
@@ -202,6 +191,7 @@ function StageCard({
   /** Estimated cost of the AI action, shown under it. */
   cost?: ReactNode;
 }) {
+  const t = STUDIO_STAGES[useLocale()];
   const headingId = `stage-${number}-title`;
   const bodyId = `stage-${number}-body`;
   return (
@@ -216,16 +206,16 @@ function StageCard({
           </h2>
           <p className="text-sm text-muted">{summary}</p>
         </div>
-        <Chip tone={STATE_TONE[state]}>{STATE_LABEL[state]}</Chip>
+        <Chip tone={STATE_TONE[state]}>{t.state[state]}</Chip>
         <button
           type="button"
           aria-expanded={open}
           aria-controls={bodyId}
-          aria-label={`${open ? "סגירת" : "עריכת"} שלב ${number}: ${title}`}
+          aria-label={t.card.toggleLabel(open, number, title)}
           onClick={onToggle}
           className="flex min-h-11 min-w-11 items-center justify-center gap-1 rounded-full border-2 border-border-strong bg-surface px-3 text-sm font-semibold hover:bg-surface-2 sm:px-4"
         >
-          <span className="hidden sm:inline">{open ? "סגירה" : "עריכה"}</span>
+          <span className="hidden sm:inline">{open ? t.card.close : t.card.edit}</span>
           <ChevronDown aria-hidden="true" className={cn("size-4 transition-transform", open && "rotate-180")} />
         </button>
       </div>
@@ -234,13 +224,13 @@ function StageCard({
         <p className="text-sm text-muted">{description}</p>
         <div className="grid gap-3 md:grid-cols-2">
           <div className="flex flex-col gap-3 rounded-md bg-surface-2 p-4">
-            <h3 className="font-semibold">בעצמכם</h3>
+            <h3 className="font-semibold">{t.card.manual}</h3>
             {manual}
           </div>
           <div className="flex flex-col gap-3 rounded-md bg-primary-soft p-4">
             <h3 className="flex items-center gap-2 font-semibold">
               <Sparkles aria-hidden="true" className="size-4" />
-              בעזרת בינה מלאכותית
+              {t.card.ai}
             </h3>
             {ai}
             {cost}
@@ -289,6 +279,7 @@ export function StagesPanel(props: StagesPanelProps) {
     onConfirm,
   } = props;
 
+  const t = STUDIO_STAGES[useLocale()];
   const heroFile = useRef<HTMLInputElement>(null);
   const [idea, setIdea] = useState("");
   const [heroName, setHeroName] = useState("");
@@ -404,17 +395,17 @@ export function StagesPanel(props: StagesPanelProps) {
   // One suggestion for what to do next; nothing is ever locked behind it.
   const next: { stage: number; text: string } | null =
     counts.withText === 0
-      ? { stage: 2, text: "כתיבת הסיפור" }
+      ? { stage: 2, text: t.nextStep.story }
       : !hero?.image
-        ? { stage: 1, text: "יצירת הגיבור" }
+        ? { stage: 1, text: t.nextStep.hero }
         : missingImages > 0
-          ? { stage: 4, text: missingImages === 1 ? "איור עמוד אחד" : `איור ${missingImages} עמודים` }
+          ? { stage: 4, text: t.nextStep.illustrate(missingImages) }
           : counts.withAudio < counts.withText
-            ? { stage: 5, text: "הקראה" }
+            ? { stage: 5, text: t.nextStep.narration }
             : counts.withNikud < counts.withText
-              ? { stage: 6, text: "ניקוד" }
+              ? { stage: 6, text: t.nextStep.nikud }
               : details.missing.length > 0
-                ? { stage: 8, text: "השלמת פרטי הספר" }
+                ? { stage: 8, text: t.nextStep.details }
                 : null;
 
   // Estimated costs (only when the server told us the providers and prices).
@@ -446,15 +437,13 @@ export function StagesPanel(props: StagesPanelProps) {
 
   return (
     <div className="mx-auto flex w-full max-w-[60rem] flex-col gap-4">
-      <nav aria-label="התקדמות בשלבי היצירה" className="flex flex-col gap-3 rounded-lg border border-border bg-surface p-3 sm:p-4">
+      <nav aria-label={t.nav.label} className="flex flex-col gap-3 rounded-lg border border-border bg-surface p-3 sm:p-4">
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
-          <p className="font-semibold">
-            {doneSteps} מתוך 8 שלבים מוכנים
-          </p>
-          <p className="text-sm text-muted">כל שלב עצמאי: בעצמכם או בבינה מלאכותית, בכל סדר.</p>
+          <p className="font-semibold">{t.nav.doneSteps(doneSteps)}</p>
+          <p className="text-sm text-muted">{t.nav.independent}</p>
         </div>
         <ol className="grid grid-cols-8 gap-1">
-          {Object.entries(STEP_NAMES).map(([key, name]) => {
+          {Object.entries(t.steps).map(([key, name]) => {
             const n = Number(key);
             const state = stageStates[n];
             return (
@@ -462,7 +451,7 @@ export function StagesPanel(props: StagesPanelProps) {
                 <button
                   type="button"
                   onClick={() => goToStage(n)}
-                  aria-label={`שלב ${n}: ${name}, ${STATE_LABEL[state]}`}
+                  aria-label={t.nav.stepLabel(n, name, t.state[state])}
                   data-state={state}
                   className="flex min-h-11 w-full flex-col items-center justify-center gap-0.5 rounded-md px-0.5 hover:bg-surface-2"
                 >
@@ -490,24 +479,25 @@ export function StagesPanel(props: StagesPanelProps) {
         </div>
         {costs && todo ? (
           <p className="text-sm text-muted" role="status" data-testid="cost-total">
-            <strong className="text-foreground">{totalLine(todo, costs)}</strong> (רק מה שעוד לא נעשה, בלי ניסיונות חוזרים).
+            <strong className="text-foreground">{totalLine(todo, costs)}</strong>
+            {t.nav.totalNote}
           </p>
         ) : null}
         <p className="flex flex-wrap items-center gap-x-3 rounded-md bg-primary-soft px-3 py-1 font-semibold" data-testid="next-step">
           {next ? (
             <>
-              <span>הבא בתור: {next.text}</span>
+              <span>{t.nav.next(next.text)}</span>
               <button
                 type="button"
                 onClick={() => goToStage(next.stage)}
-                aria-label={`מעבר לשלב ${next.stage}`}
+                aria-label={t.nav.goToStageLabel(next.stage)}
                 className="min-h-11 rounded-full px-3 text-sm font-semibold text-secondary underline"
               >
-                לשלב {next.stage}
+                {t.nav.goToStage(next.stage)}
               </button>
             </>
           ) : (
-            <span>הספר מוכן. אפשר לעבור לתצוגה מקדימה ולפרסום.</span>
+            <span>{t.nav.ready}</span>
           )}
         </p>
       </nav>
@@ -516,36 +506,37 @@ export function StagesPanel(props: StagesPanelProps) {
       <StageCard
         number={1}
         icon={UserRound}
-        title="יצירת הדמות"
-        description="תיאור ותמונת ייחוס, כדי שהגיבור ייראה אותו דבר בכל עמוד."
+        title={t.hero.title}
+        description={t.hero.description}
         state={stageStates[1]}
         open={isOpen(1)}
         onToggle={() => toggle(1)}
         preview={(open) => <HeroPreview imageUrl={heroImage} description={description} large={open} />}
-        summary={hero?.image ? "יש תמונת גיבור" : hero?.description.trim() ? "יש תיאור, אין תמונה" : "אין גיבור"}
+        summary={hero?.image ? t.hero.summaryImage : hero?.description.trim() ? t.hero.summaryDescription : t.hero.summaryNone}
         cost={costLineFor("hero")}
         manual={
           <>
-            <Field label="איך הגיבור נראה?" htmlFor="stage-hero-description">
+            <Field label={t.hero.looksLabel} htmlFor="stage-hero-description">
               <Textarea
                 id="stage-hero-description"
+                dir="auto"
                 rows={3}
                 maxLength={MAX_HERO_DESCRIPTION}
                 value={description}
                 onChange={(event) => changeHero({ description: event.target.value })}
-                placeholder="למשל: ילדה בת שש עם צמה ג'ינג'ית, חולצה צהובה ומגפיים אדומים"
+                placeholder={t.hero.looksPlaceholder}
                 disabled={disabled}
               />
             </Field>
             <div className="flex flex-wrap items-center gap-2">
               <Button variant="outline" onClick={() => heroFile.current?.click()} disabled={disabled}>
                 <Upload aria-hidden="true" className="size-4" />
-                העלאת תמונת גיבור
+                {t.hero.upload}
               </Button>
               {hero ? (
                 <Button variant="ghost" size="sm" className="text-danger" onClick={() => onHeroChange(undefined)} disabled={disabled}>
                   <Trash2 aria-hidden="true" className="size-4" />
-                  הסרת הגיבור
+                  {t.hero.remove}
                 </Button>
               ) : null}
               <input
@@ -565,12 +556,12 @@ export function StagesPanel(props: StagesPanelProps) {
         ai={
           <>
             <p className="text-sm">
-              {description.trim() ? "נצייר לפי התיאור שכתבתם." : "בלי תיאור נכתוב אותו לפי הסיפור (צריך טקסט בעמודים)."}
+              {description.trim() ? t.hero.fromDescription : t.hero.fromStory}
             </p>
             <div>
               <Button variant={heroImage ? "outline" : "primary"} onClick={() => onHeroGenerate(description.trim(), style)} disabled={disabled}>
                 <Sparkles aria-hidden="true" className="size-5" />
-                {heroImage ? "יצירת הגיבור מחדש" : "יצירת תמונת הגיבור"}
+                {heroImage ? t.hero.regenerate : t.hero.generate}
               </Button>
             </div>
           </>
@@ -581,51 +572,53 @@ export function StagesPanel(props: StagesPanelProps) {
       <StageCard
         number={2}
         icon={BookText}
-        title="כתיבת הסיפור"
-        description="הטקסט של העמודים. ברירת המחדל: חרוזים וקצב בסגנון ד״ר סוס."
+        title={t.story.title}
+        description={t.story.description}
         state={stageStates[2]}
         open={isOpen(2)}
         onToggle={() => toggle(2)}
         preview={() => <StoryPreview pages={created.pages} onSeeAll={onGoToPages} />}
-        summary={counts.withText === 0 ? "אין טקסט" : `${counts.withText} עמודים עם טקסט`}
+        summary={counts.withText === 0 ? t.story.summaryNone : t.story.summary(counts.withText)}
         cost={costLineFor("story")}
         manual={
           <>
-            <p className="text-sm">הדביקו סיפור שלם והוא יתחלק לעמודים, או כתבו בכל עמוד.</p>
+            <p className="text-sm">{t.story.manualHint}</p>
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" onClick={onPasteStory} disabled={disabled}>
-                הדבקת סיפור שלם
+                {t.story.paste}
               </Button>
               <Button variant="ghost" onClick={onGoToPages}>
-                כתיבה בעמודים
+                {t.story.writeInPages}
               </Button>
             </div>
           </>
         }
         ai={
           <>
-            <Field label="על מה הסיפור?" htmlFor="stage-idea" hint="כמה מילים מספיקות. הכותב משלים עלילה וחרוזים.">
+            <Field label={t.story.ideaLabel} htmlFor="stage-idea" hint={t.story.ideaHint}>
               <Textarea
                 id="stage-idea"
+                dir="auto"
                 rows={2}
                 maxLength={300}
                 value={idea}
                 onChange={(event) => setIdea(event.target.value)}
-                placeholder="למשל: ארנבת שלא רוצה ללכת לגן"
+                placeholder={t.story.ideaPlaceholder}
                 disabled={disabled}
               />
             </Field>
             <div className="flex flex-wrap items-end gap-3">
-              <Field label="שם הגיבור (לא חובה)" htmlFor="stage-hero-name">
+              <Field label={t.story.heroNameLabel} htmlFor="stage-hero-name">
                 <Input
                   id="stage-hero-name"
+                  dir="auto"
                   value={heroName}
                   maxLength={30}
                   onChange={(event) => setHeroName(event.target.value)}
                   disabled={disabled}
                 />
               </Field>
-              <div className="flex gap-2" role="group" aria-label="בן או בת">
+              <div className="flex gap-2" role="group" aria-label={t.story.genderGroup}>
                 {(["girl", "boy"] as const).map((gender) => (
                   <button
                     key={gender}
@@ -638,7 +631,7 @@ export function StagesPanel(props: StagesPanelProps) {
                       heroGender === gender ? "border-primary bg-surface" : "border-border hover:bg-surface",
                     )}
                   >
-                    {gender === "girl" ? "בת" : "בן"}
+                    {gender === "girl" ? t.story.girl : t.story.boy}
                   </button>
                 ))}
               </div>
@@ -650,10 +643,10 @@ export function StagesPanel(props: StagesPanelProps) {
                 disabled={disabled || idea.trim().length < 3}
               >
                 <Wand2 aria-hidden="true" className="size-5" />
-                כתיבת הסיפור
+                {t.story.write}
               </Button>
             </div>
-            {counts.withText > 0 ? <p className="text-sm text-muted">יחליף את הטקסט הקיים, אחרי אישור.</p> : null}
+            {counts.withText > 0 ? <p className="text-sm text-muted">{t.story.replacesNote}</p> : null}
           </>
         }
       />
@@ -662,8 +655,8 @@ export function StagesPanel(props: StagesPanelProps) {
       <StageCard
         number={3}
         icon={Palette}
-        title="הסגנון"
-        description="איך נראים האיורים. נשמר בספר ומשפיע על האיורים הבאים."
+        title={t.style.title}
+        description={t.style.description}
         state={stageStates[3]}
         open={isOpen(3)}
         onToggle={() => toggle(3)}
@@ -671,19 +664,17 @@ export function StagesPanel(props: StagesPanelProps) {
         summary={ILLUSTRATION_STYLES.find((option) => option.slug === style)?.label ?? style}
         cost={costLineFor("style")}
         manual={
-          <p className="text-sm">
-            הסגנון משפיע רק על איורים שנוצרים בבינה מלאכותית. אם אתם מעלים איורים משלכם, אפשר לדלג.
-          </p>
+          <p className="text-sm">{t.style.manualHint}</p>
         }
         ai={
           <>
             {(
               [
-                ["general", "כללי"],
-                ["jewish", "יהודי ותורני"],
+                ["general", t.style.general],
+                ["jewish", t.style.jewish],
               ] as const
             ).map(([group, heading]) => (
-              <div key={group} role="group" aria-label={`סגנון האיור: ${heading}`} className="flex flex-col gap-2">
+              <div key={group} role="group" aria-label={t.style.groupLabel(heading)} className="flex flex-col gap-2">
                 <p className="text-sm font-semibold">{heading}</p>
                 <div className="flex flex-wrap gap-2">
                   {ILLUSTRATION_STYLES.filter((option) => option.group === group).map((option) => (
@@ -709,8 +700,8 @@ export function StagesPanel(props: StagesPanelProps) {
                 </div>
               </div>
             ))}
-            <div role="group" aria-label="כללים נוספים" className="flex flex-col gap-2">
-              <p className="text-sm font-semibold">כללים נוספים (אפשר כמה)</p>
+            <div role="group" aria-label={t.style.packsLabel} className="flex flex-col gap-2">
+              <p className="text-sm font-semibold">{t.style.packsHeading}</p>
               <div className="flex flex-wrap gap-2">
                 {RULE_PACKS.map((pack) => (
                   <button
@@ -732,12 +723,13 @@ export function StagesPanel(props: StagesPanelProps) {
               </div>
             </div>
             <Field
-              label="הנחיות משלכם (לא חובה)"
+              label={t.style.notesLabel}
               htmlFor="stage-style-notes"
-              hint="נוסף על הסגנון, לא במקומו. למשל: צבעים חמים."
+              hint={t.style.notesHint}
             >
               <Textarea
                 id="stage-style-notes"
+                dir="auto"
                 rows={2}
                 maxLength={600}
                 value={hero?.styleNotes ?? ""}
@@ -753,33 +745,33 @@ export function StagesPanel(props: StagesPanelProps) {
       <StageCard
         number={4}
         icon={ImagePlus}
-        title="התמונות"
-        description="איור לכל עמוד."
+        title={t.pictures.title}
+        description={t.pictures.description}
         state={stageStates[4]}
         open={isOpen(4)}
         onToggle={() => toggle(4)}
         preview={() => <PicturesPreview pages={created.pages} version={version} onOpen={openPage} />}
-        summary={`${counts.withImage} מתוך ${counts.pages} עמודים עם תמונה`}
+        summary={t.pictures.summary(counts.withImage, counts.pages)}
         cost={costLineFor("pictures")}
         manual={
           <>
-            <p className="text-sm">אפשר כמה בבת אחת: כל תמונה הופכת לעמוד. אפשר גם לגרור לעמודים.</p>
+            <p className="text-sm">{t.pictures.manualHint}</p>
             <div>
               <Button variant="outline" onClick={onUploadImages} disabled={disabled}>
                 <Upload aria-hidden="true" className="size-4" />
-                העלאת תמונות
+                {t.pictures.upload}
               </Button>
             </div>
           </>
         }
         ai={
           <>
-            <p className="text-sm">תמונה אחת עם כמה איורים, שנחתכת לעמודים. צריך טקסט בעמוד וגיבור (שלב 1).</p>
-            <div role="group" aria-label="גודל הרשת" className="flex flex-wrap gap-2">
+            <p className="text-sm">{t.pictures.aiHint}</p>
+            <div role="group" aria-label={t.pictures.gridLabel} className="flex flex-wrap gap-2">
               {(
                 [
-                  ["3x3", "רשת 3×3"],
-                  ["4x4", "רשת 4×4"],
+                  ["3x3", t.pictures.grid3],
+                  ["4x4", t.pictures.grid4],
                 ] as const
               ).map(([value, label]) => (
                 <button
@@ -798,13 +790,12 @@ export function StagesPanel(props: StagesPanelProps) {
               ))}
             </div>
             <p className="text-sm text-muted">
-              {gridLayout === "3x3"
-                ? "9 איורים בתמונה: זול ואחיד."
-                : "16 איורים בתמונה: זול עוד יותר, אבל כל איור קטן יותר."}
+              {gridLayout === "3x3" ? t.pictures.grid3Hint : t.pictures.grid4Hint}
             </p>
-            <Field label="הנחיות לאיור הזה (לא חובה)" htmlFor="stage-grid-notes" hint="נוסף על הסגנון. תקף רק לפעם הזאת.">
+            <Field label={t.pictures.notesLabel} htmlFor="stage-grid-notes" hint={t.pictures.notesHint}>
               <Textarea
                 id="stage-grid-notes"
+                dir="auto"
                 rows={2}
                 maxLength={600}
                 value={gridNotes}
@@ -817,11 +808,11 @@ export function StagesPanel(props: StagesPanelProps) {
                 <Paintbrush aria-hidden="true" className="size-5" />
                 {missingImages > 0
                   ? missingImages === 1
-                    ? "איור העמוד שאין לו תמונה"
-                    : `איור ${missingImages} עמודים שאין להם תמונה`
+                    ? t.pictures.illustrateOne
+                    : t.pictures.illustrateMany(missingImages)
                   : counts.withText === 0
-                    ? "אין עמודים עם טקסט לאייר"
-                    : "לכל העמודים עם טקסט יש תמונה"}
+                    ? t.pictures.noText
+                    : t.pictures.allDone}
               </Button>
             </div>
           </>
@@ -832,8 +823,8 @@ export function StagesPanel(props: StagesPanelProps) {
       <StageCard
         number={5}
         icon={Mic}
-        title="הקראה"
-        description="קול שמקריא כל עמוד."
+        title={t.narration.title}
+        description={t.narration.description}
         state={stageStates[5]}
         open={isOpen(5)}
         onToggle={() => toggle(5)}
@@ -845,22 +836,22 @@ export function StagesPanel(props: StagesPanelProps) {
             voiceLabel={voices.find((voice) => voice.id === narrationVoice)?.label}
           />
         )}
-        summary={`${counts.withAudio} מתוך ${counts.withText} עמודים מוקראים`}
+        summary={t.narration.summary(counts.withAudio, counts.withText)}
         cost={costLineFor("narration")}
         manual={
           <>
-            <p className="text-sm">הקליטו או העלו שמע בלשונית העמודים. הקלטה שלכם לא נדרסת.</p>
+            <p className="text-sm">{t.narration.manualHint}</p>
             <div>
               <Button variant="outline" onClick={onGoToPages}>
-                להקלטה בעמודים
+                {t.narration.recordInPages}
               </Button>
             </div>
           </>
         }
         ai={
           <>
-            <p className="text-sm">קול מלאכותי. בחרו סגנון וקול, ואז הקראה לעמודים החסרים או הקראה מחדש לכל הספר.</p>
-            <div role="group" aria-label="סגנון ההקראה" className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <p className="text-sm">{t.narration.aiHint}</p>
+            <div role="group" aria-label={t.narration.styleGroup} className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {NARRATION_STYLES.map((option) => (
                 <button
                   key={option.slug}
@@ -884,7 +875,7 @@ export function StagesPanel(props: StagesPanelProps) {
             </div>
             {voices.length > 0 ? (
               <div className="flex flex-col gap-2">
-                <div role="group" aria-label="קול ההקראה" className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <div role="group" aria-label={t.narration.voiceGroup} className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {voices.map((voice) => (
                     <button
                       key={voice.id}
@@ -918,16 +909,17 @@ export function StagesPanel(props: StagesPanelProps) {
                         }
                       }}
                     >
-                      שמעו דוגמה
+                      {t.narration.sample}
                     </Button>
-                    <span className="text-sm text-muted">משפט קצר, מנצל מעט מהמכסה.</span>
+                    <span className="text-sm text-muted">{t.narration.sampleHint}</span>
                   </div>
                 ) : null}
               </div>
             ) : null}
-            <Field label="הנחיות משלכם להקראה (לא חובה)" htmlFor="stage-narration-notes" hint="נוסף על הסגנון. למשל: לאט ובלחש בסוף.">
+            <Field label={t.narration.notesLabel} htmlFor="stage-narration-notes" hint={t.narration.notesHint}>
               <Textarea
                 id="stage-narration-notes"
+                dir="auto"
                 rows={2}
                 maxLength={300}
                 value={hero?.narrationNotes ?? ""}
@@ -937,7 +929,7 @@ export function StagesPanel(props: StagesPanelProps) {
             </Field>
             {narrationIgnored || (narrationInfo?.notesHonoured === false && !!hero?.narrationNotes?.trim()) ? (
               <p className="text-sm" role="status">
-                הקול הנוכחי לא מקבל הנחיות חופשיות, אז רק הסגנון שבחרתם נלקח בחשבון.
+                {t.narration.notesIgnored}
               </p>
             ) : null}
             <div className="flex flex-col gap-3">
@@ -946,16 +938,16 @@ export function StagesPanel(props: StagesPanelProps) {
                   <div>
                     <Button onClick={() => void runNarration("missing")} disabled={disabled || counts.withText === 0}>
                       <Mic aria-hidden="true" className="size-5" />
-                      הקראה לעמודים שעדיין אין להם הקראה
+                      {t.narration.narrateMissing}
                     </Button>
                   </div>
                   <p className="text-sm text-muted">
-                    {narrationMissing === 1 ? "עמוד אחד מחכה להקראה." : `${narrationMissing} עמודים מחכים להקראה.`}
+                    {t.narration.waiting(narrationMissing)}
                   </p>
                 </div>
               ) : (
                 <p className="text-sm font-medium" role="note">
-                  {counts.withText === 0 ? "אין עמודים עם טקסט להקריא." : "כל העמודים כבר מוקראים."}
+                  {counts.withText === 0 ? t.narration.noText : t.narration.allDone}
                 </p>
               )}
               {counts.withText > 0 ? (
@@ -963,15 +955,15 @@ export function StagesPanel(props: StagesPanelProps) {
                   <div>
                     <Button variant="outline" onClick={() => void runNarration("all")} disabled={disabled}>
                       <Mic aria-hidden="true" className="size-5" />
-                      הקראה מחדש של כל הספר בקול ובסגנון שנבחרו
+                      {t.narration.narrateAll}
                     </Button>
                   </div>
-                  <p className="text-sm text-muted">מחליפה את ההקראה הקיימת בכל העמודים. הקלטה שלכם נשארת אלא אם תאשרו אחרת.</p>
+                  <p className="text-sm text-muted">{t.narration.narrateAllHint}</p>
                   {costs ? (
                     <CostLine
                       estimate={estimateNarration(costs, { chars: counts.textChars ?? counts.withText * 200 })}
                       costs={costs}
-                      label="הקראה מחדש של כל הספר"
+                      label={t.narration.narrateAllCost}
                     />
                   ) : null}
                 </div>
@@ -985,31 +977,31 @@ export function StagesPanel(props: StagesPanelProps) {
       <StageCard
         number={6}
         icon={Wand2}
-        title="ניקוד"
-        description="סימני ניקוד שעוזרים לקורא הצעיר."
+        title={t.nikud.title}
+        description={t.nikud.description}
         state={stageStates[6]}
         open={isOpen(6)}
         onToggle={() => toggle(6)}
         preview={() => <NikudPreview pages={created.pages} />}
-        summary={`${counts.withNikud} מתוך ${counts.withText} עמודים מנוקדים`}
+        summary={t.nikud.summary(counts.withNikud, counts.withText)}
         cost={costLineFor("nikud")}
         manual={
           <>
-            <p className="text-sm">נקדו ותקנו בשדה הניקוד בכל עמוד. תיקון ידני לא נדרס.</p>
+            <p className="text-sm">{t.nikud.manualHint}</p>
             <div>
               <Button variant="outline" onClick={onGoToPages}>
-                לניקוד בעמודים
+                {t.nikud.inPages}
               </Button>
             </div>
           </>
         }
         ai={
           <>
-            <p className="text-sm">ניקוד אוטומטי לעמודים בלי ניקוד. כדאי לבדוק שמות בדויים.</p>
+            <p className="text-sm">{t.nikud.aiHint}</p>
             <div>
               <Button variant={counts.withText > 0 && counts.withNikud >= counts.withText ? "outline" : "primary"} onClick={onNikudAll} disabled={disabled || counts.withText === 0}>
                 <Wand2 aria-hidden="true" className="size-5" />
-                ניקוד לכל העמודים
+                {t.nikud.all}
               </Button>
             </div>
           </>
@@ -1041,29 +1033,29 @@ export function StagesPanel(props: StagesPanelProps) {
       <StageCard
         number={8}
         icon={ClipboardList}
-        title="פרטי הספר"
-        description="כותרת, תקציר, קטגוריות, תגיות ושאלות לשיחה. מתמלאים לבד עם כתיבת סיפור."
+        title={t.details.title}
+        description={t.details.description}
         state={stageStates[8]}
         open={isOpen(8)}
         onToggle={() => toggle(8)}
         preview={() => <DetailsPreview created={created} details={details} />}
         summary={
-          details.missing.length > 0 ? `חסר: ${details.missing.join(", ")}` : `${details.done} מתוך ${details.total} פרטים מולאו`
+          details.missing.length > 0 ? t.details.missing(details.missing.join(", ")) : t.details.summary(details.done, details.total)
         }
         cost={costLineFor("details")}
         manual={
           <>
-            <p className="text-sm">ערכו הכול, כולל קרדיטים, רישיון וכריכה, בלשונית פרטי הספר.</p>
+            <p className="text-sm">{t.details.manualHint}</p>
             <div>
               <Button variant="outline" onClick={onGoToDetails}>
-                לפרטי הספר
+                {t.details.goTo}
               </Button>
             </div>
           </>
         }
         ai={
           <>
-            <p className="text-sm">הכותב משלים פרטים ריקים לפי הסיפור. מה שכתבתם לא נדרס.</p>
+            <p className="text-sm">{t.details.aiHint}</p>
             <label className="flex items-start gap-2 text-sm">
               <input
                 type="checkbox"
@@ -1071,12 +1063,12 @@ export function StagesPanel(props: StagesPanelProps) {
                 checked={replaceDetails}
                 onChange={(event) => setReplaceDetails(event.target.checked)}
               />
-              <span>להחליף גם פרטים שכבר מולאו (הקרדיטים לא יוחלפו)</span>
+              <span>{t.details.replace}</span>
             </label>
             <div>
               <Button variant={details.missing.length === 0 ? "outline" : "primary"} onClick={() => onAutoDetails({ replace: replaceDetails })} disabled={disabled || counts.withText === 0}>
                 <Sparkles aria-hidden="true" className="size-5" />
-                מילוי אוטומטי של הפרטים
+                {t.details.auto}
               </Button>
             </div>
           </>
@@ -1122,6 +1114,7 @@ function AnimationStage({
   refresh: () => Promise<void>;
   pages: CreatedPage[];
 }) {
+  const t = STUDIO_STAGES[useLocale()].animation;
   const [running, setRunning] = useState<number | null>(null);
   const [noteOpen, setNoteOpen] = useState<number | null>(null);
   // One-off notes per page: not saved with the book.
@@ -1138,10 +1131,10 @@ function AnimationStage({
   const animate = async (page: number, replace: boolean) => {
     if (running !== null) return;
     setRunning(page);
-    onBusy({ label: `מנפיש את עמוד ${page + 1}. זה לוקח בערך דקה…`, expectedSeconds: EXPECTED_SECONDS.animation });
+    onBusy({ label: t.busyAnimating(page + 1), expectedSeconds: EXPECTED_SECONDS.animation });
     try {
       if (!(await onFlush())) {
-        onNotice({ tone: "error", text: "אי אפשר להנפיש לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        onNotice({ tone: "error", text: t.flushAnimate });
         return;
       }
       const notes = [hero?.animationNotes?.trim(), pageNotes[page]?.trim()].filter(Boolean).join(" ").slice(0, ANIMATION_NOTES_MAX);
@@ -1153,18 +1146,18 @@ function AnimationStage({
       if (outcome.status === "animated") {
         onNotice({
           tone: "success",
-          text: `עמוד ${page + 1} הונפש. אם התנועה לא מתאימה, אפשר ללחוץ על הנפשה מחדש.`,
+          text: t.animated(page + 1),
           mock: outcome.videoSource === "mock" ? "video" : undefined,
         });
       } else if (outcome.status === "refused") {
-        onNotice({ tone: "error", text: "שירות הווידאו סירב להנפיש את האיור (מסנן בטיחות). אפשר להחליף את האיור." });
+        onNotice({ tone: "error", text: t.refused });
       } else if (outcome.status === "failed") {
-        onNotice({ tone: "error", text: outcome.error ?? "ההנפשה נכשלה" });
+        onNotice({ tone: "error", text: outcome.error ?? t.failed });
       } else {
-        onNotice({ tone: "info", text: "לא היה מה להנפיש בעמוד הזה." });
+        onNotice({ tone: "info", text: t.nothing });
       }
     } catch (err) {
-      fail(err, "ההנפשה נכשלה");
+      fail(err, t.failed);
     } finally {
       setRunning(null);
       onBusy(null);
@@ -1179,9 +1172,9 @@ function AnimationStage({
     }
     if (ownClips.has(page)) {
       onConfirm({
-        title: "להחליף את הקליפ שהעליתם?",
-        description: `בעמוד ${page + 1} יש קליפ שהעליתם בעצמכם. הנפשה חדשה תחליף אותו, ויש לכך עלות.`,
-        confirmLabel: "החלפה בהנפשה חדשה",
+        title: t.replaceTitle,
+        description: t.replaceDescription(page + 1),
+        confirmLabel: t.replaceConfirm,
         run: () => void animate(page, true),
       });
       return;
@@ -1190,17 +1183,17 @@ function AnimationStage({
   };
 
   const attach = async (page: number, file: File) => {
-    onBusy({ label: "מעלה את הקליפ…", expectedSeconds: EXPECTED_SECONDS.upload });
+    onBusy({ label: t.busyUploading, expectedSeconds: EXPECTED_SECONDS.upload });
     try {
       // The server addresses pages by their saved order, so a pending reorder must land first.
       if (!(await onFlush())) {
-        onNotice({ tone: "error", text: "אי אפשר להעלות קליפ לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        onNotice({ tone: "error", text: t.flushUpload });
         return;
       }
       await attachPageClip(bookId, page, file, file.name);
-      onNotice({ tone: "success", text: `הקליפ נשמר בעמוד ${page + 1}.` });
+      onNotice({ tone: "success", text: t.saved(page + 1) });
     } catch (err) {
-      fail(err, "העלאת הקליפ נכשלה");
+      fail(err, t.uploadFailed);
     } finally {
       onBusy(null);
       void refresh();
@@ -1208,15 +1201,15 @@ function AnimationStage({
   };
 
   const remove = async (page: number) => {
-    onBusy({ label: "מסיר את ההנפשה…", expectedSeconds: EXPECTED_SECONDS.bookAction });
+    onBusy({ label: t.busyRemoving, expectedSeconds: EXPECTED_SECONDS.bookAction });
     try {
       if (!(await onFlush())) {
-        onNotice({ tone: "error", text: "אי אפשר להסיר את הקליפ לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        onNotice({ tone: "error", text: t.flushRemove });
         return;
       }
       await removePageClip(bookId, page);
     } catch (err) {
-      fail(err, "הסרת ההנפשה נכשלה");
+      fail(err, t.removeFailed);
     } finally {
       onBusy(null);
       void refresh();
@@ -1230,35 +1223,35 @@ function AnimationStage({
     <StageCard
       number={7}
       icon={Clapperboard}
-      title="הנפשת התמונות"
-      description="קליפ קצר ושקט שמניע את האיור. שלב לא חובה."
+      title={t.title}
+      description={t.description}
       state={stateOf(withClip, illustratedPages.length)}
       open={open}
       onToggle={onToggle}
       preview={() => <AnimationPreview pages={pages} version={version} />}
-      summary={`${withClip} מתוך ${illustratedPages.length} איורים מונפשים`}
-      cost={costs ? <CostLine estimate={estimateAnimation(costs, { clips: 1 })} costs={costs} label="הנפשת עמוד אחד" /> : undefined}
+      summary={t.summary(withClip, illustratedPages.length)}
+      cost={costs ? <CostLine estimate={estimateAnimation(costs, { clips: 1 })} costs={costs} label={t.costOne} /> : undefined}
       manual={
         <>
-          <p className="text-sm">יש לכם קליפ (MP4 או WebM, עד 25 מ״ב)? העלו אותו לעמוד.</p>
+          <p className="text-sm">{t.manualHint}</p>
           {illustratedPages.length === 0 ? (
-            <p className="text-sm text-muted">אין עדיין איורים להנפשה.</p>
+            <p className="text-sm text-muted">{t.noPictures}</p>
           ) : (
             <ul className="flex flex-col gap-2">
               {illustratedPages.map((page) => (
                 <li key={page} className="flex flex-wrap items-center gap-2">
-                  <span className="min-w-16 font-medium">עמוד {page + 1}</span>
+                  <span className="min-w-16 font-medium">{t.page(page + 1)}</span>
                   <Button
                     variant="outline"
                     disabled={disabled}
-                    aria-label={`${clips.has(page) ? "החלפת קליפ" : "העלאת קליפ"} בעמוד ${page + 1}`}
+                    aria-label={t.clipLabel(clips.has(page) ? t.replaceClip : t.uploadClip, page + 1)}
                     onClick={() => {
                       targetPage.current = page;
                       fileInput.current?.click();
                     }}
                   >
                     <Upload aria-hidden="true" className="size-4" />
-                    {clips.has(page) ? "החלפת קליפ" : "העלאת קליפ"}
+                    {clips.has(page) ? t.replaceClip : t.uploadClip}
                   </Button>
                   {clips.has(page) ? (
                     <Button
@@ -1266,11 +1259,11 @@ function AnimationStage({
                       size="sm"
                       className="text-danger"
                       disabled={disabled}
-                      aria-label={`הסרת ההנפשה מעמוד ${page + 1}`}
+                      aria-label={t.removeLabel(page + 1)}
                       onClick={() => void remove(page)}
                     >
                       <Trash2 aria-hidden="true" className="size-4" />
-                      הסרה
+                      {t.remove}
                     </Button>
                   ) : null}
                 </li>
@@ -1292,10 +1285,8 @@ function AnimationStage({
       }
       ai={
         <>
-          <p className="text-sm">
-            מנפישים עמוד אחד בכל פעם: כל הנפשה לוקחת בערך דקה ועולה כסף. בחרו סוג תנועה, הוסיפו הוראות אם רוצים, ולחצו על הנפשה ליד העמוד.
-          </p>
-          <div role="group" aria-label="סוג התנועה" className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <p className="text-sm">{t.aiHint}</p>
+          <div role="group" aria-label={t.motionGroup} className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {ANIMATION_MOTIONS.map((option) => (
               <button
                 key={option.slug}
@@ -1318,12 +1309,13 @@ function AnimationStage({
             ))}
           </div>
           <Field
-            label="הוראות מיוחדות להנפשה (לא חובה)"
+            label={t.notesLabel}
             htmlFor="stage-animation-notes"
-            hint="נוסף על סוג התנועה. למשל: הציפור מנפנפת בכנפיים, העננים זזים לאט. הסגנון של האיור והכללים לילדים נשמרים תמיד."
+            hint={t.notesHint}
           >
             <Textarea
               id="stage-animation-notes"
+              dir="auto"
               rows={2}
               maxLength={ANIMATION_NOTES_MAX}
               value={hero?.animationNotes ?? ""}
@@ -1332,9 +1324,9 @@ function AnimationStage({
             />
           </Field>
           {illustratedPages.length === 0 ? (
-            <p className="text-sm text-muted">אין עדיין איורים להנפשה. אפשר לאייר בשלב 4.</p>
+            <p className="text-sm text-muted">{t.noPicturesAi}</p>
           ) : (
-            <ul className="flex flex-col gap-3" aria-label="הנפשה לפי עמוד">
+            <ul className="flex flex-col gap-3" aria-label={t.perPageGroup}>
               {illustratedPages.map((page) => {
                 const info = pageByIndex.get(page);
                 const has = clips.has(page);
@@ -1344,20 +1336,22 @@ function AnimationStage({
                     <div className="flex flex-wrap items-center gap-3">
                       <PageClipThumb image={info?.image} video={info?.video} version={version} index={page} />
                       <div className="flex min-w-0 flex-1 flex-col gap-1">
-                        <span className="font-medium">עמוד {page + 1}</span>
-                        <span className="text-sm text-muted">{has ? "יש קליפ" : "עוד אין קליפ"}</span>
+                        <span className="font-medium">{t.page(page + 1)}</span>
+                        <span className="text-sm text-muted">{has ? t.hasClip : t.noClip}</span>
                       </div>
                       <Button
                         variant={has ? "outline" : "primary"}
                         disabled={disabled || running !== null}
                         loading={running === page}
-                        aria-label={`${has ? "הנפשה מחדש" : "הנפשה"} של עמוד ${page + 1}${
-                          costs ? `, ${costLine(estimateAnimation(costs, { clips: 1 }), costs)}` : ""
-                        }`}
+                        aria-label={t.animateLabel(
+                          has ? t.reanimate : t.animate,
+                          page + 1,
+                          costs ? costLine(estimateAnimation(costs, { clips: 1 }), costs) : "",
+                        )}
                         onClick={() => requestAnimate(page)}
                       >
                         <Clapperboard aria-hidden="true" className="size-4" />
-                        {has ? "הנפשה מחדש" : "הנפשה"}
+                        {has ? t.reanimate : t.animate}
                       </Button>
                     </div>
                     <div>
@@ -1367,13 +1361,14 @@ function AnimationStage({
                         onClick={() => setNoteOpen(open ? null : page)}
                         className="min-h-touch text-sm font-medium text-primary underline-offset-2 hover:underline"
                       >
-                        הוראה לעמוד הזה
+                        {t.pageNote}
                       </button>
                       {open ? (
                         <Input
-                          aria-label={`הוראה להנפשת עמוד ${page + 1}`}
+                          aria-label={t.pageNoteLabel(page + 1)}
+                          dir="auto"
                           maxLength={200}
-                          placeholder="למשל: הילדה מנופפת לשלום"
+                          placeholder={t.pageNotePlaceholder}
                           value={pageNotes[page] ?? ""}
                           onChange={(event) => setPageNotes((current) => ({ ...current, [page]: event.target.value }))}
                           disabled={disabled}

@@ -1,5 +1,7 @@
 import { cn } from "@/lib/cn";
 import { creditPeople, creditStatements, licenseDeedUrl, safeHttpUrl, type CreditBook } from "@/lib/credits";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { creditLabel, READER_MESSAGES } from "@/lib/i18n/reader";
 import { mediaUrl } from "@/lib/media/url";
 
 export interface BookCreditsProps {
@@ -18,6 +20,8 @@ export interface BookCreditsProps {
   className?: string;
   /** Prefix of the element ids; change it when two blocks are on one page. */
   id?: string;
+  /** Interface language of the labels. The credited names and statements stay as written. Default Hebrew. */
+  locale?: Locale;
 }
 
 /** True when a book has anything to credit. */
@@ -49,8 +53,10 @@ export function BookCredits({
   mediaToken,
   className,
   id = "book-credits",
+  locale = DEFAULT_LOCALE,
 }: BookCreditsProps) {
   if (!hasCredits(book)) return null;
+  const t = READER_MESSAGES[locale].credits;
 
   const people = creditPeople(book);
   const statements = creditStatements(book);
@@ -62,7 +68,7 @@ export function BookCredits({
   const source = book.source.trim();
   const sourceUrl = safeHttpUrl(source);
   const Heading = headingLevel === 2 ? "h2" : "h3";
-  const logoAlt = `הלוגו של ${publisher || "המוציא לאור"}`;
+  const logoAlt = t.logoAlt(publisher);
   const logoImage = logo ? (
     <img src={logo} alt={logoAlt} loading="lazy" className="h-14 w-auto rounded-md bg-white p-1.5" />
   ) : null;
@@ -79,14 +85,14 @@ export function BookCredits({
       )}
     >
       <Heading id={`${id}-title`} className={variant === "card" ? "text-2xl font-bold" : "text-xl font-bold"}>
-        קרדיטים
+        {t.title}
       </Heading>
 
       {people.length > 0 ? (
         <dl className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
           {people.map((line) => (
             <div key={line.key}>
-              <dt className="text-sm font-semibold text-muted">{line.label}</dt>
+              <dt className="text-sm font-semibold text-muted">{creditLabel(locale, line, book.language ?? "he")}</dt>
               <dd dir={line.ltr ? "ltr" : "auto"} className="text-start text-lg">
                 {line.value}
               </dd>
@@ -107,7 +113,7 @@ export function BookCredits({
 
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
         {logoImage && publisherUrl ? (
-          <a href={publisherUrl} {...EXTERNAL} aria-label={`${logoAlt} (נפתח בחלון חדש)`} className="shrink-0">
+          <a href={publisherUrl} {...EXTERNAL} aria-label={`${logoAlt}${t.newWindow}`} className="shrink-0">
             {logoImage}
           </a>
         ) : (
@@ -116,11 +122,11 @@ export function BookCredits({
         <ul className="flex min-w-0 flex-col gap-1">
           {publisher ? (
             <li>
-              <span className="text-muted">פורסם במקור על ידי </span>
+              <span className="text-muted">{t.publishedBy}</span>
               {publisherUrl ? (
                 <a href={publisherUrl} {...EXTERNAL} className={LINK}>
                   <bdi>{publisher}</bdi>
-                  <span className="sr-only"> (נפתח בחלון חדש)</span>
+                  <span className="sr-only">{t.newWindow}</span>
                 </a>
               ) : (
                 <bdi>{publisher}</bdi>
@@ -129,11 +135,11 @@ export function BookCredits({
           ) : null}
           {license ? (
             <li>
-              <span className="text-muted">רישיון: </span>
+              <span className="text-muted">{t.license}</span>
               {deed ? (
                 <a href={deed} {...EXTERNAL} className={LINK}>
                   <bdi dir="ltr">{license}</bdi>
-                  <span className="sr-only"> (נפתח בחלון חדש)</span>
+                  <span className="sr-only">{t.newWindow}</span>
                 </a>
               ) : (
                 <bdi>{license}</bdi>
@@ -142,7 +148,7 @@ export function BookCredits({
           ) : null}
           {showSource && source ? (
             <li className="min-w-0">
-              <span className="text-muted">מקור: </span>
+              <span className="text-muted">{t.source}</span>
               {sourceUrl ? (
                 <a href={sourceUrl} {...EXTERNAL} className={cn(LINK, "break-all")}>
                   <bdi dir="ltr">{source}</bdi>

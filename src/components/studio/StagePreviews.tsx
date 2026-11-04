@@ -2,11 +2,14 @@
 
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Chip } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { ILLUSTRATION_STYLES, NARRATION_STYLES, RULE_PACKS } from "@/lib/generation/presets";
 import { hasNikud } from "@/lib/hebrew";
 import { mediaUrl } from "@/lib/media/url";
+import { taxonomyText } from "@/lib/i18n/messages";
+import { STUDIO_STAGES } from "@/lib/i18n/studio-stages";
 import { CATEGORIES } from "@/lib/taxonomy";
 import type { DetailsStatus } from "./types";
 
@@ -54,21 +57,22 @@ function Empty({ children }: { children: string }) {
 
 /** Stage 1: the hero image, large enough to judge, and the description. */
 export function HeroPreview({ imageUrl, description, large }: { imageUrl: string; description: string; large: boolean }) {
-  if (!imageUrl && !description.trim()) return <Empty>עוד אין גיבור.</Empty>;
+  const t = STUDIO_STAGES[useLocale()].previews;
+  if (!imageUrl && !description.trim()) return <Empty>{t.noHero}</Empty>;
   return (
     <div className="flex flex-wrap items-start gap-3">
       {imageUrl ? (
-        <a href={imageUrl} target="_blank" rel="noreferrer" className="shrink-0" aria-label="פתיחת תמונת הגיבור בגודל מלא">
+        <a href={imageUrl} target="_blank" rel="noreferrer" className="shrink-0" aria-label={t.openHero}>
           <img
             src={imageUrl}
-            alt="תמונת הגיבור"
+            alt={t.heroAlt}
             loading="lazy"
             className={cn("rounded-md border border-border bg-surface object-contain", large ? "size-48" : "size-24")}
           />
         </a>
       ) : (
         <div className="flex size-24 shrink-0 items-center justify-center rounded-md border-2 border-dashed border-border-strong text-center text-sm text-muted">
-          אין תמונה
+          {t.noImage}
         </div>
       )}
       {description.trim() ? (
@@ -80,24 +84,23 @@ export function HeroPreview({ imageUrl, description, large }: { imageUrl: string
 
 /** Stage 2: title-less excerpt of the first pages, rhyme lines kept as lines. */
 export function StoryPreview({ pages, onSeeAll }: { pages: CreatedPage[]; onSeeAll: () => void }) {
+  const t = STUDIO_STAGES[useLocale()].previews;
   const withText = pages.filter((page) => page.text.trim().length > 0);
-  if (withText.length === 0) return <Empty>עוד אין טקסט בעמודים.</Empty>;
+  if (withText.length === 0) return <Empty>{t.noText}</Empty>;
   return (
     <div className="flex flex-col gap-2">
       <ol className="grid gap-2 sm:grid-cols-3">
         {withText.slice(0, 3).map((page) => (
           <li key={page.index} className="min-w-0 rounded-md border border-border bg-surface p-3">
-            <span className="text-xs font-semibold text-muted">עמוד {page.index + 1}</span>
-            <p className="line-clamp-4 whitespace-pre-line text-sm leading-relaxed">{page.text.trim()}</p>
+            <span className="text-xs font-semibold text-muted">{t.page(page.index + 1)}</span>
+            <p dir="auto" className="line-clamp-4 whitespace-pre-line text-sm leading-relaxed">{page.text.trim()}</p>
           </li>
         ))}
       </ol>
       <p className="flex flex-wrap items-center gap-2 text-sm text-muted">
-        <span>
-          {withText.length} {withText.length === 1 ? "עמוד עם טקסט" : "עמודים עם טקסט"}
-        </span>
+        <span>{t.withText(withText.length)}</span>
         <button type="button" onClick={onSeeAll} className="min-h-11 rounded-full px-3 font-semibold text-secondary underline">
-          לראות הכול בעמודים
+          {t.seeAll}
         </button>
       </p>
     </div>
@@ -106,6 +109,7 @@ export function StoryPreview({ pages, onSeeAll }: { pages: CreatedPage[]; onSeeA
 
 /** Stage 3: the chosen style and rule packs as chips, with a swatch. */
 export function StylePreview({ style, chosen, packs, notes }: { style: string; chosen: boolean; packs: string[]; notes?: string }) {
+  const t = STUDIO_STAGES[useLocale()].previews;
   const preset = ILLUSTRATION_STYLES.find((option) => option.slug === style);
   const packOptions = packs.map((slug) => RULE_PACKS.find((pack) => pack.slug === slug)).filter((pack) => !!pack);
   return (
@@ -124,9 +128,9 @@ export function StylePreview({ style, chosen, packs, notes }: { style: string; c
               {pack.label}
             </Chip>
           ))}
-          {notes?.trim() ? <Chip tone="neutral">הנחיות משלכם</Chip> : null}
+          {notes?.trim() ? <Chip tone="neutral">{t.ownNotes}</Chip> : null}
         </div>
-        {!chosen ? <p className="text-sm text-muted">ברירת מחדל. עוד לא בחרתם.</p> : null}
+        {!chosen ? <p className="text-sm text-muted">{t.defaultStyle}</p> : null}
       </div>
     </div>
   );
@@ -142,9 +146,10 @@ export function PicturesPreview({
   version?: string;
   onOpen: (index: number) => void;
 }) {
-  if (!pages.some((page) => page.image || page.text.trim())) return <Empty>עוד אין עמודים לאייר.</Empty>;
+  const t = STUDIO_STAGES[useLocale()].previews;
+  if (!pages.some((page) => page.image || page.text.trim())) return <Empty>{t.noPages}</Empty>;
   return (
-    <ul className="grid grid-cols-[repeat(auto-fill,minmax(4.5rem,5.5rem))] gap-2" aria-label="תמונות העמודים">
+    <ul className="grid grid-cols-[repeat(auto-fill,minmax(4.5rem,5.5rem))] gap-2" aria-label={t.picturesLabel}>
       {pages.map((page) => {
         const src = mediaUrl(page.image, version);
         return (
@@ -152,7 +157,7 @@ export function PicturesPreview({
             <button
               type="button"
               onClick={() => onOpen(page.index)}
-              aria-label={src ? `עמוד ${page.index + 1}: פתיחה בעמודים` : `עמוד ${page.index + 1}: אין תמונה, פתיחה בעמודים`}
+              aria-label={t.thumbLabel(page.index + 1, !!src)}
               data-testid={src ? "page-thumb" : "page-thumb-missing"}
               className={cn(
                 "relative flex aspect-square min-h-11 w-full items-center justify-center overflow-hidden rounded-md",
@@ -189,6 +194,7 @@ export function NarrationPreview({
   styleSlug: string;
   voiceLabel?: string;
 }) {
+  const t = STUDIO_STAGES[useLocale()].previews;
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState<number | null>(null);
   useEffect(
@@ -198,7 +204,7 @@ export function NarrationPreview({
     [],
   );
   const narrated = pages.filter((page) => page.audio);
-  if (narrated.length === 0) return <Empty>עוד אין הקראה.</Empty>;
+  if (narrated.length === 0) return <Empty>{t.noNarration}</Empty>;
   const styleLabel = NARRATION_STYLES.find((option) => option.slug === styleSlug)?.label ?? styleSlug;
 
   const toggle = (page: CreatedPage) => {
@@ -218,14 +224,14 @@ export function NarrationPreview({
 
   return (
     <div className="flex flex-col gap-2">
-      <ul className="flex flex-wrap gap-2" aria-label="הקראה לפי עמוד">
+      <ul className="flex flex-wrap gap-2" aria-label={t.narrationLabel}>
         {narrated.map((page) => (
           <li key={page.index}>
             <button
               type="button"
               onClick={() => toggle(page)}
               aria-pressed={playing === page.index}
-              aria-label={`${playing === page.index ? "עצירת" : "השמעת"} ההקראה של עמוד ${page.index + 1}`}
+              aria-label={t.playLabel(playing === page.index, page.index + 1)}
               className="flex min-h-11 min-w-11 items-center justify-center gap-1 rounded-full border-2 border-border-strong bg-surface px-3 text-sm font-semibold hover:bg-surface-2"
             >
               {playing === page.index ? <Pause aria-hidden="true" className="size-4" /> : <Play aria-hidden="true" className="size-4" />}
@@ -235,8 +241,7 @@ export function NarrationPreview({
         ))}
       </ul>
       <p className="text-sm text-muted">
-        {narrated.length} עמודים מוקראים. הגדרה נוכחית: {styleLabel}
-        {voiceLabel ? `, ${voiceLabel}` : ""}.
+        {t.narrated(narrated.length, styleLabel, voiceLabel)}
       </p>
     </div>
   );
@@ -244,24 +249,26 @@ export function NarrationPreview({
 
 /** Stage 6: one vocalized line. */
 export function NikudPreview({ pages }: { pages: CreatedPage[] }) {
+  const t = STUDIO_STAGES[useLocale()].previews;
   const sample = pages.find((page) => page.text.trim() && page.textNikud && hasNikud(page.textNikud));
-  if (!sample?.textNikud) return <Empty>עוד אין ניקוד.</Empty>;
+  if (!sample?.textNikud) return <Empty>{t.noNikud}</Empty>;
   const line = sample.textNikud.split("\n").find((entry) => entry.trim()) ?? sample.textNikud;
   return (
     <p className="min-w-0 rounded-md border border-border bg-surface p-3 text-lg leading-loose">
-      <span className="line-clamp-2">{line.trim()}</span>
-      <span className="text-xs text-muted">עמוד {sample.index + 1}</span>
+      <span dir="auto" className="line-clamp-2">{line.trim()}</span>
+      <span className="text-xs text-muted">{t.page(sample.index + 1)}</span>
     </p>
   );
 }
 
 /** Stage 7: tiny looping muted clips; the still picture when motion is reduced. */
 export function AnimationPreview({ pages, version }: { pages: CreatedPage[]; version?: string }) {
+  const t = STUDIO_STAGES[useLocale()].previews;
   const reduced = usePrefersReducedMotion();
   const clips = pages.filter((page) => page.video);
-  if (clips.length === 0) return <Empty>עוד אין קליפים.</Empty>;
+  if (clips.length === 0) return <Empty>{t.noClips}</Empty>;
   return (
-    <ul className="grid grid-cols-[repeat(auto-fill,minmax(5.5rem,7rem))] gap-2" aria-label="קליפים">
+    <ul className="grid grid-cols-[repeat(auto-fill,minmax(5.5rem,7rem))] gap-2" aria-label={t.clipsLabel}>
       {clips.map((page) => {
         const poster = mediaUrl(page.image, version);
         return (
@@ -277,7 +284,7 @@ export function AnimationPreview({ pages, version }: { pages: CreatedPage[]; ver
                 playsInline
                 autoPlay
                 preload="metadata"
-                aria-label={`קליפ של עמוד ${page.index + 1}`}
+                aria-label={t.clipLabel(page.index + 1)}
                 className="size-full object-cover"
               />
             )}
@@ -293,18 +300,20 @@ export function AnimationPreview({ pages, version }: { pages: CreatedPage[]; ver
 
 /** Stage 8: title, summary, tags and categories. */
 export function DetailsPreview({ created, details }: { created: CreatedSummary; details: DetailsStatus }) {
+  const locale = useLocale();
+  const t = STUDIO_STAGES[locale].previews;
   const categories = created.categories.map((slug) => CATEGORIES.find((category) => category.slug === slug));
   if (!created.title.trim() && !created.summary.trim() && created.tags.length === 0 && categories.length === 0) {
-    return <Empty>עוד אין פרטים.</Empty>;
+    return <Empty>{t.noDetails}</Empty>;
   }
   return (
     <div className="flex flex-col gap-2">
-      {created.title.trim() ? <p className="font-semibold">{created.title}</p> : null}
-      {created.summary.trim() ? <p className="line-clamp-3 text-sm leading-relaxed">{created.summary}</p> : null}
+      {created.title.trim() ? <p dir="auto" className="font-semibold">{created.title}</p> : null}
+      {created.summary.trim() ? <p dir="auto" className="line-clamp-3 text-sm leading-relaxed">{created.summary}</p> : null}
       <div className="flex flex-wrap gap-1.5">
         {categories.map((category, i) => (
           <Chip key={category?.slug ?? i} tone="secondary" icon={category?.emoji}>
-            {category?.label ?? created.categories[i]}
+            {category ? taxonomyText(locale, "category", category.slug, category).label : created.categories[i]}
           </Chip>
         ))}
         {created.tags.slice(0, 8).map((tag) => (
@@ -312,7 +321,7 @@ export function DetailsPreview({ created, details }: { created: CreatedSummary; 
         ))}
       </div>
       <p className="text-sm text-muted">
-        {details.done} מתוך {details.total} פרטים מולאו.
+        {t.detailsDone(details.done, details.total)}
       </p>
     </div>
   );
@@ -320,6 +329,7 @@ export function DetailsPreview({ created, details }: { created: CreatedSummary; 
 
 /** One page's picture, or its muted looping clip (a still picture when the user prefers reduced motion). */
 export function PageClipThumb({ image, video, version, index }: { image?: string; video?: string; version?: string; index: number }) {
+  const t = STUDIO_STAGES[useLocale()].previews;
   const reduced = usePrefersReducedMotion();
   const poster = mediaUrl(image, version);
   return (
@@ -333,11 +343,11 @@ export function PageClipThumb({ image, video, version, index }: { image?: string
           playsInline
           autoPlay
           preload="metadata"
-          aria-label={`קליפ של עמוד ${index + 1}`}
+          aria-label={t.clipLabel(index + 1)}
           className="size-full object-cover"
         />
       ) : poster ? (
-        <img src={poster} alt={`איור של עמוד ${index + 1}`} loading="lazy" className="size-full object-cover" />
+        <img src={poster} alt={t.pictureAlt(index + 1)} loading="lazy" className="size-full object-cover" />
       ) : null}
     </div>
   );

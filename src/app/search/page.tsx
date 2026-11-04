@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { BookRow } from "@/components/BookRow";
 import {
-  bookCountLabel,
   hrefWith,
   parseLibraryQuery,
   toParams,
@@ -16,7 +15,11 @@ import { listLibraryBooks, listPopularBooks, listTagCounts } from "@/components/
 import { SearchForm } from "@/components/library/SearchForm";
 import { SortChips } from "@/components/library/SortChips";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
-import { CATEGORY_NAV } from "@/lib/nav";
+import { libraryMessages } from "@/lib/i18n/library";
+import type { Locale } from "@/lib/i18n/locale";
+import { getMessages, taxonomyText } from "@/lib/i18n/messages";
+import { getLocale } from "@/lib/i18n/server";
+import { navFor } from "@/lib/nav";
 import { routes } from "@/lib/routes";
 
 export const dynamic = "force-dynamic";
@@ -37,7 +40,8 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 /** Suggestions shown before a search and when nothing was found. */
-async function Suggestions() {
+async function Suggestions({ locale }: { locale: Locale }) {
+  const t = libraryMessages(locale).search;
   const [tags, popular] = await Promise.all([
     listTagCounts(16),
     listPopularBooks(12),
@@ -48,12 +52,12 @@ async function Suggestions() {
         <section aria-labelledby="search-tags-title" className="flex flex-col gap-3">
           <h2 id="search-tags-title" className="text-2xl font-bold">
             <span aria-hidden="true">🏷️ </span>
-            תגיות נפוצות
+            {t.popularTags}
           </h2>
           <ul className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <li key={tag.label}>
-                <Chip href={routes.tag(tag.label)}>{tag.label}</Chip>
+                <Chip href={routes.tag(tag.label)}>{taxonomyText(locale, "tag", tag.label, tag).label}</Chip>
               </li>
             ))}
           </ul>
@@ -62,10 +66,10 @@ async function Suggestions() {
       <section aria-labelledby="search-categories-title" className="flex flex-col gap-3">
         <h2 id="search-categories-title" className="text-2xl font-bold">
           <span aria-hidden="true">🗂️ </span>
-          קטגוריות
+          {t.categories}
         </h2>
         <ul className="flex flex-wrap gap-2">
-          {CATEGORY_NAV.map((item) => (
+          {navFor(locale).category.map((item) => (
             <li key={item.href}>
               <Chip href={item.href} icon={item.emoji} tone="secondary">
                 {item.label}
@@ -74,7 +78,7 @@ async function Suggestions() {
           ))}
         </ul>
       </section>
-      <BookRow title="הכי פופולריים" emoji="🏆" books={popular} href={routes.books({ sort: "popular" })} />
+      <BookRow title={t.popular} emoji="🏆" books={popular} href={routes.books({ sort: "popular" })} locale={locale} />
     </>
   );
 }
@@ -88,16 +92,19 @@ export default async function SearchPage({ searchParams }: Props) {
   const shown: LibraryQuery = { ...query, page: listing?.page ?? 1 };
   const scope: ListingScope = { kind: "search" };
   const listParams = toParams({ ...shown, page: undefined });
+  const locale = await getLocale();
+  const t = libraryMessages(locale).search;
 
   return (
     <main className="container-page flex flex-col gap-8 py-8 sm:py-10">
       <PageHeading
-        title="חיפוש ספרים"
+        title={t.title}
         emoji="🔎"
-        description="מחפשים לפי שם הספר, המחבר, התגיות או מילים מתוך הסיפור. אפשר לכתוב עם ניקוד או בלי."
-        crumbs={[{ label: "חיפוש" }]}
+        description={t.description}
+        crumbs={[{ label: t.crumb }]}
+        locale={locale}
       >
-        <SearchForm defaultValue={query.q} size="lg" autoFocus={!query.q} className="max-w-2xl" />
+        <SearchForm defaultValue={query.q} size="lg" autoFocus={!query.q} locale={locale} className="max-w-2xl" />
       </PageHeading>
 
       {listing && query.q ? (
@@ -105,11 +112,11 @@ export default async function SearchPage({ searchParams }: Props) {
           <div className="flex flex-col gap-3">
             <h2 id="search-results-title" className="text-2xl font-bold" role="status">
               {listing.total === 0
-                ? `לא מצאנו ספרים עבור "${query.q}"`
-                : `${bookCountLabel(listing.total)} עבור "${query.q}"`}
+                ? t.nothingFor(query.q)
+                : t.foundFor(getMessages(locale).library.bookCount(listing.total), query.q)}
             </h2>
             {listing.total > 1 ? (
-              <SortChips current={shown.sort} hrefFor={(sort) => hrefWith(path, shown, { sort })} />
+              <SortChips current={shown.sort} hrefFor={(sort) => hrefWith(path, shown, { sort })} locale={locale} />
             ) : null}
           </div>
           {listing.books.length > 0 ? (
@@ -126,15 +133,15 @@ export default async function SearchPage({ searchParams }: Props) {
           ) : (
             <EmptyState
               icon="🔍"
-              title="אין תוצאות"
-              description="נסו מילה אחרת או קצרה יותר, או בחרו אחת מההצעות למטה."
-              action={<ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>}
+              title={t.noResultsTitle}
+              description={t.noResultsDescription}
+              action={<ButtonLink href={routes.books()}>{t.allBooks}</ButtonLink>}
             />
           )}
         </section>
       ) : null}
 
-      {!listing || listing.total === 0 ? <Suggestions /> : null}
+      {!listing || listing.total === 0 ? <Suggestions locale={locale} /> : null}
     </main>
   );
 }

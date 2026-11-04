@@ -3,7 +3,10 @@
 import { FileArchive, ScanText, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Card, CardDescription, CardTitle, Field, Input, Spinner } from "@/components/ui";
+import { STUDIO_IMPORT } from "@/lib/i18n/studio-import";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
 import { CcCreditSchema, type CcCredit } from "@/lib/importers/cc";
 import {
   prepareImageForUpload,
@@ -37,12 +40,13 @@ interface ApiSuccess {
 
 type ApiResult<T> = { ok: true; data: T } | { ok: false; status: number; message: string };
 
-async function postForm<T>(url: string, form: FormData): Promise<ApiResult<T>> {
+async function postForm<T>(url: string, form: FormData, locale: Locale = DEFAULT_LOCALE): Promise<ApiResult<T>> {
+  const t = STUDIO_IMPORT[locale];
   let response: Response;
   try {
     response = await fetch(url, { method: "POST", body: form, credentials: "same-origin" });
   } catch {
-    return { ok: false, status: 0, message: "אין חיבור לשרת. בדקו את החיבור ונסו שוב." };
+    return { ok: false, status: 0, message: t.offline };
   }
   let body: unknown = null;
   try {
@@ -55,7 +59,7 @@ async function postForm<T>(url: string, form: FormData): Promise<ApiResult<T>> {
   return {
     ok: false,
     status: response.status,
-    message: typeof message === "string" ? message : "משהו השתבש. נסו שוב בעוד רגע.",
+    message: typeof message === "string" ? message : t.genericError,
   };
 }
 
@@ -88,6 +92,8 @@ const IMAGE_FILE_EXT: Record<string, string> = {
 /** The whole import flow: pick a source, review the pages, add credit, create the draft. */
 export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
   const router = useRouter();
+  const locale = useLocale();
+  const t = STUDIO_IMPORT[locale];
   const [packageFile, setPackageFile] = useState<File | null>(null);
   const [pages, setPages] = useState<DraftPage[]>([]);
   const [kind, setKind] = useState<"images" | "pdf">("images");
@@ -152,12 +158,12 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
     }));
 
     const info: string[] = [];
-    if (skipped > 0) info.push(`דילגנו על ${skipped} קבצים שאינם תמונות.`);
+    if (skipped > 0) info.push(t.skippedNonImages(skipped));
     if (tooBig.length > 0) {
-      info.push(`דילגנו על ${tooBig.length} תמונות שגדולות מ-${formatMegabytes(IMPORT_LIMITS.imageBytes)}.`);
+      info.push(t.skippedTooBig(tooBig.length, formatMegabytes(IMPORT_LIMITS.imageBytes)));
     }
     if (sorted.length > accepted.length) {
-      info.push(`ספר יכול להכיל עד ${IMPORT_LIMITS.pages} עמודים; שאר התמונות לא נוספו.`);
+      info.push(t.tooManyPages(IMPORT_LIMITS.pages));
     }
     setNotices(info);
 
@@ -170,19 +176,19 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
 
   const readPdf = async (file: File) => {
     if (file.size > IMPORT_LIMITS.pdfBytes) {
-      setError(`קובץ ה-PDF גדול מ-${formatMegabytes(IMPORT_LIMITS.pdfBytes)}.`);
+      setError(t.pdfTooBig(formatMegabytes(IMPORT_LIMITS.pdfBytes)));
       return;
     }
-    setBusy({ kind: "reading", message: "פותחים את ה-PDF…" });
+    setBusy({ kind: "reading", message: t.openingPdf });
     try {
       const { importPdf } = await import("@/lib/importers/pdf");
       const result = await importPdf(file, {
         maxPages: IMPORT_LIMITS.pages,
-        onProgress: (done, total) => setBusy({ kind: "reading", message: `מכינים עמוד ${done} מתוך ${total}…` }),
+        onProgress: (done, total) => setBusy({ kind: "reading", message: t.preparingPage(done, total) }),
       });
       const next: DraftPage[] = result.pages.map((page) => ({
         key: nextKey(),
-        name: `עמוד ${page.pageNumber} ב-PDF`,
+        name: t.pdfPageName(page.pageNumber),
         image: page.image,
         previewUrl: URL.createObjectURL(page.image),
         text: page.text,
@@ -190,17 +196,17 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
       }));
       const info: string[] = [];
       if (result.totalPages > result.pages.length) {
-        info.push(`ב-PDF יש ${result.totalPages} עמודים; יובאו ${result.pages.length} הראשונים.`);
+        info.push(t.pdfTruncated(result.totalPages, result.pages.length));
       }
       const withoutText = next.filter((page) => page.text === "").length;
       if (withoutText === next.length && next.length > 0) {
         info.push(
           ocrEnabled
-            ? "ב-PDF הזה אין שכבת טקסט (כנראה שהוא סרוק). אפשר לזהות את הטקסט מהתמונות או להקליד אותו."
-            : "ב-PDF הזה אין שכבת טקסט (כנראה שהוא סרוק). את הטקסט צריך להקליד.",
+            ? t.pdfNoTextOcr
+            : t.pdfNoText,
         );
       } else if (withoutText > 0) {
-        info.push(`ב-${withoutText} עמודים לא נמצא טקסט.`);
+        info.push(t.pagesWithoutText(withoutText));
       }
       setNotices(info);
       replacePages(next);
@@ -209,7 +215,7 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
       if (!title.trim()) setTitle(baseName(file.name));
     } catch (err) {
       console.error("[import] PDF import failed", err);
-      setError("לא הצלחנו לפתוח את ה-PDF. ייתכן שהקובץ פגום או מוגן בסיסמה.");
+      setError(t.pdfFailed);
     } finally {
       setBusy(null);
     }
@@ -227,7 +233,7 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
       return;
     }
     if (pdfs.length > 0) {
-      if (pdfs.length > 1) setNotices(["נבחרו כמה קובצי PDF; מייבאים את הראשון."]);
+      if (pdfs.length > 1) setNotices([t.severalPdfs]);
       else setNotices([]);
       void readPdf(pdfs[0].file);
       return;
@@ -235,15 +241,15 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
     if (zips.length > 0) {
       const file = zips[0].file;
       if (file.size > IMPORT_LIMITS.packageBytes) {
-        setError(`קובץ ה-zip גדול מ-${formatMegabytes(IMPORT_LIMITS.packageBytes)}.`);
+        setError(t.zipTooBig(formatMegabytes(IMPORT_LIMITS.packageBytes)));
         return;
       }
       replacePages([]);
-      setNotices(zips.length > 1 ? ["נבחרו כמה קובצי zip; מייבאים את הראשון."] : []);
+      setNotices(zips.length > 1 ? [t.severalZips] : []);
       setPackageFile(file);
       return;
     }
-    setError("לא מצאנו קובץ מתאים. אפשר לייבא קובץ zip של ספר, קובץ PDF או תמונות.");
+    setError(t.noSuitableFile);
   };
 
   // --- Editing the page list ------------------------------------------------------
@@ -278,13 +284,13 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
     let image = await rasterizeImage(page.image, 1568, 0.85);
     if (image && image.size > IMPORT_LIMITS.ocrImageBytes) image = await rasterizeImage(page.image, 1024, 0.8);
     if (!image || image.size > IMPORT_LIMITS.ocrImageBytes) {
-      patchPage(key, { ocr: "error", ocrMessage: "אי אפשר לזהות טקסט בתמונה מהסוג הזה." });
+      patchPage(key, { ocr: "error", ocrMessage: t.ocrUnsupported });
       return;
     }
 
     const form = new FormData();
     form.append("image", image, "page.jpg");
-    const result = await postForm<{ text: string; truncated: boolean }>("/api/import/ocr", form);
+    const result = await postForm<{ text: string; truncated: boolean }>("/api/import/ocr", form, locale);
     if (!result.ok) {
       if (failIfSignedOut(result.status)) return;
       patchPage(key, { ocr: "error", ocrMessage: result.message });
@@ -292,22 +298,22 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
     }
     const text = result.data.text.trim();
     if (text === "") {
-      patchPage(key, { ocr: "idle", ocrMessage: "לא נמצא טקסט בעמוד הזה." });
+      patchPage(key, { ocr: "idle", ocrMessage: t.ocrNoText });
       return;
     }
     patchPage(key, {
       ocr: "idle",
       text: text.slice(0, IMPORT_LIMITS.pageTextChars),
       ocrMessage: result.data.truncated
-        ? "הטקסט זוהה אוטומטית ונקטע באמצע. כדאי להשלים ולבדוק אותו."
-        : "הטקסט זוהה אוטומטית. כדאי לבדוק אותו.",
+        ? t.ocrTruncated
+        : t.ocrDone,
     });
   };
 
   const recogniseAll = async () => {
     const targets = pagesRef.current.filter((page) => page.text.trim() === "").map((page) => page.key);
     for (const [i, key] of targets.entries()) {
-      setBusy({ kind: "ocr-all", message: `מזהים טקסט בעמוד ${i + 1} מתוך ${targets.length}…` });
+      setBusy({ kind: "ocr-all", message: t.ocrPage(i + 1, targets.length) });
       await recognise(key);
     }
     setBusy(null);
@@ -318,10 +324,10 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
   const importPackage = async () => {
     if (!packageFile) return;
     setError(null);
-    setBusy({ kind: "uploading", message: "מייבאים את הספר…" });
+    setBusy({ kind: "uploading", message: t.importingBook });
     const form = new FormData();
     form.append("file", packageFile, "book.zip");
-    const result = await postForm<ApiSuccess>("/api/import/package", form);
+    const result = await postForm<ApiSuccess>("/api/import/package", form, locale);
     if (!result.ok) {
       setBusy(null);
       if (!failIfSignedOut(result.status)) setError(result.message);
@@ -340,11 +346,11 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
     const errors: CreditErrors = {};
     for (const issue of parsed.error.issues) {
       const field = issue.path[0];
-      if (field === "license") errors.license = "בחרו רישיון.";
-      if (field === "sourceUrl") errors.sourceUrl = "הזינו קישור מלא שמתחיל ב-https://.";
-      if (field === "author") errors.author = "הזינו את שם הכותב או הכותבת.";
-      if (field === "illustrator") errors.illustrator = "השם ארוך מדי.";
-      if (field === "publisherUrl") errors.publisherUrl = "הזינו קישור מלא שמתחיל ב-https://, או השאירו ריק.";
+      if (field === "license") errors.license = t.errLicense;
+      if (field === "sourceUrl") errors.sourceUrl = t.errSourceUrl;
+      if (field === "author") errors.author = t.errAuthor;
+      if (field === "illustrator") errors.illustrator = t.errIllustrator;
+      if (field === "publisherUrl") errors.publisherUrl = t.errPublisherUrl;
     }
     setCreditErrors(errors);
     return null;
@@ -354,16 +360,16 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
     setError(null);
     const cleanTitle = title.trim();
     if (!cleanTitle) {
-      setError("תנו שם לספר.");
+      setError(t.missingTitle);
       return;
     }
     const validCredit = validateCredit();
     if (validCredit === null) {
-      setError("חסרים פרטי קרדיט לספר Creative Commons.");
+      setError(t.missingCredit);
       return;
     }
 
-    setBusy({ kind: "uploading", message: "מכינים את התמונות…" });
+    setBusy({ kind: "uploading", message: t.preparingImages });
     try {
       const snapshot = pagesRef.current;
       const form = new FormData();
@@ -376,7 +382,7 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
         images.push(image);
       }
       if (total > IMPORT_LIMITS.pagesRequestBytes - 1024 * 1024) {
-        setError("התמונות גדולות מדי יחד. נסו לייבא פחות עמודים בכל פעם, או להקטין את התמונות.");
+        setError(t.imagesTooBig);
         return;
       }
       form.append(
@@ -393,8 +399,8 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
         form.append("images", image, `page-${i + 1}.${ext}`);
       }
 
-      setBusy({ kind: "uploading", message: "יוצרים את הטיוטה…" });
-      const result = await postForm<ApiSuccess>("/api/import/pages", form);
+      setBusy({ kind: "uploading", message: t.creatingDraft });
+      const result = await postForm<ApiSuccess>("/api/import/pages", form, locale);
       if (!result.ok) {
         if (!failIfSignedOut(result.status)) setError(result.message);
         return;
@@ -404,7 +410,7 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
       return "navigating";
     } catch (err) {
       console.error("[import] creating the draft failed", err);
-      setError("משהו השתבש בהכנת הקבצים. נסו שוב.");
+      setError(t.prepareFailed);
     }
   };
 
@@ -424,22 +430,20 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
           <div className="flex items-start gap-3">
             <FileArchive aria-hidden="true" className="mt-1 size-8 shrink-0 text-secondary" />
             <div className="min-w-0 flex-1">
-              <CardTitle>ייבוא ספר מקובץ zip</CardTitle>
+              <CardTitle>{t.zipTitle}</CardTitle>
               <CardDescription className="truncate" dir="auto">
                 {packageFile.name} ({(packageFile.size / (1024 * 1024)).toFixed(1)}MB)
               </CardDescription>
             </div>
           </div>
-          <p className="text-muted">
-            הספר ייווצר כטיוטה פרטית שלכם, עם הטקסט, התמונות, ההקראה ופרטי הרישיון שנשמרו בקובץ.
-          </p>
+          <p className="text-muted">{t.zipText}</p>
           <div className="flex flex-wrap gap-3">
             <Button onClick={importPackage} loading={busy?.kind === "uploading"} disabled={locked}>
-              ייבוא הספר
+              {t.importBook}
             </Button>
             <Button variant="outline" onClick={reset} disabled={locked}>
               <X aria-hidden="true" className="size-5" />
-              ביטול
+              {t.cancel}
             </Button>
           </div>
         </Card>
@@ -467,27 +471,23 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
             <Card as="section" className="flex flex-col gap-4" aria-labelledby="import-pages-title">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <CardTitle id="import-pages-title">
-                  {pages.length === 1 ? "עמוד אחד" : `${pages.length} עמודים`}
+                  {t.pageCount(pages.length)}
                 </CardTitle>
                 <div className="flex flex-wrap gap-2">
                   {ocrEnabled && emptyTextPages > 0 ? (
                     <Button variant="secondary" size="sm" disabled={locked} onClick={recogniseAll}>
                       <ScanText aria-hidden="true" className="size-4" />
-                      זיהוי טקסט בכל העמודים הריקים ({emptyTextPages})
+                      {t.ocrAll(emptyTextPages)}
                     </Button>
                   ) : null}
                   <Button variant="outline" size="sm" disabled={locked} onClick={reset}>
-                    התחלה מחדש
+                    {t.startOver}
                   </Button>
                 </div>
               </div>
-              <CardDescription>
-                כל תמונה היא עמוד. אפשר לשנות את הסדר, להסיר עמודים ולהקליד את הטקסט כאן או אחר כך בעורך.
-              </CardDescription>
+              <CardDescription>{t.pagesHelp}</CardDescription>
               {ocrEnabled ? (
-                <p className="text-sm text-muted">
-                  זיהוי הטקסט שולח את תמונת העמוד לשירות בינה מלאכותית חיצוני (Claude). את התוצאה צריך לבדוק.
-                </p>
+                <p className="text-sm text-muted">{t.ocrPrivacy}</p>
               ) : null}
               <PageDraftList
                 pages={pages}
@@ -502,8 +502,8 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
           ) : null}
 
           <Card as="section" className="flex flex-col gap-5" aria-labelledby="import-details-title">
-            <CardTitle id="import-details-title">פרטי הספר</CardTitle>
-            <Field label="שם הספר" htmlFor="import-title" required>
+            <CardTitle id="import-details-title">{t.detailsTitle}</CardTitle>
+            <Field label={t.titleLabel} htmlFor="import-title" required>
               <Input
                 id="import-title"
                 dir="auto"
@@ -525,14 +525,11 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
                   setCreditErrors({});
                 }}
               />
-              זה ספר ברישיון Creative Commons
+              {t.isCc}
             </label>
             {isCc ? (
               <>
-                <p className="text-muted">
-                  ספר חופשי מותר להעלות רק עם הרישיון, הקישור למקור והקרדיט ליוצרים. הפרטים נשמרים בספר ומוצגים
-                  לקוראים. אפשר ליצור את הטיוטה גם בלי קבצים, ולהוסיף את העמודים בעורך.
-                </p>
+                <p className="text-muted">{t.ccHelp}</p>
                 <CreditFields value={credit} onChange={setCredit} errors={creditErrors} disabled={locked} />
               </>
             ) : null}
@@ -544,16 +541,16 @@ export function ImportStudio({ ocrEnabled }: ImportStudioProps) {
                 disabled={locked || !canCreate}
                 loading={busy?.kind === "uploading"}
               >
-                יצירת טיוטה
+                {t.createDraft}
               </Button>
               {!canCreate ? (
                 <p className="text-muted">
                   {pages.length === 0 && !isCc
-                    ? "כדי להמשיך, הוסיפו תמונות או PDF, או סמנו שזה ספר Creative Commons."
-                    : "כדי להמשיך, תנו שם לספר."}
+                    ? t.needFiles
+                    : t.needTitle}
                 </p>
               ) : (
-                <p className="text-muted">הספר ייווצר כטיוטה פרטית וייפתח בעורך.</p>
+                <p className="text-muted">{t.willCreate}</p>
               )}
             </div>
           </Card>

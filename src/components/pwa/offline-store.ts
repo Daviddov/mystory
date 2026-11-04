@@ -110,10 +110,14 @@ export interface DownloadOptions {
   signal?: AbortSignal;
 }
 
+/** Why a download failed, so the interface can say it in its own language. */
+export type OfflineDownloadErrorKind = "unsupported" | "manifest" | "assets" | "storage";
+
 export class OfflineDownloadError extends Error {
   constructor(
     message: string,
     readonly failed: string[] = [],
+    readonly kind?: OfflineDownloadErrorKind,
   ) {
     super(message);
     this.name = "OfflineDownloadError";
@@ -127,7 +131,7 @@ export class OfflineDownloadError extends Error {
  * offline when part of it is missing.
  */
 export async function downloadBook(bookId: string, options: DownloadOptions = {}): Promise<OfflineBook> {
-  if (!offlineSupported()) throw new OfflineDownloadError("הדפדפן הזה לא תומך בשמירה לקריאה בלי רשת");
+  if (!offlineSupported()) throw new OfflineDownloadError("הדפדפן הזה לא תומך בשמירה לקריאה בלי רשת", [], "unsupported");
   const { token, onProgress, signal } = options;
   const path = offlineBookPath(bookId);
   const manifestUrl = token ? `${path}?token=${encodeURIComponent(token)}` : path;
@@ -141,7 +145,7 @@ export async function downloadBook(bookId: string, options: DownloadOptions = {}
     book = data;
   } catch (err) {
     if (signal?.aborted) throw err;
-    throw new OfflineDownloadError("לא הצלחנו לקבל את פרטי הספר. בדקו את החיבור ונסו שוב.");
+    throw new OfflineDownloadError("לא הצלחנו לקבל את פרטי הספר. בדקו את החיבור ונסו שוב.", [], "manifest");
   }
 
   const assets = [...new Set(book.assets)].filter(isCacheableAsset);
@@ -182,6 +186,7 @@ export async function downloadBook(bookId: string, options: DownloadOptions = {}
     throw new OfflineDownloadError(
       `${failed.length} קבצים של הספר לא נשמרו, ולכן הוא לא זמין בלי רשת. נסו שוב.`,
       failed,
+      "assets",
     );
   }
 
@@ -195,7 +200,7 @@ export async function downloadBook(bookId: string, options: DownloadOptions = {}
     );
   } catch {
     await Promise.all(stored.map((url) => cache.delete(url)));
-    throw new OfflineDownloadError("אין מספיק מקום במכשיר כדי לשמור את הספר.");
+    throw new OfflineDownloadError("אין מספיק מקום במכשיר כדי לשמור את הספר.", [], "storage");
   }
   onProgress?.({ done: total, total });
 

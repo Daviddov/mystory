@@ -2,11 +2,13 @@
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Component, useEffect, useState, type ComponentType, type ReactNode } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { MockNotice } from "@/components/MockNotice";
 import { Button, Spinner } from "@/components/ui";
 import { hasNikud } from "@/lib/hebrew";
+import { STUDIO_PREVIEW_MESSAGES } from "@/lib/i18n/studio-editor";
 import { mediaUrl } from "@/lib/media/url";
-import type { BookWithPages } from "@/lib/types";
+import { textDirection, type BookWithPages } from "@/lib/types";
 
 interface PlayerProps {
   book: BookWithPages;
@@ -30,6 +32,7 @@ export interface PreviewPaneProps {
  * is missing or crashes) a plain page-by-page preview.
  */
 export function PreviewPane({ book, initialPage = 0 }: PreviewPaneProps) {
+  const t = STUDIO_PREVIEW_MESSAGES[useLocale()];
   const [player, setPlayer] = useState<{ Player: ComponentType<PlayerProps> | null } | null>(null);
 
   useEffect(() => {
@@ -48,12 +51,12 @@ export function PreviewPane({ book, initialPage = 0 }: PreviewPaneProps) {
   }, []);
 
   if (book.pages.length === 0) {
-    return <p className="rounded-md bg-surface-2 p-6 text-center text-muted">אין עדיין עמודים להציג.</p>;
+    return <p className="rounded-md bg-surface-2 p-6 text-center text-muted">{t.noPages}</p>;
   }
   if (!player) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <Spinner label="טוען תצוגה מקדימה…" />
+        <Spinner label={t.loading} />
       </div>
     );
   }
@@ -89,6 +92,7 @@ class PreviewBoundary extends Component<{ fallback: ReactNode; children: ReactNo
 
 /** Minimal page-by-page preview with no dependency on the reader module. */
 export function SimplePreview({ book, initialPage = 0 }: PreviewPaneProps) {
+  const t = STUDIO_PREVIEW_MESSAGES[useLocale()];
   const [requested, setRequested] = useState(initialPage);
   const [nikud, setNikud] = useState(false);
   const index = Math.min(Math.max(requested, 0), book.pages.length - 1);
@@ -109,29 +113,29 @@ export function SimplePreview({ book, initialPage = 0 }: PreviewPaneProps) {
           </span>
         )}
       </div>
-      <p className="story-text whitespace-pre-wrap text-center" dir="rtl">
-        {text || <span className="text-muted">אין טקסט בעמוד הזה</span>}
+      <p className="story-text whitespace-pre-wrap text-center" dir={textDirection(book.language ?? "he")}>
+        {text || <span className="text-muted">{t.noText}</span>}
       </p>
       {audio ? <audio key={audio} controls preload="none" src={audio} className="w-full" /> : null}
       {page.audio && page.audioSource === "mock" ? <MockNotice kind="tts" variant="inline" /> : null}
       <div className="flex items-center justify-between gap-2">
         <Button variant="outline" onClick={() => setRequested(index - 1)} disabled={index === 0}>
-          <ChevronRight aria-hidden="true" />
-          הקודם
+          <ChevronRight aria-hidden="true" className="ltr:-scale-x-100" />
+          {t.previous}
         </Button>
         <div className="flex flex-col items-center gap-1">
           <span className="font-semibold" aria-live="polite">
-            עמוד {index + 1} מתוך {book.pages.length}
+            {t.pageOf(index + 1, book.pages.length)}
           </span>
           {bookHasNikud ? (
             <button type="button" className="text-sm underline" aria-pressed={nikud} onClick={() => setNikud(!nikud)}>
-              {nikud ? "בלי ניקוד" : "עם ניקוד"}
+              {nikud ? t.withoutNikud : t.withNikud}
             </button>
           ) : null}
         </div>
         <Button variant="outline" onClick={() => setRequested(index + 1)} disabled={index === book.pages.length - 1}>
-          הבא
-          <ChevronLeft aria-hidden="true" />
+          {t.next}
+          <ChevronLeft aria-hidden="true" className="ltr:-scale-x-100" />
         </Button>
       </div>
     </div>

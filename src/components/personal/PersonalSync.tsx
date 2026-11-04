@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { removePrivateDownloads } from "@/components/pwa/offline-store";
+import { accountMessages } from "@/lib/i18n/account";
 import { syncPersonal } from "./local-store";
 
 export interface PersonalSyncProps {
@@ -19,6 +21,7 @@ export interface PersonalSyncProps {
  */
 export function PersonalSync({ userId, quiet = false }: PersonalSyncProps) {
   const [merged, setMerged] = useState(0);
+  const t = accountMessages(useLocale()).library;
 
   useEffect(() => {
     let cancelled = false;
@@ -51,7 +54,7 @@ export function PersonalSync({ userId, quiet = false }: PersonalSyncProps) {
       role="status"
       className="fixed inset-x-4 bottom-4 z-40 mx-auto max-w-md rounded-lg border border-border bg-surface px-5 py-3 text-center font-semibold shadow-pop print:hidden"
     >
-      המועדפים והקריאה מהמכשיר הזה נשמרו בחשבון שלכם.
+      {t.merged}
     </p>
   );
 }

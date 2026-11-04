@@ -7,8 +7,10 @@ import { saveProgress } from "@/components/personal/local-store";
 import { Button, EmptyState, Spinner, buttonClasses } from "@/components/ui";
 import { useWakeLock } from "@/components/reader/useWakeLock";
 import { cn } from "@/lib/cn";
+import { accountMessages } from "@/lib/i18n/account";
 import { splitWords } from "@/lib/hebrew";
 import { getDownload, offlineReadPath, type OfflineBook } from "./offline-store";
+import { useDeviceLocale } from "./useDeviceLocale";
 
 type State = { status: "loading" } | { status: "missing" } | { status: "ready"; book: OfflineBook };
 
@@ -33,6 +35,8 @@ export function OfflineReader() {
   const [audioFailed, setAudioFailed] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   useWakeLock(playing);
+  const locale = useDeviceLocale();
+  const t = accountMessages(locale).offline;
 
   useEffect(() => {
     let cancelled = false;
@@ -88,19 +92,21 @@ export function OfflineReader() {
     }
   }, [book, index]);
 
-  // Hebrew reads right to left: the left arrow goes forward.
+  // The arrows follow the interface: in Hebrew (right to left) the left arrow goes forward.
   useEffect(() => {
     if (!book) return;
+    const forward = locale === "he" ? "ArrowLeft" : "ArrowRight";
+    const back = locale === "he" ? "ArrowRight" : "ArrowLeft";
     const onKey = (event: KeyboardEvent) => {
       if (event.altKey || event.ctrlKey || event.metaKey) return;
-      if (event.key === "ArrowLeft" || event.key === "PageDown") goTo(index + 1);
-      else if (event.key === "ArrowRight" || event.key === "PageUp") goTo(index - 1);
+      if (event.key === forward || event.key === "PageDown") goTo(index + 1);
+      else if (event.key === back || event.key === "PageUp") goTo(index - 1);
       else return;
       event.preventDefault();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [book, index, goTo]);
+  }, [book, index, goTo, locale]);
 
   if (state.status === "loading") {
     return (
@@ -114,11 +120,11 @@ export function OfflineReader() {
     return (
       <EmptyState
         icon="🔎"
-        title="הספר הזה לא שמור במכשיר"
-        description="אפשר לקרוא בלי רשת רק ספרים שהורדתם מראש."
+        title={t.missingTitle}
+        description={t.missingDescription}
         action={
           <a href="/offline" className={buttonClasses()}>
-            לספרים שהורדתי
+            {t.myDownloads}
           </a>
         }
       />
@@ -154,12 +160,14 @@ export function OfflineReader() {
       <header className="flex items-center gap-2 border-b border-border px-3 py-2">
         <a
           href="/offline"
-          aria-label="סגירת הספר"
+          aria-label={t.close}
           className="inline-flex size-touch shrink-0 items-center justify-center rounded-full hover:bg-surface-2"
         >
           <X aria-hidden="true" />
         </a>
-        <h1 className="min-w-0 flex-1 truncate text-lg font-bold">{book.title}</h1>
+        <h1 className="min-w-0 flex-1 truncate text-lg font-bold" dir="auto">
+          {book.title}
+        </h1>
         {anyNikud ? (
           <Button
             variant={nikud ? "secondary" : "outline"}
@@ -167,18 +175,18 @@ export function OfflineReader() {
             aria-pressed={nikud}
             onClick={() => setNikud((value) => !value)}
           >
-            ניקוד
+            {t.nikud}
           </Button>
         ) : null}
         <span className="shrink-0 text-sm text-muted" aria-live="polite">
-          עמוד {index + 1} מתוך {pageCount}
+          {t.pageOf(index + 1, pageCount)}
         </span>
       </header>
 
       <div
         className="h-1.5 bg-surface-2"
         role="progressbar"
-        aria-label="התקדמות בספר"
+        aria-label={t.progress}
         aria-valuemin={1}
         aria-valuemax={pageCount}
         aria-valuenow={index + 1}
@@ -224,31 +232,31 @@ export function OfflineReader() {
             />
             <Button variant="secondary" size="lg" onClick={togglePlay} disabled={audioFailed}>
               {playing ? <Pause aria-hidden="true" className="size-6" /> : <Play aria-hidden="true" className="size-6" />}
-              {playing ? "עצירה" : "הקראה"}
+              {playing ? t.pause : t.play}
             </Button>
             {page.audioSource === "mock" ? <MockNotice kind="tts" variant="inline" /> : null}
             {audioFailed ? (
               <p role="alert" className="text-sm text-danger">
-                ההקראה של העמוד הזה לא נטענה.
+                {t.audioFailed}
               </p>
             ) : null}
           </div>
         ) : null}
       </main>
 
-      <nav aria-label="דפדוף" className="flex items-center justify-between gap-3 border-t border-border px-4 py-3">
+      <nav aria-label={t.paging} className="flex items-center justify-between gap-3 border-t border-border px-4 py-3">
         <Button variant="outline" size="lg" onClick={() => goTo(index - 1)} disabled={index === 0}>
-          <ChevronRight aria-hidden="true" className="size-6" />
-          הקודם
+          <ChevronRight aria-hidden="true" className="size-6 ltr:-scale-x-100" />
+          {t.previous}
         </Button>
         {isLast ? (
           <a href="/offline" className={buttonClasses({ size: "lg" })}>
-            הסוף! חזרה לספרים
+            {t.theEnd}
           </a>
         ) : (
           <Button size="lg" onClick={() => goTo(index + 1)}>
-            הבא
-            <ChevronLeft aria-hidden="true" className="size-6" />
+            {t.next}
+            <ChevronLeft aria-hidden="true" className="size-6 ltr:-scale-x-100" />
           </Button>
         )}
       </nav>

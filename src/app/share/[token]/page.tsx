@@ -7,7 +7,10 @@ import { ButtonLink, Card, Chip } from "@/components/ui";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
-import { ageGroupsLabel, getAgeGroup, readingTimeLabel } from "@/lib/taxonomy";
+import { accountMessages } from "@/lib/i18n/account";
+import { ageGroupsText, readingTimeText } from "@/lib/i18n/labels";
+import { getLocale } from "@/lib/i18n/server";
+import { getAgeGroup } from "@/lib/taxonomy";
 import { bookAgeGroups, type BookWithPages } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -39,6 +42,8 @@ export default async function SharePage({ params }: Props) {
   const { token } = await params;
   const book = await loadSharedBook(token);
   if (!book) notFound();
+  const locale = await getLocale();
+  const t = accountMessages(locale).share;
 
   // The cover of an unpublished book is served only with the share token (see /media).
   const cover = mediaUrl(book.coverImage, book.updatedAt, book.status === "published" ? undefined : token);
@@ -55,7 +60,7 @@ export default async function SharePage({ params }: Props) {
       <Card padding="lg" className="flex w-full max-w-3xl flex-col items-center gap-8 sm:flex-row sm:items-start">
         <div className="aspect-[3/4] w-56 shrink-0 overflow-hidden rounded-lg border border-border bg-surface-2 shadow-card sm:w-64">
           {cover ? (
-            <img src={cover} alt={`כריכת הספר ${book.title}`} className="size-full object-cover" />
+            <img src={cover} alt={t.coverAlt(book.title)} className="size-full object-cover" />
           ) : (
             <div className="flex size-full items-center justify-center text-7xl" aria-hidden="true">
               📖
@@ -64,36 +69,45 @@ export default async function SharePage({ params }: Props) {
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col items-center gap-4 text-center sm:items-start sm:text-start">
-          <p className="font-semibold text-secondary">שיתפו איתכם ספר</p>
-          <h1 className="text-4xl font-extrabold leading-tight">{book.title}</h1>
-          {book.author ? <p className="text-lg text-muted">מאת {book.author}</p> : null}
+          <p className="font-semibold text-secondary">{t.sharedWithYou}</p>
+          <h1 className="text-4xl font-extrabold leading-tight" dir="auto">
+            {book.title}
+          </h1>
+          {book.author ? (
+            <p className="text-lg text-muted">
+              {t.by}
+              <bdi dir="auto">{book.author}</bdi>
+            </p>
+          ) : null}
           <div className="flex flex-wrap justify-center gap-2 sm:justify-start">
-            {age ? <Chip icon={age.emoji}>{ageGroupsLabel(ages)}</Chip> : null}
-            <Chip icon={<Clock aria-hidden="true" className="size-4" />}>{readingTimeLabel(book.readingMinutes)}</Chip>
-            <Chip>{book.pages.length} עמודים</Chip>
+            {age ? <Chip icon={age.emoji}>{ageGroupsText(locale, ages)}</Chip> : null}
+            <Chip icon={<Clock aria-hidden="true" className="size-4" />}>{readingTimeText(locale, book.readingMinutes)}</Chip>
+            <Chip>{t.pages(book.pages.length)}</Chip>
           </div>
-          {book.summary ? <p className="text-lg leading-relaxed">{book.summary}</p> : null}
+          {book.summary ? (
+            <p className="text-lg leading-relaxed" dir="auto">
+              {book.summary}
+            </p>
+          ) : null}
 
           {book.pages.length > 0 ? (
             <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
               <ButtonLink href={readHref} size="lg">
                 <BookOpen aria-hidden="true" className="size-6" />
-                בואו נקרא
+                {t.read}
               </ButtonLink>
               <OfflineDownloadButton bookId={book.id} title={book.title} token={isPublic ? undefined : token} />
               <ButtonLink href={routes.print(book.slug, isPublic ? undefined : token)} variant="outline">
                 <Printer aria-hidden="true" className="size-5" />
-                הדפסה ו-PDF
+                {t.print}
               </ButtonLink>
             </div>
           ) : (
-            <p className="rounded-md bg-warning-soft px-4 py-3">בספר הזה עדיין אין עמודים.</p>
+            <p className="rounded-md bg-warning-soft px-4 py-3">{t.noPages}</p>
           )}
 
           {isPublic ? null : (
-            <p className="text-sm text-muted">
-              זהו ספר פרטי. הוא נפתח רק דרך הקישור הזה, ובעל הספר יכול לבטל את הקישור בכל רגע.
-            </p>
+            <p className="text-sm text-muted">{t.privateNote}</p>
           )}
         </div>
       </Card>

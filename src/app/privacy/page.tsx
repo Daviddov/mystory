@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { InfoPage, InfoSection } from "../about/_components/InfoPage";
+import { PrivacyPageEn } from "./privacy-en";
 
 export const metadata: Metadata = {
   title: "מדיניות פרטיות",
@@ -10,10 +12,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-const UPDATED = "27 באוקטובר 2026";
+const UPDATED = "4 בנובמבר 2026";
+const UPDATED_EN = "November 4, 2026";
 const CONTACT_EMAIL = "baror2013@gmail.com";
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  if ((await getLocale()) === "en") return <PrivacyPageEn updated={UPDATED_EN} email={CONTACT_EMAIL} />;
   return (
     <InfoPage
       title="מדיניות פרטיות"
@@ -49,7 +53,7 @@ export default function PrivacyPage() {
         <ul>
           <li>
             <strong>במכשיר שלכם בלבד:</strong> העמוד האחרון שקראתם בכל ספר, גודל הטקסט שבחרתם, מצב יום או מצב לפני
-            השינה, וספרים שהורדתם לקריאה בלי רשת. המידע הזה נשמר בדפדפן ואינו נשלח אלינו. אפשר למחוק אותו בכל רגע
+            השינה, שפת הממשק, וספרים שהורדתם לקריאה בלי רשת. המידע הזה נשמר בדפדפן ואינו נשלח אלינו. אפשר למחוק אותו בכל רגע
             מהגדרות הדפדפן.
           </li>
           <li>
@@ -186,7 +190,7 @@ export default function PrivacyPage() {
 
       <InfoSection id="cookies" title="עוגיות ואחסון בדפדפן">
         <p>
-          האתר משתמש בעוגיות הכרחיות בלבד, ששומרות את ההתחברות לחשבון. אין עוגיות פרסום ואין עוגיות של צד שלישי.
+          האתר משתמש בעוגיות הכרחיות בלבד: אחת שומרת את ההתחברות לחשבון, ואחת זוכרת את שפת הממשק שבחרתם. אין עוגיות פרסום ואין עוגיות של צד שלישי.
           ההעדפות וההתקדמות בקריאה נשמרות באחסון המקומי של הדפדפן, כמתואר למעלה.
         </p>
       </InfoSection>

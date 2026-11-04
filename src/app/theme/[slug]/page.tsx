@@ -5,6 +5,9 @@ import type { RawSearchParams } from "@/components/library/filters";
 import { listingRobots } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
+import { libraryMessages } from "@/lib/i18n/library";
+import { taxonomyText } from "@/lib/i18n/messages";
+import { getLocale } from "@/lib/i18n/server";
 import { THEMES, getTheme } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -36,26 +39,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ThemePage({ params, searchParams }: Props) {
   const theme = getTheme((await params).slug);
   if (!theme) notFound();
+  const locale = await getLocale();
+  const t = libraryMessages(locale);
+  const text = taxonomyText(locale, "theme", theme.slug, theme);
 
   return (
     <BrowseView
       path={routes.theme(theme.slug)}
       searchParams={await searchParams}
       base={{ theme: theme.slug }}
-      eyebrow="נושא לשיחה"
-      title={`סיפורים על ${theme.label}`}
+      eyebrow={t.theme.eyebrow}
+      title={t.theme.title(text.label)}
       emoji={theme.emoji}
-      description="ספרים שעוזרים לפתוח שיחה על הנושא הזה. בעמוד של כל ספר מחכות שאלות לשיחה."
-      crumbs={[{ label: "כל הספרים", href: routes.books() }, { label: theme.label }]}
-      siblingsLabel="נושאים לשיחה"
+      description={t.theme.description}
+      crumbs={[{ label: t.allBooksCrumb, href: routes.books() }, { label: text.label }]}
+      siblingsLabel={t.theme.siblings}
       siblings={THEMES.map((item) => ({
-        label: item.label,
+        label: taxonomyText(locale, "theme", item.slug, item).label,
         href: routes.theme(item.slug),
         emoji: item.emoji,
         selected: item.slug === theme.slug,
       }))}
       refineHref={routes.books({ theme: theme.slug })}
-      emptyTitle="עוד אין ספרים בנושא הזה"
+      emptyTitle={t.theme.empty}
     />
   );
 }

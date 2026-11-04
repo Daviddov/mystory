@@ -2,8 +2,10 @@
 
 import { Check, Link2, Mail, MessageCircle, Send, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, ButtonLink } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 
 export interface ShareButtonsProps {
   /** Absolute address of the book page. */
@@ -14,6 +16,7 @@ export interface ShareButtonsProps {
 
 /** Share a book: the device's share sheet when there is one, plus WhatsApp, Telegram, email and copy-link. */
 export function ShareButtons({ url, title, className }: ShareButtonsProps) {
+  const t = READER_MESSAGES[useLocale()].share;
   const [canShare, setCanShare] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -21,7 +24,7 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
     setCanShare(typeof navigator !== "undefined" && typeof navigator.share === "function");
   }, []);
 
-  const text = `${title} – סיפור לילדים באתר הסיפור שלי`;
+  const text = t.text(title);
   const encodedUrl = encodeURIComponent(url);
   const encodedText = encodeURIComponent(text);
 
@@ -39,39 +42,39 @@ export function ShareButtons({ url, title, className }: ShareButtonsProps) {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2500);
     } catch {
-      window.prompt("העתיקו את הקישור:", url);
+      window.prompt(t.copyPrompt, url);
     }
   }
 
   const external = { target: "_blank", rel: "noopener noreferrer" } as const;
 
   return (
-    <div role="group" aria-label={`שיתוף הספר ${title}`} className={cn("flex flex-wrap items-center gap-2", className)}>
-      <span className="text-base font-semibold text-muted">שיתוף:</span>
+    <div role="group" aria-label={t.group(title)} className={cn("flex flex-wrap items-center gap-2", className)}>
+      <span className="text-base font-semibold text-muted">{t.label}</span>
       {canShare ? (
         <Button variant="outline" onClick={nativeShare}>
           <Share2 aria-hidden="true" className="size-5" />
-          שתפו
+          {t.share}
         </Button>
       ) : null}
       <ButtonLink variant="outline" href={`https://wa.me/?text=${encodedText}%20${encodedUrl}`} {...external}>
         <MessageCircle aria-hidden="true" className="size-5" />
-        וואטסאפ
+        {t.whatsapp}
       </ButtonLink>
       <ButtonLink variant="outline" href={`https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`} {...external}>
         <Send aria-hidden="true" className="size-5" />
-        טלגרם
+        {t.telegram}
       </ButtonLink>
       <ButtonLink variant="outline" href={`mailto:?subject=${encodedText}&body=${encodedUrl}`}>
         <Mail aria-hidden="true" className="size-5" />
-        מייל
+        {t.email}
       </ButtonLink>
       <Button variant="outline" onClick={copyLink}>
         {copied ? <Check aria-hidden="true" className="size-5" /> : <Link2 aria-hidden="true" className="size-5" />}
-        {copied ? "הקישור הועתק" : "העתקת קישור"}
+        {copied ? t.copied : t.copy}
       </Button>
       <span role="status" aria-live="polite" className="sr-only">
-        {copied ? "הקישור הועתק" : ""}
+        {copied ? t.copied : ""}
       </span>
     </div>
   );

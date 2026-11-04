@@ -1,26 +1,27 @@
 import { ButtonLink, EmptyState } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth";
+import { getLocale } from "@/lib/i18n/server";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { routes } from "@/lib/routes";
 
 /** Shown for a missing book and for a private book the visitor may not read (the two look the same on purpose). */
 export default async function ReadNotFound() {
-  const user = await getCurrentUser();
+  const [user, locale] = await Promise.all([getCurrentUser(), getLocale()]);
+  const t = READER_MESSAGES[locale].readNotFound;
   return (
     <main className="container-page py-16">
       <EmptyState
         icon="🔍"
-        title="לא מצאנו את הספר הזה"
+        title={t.title}
         description={
-          user
-            ? "ייתכן שהספר הוסר, או שהוא פרטי ושייך למישהו אחר. ספר פרטי נפתח רק לבעליו או דרך קישור שיתוף."
-            : "ייתכן שהספר הוסר, או שהוא ספר פרטי. אם זה ספר שלכם, התחברו ונסו שוב."
+          user ? t.signedIn : t.signedOut
         }
         action={
           <div className="flex flex-wrap justify-center gap-3">
-            <ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>
+            <ButtonLink href={routes.books()}>{t.allBooks}</ButtonLink>
             {user ? null : (
               <ButtonLink href={routes.login()} variant="outline">
-                התחברות
+                {t.signIn}
               </ButtonLink>
             )}
           </div>

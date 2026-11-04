@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BookOpen } from "lucide-react";
 import { BookGrid } from "@/components/BookGrid";
-import { bookCountLabel } from "@/components/library/filters";
 import { PageHeading } from "@/components/library/PageHeading";
 import { getCollectionWithBooks } from "@/components/library/queries";
-import { seasonInfo } from "@/components/library/seasons";
+import { normalizeSeason, seasonInfo } from "@/components/library/seasons";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
+import { libraryMessages } from "@/lib/i18n/library";
+import { getMessages, taxonomyText } from "@/lib/i18n/messages";
+import { getLocale } from "@/lib/i18n/server";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { pageMetadata, plainText } from "@/lib/seo";
@@ -60,29 +62,39 @@ export default async function CollectionPage({ params }: Props) {
   if (!found) notFound();
   const { collection, books } = found;
   const season = seasonInfo(collection.season);
+  const locale = await getLocale();
+  const t = libraryMessages(locale).collection;
+  const seasonLabel = season
+    ? taxonomyText(locale, "season", normalizeSeason(collection.season) ?? "", season).label
+    : undefined;
 
   return (
     <main className="container-page flex flex-col gap-8 py-8 sm:py-10">
       <PageHeading
-        eyebrow="אוסף"
-        title={collection.title}
+        eyebrow={t.eyebrow}
+        // Collection titles and descriptions are content, written by the editors: never translated.
+        title={<span dir="auto">{collection.title}</span>}
         emoji="🧺"
-        description={collection.description || undefined}
-        crumbs={[{ label: "אוספים", href: routes.collections() }, { label: collection.title }]}
+        description={collection.description ? <span dir="auto">{collection.description}</span> : undefined}
+        crumbs={[
+          { label: libraryMessages(locale).collections.crumb, href: routes.collections() },
+          { label: collection.title },
+        ]}
+        locale={locale}
       >
         <div className="flex flex-wrap items-center gap-3">
           {season ? (
             <Chip icon={season.emoji} tone="secondary">
-              {season.label}
+              {seasonLabel}
             </Chip>
           ) : null}
-          <p className="text-muted">{bookCountLabel(books.length)}</p>
+          <p className="text-muted">{getMessages(locale).library.bookCount(books.length)}</p>
         </div>
         {books[0] ? (
           <div>
             <ButtonLink href={routes.read(books[0].slug)} size="lg">
               <BookOpen aria-hidden="true" />
-              מתחילים מהספר הראשון
+              {t.startFirst}
             </ButtonLink>
           </div>
         ) : null}
@@ -90,12 +102,13 @@ export default async function CollectionPage({ params }: Props) {
 
       <BookGrid
         books={books}
+        locale={locale}
         empty={
           <EmptyState
             icon="🧺"
-            title="האוסף הזה עוד ריק"
-            description="עוד לא נוספו אליו ספרים שפורסמו."
-            action={<ButtonLink href={routes.collections()}>לכל האוספים</ButtonLink>}
+            title={t.emptyTitle}
+            description={t.emptyDescription}
+            action={<ButtonLink href={routes.collections()}>{t.allCollections}</ButtonLink>}
           />
         }
       />

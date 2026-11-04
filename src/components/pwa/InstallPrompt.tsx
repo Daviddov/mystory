@@ -3,8 +3,10 @@
 import { Download, Share, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { accountMessages, type AccountMessages } from "@/lib/i18n/account";
 
 /** Chromium's install event (not in the DOM typings). */
 interface BeforeInstallPromptEvent extends Event {
@@ -139,11 +141,10 @@ export interface InstallPromptProps {
   className?: string;
 }
 
-function IosSteps() {
+function IosSteps({ t }: { t: AccountMessages["install"] }) {
   return (
     <p className="text-sm leading-relaxed text-muted">
-      באייפון ובאייפד: לוחצים על כפתור השיתוף{" "}
-      <Share aria-hidden="true" className="inline size-4 align-text-bottom" /> ובוחרים &quot;הוספה למסך הבית&quot;.
+      {t.iosBefore} <Share aria-hidden="true" className="inline size-4 align-text-bottom" /> {t.iosAfter}
     </p>
   );
 }
@@ -153,10 +154,11 @@ export function InstallPrompt({ variant = "banner", className }: InstallPromptPr
   const info = useSyncExternalStore(subscribe, getSnapshot, () => SERVER_STATE);
   const pathname = usePathname() ?? "";
   const [showIos, setShowIos] = useState(false);
+  const t = accountMessages(useLocale()).install;
 
   if (info.standalone) {
     return variant === "inline" ? (
-      <p className={cn("text-sm text-muted", className)}>האתר כבר מותקן כאפליקציה במכשיר הזה.</p>
+      <p className={cn("text-sm text-muted", className)}>{t.installed}</p>
     ) : null;
   }
   const installable = info.canPrompt || info.ios;
@@ -172,10 +174,10 @@ export function InstallPrompt({ variant = "banner", className }: InstallPromptPr
             aria-expanded={info.canPrompt ? undefined : showIos}
           >
             <Download aria-hidden="true" className="size-5" />
-            התקנה כאפליקציה
+            {t.installAsApp}
           </Button>
         </div>
-        {showIos && !info.canPrompt ? <IosSteps /> : null}
+        {showIos && !info.canPrompt ? <IosSteps t={t} /> : null}
       </div>
     );
   }
@@ -185,7 +187,7 @@ export function InstallPrompt({ variant = "banner", className }: InstallPromptPr
 
   return (
     <aside
-      aria-label="התקנת האתר כאפליקציה"
+      aria-label={t.bannerAria}
       className={cn(
         "site-chrome fixed inset-x-3 bottom-3 z-30 mx-auto flex max-w-lg items-start gap-3 rounded-lg border border-border bg-surface p-4 shadow-pop print:hidden",
         className,
@@ -193,25 +195,25 @@ export function InstallPrompt({ variant = "banner", className }: InstallPromptPr
     >
       <img src="/icons/icon.svg" alt="" width={48} height={48} className="size-12 shrink-0 rounded-md" />
       <div className="flex min-w-0 flex-1 flex-col gap-2">
-        <p className="font-bold">הסיפור שלי על מסך הבית</p>
+        <p className="font-bold">{t.bannerTitle}</p>
         {info.canPrompt ? (
           <>
-            <p className="text-sm text-muted">נפתח בלחיצה אחת, וספרים שהורדתם נקראים גם בלי רשת.</p>
+            <p className="text-sm text-muted">{t.bannerText}</p>
             <div>
               <Button size="sm" onClick={() => void install()}>
                 <Download aria-hidden="true" className="size-4" />
-                התקנה
+                {t.install}
               </Button>
             </div>
           </>
         ) : (
-          <IosSteps />
+          <IosSteps t={t} />
         )}
       </div>
       <button
         type="button"
         onClick={dismiss}
-        aria-label="סגירה"
+        aria-label={t.close}
         className="inline-flex size-touch shrink-0 items-center justify-center rounded-full text-muted hover:bg-surface-2"
       >
         <X aria-hidden="true" />

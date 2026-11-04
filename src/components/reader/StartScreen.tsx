@@ -3,7 +3,9 @@
 import { BookOpen, Headphones, Info } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 
 export interface StartScreenProps {
   title: string;
@@ -35,6 +37,7 @@ export function StartScreen({
   download,
   detailsHref,
 }: StartScreenProps) {
+  const t = READER_MESSAGES[useLocale()].start;
   return (
     <div
       role="dialog"
@@ -67,23 +70,29 @@ export function StartScreen({
           </p>
         )}
         <div>
-          <h2 id="reader-start-title" className="text-3xl font-bold leading-tight sm:text-4xl">
+          <h2 id="reader-start-title" dir="auto" className="text-3xl font-bold leading-tight sm:text-4xl">
             {title}
           </h2>
-          {author ? <p className="mt-1 text-lg text-muted">{author}</p> : null}
+          {author ? (
+            <p dir="auto" className="mt-1 text-lg text-muted">
+              {author}
+            </p>
+          ) : null}
           {dedication ? (
-            <p className="mt-3 text-xl font-semibold italic leading-relaxed text-foreground">{dedication}</p>
+            <p dir="auto" className="mt-3 text-xl font-semibold italic leading-relaxed text-foreground">
+              {dedication}
+            </p>
           ) : null}
         </div>
         <div className="flex w-full flex-col gap-3">
           <Button size="lg" className="min-h-16 w-full text-2xl shadow-lift" autoFocus onClick={onRead}>
             <BookOpen aria-hidden="true" className="size-7" />
-            {resumePage > 0 ? `נמשיך מעמוד ${resumePage + 1}` : "בואו נקרא"}
+            {resumePage > 0 ? t.resume(resumePage + 1) : t.read}
           </Button>
           {onListen ? (
             <Button size="lg" variant="secondary" className="w-full" onClick={onListen}>
               <Headphones aria-hidden="true" />
-              האזנה לסיפור
+              {t.listen}
             </Button>
           ) : null}
           {download ? <div className="flex justify-center [&>*]:w-full">{download}</div> : null}
@@ -94,7 +103,7 @@ export function StartScreen({
             className="inline-flex min-h-touch items-center gap-1.5 px-3 text-base text-muted underline underline-offset-4 hover:text-foreground"
           >
             <Info aria-hidden="true" className="size-4" />
-            לפרטים על הספר
+            {t.details}
           </Link>
         ) : null}
       </div>

@@ -1,7 +1,9 @@
 "use client";
 
 import { Heart } from "lucide-react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { useFavorite } from "./hooks";
 
 export interface FavoriteButtonProps {
@@ -19,7 +21,8 @@ export interface FavoriteButtonProps {
  */
 export function FavoriteButton({ bookId, title, variant = "icon", className }: FavoriteButtonProps) {
   const [favorite, toggle] = useFavorite(bookId);
-  const action = favorite ? "הסרה מהמועדפים" : "הוספה למועדפים";
+  const t = READER_MESSAGES[useLocale()].favorite;
+  const action = favorite ? t.remove : t.add;
   return (
     <button
       type="button"
@@ -38,7 +41,7 @@ export function FavoriteButton({ bookId, title, variant = "icon", className }: F
         aria-hidden="true"
         className={cn("size-6", favorite ? "fill-danger text-danger" : "text-muted")}
       />
-      {variant === "label" ? <span>{favorite ? "במועדפים" : "למועדפים"}</span> : null}
+      {variant === "label" ? <span>{favorite ? t.inFavorites : t.toFavorites}</span> : null}
     </button>
   );
 }

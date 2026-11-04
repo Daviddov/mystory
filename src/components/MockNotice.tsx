@@ -1,21 +1,11 @@
 import { FlaskConical } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 
 export type MockKind = "text" | "nikud" | "tts" | "tts-device" | "image" | "video" | "login" | "translation" | "generic";
 
-const MESSAGES: Record<MockKind, string> = {
-  text: "מצב הדגמה: שירות כתיבת הסיפורים לא מחובר, ולכן מוצג סיפור קבוע לדוגמה.",
-  nikud: "מצב הדגמה: שירות הניקוד לא מחובר, ולכן הטקסט נשאר בלי ניקוד.",
-  tts: "קול הדגמה: שירות ההקראה לא מחובר ובמכשיר הזה אין קול עברי, ולכן ההקלטה שקטה והמילים מודגשות בקצב קבוע.",
-  "tts-device": "קול המכשיר: שירות ההקראה לא מחובר, ולכן הסיפור מוקרא בקול העברי המובנה של המכשיר.",
-  image: "איור לדוגמה: שירות האיורים לא מחובר, ולכן מוצג איור זמני במקום איור אמיתי.",
-  video: "הנפשה לדוגמה: שירות הנפשת האיורים לא מחובר, ולכן מוצגת תנועה זמנית במקום הנפשה אמיתית.",
-  translation:
-    "מצב הדגמה: שירות התרגום לא מחובר, ולכן הספר לא תורגם והטקסט לא השתנה. אפשר לתרגם ידנית, עמוד מול עמוד.",
-  login: "התחברות לסביבת פיתוח: בלי סיסמה ובלי אימות. לא לשימוש באתר פעיל.",
-  generic: "מצב הדגמה: חלק מהשירותים החיצוניים לא מחוברים, והתוצאה היא דוגמה בלבד.",
-};
 
 export interface MockNoticeProps {
   /** Which mocked service the notice is about. Default 'generic'. */
@@ -25,10 +15,12 @@ export interface MockNoticeProps {
   /** 'inline' is a compact one-line badge. Default 'banner'. */
   variant?: "banner" | "inline";
   className?: string;
+  /** Interface language of the default message. Default Hebrew. */
+  locale?: Locale;
 }
 
 /** Visible notice that a result came from a mock provider. Never hide mock output from the user. */
-export function MockNotice({ kind = "generic", children, variant = "banner", className }: MockNoticeProps) {
+export function MockNotice({ kind = "generic", children, variant = "banner", className, locale = DEFAULT_LOCALE }: MockNoticeProps) {
   return (
     <p
       role="note"
@@ -39,7 +31,7 @@ export function MockNotice({ kind = "generic", children, variant = "banner", cla
       )}
     >
       <FlaskConical aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-warning" />
-      <span>{children ?? MESSAGES[kind]}</span>
+      <span>{children ?? READER_MESSAGES[locale].mock[kind]}</span>
     </p>
   );
 }

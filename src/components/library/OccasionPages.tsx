@@ -7,6 +7,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { cache } from "react";
 import { cn } from "@/lib/cn";
+import { TORAH_BOOKS } from "@/lib/generation/parasha";
+import { libraryMessages, occasionIntroEn, occasionNameEn, torahBookEn } from "@/lib/i18n/library";
+import type { Locale } from "@/lib/i18n/locale";
+import { getLocale } from "@/lib/i18n/server";
 import {
   HOLIDAYS,
   getOccasion,
@@ -29,6 +33,18 @@ import { PageHeading, type Crumb } from "./PageHeading";
 import { listOccasionBookIds } from "./queries";
 import { currentSeasons } from "./seasons";
 import { SectionTitle } from "./SectionTitle";
+
+/** The bare name in the interface language: "נח" / "Noach". */
+function occasionName(locale: Locale, occasion: Occasion): string {
+  return locale === "he" ? occasion.name : occasionNameEn(occasion.kind, occasion.slug);
+}
+
+/** The name with its prefix in the interface language: "פרשת נח" / "Parashat Noach". */
+function occasionLabelText(locale: Locale, occasion: Occasion): string {
+  if (locale === "he") return occasionLabel(occasion);
+  const name = occasionName(locale, occasion);
+  return occasion.kind === "parasha" ? `Parashat ${name}` : name;
+}
 
 /** One read per request, shared by generateMetadata and the page. */
 const occasionBooks = cache(listOccasionBookIds);
@@ -71,9 +87,12 @@ export async function occasionMetadata(kind: OccasionKind, slug: string): Promis
 
 export async function OccasionView({ occasion, searchParams }: { occasion: Occasion; searchParams: RawSearchParams }) {
   const ids = occasionBookIds(await occasionBooks(), occasion);
+  const locale = await getLocale();
   const index = INDEX[occasion.kind];
-  const label = occasionLabel(occasion);
-  const crumbs: Crumb[] = [{ label: index.crumb, href: index.href() }, { label }];
+  const t = libraryMessages(locale).occasions[occasion.kind];
+  const name = occasionName(locale, occasion);
+  const label = occasionLabelText(locale, occasion);
+  const crumbs: Crumb[] = [{ label: t.crumb, href: index.href() }, { label }];
 
   // Parashot: the other portions of the same book of the Torah. Holidays: all holidays.
   const siblings =
@@ -87,31 +106,27 @@ export async function OccasionView({ occasion, searchParams }: { occasion: Occas
       searchParams={searchParams}
       base={{ ids }}
       scope={{ kind: occasion.kind, value: occasion.slug }}
-      eyebrow={occasion.kind === "parasha" ? "פרשת השבוע" : "חגים ומועדים"}
-      title={occasion.kind === "parasha" ? `סיפורים לפרשת ${occasion.name}` : `סיפורים ל${occasion.name}`}
+      eyebrow={t.eyebrow}
+      title={t.pageTitle(name)}
       emoji={occasion.emoji}
-      description={occasionIntro(occasion)}
+      description={locale === "he" ? occasionIntro(occasion) : occasionIntroEn(occasion.kind, occasion.slug, occasion.book)}
       crumbs={crumbs}
-      siblingsLabel={occasion.kind === "parasha" ? "עוד פרשות" : "עוד חגים"}
+      siblingsLabel={t.siblings}
       siblings={siblings.map((item) => ({
-        label: item.name,
+        label: occasionName(locale, item),
         href: occasionHref(item),
         emoji: occasion.kind === "holiday" ? item.emoji : undefined,
         selected: item.slug === occasion.slug,
       }))}
       refineHref={routes.books({ category: occasion.kind === "parasha" ? "parasha" : "judaism" })}
-      emptyTitle={
-        occasion.kind === "parasha"
-          ? `הסיפור לפרשת ${occasion.name} עוד בהכנה`
-          : `סיפורים ל${occasion.name} עוד בהכנה`
-      }
+      emptyTitle={t.empty(name)}
     >
       <p>
         <Link
           href={index.href()}
           className="font-semibold text-primary underline-offset-4 hover:underline"
         >
-          {occasion.kind === "parasha" ? "לכל פרשות השבוע" : "לכל החגים"}
+          {t.backToIndex}
         </Link>
       </p>
     </BrowseView>
@@ -125,7 +140,18 @@ export function occasionIndexMetadata(kind: OccasionKind): Metadata {
   return pageMetadata({ title: index.title, description: index.description, path: index.href() });
 }
 
-function OccasionLink({ occasion, count, highlight }: { occasion: Occasion; count: number; highlight?: boolean }) {
+function OccasionLink({
+  occasion,
+  count,
+  highlight,
+  locale,
+}: {
+  occasion: Occasion;
+  count: number;
+  highlight?: boolean;
+  locale: Locale;
+}) {
+  const t = libraryMessages(locale).occasions;
   return (
     <Link
       href={occasionHref(occasion)}
@@ -137,11 +163,11 @@ function OccasionLink({ occasion, count, highlight }: { occasion: Occasion; coun
     >
       <span className="flex items-center gap-2 font-semibold">
         <span aria-hidden="true">{occasion.emoji}</span>
-        {occasionLabel(occasion)}
+        {occasionLabelText(locale, occasion)}
       </span>
       <span className="text-sm text-muted">
-        {highlight ? "עכשיו · " : ""}
-        {count === 0 ? "בקרוב" : count === 1 ? "סיפור אחד" : `${count} סיפורים`}
+        {highlight ? t.now : ""}
+        {t.count(count)}
       </span>
     </Link>
   );
@@ -149,26 +175,34 @@ function OccasionLink({ occasion, count, highlight }: { occasion: Occasion; coun
 
 export async function OccasionIndexView({ kind }: { kind: OccasionKind }) {
   const grouped = await occasionBooks();
+  const locale = await getLocale();
+  const all = libraryMessages(locale).occasions;
+  const t = all[kind];
   const index = INDEX[kind];
   const other = INDEX[kind === "parasha" ? "holiday" : "parasha"];
   const inSeason = new Set(currentSeasons(new Date()));
 
   const groups =
     kind === "parasha"
-      ? parashotByBook().map((group) => ({ id: group.book, title: `ספר ${group.label}`, items: group.parashot }))
-      : [{ id: "holidays", title: "שבת וחגים", items: [...HOLIDAYS] }];
+      ? parashotByBook().map((group) => ({
+          id: group.book,
+          title: all.torahBook(locale === "he" ? TORAH_BOOKS[group.book] : torahBookEn(group.book)),
+          items: group.parashot,
+        }))
+      : [{ id: "holidays", title: all.holidaysGroup, items: [...HOLIDAYS] }];
 
   return (
     <main className="container-page flex flex-col gap-10 py-8 sm:py-10">
       <PageHeading
-        title={index.title}
+        title={t.title}
         emoji={index.emoji}
-        description={index.description}
-        crumbs={[{ label: "כל הספרים", href: routes.books() }, { label: index.crumb }]}
+        description={t.description}
+        crumbs={[{ label: all.allBooksCrumb, href: routes.books() }, { label: t.crumb }]}
+        locale={locale}
       >
         <p>
           <Link href={other.href()} className="font-semibold text-primary underline-offset-4 hover:underline">
-            {kind === "parasha" ? "סיפורים לשבת ולחגים" : "סיפורים לפרשת השבוע"}
+            {t.otherIndex}
           </Link>
         </p>
       </PageHeading>
@@ -183,6 +217,7 @@ export async function OccasionIndexView({ kind }: { kind: OccasionKind }) {
                   occasion={occasion}
                   count={occasionBookIds(grouped, occasion).length}
                   highlight={occasion.kind === "holiday" && inSeason.has(occasion.slug)}
+                  locale={locale}
                 />
               </li>
             ))}

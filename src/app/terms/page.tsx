@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { DraftNotice, InfoPage, InfoSection, Missing } from "../about/_components/InfoPage";
+import { TermsPageEn } from "./terms-en";
 
 export const metadata: Metadata = {
   title: "תנאי שימוש (טיוטה)",
@@ -12,8 +14,10 @@ export const metadata: Metadata = {
 };
 
 const UPDATED = "13 באוקטובר 2026";
+const UPDATED_EN = "October 13, 2026";
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  if ((await getLocale()) === "en") return <TermsPageEn updated={UPDATED_EN} />;
   return (
     <InfoPage
       title="תנאי שימוש"

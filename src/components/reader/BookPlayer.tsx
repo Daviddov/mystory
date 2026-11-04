@@ -35,7 +35,9 @@ import type { RecordingView } from "@/lib/recordings/client";
 import { useTheme } from "@/components/ThemeToggle";
 import { Button, ButtonLink, EmptyState, Spinner } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { LANGUAGE_NAMES_HE } from "@/lib/credits";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localeDir } from "@/lib/i18n/locale";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { countWords } from "@/lib/hebrew";
 import { mediaUrl } from "@/lib/media/url";
 import {
@@ -65,7 +67,7 @@ import {
 import { routes } from "@/lib/routes";
 import { applyTheme } from "@/lib/theme";
 import type { PublicBook } from "@/lib/public-book";
-import { bookLanguage, bookVersions, pageVersion, type BookLanguage } from "@/lib/types";
+import { bookLanguage, bookVersions, pageVersion, textDirection, type BookLanguage } from "@/lib/types";
 import { EndScreen } from "./EndScreen";
 import { ReaderSettings } from "./ReaderSettings";
 import { StartScreen } from "./StartScreen";
@@ -304,6 +306,7 @@ export function BookPlayer(props: BookPlayerProps) {
     () => false,
   );
   const page = (props.variant ?? "page") === "page";
+  const t = READER_MESSAGES[useLocale()].player;
   if (!isClient) {
     return (
       <div
@@ -314,7 +317,7 @@ export function BookPlayer(props: BookPlayerProps) {
           props.className,
         )}
       >
-        <Spinner size="lg" label="פותחים את הספר…" />
+        <Spinner size="lg" label={t.opening} />
       </div>
     );
   }
@@ -347,6 +350,12 @@ function Player({
   className,
 }: BookPlayerProps) {
   const isPage = variant === "page";
+  const locale = useLocale();
+  const t = READER_MESSAGES[locale].player;
+  // Page turning follows the book, not the interface: a Hebrew or Arabic book turns right to left
+  // even when the interface is English. The parts that move with the pages (progress bar, page,
+  // page turners) carry this direction; the top bar and the dialogs keep the interface's.
+  const readingDir = textDirection(bookLanguage(book));
   const remember = persist ?? isPage;
   const pageCount = book.pages.length;
 
@@ -452,7 +461,7 @@ function Player({
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [notice, setNotice] = useState<ReactNode>(() =>
-    start.resumed ? `ממשיכים מעמוד ${start.index + 1}, איפה שעצרנו.` : null,
+    start.resumed ? t.resumed(start.index + 1) : null,
   );
   const [noticeAction, setNoticeAction] = useState<"restart" | null>(() => (start.resumed ? "restart" : null));
   useEffect(() => {
@@ -660,8 +669,8 @@ function Player({
     if (typeof MediaMetadata !== "undefined") {
       session.metadata = new MediaMetadata({
         title: book.title,
-        artist: book.author || "הסיפור שלי",
-        album: "האזנה לפני השינה",
+        artist: book.author || t.siteName,
+        album: t.bedtimeAlbum,
         artwork: book.coverImage
           ? [{ src: mediaUrl(book.coverImage, book.updatedAt, shareToken), sizes: "600x800" }]
           : [],
@@ -690,7 +699,7 @@ function Player({
       }
       session.metadata = null;
     };
-  }, [hasMediaSession, book.title, book.author, book.coverImage, book.updatedAt, shareToken]);
+  }, [hasMediaSession, book.title, book.author, book.coverImage, book.updatedAt, shareToken, t]);
 
   // ---- Saving the position ------------------------------------------------
   const savedIndex = useRef(start.index);
@@ -752,7 +761,7 @@ function Player({
   const handleKey = (event: KeyboardEvent | ReactKeyboardEvent) => {
     if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
     if (settingsOpen || asleep || choosing || pageCount === 0 || isTypingTarget(event.target)) return;
-    const action = keyToAction(event.key);
+    const action = keyToAction(event.key, readingDir);
     if (!action) return;
     // Enter and Space on a focused button or link must press it, not turn the page.
     if ((event.key === "Enter" || event.key === " " || event.key === "Spacebar") && isActivatable(event.target)) {
@@ -784,7 +793,7 @@ function Player({
     if (!begin || begin.id !== event.pointerId) return;
     const dx = event.clientX - begin.x;
     const dy = event.clientY - begin.y;
-    const action = swipeToAction(dx, dy);
+    const action = swipeToAction(dx, dy, readingDir);
     if (!action) {
       // A plain tap on the page turns it, unless it landed on a control or on a word that plays.
       if (atEnd || Math.abs(dx) > 10 || Math.abs(dy) > 10) return;
@@ -813,7 +822,7 @@ function Player({
   const videoSrc = animatePictures && current?.video ? mediaUrl(current.video, book.updatedAt, shareToken) : "";
   const showVideo = videoSrc !== "" && brokenVideo !== videoSrc;
   const showImage = showVideo || imageReady;
-  const pictureAlt = current?.imageAlt?.trim() || `איור לעמוד ${index + 1}`;
+  const pictureAlt = current?.imageAlt?.trim() || t.pictureAlt(index + 1);
   // The clip is decorative: it rests while the tab is hidden, the sleep screen is up or the start screen covers it.
   const pageHidden = usePageHidden();
   const motionActive = !pageHidden && !asleep && !(choosing && !atEnd);
@@ -889,13 +898,14 @@ function Player({
   const audioControls = hasAnyAudio && !recordMode;
   const pageCounter = (
     <p
+      dir={localeDir(locale)}
       className="min-w-0 truncate rounded-full bg-surface/70 px-3 py-0.5 text-center text-sm font-medium text-muted backdrop-blur"
       aria-hidden="true"
     >
       <span dir="ltr">
         {index + 1} / {pageCount}
       </span>
-      {hasAnyAudio ? (audioSrc ? null : " · לעמוד הזה אין הקראה") : " · לספר הזה אין הקראה"}
+      {hasAnyAudio ? (audioSrc ? null : ` · ${t.noPageAudio}`) : ` · ${t.noBookAudio}`}
     </p>
   );
 
@@ -924,14 +934,14 @@ function Player({
   const exitControl = (size: "icon" | "lg"): ReactNode => {
     const content =
       size === "icon" ? (
-        <ArrowRight aria-hidden="true" />
+        <ArrowRight aria-hidden="true" className="ltr:-scale-x-100" />
       ) : (
         <>
-          <ArrowRight aria-hidden="true" />
-          יציאה מהספר
+          <ArrowRight aria-hidden="true" className="ltr:-scale-x-100" />
+          {t.exit}
         </>
       );
-    const label = size === "icon" ? "יציאה מהספר" : undefined;
+    const label = size === "icon" ? t.exit : undefined;
     if (onExit) {
       return (
         <Button variant={size === "icon" ? "ghost" : "outline"} size={size} aria-label={label} title={label} onClick={onExit}>
@@ -968,8 +978,8 @@ function Player({
       <div data-immersive={isPage ? "" : undefined} className={cn(containerClass, "items-center justify-center p-6")}>
         <EmptyState
           icon="📖"
-          title="בספר הזה אין עדיין עמודים"
-          description="אחרי שיתווספו עמודים אפשר יהיה לקרוא אותו כאן."
+          title={t.emptyTitle}
+          description={t.emptyDescription}
           action={exitControl("lg")}
         />
       </div>
@@ -985,7 +995,7 @@ function Player({
       tabIndex={isPage ? undefined : 0}
       onKeyDown={isPage ? undefined : handleKey}
       role="region"
-      aria-label={`קוראים: ${book.title}`}
+      aria-label={t.region(book.title)}
     >
       <style>{READER_CSS}</style>
 
@@ -1007,8 +1017,8 @@ function Player({
         {isPage ? (
           <Link
             href={routes.home()}
-            aria-label="הסיפור שלי: לדף הבית"
-            title="לדף הבית"
+            aria-label={t.home}
+            title={t.homeTitle}
             className="group inline-flex size-touch shrink-0 items-center justify-center rounded-full"
           >
             <span
@@ -1026,8 +1036,8 @@ function Player({
         {otherLanguage ? (
           <button
             type="button"
-            aria-label={`להציג את הסיפור ב${LANGUAGE_NAMES_HE[otherLanguage]}`}
-            title={`להציג את הסיפור ב${LANGUAGE_NAMES_HE[otherLanguage]}`}
+            aria-label={t.showIn(otherLanguage)}
+            title={t.showIn(otherLanguage)}
             onClick={() =>
               updatePrefs(otherLanguage === bookLanguage(book) ? { original: false } : { original: true, secondLanguage: otherLanguage })
             }
@@ -1043,8 +1053,8 @@ function Player({
         <button
           type="button"
           aria-pressed={textLayout !== "hidden"}
-          aria-label="הצגת הטקסט"
-          title={textLayout === "hidden" ? "להציג את הטקסט" : "להסתיר את הטקסט"}
+          aria-label={t.textToggle}
+          title={textLayout === "hidden" ? t.showText : t.hideText}
           onClick={() => updatePrefs({ textLayout: textLayout === "hidden" ? "side" : "hidden" })}
           className={cn(
             "inline-flex min-h-touch shrink-0 items-center gap-1 rounded-full border-2 px-2.5 text-base font-bold transition-colors sm:px-3",
@@ -1055,7 +1065,7 @@ function Player({
         >
           <Type aria-hidden="true" className="size-5" />
           <span aria-hidden="true" className="max-sm:hidden">
-            {textLayout === "hidden" ? "בלי טקסט" : "עם טקסט"}
+            {textLayout === "hidden" ? t.withoutText : t.withText}
           </span>
         </button>
 
@@ -1064,7 +1074,7 @@ function Player({
             type="button"
             onClick={() => setSettingsOpen(true)}
             className="inline-flex min-h-touch shrink-0 items-center gap-1 rounded-full bg-primary-soft px-3 text-sm font-semibold"
-            aria-label={`טיימר שינה: נשארו ${formatCountdown(sleep.remaining)}`}
+            aria-label={t.sleepLeft(formatCountdown(sleep.remaining))}
           >
             <Timer aria-hidden="true" className="size-4" />
             <span dir="ltr">{formatCountdown(sleep.remaining)}</span>
@@ -1075,8 +1085,8 @@ function Player({
           variant="ghost"
           size="icon"
           aria-pressed={bedtime}
-          aria-label="מצב לפני השינה"
-          title={bedtime ? "חזרה למצב יום" : "מצב לפני השינה"}
+          aria-label={t.bedtimeMode}
+          title={bedtime ? t.dayMode : t.bedtimeMode}
           onClick={() => applyTheme(bedtime ? "day" : "bedtime")}
         >
           {bedtime ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
@@ -1087,8 +1097,8 @@ function Player({
             size="icon"
             className="max-sm:hidden"
             aria-pressed={isFullscreen}
-            aria-label="מסך מלא"
-            title={isFullscreen ? "יציאה ממסך מלא" : "מסך מלא"}
+            aria-label={t.fullscreen}
+            title={isFullscreen ? t.exitFullscreen : t.fullscreen}
             onClick={toggleFullscreen}
           >
             {isFullscreen ? <Minimize aria-hidden="true" /> : <Maximize aria-hidden="true" />}
@@ -1100,8 +1110,8 @@ function Player({
               variant={recordMode ? "danger" : "ghost"}
               size="icon"
               aria-pressed={recordMode}
-              aria-label="הקלטה בקול שלי"
-              title={recordMode ? "סיום מצב ההקלטה" : "להקליט את הסיפור בקול שלי"}
+              aria-label={t.record}
+              title={recordMode ? t.stopRecording : t.startRecording}
               onClick={() => (recordMode ? setRecordMode(false) : enterRecordMode())}
             >
               <Mic aria-hidden="true" />
@@ -1111,8 +1121,8 @@ function Player({
               href={recorder.loginHref}
               variant="ghost"
               size="icon"
-              aria-label="הקלטה בקול שלי (צריך להתחבר)"
-              title="כדי להקליט בקול שלכם צריך להתחבר"
+              aria-label={t.recordSignIn}
+              title={t.recordSignInTitle}
             >
               <Mic aria-hidden="true" />
             </ButtonLink>
@@ -1121,17 +1131,17 @@ function Player({
         <Button
           variant="ghost"
           size="icon"
-          aria-label="הגדרות קריאה"
-          title="הגדרות קריאה"
+          aria-label={t.settings}
+          title={t.settings}
           onClick={() => setSettingsOpen(true)}
         >
           <Settings aria-hidden="true" />
         </Button>
       </header>
 
-      <ProgressScrubber index={index} pageCount={pageCount} onJump={jump} />
+      <ProgressScrubber index={index} pageCount={pageCount} onJump={jump} dir={readingDir} />
       <p className="sr-only" aria-live="polite">
-        {atEnd ? "סוף הסיפור" : `עמוד ${index + 1} מתוך ${pageCount}`}
+        {atEnd ? t.theEnd : t.pageOf(index + 1, pageCount)}
       </p>
 
       {/* Stage */}
@@ -1157,6 +1167,7 @@ function Player({
         ) : (
           <div
             key={index}
+            dir={readingDir}
             className={cn(
               // Nothing floats over the page: the controls have their own row under it, and on wider
               // screens the side padding keeps the page clear of the page turners.
@@ -1249,7 +1260,7 @@ function Player({
               </div>
             ) : null}
             {!showImage && text.trim() === "" ? (
-              <p className="m-auto text-7xl" aria-label="עמוד ריק">
+              <p className="m-auto text-7xl" aria-label={t.emptyPage}>
                 📖
               </p>
             ) : null}
@@ -1272,7 +1283,7 @@ function Player({
                   setNoticeAction(null);
                 }}
               >
-                להתחיל מההתחלה
+                {t.startOver}
               </Button>
             ) : null}
           </div>
@@ -1281,25 +1292,26 @@ function Player({
 
       {/* A demo clip says so, like demo narration. */}
       {!atEnd && showVideo && current?.videoSource === "mock" ? (
-        <MockNotice kind="video" className="mx-3 mb-1 shrink-0 px-3 py-1.5 text-sm" />
+        <MockNotice kind="video" locale={locale} className="mx-3 mb-1 shrink-0 px-3 py-1.5 text-sm" />
       ) : null}
 
       {/* Narration messages */}
       {!atEnd && isDemoAudio ? (
-        <MockNotice kind={speech ? "tts-device" : "tts"} className="mx-3 mb-1 shrink-0 px-3 py-1.5 text-sm" />
+        <MockNotice kind={speech ? "tts-device" : "tts"} locale={locale} className="mx-3 mb-1 shrink-0 px-3 py-1.5 text-sm" />
       ) : null}
       {!atEnd && (narration.failed || narration.blocked) ? (
         <p role="alert" className="mx-3 mb-1 shrink-0 rounded-md bg-danger-soft px-3 py-1.5 text-sm">
           {narration.failed
-            ? "לא הצלחנו להשמיע את ההקראה של העמוד הזה. אפשר להמשיך לקרוא כרגיל."
-            : "הדפדפן חסם את ההשמעה. לחצו שוב על כפתור ההשמעה."}
+            ? t.audioFailed
+            : t.audioBlocked}
         </p>
       ) : null}
 
-      {/* Bottom controls, in their own row so they never cover the words. In RTL the first item
-          sits on the right: previous is right, next is left. */}
+      {/* Bottom controls, in their own row so they never cover the words. They follow the book's
+          direction: in a right-to-left book previous is right and next is left. */}
       {!atEnd ? (
         <footer
+          dir={readingDir}
           className={cn(
             "mystory-reader-controls z-10 flex shrink-0 flex-col items-center gap-1 px-2 pt-1 sm:px-6",
             !recordMode && "pb-[max(0.375rem,env(safe-area-inset-bottom))]",
@@ -1311,19 +1323,24 @@ function Player({
               variant="outline"
               size="icon-lg"
               className="mystory-reader-turn mystory-reader-turn-prev size-14 shrink-0 border-transparent bg-surface/80 p-0 shadow-card ring-1 ring-border/60 backdrop-blur-md transition-transform hover:scale-105 active:scale-95 sm:absolute sm:start-5 sm:top-1/2 sm:size-20 sm:-translate-y-1/2"
-              aria-label="לעמוד הקודם"
+              aria-label={t.previousPage}
               disabled={index === 0}
               onClick={() => turn(-1)}
             >
-              <ChevronRight aria-hidden="true" className="size-8 sm:size-11" />
+              {/* Chosen in code: ltr:/rtl: variants also match an outer page of the other direction. */}
+              {readingDir === "rtl" ? (
+                <ChevronRight aria-hidden="true" className="size-8 sm:size-11" />
+              ) : (
+                <ChevronLeft aria-hidden="true" className="size-8 sm:size-11" />
+              )}
             </Button>
             {audioControls ? (
               <div className="mystory-reader-pill flex min-w-0 items-center gap-2 rounded-full bg-surface/85 p-1.5 pe-3 shadow-pop ring-1 ring-border/60 backdrop-blur-md">
                 <Button
                   variant="secondary"
                   size="icon-lg"
-                  aria-label={narrating ? "להשהות את ההקראה" : "להשמיע את הסיפור"}
-                  title={audioSrc ? undefined : "לעמוד הזה אין הקראה"}
+                  aria-label={narrating ? t.pause : t.play}
+                  title={audioSrc ? undefined : t.noPageAudio}
                   disabled={!audioSrc}
                   onClick={toggleNarration}
                   className={cn("mystory-reader-play size-16 shrink-0 rounded-full", narrating && "mystory-reader-playing")}
@@ -1331,6 +1348,7 @@ function Player({
                   {narrating ? <Pause aria-hidden="true" className="size-8" /> : <Play aria-hidden="true" className="size-8" />}
                 </Button>
                 <VoicePicker
+                  dir={localeDir(locale)}
                   hasOriginal={hasOriginalAudio}
                   versions={versions}
                   value={voiceId}
@@ -1347,10 +1365,14 @@ function Player({
               variant="primary"
               size="icon-lg"
               className="mystory-reader-turn mystory-reader-turn-next size-14 shrink-0 p-0 shadow-lift transition-transform hover:scale-105 active:scale-95 sm:absolute sm:end-5 sm:top-1/2 sm:size-20 sm:-translate-y-1/2"
-              aria-label={isLastPage ? "לסוף הסיפור" : "לעמוד הבא"}
+              aria-label={isLastPage ? t.toTheEnd : t.nextPage}
               onClick={() => turn(1)}
             >
-              <ChevronLeft aria-hidden="true" className="size-8 sm:size-11" />
+              {readingDir === "rtl" ? (
+                <ChevronLeft aria-hidden="true" className="size-8 sm:size-11" />
+              ) : (
+                <ChevronRight aria-hidden="true" className="size-8 sm:size-11" />
+              )}
             </Button>
           </div>
           {audioControls ? pageCounter : null}
@@ -1406,16 +1428,16 @@ function Player({
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="לילה טוב"
+          aria-label={t.goodNight}
           className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-6 bg-black/90 p-6 text-center text-white"
         >
           <p className="text-7xl" aria-hidden="true">
             🌙
           </p>
-          <p className="text-4xl font-bold">לילה טוב</p>
-          <p className="text-xl opacity-80">הטיימר הסתיים וההקראה נעצרה.</p>
+          <p className="text-4xl font-bold">{t.goodNight}</p>
+          <p className="text-xl opacity-80">{t.timerDone}</p>
           <Button variant="outline" size="lg" autoFocus onClick={() => setAsleep(false)}>
-            להמשיך לקרוא
+            {t.keepReading}
           </Button>
         </div>
       ) : null}
@@ -1453,6 +1475,7 @@ function Player({
         onLiveImages={(value) => updatePrefs({ liveImages: value })}
         reducedMotion={reducedMotion}
         nikudAvailable={nikudAvailable}
+        sampleLanguage={textLanguage}
         nikud={nikudOn}
         onNikud={(value) => updatePrefs({ nikud: value })}
         hasAudio={hasAnyAudio}
@@ -1465,7 +1488,7 @@ function Player({
           updatePrefs({ autoAdvance: true });
           sleep.start(30);
           setSettingsOpen(false);
-          showNotice("מצב האזנה לפני השינה: ההקראה תיעצר בעוד 30 דקות.");
+          showNotice(t.bedtimeNotice);
           if (audioSrc && !narrating) toggleNarration();
         }}
         rate={rate}
@@ -1475,7 +1498,7 @@ function Player({
         sleepRemaining={sleep.remaining}
         onSleepStart={(minutes) => {
           sleep.start(minutes);
-          showNotice(`טיימר השינה הופעל ל-${minutes} דקות.`);
+          showNotice(t.sleepNotice(minutes));
           setSettingsOpen(false);
         }}
         onSleepCancel={sleep.cancel}

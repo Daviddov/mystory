@@ -2,8 +2,10 @@
 
 import { ListMusic } from "lucide-react";
 import { useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { buttonClasses } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { libraryMessages } from "@/lib/i18n/library";
 import { setInPlaylist } from "./playlist";
 
 export interface PlaylistButtonProps {
@@ -15,6 +17,7 @@ export interface PlaylistButtonProps {
 
 /** "Add to my listening playlist" on the book page (signed-in users, narrated books). */
 export function PlaylistButton({ bookId, initialInPlaylist, className }: PlaylistButtonProps) {
+  const t = libraryMessages(useLocale()).playlistButton;
   const [inPlaylist, setIn] = useState(initialInPlaylist);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -40,10 +43,10 @@ export function PlaylistButton({ bookId, initialInPlaylist, className }: Playlis
         className={buttonClasses({ variant: "outline", size: "lg", className: "w-full sm:w-auto" })}
       >
         <ListMusic aria-hidden="true" className={cn(inPlaylist && "text-primary")} />
-        {inPlaylist ? "ברשימת ההשמעה שלי" : "הוספה לרשימת ההשמעה"}
+        {inPlaylist ? t.inPlaylist : t.add}
       </button>
       <p role="status" aria-live="polite" className="min-h-5 text-sm text-muted">
-        {failed ? "לא הצלחנו לעדכן את הרשימה. נסו שוב בעוד רגע." : null}
+        {failed ? t.failed : null}
       </p>
     </div>
   );

@@ -4,7 +4,9 @@ import { RotateCcw } from "lucide-react";
 import type { ReactNode } from "react";
 import { BookCard } from "@/components/BookCard";
 import { BookCredits, hasCredits, type BookCreditsProps } from "@/components/BookCredits";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { routes } from "@/lib/routes";
 import type { PublicBook } from "@/lib/public-book";
 
@@ -44,6 +46,8 @@ export function EndScreen({
   mediaToken,
   staffPanel,
 }: EndScreenProps) {
+  const locale = useLocale();
+  const t = READER_MESSAGES[locale].end;
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-8">
       <header className="relative text-center">
@@ -64,12 +68,16 @@ export function EndScreen({
         >
           🎉
         </p>
-        <h2 className="relative mt-4 text-4xl font-bold sm:text-5xl">סוף הסיפור</h2>
-        <p className="mt-2 text-xl text-muted">קראנו את ״{title}״ עד הסוף. כל הכבוד!</p>
+        <h2 className="relative mt-4 text-4xl font-bold sm:text-5xl">{t.title}</h2>
+        <p className="mt-2 text-xl text-muted">
+          {t.wellDoneBefore}
+          <bdi>{title}</bdi>
+          {t.wellDoneAfter}
+        </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <Button size="lg" variant="primary" onClick={onReadAgain}>
             <RotateCcw aria-hidden="true" />
-            לקרוא שוב
+            {t.readAgain}
           </Button>
           {exit}
         </div>
@@ -84,7 +92,7 @@ export function EndScreen({
         >
           <h3 id="reader-questions-title" className="text-2xl font-bold">
             <span aria-hidden="true">💬 </span>
-            על מה אפשר לדבר?
+            {t.questions}
           </h3>
           <ol className="mt-4 flex flex-col gap-3 text-xl leading-relaxed">
             {discussionQuestions.map((question, index) => (
@@ -95,7 +103,7 @@ export function EndScreen({
                 >
                   {index + 1}
                 </span>
-                <span>{question}</span>
+                <span dir="auto">{question}</span>
               </li>
             ))}
           </ol>
@@ -106,11 +114,11 @@ export function EndScreen({
         <section aria-labelledby="reader-next-title">
           <h3 id="reader-next-title" className="mb-4 text-2xl font-bold">
             <span aria-hidden="true">📚 </span>
-            מה קוראים עכשיו?
+            {t.next}
           </h3>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {recommendations.map((book) => (
-              <BookCard key={book.id} book={book} href={routes.read(book.slug)} />
+              <BookCard key={book.id} book={book} href={routes.read(book.slug)} locale={locale} />
             ))}
           </div>
         </section>
@@ -120,7 +128,7 @@ export function EndScreen({
       {creditsBook && hasCredits(creditsBook) ? (
         <details className="text-center">
           <summary className="inline-flex min-h-touch cursor-pointer list-none items-center px-3 text-base text-muted underline underline-offset-4 hover:text-foreground [&::-webkit-details-marker]:hidden">
-            קרדיטים ורישיון
+            {t.credits}
           </summary>
           <div className="mt-3 text-start">
             <BookCredits
@@ -129,6 +137,7 @@ export function EndScreen({
               headingLevel={3}
               id="reader-credits"
               mediaToken={mediaToken}
+              locale={locale}
             />
           </div>
         </details>

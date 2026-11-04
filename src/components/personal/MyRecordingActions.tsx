@@ -3,7 +3,9 @@
 import { Send, Trash2, Undo2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";
+import { accountMessages } from "@/lib/i18n/account";
 import { deleteRecordingRequest, shareRecordingRequest, type RecordingView } from "@/lib/recordings/client";
 
 export interface MyRecordingActionsProps {
@@ -17,6 +19,8 @@ export interface MyRecordingActionsProps {
 /** Share, stop sharing or delete one of the reader's own recordings (on "המדף שלי"). */
 export function MyRecordingActions({ id, title, status, canShare }: MyRecordingActionsProps) {
   const router = useRouter();
+  const locale = useLocale();
+  const t = accountMessages(locale).recording;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +29,7 @@ export function MyRecordingActions({ id, title, status, canShare }: MyRecordingA
     setError(null);
     const result = await action();
     setBusy(false);
-    if (!result.ok) setError(result.error ?? null);
+    if (!result.ok) setError(locale === "he" ? (result.error ?? null) : t.failed);
     else router.refresh();
   }
 
@@ -40,7 +44,7 @@ export function MyRecordingActions({ id, title, status, canShare }: MyRecordingA
             onClick={() => void run(() => shareRecordingRequest(id, "submit"))}
           >
             <Send aria-hidden="true" className="size-4" />
-            לשתף עם כולם
+            {t.share}
           </Button>
         ) : null}
         {status !== "private" ? (
@@ -51,7 +55,7 @@ export function MyRecordingActions({ id, title, status, canShare }: MyRecordingA
             onClick={() => void run(() => shareRecordingRequest(id, "withdraw"))}
           >
             <Undo2 aria-hidden="true" className="size-4" />
-            להפסיק לשתף
+            {t.unshare}
           </Button>
         ) : null}
         <Button
@@ -59,13 +63,13 @@ export function MyRecordingActions({ id, title, status, canShare }: MyRecordingA
           variant="ghost"
           disabled={busy}
           onClick={() => {
-            if (window.confirm(`למחוק את ההקלטה "${title}"? אי אפשר לבטל את המחיקה.`)) {
+            if (window.confirm(t.confirmDelete(title))) {
               void run(() => deleteRecordingRequest(id));
             }
           }}
         >
           <Trash2 aria-hidden="true" className="size-4" />
-          מחיקה
+          {t.delete}
         </Button>
       </div>
       {error ? (

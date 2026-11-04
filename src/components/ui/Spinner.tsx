@@ -1,15 +1,20 @@
 import { cn } from "@/lib/cn";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 
 export interface SpinnerProps {
   size?: "sm" | "md" | "lg";
   /** Accessible label. Pass "" when the spinner only decorates other text. Default "טוען…". */
   label?: string;
   className?: string;
+  /** Interface language of the default label. Default Hebrew. */
+  locale?: Locale;
 }
 
 const SIZES = { sm: "size-4 border-2", md: "size-7 border-[3px]", lg: "size-12 border-4" };
 
-export function Spinner({ size = "md", label = "טוען…", className }: SpinnerProps) {
+export function Spinner({ size = "md", label: givenLabel, className, locale = DEFAULT_LOCALE }: SpinnerProps) {
+  const label = givenLabel ?? READER_MESSAGES[locale].ui.loading;
   return (
     <span
       role={label ? "status" : undefined}

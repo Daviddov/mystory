@@ -3,6 +3,8 @@ import { BookHeart, Camera, Printer, Sparkles } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
 import { WaitlistForm } from "@/components/waitlist/WaitlistForm";
 import { ButtonLink, Card, CardDescription, CardTitle } from "@/components/ui";
+import { accountMessages } from "@/lib/i18n/account";
+import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
@@ -20,31 +22,17 @@ export const metadata: Metadata = {
   openGraph: { title: TITLE, description: DESCRIPTION, type: "website", locale: "he_IL" },
 };
 
-const STEPS = [
-  { icon: Camera, title: "מספרים על הילד", text: "שם, גיל, מה הוא אוהב, ואם רוצים גם תמונה כדי שהגיבור ידמה לו." },
-  { icon: Sparkles, title: "הסיפור נכתב ומאויר", text: "סיפור בחרוזים בעברית, עם איור לכל עמוד, בכמה דקות." },
-  { icon: BookHeart, title: "קוראים ומקשיבים", text: "הספר נפתח עם ניקוד והקראה בקול, ואפשר לשמור אותו, לשתף אותו ולהדפיס." },
-] as const;
+const STEP_ICONS = [Camera, Sparkles, BookHeart] as const;
 
-const QUESTIONS = [
-  {
-    q: "כמה עולה ספר אישי?",
-    a: `ספר אחד בשבוע בחינם. על חבילות ספרים נוספות אנחנו עדיין חושבים (בערך ${TEASER.books} ספרים ב-${TEASER.shekels} ₪), ועוד אי אפשר לרכוש. השאירו מייל ונעדכן.`,
-  },
-  {
-    q: "אפשר לקבל ספר מודפס?",
-    a: "זה בתכנון. כרגע אפשר להוריד קובץ PDF להדפסה בבית. השאירו מייל ונעדכן כשיהיה ספר מודפס שמגיע עד הדלת.",
-  },
-  {
-    q: "מה קורה לתמונה של הילד?",
-    a: "התמונה משמשת רק ליצירת הספר שלכם. הספר נשאר פרטי ורק אתם מחליטים אם לשתף אותו.",
-  },
-] as const;
+/** Structured data stays Hebrew, like the rest of the page's SEO. */
+const QUESTIONS = accountMessages("he").personalBook.questions(TEASER.books, TEASER.shekels);
 
-export default function PersonalBookPage() {
+export default async function PersonalBookPage() {
+  const t = accountMessages(await getLocale()).personalBook;
+  const questions = t.questions(TEASER.books, TEASER.shekels);
   return (
     <main className="container-page py-10">
-      <JsonLd data={breadcrumbJsonLd([{ label: "ספר אישי" }])} />
+      <JsonLd data={breadcrumbJsonLd([{ label: accountMessages("he").personalBook.crumb }])} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -58,21 +46,21 @@ export default function PersonalBookPage() {
       />
       <div className="mx-auto flex max-w-3xl flex-col gap-12">
         <header className="flex flex-col items-start gap-4">
-          <h1 className="text-3xl font-bold leading-tight sm:text-5xl">ספר אישי לילד שלכם</h1>
-          <p className="text-xl leading-relaxed text-muted">
-            סיפור מאויר בעברית שבו הילד או הילדה הם הגיבורים. מתאים כמתנה, לפני השינה, או סתם בשביל הכיף.
-          </p>
+          <h1 className="text-3xl font-bold leading-tight sm:text-5xl">{t.title}</h1>
+          <p className="text-xl leading-relaxed text-muted">{t.intro}</p>
           <ButtonLink href={routes.create()} size="lg">
-            יוצרים ספר חינם
+            {t.cta}
           </ButtonLink>
         </header>
 
         <section aria-labelledby="how" className="flex flex-col gap-5">
           <h2 id="how" className="text-2xl font-bold">
-            איך זה עובד
+            {t.how}
           </h2>
           <ol className="grid gap-4 sm:grid-cols-3">
-            {STEPS.map(({ icon: Icon, title, text }, index) => (
+            {t.steps.map(({ title, text }, index) => {
+              const Icon = STEP_ICONS[index] ?? Sparkles;
+              return (
               <Card as="li" key={title} className="flex flex-col gap-2">
                 <Icon aria-hidden="true" className="size-8 text-primary" />
                 <CardTitle>
@@ -80,21 +68,19 @@ export default function PersonalBookPage() {
                 </CardTitle>
                 <CardDescription>{text}</CardDescription>
               </Card>
-            ))}
+              );
+            })}
           </ol>
         </section>
 
         <section aria-labelledby="more" className="flex flex-col gap-5">
           <h2 id="more" className="text-2xl font-bold">
-            רוצים עוד?
+            {t.more}
           </h2>
           <Card tone="soft" padding="lg" className="flex flex-col gap-6">
             <p className="flex items-center gap-3 text-lg leading-relaxed">
               <Printer aria-hidden="true" className="size-7 shrink-0 text-primary" />
-              <span>
-                ספר אחד בשבוע הוא חינם. אנחנו בודקים אם יש עניין בחבילת ספרים נוספים (בערך {TEASER.books} ספרים ב-
-                {TEASER.shekels} ₪) ובספר מודפס. אם זה מעניין אתכם, השאירו מייל ונעדכן כשזה יהיה זמין.
-              </span>
+              <span>{t.moreText(TEASER.books, TEASER.shekels)}</span>
             </p>
             <WaitlistForm />
           </Card>
@@ -102,9 +88,9 @@ export default function PersonalBookPage() {
 
         <section aria-labelledby="faq" className="flex flex-col gap-4">
           <h2 id="faq" className="text-2xl font-bold">
-            שאלות נפוצות
+            {t.faq}
           </h2>
-          {QUESTIONS.map(({ q, a }) => (
+          {questions.map(({ q, a }) => (
             <div key={q} className="flex flex-col gap-1">
               <h3 className="text-lg font-bold">{q}</h3>
               <p className="text-lg leading-relaxed text-muted">{a}</p>

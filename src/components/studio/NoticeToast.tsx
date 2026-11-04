@@ -3,7 +3,9 @@
 import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { MockNotice } from "@/components/MockNotice";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
+import { STUDIO_COMMON } from "@/lib/i18n/studio";
 import type { EditorNotice } from "./types";
 
 /** A success message goes away by itself after this long; errors and info stay until closed. */
@@ -14,6 +16,7 @@ export const SUCCESS_DISMISS_MS = 8000;
  * wherever the user has scrolled. Success fades after a few seconds, errors persist.
  */
 export function NoticeToast({ notice, onClose }: { notice: EditorNotice; onClose: () => void }) {
+  const t = STUDIO_COMMON[useLocale()];
   const close = useRef(onClose);
   useEffect(() => {
     close.current = onClose;
@@ -40,7 +43,7 @@ export function NoticeToast({ notice, onClose }: { notice: EditorNotice; onClose
           <p className="flex-1 font-medium">{notice.text}</p>
           <button
             type="button"
-            aria-label="סגירת ההודעה"
+            aria-label={t.closeNotice}
             onClick={onClose}
             className="flex size-8 shrink-0 items-center justify-center rounded-full hover:bg-surface"
           >

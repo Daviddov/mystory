@@ -1,7 +1,9 @@
 "use client";
 
 import { ArrowDown, ArrowUp, ScanText, Trash2 } from "lucide-react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Spinner, Textarea } from "@/components/ui";
+import { STUDIO_PAGE_DRAFTS } from "@/lib/i18n/studio-import";
 import { IMPORT_LIMITS } from "@/lib/importers/limits";
 
 export interface DraftPage {
@@ -28,6 +30,7 @@ export interface PageDraftListProps {
 
 /** Editable preview of the pages about to be imported: thumbnail, text, order. */
 export function PageDraftList({ pages, disabled, ocrEnabled, onText, onMove, onRemove, onOcr }: PageDraftListProps) {
+  const t = STUDIO_PAGE_DRAFTS[useLocale()];
   return (
     <ol className="flex flex-col gap-4">
       {pages.map((page, index) => {
@@ -40,7 +43,7 @@ export function PageDraftList({ pages, disabled, ocrEnabled, onText, onMove, onR
             <div className="flex flex-col gap-2">
               <img
                 src={page.previewUrl}
-                alt={`עמוד ${index + 1}`}
+                alt={t.page(index + 1)}
                 className="aspect-[4/3] w-full rounded-sm bg-surface-2 object-contain"
               />
               <p className="truncate text-sm text-muted" dir="auto" title={page.name}>
@@ -50,13 +53,13 @@ export function PageDraftList({ pages, disabled, ocrEnabled, onText, onMove, onR
             <div className="flex flex-col gap-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <label htmlFor={textId} className="text-lg font-bold">
-                  עמוד {index + 1}
+                  {t.page(index + 1)}
                 </label>
                 <div className="flex gap-1">
                   <Button
                     variant="ghost"
                     size="icon"
-                    aria-label={`העברת עמוד ${index + 1} למעלה`}
+                    aria-label={t.moveUp(index + 1)}
                     disabled={disabled || index === 0}
                     onClick={() => onMove(page.key, -1)}
                   >
@@ -65,7 +68,7 @@ export function PageDraftList({ pages, disabled, ocrEnabled, onText, onMove, onR
                   <Button
                     variant="ghost"
                     size="icon"
-                    aria-label={`העברת עמוד ${index + 1} למטה`}
+                    aria-label={t.moveDown(index + 1)}
                     disabled={disabled || index === pages.length - 1}
                     onClick={() => onMove(page.key, 1)}
                   >
@@ -74,7 +77,7 @@ export function PageDraftList({ pages, disabled, ocrEnabled, onText, onMove, onR
                   <Button
                     variant="ghost"
                     size="icon"
-                    aria-label={`הסרת עמוד ${index + 1}`}
+                    aria-label={t.remove(index + 1)}
                     disabled={disabled}
                     onClick={() => onRemove(page.key)}
                   >
@@ -89,7 +92,7 @@ export function PageDraftList({ pages, disabled, ocrEnabled, onText, onMove, onR
                 value={page.text}
                 disabled={disabled || page.ocr === "busy"}
                 maxLength={IMPORT_LIMITS.pageTextChars}
-                placeholder="הטקסט של העמוד. אפשר להשאיר ריק ולהשלים אחר כך בעורך."
+                placeholder={t.textPlaceholder}
                 onChange={(event) => onText(page.key, event.target.value)}
               />
               {ocrEnabled ? (
@@ -101,9 +104,9 @@ export function PageDraftList({ pages, disabled, ocrEnabled, onText, onMove, onR
                     onClick={() => onOcr(page.key)}
                   >
                     <ScanText aria-hidden="true" className="size-4" />
-                    זיהוי טקסט מהתמונה
+                    {t.recognise}
                   </Button>
-                  {page.ocr === "busy" ? <Spinner size="sm" label="מזהה טקסט…" /> : null}
+                  {page.ocr === "busy" ? <Spinner size="sm" label={t.recognising} /> : null}
                   {page.ocrMessage ? (
                     <p role="status" className={page.ocr === "error" ? "text-sm text-danger" : "text-sm text-muted"}>
                       {page.ocrMessage}

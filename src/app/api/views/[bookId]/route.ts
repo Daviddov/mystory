@@ -26,7 +26,7 @@ export async function POST(request: Request, context: { params: Promise<{ bookId
   try {
     if (!isSameOriginRequest(request)) return jsonError(403, "הבקשה נדחתה");
     const bookId = IdSchema.parse((await context.params).bookId);
-    const limited = rateLimited("VIEWS", { request });
+    const limited = await rateLimited("VIEWS", { request });
     if (limited) return limited;
 
     const repo = await getRepo();

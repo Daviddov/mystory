@@ -86,7 +86,7 @@ function timeOf(value: string | undefined): number {
 
 export async function POST(request: Request): Promise<Response> {
   try {
-    const blocked = rejectCrossOrigin(request);
+    const blocked = await rejectCrossOrigin(request);
     if (blocked) return blocked;
     const user = await requireUser();
     const body = await readJsonBody(request);

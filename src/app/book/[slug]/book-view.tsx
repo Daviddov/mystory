@@ -51,6 +51,7 @@ import {
   type BookWithPages,
   type User,
 } from "@/lib/types";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 /**
  * The book page, shared by two routes:
@@ -86,7 +87,7 @@ function httpUrl(value: string): string | null {
 
 export async function bookMetadata(slug: string, viewer: User | null): Promise<Metadata> {
   const book = await loadVisibleBook(slug, viewer);
-  if (!book) return { title: "הספר לא נמצא", robots: { index: false } };
+  if (!book) return localizeTitle({ title: "הספר לא נמצא", robots: { index: false } });
   const age = getAgeGroup(book.ageGroup);
   const agesLabel = ageGroupsLabel(bookAgeGroups(book));
   // Search engines match text without nikud: people type titles without vowel points.
@@ -103,7 +104,8 @@ export async function bookMetadata(slug: string, viewer: User | null): Promise<M
     : summary.length <= 90
       ? `${summary}. ${details}`
       : plainText(book.summary, 155);
-  return {
+  const kindEn = `a children's story to read${hasAudio ? " and listen to" : ""}${voweled ? " with nikud" : ""}`;
+  return localizeTitle({
     title: `${title}: ${kind}`,
     description,
     authors: book.author ? [{ name: book.author }] : undefined,
@@ -121,7 +123,7 @@ export async function bookMetadata(slug: string, viewer: User | null): Promise<M
       tags: book.tags,
     },
     twitter: { card: "summary_large_image", title, description },
-  };
+  }, `${title}: ${kindEn}`);
 }
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {

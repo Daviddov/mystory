@@ -13,6 +13,7 @@ import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { BookLanguageSchema } from "@/lib/types";
 import { plainText } from "@/lib/seo";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 export const dynamic = "force-dynamic";
 
@@ -57,19 +58,25 @@ export async function generateMetadata({ params, searchParams }: ReadPageProps):
   const { slug } = await params;
   const { token } = parseQuery(await searchParams);
   const result = await loadBookForReader(slug, token);
-  if (!result.ok) return { title: "הספר לא נמצא", robots: { index: false, follow: false } };
+  if (!result.ok) return localizeTitle({ title: "הספר לא נמצא", robots: { index: false, follow: false } });
   const { book } = result;
   if (book.status !== "published") {
     // Private books stay out of search engines, and the share token out of Referer headers.
-    return { title: `קוראים: ${book.title}`, robots: { index: false, follow: false }, referrer: "no-referrer" };
+    return localizeTitle(
+      { title: `קוראים: ${book.title}`, robots: { index: false, follow: false }, referrer: "no-referrer" },
+      `Reading: ${book.title}`,
+    );
   }
   // The book's page carries the same story (full text, details, structured data),
   // so the reader points search engines there instead of competing with it.
-  return {
-    title: `קוראים: ${plainText(book.title)}`,
-    description: plainText(book.summary, 155) || undefined,
-    alternates: { canonical: routes.book(book.slug) },
-  };
+  return localizeTitle(
+    {
+      title: `קוראים: ${plainText(book.title)}`,
+      description: plainText(book.summary, 155) || undefined,
+      alternates: { canonical: routes.book(book.slug) },
+    },
+    `Reading: ${plainText(book.title)}`,
+  );
 }
 
 export default async function ReadPage({ params, searchParams }: ReadPageProps) {

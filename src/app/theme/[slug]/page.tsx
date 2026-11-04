@@ -9,6 +9,7 @@ import { libraryMessages } from "@/lib/i18n/library";
 import { taxonomyText } from "@/lib/i18n/messages";
 import { getLocale } from "@/lib/i18n/server";
 import { THEMES, getTheme } from "@/lib/taxonomy";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -27,13 +28,16 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const theme = getTheme((await params).slug);
-  if (!theme) return { title: "הדף לא נמצא", robots: { index: false } };
+  if (!theme) return localizeTitle({ title: "הדף לא נמצא", robots: { index: false } });
   const page = pageMetadata({
     title: `סיפורים על ${theme.label} לילדים`,
     description: `סיפורי ילדים שפותחים שיחה על ${theme.label}: ספרים מאוירים עם ניקוד והקראה, ושאלות לשיחה בסוף כל ספר. לקריאה ולהאזנה בחינם.`,
     path: routes.theme(theme.slug),
   });
-  return { ...page, robots: await listingRobots({ theme: theme.slug }) };
+  return localizeTitle(
+    { ...page, robots: await listingRobots({ theme: theme.slug }) },
+    `Stories about ${taxonomyText("en", "theme", theme.slug, theme).label.toLowerCase()} for children`,
+  );
 }
 
 export default async function ThemePage({ params, searchParams }: Props) {

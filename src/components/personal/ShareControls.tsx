@@ -3,6 +3,7 @@
 import { Check, Copy, Link2, Link2Off } from "lucide-react";
 import { useState, useSyncExternalStore } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { showServerMessage } from "@/lib/i18n/server-errors";
 import { Button } from "@/components/ui";
 import { accountMessages } from "@/lib/i18n/account";
 import { routes } from "@/lib/routes";
@@ -56,7 +57,7 @@ export function ShareControls({ bookId, title, initialToken }: ShareControlsProp
       });
       const body = (await response.json().catch(() => ({}))) as Partial<ShareResponse>;
       if (!response.ok) {
-        setError((locale === "he" ? body.error : undefined) ?? t.failed);
+        setError(showServerMessage(locale, body.error, t.failed));
         return;
       }
       setToken(body.token ?? null);

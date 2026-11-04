@@ -10,6 +10,8 @@ import { cn } from "@/lib/cn";
 import type { CostContext } from "@/lib/generation/costs";
 import { countWords, estimateReadingMinutes, hasNikud, stripNikud } from "@/lib/hebrew";
 import { readingTimeText } from "@/lib/i18n/labels";
+import type { Locale } from "@/lib/i18n/locale";
+import { showServerMessage, translateServerMessage } from "@/lib/i18n/server-errors";
 import { STUDIO_STATUS_LABELS } from "@/lib/i18n/studio";
 import { STUDIO_EDITOR_MESSAGES } from "@/lib/i18n/studio-editor";
 import { timingsMatchText } from "@/lib/narration/align";
@@ -108,8 +110,8 @@ function hasFreshAudio(page: EditorPage): boolean {
   return timingsMatchText(page.wordTimings, spoken);
 }
 
-function errorMessage(err: unknown, fallback: string): string {
-  return err instanceof StudioApiError ? err.message : fallback;
+function errorMessage(locale: Locale, err: unknown, fallback: string): string {
+  return err instanceof StudioApiError ? translateServerMessage(locale, err.message) : fallback;
 }
 
 /** Runs `worker` over `items` with at most `limit` running at once. */
@@ -202,7 +204,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       audio.addEventListener("ended", () => URL.revokeObjectURL(sample.url), { once: true });
       await audio.play();
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.voiceSampleFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.voiceSampleFailed) });
     }
   };
 
@@ -317,7 +319,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       if (Array.isArray(details?.pageIndexes)) {
         setUntranslatedPages(details.pageIndexes.filter((value): value is number => typeof value === "number"));
       }
-      setNotice({ tone: "error", text: errorMessage(err, t.translationFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.translationFailed) });
     } finally {
       setBusy(null);
     }
@@ -419,7 +421,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const upload = await uploadMedia(bookId, "image", await shrinkImage(file), file.name);
       updatePage(key, { image: upload.path, uploading: false, uploadError: undefined });
     } catch (err) {
-      updatePage(key, { uploading: false, uploadError: errorMessage(err, t.imageUploadFailed) }, false);
+      updatePage(key, { uploading: false, uploadError: errorMessage(locale, err, t.imageUploadFailed) }, false);
     }
   };
 
@@ -472,7 +474,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       updatePage(key, { audio: upload.path, audioSource: "recorded", wordTimings: undefined });
       setNotice({ tone: "success", text: t.recordingSaved });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.recordingSaveFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.recordingSaveFailed) });
     }
   };
 
@@ -606,14 +608,14 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       if (outcome.skipped > 0) parts.push(t.skippedPages(outcome.skipped));
       if (outcome.failed > 0) parts.push(t.failedPages(outcome.failed));
       const rawError = outcome.pages.find((p) => p.status === "failed")?.error;
-      // Vendor errors come in English (often raw JSON): show a short reason instead. Hebrew server messages pass as they are.
+      // Vendor errors come in English (often raw JSON): show a short reason instead. Hebrew server messages are shown translated.
       const firstError = rawError
         ? /quota|credit|402|429|limit/i.test(rawError)
           ? t.ttsQuota
           : /401|403|api key|unauthor/i.test(rawError)
             ? t.ttsKeyRejected
             : /[֐-׿]/.test(rawError)
-              ? rawError
+              ? showServerMessage(locale, rawError, t.ttsFailed)
               : t.ttsFailed
         : undefined;
       setNotice({
@@ -628,7 +630,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       });
       return { styleNotesIgnored: outcome.styleNotesIgnored };
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.narrationFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.narrationFailed) });
     } finally {
       setBusy(null);
     }
@@ -716,7 +718,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
         mock: outcome.isMock ? "image" : undefined,
       });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.heroFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.heroFailed) });
     } finally {
       setBusy(null);
     }
@@ -733,7 +735,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const current = metaRef.current.hero;
       setHero({ ...current, description: current?.description ?? "", image: upload.path });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.imageUploadFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.imageUploadFailed) });
     } finally {
       setBusy(null);
     }
@@ -770,7 +772,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       });
     } catch (err) {
       const prefix = done > 0 ? t.illustratedThen(done) : "";
-      setNotice({ tone: "error", text: `${prefix}${errorMessage(err, t.illustrationFailed)}`, mock: mock ? "image" : undefined });
+      setNotice({ tone: "error", text: `${prefix}${errorMessage(locale, err, t.illustrationFailed)}`, mock: mock ? "image" : undefined });
     } finally {
       setBusy(null);
     }
@@ -833,7 +835,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       });
     } catch (err) {
       const prefix = done > 0 ? t.illustratedThen(done) : "";
-      setNotice({ tone: "error", text: `${prefix}${errorMessage(err, t.illustrationsFailed)}`, mock: mock ? "image" : undefined });
+      setNotice({ tone: "error", text: `${prefix}${errorMessage(locale, err, t.illustrationsFailed)}`, mock: mock ? "image" : undefined });
     } finally {
       setBusy(null);
     }
@@ -881,7 +883,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       updateMeta(patch);
       return describeFilled(filled, patch, locale);
     } catch (err) {
-      return t.detailsFailed(errorMessage(err, t.serviceUnavailable));
+      return t.detailsFailed(errorMessage(locale, err, t.serviceUnavailable));
     }
   };
 
@@ -964,7 +966,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
         mock: outcome.isMock ? "text" : undefined,
       });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.storyFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.storyFailed) });
     } finally {
       setBusy(null);
     }
@@ -1012,7 +1014,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       applyServerBook(await action());
       setNotice({ tone: "success", text: success });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.actionFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.actionFailed) });
     } finally {
       setBusy(null);
     }
@@ -1031,7 +1033,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       router.push(routes.studio());
       router.refresh();
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.deleteBookFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.deleteBookFailed) });
       setBusy(null);
     }
   };
@@ -1041,7 +1043,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const upload = await uploadMedia(bookId, "cover", await shrinkImage(file), file.name);
       updateMeta({ coverImage: upload.path });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, t.coverUploadFailed) });
+      setNotice({ tone: "error", text: errorMessage(locale, err, t.coverUploadFailed) });
     }
   };
 

@@ -70,7 +70,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     const key = `${book.id}:${body.target === "hero" ? "hero" : body.target === "grid" ? "grid" : body.page}`;
     if (running.has(key)) return jsonError(409, "האיור הזה כבר בהכנה. חכו שיסתיים.");
     // Paid model calls: limited per user (RATE_LIMIT_ILLUSTRATE_PER_HOUR, in-process).
-    const limited = rateLimited("ILLUSTRATE", { request, user: ctx.user });
+    const limited = await rateLimited("ILLUSTRATE", { request, user: ctx.user });
     if (limited) return limited;
 
     running.add(key);

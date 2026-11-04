@@ -23,7 +23,7 @@ export async function readJsonBody(request: Request): Promise<unknown> {
   }
 }
 
-export function recordingApiError(err: unknown): Response {
+export async function recordingApiError(err: unknown): Promise<Response> {
   if (err instanceof RecordingError) return jsonError(err.status, err.message);
   return apiError(err);
 }

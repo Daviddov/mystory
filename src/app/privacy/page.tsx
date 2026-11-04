@@ -4,13 +4,18 @@ import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { InfoPage, InfoSection } from "../about/_components/InfoPage";
 import { PrivacyPageEn } from "./privacy-en";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = {
+const HEBREW_METADATA: Metadata = {
   title: "מדיניות פרטיות",
   description:
     "מדיניות הפרטיות של הסיפור שלי: איזה מידע נשמר, מה מקבלים מחשבון Google, מה קורה לתמונות של ילדים, ואילו שירותים חיצוניים מעורבים.",
   alternates: { canonical: "/privacy" },
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Privacy policy");
+}
 
 const UPDATED = "4 בנובמבר 2026";
 const UPDATED_EN = "November 4, 2026";

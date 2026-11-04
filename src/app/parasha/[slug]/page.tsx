@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { OccasionView, occasionMetadata } from "@/components/library/OccasionPages";
 import type { RawSearchParams } from "@/components/library/filters";
 import { getOccasion } from "@/lib/occasions";
+import { localizeTitle } from "@/lib/i18n/metadata";
+import { occasionNameEn } from "@/lib/i18n/library";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -20,7 +22,8 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  return occasionMetadata("parasha", (await params).slug);
+  const { slug } = await params;
+  return localizeTitle(occasionMetadata("parasha", slug), `Parashat ${occasionNameEn("parasha", slug)}: stories for children`);
 }
 
 export default async function ParashaPage({ params, searchParams }: Props) {

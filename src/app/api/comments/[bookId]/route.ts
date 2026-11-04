@@ -46,13 +46,13 @@ export async function GET(request: Request, context: Context): Promise<Response>
 
 export async function POST(request: Request, context: Context): Promise<Response> {
   try {
-    const blocked = rejectCrossOrigin(request);
+    const blocked = await rejectCrossOrigin(request);
     if (blocked) return blocked;
     const user = await requireUser();
     const bookId = BookIdSchema.parse((await context.params).bookId);
     const { body, token } = CreateSchema.parse(await readJsonBody(request));
     await loadViewableBook({ bookId }, user, token);
-    const limited = rateLimited("COMMENTS", { user, request });
+    const limited = await rateLimited("COMMENTS", { user, request });
     if (limited) return limited;
     const repo = await getRepo();
     const comment = await repo.addComment({ bookId, userId: user.id, authorName: authorDisplayName(user), body });

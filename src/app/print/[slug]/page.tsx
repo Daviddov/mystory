@@ -23,6 +23,7 @@ import { ageGroupLabel, readingTimeLabel } from "@/lib/taxonomy";
 import { SLUG_PATTERN, type BookWithPages } from "@/lib/types";
 import { PRINT_CSS } from "./print-css";
 import { PrintButton } from "./PrintButton";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 export const dynamic = "force-dynamic";
 
@@ -48,11 +49,11 @@ export async function generateMetadata({ params, searchParams }: PrintPageProps)
   const { slug } = await params;
   const token = first((await searchParams).token);
   const book = await loadBook(slug, token);
-  return {
+  return localizeTitle({
     title: book ? `הדפסה: ${book.title}` : "הדפסת ספר",
     // The print view duplicates the book page; keep it out of search results.
     robots: { index: false, follow: false },
-  };
+  }, book ? `Print: ${book.title}` : "Print a book");
 }
 
 /** Text size by length: short picture-book lines are large, long pages are smaller. */

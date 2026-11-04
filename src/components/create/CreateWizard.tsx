@@ -33,6 +33,7 @@ import {
 } from "@/lib/i18n/account";
 import type { Locale } from "@/lib/i18n/locale";
 import { taxonomyText } from "@/lib/i18n/messages";
+import { findServerMessage, hasHebrew, showServerMessage } from "@/lib/i18n/server-errors";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { AGE_GROUP_INFO, CATEGORIES } from "@/lib/taxonomy";
@@ -122,6 +123,9 @@ function Stepper({ current, t }: { current: number; t: WizardMessages }) {
  */
 function submitErrorText(locale: Locale, t: WizardMessages, status: number, error: string | undefined): string {
   if (locale === "he") return error ?? t.somethingWrong;
+  const translated = error ? findServerMessage(locale, error) : undefined;
+  if (translated) return translated;
+  if (error && !hasHebrew(error)) return error;
   if (status === 413) return t.photoSize;
   if (status === 400) return t.badInput;
   if (status === 429) return t.quotaReached;
@@ -761,7 +765,7 @@ function ProgressPanel({
           {t.failedTitle}
         </h2>
         <p role="alert" className="text-lg text-muted">
-          {(locale === "he" ? job.error : undefined) ?? t.somethingWrong}
+          {locale === "he" ? (job.error ?? t.somethingWrong) : showServerMessage(locale, job.error, t.somethingWrong)}
         </p>
         <Button size="lg" onClick={onTryAgain}>
           {t.tryAgain}
@@ -773,6 +777,8 @@ function ProgressPanel({
   if (job?.status === "done" && job.book) {
     const book = job.book;
     const cover = mediaUrl(book.coverImage, book.updatedAt);
+    const notes = (job.message ?? "").replace(/^הספר מוכן!\s*/, "");
+    const readyNotes = notes ? (locale === "he" ? notes : findServerMessage(locale, notes)) : undefined;
     return (
       <Card padding="lg" className="flex flex-col items-center gap-5 text-center">
         <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-bold text-foreground outline-none">
@@ -791,10 +797,8 @@ function ProgressPanel({
         <p className="text-base text-muted">
           {t.readyText(book.pageCount)}
         </p>
-        {/* The server's extra notes are Hebrew only. */}
-        {locale === "he" && job.message && job.message !== "הספר מוכן!" ? (
-          <p className="text-sm text-muted">{job.message.replace(/^הספר מוכן!\s*/, "")}</p>
-        ) : null}
+        {/* The server's extra notes, written in Hebrew; English shows them only when they are known. */}
+        {readyNotes ? <p className="text-sm text-muted">{readyNotes}</p> : null}
         {job.usedMock ? (
           <div className="flex w-full flex-col gap-2 text-start">
             {job.mock.text ? <MockNotice kind="text" /> : null}
@@ -855,7 +859,13 @@ function ProgressPanel({
       </div>
       <p aria-live="polite" className="flex items-center justify-center gap-2 text-center text-lg text-foreground">
         <Spinner size="sm" label="" />
-        <span>{(job ? (locale === "he" ? job.message : jobStepLabel(locale, job.step, "")) : "") || t.starting}</span>
+        <span>
+          {(job
+            ? locale === "he"
+              ? job.message
+              : (findServerMessage(locale, job.message) ?? jobStepLabel(locale, job.step, ""))
+            : "") || t.starting}
+        </span>
       </p>
       <ol className="flex flex-col gap-2">
         {steps.map((item, index) => {

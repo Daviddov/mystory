@@ -7,7 +7,7 @@ import { PagesImportError } from "./create-from-pages";
 import { OcrError } from "./ocr";
 import { UploadError } from "./request";
 
-export function importApiError(err: unknown): Response {
+export async function importApiError(err: unknown): Promise<Response> {
   if (err instanceof UploadError) return jsonError(err.status, err.message);
   if (err instanceof BookCapError) return jsonError(err.status, err.message);
   if (err instanceof BookPackageError) {

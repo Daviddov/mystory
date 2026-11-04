@@ -3,6 +3,7 @@
 import { AlertTriangle, Check, CloudUpload, Pencil } from "lucide-react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
+import { translateServerMessage } from "@/lib/i18n/server-errors";
 import { STUDIO_SAVE_MESSAGES } from "@/lib/i18n/studio-editor";
 import type { SaveState } from "./useAutosave";
 
@@ -15,7 +16,8 @@ export interface SaveIndicatorProps {
 
 /** Always-visible save state of the editor. */
 export function SaveIndicator({ state, error, onRetry, className }: SaveIndicatorProps) {
-  const LABELS = STUDIO_SAVE_MESSAGES[useLocale()];
+  const locale = useLocale();
+  const LABELS = STUDIO_SAVE_MESSAGES[locale];
   const Icon = state === "saved" ? Check : state === "saving" ? CloudUpload : state === "error" ? AlertTriangle : Pencil;
   return (
     <div
@@ -31,7 +33,7 @@ export function SaveIndicator({ state, error, onRetry, className }: SaveIndicato
       )}
     >
       <Icon aria-hidden="true" className={cn("size-4 shrink-0", state === "saving" && "animate-pulse")} />
-      <span>{state === "error" && error ? `${LABELS.error}: ${error}` : LABELS[state]}</span>
+      <span>{state === "error" && error ? `${LABELS.error}: ${translateServerMessage(locale, error)}` : LABELS[state]}</span>
       {state === "error" && onRetry ? (
         <button type="button" onClick={onRetry} className="rounded-full px-2 font-bold underline">
           {LABELS.retry}

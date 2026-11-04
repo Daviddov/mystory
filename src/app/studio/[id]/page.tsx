@@ -7,8 +7,14 @@ import { buildCostContext } from "@/lib/generation/costs";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { IdSchema } from "@/lib/types";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = { title: "עריכת ספר" };
+const HEBREW_METADATA: Metadata = { title: "עריכת ספר" };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Edit book");
+}
+
 export const dynamic = "force-dynamic";
 
 export default async function StudioBookPage({ params }: { params: Promise<{ id: string }> }) {

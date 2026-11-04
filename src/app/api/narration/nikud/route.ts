@@ -28,7 +28,7 @@ export async function POST(request: Request): Promise<Response> {
   try {
     assertSameOrigin(request);
     const user = await requireUser();
-    const limited = rateLimited("NIKUD", { request, user });
+    const limited = await rateLimited("NIKUD", { request, user });
     if (limited) return limited;
     let json: unknown;
     try {

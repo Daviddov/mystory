@@ -6,8 +6,14 @@ import { accountMessages } from "@/lib/i18n/account";
 import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { SignInForm } from "../SignInForm";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = { title: "כניסה" };
+const HEBREW_METADATA: Metadata = { title: "כניסה" };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Sign in");
+}
+
 export const dynamic = "force-dynamic";
 
 /** Sign-in page of Supabase mode. In local mode it hands over to /login. */

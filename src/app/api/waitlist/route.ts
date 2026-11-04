@@ -19,9 +19,9 @@ const BodySchema = z.object({
 
 export async function POST(request: Request): Promise<Response> {
   try {
-    const blocked = rejectCrossOrigin(request);
+    const blocked = await rejectCrossOrigin(request);
     if (blocked) return blocked;
-    const limited = rateLimited("WAITLIST", { request });
+    const limited = await rateLimited("WAITLIST", { request });
     if (limited) return limited;
     const { email, interests } = BodySchema.parse(await readJsonBody(request));
     const repo = await getRepo();

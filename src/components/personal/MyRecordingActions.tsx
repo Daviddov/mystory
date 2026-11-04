@@ -4,6 +4,7 @@ import { Send, Trash2, Undo2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { showServerMessage } from "@/lib/i18n/server-errors";
 import { Button } from "@/components/ui";
 import { accountMessages } from "@/lib/i18n/account";
 import { deleteRecordingRequest, shareRecordingRequest, type RecordingView } from "@/lib/recordings/client";
@@ -29,7 +30,7 @@ export function MyRecordingActions({ id, title, status, canShare }: MyRecordingA
     setError(null);
     const result = await action();
     setBusy(false);
-    if (!result.ok) setError(locale === "he" ? (result.error ?? null) : t.failed);
+    if (!result.ok) setError(locale === "he" ? (result.error ?? null) : showServerMessage(locale, result.error, t.failed));
     else router.refresh();
   }
 

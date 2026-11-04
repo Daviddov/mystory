@@ -18,11 +18,11 @@ export const MAX_BATCH = 200;
 /**
  * Rejects cross-site requests to mutating routes. The session cookie is
  * SameSite=Lax already; this is a second, explicit check.
- * Returns a 403 response, or null when the request may proceed.
+ * Resolves to a 403 response, or null when the request may proceed.
  */
-export function rejectCrossOrigin(request: Request): Response | null {
+export async function rejectCrossOrigin(request: Request): Promise<Response | null> {
   // The rules live in one place for every route family: @/lib/same-origin.
-  return isSameOriginRequest(request) ? null : jsonError(403, "הבקשה נחסמה");
+  return isSameOriginRequest(request) ? null : await jsonError(403, "הבקשה נחסמה");
 }
 
 /** Reads a JSON body; an empty or invalid body becomes `{}` so zod reports the problem. */

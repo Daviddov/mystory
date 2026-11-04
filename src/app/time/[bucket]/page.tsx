@@ -9,6 +9,7 @@ import { libraryMessages } from "@/lib/i18n/library";
 import { taxonomyText } from "@/lib/i18n/messages";
 import { getLocale } from "@/lib/i18n/server";
 import { READING_TIME_BUCKETS, getReadingTimeBucket } from "@/lib/taxonomy";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -42,7 +43,7 @@ const SEARCH_TITLES: Record<string, string> = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const bucket = getReadingTimeBucket((await params).bucket);
-  if (!bucket) return { title: "הדף לא נמצא", robots: { index: false } };
+  if (!bucket) return localizeTitle({ title: "הדף לא נמצא", robots: { index: false } });
   const page = pageMetadata({
     title: SEARCH_TITLES[bucket.slug] ?? `סיפורים לילדים: ${bucket.label} קריאה`,
     description:
@@ -51,7 +52,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         .trim(),
     path: routes.time(bucket.slug),
   });
-  return { ...page, robots: await listingRobots({ timeBucket: bucket.slug }) };
+  return localizeTitle(
+    { ...page, robots: await listingRobots({ timeBucket: bucket.slug }) },
+    `Children's stories: ${taxonomyText("en", "time", bucket.slug, bucket).label.toLowerCase()} of reading`,
+  );
 }
 
 export default async function TimePage({ params, searchParams }: Props) {

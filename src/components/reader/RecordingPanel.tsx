@@ -6,6 +6,7 @@ import { AudioRecorder } from "@/components/studio/AudioRecorder";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Spinner } from "@/components/ui";
 import { READER_MESSAGES } from "@/lib/i18n/reader";
+import { translateServerMessage } from "@/lib/i18n/server-errors";
 import {
   createRecordingRequest,
   deletePageRequest,
@@ -50,7 +51,8 @@ export function RecordingPanel({
   onSaved,
   onClose,
 }: RecordingPanelProps) {
-  const t = READER_MESSAGES[useLocale()].recording;
+  const locale = useLocale();
+  const t = READER_MESSAGES[locale].recording;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -67,7 +69,7 @@ export function RecordingPanel({
     const result = await action();
     setBusy(false);
     if (!result.ok) {
-      setError(result.error);
+      setError(translateServerMessage(locale, result.error));
       return;
     }
     onChange(result.recording);

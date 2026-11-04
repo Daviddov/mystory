@@ -12,6 +12,7 @@ import { ageGroupsText, readingTimeText } from "@/lib/i18n/labels";
 import { getLocale } from "@/lib/i18n/server";
 import { getAgeGroup } from "@/lib/taxonomy";
 import { bookAgeGroups, type BookWithPages } from "@/lib/types";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 export const dynamic = "force-dynamic";
 
@@ -29,12 +30,12 @@ async function loadSharedBook(token: string): Promise<BookWithPages | null> {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = await loadSharedBook((await params).token);
-  return {
+  return localizeTitle({
     title: book ? book.title : "ספר משותף",
     // A share link is a secret: keep it out of search engines and out of Referer headers.
     robots: { index: false, follow: false },
     referrer: "no-referrer",
-  };
+  }, book ? book.title : "Shared book");
 }
 
 /** Public landing page of a share link: the cover and one big "read" button. */

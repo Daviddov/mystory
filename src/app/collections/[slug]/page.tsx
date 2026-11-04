@@ -13,6 +13,7 @@ import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { pageMetadata, plainText } from "@/lib/seo";
 import { SLUG_PATTERN } from "@/lib/types";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -35,7 +36,7 @@ async function load(slug: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const found = await load((await params).slug);
-  if (!found) return { title: "האוסף לא נמצא", robots: { index: false } };
+  if (!found) return localizeTitle({ title: "האוסף לא נמצא", robots: { index: false } });
   const { collection, books } = found;
   const cover = books[0] ? mediaUrl(books[0].coverImage, books[0].updatedAt) : "";
   const name = plainText(collection.title);
@@ -49,12 +50,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description,
     path: routes.collection(collection.slug),
   });
-  return {
+  return localizeTitle({
     ...page,
     openGraph: { ...page.openGraph, images: cover ? [{ url: cover }] : undefined },
     // An empty collection is left out of the sitemap too: nothing to index until a book is added.
     robots: books.length > 0 ? undefined : { index: false, follow: true },
-  };
+  }, `${name}: a collection of children's stories`);
 }
 
 export default async function CollectionPage({ params }: Props) {

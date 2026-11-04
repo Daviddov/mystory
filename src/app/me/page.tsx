@@ -16,11 +16,17 @@ import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import type { Book, BookStatus, BookWithPages, Recording, RecordingStatus } from "@/lib/types";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = {
+const HEBREW_METADATA: Metadata = {
   title: "המדף שלי",
   robots: { index: false },
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "My shelf");
+}
+
 export const dynamic = "force-dynamic";
 
 const STATUS_TONE: Record<BookStatus, ChipTone> = {

@@ -7,6 +7,7 @@ import { accountMessages } from "@/lib/i18n/account";
 import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { breadcrumbJsonLd } from "@/lib/seo";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 /** The visible price teaser. A plan, not an offer: nothing can be bought yet. */
 const TEASER = { books: 10, shekels: 39 } as const;
@@ -15,12 +16,16 @@ const TITLE = "ספר אישי לילד: סיפור מאויר עם השם של�
 const DESCRIPTION =
   "יוצרים בעברית ספר ילדים מאויר שבו הילד או הילדה הם הגיבורים, עם ניקוד והקראה. ספר אחד בשבוע בחינם, ואפשר להירשם לעדכון על ספרים נוספים וספר מודפס.";
 
-export const metadata: Metadata = {
+const HEBREW_METADATA: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: routes.personalBook() },
   openGraph: { title: TITLE, description: DESCRIPTION, type: "website", locale: "he_IL" },
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "A personal book for your child: an illustrated story with their name");
+}
 
 const STEP_ICONS = [Camera, Sparkles, BookHeart] as const;
 

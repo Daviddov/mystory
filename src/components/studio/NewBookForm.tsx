@@ -5,6 +5,7 @@ import { useState, type FormEvent } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Field, Input, Select } from "@/components/ui";
 import { taxonomyText } from "@/lib/i18n/messages";
+import { translateServerMessage } from "@/lib/i18n/server-errors";
 import { STUDIO_NEW_BOOK } from "@/lib/i18n/studio";
 import { routes } from "@/lib/routes";
 import { createBook, StudioApiError } from "@/lib/studio/client";
@@ -35,7 +36,7 @@ export function NewBookForm() {
       const book = await createBook({ title: name, ageGroup });
       router.push(routes.studioBook(book.id));
     } catch (err) {
-      setError(err instanceof StudioApiError ? err.message : t.createFailed);
+      setError(err instanceof StudioApiError ? translateServerMessage(locale, err.message) : t.createFailed);
       setBusy(false);
     }
   };

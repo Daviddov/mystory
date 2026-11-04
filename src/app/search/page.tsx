@@ -21,6 +21,7 @@ import { getMessages, taxonomyText } from "@/lib/i18n/messages";
 import { getLocale } from "@/lib/i18n/server";
 import { navFor } from "@/lib/nav";
 import { routes } from "@/lib/routes";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 export const dynamic = "force-dynamic";
 
@@ -30,13 +31,13 @@ interface Props {
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { q } = parseLibraryQuery(await searchParams);
-  return {
+  return localizeTitle({
     title: q ? `חיפוש: ${q}` : "חיפוש ספרים",
     description: "חיפוש חופשי בספריית הסיפורים: לפי שם הספר, המחבר, התגיות או מילים מתוך הסיפור.",
     alternates: { canonical: routes.search() },
     // Result pages depend on what the visitor typed and should not be indexed.
     robots: q ? { index: false, follow: true } : undefined,
-  };
+  }, q ? `Search: ${q}` : "Search books");
 }
 
 /** Suggestions shown before a search and when nothing was found. */

@@ -31,7 +31,7 @@ const STATUS_OF: Record<BookDashError["code"], number> = {
   media: 502,
 };
 
-function bookDashApiError(err: unknown): Response {
+async function bookDashApiError(err: unknown): Promise<Response> {
   if (err instanceof BookDashError) {
     console.error(`[bookdash] ${err.message}`);
     return jsonError(STATUS_OF[err.code], err.userMessage, { code: err.code });

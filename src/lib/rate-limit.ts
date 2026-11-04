@@ -9,8 +9,11 @@
  * A multi-instance deployment needs a shared store (Redis, a database table)
  * or limits at the vendor / gateway.
  *
- * No "server-only" import, so it can be unit tested.
+ * The 429 message is translated for English visitors through src/lib/api.ts
+ * (server only; tests replace "server-only" with an empty module).
  */
+import { requestLocale } from "./api";
+import { translateServerMessage } from "./i18n/server-errors";
 
 export interface RateLimitRule {
   /** Requests allowed per window. 0 blocks everything; Infinity disables the limit. */
@@ -149,20 +152,21 @@ export function rateLimitKey(caller: RateLimitCaller): string {
   return caller.user ? `u:${caller.user.id}` : `ip:${clientIp(caller.request)}`;
 }
 
-function tooManyRequests(result: RateLimitResult): Response {
+async function tooManyRequests(result: RateLimitResult): Promise<Response> {
   const minutes = Math.max(1, Math.ceil(result.retryAfterSeconds / 60));
+  const message = `יותר מדי בקשות בזמן קצר. נסו שוב בעוד ${minutes === 1 ? "דקה" : `${minutes} דקות`}.`;
   return Response.json(
-    { error: `יותר מדי בקשות בזמן קצר. נסו שוב בעוד ${minutes === 1 ? "דקה" : `${minutes} דקות`}.` },
+    { error: translateServerMessage(await requestLocale(), message) },
     { status: 429, headers: { "Retry-After": String(result.retryAfterSeconds), "Cache-Control": "no-store" } },
   );
 }
 
 /**
- * Counts one request against the caller's limit. Returns a 429 response when
- * the limit is used up, otherwise null (go on). Staff are exempt.
+ * Counts one request against the caller's limit. Resolves to a 429 response
+ * when the limit is used up, otherwise null (go on). Staff are exempt.
  */
-export function rateLimited(name: RateLimitName, caller: RateLimitCaller): Response | null {
+export async function rateLimited(name: RateLimitName, caller: RateLimitCaller): Promise<Response | null> {
   if (caller.user && (caller.user.role === "admin" || caller.user.role === "editor")) return null;
   const result = checkRateLimit(name, rateLimitKey(caller), rateLimitRule(name));
-  return result.ok ? null : tooManyRequests(result);
+  return result.ok ? null : await tooManyRequests(result);
 }

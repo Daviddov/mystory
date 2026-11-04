@@ -61,13 +61,13 @@ export default async function PersonalBookPage() {
             {t.steps.map(({ title, text }, index) => {
               const Icon = STEP_ICONS[index] ?? Sparkles;
               return (
-              <Card as="li" key={title} className="flex flex-col gap-2">
-                <Icon aria-hidden="true" className="size-8 text-primary" />
-                <CardTitle>
-                  {index + 1}. {title}
-                </CardTitle>
-                <CardDescription>{text}</CardDescription>
-              </Card>
+                <Card as="li" key={title} className="flex flex-col gap-2">
+                  <Icon aria-hidden="true" className="size-8 text-primary" />
+                  <CardTitle>
+                    {index + 1}. {title}
+                  </CardTitle>
+                  <CardDescription>{text}</CardDescription>
+                </Card>
               );
             })}
           </ol>

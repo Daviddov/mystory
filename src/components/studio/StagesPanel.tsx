@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localizePresets, presetText } from "@/lib/i18n/presets";
 import { Button, Card, Chip, Field, Input, Textarea, type ChipProps } from "@/components/ui";
 import { STUDIO_STAGES } from "@/lib/i18n/studio-stages";
 import { cn } from "@/lib/cn";
@@ -279,7 +280,8 @@ export function StagesPanel(props: StagesPanelProps) {
     onConfirm,
   } = props;
 
-  const t = STUDIO_STAGES[useLocale()];
+  const locale = useLocale();
+  const t = STUDIO_STAGES[locale];
   const heroFile = useRef<HTMLInputElement>(null);
   const [idea, setIdea] = useState("");
   const [heroName, setHeroName] = useState("");
@@ -479,7 +481,7 @@ export function StagesPanel(props: StagesPanelProps) {
         </div>
         {costs && todo ? (
           <p className="text-sm text-muted" role="status" data-testid="cost-total">
-            <strong className="text-foreground">{totalLine(todo, costs)}</strong>
+            <strong className="text-foreground">{totalLine(todo, costs, locale)}</strong>
             {t.nav.totalNote}
           </p>
         ) : null}
@@ -661,7 +663,7 @@ export function StagesPanel(props: StagesPanelProps) {
         open={isOpen(3)}
         onToggle={() => toggle(3)}
         preview={() => <StylePreview style={style} chosen={!!hero?.style} packs={packs} notes={hero?.styleNotes} />}
-        summary={ILLUSTRATION_STYLES.find((option) => option.slug === style)?.label ?? style}
+        summary={localizePresets(locale, "style", ILLUSTRATION_STYLES).find((option) => option.slug === style)?.label ?? style}
         cost={costLineFor("style")}
         manual={
           <p className="text-sm">{t.style.manualHint}</p>
@@ -677,7 +679,7 @@ export function StagesPanel(props: StagesPanelProps) {
               <div key={group} role="group" aria-label={t.style.groupLabel(heading)} className="flex flex-col gap-2">
                 <p className="text-sm font-semibold">{heading}</p>
                 <div className="flex flex-wrap gap-2">
-                  {ILLUSTRATION_STYLES.filter((option) => option.group === group).map((option) => (
+                  {localizePresets(locale, "style", ILLUSTRATION_STYLES).filter((option) => option.group === group).map((option) => (
                     <button
                       key={option.slug}
                       type="button"
@@ -703,7 +705,7 @@ export function StagesPanel(props: StagesPanelProps) {
             <div role="group" aria-label={t.style.packsLabel} className="flex flex-col gap-2">
               <p className="text-sm font-semibold">{t.style.packsHeading}</p>
               <div className="flex flex-wrap gap-2">
-                {RULE_PACKS.map((pack) => (
+                {localizePresets(locale, "rulePack", RULE_PACKS).map((pack) => (
                   <button
                     key={pack.slug}
                     type="button"
@@ -852,7 +854,7 @@ export function StagesPanel(props: StagesPanelProps) {
           <>
             <p className="text-sm">{t.narration.aiHint}</p>
             <div role="group" aria-label={t.narration.styleGroup} className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {NARRATION_STYLES.map((option) => (
+              {localizePresets(locale, "narration", NARRATION_STYLES).map((option) => (
                 <button
                   key={option.slug}
                   type="button"
@@ -876,7 +878,7 @@ export function StagesPanel(props: StagesPanelProps) {
             {voices.length > 0 ? (
               <div className="flex flex-col gap-2">
                 <div role="group" aria-label={t.narration.voiceGroup} className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {voices.map((voice) => (
+                  {voices.map((voice) => ({ ...voice, ...presetText(locale, "voice", voice.id, voice) })).map((voice) => (
                     <button
                       key={voice.id}
                       type="button"
@@ -1114,7 +1116,8 @@ function AnimationStage({
   refresh: () => Promise<void>;
   pages: CreatedPage[];
 }) {
-  const t = STUDIO_STAGES[useLocale()].animation;
+  const locale = useLocale();
+  const t = STUDIO_STAGES[locale].animation;
   const [running, setRunning] = useState<number | null>(null);
   const [noteOpen, setNoteOpen] = useState<number | null>(null);
   // One-off notes per page: not saved with the book.
@@ -1287,7 +1290,7 @@ function AnimationStage({
         <>
           <p className="text-sm">{t.aiHint}</p>
           <div role="group" aria-label={t.motionGroup} className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {ANIMATION_MOTIONS.map((option) => (
+            {localizePresets(locale, "motion", ANIMATION_MOTIONS).map((option) => (
               <button
                 key={option.slug}
                 type="button"
@@ -1346,7 +1349,7 @@ function AnimationStage({
                         aria-label={t.animateLabel(
                           has ? t.reanimate : t.animate,
                           page + 1,
-                          costs ? costLine(estimateAnimation(costs, { clips: 1 }), costs) : "",
+                          costs ? costLine(estimateAnimation(costs, { clips: 1 }), costs, locale) : "",
                         )}
                         onClick={() => requestAnimate(page)}
                       >

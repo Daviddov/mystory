@@ -561,24 +561,24 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                   {STORY_MOODS.map((item) => {
                     const text = moodText(locale, item.slug, item);
                     return (
-                    <Chip
-                      key={item.slug}
-                      tone="accent"
-                      selected={mood === item.slug}
-                      onClick={() => {
-                        if (mood === item.slug) {
-                          setMood(null);
-                          return;
-                        }
-                        const previous = STORY_MOODS.find((m) => m.slug === mood);
-                        const previousIdea = previous ? moodText(locale, previous.slug, previous).idea : undefined;
-                        setMood(item.slug);
-                        // Seeds the idea box, but never overwrites something the parent wrote.
-                        if (idea.trim() === "" || idea === previousIdea) setIdea(text.idea);
-                      }}
-                    >
-                      <span aria-hidden="true">{item.emoji}</span> {text.label}
-                    </Chip>
+                      <Chip
+                        key={item.slug}
+                        tone="accent"
+                        selected={mood === item.slug}
+                        onClick={() => {
+                          if (mood === item.slug) {
+                            setMood(null);
+                            return;
+                          }
+                          const previous = STORY_MOODS.find((m) => m.slug === mood);
+                          const previousIdea = previous ? moodText(locale, previous.slug, previous).idea : undefined;
+                          setMood(item.slug);
+                          // Seeds the idea box, but never overwrites something the parent wrote.
+                          if (idea.trim() === "" || idea === previousIdea) setIdea(text.idea);
+                        }}
+                      >
+                        <span aria-hidden="true">{item.emoji}</span> {text.label}
+                      </Chip>
                     );
                   })}
                 </div>

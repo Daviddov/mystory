@@ -3,6 +3,7 @@
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localizePresets } from "@/lib/i18n/presets";
 import { Chip } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { ILLUSTRATION_STYLES, NARRATION_STYLES, RULE_PACKS } from "@/lib/generation/presets";
@@ -109,9 +110,12 @@ export function StoryPreview({ pages, onSeeAll }: { pages: CreatedPage[]; onSeeA
 
 /** Stage 3: the chosen style and rule packs as chips, with a swatch. */
 export function StylePreview({ style, chosen, packs, notes }: { style: string; chosen: boolean; packs: string[]; notes?: string }) {
-  const t = STUDIO_STAGES[useLocale()].previews;
-  const preset = ILLUSTRATION_STYLES.find((option) => option.slug === style);
-  const packOptions = packs.map((slug) => RULE_PACKS.find((pack) => pack.slug === slug)).filter((pack) => !!pack);
+  const locale = useLocale();
+  const t = STUDIO_STAGES[locale].previews;
+  const preset = localizePresets(locale, "style", ILLUSTRATION_STYLES).find((option) => option.slug === style);
+  const packOptions = packs
+    .map((slug) => localizePresets(locale, "rulePack", RULE_PACKS).find((pack) => pack.slug === slug))
+    .filter((pack) => !!pack);
   return (
     <div className="flex flex-wrap items-center gap-3">
       <span
@@ -194,7 +198,8 @@ export function NarrationPreview({
   styleSlug: string;
   voiceLabel?: string;
 }) {
-  const t = STUDIO_STAGES[useLocale()].previews;
+  const locale = useLocale();
+  const t = STUDIO_STAGES[locale].previews;
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState<number | null>(null);
   useEffect(
@@ -205,7 +210,7 @@ export function NarrationPreview({
   );
   const narrated = pages.filter((page) => page.audio);
   if (narrated.length === 0) return <Empty>{t.noNarration}</Empty>;
-  const styleLabel = NARRATION_STYLES.find((option) => option.slug === styleSlug)?.label ?? styleSlug;
+  const styleLabel = localizePresets(locale, "narration", NARRATION_STYLES).find((option) => option.slug === styleSlug)?.label ?? styleSlug;
 
   const toggle = (page: CreatedPage) => {
     if (playing === page.index) {

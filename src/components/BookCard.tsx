@@ -6,7 +6,7 @@ import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { ageGroupsText, readingTimeText } from "@/lib/i18n/labels";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
-import { getMessages } from "@/lib/i18n/messages";
+import { getMessages, taxonomyText } from "@/lib/i18n/messages";
 import { getAgeGroup, tagSlug } from "@/lib/taxonomy";
 import type { PublicBook } from "@/lib/public-book";
 import { bookAgeGroups, bookLanguage, bookVersions, type BookLanguage } from "@/lib/types";
@@ -128,9 +128,10 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
             {tags.map((tag) => (
               <span
                 key={tag}
+                dir="auto"
                 className="inline-flex h-6 items-center rounded-full border border-border px-2 text-xs text-muted"
               >
-                #{tag}
+                #{taxonomyText(locale, "tag", tag, { label: tag }).label}
               </span>
             ))}
           </p>

@@ -879,7 +879,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       autoFilledRef.current = merged.autoFilled;
       if (filled.length === 0) return options.replace || !options.aiWrote ? t.detailsAllFilled : "";
       updateMeta(patch);
-      return describeFilled(filled, patch);
+      return describeFilled(filled, patch, locale);
     } catch (err) {
       return t.detailsFailed(errorMessage(err, t.serviceUnavailable));
     }
@@ -905,7 +905,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     } catch {
       // The cover is picked up on the next save or reload.
     }
-    return credits.filled.length > 0 ? describeFilled(credits.filled, credits.patch) : "";
+    return credits.filled.length > 0 ? describeFilled(credits.filled, credits.patch, locale) : "";
   };
 
   /** A pasted story with no summary and no tags yet gets its details too. */
@@ -1191,7 +1191,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
                 })),
               }}
               onGoToDetails={() => setTab("details")}
-              details={detailsCompleteness(meta)}
+              details={detailsCompleteness(meta, locale)}
               onAutoDetails={(options) => void runAutoDetails(options)}
               onUploadImages={pickImages}
               onIllustrateGrid={(options) => illustrateMissing(options)}

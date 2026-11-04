@@ -65,9 +65,13 @@ export function CollectionCard({ collection, books, inSeason, locale = DEFAULT_L
             {inSeason ? <span className="rounded-full bg-accent px-3 py-1 text-accent-foreground">{t.home.inSeason}</span> : null}
           </p>
         ) : null}
-        <h3 className="text-xl font-bold leading-snug">{collection.title}</h3>
+        <h3 dir="auto" className="text-xl font-bold leading-snug">
+          {collection.title}
+        </h3>
         {collection.description ? (
-          <p className="line-clamp-3 leading-relaxed text-muted">{collection.description}</p>
+          <p dir="auto" className="line-clamp-3 leading-relaxed text-muted">
+            {collection.description}
+          </p>
         ) : null}
         <p className="text-sm font-semibold text-secondary">{t.library.bookCount(books.length)}</p>
       </div>

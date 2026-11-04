@@ -3,6 +3,7 @@
 import { ChevronDown, Paintbrush, Sparkles, Trash2, Upload, UserRound } from "lucide-react";
 import { useRef, useState } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localizePresets } from "@/lib/i18n/presets";
 import { Button, Card, Field, Textarea } from "@/components/ui";
 import { HERO_PANEL_MESSAGES, illustrationStyleLabel } from "@/lib/i18n/studio-panels";
 import { cn } from "@/lib/cn";
@@ -132,7 +133,7 @@ export function HeroPanel({
             <fieldset className="flex flex-col gap-2">
               <legend className="mb-1 font-semibold">{t.style}</legend>
               <div className="flex flex-wrap gap-2">
-                {ILLUSTRATION_STYLES.map((option) => (
+                {localizePresets(locale, "style", ILLUSTRATION_STYLES).map((option) => (
                   <button
                     key={option.slug}
                     type="button"

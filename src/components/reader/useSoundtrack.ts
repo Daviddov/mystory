@@ -66,24 +66,28 @@ export function useSoundtrack(src: string, playing: boolean, level: number): Sou
     const seconds = audible ? FADE_IN_SECONDS : FADE_OUT_SECONDS;
     const chain = chainRef.current;
     if (audible && audio.paused) audio.play().catch(() => {});
-    let frame = 0;
+    let ramp: number | null = null;
     if (chain) {
+      // The gain node sets the loudness; the element itself stays at full volume.
+      if (audio.volume !== 1) audio.volume = 1;
       const now = chain.context.currentTime;
       chain.gain.gain.cancelScheduledValues(now);
       chain.gain.gain.setValueAtTime(chain.gain.gain.value, now);
       chain.gain.gain.linearRampToValueAtTime(target, now + seconds);
     } else {
+      // A timer, not requestAnimationFrame: frames stop in a tab that is not visible, and the music would stay silent.
       const from = audio.volume;
       const start = performance.now();
-      const step = () => {
+      ramp = window.setInterval(() => {
         const progress = Math.min(1, (performance.now() - start) / (seconds * 1000));
         audio.volume = from + (target - from) * progress;
-        if (progress < 1) frame = requestAnimationFrame(step);
-      };
-      frame = requestAnimationFrame(step);
+        if (progress === 1 && ramp !== null) window.clearInterval(ramp);
+      }, 50);
     }
     if (!audible) pauseTimer.current = window.setTimeout(() => audio.pause(), seconds * 1000 + 100);
-    return () => cancelAnimationFrame(frame);
+    return () => {
+      if (ramp !== null) window.clearInterval(ramp);
+    };
   }, [audible, level]);
 
   useEffect(

@@ -170,7 +170,7 @@ const READER_CSS = `
   .mystory-reader-spread { flex-direction: row; }
   /* In a row the picture's frame takes the full height, or a tall picture would spill over the bars. */
   .mystory-reader-frame { height: 100%; }
-  .mystory-reader-text { max-height: 100%; width: 33%; }
+  .mystory-reader-text { max-height: 100%; width: 40%; }
 }
 /* A phone on its side: every pixel of height goes to the page. Slimmer bars, a smaller play
    button, the page count beside the controls instead of under them, smaller page turners. */
@@ -1182,7 +1182,8 @@ function Player({
                 className={cn(
                   // The frame clips the slow zoom of a living picture.
                   "mystory-reader-frame flex min-h-0 w-full min-w-0 flex-1 items-center justify-center overflow-hidden",
-                  sideBySide && "sm:h-full",
+                  // Beside the text, the picture hugs it instead of floating in the middle of its frame.
+                  sideBySide && "sm:h-full sm:justify-end",
                   !motionActive && "mystory-motion-paused",
                 )}
                 style={showVideo ? { containerType: "size" } : undefined}
@@ -1233,6 +1234,7 @@ function Player({
                     }}
                     className={cn(
                       "size-full select-none object-contain bedtime:opacity-90",
+                      sideBySide && (readingDir === "rtl" ? "sm:object-left" : "sm:object-right"),
                       animatePictures && "mystory-kenburns",
                     )}
                     style={animatePictures ? kenBurnsStyle(index, currentWordCount) : undefined}
@@ -1248,7 +1250,7 @@ function Player({
                   showImage
                     ? "mystory-reader-text shrink-0 rounded-[1.5rem] bg-surface/80 px-4 py-2 shadow-card ring-1 ring-border/60 backdrop-blur-md sm:px-6"
                     : "flex min-h-0 flex-1 flex-col justify-center",
-                  sideBySide && "mystory-reader-text-beside sm:w-1/3 sm:max-w-md sm:shrink-0",
+                  sideBySide && "mystory-reader-text-beside sm:w-2/5 sm:max-w-2xl sm:shrink-0",
                 )}
               >
                 <StoryText
@@ -1325,6 +1327,9 @@ function Player({
               className="mystory-reader-turn mystory-reader-turn-prev size-14 shrink-0 border-transparent bg-surface/80 p-0 shadow-card ring-1 ring-border/60 backdrop-blur-md transition-transform hover:scale-105 active:scale-95 sm:absolute sm:start-5 sm:top-1/2 sm:size-20 sm:-translate-y-1/2"
               aria-label={t.previousPage}
               disabled={index === 0}
+              // A disabled button is pointer-events-none, so a click on it fell through to the page
+              // underneath and turned to the next page. Keep it hit-testable so the click is swallowed.
+              style={index === 0 ? { pointerEvents: "auto", cursor: "default" } : undefined}
               onClick={() => turn(-1)}
             >
               {/* Chosen in code: ltr:/rtl: variants also match an outer page of the other direction. */}

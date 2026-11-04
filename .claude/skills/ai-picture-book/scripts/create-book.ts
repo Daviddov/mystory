@@ -35,7 +35,8 @@ async function main(): Promise<void> {
   const [specPath, imgDir] = process.argv.slice(2);
   if (!specPath || !imgDir) throw new Error("usage: create-book.ts <spec.json> <img-folder>");
   const spec = JSON.parse(readFileSync(specPath, "utf8")) as Spec;
-  if (!/^ai-[a-z0-9-]+$/.test(spec.id)) throw new Error(`id must look like ai-<slug>: ${spec.id}`);
+  // bk_...: a local rebuild of a book that a user made on the live site, pushed back with scripts/_push-book.ts.
+  if (!/^(ai-[a-z0-9-]+|bk_[a-z0-9]+)$/.test(spec.id)) throw new Error(`id must look like ai-<slug>: ${spec.id}`);
 
   const root = path.join(process.cwd(), "data");
   const names = bookImageNames(spec.pages.length);

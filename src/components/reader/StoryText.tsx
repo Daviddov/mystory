@@ -45,7 +45,7 @@ export function StoryText({ text, activeWord, onWordTap, className, lang = "he" 
       lang={lang}
       dir={textDirection(lang)}
       onClick={handleClick}
-      className={cn("story-text text-center text-foreground", className)}
+      className={cn("story-text text-start text-foreground", className)}
     >
       {lines.map((line, lineIndex) => (
         <p key={lineIndex} className="m-0">

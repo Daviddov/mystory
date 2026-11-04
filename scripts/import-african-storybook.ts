@@ -26,11 +26,13 @@ import path from "node:path";
 import {
   AfricanStorybookClient,
   AfricanStorybookError,
+  africanStorybookBookId,
   africanStorybookNumber,
   findAfricanStorybookBook,
   importAfricanStorybookBook,
 } from "../src/lib/importers/african-storybook";
 import { LocalMediaStore } from "../src/lib/media/local";
+import { withoutExcluded } from "./lib/excluded";
 import type { MediaStore } from "../src/lib/media/types";
 import { LocalRepository } from "../src/lib/repo/local";
 import type { Repository } from "../src/lib/repo/types";
@@ -122,10 +124,13 @@ async function main(): Promise<void> {
   const owner = await resolveOwner(repo, ownerEmail);
   console.log(`owner:   ${owner.label}`);
   const targets = all
-    ? (await client.catalogue())
-        .filter((entry) => entry.importable)
-        .slice(0, limit)
-        .map((entry) => entry.number)
+    ? withoutExcluded(
+        (await client.catalogue())
+          .filter((entry) => entry.importable)
+          .slice(0, limit)
+          .map((entry) => entry.number),
+        africanStorybookBookId,
+      )
     : ids.slice(0, limit);
 
   let failed = 0;

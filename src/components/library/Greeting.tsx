@@ -1,18 +1,21 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { useT } from "../i18n/LocaleProvider";
+
+type GreetingKey = "morning" | "noon" | "evening" | "night" | "hello";
 
 interface GreetingText {
-  text: string;
+  key: GreetingKey;
   emoji: string;
 }
 
-const MORNING: GreetingText = { text: "בוקר טוב!", emoji: "🌤️" };
-const NOON: GreetingText = { text: "צהריים טובים!", emoji: "☀️" };
-const EVENING: GreetingText = { text: "ערב טוב!", emoji: "🌇" };
-const NIGHT: GreetingText = { text: "לילה טוב!", emoji: "🌙" };
+const MORNING: GreetingText = { key: "morning", emoji: "🌤️" };
+const NOON: GreetingText = { key: "noon", emoji: "☀️" };
+const EVENING: GreetingText = { key: "evening", emoji: "🌇" };
+const NIGHT: GreetingText = { key: "night", emoji: "🌙" };
 /** In the cached HTML, and until the browser knows the time. */
-const NEUTRAL: GreetingText = { text: "שלום!", emoji: "👋" };
+const NEUTRAL: GreetingText = { key: "hello", emoji: "👋" };
 
 /** Greeting by the hour in Israel. */
 export function greetingFor(now: Date): GreetingText {
@@ -32,6 +35,7 @@ const subscribe = () => () => undefined;
  * the page arrives with a neutral "hello" and hydration swaps in the greeting.
  */
 export function Greeting() {
+  const { t } = useT();
   const greeting = useSyncExternalStore(
     subscribe,
     () => greetingFor(new Date()),
@@ -40,7 +44,7 @@ export function Greeting() {
   return (
     <>
       <span aria-hidden="true">{greeting.emoji}</span>
-      {greeting.text}
+      {t.greeting[greeting.key]}
     </>
   );
 }

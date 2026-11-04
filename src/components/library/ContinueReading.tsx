@@ -1,6 +1,7 @@
 "use client";
 
 import { BookCard } from "@/components/BookCard";
+import { useT } from "@/components/i18n/LocaleProvider";
 import { usePersonal } from "@/components/personal/hooks";
 import type { PublicBook } from "@/lib/public-book";
 import { routes } from "@/lib/routes";
@@ -9,6 +10,7 @@ import { SectionTitle } from "./SectionTitle";
 /** "Continue reading": books started on this device and not finished, most recent first. Hidden when there are none. */
 export function ContinueReading({ books }: { books: PublicBook[] }) {
   const { progress } = usePersonal();
+  const { locale, t } = useT();
   const byId = new Map(books.map((book) => [book.id, book]));
   const started = progress
     .filter((item) => !item.completed && byId.has(item.bookId))
@@ -19,7 +21,7 @@ export function ContinueReading({ books }: { books: PublicBook[] }) {
   return (
     <section aria-labelledby="continue-title" className="flex flex-col gap-4">
       <SectionTitle id="continue-title" emoji="🔖">
-        ממשיכים לקרוא
+        {t.home.continueReading}
       </SectionTitle>
       <ul className="scrollbar-none -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-4 pt-2 sm:-mx-6 sm:gap-5 sm:px-6">
         {started.map((item) => {
@@ -30,8 +32,9 @@ export function ContinueReading({ books }: { books: PublicBook[] }) {
               <BookCard
                 book={book}
                 layout="shelf"
+                locale={locale}
                 href={routes.read(book.slug, page)}
-                badge={page > 1 ? `עמוד ${page}` : "התחלנו"}
+                badge={page > 1 ? t.home.startedPage(page) : t.home.started}
               />
             </li>
           );

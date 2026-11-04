@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
-import { INFO_NAV } from "@/lib/nav";
+import { getT } from "@/lib/i18n/server";
+import { navFor } from "@/lib/nav";
 
 export interface InfoPageProps {
   title: string;
@@ -15,7 +16,8 @@ export interface InfoPageProps {
   children: ReactNode;
 }
 
-export function InfoPage({ title, lead, notice, current, children }: InfoPageProps) {
+export async function InfoPage({ title, lead, notice, current, children }: InfoPageProps) {
+  const { locale, t } = await getT();
   return (
     <main className="container-page py-10">
       <article className="mx-auto flex max-w-3xl flex-col gap-8">
@@ -27,10 +29,10 @@ export function InfoPage({ title, lead, notice, current, children }: InfoPagePro
         {children}
       </article>
 
-      <nav aria-label="עוד מידע על האתר" className="mx-auto mt-12 max-w-3xl border-t border-border pt-6">
-        <h2 className="mb-3 text-lg font-bold">עוד מידע על האתר</h2>
+      <nav aria-label={t.info.more} className="mx-auto mt-12 max-w-3xl border-t border-border pt-6">
+        <h2 className="mb-3 text-lg font-bold">{t.info.more}</h2>
         <ul className="flex flex-wrap gap-x-6 gap-y-1">
-          {INFO_NAV.map((link) => (
+          {navFor(locale).info.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}

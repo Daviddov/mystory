@@ -18,6 +18,8 @@ import {
   themeLabel,
   type ReadingTimeBucket,
 } from "@/lib/taxonomy";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { getMessages, taxonomyText } from "@/lib/i18n/messages";
 import { AGE_GROUPS, type AgeGroup, type LibraryLanguage } from "@/lib/types";
 
 export const PAGE_SIZE = 24;
@@ -199,24 +201,34 @@ export interface ActiveFilter {
   emoji?: string;
 }
 
-/** Human readable (Hebrew) description of each active filter, for removable chips. */
-export function describeActiveFilters(query: LibraryQuery): ActiveFilter[] {
+/** Human readable description of each active filter, for removable chips. Hebrew unless `locale` says otherwise. */
+export function describeActiveFilters(query: LibraryQuery, locale: Locale = DEFAULT_LOCALE): ActiveFilter[] {
+  const t = getMessages(locale).library.filter;
   const active: ActiveFilter[] = [];
-  if (query.q) active.push({ key: "q", label: `חיפוש: ${query.q}`, emoji: "🔎" });
+  if (query.q) active.push({ key: "q", label: t.searchFor(query.q), emoji: "🔎" });
   if (query.age) {
     const info = getAgeGroup(query.age);
-    active.push({ key: "age", label: info?.label ?? query.age, emoji: info?.emoji });
+    active.push({ key: "age", label: info ? taxonomyText(locale, "age", info.slug, info).label : query.age, emoji: info?.emoji });
   }
-  if (query.category) active.push({ key: "category", label: categoryLabel(query.category) });
-  if (query.time) active.push({ key: "time", label: getReadingTimeBucket(query.time)?.label ?? query.time });
-  if (query.theme) active.push({ key: "theme", label: `נושא: ${themeLabel(query.theme)}` });
-  if (query.tag) active.push({ key: "tag", label: `תגית: ${query.tag}` });
-  if (query.audio) active.push({ key: "audio", label: "עם השמעה", emoji: "🔊" });
-  if (query.nikud) active.push({ key: "nikud", label: "עם ניקוד", emoji: "אָ" });
-  if (query.anim) active.push({ key: "anim", label: "עם הנפשות", emoji: "🎬" });
-  if (query.lang === "ar") active.push({ key: "lang", label: "ספרים בערבית", emoji: "ع" });
+  if (query.category) {
+    const label = taxonomyText(locale, "category", query.category, { label: categoryLabel(query.category) }).label;
+    active.push({ key: "category", label });
+  }
+  if (query.time) {
+    const bucket = getReadingTimeBucket(query.time);
+    active.push({ key: "time", label: bucket ? taxonomyText(locale, "time", bucket.slug, bucket).label : query.time });
+  }
+  if (query.theme) {
+    const label = taxonomyText(locale, "theme", query.theme, { label: themeLabel(query.theme) }).label;
+    active.push({ key: "theme", label: t.themeIs(label) });
+  }
+  if (query.tag) active.push({ key: "tag", label: t.tagIs(query.tag) });
+  if (query.audio) active.push({ key: "audio", label: t.audio, emoji: "🔊" });
+  if (query.nikud) active.push({ key: "nikud", label: t.nikud, emoji: "אָ" });
+  if (query.anim) active.push({ key: "anim", label: t.anim, emoji: "🎬" });
+  if (query.lang === "ar") active.push({ key: "lang", label: t.arabic, emoji: "ع" });
   if (query.read) {
-    active.push({ key: "read", label: query.read === "read" ? "ספרים שנקראו" : "ספרים שעוד לא נקראו", emoji: "✅" });
+    active.push({ key: "read", label: query.read === "read" ? t.readBooks : t.unreadBooks, emoji: "✅" });
   }
   return active;
 }

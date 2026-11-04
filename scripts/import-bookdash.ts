@@ -20,8 +20,9 @@
  */
 import path from "node:path";
 import { missingCreditRoles } from "../src/lib/credits";
-import { BookDashClient, BookDashError, findBookDashBook, importBookDashBook } from "../src/lib/importers/bookdash";
+import { BookDashClient, BookDashError, bookDashBookId, findBookDashBook, importBookDashBook } from "../src/lib/importers/bookdash";
 import { LocalMediaStore } from "../src/lib/media/local";
+import { withoutExcluded } from "./lib/excluded";
 import type { MediaStore } from "../src/lib/media/types";
 import { LocalRepository } from "../src/lib/repo/local";
 import type { Repository } from "../src/lib/repo/types";
@@ -127,7 +128,7 @@ async function main(): Promise<void> {
 
   const owner = await resolveOwner(repo, ownerEmail);
   console.log(`owner:   ${owner.label}`);
-  const targets = all ? (await client.catalogue()).entries.map((entry) => entry.slug) : slugs;
+  const targets = all ? withoutExcluded((await client.catalogue()).entries.map((entry) => entry.slug), bookDashBookId) : slugs;
 
   let failed = 0;
   for (const slug of targets) {

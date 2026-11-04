@@ -3,17 +3,23 @@ import { BookOpen, Clock } from "lucide-react";
 import { ButtonLink, Chip } from "@/components/ui";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
-import { ageGroupsLabel, getAgeGroup, readingTimeLabel } from "@/lib/taxonomy";
+import { ageGroupsText, readingTimeText } from "@/lib/i18n/labels";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { getMessages } from "@/lib/i18n/messages";
+import { getAgeGroup } from "@/lib/taxonomy";
 import { bookAgeGroups, type Book } from "@/lib/types";
 
 export interface HeroBookProps {
   book: Book;
   /** Heading above the title: "ספר השבוע", or another label when no book was chosen. */
   label: string;
+  /** Interface language of the labels. Default Hebrew. */
+  locale?: Locale;
 }
 
 /** The large "book of the week" banner at the top of the home page. */
-export function HeroBook({ book, label }: HeroBookProps) {
+export function HeroBook({ book, label, locale = DEFAULT_LOCALE }: HeroBookProps) {
+  const t = getMessages(locale).home;
   const cover = mediaUrl(book.coverImage, book.updatedAt);
   const ages = bookAgeGroups(book);
   const age = getAgeGroup(ages[0]);
@@ -61,11 +67,11 @@ export function HeroBook({ book, label }: HeroBookProps) {
             <span aria-hidden="true">⭐</span>
             {label}
           </p>
-          <h2 id="hero-book-title" className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+          <h2 id="hero-book-title" dir="auto" className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
             {book.title}
           </h2>
           {book.summary ? (
-            <p className="line-clamp-4 max-w-2xl text-lg leading-relaxed text-foreground/80 sm:text-xl">
+            <p dir="auto" className="line-clamp-4 max-w-2xl text-lg leading-relaxed text-foreground/80 sm:text-xl">
               {book.summary}
             </p>
           ) : null}
@@ -79,23 +85,23 @@ export function HeroBook({ book, label }: HeroBookProps) {
                   size="sm"
                   className="min-h-9 bg-surface"
                 >
-                  {ageGroupsLabel(ages)}
+                  {ageGroupsText(locale, ages)}
                 </Chip>
               </li>
             ) : null}
             <li>
               <Chip icon={<Clock className="size-4" />} size="sm" className="min-h-9 bg-surface">
-                {readingTimeLabel(book.readingMinutes)}
+                {readingTimeText(locale, book.readingMinutes)}
               </Chip>
             </li>
           </ul>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
             <ButtonLink href={routes.read(book.slug)} size="lg" className="w-full sm:w-auto">
               <BookOpen aria-hidden="true" />
-              בואו נקרא
+              {t.letsRead}
             </ButtonLink>
             <ButtonLink href={routes.book(book.slug)} variant="outline" size="lg" className="w-full sm:w-auto">
-              על הספר
+              {t.aboutBook}
             </ButtonLink>
           </div>
         </div>

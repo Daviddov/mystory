@@ -20,6 +20,7 @@ import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { BookCard } from "@/components/BookCard";
 import { BOOK_GRID_CLASSES } from "@/components/BookGrid";
+import { useT } from "@/components/i18n/LocaleProvider";
 import { Button, Spinner, buttonClasses } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { buildHref } from "./filters";
@@ -126,6 +127,8 @@ export function InfiniteBookGrid({
     if (status === "idle" && hasMore && visible.current) void loadMore();
   }, [status, hasMore, lastPage, loadMore]);
 
+  const { locale, t } = useT();
+
   const onMoreClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
     event.preventDefault();
@@ -141,8 +144,8 @@ export function InfiniteBookGrid({
             rel="prev"
             className={buttonClasses({ variant: "ghost", size: "sm" })}
           >
-            <ChevronRight aria-hidden="true" className="size-4" />
-            לספרים הקודמים
+            <ChevronRight aria-hidden="true" className="size-4 ltr:-scale-x-100" />
+            {t.library.earlier}
           </a>
         </p>
       ) : null}
@@ -155,8 +158,9 @@ export function InfiniteBookGrid({
               priority={index < 6}
               showTags={showTags}
               hideTag={hideTag}
+              locale={locale}
               {...(params.lang === "ar" ? { language: "ar" as const } : {})}
-              {...(item.isNew ? { badge: "חדש" } : {})}
+              {...(item.isNew ? { badge: t.book.new } : {})}
               {...(item.read ? { read: true } : {})}
             />
           </li>
@@ -167,16 +171,16 @@ export function InfiniteBookGrid({
         {hasMore ? (
           status === "error" ? (
             <>
-              <p className="text-muted">לא הצלחנו לטעון עוד ספרים.</p>
+              <p className="text-muted">{t.library.loadFailed}</p>
               <Button variant="outline" size="sm" onClick={() => void loadMore()}>
                 <RotateCcw aria-hidden="true" className="size-4" />
-                נסו שוב
+                {t.library.retry}
               </Button>
             </>
           ) : status === "loading" ? (
             <p className="flex items-center gap-2 text-muted">
               <Spinner size="sm" label="" />
-              טוענים עוד ספרים…
+              {t.library.loading}
             </p>
           ) : (
             <a
@@ -185,14 +189,14 @@ export function InfiniteBookGrid({
               onClick={onMoreClick}
               className={buttonClasses({ variant: "outline", size: "md" })}
             >
-              עוד ספרים
-              <ChevronLeft aria-hidden="true" className="size-5" />
+              {t.library.loadMore}
+              <ChevronLeft aria-hidden="true" className="size-5 ltr:-scale-x-100" />
             </a>
           )
         ) : lastPage > 1 || page > 1 ? (
           <p className="text-muted">
             <span aria-hidden="true">📚 </span>
-            זהו, ראיתם את כל הספרים
+            {t.library.seenAll}
           </p>
         ) : null}
       </div>

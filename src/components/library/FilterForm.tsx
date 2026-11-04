@@ -2,7 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition, type FormEvent } from "react";
+import { useT } from "@/components/i18n/LocaleProvider";
 import { Button, Input, Label, Select } from "@/components/ui";
+import { taxonomyText } from "@/lib/i18n/messages";
 import { routes } from "@/lib/routes";
 import { AGE_GROUP_INFO, CATEGORIES, READING_TIME_BUCKETS, THEMES } from "@/lib/taxonomy";
 import { buildHref, parseLibraryQuery, toParams, SORT_OPTIONS, type LibraryQuery } from "./filters";
@@ -22,6 +24,8 @@ export interface FilterFormProps {
 export function FilterForm({ query, signedIn = false }: FilterFormProps) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const { locale, t: messages } = useT();
+  const t = messages.library.filter;
 
   function apply(form: HTMLFormElement) {
     const data = new FormData(form);
@@ -52,68 +56,68 @@ export function FilterForm({ query, signedIn = false }: FilterFormProps) {
       action={routes.books()}
       method="get"
       role="search"
-      aria-label="סינון ספרים"
+      aria-label={t.form}
       aria-busy={pending || undefined}
       onSubmit={onSubmit}
       onChange={onChange}
       className="grid grid-cols-2 gap-x-3 gap-y-4 rounded-lg border border-border bg-surface p-4 shadow-card md:grid-cols-3 lg:grid-cols-6"
     >
       <div className="col-span-2 flex flex-col gap-1.5 md:col-span-3 lg:col-span-2">
-        <Label htmlFor="filter-q">חיפוש חופשי</Label>
+        <Label htmlFor="filter-q">{t.q}</Label>
         <Input
           id="filter-q"
           name="q"
           type="search"
           defaultValue={query.q ?? ""}
-          placeholder="שם ספר, דמות או נושא"
+          placeholder={t.qPlaceholder}
           maxLength={100}
           enterKeyHint="search"
         />
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="filter-age">גיל</Label>
+        <Label htmlFor="filter-age">{t.age}</Label>
         <Select id="filter-age" name="age" defaultValue={query.age ?? ""}>
-          <option value="">כל הגילים</option>
+          <option value="">{t.allAges}</option>
           {AGE_GROUP_INFO.map((age) => (
             <option key={age.slug} value={age.slug}>
-              {age.label}
+              {taxonomyText(locale, "age", age.slug, age).label}
             </option>
           ))}
         </Select>
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="filter-category">קטגוריה</Label>
+        <Label htmlFor="filter-category">{t.category}</Label>
         <Select id="filter-category" name="category" defaultValue={query.category ?? ""}>
-          <option value="">כל הקטגוריות</option>
+          <option value="">{t.allCategories}</option>
           {CATEGORIES.map((category) => (
             <option key={category.slug} value={category.slug}>
-              {category.label}
+              {taxonomyText(locale, "category", category.slug, category).label}
             </option>
           ))}
         </Select>
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="filter-time">זמן קריאה</Label>
+        <Label htmlFor="filter-time">{t.time}</Label>
         <Select id="filter-time" name="time" defaultValue={query.time ?? ""}>
-          <option value="">כל משך</option>
+          <option value="">{t.allTimes}</option>
           {READING_TIME_BUCKETS.map((bucket) => (
             <option key={bucket.slug} value={bucket.slug}>
-              {bucket.label}
+              {taxonomyText(locale, "time", bucket.slug, bucket).label}
             </option>
           ))}
         </Select>
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="filter-theme">נושא לשיחה</Label>
+        <Label htmlFor="filter-theme">{t.theme}</Label>
         <Select id="filter-theme" name="theme" defaultValue={query.theme ?? ""}>
-          <option value="">כל הנושאים</option>
+          <option value="">{t.allThemes}</option>
           {THEMES.map((theme) => (
             <option key={theme.slug} value={theme.slug}>
-              {theme.label}
+              {taxonomyText(locale, "theme", theme.slug, theme).label}
             </option>
           ))}
         </Select>
@@ -121,33 +125,33 @@ export function FilterForm({ query, signedIn = false }: FilterFormProps) {
 
       {signedIn ? (
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="filter-read">סטטוס קריאה</Label>
+          <Label htmlFor="filter-read">{t.read}</Label>
           <Select id="filter-read" name="read" defaultValue={query.read ?? ""}>
-            <option value="">הכול</option>
-            <option value="unread">עוד לא נקראו</option>
-            <option value="read">נקראו</option>
+            <option value="">{t.readAll}</option>
+            <option value="unread">{t.unread}</option>
+            <option value="read">{t.readOnly}</option>
           </Select>
         </div>
       ) : null}
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="filter-sort">סדר</Label>
+        <Label htmlFor="filter-sort">{t.sort}</Label>
         <Select id="filter-sort" name="sort" defaultValue={query.sort}>
           {SORT_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
-              {option.label}
+              {messages.library.sort[option.value]}
             </option>
           ))}
         </Select>
       </div>
 
       <fieldset className="col-span-2 flex flex-wrap items-center gap-x-5 gap-y-2 md:col-span-3 lg:col-span-6">
-        <legend className="sr-only">סוג התוכן</legend>
+        <legend className="sr-only">{t.kind}</legend>
         {(
           [
-            ["audio", "🔊 עם השמעה", query.audio],
-            ["nikud", "אָ עם ניקוד", query.nikud],
-            ["anim", "🎬 עם הנפשות", query.anim],
+            ["audio", `🔊 ${t.audio}`, query.audio],
+            ["nikud", `אָ ${t.nikud}`, query.nikud],
+            ["anim", `🎬 ${t.anim}`, query.anim],
           ] as const
         ).map(([name, label, checked]) => (
           <label key={name} className="inline-flex cursor-pointer items-center gap-2 font-medium">
@@ -158,7 +162,7 @@ export function FilterForm({ query, signedIn = false }: FilterFormProps) {
         <label className="inline-flex cursor-pointer items-center gap-2 font-medium">
           <input type="checkbox" name="lang" value="ar" defaultChecked={query.lang === "ar"} className="size-5 accent-primary" />
           <span>
-            ספרים בערבית{" "}
+            {t.arabic}{" "}
             <span lang="ar" className="text-muted">
               (كتب بالعربية)
             </span>
@@ -171,7 +175,7 @@ export function FilterForm({ query, signedIn = false }: FilterFormProps) {
 
       <div className="flex items-end">
         <Button type="submit" fullWidth loading={pending}>
-          הצגה
+          {t.submit}
         </Button>
       </div>
     </form>

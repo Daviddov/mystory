@@ -32,7 +32,7 @@ export function SectionTitle({ id, children, emoji, href, hrefLabel, className }
           className="ms-auto inline-flex min-h-11 shrink-0 items-center gap-1 rounded-full bg-surface px-4 text-sm font-semibold text-secondary shadow-card transition-colors hover:bg-secondary-soft sm:text-base"
         >
           {hrefLabel}
-          <ChevronLeft aria-hidden="true" className="size-5" />
+          <ChevronLeft aria-hidden="true" className="size-5 ltr:-scale-x-100" />
         </Link>
       ) : null}
     </div>

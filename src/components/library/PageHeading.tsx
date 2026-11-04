@@ -3,6 +3,8 @@ import { ChevronLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/JsonLd";
 import { cn } from "@/lib/cn";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { getMessages } from "@/lib/i18n/messages";
 import { routes } from "@/lib/routes";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
@@ -22,6 +24,8 @@ export interface PageHeadingProps {
   /** Also emit the crumbs as BreadcrumbList structured data. Off for pages search engines must not see (private books). */
   structuredData?: boolean;
   children?: ReactNode;
+  /** Interface language of the labels. Default Hebrew. */
+  locale?: Locale;
   className?: string;
 }
 
@@ -34,18 +38,20 @@ export function PageHeading({
   crumbs,
   structuredData = true,
   children,
+  locale = DEFAULT_LOCALE,
   className,
 }: PageHeadingProps) {
-  const trail: Crumb[] = [{ label: "דף הבית", href: routes.home() }, ...(crumbs ?? [])];
+  const t = getMessages(locale);
+  const trail: Crumb[] = [{ label: t.nav.home, href: routes.home() }, ...(crumbs ?? [])];
   return (
     <header className={cn("flex flex-col gap-3", className)}>
       {crumbs && structuredData ? <JsonLd data={breadcrumbJsonLd(crumbs)} /> : null}
       {crumbs ? (
-        <nav aria-label="מיקום באתר">
+        <nav aria-label={t.library.breadcrumbs}>
           <ol className="flex flex-wrap items-center gap-1 text-sm text-muted">
             {trail.map((crumb, index) => (
               <li key={`${crumb.label}-${index}`} className="inline-flex items-center gap-1">
-                {index > 0 ? <ChevronLeft aria-hidden="true" className="size-4" /> : null}
+                {index > 0 ? <ChevronLeft aria-hidden="true" className="size-4 ltr:-scale-x-100" /> : null}
                 {crumb.href ? (
                   <Link href={crumb.href} className="rounded-sm py-2 underline-offset-4 hover:underline">
                     {crumb.label}

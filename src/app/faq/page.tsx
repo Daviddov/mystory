@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import type { Locale } from "@/lib/i18n/locale";
+import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { InfoPage } from "../about/_components/InfoPage";
+import { TOPICS_EN } from "./faq-en";
 
 export const metadata: Metadata = {
   title: "שאלות ותשובות",
@@ -10,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
 };
 
-interface Question {
+export interface Question {
   q: string;
   /** Paragraphs of the answer, as plain text (also used for the structured data). */
   a: string[];
@@ -18,7 +21,7 @@ interface Question {
   link?: { href: string; label: string };
 }
 
-interface Topic {
+export interface Topic {
   id: string;
   title: string;
   emoji: string;
@@ -222,12 +225,31 @@ const TOPICS: Topic[] = [
   },
 ];
 
-function structuredData(): string {
+const PAGE = {
+  he: {
+    title: "שאלות ותשובות",
+    lead: "כל מה ששואלים על קריאה, האזנה, ניקוד, יצירת סיפורים, פרטיות ורישיונות.",
+    topicsNav: "נושאים בדף",
+    topics: "נושאים",
+    notFound: "לא מצאתם תשובה? פרטים נוספים על האתר נמצאים בדף",
+    about: "על האתר",
+  },
+  en: {
+    title: "Questions and answers",
+    lead: "Everything people ask about reading, listening, nikud, making stories, privacy and licenses.",
+    topicsNav: "Topics on this page",
+    topics: "Topics",
+    notFound: "Didn't find an answer? There is more about the site on the page",
+    about: "About",
+  },
+} satisfies Record<Locale, Record<string, string>>;
+
+function structuredData(locale: Locale, topics: Topic[]): string {
   const data = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    inLanguage: "he",
-    mainEntity: TOPICS.flatMap((topic) =>
+    inLanguage: locale,
+    mainEntity: topics.flatMap((topic) =>
       topic.questions.map((question) => ({
         "@type": "Question",
         name: question.q,
@@ -239,19 +261,18 @@ function structuredData(): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const locale = await getLocale();
+  const t = PAGE[locale];
+  const topics = locale === "en" ? TOPICS_EN : TOPICS;
   return (
-    <InfoPage
-      title="שאלות ותשובות"
-      current={routes.faq()}
-      lead="כל מה ששואלים על קריאה, האזנה, ניקוד, יצירת סיפורים, פרטיות ורישיונות."
-    >
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData() }} />
+    <InfoPage title={t.title} current={routes.faq()} lead={t.lead}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData(locale, topics) }} />
 
-      <nav aria-label="נושאים בדף" className="rounded-lg bg-surface-2 p-5">
-        <h2 className="mb-2 text-lg font-bold">נושאים</h2>
+      <nav aria-label={t.topicsNav} className="rounded-lg bg-surface-2 p-5">
+        <h2 className="mb-2 text-lg font-bold">{t.topics}</h2>
         <ul className="flex flex-wrap gap-2">
-          {TOPICS.map((topic) => (
+          {topics.map((topic) => (
             <li key={topic.id}>
               <a
                 href={`#${topic.id}`}
@@ -265,7 +286,7 @@ export default function FaqPage() {
         </ul>
       </nav>
 
-      {TOPICS.map((topic) => (
+      {topics.map((topic) => (
         <section key={topic.id} id={topic.id} aria-labelledby={`${topic.id}-title`} className="flex scroll-mt-24 flex-col gap-3">
           <h2 id={`${topic.id}-title`} className="flex items-center gap-2 text-2xl font-bold">
             <span aria-hidden="true">{topic.emoji}</span>
@@ -303,7 +324,11 @@ export default function FaqPage() {
       ))}
 
       <p className="text-lg leading-relaxed text-muted">
-        לא מצאתם תשובה? פרטים נוספים על האתר נמצאים בדף <Link href={routes.about()} className="font-medium text-secondary underline underline-offset-4">על האתר</Link>.
+        {t.notFound}{" "}
+        <Link href={routes.about()} className="font-medium text-secondary underline underline-offset-4">
+          {t.about}
+        </Link>
+        .
       </p>
     </InfoPage>
   );

@@ -4,6 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 import { cn } from "@/lib/cn";
 import { applyTheme, readTheme, THEME_EVENT, type Theme } from "@/lib/theme";
+import { useT } from "./i18n/LocaleProvider";
 
 function subscribe(onChange: () => void): () => void {
   window.addEventListener(THEME_EVENT, onChange);
@@ -26,14 +27,15 @@ export interface ThemeToggleProps {
 /** Switches between the day theme and the dark bedtime theme; the choice is saved on the device. */
 export function ThemeToggle({ className }: ThemeToggleProps) {
   const theme = useTheme();
+  const { t } = useT();
   const bedtime = theme === "bedtime";
   return (
     <button
       type="button"
       onClick={() => applyTheme(bedtime ? "day" : "bedtime")}
       aria-pressed={bedtime}
-      aria-label="מצב לפני השינה"
-      title={bedtime ? "חזרה למצב יום" : "מצב לפני השינה"}
+      aria-label={t.header.bedtimeMode}
+      title={bedtime ? t.header.dayMode : t.header.bedtimeMode}
       className={cn(
         "inline-flex size-touch shrink-0 items-center justify-center rounded-full text-foreground hover:bg-surface-2",
         className,

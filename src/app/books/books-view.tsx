@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { X } from "lucide-react";
 import { FilterForm } from "@/components/library/FilterForm";
 import {
-  bookCountLabel,
   describeActiveFilters,
   hasActiveFilters,
   hrefWith,
@@ -16,6 +15,7 @@ import { toListingItems } from "@/components/library/listing";
 import { PageHeading } from "@/components/library/PageHeading";
 import { listBooksForViewer } from "@/components/library/queries";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
+import { getT } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
 import type { User } from "@/lib/types";
@@ -44,26 +44,29 @@ export async function BooksView({ searchParams, viewer = null }: { searchParams:
   // "Read" is per user: without a signed-in viewer the filter does not apply.
   const { query, listing, readIds } = await listBooksForViewer(parseLibraryQuery(searchParams), viewer);
   const shown = { ...query, page: listing.page };
-  const active = describeActiveFilters(shown);
   const path = routes.books();
   const scope: ListingScope = { kind: "books" };
   const listParams = toParams({ ...shown, page: undefined });
+  const { locale, t: messages } = await getT();
+  const t = messages.library;
+  const active = describeActiveFilters(shown, locale);
 
   return (
     <main className="container-page flex flex-col gap-8 py-8 sm:py-10">
       <PageHeading
-        title="כל הספרים"
+        title={t.booksTitle}
         emoji="📚"
-        description="אפשר לשלב כמה סינונים יחד: גיל, קטגוריה, זמן קריאה ונושא לשיחה."
-        crumbs={[{ label: "כל הספרים" }]}
+        description={t.booksDescription}
+        crumbs={[{ label: t.booksTitle }]}
+        locale={locale}
       />
 
       <FilterForm query={shown} signedIn={!!viewer} />
 
-      <section aria-label="רשימת הספרים" className="flex flex-col gap-6">
+      <section aria-label={t.bookList} className="flex flex-col gap-6">
         <div className="flex flex-wrap items-center gap-2">
           <p className="me-2 font-semibold" role="status">
-            {bookCountLabel(listing.total)}
+            {t.bookCount(listing.total)}
           </p>
           {active.map((filter) => (
             <Chip
@@ -71,16 +74,16 @@ export async function BooksView({ searchParams, viewer = null }: { searchParams:
               href={hrefWith(path, shown, { [filter.key]: undefined })}
               tone="primary"
               icon={filter.emoji}
-              title="הסרת הסינון"
+              title={t.removeFilter}
             >
               {filter.label}
               <X aria-hidden="true" className="ms-1 inline size-4 align-[-2px]" />
-              <span className="sr-only"> (הסרת הסינון)</span>
+              <span className="sr-only"> ({t.removeFilter})</span>
             </Chip>
           ))}
           {active.length > 1 ? (
             <Chip href={hrefWith(path, { sort: shown.sort, page: 1 }, {})} tone="neutral">
-              ניקוי כל הסינונים
+              {t.clearFilters}
             </Chip>
           ) : null}
         </div>
@@ -99,9 +102,9 @@ export async function BooksView({ searchParams, viewer = null }: { searchParams:
         ) : (
           <EmptyState
             icon="🔍"
-            title="לא מצאנו ספרים שמתאימים לכל הסינונים"
-            description="נסו להסיר אחד מהסינונים, או התחילו מחדש."
-            action={<ButtonLink href={routes.books()}>ניקוי כל הסינונים</ButtonLink>}
+            title={t.noMatchTitle}
+            description={t.noMatchDescription}
+            action={<ButtonLink href={routes.books()}>{t.clearFilters}</ButtonLink>}
           />
         )}
       </section>

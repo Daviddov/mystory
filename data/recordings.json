@@ -1,68 +1,5 @@
 [
   {
-    "id": "abrn0rd8vm0u",
-    "bookId": "letsread-e7df4fca-9673-42ec-adbd-a232686183c6",
-    "userId": "u_m3ipvar7h1mb",
-    "title": "ההקלטה שלי",
-    "status": "private",
-    "pages": [
-      {
-        "index": 0,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p1-tchjqzlrhthe.webm"
-      },
-      {
-        "index": 1,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p2-bepddhxo3lqi.webm"
-      },
-      {
-        "index": 2,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p3-cr55d5g7qocl.webm"
-      },
-      {
-        "index": 3,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p4-zvq8cx6vjqxe.webm"
-      },
-      {
-        "index": 4,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p5-yoniwz1yekwn.webm"
-      },
-      {
-        "index": 5,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p6-yv5qbjh505ps.webm"
-      },
-      {
-        "index": 6,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p7-grrsh4u57l6o.webm"
-      },
-      {
-        "index": 7,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p8-ssbb8tqjugrv.webm"
-      },
-      {
-        "index": 8,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p9-vrg4m148oz2k.webm"
-      },
-      {
-        "index": 9,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p10-llglwrsyxdzh.webm"
-      },
-      {
-        "index": 10,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p11-79ckvgwj6tx3.webm"
-      },
-      {
-        "index": 11,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p12-8wywpm15saa7.webm"
-      },
-      {
-        "index": 12,
-        "audio": "books/letsread-e7df4fca-9673-42ec-adbd-a232686183c6/rec/abrn0rd8vm0u/p13-irprgppov0xs.webm"
-      }
-    ],
-    "createdAt": "2026-10-15T18:25:00.632Z",
-    "updatedAt": "2026-10-15T18:27:21.002Z"
-  },
-  {
     "id": "6p1l5senq7li",
     "bookId": "bookdash-katiitis-song",
     "userId": "u_m3ipvar7h1mb",
@@ -634,5 +571,332 @@
     ],
     "createdAt": "2026-10-29T18:09:55.238Z",
     "updatedAt": "2026-10-29T18:14:07.149Z"
+  },
+  {
+    "id": "9jb14zculsa3",
+    "bookId": "ai-hershele-ma-shenichnas-lo-yotze",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p1-j3gpb56ttor5.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p2-ygw7174bort1.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p3-zs43yhpligz8.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p4-io3qbnrpyksw.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p5-wo8556b4lqw0.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p6-v5d4o3c75dbo.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p7-cozacg7ycbti.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p8-vl8elqvog0t6.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p9-8vee04l8m7qn.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p10-fwkjzsue9txd.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p11-ug8ei1rbdyjx.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/ai-hershele-ma-shenichnas-lo-yotze/rec/9jb14zculsa3/p12-qane2zsdknba.webm"
+      }
+    ],
+    "createdAt": "2026-11-03T17:17:08.638Z",
+    "updatedAt": "2026-11-04T17:32:35.998Z"
+  },
+  {
+    "id": "s96264dh3vhm",
+    "bookId": "ai-hershele-kacha-haolam-mistovev",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p1-hm3uthckybnx.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p2-50f2u2ck4wv9.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p3-ibhgj2p92lxt.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p4-fxmjf27mm961.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p5-m8vkojh7wyuz.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p6-ugkdxedq6ltk.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p7-oyykuoho2fpe.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p8-jhynz6fm7ocl.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p9-a3dsayxi9rxt.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p10-bh1d3bzhteim.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p11-a88wm0v40vd1.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/ai-hershele-kacha-haolam-mistovev/rec/s96264dh3vhm/p12-jd3mes8wmnyj.webm"
+      }
+    ],
+    "createdAt": "2026-11-03T17:23:56.038Z",
+    "updatedAt": "2026-11-03T17:27:35.267Z"
+  },
+  {
+    "id": "707terpgk5n5",
+    "bookId": "letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p1-r20uk055z437.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p2-u3f1z5kdhh22.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p3-y2bdhptjyl25.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p4-5s5e6smd5mpz.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p5-usxeh5pzs1h2.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p6-710t9k5szadh.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p7-54mzo1nr3gsk.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p8-rk4218k8ddh7.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p9-a5itwr0x0tlb.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p11-p0hvh1jf6aaa.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p12-m1hh2wyyw7yj.webm"
+      },
+      {
+        "index": 12,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p13-vbvvehgj08dm.webm"
+      },
+      {
+        "index": 13,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p14-v9eb3xs12mj5.webm"
+      },
+      {
+        "index": 14,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p15-bkni4oh6i8dg.webm"
+      },
+      {
+        "index": 15,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p16-vdzok95uttbz.webm"
+      },
+      {
+        "index": 16,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p17-jyuwi361sizo.webm"
+      },
+      {
+        "index": 17,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p18-l7w2ucxbcxdq.webm"
+      },
+      {
+        "index": 18,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p19-f7ze4ti4joq0.webm"
+      },
+      {
+        "index": 19,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p20-zbj75o7aj1u4.webm"
+      },
+      {
+        "index": 20,
+        "audio": "books/letsread-84af2ae8-7434-4a09-a4d3-55ae33d2de6a/rec/707terpgk5n5/p21-qfnymas683ts.webm"
+      }
+    ],
+    "createdAt": "2026-11-03T17:28:37.536Z",
+    "updatedAt": "2026-11-04T17:18:20.507Z"
+  },
+  {
+    "id": "56wr8377tyc6",
+    "bookId": "ai-hershele-hapanim-hamefuchamim",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p1-yhv7w95ba8ef.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p2-3gb8q361j64u.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p3-tzdx56vjm7qw.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p4-lueemnw9l9z4.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p5-9rbi926xjd2i.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p6-h1xw1vlq00v6.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p7-mpb214o28tg1.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p8-uap7b6kccm4h.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p9-ts2g5o9wydwb.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p10-wdzgdu9o50l4.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p11-sgyp1vikqlw7.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/ai-hershele-hapanim-hamefuchamim/rec/56wr8377tyc6/p12-9rsbs0ilb62p.webm"
+      }
+    ],
+    "createdAt": "2026-11-03T17:32:08.950Z",
+    "updatedAt": "2026-11-03T17:34:57.019Z"
+  },
+  {
+    "id": "jf6yzvm89k3n",
+    "bookId": "ai-hershele-afar-eretz-yisrael-banaalayim",
+    "userId": "u_m3ipvar7h1mb",
+    "title": "ההקלטה שלי",
+    "status": "private",
+    "pages": [
+      {
+        "index": 0,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p1-c5vft7mtp9br.webm"
+      },
+      {
+        "index": 1,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p2-8c39q0ivlbgj.webm"
+      },
+      {
+        "index": 2,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p3-95g2as2szuwo.webm"
+      },
+      {
+        "index": 3,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p4-jg4kzx123i69.webm"
+      },
+      {
+        "index": 4,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p5-6wv6poprczd4.webm"
+      },
+      {
+        "index": 5,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p6-bo5mz82te5i5.webm"
+      },
+      {
+        "index": 6,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p7-66ooz1ujglhw.webm"
+      },
+      {
+        "index": 7,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p8-r1xw0gxme6bf.webm"
+      },
+      {
+        "index": 8,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p9-gq43tnimjpx5.webm"
+      },
+      {
+        "index": 9,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p10-7oguffmzeft6.webm"
+      },
+      {
+        "index": 10,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p11-pz4ly7pibekk.webm"
+      },
+      {
+        "index": 11,
+        "audio": "books/ai-hershele-afar-eretz-yisrael-banaalayim/rec/jf6yzvm89k3n/p12-ufo9qbv2ejva.webm"
+      }
+    ],
+    "createdAt": "2026-11-03T17:35:46.954Z",
+    "updatedAt": "2026-11-04T17:45:41.915Z"
   }
 ]

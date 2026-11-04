@@ -2,19 +2,23 @@ import Link from "next/link";
 import { LogIn, LogOut, Menu, Search, Shield, UserRound } from "lucide-react";
 import { getCurrentUser, hasRole } from "@/lib/auth";
 import { logoutAction } from "@/lib/auth/actions";
-import { ACCOUNT_NAV, AGE_NAV, MAIN_NAV } from "@/lib/nav";
+import { getT } from "@/lib/i18n/server";
+import { navFor } from "@/lib/nav";
 import { routes } from "@/lib/routes";
 import { ThemeToggle } from "../ThemeToggle";
 import { HeaderMenu } from "./HeaderMenu";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const ICON_LINK =
   "inline-flex size-touch shrink-0 items-center justify-center rounded-full text-foreground hover:bg-surface-2";
 const MENU_LINK = "flex min-h-touch items-center gap-2 rounded-md px-3 text-lg font-medium hover:bg-surface-2";
 
-/** Sticky site header: logo, main navigation, search, theme toggle and the account menu. */
+/** Sticky site header: logo, main navigation, search, language and theme toggles and the account menu. */
 export async function SiteHeader() {
   const user = await getCurrentUser();
   const isEditor = hasRole(user, "editor");
+  const { locale, t } = await getT();
+  const { main: MAIN_NAV, age: AGE_NAV, account: ACCOUNT_NAV } = navFor(locale);
 
   return (
     <header className="site-chrome sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur print:hidden">
@@ -29,15 +33,15 @@ export async function SiteHeader() {
           >
             📖
           </span>
-          <span className="truncate">הסיפור שלי</span>
+          <span className="truncate">{t.site.name}</span>
         </Link>
 
-        <nav aria-label="ניווט ראשי" className="ms-4 hidden items-center gap-1 lg:flex">
+        <nav aria-label={t.header.mainNav} className="ms-2 hidden items-center gap-1 lg:flex xl:ms-4">
           {MAIN_NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="inline-flex min-h-11 items-center rounded-full px-3.5 font-semibold transition-colors hover:bg-primary-soft hover:text-primary"
+              className="inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-2.5 font-semibold xl:px-3.5 transition-colors hover:bg-primary-soft hover:text-primary"
             >
               {item.label}
             </Link>
@@ -45,16 +49,17 @@ export async function SiteHeader() {
         </nav>
 
         <div className="ms-auto flex shrink-0 items-center sm:gap-1">
-          <Link href={routes.search()} className={ICON_LINK} aria-label="חיפוש" title="חיפוש">
+          <Link href={routes.search()} className={ICON_LINK} aria-label={t.header.search} title={t.header.search}>
             <Search aria-hidden="true" />
           </Link>
+          <LanguageSwitcher />
           <ThemeToggle />
 
           {user ? (
             <HeaderMenu
               className="relative hidden lg:block"
               summaryClassName="flex min-h-touch list-none items-center gap-2 rounded-full px-3 font-semibold hover:bg-surface-2 [&::-webkit-details-marker]:hidden"
-              summaryLabel={`החשבון של ${user.name}`}
+              summaryLabel={t.header.account(user.name)}
               summary={
                 <>
                   <UserRound aria-hidden="true" />
@@ -71,13 +76,13 @@ export async function SiteHeader() {
                 {isEditor ? (
                   <Link href={routes.admin()} className={MENU_LINK}>
                     <Shield aria-hidden="true" className="size-5" />
-                    לוח ניהול
+                    {t.header.admin}
                   </Link>
                 ) : null}
                 <form action={logoutAction}>
                   <button type="submit" className={`${MENU_LINK} w-full`}>
                     <LogOut aria-hidden="true" className="size-5" />
-                    יציאה
+                    {t.header.signOut}
                   </button>
                 </form>
               </div>
@@ -88,18 +93,18 @@ export async function SiteHeader() {
               className="hidden min-h-touch items-center gap-2 rounded-full px-4 font-semibold hover:bg-surface-2 lg:inline-flex"
             >
               <LogIn aria-hidden="true" />
-              כניסה
+              {t.header.signIn}
             </Link>
           )}
 
           <HeaderMenu
             className="lg:hidden"
             summaryClassName={`${ICON_LINK} list-none [&::-webkit-details-marker]:hidden`}
-            summaryLabel="תפריט"
+            summaryLabel={t.header.menu}
             summary={<Menu aria-hidden="true" />}
           >
             <nav
-              aria-label="תפריט"
+              aria-label={t.header.menu}
               className="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-border bg-surface p-3 shadow-pop"
             >
               <ul className="container-page flex flex-col px-0">
@@ -134,7 +139,7 @@ export async function SiteHeader() {
                       <li>
                         <Link href={routes.admin()} className={MENU_LINK}>
                           <Shield aria-hidden="true" className="size-5" />
-                          לוח ניהול
+                          {t.header.admin}
                         </Link>
                       </li>
                     ) : null}
@@ -142,7 +147,7 @@ export async function SiteHeader() {
                       <form action={logoutAction}>
                         <button type="submit" className={`${MENU_LINK} w-full`}>
                           <LogOut aria-hidden="true" className="size-5" />
-                          יציאה ({user.name})
+                          {t.header.signOutAs(user.name)}
                         </button>
                       </form>
                     </li>
@@ -151,7 +156,7 @@ export async function SiteHeader() {
                   <li>
                     <Link href={routes.login()} className={MENU_LINK}>
                       <LogIn aria-hidden="true" className="size-5" />
-                      כניסה
+                      {t.header.signIn}
                     </Link>
                   </li>
                 )}

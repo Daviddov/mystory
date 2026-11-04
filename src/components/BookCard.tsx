@@ -4,7 +4,10 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
-import { ageGroupsLabel, getAgeGroup, readingTimeLabel, tagSlug } from "@/lib/taxonomy";
+import { ageGroupsText, readingTimeText } from "@/lib/i18n/labels";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { getMessages } from "@/lib/i18n/messages";
+import { getAgeGroup, tagSlug } from "@/lib/taxonomy";
 import type { PublicBook } from "@/lib/public-book";
 import { bookAgeGroups, bookLanguage, bookVersions, type BookLanguage } from "@/lib/types";
 
@@ -32,6 +35,8 @@ export interface BookCardProps {
    * second language shows that title, and the reader opens in it.
    */
   language?: BookLanguage;
+  /** Interface language of the labels. Default Hebrew. */
+  locale?: Locale;
   className?: string;
 }
 
@@ -42,7 +47,8 @@ const AGE_TONES: Record<string, string> = {
 };
 
 /** Cover (3:4), title, and pills for age group and reading time. Works in Server and Client Components. */
-export function BookCard({ book, href, layout = "grid", badge, footer, priority, showTags, hideTag, read, language, className }: BookCardProps) {
+export function BookCard({ book, href, layout = "grid", badge, footer, priority, showTags, hideTag, read, language, locale = DEFAULT_LOCALE, className }: BookCardProps) {
+  const t = getMessages(locale).book;
   const version = language && language !== bookLanguage(book) ? bookVersions(book).find((v) => v.language === language) : undefined;
   const inSecondLanguage = !!version;
   const title = version ? version.title : book.title;
@@ -74,20 +80,20 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
           )}
           {book.hasAudio ? (
             <span
-              title="יש הקראה"
+              title={t.hasAudio}
               className="absolute bottom-2 end-2 inline-flex size-9 items-center justify-center rounded-full bg-surface/90 text-foreground shadow-card backdrop-blur-sm"
             >
               <Headphones aria-hidden="true" className="size-5" />
-              <span className="sr-only">יש הקראה</span>
+              <span className="sr-only">{t.hasAudio}</span>
             </span>
           ) : null}
           {read ? (
             <span
-              title="קראתם את הספר"
+              title={t.read}
               className="absolute bottom-2 start-2 inline-flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card"
             >
               <Check aria-hidden="true" className="size-5" />
-              <span className="sr-only">קראתם את הספר</span>
+              <span className="sr-only">{t.read}</span>
             </span>
           ) : null}
           {badge ? (
@@ -96,7 +102,7 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
             </span>
           ) : null}
         </div>
-        <h3 lang={inSecondLanguage ? language : bookLanguage(book)} className="line-clamp-2 px-0.5 text-lg font-semibold leading-snug">
+        <h3 lang={inSecondLanguage ? language : bookLanguage(book)} dir="auto" className="line-clamp-2 px-0.5 text-lg font-semibold leading-snug">
           {title}
         </h3>
         <p className="flex flex-wrap items-center gap-1.5 px-0.5">
@@ -108,17 +114,17 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
               )}
             >
               <span aria-hidden="true">{age.emoji}</span>
-              {ageGroupsLabel(ages)}
+              {ageGroupsText(locale, ages)}
             </span>
           ) : null}
           <span className="inline-flex items-center gap-1 rounded-full bg-surface-2 px-2.5 py-0.5 text-xs font-semibold text-muted">
             <Clock aria-hidden="true" className="size-3.5" />
-            {readingTimeLabel(book.readingMinutes)}
+            {readingTimeText(locale, book.readingMinutes)}
           </span>
         </p>
         {tags.length > 0 ? (
           // One line: tags that do not fit wrap to a hidden second line.
-          <p className="flex max-h-6 flex-wrap gap-1 overflow-hidden px-0.5" aria-label={`תגיות: ${tags.join(", ")}`}>
+          <p className="flex max-h-6 flex-wrap gap-1 overflow-hidden px-0.5" aria-label={t.tags(tags.join(", "))}>
             {tags.map((tag) => (
               <span
                 key={tag}
@@ -133,11 +139,11 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
       {href === undefined ? (
         <Link
           href={routes.book(book.slug)}
-          title="לפרטים"
+          title={t.details}
           className="absolute end-2 top-2 inline-flex size-10 items-center justify-center rounded-full bg-surface/90 text-foreground opacity-90 shadow-card backdrop-blur-sm transition hover:bg-surface hover:opacity-100"
         >
           <Info aria-hidden="true" className="size-5" />
-          <span className="sr-only">לפרטים על {title}</span>
+          <span className="sr-only">{t.detailsAbout(title)}</span>
         </Link>
       ) : null}
       {footer ? <div className="mt-2">{footer}</div> : null}

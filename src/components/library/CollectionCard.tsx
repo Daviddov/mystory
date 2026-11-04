@@ -2,9 +2,10 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { getMessages, taxonomyText } from "@/lib/i18n/messages";
 import type { Book, Collection } from "@/lib/types";
-import { bookCountLabel } from "./filters";
-import { seasonInfo } from "./seasons";
+import { normalizeSeason, seasonInfo } from "./seasons";
 
 export interface CollectionCardProps {
   collection: Collection;
@@ -12,11 +13,14 @@ export interface CollectionCardProps {
   books: Book[];
   /** Marks the collection as fitting the current season. */
   inSeason?: boolean;
+  /** Interface language of the labels (not of the collection's own title). Default Hebrew. */
+  locale?: Locale;
   className?: string;
 }
 
 /** A curated collection: a fan of covers, title, description and book count. */
-export function CollectionCard({ collection, books, inSeason, className }: CollectionCardProps) {
+export function CollectionCard({ collection, books, inSeason, locale = DEFAULT_LOCALE, className }: CollectionCardProps) {
+  const t = getMessages(locale);
   const season = seasonInfo(collection.season);
   const covers = books.slice(0, 3);
   return (
@@ -56,16 +60,16 @@ export function CollectionCard({ collection, books, inSeason, className }: Colle
           <p className="flex flex-wrap items-center gap-2 text-sm font-semibold">
             <span className="inline-flex items-center gap-1 rounded-full bg-secondary-soft px-3 py-1">
               <span aria-hidden="true">{season.emoji}</span>
-              {season.label}
+              {taxonomyText(locale, "season", normalizeSeason(collection.season) ?? "", season).label}
             </span>
-            {inSeason ? <span className="rounded-full bg-accent px-3 py-1 text-accent-foreground">מתאים לעכשיו</span> : null}
+            {inSeason ? <span className="rounded-full bg-accent px-3 py-1 text-accent-foreground">{t.home.inSeason}</span> : null}
           </p>
         ) : null}
         <h3 className="text-xl font-bold leading-snug">{collection.title}</h3>
         {collection.description ? (
           <p className="line-clamp-3 leading-relaxed text-muted">{collection.description}</p>
         ) : null}
-        <p className="text-sm font-semibold text-secondary">{bookCountLabel(books.length)}</p>
+        <p className="text-sm font-semibold text-secondary">{t.library.bookCount(books.length)}</p>
       </div>
     </Link>
   );

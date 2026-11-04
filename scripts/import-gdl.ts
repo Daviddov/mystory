@@ -33,11 +33,13 @@ import {
   GdlClient,
   GdlError,
   findGdlBook,
+  gdlBookId,
   gdlCatalogueProblem,
   importGdlBook,
   type GdlErrorCode,
 } from "../src/lib/importers/gdl";
 import { LocalMediaStore } from "../src/lib/media/local";
+import { withoutExcluded } from "./lib/excluded";
 import type { MediaStore } from "../src/lib/media/types";
 import { LocalRepository } from "../src/lib/repo/local";
 import type { Repository } from "../src/lib/repo/types";
@@ -128,7 +130,9 @@ async function main(): Promise<void> {
   const owner = await resolveOwner(repo, ownerEmail);
   console.log(`owner:   ${owner.label}`);
   // --all leaves out what the catalogue already rules out: other licenses, other content types, skipped publishers.
-  const targets = all ? (await client.catalogue()).filter((entry) => !gdlCatalogueProblem(entry)).map((entry) => entry.id) : ids;
+  const targets = all
+    ? withoutExcluded((await client.catalogue()).filter((entry) => !gdlCatalogueProblem(entry)).map((entry) => entry.id), gdlBookId)
+    : ids;
   if (all) console.log(`skipping the publishers: ${GDL_SKIPPED_PUBLISHERS.map((publisher) => publisher.name).join(", ")}`);
 
   let failed = 0;

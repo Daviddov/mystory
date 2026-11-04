@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useT } from "@/components/i18n/LocaleProvider";
 import { Button, ButtonLink, EmptyState } from "@/components/ui";
 import { routes } from "@/lib/routes";
 
@@ -12,6 +13,7 @@ export default function RouteError({
   error: Error & { digest?: string };
   retry: () => void;
 }) {
+  const { t } = useT();
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -21,20 +23,20 @@ export default function RouteError({
       <div role="alert">
         <EmptyState
           icon="🙈"
-          title="אופס, משהו השתבש"
-          description="לא הצלחנו להציג את הדף. זה לא בגללכם. אפשר לנסות שוב, ואם זה לא עוזר, לחזור לדף הבית."
+          title={t.error.title}
+          description={t.error.description}
           action={
             <div className="flex flex-wrap justify-center gap-3">
-              <Button onClick={() => retry()}>לנסות שוב</Button>
+              <Button onClick={() => retry()}>{t.error.retry}</Button>
               <ButtonLink href={routes.home()} variant="outline">
-                לדף הבית
+                {t.error.home}
               </ButtonLink>
             </div>
           }
         />
         {error.digest ? (
           <p className="mt-4 text-center text-sm text-muted">
-            קוד לתמיכה:{" "}
+            {t.error.supportCode}{" "}
             <span dir="ltr" className="font-mono">
               {error.digest}
             </span>

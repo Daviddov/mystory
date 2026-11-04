@@ -1,12 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { Frank_Ruhl_Libre, Fredoka, Noto_Naskh_Arabic, Rubik } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { LocaleProvider } from "@/components/i18n/LocaleProvider";
 import { AppShellExtras } from "@/components/pwa/AppShellExtras";
 import { seoEnv, siteUrl } from "@/lib/config";
+import { localeDir } from "@/lib/i18n/locale";
+import { getMessages } from "@/lib/i18n/messages";
+import { getLocale } from "@/lib/i18n/server";
 import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TITLE } from "@/lib/seo";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
@@ -78,12 +83,14 @@ export const viewport: Viewport = {
   themeColor: [{ color: "#fff8ec" }],
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   const plausibleDomain = seoEnv.plausibleDomain();
+  // Always Hebrew on the static (force-static) pages, which see no cookies.
+  const locale = await getLocale();
   return (
     <html
-      lang="he"
-      dir="rtl"
+      lang={locale}
+      dir={localeDir(locale)}
       data-theme="day"
       className={`${uiFont.variable} ${displayFont.variable} ${storyFont.variable} ${arabicFont.variable} h-full antialiased`}
       suppressHydrationWarning
@@ -92,19 +99,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-full flex-col">
-        <a
-          href="#main"
-          className="sr-only z-50 rounded-full bg-primary font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:px-5 focus:py-3"
-        >
-          דילוג לתוכן
-        </a>
-        <SiteHeader />
-        <div id="main" className="flex flex-1 flex-col">
-          {children}
-        </div>
-        <SiteFooter />
-        <AppShellExtras />
+        <LocaleProvider locale={locale}>
+          <a
+            href="#main"
+            className="sr-only z-50 rounded-full bg-primary font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:px-5 focus:py-3"
+          >
+            {getMessages(locale).site.skipToContent}
+          </a>
+          <SiteHeader />
+          <div id="main" className="flex flex-1 flex-col">
+            {children}
+          </div>
+          <SiteFooter />
+          <AppShellExtras />
+        </LocaleProvider>
         <Analytics />
+        <SpeedInsights />
         {plausibleDomain ? (
           // Cookieless and without personal data, so no consent banner is needed.
           <Script

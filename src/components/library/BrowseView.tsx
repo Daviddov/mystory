@@ -3,11 +3,12 @@ import type { ReactNode } from "react";
 import { BookGrid } from "@/components/BookGrid";
 import { JsonLd } from "@/components/JsonLd";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
+import { getT } from "@/lib/i18n/server";
 import type { BookFilter } from "@/lib/repo/types";
 import { routes } from "@/lib/routes";
 import { bookListJsonLd } from "@/lib/seo";
 import { AGE_GROUP_INFO } from "@/lib/taxonomy";
-import { bookCountLabel, hrefWith, parseLibraryQuery, toParams, type LibraryQuery, type RawSearchParams } from "./filters";
+import { hrefWith, parseLibraryQuery, toParams, type LibraryQuery, type RawSearchParams } from "./filters";
 import { InfiniteBookGrid } from "./InfiniteBookGrid";
 import { listingApiUrl, scopeForBase, type ListingScope } from "./infinite";
 import { toListingItems } from "./listing";
@@ -72,7 +73,7 @@ export async function BrowseView({
   siblingsLabel,
   ageFilter = true,
   refineHref,
-  emptyTitle = "עוד אין כאן ספרים",
+  emptyTitle,
   children,
   footer,
   scope,
@@ -88,14 +89,23 @@ export async function BrowseView({
   const shown: LibraryQuery = { ...query, page: listing.page };
   const listScope = scope ?? scopeForBase(base);
   const listParams = toParams({ ...shown, page: undefined });
+  const { locale, t: messages } = await getT();
+  const t = messages.library;
 
   return (
     <main className="container-page flex flex-col gap-8 py-8 sm:py-10">
       {listing.books.length > 0 ? <JsonLd data={bookListJsonLd(listing.books)} /> : null}
-      <PageHeading title={title} emoji={emoji} eyebrow={eyebrow} description={description} crumbs={crumbs} />
+      <PageHeading
+        title={title}
+        emoji={emoji}
+        eyebrow={eyebrow}
+        description={description}
+        crumbs={crumbs}
+        locale={locale}
+      />
 
       {siblings && siblings.length > 0 ? (
-        <nav aria-label={siblingsLabel ?? "עוד אפשרויות"}>
+        <nav aria-label={siblingsLabel ?? t.moreOptions}>
           <ul className="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
             {siblings.map((sibling) => (
               <li key={sibling.href} className="shrink-0">
@@ -110,13 +120,13 @@ export async function BrowseView({
 
       {children}
 
-      <section aria-label="רשימת הספרים" className="flex flex-col gap-6">
+      <section aria-label={t.bookList} className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           {ageFilter ? (
-            <nav aria-label="סינון לפי גיל" className="flex flex-wrap items-center gap-2">
-              <span className="text-sm font-semibold text-muted">גיל:</span>
+            <nav aria-label={t.byAge} className="flex flex-wrap items-center gap-2">
+              <span className="text-sm font-semibold text-muted">{t.age}</span>
               <Chip href={hrefWith(path, shown, { age: undefined })} selected={!shown.age}>
-                כל הגילים
+                {t.allAges}
               </Chip>
               {AGE_GROUP_INFO.map((age) => (
                 <Chip
@@ -131,16 +141,16 @@ export async function BrowseView({
             </nav>
           ) : null}
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <SortChips current={shown.sort} hrefFor={(sort) => hrefWith(path, shown, { sort })} />
+            <SortChips current={shown.sort} hrefFor={(sort) => hrefWith(path, shown, { sort })} locale={locale} />
             {refineHref ? (
               <ButtonLink href={refineHref} variant="outline" size="sm">
                 <SlidersHorizontal aria-hidden="true" className="size-4" />
-                עוד סינונים
+                {t.moreFilters}
               </ButtonLink>
             ) : null}
           </div>
           <p className="text-muted" role="status">
-            {bookCountLabel(listing.total)}
+            {t.bookCount(listing.total)}
           </p>
         </div>
 
@@ -161,25 +171,22 @@ export async function BrowseView({
           <>
             <BookGrid
               books={listing.books}
+              locale={locale}
               cardProps={(book) => ({
                 showTags: true,
                 hideTag: base.tag,
                 ...(shown.lang ? { language: shown.lang } : {}),
-                ...(isNewBook(book, listing.now) ? { badge: "חדש" } : {}),
+                ...(isNewBook(book, listing.now) ? { badge: messages.book.new } : {}),
               })}
               empty={
                 <EmptyState
-                  title={emptyTitle}
-                  description={
-                    shown.age
-                      ? "אין ספרים לגיל שבחרתם. נסו גיל אחר או הציגו את כל הגילים."
-                      : "ספרים חדשים מתווספים כל הזמן. בינתיים אפשר לעיין בכל הספרייה."
-                  }
+                  title={emptyTitle ?? t.emptyHere}
+                  description={shown.age ? t.noBooksForAge : t.moreSoon}
                   action={
                     shown.age ? (
-                      <ButtonLink href={hrefWith(path, shown, { age: undefined })}>כל הגילים</ButtonLink>
+                      <ButtonLink href={hrefWith(path, shown, { age: undefined })}>{t.allAges}</ButtonLink>
                     ) : (
-                      <ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>
+                      <ButtonLink href={routes.books()}>{t.allBooks}</ButtonLink>
                     )
                   }
                 />
@@ -190,6 +197,7 @@ export async function BrowseView({
               page={listing.page}
               pages={listing.pages}
               hrefFor={(page) => hrefWith(path, shown, { page })}
+              locale={locale}
             />
           </>
         )}

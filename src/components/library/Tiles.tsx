@@ -2,6 +2,8 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { routes } from "@/lib/routes";
 import { SectionTitle } from "./SectionTitle";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { getMessages, taxonomyText } from "@/lib/i18n/messages";
 import { AGE_GROUP_INFO, READING_TIME_BUCKETS } from "@/lib/taxonomy";
 
 const TILE =
@@ -15,11 +17,11 @@ const AGE_TONES = [
 ];
 
 /** Three large entry tiles, one per age group. */
-export function AgeTiles({ className }: { className?: string }) {
+export function AgeTiles({ locale = DEFAULT_LOCALE, className }: { locale?: Locale; className?: string }) {
   return (
     <section aria-labelledby="age-tiles-title" className={cn("flex flex-col gap-4", className)}>
       <SectionTitle id="age-tiles-title" emoji="🎂">
-        בוחרים לפי גיל
+        {getMessages(locale).home.byAge}
       </SectionTitle>
       <ul className="grid gap-3 sm:grid-cols-3 sm:gap-4">
         {AGE_GROUP_INFO.map((age, index) => (
@@ -32,8 +34,8 @@ export function AgeTiles({ className }: { className?: string }) {
                 {age.emoji}
               </span>
               <span className="flex flex-col gap-0.5">
-                <span className="font-display text-2xl font-semibold">{age.label}</span>
-                <span className="leading-snug text-muted">{age.description}</span>
+                <span className="font-display text-2xl font-semibold">{taxonomyText(locale, "age", age.slug, age).label}</span>
+                <span className="leading-snug text-muted">{taxonomyText(locale, "age", age.slug, age).description}</span>
               </span>
             </Link>
           </li>
@@ -44,11 +46,11 @@ export function AgeTiles({ className }: { className?: string }) {
 }
 
 /** Reading-time entry tiles: "how much time do we have?". */
-export function TimeTiles({ className }: { className?: string }) {
+export function TimeTiles({ locale = DEFAULT_LOCALE, className }: { locale?: Locale; className?: string }) {
   return (
     <section aria-labelledby="time-tiles-title" className={cn("flex flex-col gap-4", className)}>
       <SectionTitle id="time-tiles-title" emoji="⏱️">
-        כמה זמן יש לנו?
+        {getMessages(locale).home.byTime}
       </SectionTitle>
       <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {READING_TIME_BUCKETS.map((bucket) => (
@@ -63,7 +65,7 @@ export function TimeTiles({ className }: { className?: string }) {
               >
                 {bucket.slug === "20" ? "20+" : bucket.slug}
               </span>
-              <span className="text-lg font-semibold">{bucket.label}</span>
+              <span className="text-lg font-semibold">{taxonomyText(locale, "time", bucket.slug, bucket).label}</span>
             </Link>
           </li>
         ))}

@@ -13,7 +13,7 @@
  *                       its narration and edits
  *
  * A story that was imported before is skipped (found by its StoryWeaver id).
- * --all also skips the stories in scripts/sources/storyweaver-excluded.json:
+ * --all also skips the stories in scripts/storyweaver-excluded.json:
  * books removed after a content review, which must not come back. Naming one
  * explicitly still imports it.
  * Hebrew stories arrive in Hebrew; English ones stay in English until someone
@@ -41,7 +41,7 @@ const USAGE =
   "usage: tsx scripts/import-storyweaver.ts <slug> [...] | --all | --list  [--language Hebrew|English|Arabic] [--limit <n>] [--owner <email>] [--force]";
 
 /** Book ids ("storyweaver-<id>") that a content review removed; --all leaves them out. */
-const EXCLUDED_FILE = path.join(__dirname, "sources", "storyweaver-excluded.json");
+const EXCLUDED_FILE = path.join(__dirname, "storyweaver-excluded.json");
 
 function excludedIds(): Set<string> {
   if (!fs.existsSync(EXCLUDED_FILE)) return new Set();

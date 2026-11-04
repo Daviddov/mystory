@@ -42,6 +42,19 @@ export const LIVE_PREFIX = "/live";
 /** Session cookie of the local (development) login. Same value as SESSION_COOKIE in src/lib/auth/session.ts. */
 export const LOCAL_SESSION_COOKIE = "mystory_session";
 
+/** Interface-language cookie. Same value as LOCALE_COOKIE in src/lib/i18n/locale.ts. */
+export const LOCALE_COOKIE = "mystory_lang";
+
+/**
+ * Whether the visitor chose a non-default (English) interface. The static
+ * library pages are cached in Hebrew, so such a visitor needs the live twin,
+ * like a signed-in one.
+ */
+function wantsOtherLocale(request: NextRequest): boolean {
+  const value = request.cookies.get(LOCALE_COOKIE)?.value;
+  return value !== undefined && value !== "he";
+}
+
 /** Query-string keys the library listings read (src/components/library/filters.ts). */
 export const LIBRARY_QUERY_KEYS: readonly string[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim", "read", "lang", "sort", "page"];
 
@@ -55,7 +68,8 @@ const LIBRARY_LISTING = /^\/(?:books|listen|(?:age|category|theme|time|tag|paras
  * The library pages are static and cached (ISR), so their HTML must be the
  * same for every signed-out visitor. A request that needs more than that is
  * rewritten to the dynamic twin under /live:
- *   - any library page, when the visitor is signed in;
+ *   - any library page, when the visitor is signed in or chose the English
+ *     interface (`signedIn` covers both);
  *   - a listing with a library query (filters, sort, page).
  * Other query strings (utm_*, _rsc, ...) keep the static page.
  * Returns the rewrite target, or null to serve the page as it is.
@@ -162,7 +176,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     const live = libraryRewrite(
       request.nextUrl.pathname,
       request.nextUrl.searchParams,
-      request.cookies.has(LOCAL_SESSION_COOKIE),
+      request.cookies.has(LOCAL_SESSION_COOKIE) || wantsOtherLocale(request),
     );
     const page = live ? NextResponse.rewrite(rewriteTo(request, live)) : NextResponse.next();
     return withAgentLinks(page, request.nextUrl.pathname);
@@ -205,7 +219,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     target.searchParams.set("next", `${pathname}${search}`);
   }
   if (!target) {
-    const live = libraryRewrite(pathname, request.nextUrl.searchParams, signedIn);
+    const live = libraryRewrite(pathname, request.nextUrl.searchParams, signedIn || wantsOtherLocale(request));
     if (!live) return withAgentLinks(response, pathname);
     // Same request (with any refreshed session cookies), rendered by the live route.
     const rewritten = NextResponse.rewrite(rewriteTo(request, live), { request });

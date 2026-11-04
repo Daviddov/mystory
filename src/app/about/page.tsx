@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui";
+import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { InfoPage, InfoSection } from "./_components/InfoPage";
+import { AboutPageEn } from "./about-en";
 
 export const metadata: Metadata = {
   title: "על האתר",
@@ -10,7 +12,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  if ((await getLocale()) === "en") return <AboutPageEn />;
   return (
     <InfoPage
       title="על האתר"

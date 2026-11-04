@@ -12,6 +12,8 @@ import { SectionTitle } from "@/components/library/SectionTitle";
 import { AgeTiles, TimeTiles } from "@/components/library/Tiles";
 import { JsonLd } from "@/components/JsonLd";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
+import { getMessages, taxonomyText } from "@/lib/i18n/messages";
+import { getLocale } from "@/lib/i18n/server";
 import { toPublicBook } from "@/lib/public-book";
 import { routes } from "@/lib/routes";
 import { pageMetadata, SITE_TITLE, siteJsonLd } from "@/lib/seo";
@@ -32,15 +34,18 @@ export const metadata: Metadata = { ...page, title: { absolute: TITLE } };
 export default async function HomePage() {
   const data = await getHomeData();
   const today = new Date(data.now);
+  // Hebrew in the static page; English visitors get the live twin (src/proxy.ts).
+  const locale = await getLocale();
+  const t = getMessages(locale).home;
 
   if (data.totalBooks === 0) {
     return (
       <main className="container-page flex flex-col gap-8 py-10">
-        <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl">סיפורי ילדים לקרוא ולשמוע</h1>
+        <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl">{t.title}</h1>
         <EmptyState
-          title="הספרייה עוד ריקה"
-          description="עוד לא פורסמו ספרים. אפשר ליצור את הספר הראשון בסטודיו."
-          action={<ButtonLink href={routes.studio()}>לסטודיו</ButtonLink>}
+          title={t.emptyTitle}
+          description={t.emptyDescription}
+          action={<ButtonLink href={routes.studio()}>{t.toStudio}</ButtonLink>}
         />
       </main>
     );
@@ -70,74 +75,93 @@ export default async function HomePage() {
           </p>
           <div className="flex flex-col gap-3">
             <h1 className="text-4xl font-bold leading-tight sm:text-6xl">
-              סיפורי ילדים לקרוא <span className="text-primary">ולשמוע</span>
+              {t.titleStart}
+              <span className="text-primary">{t.titleEnd}</span>
             </h1>
-            <p className="text-lg leading-relaxed text-foreground/75 sm:text-xl">
-              ספרים מאוירים עם ניקוד והקראה, לפני השינה ובכל שעה. בוחרים ספר, מדפדפים וקוראים יחד. בלי הרשמה ובלי פרסומות.
-            </p>
+            <p className="text-lg leading-relaxed text-foreground/75 sm:text-xl">{t.lead}</p>
           </div>
-          <SearchForm id="home-search" />
+          <SearchForm id="home-search" locale={locale} />
         </div>
       </section>
 
       <ContinueReading books={readableBooks} />
 
       {data.bookOfTheWeek ? (
-        <HeroBook book={data.bookOfTheWeek} label={data.bookOfTheWeekIsChosen ? "ספר השבוע" : "הספר הכי נקרא"} />
+        <HeroBook
+          book={data.bookOfTheWeek}
+          label={data.bookOfTheWeekIsChosen ? t.bookOfTheWeek : t.mostRead}
+          locale={locale}
+        />
       ) : null}
 
-      <AgeTiles />
+      <AgeTiles locale={locale} />
 
       <BookRow
-        title="חדש בספרייה"
+        title={t.newest}
         emoji="✨"
         books={data.newest}
         href={routes.books({ sort: "new" })}
+        locale={locale}
         cardProps={(book, index) => ({
-          badge: isNewBook(book, data.now) ? "חדש" : undefined,
+          badge: isNewBook(book, data.now) ? getMessages(locale).book.new : undefined,
           priority: index < 4,
         })}
       />
 
-      <BookRow title="הכי פופולריים" emoji="🏆" books={data.popular} href={routes.books({ sort: "popular" })} />
+      <BookRow
+        title={t.popular}
+        emoji="🏆"
+        books={data.popular}
+        href={routes.books({ sort: "popular" })}
+        locale={locale}
+      />
 
-      <TimeTiles />
+      <TimeTiles locale={locale} />
 
       {data.collections.length > 0 ? (
         <section aria-labelledby="home-collections-title" className="flex flex-col gap-4">
-          <SectionTitle id="home-collections-title" emoji="🧺" href={routes.collections()} hrefLabel="לכל האוספים">
-            אוספים לעונה ולחגים
+          <SectionTitle id="home-collections-title" emoji="🧺" href={routes.collections()} hrefLabel={t.allCollections}>
+            {t.collections}
           </SectionTitle>
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.collections.slice(0, 6).map(({ collection, books }) => (
               <li key={collection.id}>
-                <CollectionCard collection={collection} books={books} inSeason={isInSeason(collection, today)} />
+                <CollectionCard
+                  collection={collection}
+                  books={books}
+                  inSeason={isInSeason(collection, today)}
+                  locale={locale}
+                />
               </li>
             ))}
           </ul>
         </section>
       ) : null}
 
-      {data.shelves.map((shelf) => (
-        <BookRow
-          key={shelf.category.slug}
-          title={shelf.category.label}
-          emoji={shelf.category.emoji}
-          books={shelf.books}
-          href={routes.category(shelf.category.slug)}
-          hrefLabel={`כל ספרי ${shelf.category.label}`}
-        />
-      ))}
+      {data.shelves.map((shelf) => {
+        const { label } = taxonomyText(locale, "category", shelf.category.slug, shelf.category);
+        return (
+          <BookRow
+            key={shelf.category.slug}
+            title={label}
+            emoji={shelf.category.emoji}
+            books={shelf.books}
+            href={routes.category(shelf.category.slug)}
+            hrefLabel={t.allInCategory(label)}
+            locale={locale}
+          />
+        );
+      })}
 
       <section aria-labelledby="home-themes-title" className="flex flex-col gap-4">
         <SectionTitle id="home-themes-title" emoji="💬">
-          על מה נדבר אחרי הסיפור?
+          {t.themesTitle}
         </SectionTitle>
         <ul className="flex flex-wrap gap-2">
           {THEMES.map((theme) => (
             <li key={theme.slug}>
               <Chip href={routes.theme(theme.slug)} icon={theme.emoji} tone="secondary">
-                {theme.label}
+                {taxonomyText(locale, "theme", theme.slug, theme).label}
               </Chip>
             </li>
           ))}
@@ -146,7 +170,7 @@ export default async function HomePage() {
 
       <div className="flex justify-center">
         <ButtonLink href={routes.books()} variant="secondary" size="lg">
-          לכל הספרים בספרייה
+          {t.allBooksButton}
         </ButtonLink>
       </div>
     </main>

@@ -3,7 +3,7 @@
  * env vars are set and the mock otherwise:
  *
  *   text   ANTHROPIC_API_KEY       -> providers/claude-text.ts
- *   nikud  NIKUD_PROVIDER=gemini   -> providers/gemini-nikud.ts (Dicta when Gemini fails; key NIKUD_API_KEY, else TEXT_API_KEY)
+ *   nikud  NIKUD_PROVIDER=gemini   -> providers/gemini-nikud.ts (Dicta when Gemini fails; key TEXT_API_KEY)
  *          NIKUD_PROVIDER=dicta    -> providers/dicta-nikud.ts
  *   tts    TTS_PROVIDER=<vendor>   -> providers/tts.ts  (gemini = AI Studio, key TTS_API_KEY; elevenlabs)
  *   image  IMAGE_PROVIDER=<vendor> -> providers/image.ts
@@ -56,7 +56,7 @@ function nikudVendor(): "gemini" | "dicta" | "mock" {
   const chosen = aiEnv.nikudProvider()?.toLowerCase();
   if (chosen === "dicta") return "dicta";
   if (chosen !== undefined && chosen !== "gemini") return "mock";
-  if (aiEnv.nikudApiKey() !== undefined) return "gemini";
+  if (aiEnv.textApiKey() !== undefined) return "gemini";
   // Asked for Gemini without a key: Dicta needs none.
   return chosen === "gemini" ? "dicta" : "mock";
 }

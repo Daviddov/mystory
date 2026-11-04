@@ -1,14 +1,13 @@
 /**
  * Hebrew nikud from Gemini, with Dicta Nakdan as the fallback. Selected when
- * NIKUD_PROVIDER=gemini, or when it is unset and a Gemini key exists
- * (NIKUD_API_KEY, else TEXT_API_KEY).
+ * NIKUD_PROVIDER=gemini, or when it is unset and TEXT_API_KEY is set (the
+ * story writer's key: nikud is text work).
  *
  * Gemini may only add vowel points: the letters, punctuation and word count of
  * its answer must equal the input's. An answer that changes anything else, a
  * failed call or an answer without nikud goes to the fallback instead.
  */
 import { z } from "zod";
-import { aiEnv } from "../../config";
 import { hasNikud, sameLetters } from "../../hebrew";
 import type { NikudProvider, TextProvider } from "../types";
 import { createGeminiTextProvider } from "./gemini-text";
@@ -28,7 +27,7 @@ export const NIKUD_SYSTEM = [
 export async function createGeminiNikudProvider(
   options: { fallback?: NikudProvider; text?: TextProvider; log?: (message: string) => void } = {},
 ): Promise<NikudProvider> {
-  const text = options.text ?? (await createGeminiTextProvider({ apiKey: aiEnv.nikudApiKey() }));
+  const text = options.text ?? (await createGeminiTextProvider());
   const log = options.log ?? ((message: string) => console.warn(message));
   const { fallback } = options;
 

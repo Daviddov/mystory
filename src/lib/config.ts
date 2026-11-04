@@ -83,11 +83,10 @@ export const aiEnv = {
   anthropicModel: () => env("ANTHROPIC_MODEL"),
   /**
    * "gemini" (Gemini first, Dicta when Gemini fails), "dicta" (Dicta only) or "mock".
-   * Unset: Gemini with the Dicta fallback when a Gemini key exists, otherwise the mock.
+   * Gemini nikud is text work and uses TEXT_API_KEY. Unset: Gemini with the Dicta fallback
+   * when TEXT_API_KEY is set, otherwise the mock.
    */
   nikudProvider: () => env("NIKUD_PROVIDER"),
-  /** AI Studio key for Gemini nikud. Unset falls back to TEXT_API_KEY: nikud is text work and costs little. */
-  nikudApiKey: () => env("NIKUD_API_KEY") ?? env("TEXT_API_KEY"),
   dictaApiUrl: () => env("DICTA_API_URL"),
   /**
    * TTS vendor: "gemini" (Google AI Studio, providers/gemini-tts.ts) or "elevenlabs" (providers/tts.ts).

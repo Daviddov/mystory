@@ -27,3 +27,37 @@ describe("TTS provider selection", () => {
     expect(ttsHonoursNotes()).toBe(false);
   });
 });
+
+describe("provider defaults from keys", () => {
+  it("a key alone turns on Gemini images, voice and video", () => {
+    vi.stubEnv("IMAGE_PROVIDER", "");
+    vi.stubEnv("IMAGE_API_KEY", "k");
+    vi.stubEnv("TTS_PROVIDER", "");
+    vi.stubEnv("TTS_API_KEY", "k");
+    vi.stubEnv("VIDEO_PROVIDER", "");
+    vi.stubEnv("VIDEO_API_KEY", "k");
+    const status = getAiStatus();
+    expect(status.image).toEqual({ name: "gemini", isMock: false });
+    expect(status.tts).toEqual({ name: "gemini", isMock: false });
+    expect(status.video).toEqual({ name: "gemini", isMock: false });
+  });
+
+  it("an ElevenLabs key alone means ElevenLabs", () => {
+    vi.stubEnv("TTS_PROVIDER", "");
+    vi.stubEnv("TTS_API_KEY", "sk_abc");
+    expect(getAiStatus().tts.name).toBe("elevenlabs");
+  });
+
+  it("nikud uses Gemini when a Gemini key exists, Dicta when asked, the mock otherwise", () => {
+    vi.stubEnv("NIKUD_PROVIDER", "");
+    vi.stubEnv("TEXT_API_KEY", "k");
+    expect(getAiStatus().nikud).toEqual({ name: "gemini", isMock: false });
+    vi.stubEnv("NIKUD_PROVIDER", "dicta");
+    expect(getAiStatus().nikud).toEqual({ name: "dicta", isMock: false });
+    vi.stubEnv("NIKUD_PROVIDER", "gemini");
+    vi.stubEnv("TEXT_API_KEY", "");
+    expect(getAiStatus().nikud).toEqual({ name: "dicta", isMock: false });
+    vi.stubEnv("NIKUD_PROVIDER", "");
+    expect(getAiStatus().nikud).toEqual({ name: "mock", isMock: true });
+  });
+});

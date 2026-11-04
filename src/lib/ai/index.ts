@@ -3,10 +3,13 @@
  * env vars are set and the mock otherwise:
  *
  *   text   ANTHROPIC_API_KEY       -> providers/claude-text.ts
- *   nikud  NIKUD_PROVIDER=dicta    -> providers/dicta-nikud.ts
+ *   nikud  NIKUD_PROVIDER=gemini   -> providers/gemini-nikud.ts (Dicta when Gemini fails; key NIKUD_API_KEY, else TEXT_API_KEY)
+ *          NIKUD_PROVIDER=dicta    -> providers/dicta-nikud.ts
  *   tts    TTS_PROVIDER=<vendor>   -> providers/tts.ts  (gemini = AI Studio, key TTS_API_KEY; elevenlabs)
  *   image  IMAGE_PROVIDER=<vendor> -> providers/image.ts
  *   video  VIDEO_PROVIDER=<vendor> -> providers/video.ts  (gemini = Veo; key VIDEO_API_KEY)
+ *
+ * An unset *_PROVIDER with that service's key set picks Gemini, so a key alone is enough.
  *
  * Results always carry `isMock`; surface it in the UI.
  */
@@ -48,9 +51,19 @@ function textVendor(): "gemini" | "claude" | "mock" {
 function isTextConfigured(): boolean {
   return textVendor() !== "mock";
 }
-function isNikudConfigured(): boolean {
-  return aiEnv.nikudProvider()?.toLowerCase() === "dicta";
+/** Gemini first (Dicta when it fails), Dicta alone when asked for, otherwise the mock. */
+function nikudVendor(): "gemini" | "dicta" | "mock" {
+  const chosen = aiEnv.nikudProvider()?.toLowerCase();
+  if (chosen === "dicta") return "dicta";
+  if (chosen !== undefined && chosen !== "gemini") return "mock";
+  if (aiEnv.nikudApiKey() !== undefined) return "gemini";
+  // Asked for Gemini without a key: Dicta needs none.
+  return chosen === "gemini" ? "dicta" : "mock";
 }
+function isNikudConfigured(): boolean {
+  return nikudVendor() !== "mock";
+}
+// aiEnv.*Provider() already default to a vendor when only that service's key is set.
 function isTtsConfigured(): boolean {
   const name = aiEnv.ttsProvider()?.toLowerCase();
   return name !== undefined && name !== "mock";
@@ -76,8 +89,11 @@ export async function getTextProvider(): Promise<TextProvider> {
 }
 
 export async function getNikudProvider(): Promise<NikudProvider> {
-  if (!isNikudConfigured()) return mockNikudProvider;
-  return (await import("./providers/dicta-nikud")).createDictaNikudProvider();
+  const vendor = nikudVendor();
+  if (vendor === "mock") return mockNikudProvider;
+  const dicta = await (await import("./providers/dicta-nikud")).createDictaNikudProvider();
+  if (vendor === "dicta") return dicta;
+  return (await import("./providers/gemini-nikud")).createGeminiNikudProvider({ fallback: dicta });
 }
 
 export async function getTtsProvider(): Promise<TtsProvider> {
@@ -98,7 +114,7 @@ export async function getVideoProvider(): Promise<VideoProvider> {
 /** Which providers are real and which are mocks, decided from env vars only (no network, no imports). */
 export function getAiStatus(): AiStatus {
   const text = { name: textVendor(), isMock: !isTextConfigured() };
-  const nikud = { name: isNikudConfigured() ? "dicta" : "mock", isMock: !isNikudConfigured() };
+  const nikud = { name: nikudVendor(), isMock: !isNikudConfigured() };
   const tts = {
     name: isTtsConfigured() ? (aiEnv.ttsProvider() as string) : "mock",
     isMock: !isTtsConfigured(),

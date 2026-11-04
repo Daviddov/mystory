@@ -11,6 +11,12 @@ export function hasNikud(text: string): boolean {
   return /[ְ-ׇּׁׂ]/.test(text);
 }
 
+/** True when `vocalized` is `original` with vowel points only: same letters, punctuation and words. */
+export function sameLetters(original: string, vocalized: string): boolean {
+  const skeleton = (text: string) => stripNikud(text).replace(/\s+/g, " ").trim();
+  return skeleton(original) === skeleton(vocalized) && countWords(original) === countWords(vocalized);
+}
+
 /** Arabic vowel marks (harakat U+064B-U+065F, dagger alef U+0670) and the tatweel stretch (U+0640). */
 const ARABIC_MARKS_RE = /[ً-ٰٟـ]/g;
 

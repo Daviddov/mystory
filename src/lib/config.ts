@@ -81,11 +81,22 @@ export const aiEnv = {
   textModel: () => env("TEXT_MODEL"),
   anthropicApiKey: () => env("ANTHROPIC_API_KEY"),
   anthropicModel: () => env("ANTHROPIC_MODEL"),
-  /** "dicta" enables the Dicta provider; anything else (or unset) uses the mock. */
+  /**
+   * "gemini" (Gemini first, Dicta when Gemini fails), "dicta" (Dicta only) or "mock".
+   * Unset: Gemini with the Dicta fallback when a Gemini key exists, otherwise the mock.
+   */
   nikudProvider: () => env("NIKUD_PROVIDER"),
+  /** AI Studio key for Gemini nikud. Unset falls back to TEXT_API_KEY: nikud is text work and costs little. */
+  nikudApiKey: () => env("NIKUD_API_KEY") ?? env("TEXT_API_KEY"),
   dictaApiUrl: () => env("DICTA_API_URL"),
-  /** TTS vendor: "gemini" (Google AI Studio, providers/gemini-tts.ts) or "elevenlabs" (providers/tts.ts); unset uses the mock. */
-  ttsProvider: () => env("TTS_PROVIDER"),
+  /**
+   * TTS vendor: "gemini" (Google AI Studio, providers/gemini-tts.ts) or "elevenlabs" (providers/tts.ts).
+   * Unset: picked from TTS_API_KEY (an sk_... key is ElevenLabs, any other Gemini); no key uses the mock.
+   */
+  ttsProvider: () => {
+    const key = env("TTS_API_KEY");
+    return env("TTS_PROVIDER") ?? (key ? (key.startsWith("sk_") ? "elevenlabs" : "gemini") : undefined);
+  },
   ttsApiKey: () => env("TTS_API_KEY"),
   /** AI Studio key for Gemini TTS only, no fallback to another service's key. */
   geminiTtsApiKey: () => {
@@ -107,8 +118,8 @@ export const aiEnv = {
       .map((voice) => voice?.trim() ?? "")
       .filter((voice) => voice.length > 0),
   ttsRegion: () => env("TTS_REGION"),
-  /** Name of the image vendor implemented in providers/image.ts; unset uses the mock. */
-  imageProvider: () => env("IMAGE_PROVIDER"),
+  /** Name of the image vendor implemented in providers/image.ts. Unset: "gemini" when IMAGE_API_KEY is set, else the mock. */
+  imageProvider: () => env("IMAGE_PROVIDER") ?? (env("IMAGE_API_KEY") ? "gemini" : undefined),
   imageApiKey: () => env("IMAGE_API_KEY"),
   imageModel: () => env("IMAGE_MODEL"),
   /** "1K", "2K" or "4K" (IMAGE_SIZE). Anything else, or unset, means the default 1K. */
@@ -116,8 +127,8 @@ export const aiEnv = {
     const value = env("IMAGE_SIZE")?.toUpperCase();
     return value === "2K" || value === "4K" ? value : "1K";
   },
-  /** Name of the video vendor implemented in providers/video.ts ("gemini" = Veo); unset uses the mock. */
-  videoProvider: () => env("VIDEO_PROVIDER"),
+  /** Name of the video vendor implemented in providers/video.ts ("gemini" = Veo). Unset: "gemini" when VIDEO_API_KEY is set, else the mock. */
+  videoProvider: () => env("VIDEO_PROVIDER") ?? (env("VIDEO_API_KEY") ? "gemini" : undefined),
   /** Video only (Veo), no fallback to IMAGE_API_KEY. */
   videoApiKey: () => env("VIDEO_API_KEY"),
   videoModel: () => env("VIDEO_MODEL"),

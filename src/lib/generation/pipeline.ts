@@ -4,7 +4,8 @@
  *   outline -> pages (tuned to the age group) -> second-pass quality and
  *   child-safety review (one automatic revision on "major") -> character sheet
  *   (description + reference image) -> page illustrations (grids of up to 9 panels, cropped) + cover ->
- *   title, summary, tags, themes, discussion questions -> save the book ->
+ *   title, summary, tags, themes, discussion questions -> nikud (Gemini, Dicta fallback) and a
+ *   proofreading pass of it -> save the book ->
  *   narration (when a narration pipeline is installed).
  *
  * Every dependency is injected, so the same code runs inside Next.js
@@ -14,7 +15,7 @@
  * Privacy: this module never logs inputs, and the child photo is reachable
  * only through EphemeralPhoto.useOnce (see photo.ts).
  */
-import type { AiUsage, ImageProvider, ImageReference, TextProvider, TextRequest } from "../ai/types";
+import type { AiUsage, ImageProvider, ImageReference, NikudProvider, TextProvider, TextRequest } from "../ai/types";
 import { countWords, estimateReadingMinutes } from "../hebrew";
 import { newId } from "../ids";
 import { storeImage } from "../media/optimize";
@@ -28,6 +29,7 @@ import { cleanFreeText } from "./input";
 import { mockCharacter, mockMetadata, mockOutline, mockPages, mockReview } from "./mock-story";
 import { AGE_WRITING_RULES, getStoryStyle } from "./options";
 import { illustrationDirection } from "./presets";
+import { vocalizeStory } from "./nikud";
 import type { EphemeralPhoto } from "./photo";
 import {
   CharacterSchema,
@@ -59,6 +61,7 @@ export const GENERATION_STEPS = [
   { step: "character", label: "מציירים את הגיבור", progress: 45 },
   { step: "illustrations", label: "מאיירים את העמודים", progress: 52 },
   { step: "details", label: "בוחרים שם ושאלות לשיחה", progress: 86 },
+  { step: "nikud", label: "מנקדים ובודקים את הניקוד", progress: 89 },
   { step: "saving", label: "כורכים את הספר", progress: 92 },
   { step: "narration", label: "מכינים את ההקראה", progress: 95 },
 ] as const;
@@ -91,6 +94,8 @@ export interface PipelineDeps {
   media: Pick<MediaStore, "put" | "deletePrefix">;
   text: TextProvider;
   image: ImageProvider;
+  /** Vocalizes the pages before saving. Optional: without it narration adds the nikud. */
+  nikud?: NikudProvider;
   /**
    * Narrates a saved book (the narration pipeline). Optional: when it is
    * missing the book is saved without audio and the job says so. A returned
@@ -448,13 +453,33 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
       )
     ).path;
 
-    // 7. Save. Private by default; nothing reaches the public library without an editor.
+    // 7. Nikud for every page, then a second reader proofreads it. A failure only leaves pages
+    // without nikud, which narration tries to fill in.
+    let nikudTexts: (string | undefined)[] = [];
+    if (deps.nikud) {
+      await enter("nikud");
+      if (deps.nikud.isMock) usedMock = true;
+      const vocalized = await vocalizeStory(
+        { nikud: deps.nikud, ask, addUsage: (usage) => cost.add(usage), log },
+        pages.map((page) => page.text),
+      );
+      nikudTexts = vocalized.texts;
+      log(`[generation ${jobId}] nikud: ${vocalized.corrected} pages corrected, ${vocalized.missing} missing`);
+      if (!deps.nikud.isMock && vocalized.missing > 0) notes.push("בחלק מהעמודים חסר ניקוד. אפשר להשלים מהסטודיו.");
+    }
+
+    // 8. Save. Private by default; nothing reaches the public library without an editor.
     await enter("saving");
     const categories = [
       input.category,
       ...meta.categories.filter((slug) => CATEGORY_SLUGS.includes(slug) && slug !== input.category),
     ].slice(0, 3);
-    const bookPages: Page[] = pages.map((page, index) => ({ index, text: page.text, image: imagePaths[index] }));
+    const bookPages: Page[] = pages.map((page, index) => ({
+      index,
+      text: page.text,
+      image: imagePaths[index],
+      ...(nikudTexts[index] ? { textNikud: nikudTexts[index] } : {}),
+    }));
     savedBook = await repo.createBook({
       id: bookId,
       title,
@@ -483,7 +508,7 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
     // during it must still be known to have produced this book (see stale.ts).
     await update({ bookId: savedBook.id });
 
-    // 8. Narration hand-off. A narration failure never loses the finished book.
+    // 9. Narration hand-off. A narration failure never loses the finished book.
     if (deps.narrate) {
       await enter("narration");
       try {

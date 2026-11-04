@@ -4,7 +4,7 @@
  * quota, and job lookup for the polling endpoint. Server only.
  */
 import "server-only";
-import { getAiStatus, getImageProvider, getTextProvider } from "../ai";
+import { getAiStatus, getImageProvider, getNikudProvider, getTextProvider } from "../ai";
 import { aiWeeklyQuota } from "../config";
 import { getMediaStore } from "../media";
 import { getRepo } from "../repo";
@@ -52,14 +52,15 @@ async function loadNarrate(): Promise<PipelineDeps["narrate"]> {
 }
 
 export async function getPipelineDeps(): Promise<PipelineDeps & { repo: Awaited<ReturnType<typeof getRepo>> }> {
-  const [repo, media, text, image, narrate] = await Promise.all([
+  const [repo, media, text, image, nikud, narrate] = await Promise.all([
     getRepo(),
     getMediaStore(),
     getTextProvider(),
     getImageProvider(),
+    getNikudProvider(),
     loadNarrate(),
   ]);
-  return { repo, media, text, image, narrate, log: (message) => console.info(message) };
+  return { repo, media, text, image, nikud, narrate, log: (message) => console.info(message) };
 }
 
 // --- Quota -----------------------------------------------------------------------------------

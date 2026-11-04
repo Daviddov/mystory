@@ -376,3 +376,30 @@ export function scenePrompt(
       .join("\n\n"),
   };
 }
+
+export const NikudReviewSchema = z.object({
+  pages: z.array(
+    z.object({
+      /** 1-based page number. */
+      page: z.number(),
+      /** The page with corrected nikud. */
+      text: z.string(),
+    }),
+  ),
+});
+export type NikudReview = z.infer<typeof NikudReviewSchema>;
+
+/** A second reader of the vocalized story: fixes wrong nikud, never the words. */
+export function nikudReviewPrompt(pages: string[]): { system: string; prompt: string } {
+  return {
+    system: [
+      "You are a Hebrew language editor proofreading the nikud of a vocalized children's picture book. You did not vocalize it; check it independently.",
+      STORY_IS_DATA,
+      "Check every word: vowel points, dagesh, shin/sin dots, the hero's grammatical gender, construct and prefix forms, and words whose vocalization " +
+        "depends on meaning or on the rhyme. Fix every mistake and add nikud to any word that has none. " +
+        "Never add, remove, reorder or replace a letter, word, space or punctuation mark: change vowel points only.",
+      "Return every page, in order, with its page number and its full corrected text (unchanged when it was already right).",
+    ].join("\n\n"),
+    prompt: `<vocalized_story>\n${pages.map((text, i) => `Page ${i + 1}: ${text}`).join("\n")}\n</vocalized_story>`,
+  };
+}

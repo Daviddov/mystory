@@ -112,8 +112,9 @@ function usageOf(body: GeminiResponse): AiUsage {
   return { inputTokens: body.usageMetadata?.promptTokenCount, outputTokens: (body.usageMetadata?.candidatesTokenCount ?? 0) + (body.usageMetadata?.thoughtsTokenCount ?? 0) };
 }
 
-export async function createGeminiTextProvider(): Promise<VisionTextProvider> {
-  const apiKey = aiEnv.textApiKey();
+/** `apiKey` overrides TEXT_API_KEY, for a service billed on its own key (nikud). */
+export async function createGeminiTextProvider(options: { apiKey?: string } = {}): Promise<VisionTextProvider> {
+  const apiKey = options.apiKey ?? aiEnv.textApiKey();
   if (!apiKey) throw new GeminiTextError("auth", "Gemini text needs TEXT_API_KEY.");
   const model = aiEnv.textModel() ?? DEFAULT_MODEL;
 

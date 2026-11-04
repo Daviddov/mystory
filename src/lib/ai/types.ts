@@ -74,6 +74,8 @@ export interface NikudResult {
   /** Vocalized text. The mock returns the input unchanged. */
   text: string;
   isMock: boolean;
+  /** Tokens spent, for a vendor that charges (Gemini). */
+  usage?: AiUsage;
 }
 
 export interface NikudProvider {

@@ -12,6 +12,7 @@ import type { Locale } from "@/lib/i18n/locale";
 import { taxonomyText } from "@/lib/i18n/messages";
 import { getLocale } from "@/lib/i18n/server";
 import { CATEGORIES, getCategory } from "@/lib/taxonomy";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -30,14 +31,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = getCategory((await params).slug);
-  if (!category) return { title: "הדף לא נמצא", robots: { index: false } };
+  if (!category) return localizeTitle({ title: "הדף לא נמצא", robots: { index: false } });
   const title = category.searchTitle ?? `סיפורי ${category.label} לילדים`;
   const page = pageMetadata({
     title,
     description: `${title}${category.description ? `: ${category.description}` : ""}. סיפורי ילדים מאוירים עם ניקוד והקראה, לקריאה ולהאזנה אונליין, בחינם.`,
     path: routes.category(category.slug),
   });
-  return { ...page, robots: await listingRobots({ category: category.slug }) };
+  return localizeTitle(
+    { ...page, robots: await listingRobots({ category: category.slug }) },
+    `${taxonomyText("en", "category", category.slug, category).label}: stories for children`,
+  );
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {

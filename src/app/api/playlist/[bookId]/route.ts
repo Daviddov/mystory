@@ -14,7 +14,7 @@ type Context = { params: Promise<{ bookId: string }> };
 
 export async function POST(request: Request, context: Context): Promise<Response> {
   try {
-    const blocked = rejectCrossOrigin(request);
+    const blocked = await rejectCrossOrigin(request);
     if (blocked) return blocked;
     const user = await requireUser();
     const bookId = BookIdSchema.parse((await context.params).bookId);
@@ -30,7 +30,7 @@ export async function POST(request: Request, context: Context): Promise<Response
 
 export async function DELETE(request: Request, context: Context): Promise<Response> {
   try {
-    const blocked = rejectCrossOrigin(request);
+    const blocked = await rejectCrossOrigin(request);
     if (blocked) return blocked;
     const user = await requireUser();
     const bookId = BookIdSchema.parse((await context.params).bookId);

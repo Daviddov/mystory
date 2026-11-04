@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { showServerMessage } from "@/lib/i18n/server-errors";
 import { Button, Textarea } from "@/components/ui";
 import type { CommentView } from "@/lib/comments";
 import { cn } from "@/lib/cn";
@@ -63,8 +64,8 @@ export function BookComments({ bookId, initialComments, signedIn, loginHref, sha
       });
       if (!response.ok) {
         const data = (await response.json().catch(() => null)) as { error?: string } | null;
-        // The server's rate-limit message is Hebrew; English readers get this module's.
-        const tooFast = response.status === 429 && data?.error ? (locale === "he" ? data.error : t.tooFast) : "";
+        // The server's rate-limit message (translated for English; this module's text if unknown).
+        const tooFast = response.status === 429 && data?.error ? showServerMessage(locale, data.error, t.tooFast) : "";
         throw new Error(tooFast || t.saveFailed);
       }
       const { comment } = (await response.json()) as { comment: CommentView };

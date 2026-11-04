@@ -21,11 +21,12 @@
  */
 import { z } from "zod";
 import { getAiStatus, ttsHonoursNotes } from "@/lib/ai";
-import { jsonError } from "@/lib/api";
+import { jsonError, requestLocale } from "@/lib/api";
 import { getNarrationDeps, pageState, type NarrationEvent } from "@/lib/narration";
 import { availableNarrationVoices, fallbackNarrationVoice, isAllowedNarrationVoice } from "@/lib/narration/voices";
 import { narrateBookWith, type NarrationDeps } from "@/lib/narration/pipeline";
 import { cleanFreeText } from "@/lib/generation/input";
+import { translateServerMessage } from "@/lib/i18n/server-errors";
 import { rateLimited } from "@/lib/rate-limit";
 import { studioApiError, studioContext } from "@/lib/studio/http";
 import { assertBookWritable, loadEditableBook as loadStudioBook, type StudioContext } from "@/lib/studio/service";
@@ -100,7 +101,7 @@ export async function POST(request: Request, context: RouteParams): Promise<Resp
   try {
     const loaded = await loadEditableBook(request, context, true);
     book = loaded.book;
-    const limited = rateLimited("NARRATION", { request, user: loaded.ctx.user });
+    const limited = await rateLimited("NARRATION", { request, user: loaded.ctx.user });
     if (limited) return limited;
     const raw = await request.text();
     let json: unknown = {};
@@ -127,6 +128,7 @@ export async function POST(request: Request, context: RouteParams): Promise<Resp
   }
 
   const encoder = new TextEncoder();
+  const locale = await requestLocale();
   // Always pass an explicit voice: the request's, else the book's if still offered, else the default.
   const heroVoice = book.hero?.narrationVoice;
   const voice =
@@ -163,12 +165,18 @@ export async function POST(request: Request, context: RouteParams): Promise<Resp
           ...options,
           ...(voice ? { voice } : {}),
           signal: request.signal,
-          onPage: (result, done, count) => send({ type: "page", done, total: count, result }),
+          onPage: (result, done, count) =>
+            send({
+              type: "page",
+              done,
+              total: count,
+              result: result.error ? { ...result, error: translateServerMessage(locale, result.error) } : result,
+            }),
         });
         send({ type: "done", summary });
       } catch (err) {
         console.error("[narration] run failed", err);
-        send({ type: "error", error: "ההקראה נכשלה. נסו שוב בעוד רגע." });
+        send({ type: "error", error: translateServerMessage(locale, "ההקראה נכשלה. נסו שוב בעוד רגע.") });
       } finally {
         if (open) {
           try {

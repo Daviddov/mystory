@@ -9,6 +9,7 @@ import { libraryMessages } from "@/lib/i18n/library";
 import { taxonomyText } from "@/lib/i18n/messages";
 import { getLocale } from "@/lib/i18n/server";
 import { AGE_GROUP_INFO, getAgeGroup } from "@/lib/taxonomy";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -46,12 +47,15 @@ const AGE_SEARCH: Record<string, { title: string; description: string }> = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const age = getAgeGroup((await params).group);
-  if (!age) return { title: "הדף לא נמצא", robots: { index: false } };
+  if (!age) return localizeTitle({ title: "הדף לא נמצא", robots: { index: false } });
   const search = AGE_SEARCH[age.slug] ?? {
     title: `סיפורי ילדים ל${age.label}`,
     description: `סיפורי ילדים ל${age.label}: ${age.description}. עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`,
   };
-  return { ...pageMetadata({ ...search, path: routes.age(age.slug) }), robots: await listingRobots({ ageGroup: age.slug }) };
+  return localizeTitle(
+    { ...pageMetadata({ ...search, path: routes.age(age.slug) }), robots: await listingRobots({ ageGroup: age.slug }) },
+    `Children's stories for ${taxonomyText("en", "age", age.slug, age).label.toLowerCase()}`,
+  );
 }
 
 export default async function AgePage({ params, searchParams }: Props) {

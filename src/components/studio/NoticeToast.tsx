@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { MockNotice } from "@/components/MockNotice";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
+import { translateServerMessage } from "@/lib/i18n/server-errors";
 import { STUDIO_COMMON } from "@/lib/i18n/studio";
 import type { EditorNotice } from "./types";
 
@@ -16,7 +17,8 @@ export const SUCCESS_DISMISS_MS = 8000;
  * wherever the user has scrolled. Success fades after a few seconds, errors persist.
  */
 export function NoticeToast({ notice, onClose }: { notice: EditorNotice; onClose: () => void }) {
-  const t = STUDIO_COMMON[useLocale()];
+  const locale = useLocale();
+  const t = STUDIO_COMMON[locale];
   const close = useRef(onClose);
   useEffect(() => {
     close.current = onClose;
@@ -40,7 +42,7 @@ export function NoticeToast({ notice, onClose }: { notice: EditorNotice; onClose
         )}
       >
         <div className="flex items-start gap-3">
-          <p className="flex-1 font-medium">{notice.text}</p>
+          <p className="flex-1 font-medium">{translateServerMessage(locale, notice.text)}</p>
           <button
             type="button"
             aria-label={t.closeNotice}

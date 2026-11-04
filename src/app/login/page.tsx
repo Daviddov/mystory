@@ -7,8 +7,14 @@ import { Card, EmptyState } from "@/components/ui";
 import { authMode, getCurrentUser, isLocalLoginAllowed, safeNextPath } from "@/lib/auth";
 import { accountMessages } from "@/lib/i18n/account";
 import { getLocale } from "@/lib/i18n/server";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = { title: "כניסה" };
+const HEBREW_METADATA: Metadata = { title: "כניסה" };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Sign in");
+}
+
 export const dynamic = "force-dynamic";
 
 export default async function LoginPage({

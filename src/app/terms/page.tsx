@@ -4,14 +4,19 @@ import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { DraftNotice, InfoPage, InfoSection, Missing } from "../about/_components/InfoPage";
 import { TermsPageEn } from "./terms-en";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = {
+const HEBREW_METADATA: Metadata = {
   title: "תנאי שימוש (טיוטה)",
   description: "טיוטת תנאי השימוש של הסיפור שלי: מה מותר לעשות בספרים, מה מותר להעלות, ואיך ספר מתפרסם בספרייה.",
   alternates: { canonical: "/terms" },
   // A draft should not be indexed as if it were the final terms.
   robots: { index: false, follow: true },
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Terms of use (draft)");
+}
 
 const UPDATED = "13 באוקטובר 2026";
 const UPDATED_EN = "October 13, 2026";

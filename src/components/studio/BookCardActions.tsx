@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, ButtonLink, Dialog } from "@/components/ui";
+import { translateServerMessage } from "@/lib/i18n/server-errors";
 import { STUDIO_BOOK_ACTIONS } from "@/lib/i18n/studio";
 import { routes } from "@/lib/routes";
 import { createShareLink, deleteBook, StudioApiError } from "@/lib/studio/client";
@@ -21,7 +22,8 @@ export interface BookCardActionsProps {
 /** Edit, share and delete buttons under a book in the "my books" list. */
 export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCardActionsProps) {
   const router = useRouter();
-  const t = STUDIO_BOOK_ACTIONS[useLocale()];
+  const locale = useLocale();
+  const t = STUDIO_BOOK_ACTIONS[locale];
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +50,7 @@ export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCa
       setShareNote(t.linkCopied);
       router.refresh();
     } catch (err) {
-      setShareNote(err instanceof StudioApiError ? err.message : t.shareFailed);
+      setShareNote(err instanceof StudioApiError ? translateServerMessage(locale, err.message) : t.shareFailed);
     } finally {
       setSharing(false);
     }
@@ -62,7 +64,7 @@ export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCa
       setOpen(false);
       router.refresh();
     } catch (err) {
-      setError(err instanceof StudioApiError ? err.message : t.deleteFailed);
+      setError(err instanceof StudioApiError ? translateServerMessage(locale, err.message) : t.deleteFailed);
     } finally {
       setBusy(false);
     }

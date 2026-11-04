@@ -56,7 +56,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     assertBookWritable(book, ctx.user);
 
     if (running.has(book.id)) return jsonError(409, "הסיפור כבר בכתיבה. חכו שיסתיים.");
-    const limited = rateLimited("WRITE", { request, user: ctx.user });
+    const limited = await rateLimited("WRITE", { request, user: ctx.user });
     if (limited) return limited;
 
     running.add(book.id);

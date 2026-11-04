@@ -299,14 +299,14 @@ describe("rate limiter", () => {
 
     const parent = { id: "u_parent", role: "parent" };
     let last: Response | null = null;
-    for (let i = 0; i <= RATE_LIMIT_DEFAULTS.TRANSLATE; i += 1) last = rateLimited("TRANSLATE", { request, user: parent });
+    for (let i = 0; i <= RATE_LIMIT_DEFAULTS.TRANSLATE; i += 1) last = await rateLimited("TRANSLATE", { request, user: parent });
     expect(last?.status).toBe(429);
     expect(Number(last?.headers.get("retry-after"))).toBeGreaterThan(0);
     expect(((await last!.json()) as { error: string }).error).toContain("יותר מדי בקשות");
     // Another user, and an editor, are not affected.
-    expect(rateLimited("TRANSLATE", { request, user: { id: "u_other", role: "parent" } })).toBeNull();
+    expect(await rateLimited("TRANSLATE", { request, user: { id: "u_other", role: "parent" } })).toBeNull();
     for (let i = 0; i < RATE_LIMIT_DEFAULTS.TRANSLATE + 5; i += 1) {
-      expect(rateLimited("TRANSLATE", { request, user: { id: "u_editor", role: "editor" } })).toBeNull();
+      expect(await rateLimited("TRANSLATE", { request, user: { id: "u_editor", role: "editor" } })).toBeNull();
     }
   });
 });

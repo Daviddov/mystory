@@ -28,7 +28,7 @@ export async function POST(request: Request): Promise<Response> {
     assertSameOrigin(request);
     const user = await requireUser();
     if (!isOcrAvailable()) return jsonError(503, "זיהוי הטקסט לא זמין באתר הזה.");
-    const limited = rateLimited("OCR", { request, user });
+    const limited = await rateLimited("OCR", { request, user });
     if (limited) return limited;
 
     const form = await readFormDataWithLimit(request, IMPORT_LIMITS.ocrImageBytes + FORM_OVERHEAD_BYTES);

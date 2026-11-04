@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { showServerMessage } from "@/lib/i18n/server-errors";
 import { Button, Field, Input } from "@/components/ui";
 import { accountMessages } from "@/lib/i18n/account";
 import { WAITLIST_INTERESTS, type WaitlistInterest } from "@/lib/types";
@@ -38,7 +39,7 @@ export function WaitlistForm({ defaultInterests = ["credits"] }: { defaultIntere
       if (!response.ok) {
         const body = (await response.json().catch(() => null)) as { error?: string } | null;
         throw new Error(
-          response.status === 400 ? t.badEmail : ((locale === "he" ? body?.error : undefined) ?? t.failed),
+          response.status === 400 ? t.badEmail : showServerMessage(locale, body?.error, t.failed),
         );
       }
       setState("done");

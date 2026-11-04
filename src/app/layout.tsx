@@ -11,6 +11,7 @@ import { AppShellExtras } from "@/components/pwa/AppShellExtras";
 import { seoEnv, siteUrl } from "@/lib/config";
 import { localeDir } from "@/lib/i18n/locale";
 import { getMessages } from "@/lib/i18n/messages";
+import { SITE_NAME_EN, SITE_TITLE_EN } from "@/lib/i18n/metadata";
 import { getLocale } from "@/lib/i18n/server";
 import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TITLE } from "@/lib/seo";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
@@ -49,13 +50,17 @@ const arabicFont = Noto_Naskh_Arabic({
   preload: false,
 });
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata(): Promise<Metadata> {
   const google = seoEnv.googleVerification();
   const bing = seoEnv.bingVerification();
+  // The tab title follows the interface language; the rest is for search engines and stays Hebrew.
+  const english = (await getLocale()) === "en";
   return {
     metadataBase: new URL(siteUrl()),
     applicationName: SITE_NAME,
-    title: { default: SITE_TITLE, template: `%s | ${SITE_NAME}` },
+    title: english
+      ? { default: SITE_TITLE_EN, template: `%s | ${SITE_NAME_EN}` }
+      : { default: SITE_TITLE, template: `%s | ${SITE_NAME}` },
     description: SITE_DESCRIPTION,
     keywords: SITE_KEYWORDS,
     category: "סיפורי ילדים",

@@ -5,12 +5,17 @@ import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { InfoPage, InfoSection } from "./_components/InfoPage";
 import { AboutPageEn } from "./about-en";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = {
+const HEBREW_METADATA: Metadata = {
   title: "על האתר",
   description: "הסיפור שלי הוא אתר סיפורים לילדים בעברית: קוראים, מקשיבים, ויוצרים ספרים משלכם. בלי פרסומות ובלי הרשמה לקריאה.",
   alternates: { canonical: "/about" },
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "About");
+}
 
 export default async function AboutPage() {
   if ((await getLocale()) === "en") return <AboutPageEn />;

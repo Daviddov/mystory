@@ -18,16 +18,21 @@ import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
 import type { BookWithPages, User } from "@/lib/types";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 export const dynamic = "force-static";
 export const revalidate = 600;
 
-export const metadata: Metadata = pageMetadata({
+const HEBREW_METADATA: Metadata = pageMetadata({
   title: "סיפורים לפני השינה להאזנה: סיפורי ילדים מוקלטים",
   description:
     "סיפורי ילדים לשמיעה בחינם: רצף סיפורים מוקלטים להאזנה לפני השינה. בוחרים גיל, מכוונים טיימר שינה ומקשיבים בעיניים עצומות.",
   path: routes.listen(),
 });
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Bedtime stories to listen to: recorded children's stories");
+}
 
 /** Upper bound on the queue, so the page stays light. */
 const MAX_BOOKS = 150;

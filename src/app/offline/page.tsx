@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { OfflineHeading } from "@/components/pwa/OfflineHeading";
 import { OfflineLibrary } from "@/components/pwa/OfflineLibrary";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = { title: "ספרים בלי רשת", robots: { index: false } };
+const HEBREW_METADATA: Metadata = { title: "ספרים בלי רשת", robots: { index: false } };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Offline books");
+}
 
 /**
  * Offline fallback page. The service worker stores an anonymous copy of this

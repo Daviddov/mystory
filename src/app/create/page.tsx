@@ -8,13 +8,18 @@ import { accountMessages, jobStepLabel, quotaText } from "@/lib/i18n/account";
 import type { Locale } from "@/lib/i18n/locale";
 import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+const HEBREW_METADATA: Metadata = {
   title: "יוצרים ספר אישי",
   description: "אשף בארבעה צעדים שיוצר ספר מאויר שבו הילד או הילדה שלכם הם הגיבורים.",
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Make a personal book");
+}
 
 function formatDay(iso: string, locale: Locale): string {
   return new Intl.DateTimeFormat(accountMessages(locale).dateLocale, { weekday: "long", day: "numeric", month: "long", timeZone: "Asia/Jerusalem" }).format(

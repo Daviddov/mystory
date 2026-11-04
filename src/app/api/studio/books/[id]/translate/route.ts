@@ -61,7 +61,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
 
     if (running.has(book.id)) return jsonError(409, "הספר הזה כבר בתרגום. חכו שהתרגום יסתיים.");
     // A paid model call: limited per user (RATE_LIMIT_TRANSLATE_PER_HOUR, in-process).
-    const limited = rateLimited("TRANSLATE", { request, user: ctx.user });
+    const limited = await rateLimited("TRANSLATE", { request, user: ctx.user });
     if (limited) return limited;
     running.add(book.id);
     try {

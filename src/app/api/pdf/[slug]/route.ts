@@ -49,7 +49,7 @@ export async function GET(request: Request, context: { params: Promise<{ slug: s
     if (!book || !canViewBook(book, user, query.token)) return jsonError(404, "הספר לא נמצא");
     if (book.pages.length === 0) return jsonError(409, "בספר הזה עדיין אין עמודים להדפסה");
     if (book.pages.length > MAX_PAGES) return jsonError(413, "הספר ארוך מדי להורדה כקובץ אחד");
-    const limited = rateLimited("PDF", { request, user });
+    const limited = await rateLimited("PDF", { request, user });
     if (limited) return limited;
 
     const pdf = await getBookPdf(book, { nikud: query.nikud === "1" });

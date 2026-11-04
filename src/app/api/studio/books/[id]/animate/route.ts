@@ -73,7 +73,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
 
     const manual = (request.headers.get("content-type") ?? "").includes("multipart/form-data");
     if (manual) {
-      const limited = rateLimited("ANIMATE", { request, user: ctx.user });
+      const limited = await rateLimited("ANIMATE", { request, user: ctx.user });
       if (limited) return limited;
     }
     let pageIndex: number;
@@ -140,7 +140,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     }
     const key = `${book.id}:${pageIndex}`;
     if (running.has(key)) return jsonError(409, "העמוד הזה כבר בהנפשה. חכו שתסתיים.");
-    const limited = rateLimited("ANIMATE", { request, user: ctx.user });
+    const limited = await rateLimited("ANIMATE", { request, user: ctx.user });
     if (limited) return limited;
     running.add(key);
     try {

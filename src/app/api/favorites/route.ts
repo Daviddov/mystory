@@ -45,7 +45,7 @@ const MergeSchema = z.object({
 
 export async function POST(request: Request): Promise<Response> {
   try {
-    const blocked = rejectCrossOrigin(request);
+    const blocked = await rejectCrossOrigin(request);
     if (blocked) return blocked;
     const user = await requireUser();
     const { bookIds } = MergeSchema.parse(await readJsonBody(request));

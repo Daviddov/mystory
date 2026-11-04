@@ -9,8 +9,14 @@ import { getLocale } from "@/lib/i18n/server";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import type { BookStatus } from "@/lib/types";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = { title: "הספרים שלי" };
+const HEBREW_METADATA: Metadata = { title: "הספרים שלי" };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "My books");
+}
+
 export const dynamic = "force-dynamic";
 
 const STATUS_ORDER: BookStatus[] = ["draft", "pending", "private", "published"];

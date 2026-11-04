@@ -36,7 +36,7 @@ export async function readJson(request: Request): Promise<unknown> {
   }
 }
 
-export function studioApiError(err: unknown): Response {
+export async function studioApiError(err: unknown): Promise<Response> {
   // A text/image/video vendor failure (retired model, bad key, quota): say so instead of a bare 500.
   if (err instanceof Error && /^(GeminiTextError|ImageProviderError|ClaudeTextError)$/.test(err.name)) {
     console.error(`[studio] AI service failed: ${err.message}`);

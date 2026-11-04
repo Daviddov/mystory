@@ -10,6 +10,7 @@ import { libraryMessages } from "@/lib/i18n/library";
 import { taxonomyText } from "@/lib/i18n/messages";
 import { getLocale } from "@/lib/i18n/server";
 import { tagFromSlug, tagIndexable, tagSlug } from "@/lib/taxonomy";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -38,10 +39,10 @@ const allTagCounts = cache(() => listTagCounts(Number.POSITIVE_INFINITY));
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const label = readTag((await params).tag);
-  if (!label) return { title: "הדף לא נמצא", robots: { index: false } };
+  if (!label) return localizeTitle({ title: "הדף לא נמצא", robots: { index: false } });
   const wanted = tagSlug(label);
   const count = (await allTagCounts()).find((tag) => tagSlug(tag.label) === wanted)?.count ?? 0;
-  return {
+  return localizeTitle({
     ...pageMetadata({
       title: `סיפורים לילדים: ${label}`,
       description: `סיפורי ילדים שקשורים ל${label}: ספרים מאוירים עם ניקוד והקראה, לקריאה ולהאזנה בחינם.`,
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }),
     // A tag with a book or two is a thin listing: visitors can browse it, search engines skip it.
     ...(tagIndexable(count) ? {} : { robots: { index: false, follow: true } }),
-  };
+  }, `Children's stories: ${taxonomyText("en", "tag", label, { label }).label}`);
 }
 
 export default async function TagPage({ params, searchParams }: Props) {

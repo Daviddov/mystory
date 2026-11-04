@@ -8,18 +8,23 @@ import { libraryMessages } from "@/lib/i18n/library";
 import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
 export const dynamic = "force-static";
 export const revalidate = 600;
 
-export const metadata: Metadata = pageMetadata({
+const HEBREW_METADATA: Metadata = pageMetadata({
   title: "אוספי סיפורי ילדים",
   description:
     "אוספי סיפורי ילדים ערוכים: לעונות השנה, לחגים ולרגעים מיוחדים כמו השעה שלפני השינה. ספרים מאוירים עם ניקוד והקראה, בחינם.",
   path: routes.collections(),
 });
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Collections of children's stories");
+}
 
 export default async function CollectionsPage() {
   const today = new Date();

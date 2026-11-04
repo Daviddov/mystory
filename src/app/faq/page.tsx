@@ -6,12 +6,17 @@ import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { InfoPage } from "../about/_components/InfoPage";
 import { TOPICS_EN } from "./faq-en";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
-export const metadata: Metadata = {
+const HEBREW_METADATA: Metadata = {
   title: "שאלות ותשובות",
   description: "תשובות על קריאה, האזנה, כפתור הניקוד, יצירת סיפור, פרטיות של תמונות ילדים ורישיונות הספרים באתר הסיפור שלי.",
   alternates: { canonical: "/faq" },
 };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, "Questions and answers");
+}
 
 export interface Question {
   q: string;

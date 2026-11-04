@@ -18,18 +18,19 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import type { RawSearchParams } from "@/components/library/filters";
 import { getCurrentUser } from "@/lib/auth";
-import HomePage, { metadata as homeMetadata } from "../../page";
+import { localizeTitle } from "@/lib/i18n/metadata";
+import HomePage, { generateMetadata as homeMetadata } from "../../page";
 import AgePage, { generateMetadata as ageMetadata } from "../../age/[group]/page";
 import { BookView, bookMetadata } from "../../book/[slug]/book-view";
-import { BooksView, booksMetadata } from "../../books/books-view";
+import { BOOKS_TITLE_EN, BooksView, booksMetadata } from "../../books/books-view";
 import CategoryPage, { generateMetadata as categoryMetadata } from "../../category/[slug]/page";
 import CollectionPage, { generateMetadata as collectionMetadata } from "../../collections/[slug]/page";
-import CollectionsPage, { metadata as collectionsMetadata } from "../../collections/page";
+import CollectionsPage, { generateMetadata as collectionsMetadata } from "../../collections/page";
 import HolidayPage, { generateMetadata as holidayMetadata } from "../../holidays/[slug]/page";
-import HolidaysPage, { metadata as holidaysMetadata } from "../../holidays/page";
-import { ListenView, metadata as listenMetadata } from "../../listen/page";
+import HolidaysPage, { generateMetadata as holidaysMetadata } from "../../holidays/page";
+import { ListenView, generateMetadata as listenMetadata } from "../../listen/page";
 import ParashaPage, { generateMetadata as parashaMetadata } from "../../parasha/[slug]/page";
-import ParashotPage, { metadata as parashotMetadata } from "../../parasha/page";
+import ParashotPage, { generateMetadata as parashotMetadata } from "../../parasha/page";
 import TagPage, { generateMetadata as tagMetadata } from "../../tag/[tag]/page";
 import ThemePage, { generateMetadata as themeMetadata } from "../../theme/[slug]/page";
 import TimePage, { generateMetadata as timeMetadata } from "../../time/[bucket]/page";
@@ -50,24 +51,24 @@ function resolve(path: readonly string[], searchParams: Promise<RawSearchParams>
   const p = <T,>(value: T) => Promise.resolve(value);
   const [section, param, ...rest] = path;
   if (rest.length > 0) return null;
-  if (section === undefined) return { page: () => HomePage(), metadata: () => homeMetadata };
+  if (section === undefined) return { page: () => HomePage(), metadata: () => homeMetadata() };
   if (param === undefined) {
     if (section === "books") {
       return {
         page: async () => BooksView({ searchParams: await searchParams, viewer: await getCurrentUser() }),
-        metadata: async () => booksMetadata(await searchParams),
+        metadata: async () => localizeTitle(booksMetadata(await searchParams), BOOKS_TITLE_EN),
       };
     }
-    if (section === "collections") return { page: () => CollectionsPage(), metadata: () => collectionsMetadata };
-    if (section === "parasha") return { page: () => ParashotPage(), metadata: () => parashotMetadata };
-    if (section === "holidays") return { page: () => HolidaysPage(), metadata: () => holidaysMetadata };
+    if (section === "collections") return { page: () => CollectionsPage(), metadata: () => collectionsMetadata() };
+    if (section === "parasha") return { page: () => ParashotPage(), metadata: () => parashotMetadata() };
+    if (section === "holidays") return { page: () => HolidaysPage(), metadata: () => holidaysMetadata() };
     if (section === "listen") {
       return {
         page: async () => {
           const age = (await searchParams).age;
           return ListenView({ age: Array.isArray(age) ? age[0] : age, viewer: await getCurrentUser() });
         },
-        metadata: () => listenMetadata,
+        metadata: () => listenMetadata(),
       };
     }
     return null;

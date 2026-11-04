@@ -25,6 +25,9 @@ import type { User } from "@/lib/types";
  * query string) and /live/books (src/app/live: filtered, sorted or paged).
  */
 
+/** English tab title of the all-books listing (see localizeTitle in src/lib/i18n/metadata.ts). */
+export const BOOKS_TITLE_EN = "All children's books: stories to read and listen to";
+
 export function booksMetadata(searchParams: RawSearchParams): Metadata {
   const query = parseLibraryQuery(searchParams);
   const filtered = hasActiveFilters(query);

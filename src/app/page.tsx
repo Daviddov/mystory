@@ -18,6 +18,7 @@ import { toPublicBook } from "@/lib/public-book";
 import { routes } from "@/lib/routes";
 import { pageMetadata, SITE_TITLE, siteJsonLd } from "@/lib/seo";
 import { THEMES } from "@/lib/taxonomy";
+import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -29,7 +30,11 @@ const DESCRIPTION =
   "סיפורי ילדים לקריאה ולהאזנה בעברית: ספרים מאוירים עם ניקוד והקראה, סיפורים לפני השינה ולגיל הרך, לפי גיל, נושא וזמן קריאה. בחינם, בלי הרשמה ובלי פרסומות.";
 
 const page = pageMetadata({ title: TITLE, description: DESCRIPTION, path: routes.home(), shareTitle: SITE_TITLE });
-export const metadata: Metadata = { ...page, title: { absolute: TITLE } };
+const HEBREW_METADATA: Metadata = { ...page, title: { absolute: TITLE } };
+
+export function generateMetadata(): Promise<Metadata> {
+  return localizeTitle(HEBREW_METADATA, { absolute: "Children's stories to read and listen to, with nikud, free | My Story" });
+}
 
 export default async function HomePage() {
   const data = await getHomeData();

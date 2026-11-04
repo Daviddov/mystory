@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OfflineHeading } from "@/components/pwa/OfflineHeading";
 import { OfflineLibrary } from "@/components/pwa/OfflineLibrary";
 
 export const metadata: Metadata = { title: "ספרים בלי רשת", robots: { index: false } };
@@ -12,10 +13,7 @@ export const metadata: Metadata = { title: "ספרים בלי רשת", robots: {
 export default function OfflinePage() {
   return (
     <main className="container-page flex flex-col gap-6 py-8">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-4xl font-extrabold">ספרים בלי רשת</h1>
-        <p className="text-lg text-muted">הספרים שהורדתם למכשיר הזה. הם נפתחים גם כשאין חיבור לאינטרנט.</p>
-      </header>
+      <OfflineHeading />
       <OfflineLibrary />
     </main>
   );

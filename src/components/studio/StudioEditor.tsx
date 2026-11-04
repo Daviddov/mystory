@@ -4,10 +4,14 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { ArrowRight, ClipboardPaste, Clock, Images, Lock, Plus, Sparkles, Wand2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, type DragEvent } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, ButtonLink, Chip, Dialog, Textarea } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import type { CostContext } from "@/lib/generation/costs";
 import { countWords, estimateReadingMinutes, hasNikud, stripNikud } from "@/lib/hebrew";
+import { readingTimeText } from "@/lib/i18n/labels";
+import { STUDIO_STATUS_LABELS } from "@/lib/i18n/studio";
+import { STUDIO_EDITOR_MESSAGES } from "@/lib/i18n/studio-editor";
 import { timingsMatchText } from "@/lib/narration/align";
 import { routes } from "@/lib/routes";
 import {
@@ -41,7 +45,6 @@ import {
   publishProblems,
   sortByFileName,
   splitStoryIntoPages,
-  STATUS_LABELS,
   STATUS_TONES,
   type BookMetaPatch,
 } from "@/lib/studio/shared";
@@ -54,8 +57,7 @@ import {
   type FilledField,
 } from "@/lib/studio/auto-details";
 import { EXPECTED_SECONDS, toBusy, type BusyInput, type BusyState } from "@/lib/studio/progress";
-import { readingTimeLabel } from "@/lib/taxonomy";
-import type { BookHero, BookStatus, BookWithPages } from "@/lib/types";
+import { textDirection, type BookHero, type BookStatus, type BookWithPages } from "@/lib/types";
 import { BusyOverlay } from "./BusyOverlay";
 import { HeroPanel } from "./HeroPanel";
 import { MetaForm } from "./MetaForm";
@@ -84,15 +86,9 @@ import { useAutosave } from "./useAutosave";
 type Tab = "stages" | "pages" | "translate" | "details" | "preview" | "publish";
 
 /** Shown only for a book whose original language is not Hebrew. */
-const TRANSLATE_TAB: { id: Tab; label: string } = { id: "translate", label: "תרגום" };
+const TRANSLATE_TAB: Tab = "translate";
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: "stages", label: "שלבי היצירה" },
-  { id: "pages", label: "עמודים" },
-  { id: "details", label: "פרטי הספר" },
-  { id: "preview", label: "תצוגה מקדימה" },
-  { id: "publish", label: "שיתוף ופרסום" },
-];
+const TABS: Tab[] = ["stages", "pages", "details", "preview", "publish"];
 
 interface ConfirmRequest {
   title: string;
@@ -140,6 +136,8 @@ export interface StudioEditorProps {
 /** The manual book studio: pages, details, live preview, sharing and publication, with autosave. */
 export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
   const router = useRouter();
+  const locale = useLocale();
+  const t = STUDIO_EDITOR_MESSAGES[locale];
   const bookId = book.id;
 
   const [meta, setMetaState] = useState<EditorMeta>(() => pickMeta(book));
@@ -197,14 +195,14 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const sample = await fetchVoiceSample(options);
       if (sample.isMock) {
         URL.revokeObjectURL(sample.url);
-        setNotice({ tone: "info", text: "אין קול אמיתי מוגדר באתר, ולכן אי אפשר לשמוע דוגמה." });
+        setNotice({ tone: "info", text: t.noRealVoice });
         return;
       }
       const audio = new Audio(sample.url);
       audio.addEventListener("ended", () => URL.revokeObjectURL(sample.url), { once: true });
       await audio.play();
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "הדגמת הקול נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.voiceSampleFailed) });
     }
   };
 
@@ -279,20 +277,20 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
   const runTranslation = async (mode: "translate" | "accept", translator: string) => {
     setBusy(
       mode === "translate"
-        ? { label: "מתרגם את כל הספר לעברית…", expectedSeconds: EXPECTED_SECONDS.translate }
-        : { label: "מאשר את התרגום…", expectedSeconds: EXPECTED_SECONDS.acceptTranslation },
+        ? { label: t.translatingBook, expectedSeconds: EXPECTED_SECONDS.translate }
+        : { label: t.acceptingTranslation, expectedSeconds: EXPECTED_SECONDS.acceptTranslation },
     );
     setUntranslatedPages([]);
     try {
       if (!(await flush())) {
-        setNotice({ tone: "error", text: "אי אפשר לתרגם לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        setNotice({ tone: "error", text: t.translateNeedsSave });
         return;
       }
       const outcome =
         mode === "translate" ? await translateBookToHebrew(bookId, translator) : await acceptTranslation(bookId, translator);
       if (outcome.status === "mock" || outcome.isMock) {
         setMockTranslation(true);
-        setNotice({ tone: "info", text: "הספר לא תורגם, והטקסט לא השתנה.", mock: "translation" });
+        setNotice({ tone: "info", text: t.notTranslated, mock: "translation" });
         return;
       }
       setMockTranslation(false);
@@ -311,15 +309,15 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
         tone: "success",
         text:
           outcome.status === "translated"
-            ? "הספר תורגם לעברית. עברו על התרגום מול המקור ותקנו, ואז נקדו והקריאו את הספר."
-            : "התרגום אושר: הספר מסומן עכשיו כספר בעברית. אפשר לנקד ולהקריא אותו.",
+            ? t.translated
+            : t.translationAccepted,
       });
     } catch (err) {
       const details = err instanceof StudioApiError ? (err.details as { pageIndexes?: unknown } | undefined) : undefined;
       if (Array.isArray(details?.pageIndexes)) {
         setUntranslatedPages(details.pageIndexes.filter((value): value is number => typeof value === "number"));
       }
-      setNotice({ tone: "error", text: errorMessage(err, "התרגום נכשל. הספר לא השתנה.") });
+      setNotice({ tone: "error", text: errorMessage(err, t.translationFailed) });
     } finally {
       setBusy(null);
     }
@@ -331,9 +329,9 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       return;
     }
     setConfirm({
-      title: "לתרגם מחדש את כל הספר?",
-      description: "התרגום החדש יחליף את הטקסט העברי בכל העמודים, כולל תיקונים שעשיתם, וגם את הניקוד וההקראה.",
-      confirmLabel: "תרגום מחדש",
+      title: t.retranslateTitle,
+      description: t.retranslateDescription,
+      confirmLabel: t.retranslateConfirm,
       danger: true,
       run: () => void runTranslation("translate", translator),
     });
@@ -350,7 +348,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
   const addPage = () => {
     const current = pagesRef.current;
     if (current.length >= MAX_PAGES) {
-      setNotice({ tone: "error", text: `אפשר עד ${MAX_PAGES} עמודים בספר.` });
+      setNotice({ tone: "error", text: t.maxPages(MAX_PAGES) });
       return;
     }
     const page: EditorPage = { key: newPageKey(), text: "" };
@@ -364,7 +362,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     const at = current.findIndex((page) => page.key === key);
     if (at < 0 || current.length >= MAX_PAGES) return;
     if (current[at].uploading) {
-      setNotice({ tone: "info", text: "התמונה של העמוד עדיין עולה. נסו לשכפל שוב בעוד רגע." });
+      setNotice({ tone: "info", text: t.duplicateWhileUploading });
       return;
     }
     const copy: EditorPage = { ...current[at], key: newPageKey(), uploading: false, uploadError: undefined };
@@ -392,9 +390,9 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     }
     const number = pagesRef.current.indexOf(page) + 1;
     setConfirm({
-      title: `למחוק את עמוד ${number}?`,
-      description: "הטקסט, התמונה וההקראה של העמוד יימחקו.",
-      confirmLabel: "מחיקת העמוד",
+      title: t.deletePageTitle(number),
+      description: t.deletePageDescription,
+      confirmLabel: t.deletePageConfirm,
       danger: true,
       run: () => removePage(key),
     });
@@ -421,13 +419,13 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const upload = await uploadMedia(bookId, "image", await shrinkImage(file), file.name);
       updatePage(key, { image: upload.path, uploading: false, uploadError: undefined });
     } catch (err) {
-      updatePage(key, { uploading: false, uploadError: errorMessage(err, "העלאת התמונה נכשלה") }, false);
+      updatePage(key, { uploading: false, uploadError: errorMessage(err, t.imageUploadFailed) }, false);
     }
   };
 
   const setPageImage = (key: string, file: File) => {
     if (!file.type.startsWith("image/")) {
-      setNotice({ tone: "error", text: "אפשר לבחור רק קובץ תמונה." });
+      setNotice({ tone: "error", text: t.imageOnly });
       return;
     }
     updatePage(key, { preview: localPreview(file), uploading: true, uploadError: undefined }, false);
@@ -438,14 +436,14 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
   const addImagesAsPages = async (files: File[]) => {
     const images = sortByFileName(files.filter((file) => file.type.startsWith("image/")));
     if (images.length === 0) {
-      setNotice({ tone: "error", text: "אפשר לגרור לכאן רק קובצי תמונה." });
+      setNotice({ tone: "error", text: t.dropImagesOnly });
       return;
     }
     const current = pagesRef.current;
     const base = current.every((page) => isBlankPage(page) && !page.preview) ? [] : current;
     const accepted = images.slice(0, Math.max(0, MAX_PAGES - base.length));
     if (accepted.length === 0) {
-      setNotice({ tone: "error", text: `אפשר עד ${MAX_PAGES} עמודים בספר.` });
+      setNotice({ tone: "error", text: t.maxPages(MAX_PAGES) });
       return;
     }
     const created: EditorPage[] = accepted.map((file) => ({
@@ -462,8 +460,8 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       tone: skipped > 0 ? "error" : "info",
       text:
         skipped > 0
-          ? `נוספו ${accepted.length} עמודים. ${skipped} תמונות לא נוספו כי בספר אפשר עד ${MAX_PAGES} עמודים.`
-          : `נוספו ${accepted.length} עמודים לפי סדר שמות הקבצים. התמונות עולות ברקע.`,
+          ? t.imagesAddedSkipped(accepted.length, skipped, MAX_PAGES)
+          : t.imagesAdded(accepted.length),
     });
     await runPool(accepted, 3, (file, index) => uploadPageImage(created[index].key, file));
   };
@@ -472,9 +470,9 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     try {
       const upload = await uploadMedia(bookId, "audio", audio, fileName);
       updatePage(key, { audio: upload.path, audioSource: "recorded", wordTimings: undefined });
-      setNotice({ tone: "success", text: "ההקלטה נשמרה בעמוד." });
+      setNotice({ tone: "success", text: t.recordingSaved });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "שמירת ההקלטה נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.recordingSaveFailed) });
     }
   };
 
@@ -503,8 +501,8 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       tone: left > 0 ? "error" : "success",
       text:
         left > 0
-          ? `הטקסט חולק לעמודים, אבל ${left} קטעים לא נכנסו כי בספר אפשר עד ${MAX_PAGES} עמודים.`
-          : `הטקסט חולק ל-${texts.length} עמודים.`,
+          ? t.pasteSplitPartial(left, MAX_PAGES)
+          : t.pasteSplit(texts.length),
     });
     void detailsAfterPaste();
   };
@@ -517,7 +515,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       return !!page && page.text.trim().length > 0 && (overwrite || !page.textNikud || !hasNikud(page.textNikud));
     });
     const nikudBusy = (at: number): BusyState => ({
-      label: todo.length > 1 ? `מנקד עמוד ${Math.min(at + 1, todo.length)} מתוך ${todo.length}…` : "מנקד את הטקסט…",
+      label: todo.length > 1 ? t.nikudPageOf(Math.min(at + 1, todo.length), todo.length) : t.nikudText,
       steps: { done: at, total: Math.max(1, todo.length) },
       expectedSeconds: EXPECTED_SECONDS.nikudPage,
     });
@@ -548,9 +546,9 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       setBusy(null);
     }
     if (failure) setNotice({ tone: "error", text: failure });
-    else if (mock) setNotice({ tone: "info", text: "הטקסט לא נוקד. אפשר לנקד ידנית.", mock: "nikud" });
-    else if (done === 0) setNotice({ tone: "info", text: "לא נמצא טקסט שצריך לנקד." });
-    else setNotice({ tone: "success", text: done === 1 ? "העמוד נוקד. כדאי לעבור על הניקוד ולתקן." : `נוקדו ${done} עמודים. כדאי לעבור על הניקוד ולתקן.` });
+    else if (mock) setNotice({ tone: "info", text: t.nikudMock, mock: "nikud" });
+    else if (done === 0) setNotice({ tone: "info", text: t.nikudNothing });
+    else setNotice({ tone: "success", text: done === 1 ? t.nikudOne : t.nikudMany(done) });
   };
 
   /** Narration is stored by the server inside the book, so: save first, narrate, then reload the audio fields. */
@@ -561,10 +559,10 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     /** Narrate again even where the audio is up to date. Default: only when pages are listed explicitly. */
     force: boolean = pageIndexes !== undefined,
   ): Promise<{ styleNotesIgnored?: boolean } | void> => {
-    setBusy({ label: "מכין הקראה…", expectedSeconds: EXPECTED_SECONDS.upload });
+    setBusy({ label: t.preparingNarration, expectedSeconds: EXPECTED_SECONDS.upload });
     try {
       if (!(await flush())) {
-        setNotice({ tone: "error", text: "אי אפשר להקריא לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        setNotice({ tone: "error", text: t.narrateNeedsSave });
         return;
       }
       const outcome = await narrate(
@@ -579,13 +577,13 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
         },
         (done, total) =>
           setBusy({
-            label: done >= total ? "שומרים את ההקראה…" : `מקריא עמוד ${done + 1} מתוך ${total}…`,
+            label: done >= total ? t.savingNarration : t.narratingPageOf(done + 1, total),
             steps: { done, total },
             expectedSeconds: EXPECTED_SECONDS.narrationPage,
           }),
       );
       if (!outcome.available) {
-        setNotice({ tone: "error", text: outcome.message ?? "ההקראה האוטומטית לא זמינה כרגע." });
+        setNotice({ tone: "error", text: outcome.message ?? t.narrationUnavailable });
         return;
       }
       const fresh = await fetchBook(bookId);
@@ -604,34 +602,33 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       commitPages(merged);
       applyServerBook(fresh);
 
-      const pagesLabel = (count: number) => (count === 1 ? "עמוד אחד" : `${count} עמודים`);
-      const parts = [`${outcome.narrated === 1 ? "הוקרא" : "הוקראו"} ${pagesLabel(outcome.narrated)}`];
-      if (outcome.skipped > 0) parts.push(`${outcome.skipped} דולגו`);
-      if (outcome.failed > 0) parts.push(`${outcome.failed} נכשלו`);
+      const parts = [t.narratedPages(outcome.narrated, t.pagesCount(outcome.narrated))];
+      if (outcome.skipped > 0) parts.push(t.skippedPages(outcome.skipped));
+      if (outcome.failed > 0) parts.push(t.failedPages(outcome.failed));
       const rawError = outcome.pages.find((p) => p.status === "failed")?.error;
-      // Vendor errors come in English (often raw JSON): show a short Hebrew reason instead.
+      // Vendor errors come in English (often raw JSON): show a short reason instead. Hebrew server messages pass as they are.
       const firstError = rawError
         ? /quota|credit|402|429|limit/i.test(rawError)
-          ? "מכסת ההקראה אצל ספק הקול נגמרה. אפשר לנסות שוב מאוחר יותר או לבחור ספק אחר."
+          ? t.ttsQuota
           : /401|403|api key|unauthor/i.test(rawError)
-            ? "ספק הקול דחה את המפתח. בדקו את TTS_API_KEY."
+            ? t.ttsKeyRejected
             : /[֐-׿]/.test(rawError)
               ? rawError
-              : "שירות ההקראה נכשל. נסו שוב בעוד רגע."
+              : t.ttsFailed
         : undefined;
       setNotice({
         tone: outcome.failed > 0 ? "error" : outcome.narrated > 0 ? "success" : "info",
         text:
           outcome.narrated === 0 && outcome.failed === 0
             ? force
-              ? "לא הוקרא אף עמוד: עמודים עם הקלטה שלכם לא מוחלפים, ועמודים בלי טקסט מדולגים."
-              : "לא היה מה להקריא: לכל העמודים עם טקסט כבר יש הקראה עדכנית או הקלטה שלכם. כדי להקריא שוב בקול אחר, בחרו \"הקראה מחדש של כל הספר\"."
-            : `${parts.join(", ")}.${firstError ? ` (${firstError})` : ""}`,
+              ? t.nothingNarratedForced
+              : t.nothingToNarrate
+            : `${parts.join(t.listSeparator)}.${firstError ? ` (${firstError})` : ""}`,
         mock: outcome.ttsMock ? "tts" : undefined,
       });
       return { styleNotesIgnored: outcome.styleNotesIgnored };
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "ההקראה נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.narrationFailed) });
     } finally {
       setBusy(null);
     }
@@ -642,12 +639,12 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     const voice = { style: options.style, notes: options.notes, voice: options.voice };
     if (options.scope === "missing") return autoNarrate(undefined, false, voice);
     if (pagesRef.current.some((candidate) => candidate.uploading)) {
-      setNotice({ tone: "info", text: "חכו רגע לסיום העלאת התמונות, ואז נסו שוב." });
+      setNotice({ tone: "info", text: t.waitForUploads });
       return;
     }
     const indexes = pagesRef.current.flatMap((page, index) => (page.text.trim().length > 0 ? [index] : []));
     if (indexes.length === 0) {
-      setNotice({ tone: "info", text: "אין עמודים עם טקסט להקריא." });
+      setNotice({ tone: "info", text: t.noTextToNarrate });
       return;
     }
     const recorded = indexes.filter((index) => {
@@ -656,18 +653,15 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     }).length;
     const replaced = indexes.length - recorded;
     const description =
-      `ההקראה של ${replaced === 1 ? "עמוד אחד" : `${replaced} עמודים`} תוחלף בקול ובסגנון שנבחרו, ויש לכך עלות לפי אורך הטקסט.` +
-      (recorded > 0
-        ? ` ב-${recorded === 1 ? "עמוד אחד" : `${recorded} עמודים`} יש הקלטה בקול שלכם: כברירת מחדל היא נשארת.`
-        : "");
+      t.renarrateReplaced(t.pagesCount(replaced)) + (recorded > 0 ? t.renarrateRecorded(t.pagesCount(recorded)) : "");
     setConfirm({
-      title: "להקריא מחדש את כל הספר?",
+      title: t.renarrateTitle,
       description,
-      confirmLabel: recorded > 0 ? "הקראה מחדש, בלי לגעת בהקלטות" : "הקראה מחדש",
+      confirmLabel: recorded > 0 ? t.renarrateKeepRecordings : t.renarrate,
       ...(recorded > 0
         ? {
             alt: {
-              label: "הקראה מחדש, כולל ההקלטות שלי",
+              label: t.renarrateWithRecordings,
               run: () => void autoNarrate(indexes, true, voice, true),
             },
           }
@@ -681,14 +675,14 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     if (index < 0) return;
     const page = pagesRef.current[index];
     if (pagesRef.current.some((candidate) => candidate.uploading)) {
-      setNotice({ tone: "info", text: "חכו רגע לסיום העלאת התמונות, ואז נסו שוב." });
+      setNotice({ tone: "info", text: t.waitForUploads });
       return;
     }
     if (page.audio && page.audioSource === "recorded") {
       setConfirm({
-        title: "להחליף את ההקלטה שלכם?",
-        description: "בעמוד הזה יש הקלטה בקול שלכם. הקראה אוטומטית תחליף אותה.",
-        confirmLabel: "החלפה בהקראה אוטומטית",
+        title: t.replaceRecordingTitle,
+        description: t.replaceRecordingDescription,
+        confirmLabel: t.replaceRecordingConfirm,
         run: () => void autoNarrate([index], true),
       });
       return;
@@ -704,12 +698,12 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
   const generateHero = async (description: string, style: string) => {
     setBusy(
       description
-        ? { label: "מצייר את הגיבור…", expectedSeconds: EXPECTED_SECONDS.hero }
-        : { label: "כותב תיאור של הגיבור לפי הסיפור ומצייר אותו…", expectedSeconds: EXPECTED_SECONDS.heroWithDescription },
+        ? { label: t.drawingHero, expectedSeconds: EXPECTED_SECONDS.hero }
+        : { label: t.describingAndDrawingHero, expectedSeconds: EXPECTED_SECONDS.heroWithDescription },
     );
     try {
       if (!(await flush())) {
-        setNotice({ tone: "error", text: "אי אפשר ליצור את הגיבור לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        setNotice({ tone: "error", text: t.heroNeedsSave });
         return;
       }
       const outcome = await createHeroImage(bookId, { description: description || undefined, style });
@@ -717,12 +711,12 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       setNotice({
         tone: "success",
         text: outcome.descriptionWritten
-          ? "הגיבור מוכן. כתבנו את התיאור שלו לפי הסיפור, ואפשר לתקן אותו וליצור מחדש."
-          : "הגיבור מוכן. עכשיו אפשר ליצור איור לכל עמוד לפיו.",
+          ? t.heroReadyDescribed
+          : t.heroReady,
         mock: outcome.isMock ? "image" : undefined,
       });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "יצירת הגיבור נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.heroFailed) });
     } finally {
       setBusy(null);
     }
@@ -730,16 +724,16 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
 
   const uploadHero = async (file: File) => {
     if (!file.type.startsWith("image/")) {
-      setNotice({ tone: "error", text: "אפשר לבחור רק קובץ תמונה." });
+      setNotice({ tone: "error", text: t.imageOnly });
       return;
     }
-    setBusy({ label: "מעלה את תמונת הגיבור…", expectedSeconds: EXPECTED_SECONDS.upload });
+    setBusy({ label: t.uploadingHero, expectedSeconds: EXPECTED_SECONDS.upload });
     try {
       const upload = await uploadMedia(bookId, "image", await shrinkImage(file), file.name);
       const current = metaRef.current.hero;
       setHero({ ...current, description: current?.description ?? "", image: upload.path });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "העלאת התמונה נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.imageUploadFailed) });
     } finally {
       setBusy(null);
     }
@@ -749,14 +743,14 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
   const illustrate = async (keys: string[], note?: string) => {
     const illustrateBusy = (at: number): BusyState =>
       keys.length > 1
-        ? { label: `מאייר עמוד ${at + 1} מתוך ${keys.length}…`, steps: { done: at, total: keys.length }, expectedSeconds: EXPECTED_SECONDS.illustratePage }
-        : { label: "מאייר את העמוד…", expectedSeconds: EXPECTED_SECONDS.illustratePage };
+        ? { label: t.illustratingPageOf(at + 1, keys.length), steps: { done: at, total: keys.length }, expectedSeconds: EXPECTED_SECONDS.illustratePage }
+        : { label: t.illustratingPage, expectedSeconds: EXPECTED_SECONDS.illustratePage };
     setBusy(illustrateBusy(0));
     let done = 0;
     let mock = false;
     try {
       if (!(await flush())) {
-        setNotice({ tone: "error", text: "אי אפשר לאייר לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        setNotice({ tone: "error", text: t.illustrateNeedsSave });
         return;
       }
       for (const [i, key] of keys.entries()) {
@@ -771,12 +765,12 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const credit = done > 0 && !mock ? await afterPictures() : "";
       setNotice({
         tone: "success",
-        text: `${done === 1 ? "האיור מוכן. אם הוא לא מתאים, אפשר ליצור איור חדש." : `אוירו ${done} עמודים.`}${credit ? ` ${credit}` : ""}`,
+        text: `${done === 1 ? t.illustrationReady : t.illustratedPages(done)}${credit ? ` ${credit}` : ""}`,
         mock: mock ? "image" : undefined,
       });
     } catch (err) {
-      const prefix = done > 0 ? `אוירו ${done} עמודים, ואז ` : "";
-      setNotice({ tone: "error", text: `${prefix}${errorMessage(err, "יצירת האיור נכשלה")}`, mock: mock ? "image" : undefined });
+      const prefix = done > 0 ? t.illustratedThen(done) : "";
+      setNotice({ tone: "error", text: `${prefix}${errorMessage(err, t.illustrationFailed)}`, mock: mock ? "image" : undefined });
     } finally {
       setBusy(null);
     }
@@ -787,9 +781,9 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     if (!page) return;
     if (page.image || page.preview) {
       setConfirm({
-        title: "להחליף את התמונה של העמוד?",
-        description: "האיור החדש יחליף את התמונה שיש עכשיו בעמוד.",
-        confirmLabel: "יצירת איור חדש",
+        title: t.replaceImageTitle,
+        description: t.replaceImageDescription,
+        confirmLabel: t.replaceImageConfirm,
         run: () => void illustrate([key], note),
       });
       return;
@@ -806,14 +800,14 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     let mock = false;
     const warnings: string[] = [];
     const gridBusy = (at: number): BusyState => ({
-      label: chunks.length > 1 ? `מאיירים רשת ${at + 1} מתוך ${chunks.length}…` : "מאיירים את העמודים ברשת אחת…",
+      label: chunks.length > 1 ? t.gridOf(at + 1, chunks.length) : t.gridOne,
       steps: { done: at, total: chunks.length },
       expectedSeconds: EXPECTED_SECONDS.grid,
     });
     setBusy(gridBusy(0));
     try {
       if (!(await flush())) {
-        setNotice({ tone: "error", text: "אי אפשר לאייר לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        setNotice({ tone: "error", text: t.illustrateNeedsSave });
         return;
       }
       for (const [i, chunk] of chunks.entries()) {
@@ -834,12 +828,12 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const extra = (warnings.length > 0 ? ` ${warnings.join(" ")}` : "") + (credit ? ` ${credit}` : "");
       setNotice({
         tone: done > 0 ? "success" : "info",
-        text: done > 0 ? `אוירו ${done} עמודים. אם איור לא מתאים, אפשר ליצור לעמוד איור חדש.${extra}` : `לא נוצרו איורים.${extra}`,
+        text: done > 0 ? `${t.gridDone(done)}${extra}` : `${t.gridNone}${extra}`,
         mock: mock ? "image" : undefined,
       });
     } catch (err) {
-      const prefix = done > 0 ? `אוירו ${done} עמודים, ואז ` : "";
-      setNotice({ tone: "error", text: `${prefix}${errorMessage(err, "יצירת האיורים נכשלה")}`, mock: mock ? "image" : undefined });
+      const prefix = done > 0 ? t.illustratedThen(done) : "";
+      setNotice({ tone: "error", text: `${prefix}${errorMessage(err, t.illustrationsFailed)}`, mock: mock ? "image" : undefined });
     } finally {
       setBusy(null);
     }
@@ -872,7 +866,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     try {
       if (!(await flush())) return "";
       const outcome = await suggestBookDetails(bookId);
-      if (outcome.isMock) return "פרטי הספר לא מולאו, כי שירות הכתיבה לא מחובר.";
+      if (outcome.isMock) return t.detailsMock;
       const merged = mergeDetails({
         meta: metaRef.current,
         suggestions: outcome.suggestions,
@@ -883,20 +877,20 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const patch: Partial<EditorMeta> = { ...merged.patch, ...credits.patch };
       const filled = [...merged.filled, ...credits.filled];
       autoFilledRef.current = merged.autoFilled;
-      if (filled.length === 0) return options.replace || !options.aiWrote ? "כל פרטי הספר כבר מלאים, ולא שינינו אותם." : "";
+      if (filled.length === 0) return options.replace || !options.aiWrote ? t.detailsAllFilled : "";
       updateMeta(patch);
       return describeFilled(filled, patch);
     } catch (err) {
-      return `פרטי הספר לא מולאו: ${errorMessage(err, "השירות לא זמין")} אפשר להשלים אותם בלשונית פרטי הספר.`;
+      return t.detailsFailed(errorMessage(err, t.serviceUnavailable));
     }
   };
 
   /** Explicit button of stage 8. */
   const runAutoDetails = async (options: { replace: boolean }) => {
-    setBusy({ label: "קוראים את הסיפור וממלאים את פרטי הספר…", expectedSeconds: EXPECTED_SECONDS.details });
+    setBusy({ label: t.readingAndFilling, expectedSeconds: EXPECTED_SECONDS.details });
     try {
       const text = await fillDetails({ replace: options.replace });
-      setNotice({ tone: text ? "success" : "info", text: text || "אין פרטים חדשים למלא." });
+      setNotice({ tone: text ? "success" : "info", text: text || t.noNewDetails });
     } finally {
       setBusy(null);
     }
@@ -918,7 +912,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
   const detailsAfterPaste = async () => {
     const current = metaRef.current;
     if (current.summary.trim().length > 0 || current.tags.length > 0) return;
-    setBusy({ label: "ממלאים את פרטי הספר לפי הסיפור…", expectedSeconds: EXPECTED_SECONDS.details });
+    setBusy({ label: t.fillingDetails, expectedSeconds: EXPECTED_SECONDS.details });
     try {
       const text = await fillDetails();
       if (text) setNotice({ tone: "success", text });
@@ -931,10 +925,10 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
 
   /** The story is written from the idea alone; the pages that exist keep their pictures but get the new text. */
   const runWriteStory = async (options: { idea: string; heroName: string; heroGender: "boy" | "girl" }) => {
-    setBusy({ label: "כותבים את הסיפור…", expectedSeconds: EXPECTED_SECONDS.story });
+    setBusy({ label: t.writingStory, expectedSeconds: EXPECTED_SECONDS.story });
     try {
       if (!(await flush())) {
-        setNotice({ tone: "error", text: "אי אפשר לכתוב לפני שהשינויים נשמרים. בדקו את החיבור ונסו שוב." });
+        setNotice({ tone: "error", text: t.writeNeedsSave });
         return;
       }
       const outcome = await writeStoryPages(bookId, {
@@ -966,11 +960,11 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const filledText = outcome.isMock ? "" : await fillDetails({ aiWrote: true });
       setNotice({
         tone: "success",
-        text: `נכתב סיפור של ${outcome.pages.length} עמודים. קראו אותו בקול, תקנו מה שצריך, ואז המשיכו לשלב הבא.${filledText ? ` ${filledText}` : ""}`,
+        text: `${t.storyWritten(outcome.pages.length)}${filledText ? ` ${filledText}` : ""}`,
         mock: outcome.isMock ? "text" : undefined,
       });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "כתיבת הסיפור נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.storyFailed) });
     } finally {
       setBusy(null);
     }
@@ -982,9 +976,9 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       return;
     }
     setConfirm({
-      title: "להחליף את הטקסט של הספר?",
-      description: "הסיפור החדש יחליף את הטקסט בכל העמודים, וגם את הניקוד וההקראה שלהם. התמונות נשארות.",
-      confirmLabel: "כתיבת סיפור חדש",
+      title: t.replaceTextTitle,
+      description: t.replaceTextDescription,
+      confirmLabel: t.replaceTextConfirm,
       danger: true,
       run: () => void runWriteStory(options),
     });
@@ -1012,37 +1006,32 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
     setBusy({ label, expectedSeconds: EXPECTED_SECONDS.bookAction });
     try {
       if (!locked && !(await flush())) {
-        setNotice({ tone: "error", text: "השינויים האחרונים לא נשמרו, ולכן הפעולה לא בוצעה. נסו שוב." });
+        setNotice({ tone: "error", text: t.actionNeedsSave });
         return;
       }
       applyServerBook(await action());
       setNotice({ tone: "success", text: success });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "הפעולה נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.actionFailed) });
     } finally {
       setBusy(null);
     }
   };
 
   const changeStatus = (status: BookStatus) => {
-    const success: Record<BookStatus, string> = {
-      draft: "הספר חזר לטיוטה.",
-      private: "הספר פרטי. רק אתם ומי שקיבל קישור רואים אותו.",
-      pending: "הספר הוגש לפרסום. עורך יעבור עליו ויאשר.",
-      published: "הספר פורסם בספרייה.",
-    };
-    void runBookAction("מעדכן…", () => setBookStatus(bookId, status), success[status]);
+    const success: Record<BookStatus, string> = t.statusSuccess;
+    void runBookAction(t.updating, () => setBookStatus(bookId, status), success[status]);
   };
 
   const removeBook = async () => {
-    setBusy({ label: "מוחק את הספר…", expectedSeconds: EXPECTED_SECONDS.bookAction });
+    setBusy({ label: t.deletingBook, expectedSeconds: EXPECTED_SECONDS.bookAction });
     try {
       await flush();
       await deleteBook(bookId);
       router.push(routes.studio());
       router.refresh();
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "מחיקת הספר נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.deleteBookFailed) });
       setBusy(null);
     }
   };
@@ -1052,7 +1041,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       const upload = await uploadMedia(bookId, "cover", await shrinkImage(file), file.name);
       updateMeta({ coverImage: upload.path });
     } catch (err) {
-      setNotice({ tone: "error", text: errorMessage(err, "העלאת השער נכשלה") });
+      setNotice({ tone: "error", text: errorMessage(err, t.coverUploadFailed) });
     }
   };
 
@@ -1080,8 +1069,8 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       <header className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3">
           <ButtonLink variant="ghost" size="sm" href={routes.studio()}>
-            <ArrowRight aria-hidden="true" className="size-4" />
-            הספרים שלי
+            <ArrowRight aria-hidden="true" className="size-4 ltr:-scale-x-100" />
+            {t.myBooks}
           </ButtonLink>
           <SaveIndicator
             state={autosave.state}
@@ -1092,10 +1081,10 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-3xl font-extrabold">{meta.title.trim() || book.title}</h1>
-          <Chip tone={STATUS_TONES[info.status]}>{STATUS_LABELS[info.status]}</Chip>
+          <Chip tone={STATUS_TONES[info.status]}>{STUDIO_STATUS_LABELS[locale][info.status]}</Chip>
           <span className="inline-flex items-center gap-1 text-muted">
             <Clock aria-hidden="true" className="size-4" />
-            {pages.length} עמודים, {readingTimeLabel(readingMinutes)} קריאה
+            {t.pagesAndTime(pages.length, readingTimeText(locale, readingMinutes))}
           </span>
         </div>
         {locked ? (
@@ -1103,16 +1092,15 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
             <Lock aria-hidden="true" className="mt-1 size-5 shrink-0" />
             <span>
               {info.status === "pending"
-                ? "הספר הוגש לפרסום וממתין לאישור, ולכן הוא נעול לעריכה. כדי לערוך, עברו ללשונית \"שיתוף ופרסום\" ובטלו את ההגשה."
-                : "הספר מפורסם בספרייה ולכן נעול לעריכה. כדי לערוך, עברו ללשונית \"שיתוף ופרסום\" והחזירו אותו למצב פרטי."}
+                ? t.lockedPending
+                : t.lockedPublished}
             </span>
           </p>
         ) : null}
         {autosave.conflict ? (
           <div role="alert" className="flex flex-col gap-3 rounded-md bg-danger-soft p-4">
             <p className="font-medium">
-              הספר השתנה במקום אחר (בלשונית אחרת, במכשיר אחר או על ידי עורך), ולכן השינויים האחרונים בלשונית הזאת
-              לא נשמרו ולא יישמרו. טענו את העמוד מחדש כדי לראות את הגרסה העדכנית ולהמשיך לערוך.
+              {t.conflict}
             </p>
             <div>
               <Button
@@ -1122,33 +1110,33 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
                   window.location.reload();
                 }}
               >
-                טעינה מחדש
+                {t.reload}
               </Button>
             </div>
           </div>
         ) : null}
         {info.reviewNote && tab !== "publish" ? (
           <p role="note" className="rounded-md bg-warning-soft p-4">
-            <strong>הערת העורך: </strong>
+            <strong>{t.reviewNote}</strong>
             {info.reviewNote}
           </p>
         ) : null}
-        <div role="tablist" aria-label="חלקי העורך" className="flex gap-1 overflow-x-auto border-b-2 border-border">
+        <div role="tablist" aria-label={t.editorParts} className="flex gap-1 overflow-x-auto border-b-2 border-border">
           {tabs.map((item) => (
             <button
-              key={item.id}
+              key={item}
               type="button"
               role="tab"
-              id={`studio-tab-${item.id}`}
-              aria-selected={tab === item.id}
+              id={`studio-tab-${item}`}
+              aria-selected={tab === item}
               aria-controls="studio-tabpanel"
-              onClick={() => setTab(item.id)}
+              onClick={() => setTab(item)}
               className={cn(
                 "-mb-0.5 min-h-touch whitespace-nowrap border-b-4 px-4 text-lg font-semibold",
-                tab === item.id ? "border-primary text-foreground" : "border-transparent text-muted hover:text-foreground",
+                tab === item ? "border-primary text-foreground" : "border-transparent text-muted hover:text-foreground",
               )}
             >
-              {item.label}
+              {t.tabs[item]}
             </button>
           ))}
         </div>
@@ -1247,15 +1235,15 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
             <div className="flex flex-wrap items-center gap-2">
               <Button onClick={() => filesInput.current?.click()}>
                 <Images aria-hidden="true" className="size-5" />
-                העלאת תמונות
+                {t.uploadImages}
               </Button>
               <Button variant="outline" onClick={addPage}>
                 <Plus aria-hidden="true" className="size-5" />
-                עמוד חדש
+                {t.newPage}
               </Button>
               <Button variant="outline" onClick={() => setPasteOpen(true)}>
                 <ClipboardPaste aria-hidden="true" className="size-5" />
-                הדבקת סיפור שלם
+                {t.pasteStory}
               </Button>
               <Button
                 variant="outline"
@@ -1267,11 +1255,11 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
                 }
               >
                 <Wand2 aria-hidden="true" className="size-5" />
-                ניקוד לכל העמודים
+                {t.nikudAll}
               </Button>
               <Button variant="outline" onClick={() => void autoNarrate(undefined, false)} disabled={uploadingCount > 0}>
                 <Sparkles aria-hidden="true" className="size-5" />
-                הקראה לכל הספר
+                {t.narrateAll}
               </Button>
               <input
                 ref={filesInput}
@@ -1296,8 +1284,8 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
               onIllustrateMissing={() => illustrateMissing()}
             />
             <p className="text-muted">
-              אפשר לגרור לכאן כמה תמונות בבת אחת: כל תמונה תהפוך לעמוד, לפי סדר שמות הקבצים.
-              {uploadingCount > 0 ? ` מעלה עוד ${uploadingCount} תמונות…` : ""}
+              {t.dropHint}
+              {uploadingCount > 0 ? t.uploadingMore(uploadingCount) : ""}
             </p>
 
             <div className="grid gap-4 lg:grid-cols-[17rem_1fr]">
@@ -1316,6 +1304,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
                   index={selectedIndex}
                   total={pages.length}
                   ageGroup={meta.ageGroup}
+                  language={info.language ?? "he"}
                   version={info.updatedAt}
                   onChange={(patch) => updatePage(selected.key, patch)}
                   onMove={(delta) => movePage(selected.key, delta)}
@@ -1365,7 +1354,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
 
         {tab === "preview" ? (
           <div className="flex flex-col gap-3">
-            <p className="text-muted">כך הספר ייראה לקוראים. התצוגה מתעדכנת עם כל שינוי, גם לפני השמירה.</p>
+            <p className="text-muted">{t.previewHint}</p>
             <PreviewPane book={previewBook} initialPage={Math.max(0, selectedIndex)} />
           </div>
         ) : null}
@@ -1376,21 +1365,21 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
             problems={problems}
             canPublish={canPublish}
             onStatus={changeStatus}
-            onCreateShare={() => void runBookAction("יוצר קישור…", () => createShareLink(bookId), "נוצר קישור שיתוף.")}
+            onCreateShare={() => void runBookAction(t.creatingLink, () => createShareLink(bookId), t.linkCreated)}
             onRemoveShare={() =>
               setConfirm({
-                title: "לבטל את קישור השיתוף?",
-                description: "מי שקיבל את הקישור לא יוכל יותר לפתוח את הספר.",
-                confirmLabel: "ביטול הקישור",
+                title: t.removeLinkTitle,
+                description: t.removeLinkDescription,
+                confirmLabel: t.removeLinkConfirm,
                 danger: true,
-                run: () => void runBookAction("מבטל קישור…", () => removeShareLink(bookId), "קישור השיתוף בוטל."),
+                run: () => void runBookAction(t.removingLink, () => removeShareLink(bookId), t.linkRemoved),
               })
             }
             onDelete={() =>
               setConfirm({
-                title: "למחוק את הספר?",
-                description: "הספר, התמונות וההקלטות יימחקו לצמיתות. אי אפשר לבטל את הפעולה.",
-                confirmLabel: "מחיקת הספר",
+                title: t.deleteBookTitle,
+                description: t.deleteBookDescription,
+                confirmLabel: t.deleteBookConfirm,
                 danger: true,
                 run: () => void removeBook(),
               })
@@ -1417,7 +1406,7 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
         footer={
           <>
             <Button variant="outline" onClick={() => setConfirm(null)}>
-              ביטול
+              {t.cancel}
             </Button>
             {confirm?.alt ? (
               <Button
@@ -1448,23 +1437,23 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
       <Dialog
         open={pasteOpen}
         onClose={() => setPasteOpen(false)}
-        title="הדבקת סיפור שלם"
-        description="הדביקו את כל הטקסט. כל פסקה (שורה ריקה בין קטעים) תהפוך לעמוד. הטקסט ימלא קודם עמודים ריקים מטקסט, ולא יחליף טקסט קיים."
+        title={t.pasteStory}
+        description={t.pasteDescription}
         size="lg"
         footer={
           <>
             <Button variant="outline" onClick={() => setPasteOpen(false)}>
-              ביטול
+              {t.cancel}
             </Button>
             <Button onClick={applyPastedStory} disabled={pasteText.trim().length === 0}>
-              חלוקה ל-{splitStoryIntoPages(pasteText).length} עמודים
+              {t.splitInto(splitStoryIntoPages(pasteText).length)}
             </Button>
           </>
         }
       >
         <Textarea
-          aria-label="הטקסט של הסיפור"
-          dir="rtl"
+          aria-label={t.storyText}
+          dir={textDirection(info.language ?? "he")}
           rows={12}
           value={pasteText}
           onChange={(event) => setPasteText(event.target.value)}

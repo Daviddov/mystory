@@ -3,7 +3,10 @@
 import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 import { useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
+import { localeDir } from "@/lib/i18n/locale";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 
 export interface StarRatingProps {
   bookId: string;
@@ -38,6 +41,8 @@ export function StarRating({
   loginHref,
   className,
 }: StarRatingProps) {
+  const locale = useLocale();
+  const t = READER_MESSAGES[locale].rating;
   const [state, setState] = useState<RatingState>({ average: initialAverage, count: initialCount, mine: initialMine });
   const router = useRouter();
   const [hover, setHover] = useState<number | null>(null);
@@ -67,17 +72,17 @@ export function StarRating({
 
   const shown = hover ?? state.mine ?? Math.round(state.average);
   const summary = state.count
-    ? `ציון ממוצע ${state.average.toFixed(1)} מתוך 5, לפי ${state.count} ${state.count === 1 ? "דירוג" : "דירוגים"}`
-    : "עוד אין דירוגים";
+    ? t.summary(state.average.toFixed(1), state.count)
+    : t.none;
 
   return (
     <div className={cn("flex flex-col gap-1", className)} data-testid="star-rating">
       <div className="flex flex-wrap items-center gap-3">
         <div
           role="group"
-          aria-label={signedIn ? "הדירוג שלך לספר" : "דירוג הספר"}
+          aria-label={signedIn ? t.mine : t.book}
           className="flex items-center gap-1"
-          dir="rtl"
+          dir={localeDir(locale)}
           onMouseLeave={() => setHover(null)}
         >
           {STARS.map((n) => {
@@ -98,7 +103,7 @@ export function StarRating({
                 onFocus={() => setHover(n)}
                 onBlur={() => setHover(null)}
                 aria-pressed={signedIn ? state.mine === n : undefined}
-                aria-label={`${n} ${n === 1 ? "כוכב" : "כוכבים"}${signedIn ? "" : " (נדרשת התחברות)"}`}
+                aria-label={t.star(n, signedIn)}
                 className="inline-flex size-touch items-center justify-center rounded-full transition-transform hover:bg-surface-2 active:scale-95"
               >
                 {icon}
@@ -113,21 +118,21 @@ export function StarRating({
               <span className="text-muted">({state.count})</span>
             </>
           ) : (
-            <span className="text-muted">עוד אין דירוגים</span>
+            <span className="text-muted">{t.none}</span>
           )}
         </p>
       </div>
       <p className="sr-only">{summary}</p>
       {signedIn ? (
         <p className="text-sm text-muted">
-          {state.mine ? "דירגתם את הספר. לחיצה על אותו כוכב מבטלת את הדירוג." : "אהבתם? דרגו את הספר."}
+          {state.mine ? t.rated : t.ask}
         </p>
       ) : (
-        <p className="text-sm text-muted">כדי לדרג את הספר צריך להתחבר.</p>
+        <p className="text-sm text-muted">{t.signIn}</p>
       )}
       {problem ? (
         <p role="alert" className="text-sm text-danger">
-          לא הצלחנו לשמור את הדירוג. נסו שוב.
+          {t.failed}
         </p>
       ) : null}
     </div>

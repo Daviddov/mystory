@@ -2,13 +2,16 @@
 
 import { Rabbit, Turtle } from "lucide-react";
 import type { ReactNode } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { PLAYBACK_RATES } from "@/lib/reader/logic";
 
-const RATE_LABELS: Record<number, string> = { 0.9: "לאט", 1: "רגיל", 1.1: "מהר" };
-
-export function rateLabel(rate: number): string {
-  return RATE_LABELS[rate] ?? `×${rate}`;
+export function rateLabel(rate: number, locale: Locale = DEFAULT_LOCALE): string {
+  const t = READER_MESSAGES[locale].speed;
+  const labels: Record<number, string> = { 0.9: t.slow, 1: t.normal, 1.1: t.fast };
+  return labels[rate] ?? `×${rate}`;
 }
 
 const ICONS: Record<number, ReactNode> = {
@@ -24,10 +27,11 @@ export interface SpeedControlProps {
 
 /** Narration speed as three side-by-side buttons: turtle (slow), normal, rabbit (fast). Lives in the reader settings. */
 export function SpeedControl({ rate, onRate }: SpeedControlProps) {
+  const locale = useLocale();
   return (
     <div
       role="radiogroup"
-      aria-label="מהירות ההקראה"
+      aria-label={READER_MESSAGES[locale].speed.label}
       className="inline-flex items-center gap-0.5 rounded-full bg-secondary-soft p-1"
     >
       {PLAYBACK_RATES.map((value) => {
@@ -38,15 +42,15 @@ export function SpeedControl({ rate, onRate }: SpeedControlProps) {
             type="button"
             role="radio"
             aria-checked={selected}
-            aria-label={rateLabel(value)}
-            title={rateLabel(value)}
+            aria-label={rateLabel(value, locale)}
+            title={rateLabel(value, locale)}
             onClick={() => onRate(value)}
             className={cn(
               "inline-flex size-11 items-center justify-center rounded-full transition-colors duration-150",
               selected ? "bg-secondary text-secondary-foreground shadow-card" : "text-foreground hover:bg-surface-2",
             )}
           >
-            {ICONS[value] ?? rateLabel(value)}
+            {ICONS[value] ?? rateLabel(value, locale)}
           </button>
         );
       })}

@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Spinner } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { OVERDUE_TEXT_EN, STUDIO_BUSY, elapsedTextEn, remainingTextEn } from "@/lib/i18n/studio";
 import { OVERDUE_TEXT, elapsedText, progressView, remainingText, valueText, type BusyState } from "@/lib/studio/progress";
 
 /**
@@ -47,6 +49,9 @@ export function BusyOverlay({ busy }: { busy: BusyState }) {
 }
 
 function Meter({ busy, startedAt, labelledBy }: { busy: BusyState; startedAt: number; labelledBy: string }) {
+  const locale = useLocale();
+  const t = STUDIO_BUSY[locale];
+  const en = locale === "en";
   const [stepStartedAt] = useState(() => Date.now());
   const [now, setNow] = useState(stepStartedAt);
   useEffect(() => {
@@ -58,11 +63,16 @@ function Meter({ busy, startedAt, labelledBy }: { busy: BusyState; startedAt: nu
   const stepElapsed = Math.max(0, (now - stepStartedAt) / 1000);
   const view = progressView(busy, elapsed, stepElapsed);
   const determinate = view.value !== null;
+  const overdueText = en ? OVERDUE_TEXT_EN : OVERDUE_TEXT;
+  const remaining = en ? remainingTextEn : remainingText;
   const detail = view.overdue
-    ? OVERDUE_TEXT
+    ? overdueText
     : view.remainingSeconds !== null && elapsed >= 1
-      ? remainingText(view.remainingSeconds)
+      ? remaining(view.remainingSeconds)
       : null;
+  const ariaValue = en
+    ? [`${view.percent ?? 0} percent`, ...(view.overdue ? [overdueText] : view.remainingSeconds !== null ? [remaining(view.remainingSeconds)] : [])].join(", ")
+    : valueText(view);
 
   return (
     <>
@@ -71,7 +81,7 @@ function Meter({ busy, startedAt, labelledBy }: { busy: BusyState; startedAt: nu
         aria-labelledby={labelledBy}
         aria-valuemin={0}
         aria-valuemax={100}
-        {...(determinate ? { "aria-valuenow": view.percent ?? 0, "aria-valuetext": valueText(view) } : { "aria-valuetext": "בתהליך" })}
+        {...(determinate ? { "aria-valuenow": view.percent ?? 0, "aria-valuetext": ariaValue } : { "aria-valuetext": t.inProgress })}
         className="relative h-3 w-full overflow-hidden rounded-full bg-border"
       >
         {determinate ? (
@@ -87,9 +97,9 @@ function Meter({ busy, startedAt, labelledBy }: { busy: BusyState; startedAt: nu
         )}
       </div>
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm text-muted">
-        <span>{view.percent !== null ? `${view.percent}%` : "מעבדים…"}</span>
+        <span>{view.percent !== null ? `${view.percent}%` : t.processing}</span>
         <span>{detail ?? ""}</span>
-        <span>{elapsedText(elapsed)}</span>
+        <span>{en ? elapsedTextEn(elapsed) : elapsedText(elapsed)}</span>
       </div>
     </>
   );

@@ -3,6 +3,7 @@
 import { BookOpen, Trash2, WifiOff } from "lucide-react";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { Button, EmptyState, Spinner, buttonClasses } from "@/components/ui";
+import { accountMessages, type AccountMessages } from "@/lib/i18n/account";
 import {
   OFFLINE_EVENT,
   listDownloads,
@@ -13,6 +14,7 @@ import {
   storageEstimate,
   type OfflineBook,
 } from "./offline-store";
+import { useDeviceLocale } from "./useDeviceLocale";
 
 function subscribeOnline(listener: () => void): () => void {
   window.addEventListener("online", listener);
@@ -23,9 +25,9 @@ function subscribeOnline(listener: () => void): () => void {
   };
 }
 
-function formatBytes(bytes: number): string {
+function formatBytes(bytes: number, t: AccountMessages["offline"]): string {
   const mb = bytes / (1024 * 1024);
-  return mb >= 1 ? `${mb.toFixed(mb >= 10 ? 0 : 1)} מ"ב` : `${Math.max(1, Math.round(bytes / 1024))} ק"ב`;
+  return mb >= 1 ? t.megabytes(mb.toFixed(mb >= 10 ? 0 : 1)) : t.kilobytes(String(Math.max(1, Math.round(bytes / 1024))));
 }
 
 interface Loaded {
@@ -42,6 +44,7 @@ interface Loaded {
  * while a client-side navigation would need the server.
  */
 export function OfflineLibrary() {
+  const t = accountMessages(useDeviceLocale()).offline;
   const online = useSyncExternalStore(
     subscribeOnline,
     () => navigator.onLine,
@@ -77,8 +80,8 @@ export function OfflineLibrary() {
     return (
       <EmptyState
         icon="📵"
-        title="הדפדפן הזה לא שומר ספרים"
-        description="קריאה בלי רשת דורשת דפדפן עדכני וכתובת מאובטחת (https). אפשר להמשיך לקרוא כרגיל כשיש חיבור."
+        title={t.unsupportedTitle}
+        description={t.unsupportedDescription}
       />
     );
   }
@@ -88,24 +91,24 @@ export function OfflineLibrary() {
       {online ? null : (
         <p role="status" className="flex items-center gap-2 rounded-md bg-warning-soft px-4 py-3 font-semibold">
           <WifiOff aria-hidden="true" className="size-5 shrink-0 text-warning" />
-          אין כרגע חיבור לרשת. הספרים שכאן נקראים גם ככה.
+          {t.noNetwork}
         </p>
       )}
       {loaded.ready || loaded.books.length === 0 ? null : (
         <p role="note" className="rounded-md bg-warning-soft px-4 py-3">
-          הספרים שמורים במכשיר, אבל הקריאה בלי רשת עדיין לא פעילה בדפדפן הזה. טענו את העמוד מחדש כשיש חיבור.
+          {t.notActive}
         </p>
       )}
 
       {loaded.books.length === 0 ? (
         <EmptyState
           icon="📥"
-          title="עדיין לא הורדתם ספרים"
-          description='בעמוד של כל ספר יש כפתור "הורדה לקריאה בלי רשת". ספר שהורדתם יחכה כאן, גם בטיסה וגם בטיול.'
+          title={t.emptyTitle}
+          description={t.emptyDescription}
           action={
             online ? (
               <a href="/books" className={buttonClasses()}>
-                לכל הספרים
+                {t.allBooks}
               </a>
             ) : undefined
           }
@@ -119,7 +122,7 @@ export function OfflineLibrary() {
             >
               <a
                 href={offlineReadPath(book.id)}
-                aria-label={`קריאת הספר ${book.title}`}
+                aria-label={t.readAria(book.title)}
                 className="block aspect-[3/4] w-24 shrink-0 overflow-hidden rounded-md border border-border bg-surface-2"
               >
                 {book.cover ? (
@@ -131,24 +134,26 @@ export function OfflineLibrary() {
                 )}
               </a>
               <div className="flex min-w-0 flex-1 flex-col gap-2">
-                <h2 className="text-xl font-bold leading-snug">{book.title}</h2>
+                <h2 className="text-xl font-bold leading-snug" dir="auto">
+                  {book.title}
+                </h2>
                 <p className="text-sm text-muted">
-                  {book.pages.length} עמודים
-                  {book.isPublic ? "" : " · ספר פרטי"}
+                  {t.pages(book.pages.length)}
+                  {book.isPublic ? "" : t.privateBook}
                 </p>
                 <div className="mt-auto flex flex-wrap items-center gap-2">
                   <a href={offlineReadPath(book.id)} className={buttonClasses({ size: "sm" })}>
                     <BookOpen aria-hidden="true" className="size-4" />
-                    קריאה
+                    {t.read}
                   </a>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => void removeDownload(book.id)}
-                    aria-label={`הסרת ${book.title} מהמכשיר`}
+                    aria-label={t.removeAria(book.title)}
                   >
                     <Trash2 aria-hidden="true" className="size-4" />
-                    הסרה
+                    {t.remove}
                   </Button>
                 </div>
               </div>
@@ -158,7 +163,7 @@ export function OfflineLibrary() {
       )}
 
       {loaded.usage !== null && loaded.books.length > 0 ? (
-        <p className="text-sm text-muted">האתר תופס כ-{formatBytes(loaded.usage)} במכשיר הזה.</p>
+        <p className="text-sm text-muted">{t.usage(formatBytes(loaded.usage, t))}</p>
       ) : null}
     </div>
   );

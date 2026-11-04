@@ -3,7 +3,9 @@
 import { Pencil, Share2, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, ButtonLink, Dialog } from "@/components/ui";
+import { STUDIO_BOOK_ACTIONS } from "@/lib/i18n/studio";
 import { routes } from "@/lib/routes";
 import { createShareLink, deleteBook, StudioApiError } from "@/lib/studio/client";
 
@@ -19,6 +21,7 @@ export interface BookCardActionsProps {
 /** Edit, share and delete buttons under a book in the "my books" list. */
 export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCardActionsProps) {
   const router = useRouter();
+  const t = STUDIO_BOOK_ACTIONS[useLocale()];
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,10 +45,10 @@ export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCa
         }
       }
       await navigator.clipboard.writeText(url);
-      setShareNote("הקישור הועתק");
+      setShareNote(t.linkCopied);
       router.refresh();
     } catch (err) {
-      setShareNote(err instanceof StudioApiError ? err.message : "יצירת הקישור נכשלה");
+      setShareNote(err instanceof StudioApiError ? err.message : t.shareFailed);
     } finally {
       setSharing(false);
     }
@@ -59,7 +62,7 @@ export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCa
       setOpen(false);
       router.refresh();
     } catch (err) {
-      setError(err instanceof StudioApiError ? err.message : "מחיקת הספר נכשלה");
+      setError(err instanceof StudioApiError ? err.message : t.deleteFailed);
     } finally {
       setBusy(false);
     }
@@ -69,9 +72,9 @@ export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCa
     <div className="flex flex-wrap items-center gap-2">
       <ButtonLink href={routes.studioBook(bookId)} variant="outline" size="sm" className="flex-1">
         <Pencil aria-hidden="true" className="size-4" />
-        עריכה
+        {t.edit}
       </ButtonLink>
-      <Button variant="ghost" size="sm" aria-label={`שיתוף הספר ${title}`} onClick={share} loading={sharing}>
+      <Button variant="ghost" size="sm" aria-label={t.shareBook(title)} onClick={share} loading={sharing}>
         <Share2 aria-hidden="true" className="size-4" />
       </Button>
       {shareNote ? (
@@ -80,7 +83,7 @@ export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCa
         </p>
       ) : null}
       {canDelete ? (
-        <Button variant="ghost" size="sm" aria-label={`מחיקת הספר ${title}`} onClick={() => setOpen(true)}>
+        <Button variant="ghost" size="sm" aria-label={t.deleteBook(title)} onClick={() => setOpen(true)}>
           <Trash2 aria-hidden="true" className="size-4 text-danger" />
         </Button>
       ) : null}
@@ -89,16 +92,16 @@ export function BookCardActions({ bookId, title, canDelete, shareToken }: BookCa
         onClose={() => {
           if (!busy) setOpen(false);
         }}
-        title="למחוק את הספר?"
-        description={`הספר "${title}", התמונות וההקלטות שלו יימחקו לצמיתות.`}
+        title={t.confirmTitle}
+        description={t.confirmText(title)}
         size="sm"
         footer={
           <>
             <Button variant="outline" onClick={() => setOpen(false)} disabled={busy}>
-              ביטול
+              {t.cancel}
             </Button>
             <Button variant="danger" onClick={remove} loading={busy}>
-              מחיקת הספר
+              {t.confirmDelete}
             </Button>
           </>
         }

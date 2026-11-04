@@ -9,6 +9,9 @@ import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { ButtonLink, Card, Chip, EmptyState, type ChipTone } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth";
+import { accountMessages } from "@/lib/i18n/account";
+import type { Locale } from "@/lib/i18n/locale";
+import { getLocale } from "@/lib/i18n/server";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
@@ -20,61 +23,49 @@ export const metadata: Metadata = {
 };
 export const dynamic = "force-dynamic";
 
-const STATUS: Record<BookStatus, { label: string; tone: ChipTone; hint: string }> = {
-  draft: { label: "טיוטה", tone: "neutral", hint: "רק אתם רואים את הספר." },
-  private: {
-    label: "פרטי",
-    tone: "secondary",
-    hint: "רק אתם רואים את הספר, ומי שקיבל מכם קישור שיתוף.",
-  },
-  pending: {
-    label: "ממתין לאישור",
-    tone: "warning",
-    hint: "הספר נשלח לעורך ויופיע בספרייה אחרי אישור.",
-  },
-  published: {
-    label: "פורסם בספרייה",
-    tone: "success",
-    hint: "הספר פתוח לכולם בספרייה.",
-  },
+const STATUS_TONE: Record<BookStatus, ChipTone> = {
+  draft: "neutral",
+  private: "secondary",
+  pending: "warning",
+  published: "success",
 };
 
-const RECORDING_STATUS: Record<RecordingStatus, { label: string; tone: ChipTone }> = {
-  private: { label: "רק אצלי", tone: "neutral" },
-  pending: { label: "ממתינה לאישור לשיתוף", tone: "warning" },
-  approved: { label: "משותפת עם כולם", tone: "success" },
+const RECORDING_TONE: Record<RecordingStatus, ChipTone> = {
+  private: "neutral",
+  pending: "warning",
+  approved: "success",
 };
 
-function MyRecordingRow({ recording, book }: { recording: Recording; book: BookWithPages }) {
-  const status = RECORDING_STATUS[recording.status];
+function MyRecordingRow({ recording, book, locale }: { recording: Recording; book: BookWithPages; locale: Locale }) {
+  const t = accountMessages(locale).me;
   return (
     <Card as="li" className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <h3 className="text-lg font-bold">
           <span aria-hidden="true">🎙️ </span>
-          {recording.title}
+          <bdi dir="auto">{recording.title}</bdi>
         </h3>
-        <Chip tone={status.tone}>{status.label}</Chip>
+        <Chip tone={RECORDING_TONE[recording.status]}>{t.recordingStatus[recording.status]}</Chip>
       </div>
       <p className="text-sm text-muted">
-        {book.title} · הוקלטו {recording.pages.length} מתוך {book.pages.length} עמודים
+        <bdi dir="auto">{book.title}</bdi> · {t.recordedPages(recording.pages.length, book.pages.length)}
       </p>
       {recording.reviewNote && recording.status === "private" ? (
         <p className="rounded-md bg-warning-soft px-3 py-2 text-sm">
-          <span className="font-semibold">הערת העורך: </span>
-          {recording.reviewNote}
+          <span className="font-semibold">{t.editorNote}</span>
+          <bdi dir="auto">{recording.reviewNote}</bdi>
         </p>
       ) : null}
       <div className="flex flex-wrap items-center gap-2">
         {recording.pages.length > 0 ? (
           <ButtonLink href={routes.readVoice(book.slug, recording.id)} size="sm">
             <Headphones aria-hidden="true" className="size-4" />
-            האזנה
+            {t.listen}
           </ButtonLink>
         ) : null}
         <ButtonLink href={routes.read(book.slug)} variant="outline" size="sm">
           <Mic aria-hidden="true" className="size-4" />
-          להמשיך להקליט
+          {t.keepRecording}
         </ButtonLink>
         <MyRecordingActions
           id={recording.id}
@@ -87,21 +78,21 @@ function MyRecordingRow({ recording, book }: { recording: Recording; book: BookW
   );
 }
 
-const dateFormat = new Intl.DateTimeFormat("he-IL", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
-
-function MyBookRow({ book }: { book: Book }) {
-  const status = STATUS[book.status];
+function MyBookRow({ book, locale }: { book: Book; locale: Locale }) {
+  const t = accountMessages(locale).me;
+  const status = t.status[book.status];
+  const dateFormat = new Intl.DateTimeFormat(accountMessages(locale).dateLocale, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
   const cover = mediaUrl(book.coverImage, book.updatedAt);
   return (
     <Card as="li" className="flex flex-col gap-4 sm:flex-row">
       <Link
         href={routes.read(book.slug)}
         className="relative block aspect-[3/4] w-28 shrink-0 overflow-hidden rounded-md border border-border bg-surface-2"
-        aria-label={`קריאת הספר ${book.title}`}
+        aria-label={t.readBookAria(book.title)}
       >
         {cover ? (
           <img src={cover} alt="" loading="lazy" decoding="async" className="size-full object-cover" />
@@ -113,35 +104,37 @@ function MyBookRow({ book }: { book: Book }) {
       </Link>
       <div className="flex min-w-0 flex-1 flex-col gap-3">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <h3 className="text-xl font-bold">{book.title}</h3>
-          <Chip tone={status.tone}>{status.label}</Chip>
+          <h3 className="text-xl font-bold" dir="auto">
+            {book.title}
+          </h3>
+          <Chip tone={STATUS_TONE[book.status]}>{status.label}</Chip>
         </div>
         <p className="text-sm text-muted">
-          {status.hint} עודכן ב-{dateFormat.format(new Date(book.updatedAt))}.
+          {status.hint} {t.updated(dateFormat.format(new Date(book.updatedAt)))}
         </p>
         {book.reviewNote && book.status !== "published" ? (
           <p className="rounded-md bg-warning-soft px-3 py-2 text-sm">
-            <span className="font-semibold">הערת העורך: </span>
-            {book.reviewNote}
+            <span className="font-semibold">{t.editorNote}</span>
+            <bdi dir="auto">{book.reviewNote}</bdi>
           </p>
         ) : null}
         <div className="flex flex-wrap items-center gap-2">
           <ButtonLink href={routes.read(book.slug)} size="sm">
-            קריאה
+            {t.read}
           </ButtonLink>
           <ButtonLink href={routes.studioBook(book.id)} variant="outline" size="sm">
             <Pencil aria-hidden="true" className="size-4" />
-            עריכה
+            {t.edit}
           </ButtonLink>
           <OfflineDownloadButton bookId={book.id} title={book.title} size="sm" />
         </div>
         {book.status === "published" ? (
           <p className="text-sm text-muted">
-            הספר ציבורי, ואפשר לשתף את{" "}
+            {t.publicBefore}{" "}
             <Link href={routes.book(book.slug)} className="font-semibold underline">
-              עמוד הספר
+              {t.publicLink}
             </Link>{" "}
-            כמו שהוא.
+            {t.publicAfter}
           </p>
         ) : (
           <ShareControls bookId={book.id} title={book.title} initialToken={book.shareToken ?? null} />
@@ -166,6 +159,8 @@ async function loadMyRecordings(userId: string): Promise<{ recording: Recording;
 
 export default async function MePage() {
   const user = await getCurrentUser();
+  const locale = await getLocale();
+  const t = accountMessages(locale).me;
   const repo = await getRepo();
   const [myBooks, myRecordings] = user
     ? await Promise.all([
@@ -179,17 +174,14 @@ export default async function MePage() {
       <PersonalSync userId={user?.id ?? null} quiet />
 
       <header className="flex flex-col gap-3">
-        <h1 className="text-4xl font-extrabold">{user ? `המדף של ${user.name}` : "המדף שלי"}</h1>
+        <h1 className="text-4xl font-extrabold">{user ? t.titleOf(user.name) : t.title}</h1>
         {user ? (
-          <p className="text-lg text-muted">הספרים שאתם קוראים, אוהבים ויוצרים, בכל מכשיר שבו אתם מחוברים.</p>
+          <p className="text-lg text-muted">{t.intro}</p>
         ) : (
           <Card tone="soft" className="flex flex-wrap items-center gap-4">
-            <p className="min-w-0 flex-1 text-lg">
-              המועדפים והמקום שבו עצרתם נשמרים במכשיר הזה בלבד. אחרי כניסה לחשבון הם יעברו אליו, ויחכו לכם בכל
-              מכשיר.
-            </p>
+            <p className="min-w-0 flex-1 text-lg">{t.anonymousIntro}</p>
             <ButtonLink href={routes.login(routes.me())} variant="secondary">
-              כניסה לחשבון
+              {t.signIn}
             </ButtonLink>
           </Card>
         )}
@@ -201,33 +193,33 @@ export default async function MePage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 id="my-books-title" className="text-2xl font-extrabold">
             <span aria-hidden="true">🎨 </span>
-            הספרים שיצרתי
+            {t.myBooks}
           </h2>
           {user ? (
             <ButtonLink href={routes.studioNew()} variant="secondary" size="sm">
               <Plus aria-hidden="true" className="size-4" />
-              ספר חדש
+              {t.newBook}
             </ButtonLink>
           ) : null}
         </div>
         {!user ? (
           <EmptyState
             icon="🎨"
-            title="כאן יופיעו הספרים שלכם"
-            description="אחרי כניסה לחשבון אפשר ליצור ספרים, לשמור אותם פרטיים ולשתף אותם בקישור."
-            action={<ButtonLink href={routes.login(routes.me())}>כניסה לחשבון</ButtonLink>}
+            title={t.signedOutBooksTitle}
+            description={t.signedOutBooksDescription}
+            action={<ButtonLink href={routes.login(routes.me())}>{t.signIn}</ButtonLink>}
           />
         ) : myBooks.length === 0 ? (
           <EmptyState
             icon="✏️"
-            title="עדיין לא יצרתם ספר"
-            description="בסטודיו אפשר להעלות תמונות וטקסט ולהפוך אותם לספר, או ליצור ספר אישי."
-            action={<ButtonLink href={routes.studio()}>לסטודיו</ButtonLink>}
+            title={t.noBooksTitle}
+            description={t.noBooksDescription}
+            action={<ButtonLink href={routes.studio()}>{t.toStudio}</ButtonLink>}
           />
         ) : (
           <ul className="grid gap-4 lg:grid-cols-2">
             {myBooks.map((book) => (
-              <MyBookRow key={book.id} book={book} />
+              <MyBookRow key={book.id} book={book} locale={locale} />
             ))}
           </ul>
         )}
@@ -237,14 +229,12 @@ export default async function MePage() {
         <section aria-labelledby="my-recordings-title" className="flex flex-col gap-4">
           <h2 id="my-recordings-title" className="text-2xl font-extrabold">
             <span aria-hidden="true">🎙️ </span>
-            ההקלטות שלי
+            {t.myRecordings}
           </h2>
-          <p className="text-muted">
-            סיפורים שהקלטתם בקול שלכם בזמן הקריאה. הקלטה ששיתפתם תופיע לכל הקוראים אחרי אישור העורכים.
-          </p>
+          <p className="text-muted">{t.recordingsIntro}</p>
           <ul className="grid gap-4 lg:grid-cols-2">
             {myRecordings.map(({ recording, book }) => (
-              <MyRecordingRow key={recording.id} recording={recording} book={book} />
+              <MyRecordingRow key={recording.id} recording={recording} book={book} locale={locale} />
             ))}
           </ul>
         </section>
@@ -253,12 +243,12 @@ export default async function MePage() {
       <section aria-labelledby="device-title" className="flex flex-col gap-4">
         <h2 id="device-title" className="text-2xl font-extrabold">
           <span aria-hidden="true">📱 </span>
-          במכשיר הזה
+          {t.onThisDevice}
         </h2>
         <div className="flex flex-wrap items-center gap-3">
           <ButtonLink href="/offline" variant="outline">
             <CloudDownload aria-hidden="true" className="size-5" />
-            ספרים שהורדתי לקריאה בלי רשת
+            {t.offlineBooks}
           </ButtonLink>
           <InstallPrompt variant="inline" />
         </div>

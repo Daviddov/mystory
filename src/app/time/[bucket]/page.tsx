@@ -5,6 +5,9 @@ import type { RawSearchParams } from "@/components/library/filters";
 import { listingRobots } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
+import { libraryMessages } from "@/lib/i18n/library";
+import { taxonomyText } from "@/lib/i18n/messages";
+import { getLocale } from "@/lib/i18n/server";
 import { READING_TIME_BUCKETS, getReadingTimeBucket } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -54,25 +57,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function TimePage({ params, searchParams }: Props) {
   const bucket = getReadingTimeBucket((await params).bucket);
   if (!bucket) notFound();
+  const locale = await getLocale();
+  const t = libraryMessages(locale);
+  const text = taxonomyText(locale, "time", bucket.slug, bucket);
 
   return (
     <BrowseView
       path={routes.time(bucket.slug)}
       searchParams={await searchParams}
       base={{ timeBucket: bucket.slug }}
-      eyebrow="ספרים לפי זמן קריאה"
-      title={bucket.label}
+      eyebrow={t.time.eyebrow}
+      title={text.label}
       emoji={bucket.emoji}
-      description={DESCRIPTIONS[bucket.slug]}
-      crumbs={[{ label: "כל הספרים", href: routes.books() }, { label: bucket.label }]}
-      siblingsLabel="זמני קריאה"
+      description={t.time.descriptions[bucket.slug]}
+      crumbs={[{ label: t.allBooksCrumb, href: routes.books() }, { label: text.label }]}
+      siblingsLabel={t.time.siblings}
       siblings={READING_TIME_BUCKETS.map((item) => ({
-        label: item.label,
+        label: taxonomyText(locale, "time", item.slug, item).label,
         href: routes.time(item.slug),
         selected: item.slug === bucket.slug,
       }))}
       refineHref={routes.books({ time: bucket.slug })}
-      emptyTitle="עוד אין ספרים באורך הזה"
+      emptyTitle={t.time.empty}
     />
   );
 }

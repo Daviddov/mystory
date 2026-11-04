@@ -2,7 +2,9 @@
 
 import { FolderOpen, Upload } from "lucide-react";
 import { useRef, useState, type DragEvent } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";
+import { STUDIO_DROP_ZONE } from "@/lib/i18n/studio-import";
 import { cn } from "@/lib/cn";
 import { filesFromDrop, filesFromInput, type PickedFile } from "@/lib/importers/client-files";
 
@@ -18,6 +20,7 @@ const ACCEPT = ".zip,.pdf,image/png,image/jpeg,image/webp,image/gif,image/avif";
 
 /** Drop target for a zip package, a PDF, images or a whole folder, with buttons for keyboard and touch users. */
 export function DropZone({ onFiles, disabled, compact, className }: DropZoneProps) {
+  const t = STUDIO_DROP_ZONE[useLocale()];
   const [over, setOver] = useState(false);
   const filesInput = useRef<HTMLInputElement>(null);
   const folderInput = useRef<HTMLInputElement>(null);
@@ -48,20 +51,20 @@ export function DropZone({ onFiles, disabled, compact, className }: DropZoneProp
       {compact ? null : <Upload aria-hidden="true" className="size-12 text-primary" />}
       <div className="flex flex-col gap-1">
         <p className={cn("font-bold", compact ? "text-lg" : "text-2xl")}>
-          {compact ? "גררו לכאן עוד תמונות" : "גררו לכאן קבצים או תיקייה"}
+          {compact ? t.dropMore : t.dropFiles}
         </p>
         {compact ? null : (
-          <p className="text-muted">קובץ zip של ספר, קובץ PDF, או תמונות (כל תמונה תהפוך לעמוד)</p>
+          <p className="text-muted">{t.hint}</p>
         )}
       </div>
       <div className="flex flex-wrap justify-center gap-3">
         <Button variant="primary" disabled={disabled} onClick={() => filesInput.current?.click()}>
           <Upload aria-hidden="true" className="size-5" />
-          בחירת קבצים
+          {t.chooseFiles}
         </Button>
         <Button variant="outline" disabled={disabled} onClick={() => folderInput.current?.click()}>
           <FolderOpen aria-hidden="true" className="size-5" />
-          בחירת תיקייה
+          {t.chooseFolder}
         </Button>
       </div>
       <input

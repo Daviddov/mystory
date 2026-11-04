@@ -21,8 +21,12 @@ import { BookVideoButton } from "@/components/video/BookVideoButton";
 import { ButtonLink, Card, Chip } from "@/components/ui";
 import { canViewBook } from "@/lib/auth";
 import { toCommentView } from "@/lib/comments";
-import { isCreativeCommons, LANGUAGE_NAMES_HE } from "@/lib/credits";
+import { isCreativeCommons } from "@/lib/credits";
 import { hasNikud } from "@/lib/hebrew";
+import { ageGroupsText, readingTimeText } from "@/lib/i18n/labels";
+import { taxonomyText } from "@/lib/i18n/messages";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
+import { getLocale } from "@/lib/i18n/server";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
@@ -37,7 +41,16 @@ import {
   readingTimeBucket,
   readingTimeLabel,
 } from "@/lib/taxonomy";
-import { bookAgeGroups, bookLanguage, needsTranslation, SLUG_PATTERN, type BookStatus, type BookWithPages, type User } from "@/lib/types";
+import {
+  bookAgeGroups,
+  bookLanguage,
+  needsTranslation,
+  SLUG_PATTERN,
+  textDirection,
+  type BookStatus,
+  type BookWithPages,
+  type User,
+} from "@/lib/types";
 
 /**
  * The book page, shared by two routes:
@@ -70,12 +83,6 @@ function httpUrl(value: string): string | null {
     return null;
   }
 }
-
-const STATUS_NOTES: Record<Exclude<BookStatus, "published">, string> = {
-  draft: "זאת טיוטה. רק מי שיצר אותה ועורכי האתר רואים את העמוד הזה.",
-  private: "זה ספר פרטי. הוא לא מופיע בספרייה, ורק מי שיצר אותו ועורכי האתר רואים את העמוד הזה.",
-  pending: "הספר ממתין לאישור עורך, ועדיין לא מופיע בספרייה.",
-};
 
 export async function bookMetadata(slug: string, viewer: User | null): Promise<Metadata> {
   const book = await loadVisibleBook(slug, viewer);
@@ -129,6 +136,10 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
 export async function BookView({ slug, viewer: user }: { slug: string; viewer: User | null }) {
   const book = await loadVisibleBook(slug, user);
   if (!book) notFound();
+  // Empty on the static route (force-static sees no cookies), which is always Hebrew; English
+  // visitors are sent to the per-request twin by src/proxy.ts.
+  const locale = await getLocale();
+  const t = READER_MESSAGES[locale].book;
 
   const repo = await getRepo();
   const [similar, isFavorite, inPlaylist, myProgress, ratingSummary, myRating, comments] = await Promise.all([
@@ -204,13 +215,13 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
 
       {book.status !== "published" ? (
         <p role="note" className="rounded-md bg-warning-soft px-4 py-3 text-base">
-          {STATUS_NOTES[book.status]}
+          {t.statusNotes[book.status as Exclude<BookStatus, "published">]}
         </p>
       ) : null}
 
       {needsTranslation(book) ? (
         <p role="note" className="rounded-md bg-warning-soft px-4 py-3 text-base">
-          הספר הזה עדיין ב{LANGUAGE_NAMES_HE[language]} ולא תורגם לעברית. הוא לא יכול להתפרסם בספרייה עד שיתורגם.
+          {t.needsTranslation(language)}
         </p>
       ) : null}
 
@@ -220,7 +231,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
             {cover ? (
               <img
                 src={cover}
-                alt={`כריכת הספר ${book.title}`}
+                alt={t.coverAlt(book.title)}
                 width={600}
                 height={800}
                 fetchPriority="high"
@@ -237,31 +248,51 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
 
         <div className="flex flex-col gap-6">
           <PageHeading
-            title={language === "he" ? book.title : <span lang={language}>{book.title}</span>}
+            title={
+              language === "he" && locale === "he" ? (
+                book.title
+              ) : (
+                <span lang={language} dir={textDirection(language)}>
+                  {book.title}
+                </span>
+              )
+            }
             structuredData={book.status === "published"}
+            locale={locale}
             crumbs={[
-              { label: "כל הספרים", href: routes.books() },
-              ...(age ? [{ label: age.label, href: routes.age(age.slug) }] : []),
+              { label: t.allBooks, href: routes.books() },
+              ...(age ? [{ label: taxonomyText(locale, "age", age.slug, age).label, href: routes.age(age.slug) }] : []),
               { label: book.title },
             ]}
           >
             {!book.author && !book.illustrator && book.credits?.creators ? (
               <p className="text-lg text-muted">
-                יוצרי הספר: <bdi>{book.credits.creators}</bdi>
+                {t.creators}
+                <bdi>{book.credits.creators}</bdi>
               </p>
             ) : null}
             {book.author || book.illustrator ? (
               <p className="text-lg text-muted">
-                {book.author ? <span>כתיבה: {book.author}</span> : null}
+                {book.author ? (
+                  <span>
+                    {t.writtenBy}
+                    <bdi>{book.author}</bdi>
+                  </span>
+                ) : null}
                 {book.author && book.illustrator ? <span aria-hidden="true"> · </span> : null}
-                {book.illustrator ? <span>איור: {book.illustrator}</span> : null}
+                {book.illustrator ? (
+                  <span>
+                    {t.illustratedBy}
+                    <bdi>{book.illustrator}</bdi>
+                  </span>
+                ) : null}
               </p>
             ) : null}
             <ul className="flex flex-wrap gap-2">
               {ageGroups.map((group) => (
                 <li key={group.slug}>
                   <Chip href={routes.age(group.slug)} icon={group.emoji} tone="accent">
-                    {group.label}
+                    {taxonomyText(locale, "age", group.slug, group).label}
                   </Chip>
                 </li>
               ))}
@@ -272,19 +303,19 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
                   tone="secondary"
                   size="md"
                 >
-                  {readingTimeLabel(book.readingMinutes)} קריאה
+                  {t.readingTime(readingTimeText(locale, book.readingMinutes))}
                 </Chip>
               </li>
               {hasPages ? (
                 <li>
-                  <Chip size="md">{book.pages.length} עמודים</Chip>
+                  <Chip size="md">{t.pages(book.pages.length)}</Chip>
                 </li>
               ) : null}
             </ul>
           </PageHeading>
 
           {book.summary ? (
-            <p lang={language} className="max-w-2xl text-xl leading-relaxed">
+            <p lang={language} dir={textDirection(language)} className="max-w-2xl text-xl leading-relaxed">
               {book.summary}
             </p>
           ) : null}
@@ -299,7 +330,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
                   data-testid="read-button"
                 >
                   <BookOpen aria-hidden="true" className="size-7" />
-                  בואו נקרא
+                  {t.read}
                 </ButtonLink>
                 {hasAudio ? (
                   <ButtonLink
@@ -309,22 +340,22 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
                     className="w-full sm:w-auto"
                   >
                     <Headphones aria-hidden="true" />
-                    האזנה לסיפור
+                    {t.listen}
                   </ButtonLink>
                 ) : null}
               </div>
             ) : (
               <p role="note" className="rounded-md bg-surface-2 px-4 py-3 text-lg">
-                לספר הזה עוד אין עמודים, ולכן אי אפשר לקרוא אותו עדיין.
+                {t.noPages}
               </p>
             )}
             {hasPages && !hasAudio ? (
               <p className="flex items-center gap-2 text-muted">
                 <Headphones aria-hidden="true" className="size-5 shrink-0" />
-                לספר הזה עוד אין הקראה. אפשר לקרוא אותו יחד בקול.
+                {t.noAudio}
               </p>
             ) : null}
-            {hasMockAudio ? <MockNotice kind="tts" /> : null}
+            {hasMockAudio ? <MockNotice kind="tts" locale={locale} /> : null}
             <div className="flex flex-wrap items-start gap-3">
               {user ? (
                 <>
@@ -353,7 +384,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
                 <>
                   <ButtonLink href={routes.print(book.slug)} variant="outline">
                     <Printer aria-hidden="true" className="size-5" />
-                    הדפסה ו-PDF
+                    {t.print}
                   </ButtonLink>
                   <OfflineDownloadButton bookId={book.id} title={book.title} />
                   {book.status === "published" ? (
@@ -390,17 +421,25 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
       <div className="grid gap-6 lg:grid-cols-2">
         <Card as="section" aria-labelledby="book-facts-title" className="flex flex-col gap-4">
           <h2 id="book-facts-title" className="text-2xl font-bold">
-            פרטי הספר
+            {t.facts}
           </h2>
           <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {book.author ? <Fact label="כתיבה">{book.author}</Fact> : null}
-            {book.illustrator ? <Fact label="איור">{book.illustrator}</Fact> : null}
-            {ageGroups.length > 0 ? (
-              <Fact label="גיל מומלץ">{ageGroupsLabel(ageGroups.map((group) => group.slug))}</Fact>
+            {book.author ? (
+              <Fact label={t.author}>
+                <bdi>{book.author}</bdi>
+              </Fact>
             ) : null}
-            <Fact label="זמן קריאה">{readingTimeLabel(book.readingMinutes)}</Fact>
-            <Fact label="רישיון">{book.license || "לא צוין"}</Fact>
-            <Fact label="מקור">
+            {book.illustrator ? (
+              <Fact label={t.illustrator}>
+                <bdi>{book.illustrator}</bdi>
+              </Fact>
+            ) : null}
+            {ageGroups.length > 0 ? (
+              <Fact label={t.age}>{ageGroupsText(locale, ageGroups.map((group) => group.slug))}</Fact>
+            ) : null}
+            <Fact label={t.time}>{readingTimeText(locale, book.readingMinutes)}</Fact>
+            <Fact label={t.license}>{book.license ? <bdi>{book.license}</bdi> : t.notGiven}</Fact>
+            <Fact label={t.source}>
               {sourceUrl ? (
                 <a
                   href={sourceUrl}
@@ -412,14 +451,14 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
                   {sourceUrl}
                 </a>
               ) : (
-                book.source || "לא צוין"
+                book.source ? <bdi>{book.source}</bdi> : t.notGiven
               )}
             </Fact>
           </dl>
           {book.origin === "ai" ? (
             <p className="rounded-md bg-surface-2 px-4 py-3 text-base">
               <span aria-hidden="true">✨ </span>
-              הספר הזה נוצר על ידי דב בר
+              {t.aiMade}
             </p>
           ) : null}
         </Card>
@@ -427,16 +466,16 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
         {categories.length + themes.length + tags.length > 0 ? (
           <Card as="section" aria-labelledby="book-topics-title" className="flex flex-col gap-4">
             <h2 id="book-topics-title" className="text-2xl font-bold">
-              על מה הספר
+              {t.topics}
             </h2>
             {categories.length > 0 ? (
               <div className="flex flex-col gap-2">
-                <h3 className="text-sm font-semibold text-muted">קטגוריות</h3>
+                <h3 className="text-sm font-semibold text-muted">{t.categories}</h3>
                 <ul className="flex flex-wrap gap-2">
                   {categories.map((category) => (
                     <li key={category.slug}>
                       <Chip href={routes.category(category.slug)} icon={category.emoji} tone="primary">
-                        {category.label}
+                        {taxonomyText(locale, "category", category.slug, category).label}
                       </Chip>
                     </li>
                   ))}
@@ -445,12 +484,12 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
             ) : null}
             {themes.length > 0 ? (
               <div className="flex flex-col gap-2">
-                <h3 className="text-sm font-semibold text-muted">נושאים לשיחה</h3>
+                <h3 className="text-sm font-semibold text-muted">{t.themes}</h3>
                 <ul className="flex flex-wrap gap-2">
                   {themes.map((theme) => (
                     <li key={theme.slug}>
                       <Chip href={routes.theme(theme.slug)} icon={theme.emoji} tone="secondary">
-                        {theme.label}
+                        {taxonomyText(locale, "theme", theme.slug, theme).label}
                       </Chip>
                     </li>
                   ))}
@@ -459,11 +498,11 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
             ) : null}
             {tags.length > 0 ? (
               <div className="flex flex-col gap-2">
-                <h3 className="text-sm font-semibold text-muted">תגיות</h3>
+                <h3 className="text-sm font-semibold text-muted">{t.tags}</h3>
                 <ul className="flex flex-wrap gap-2">
                   {tags.map((tag) => (
                     <li key={tag}>
-                      <Chip href={routes.tag(tag)}>{tag}</Chip>
+                      <Chip href={routes.tag(tag)}>{taxonomyText(locale, "tag", tag, { label: tag }).label}</Chip>
                     </li>
                   ))}
                 </ul>
@@ -473,15 +512,15 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
         ) : null}
       </div>
 
-      {hasPages ? <BookFullText book={book} /> : null}
+      {hasPages ? <BookFullText book={book} locale={locale} /> : null}
 
-      {showCredits ? <BookCredits book={book} /> : null}
+      {showCredits ? <BookCredits book={book} locale={locale} /> : null}
 
       {questions.length > 0 ? (
         <section aria-labelledby="book-questions-title" className="flex flex-col gap-4 rounded-xl bg-accent-soft p-5 sm:p-8">
           <h2 id="book-questions-title" className="text-2xl font-bold sm:text-3xl">
             <span aria-hidden="true">💬 </span>
-            שאלות לשיחה אחרי הסיפור
+            {t.questions}
           </h2>
           <ol className="flex flex-col gap-3">
             {questions.map((question, index) => (
@@ -492,7 +531,7 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
                 >
                   {index + 1}
                 </span>
-                <span>{question}</span>
+                <span dir="auto">{question}</span>
               </li>
             ))}
           </ol>
@@ -508,11 +547,12 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
       />
 
       <BookRow
-        title="עוד ספרים כאלה"
+        title={t.similar}
         emoji="📚"
         books={similar}
         href={age ? routes.age(age.slug) : routes.books()}
-        hrefLabel={age ? `עוד ספרים ל${age.label}` : "לכל הספרים"}
+        hrefLabel={age ? t.moreForAge(taxonomyText(locale, "age", age.slug, age).label) : t.toAllBooks}
+        locale={locale}
       />
     </main>
   );

@@ -1,17 +1,15 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Field, Input } from "@/components/ui";
+import { accountMessages } from "@/lib/i18n/account";
 import { WAITLIST_INTERESTS, type WaitlistInterest } from "@/lib/types";
-
-const LABELS: Record<WaitlistInterest, string> = {
-  credits: "חבילת ספרים נוספים אחרי הספר החינמי השבועי",
-  "personal-book": "ספר אישי עם השם והתמונה של הילד, כמתנה",
-  print: "ספר מודפס שמגיע עד הבית",
-};
 
 /** Leaves an e-mail on the waiting list. Nothing is charged; it only measures interest. */
 export function WaitlistForm({ defaultInterests = ["credits"] }: { defaultInterests?: WaitlistInterest[] }) {
+  const locale = useLocale();
+  const t = accountMessages(locale).waitlist;
   const [email, setEmail] = useState("");
   const [interests, setInterests] = useState<WaitlistInterest[]>(defaultInterests);
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
@@ -26,7 +24,7 @@ export function WaitlistForm({ defaultInterests = ["credits"] }: { defaultIntere
   async function submit(event: FormEvent) {
     event.preventDefault();
     if (interests.length === 0) {
-      setError("בחרו לפחות דבר אחד שמעניין אתכם.");
+      setError(t.chooseOne);
       return;
     }
     setError(null);
@@ -39,11 +37,13 @@ export function WaitlistForm({ defaultInterests = ["credits"] }: { defaultIntere
       });
       if (!response.ok) {
         const body = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(response.status === 400 ? "כתובת המייל אינה תקינה." : (body?.error ?? "משהו השתבש. נסו שוב."));
+        throw new Error(
+          response.status === 400 ? t.badEmail : ((locale === "he" ? body?.error : undefined) ?? t.failed),
+        );
       }
       setState("done");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "משהו השתבש. נסו שוב.");
+      setError(err instanceof Error ? err.message : t.failed);
       setState("idle");
     }
   }
@@ -51,7 +51,7 @@ export function WaitlistForm({ defaultInterests = ["credits"] }: { defaultIntere
   if (state === "done") {
     return (
       <p role="status" className="rounded-lg bg-surface-2 p-5 text-lg font-semibold">
-        תודה! רשמנו אתכם. נשלח מייל אחד כשזה יהיה מוכן, ולא יותר.
+        {t.thanks}
       </p>
     );
   }
@@ -59,7 +59,7 @@ export function WaitlistForm({ defaultInterests = ["credits"] }: { defaultIntere
   return (
     <form onSubmit={submit} className="flex flex-col gap-4" noValidate>
       <fieldset className="flex flex-col gap-2">
-        <legend className="mb-1 text-base font-semibold">מה מעניין אתכם?</legend>
+        <legend className="mb-1 text-base font-semibold">{t.legend}</legend>
         {WAITLIST_INTERESTS.map((interest) => (
           <label key={interest} className="flex min-h-11 items-center gap-3 text-base">
             <input
@@ -68,11 +68,11 @@ export function WaitlistForm({ defaultInterests = ["credits"] }: { defaultIntere
               checked={interests.includes(interest)}
               onChange={() => toggle(interest)}
             />
-            {LABELS[interest]}
+            {t.interests[interest]}
           </label>
         ))}
       </fieldset>
-      <Field label="המייל שלכם" htmlFor="waitlist-email" error={error} required>
+      <Field label={t.email} htmlFor="waitlist-email" error={error} required>
         <Input
           id="waitlist-email"
           type="email"
@@ -87,9 +87,9 @@ export function WaitlistForm({ defaultInterests = ["credits"] }: { defaultIntere
         />
       </Field>
       <Button type="submit" size="lg" disabled={state === "sending"}>
-        {state === "sending" ? "שולחים…" : "עדכנו אותי"}
+        {state === "sending" ? t.sending : t.submit}
       </Button>
-      <p className="text-sm text-muted">אין חיוב ואין התחייבות. המייל משמש רק לעדכון על זה, ולא נעביר אותו הלאה.</p>
+      <p className="text-sm text-muted">{t.fineprint}</p>
     </form>
   );
 }

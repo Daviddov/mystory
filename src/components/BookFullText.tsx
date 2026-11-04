@@ -1,4 +1,6 @@
 import { BookOpenText } from "lucide-react";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { mediaUrl } from "@/lib/media/url";
 import { pageDisplayText } from "@/lib/reader/logic";
 import { plainText } from "@/lib/seo";
@@ -11,7 +13,8 @@ import type { BookWithPages } from "@/lib/types";
  * reader only shows one page at a time. Collapsed by default; its content is
  * in the HTML either way.
  */
-export function BookFullText({ book }: { book: BookWithPages }) {
+export function BookFullText({ book, locale = DEFAULT_LOCALE }: { book: BookWithPages; locale?: Locale }) {
+  const t = READER_MESSAGES[locale].fullText;
   const pages = book.pages.filter((page) => page.text.trim() || page.image);
   if (pages.length === 0) return null;
   const title = plainText(book.title);
@@ -19,9 +22,12 @@ export function BookFullText({ book }: { book: BookWithPages }) {
     <details className="group rounded-xl border border-border bg-surface p-5 sm:p-8">
       <summary className="flex cursor-pointer list-none items-center gap-3 text-2xl font-bold sm:text-3xl [&::-webkit-details-marker]:hidden">
         <BookOpenText aria-hidden="true" className="size-7 shrink-0 text-secondary" />
-        <h2>הסיפור המלא: {book.title}</h2>
+        <h2>
+          {t.title}
+          <bdi>{book.title}</bdi>
+        </h2>
         <span aria-hidden="true" className="ms-auto text-base font-semibold text-muted group-open:hidden">
-          לפתוח
+          {t.open}
         </span>
       </summary>
       <ol className="mt-6 flex flex-col gap-8">
@@ -33,7 +39,7 @@ export function BookFullText({ book }: { book: BookWithPages }) {
               {image ? (
                 <img
                   src={image}
-                  alt={plainText(page.imageAlt) || `איור לעמוד ${index + 1} בסיפור ${title}`}
+                  alt={plainText(page.imageAlt) || t.pictureAlt(index + 1, title)}
                   loading="lazy"
                   decoding="async"
                   className="w-full rounded-lg bg-surface-2 object-contain sm:w-64 sm:shrink-0"

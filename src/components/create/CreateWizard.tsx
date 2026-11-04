@@ -10,6 +10,7 @@
 import { useEffect, useRef, useState, type FormEvent, type RefObject } from "react";
 import { BookOpen, Camera, Check, Pencil, Sparkles, Trash2 } from "lucide-react";
 import { MockNotice } from "@/components/MockNotice";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, ButtonLink, Card, Chip, Field, Input, Select, Spinner, Textarea } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { INPUT_LIMITS, PHOTO_LIMITS, type ChildGender, type WizardInputDraft } from "@/lib/generation/input";
@@ -21,6 +22,17 @@ import {
   type StoryMood,
   type StoryStyle,
 } from "@/lib/generation/options";
+import {
+  accountMessages,
+  hobbyLabel,
+  ideaSuggestion,
+  jobStepLabel,
+  moodText,
+  styleLabel,
+  type AccountMessages,
+} from "@/lib/i18n/account";
+import type { Locale } from "@/lib/i18n/locale";
+import { taxonomyText } from "@/lib/i18n/messages";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { AGE_GROUP_INFO, CATEGORIES } from "@/lib/taxonomy";
@@ -40,10 +52,10 @@ export interface WizardStepInfo {
 export interface CreateWizardProps {
   /** A job of this user that is still running: the wizard opens on the progress screen. */
   activeJobId?: string;
-  /** Hebrew line about the weekly quota, shown under the title. */
+  /** Line about the weekly quota in the interface language, shown under the title. */
   quotaLine: string;
   mock: WizardMockFlags;
-  /** Pipeline steps in order, for the progress list. */
+  /** Pipeline steps in order, for the progress list (labels in the interface language). */
   steps: WizardStepInfo[];
 }
 
@@ -60,7 +72,6 @@ interface JobView {
   book?: { id: string; slug: string; title: string; coverImage: string; updatedAt: string; pageCount: number };
 }
 
-const WIZARD_STEPS = ["הילד או הילדה", "הרעיון", "הסגנון", "הספר"] as const;
 const POLL_MS = 1500;
 
 function ageGroupForAge(age: number | undefined): AgeGroup {
@@ -70,10 +81,12 @@ function ageGroupForAge(age: number | undefined): AgeGroup {
   return "6-8";
 }
 
-function Stepper({ current }: { current: number }) {
+type WizardMessages = AccountMessages["wizard"];
+
+function Stepper({ current, t }: { current: number; t: WizardMessages }) {
   return (
-    <ol className="flex items-center justify-between gap-2" aria-label="שלבי היצירה">
-      {WIZARD_STEPS.map((label, index) => {
+    <ol className="flex items-center justify-between gap-2" aria-label={t.stepsAria}>
+      {t.steps.map((label, index) => {
         const done = index < current;
         const active = index === current;
         return (
@@ -94,13 +107,25 @@ function Stepper({ current }: { current: number }) {
             </span>
             <span className={cn("truncate text-sm", active ? "font-semibold text-foreground" : "text-muted")}>
               {label}
-              {done ? <span className="sr-only"> (הושלם)</span> : null}
+              {done ? <span className="sr-only">{t.completed}</span> : null}
             </span>
           </li>
         );
       })}
     </ol>
   );
+}
+
+/**
+ * The message shown when /api/generate refuses. The API answers in Hebrew, so
+ * in English the message is chosen by status.
+ */
+function submitErrorText(locale: Locale, t: WizardMessages, status: number, error: string | undefined): string {
+  if (locale === "he") return error ?? t.somethingWrong;
+  if (status === 413) return t.photoSize;
+  if (status === 400) return t.badInput;
+  if (status === 429) return t.quotaReached;
+  return t.somethingWrong;
 }
 
 function ChoiceCard({
@@ -136,6 +161,8 @@ function ChoiceCard({
 }
 
 export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWizardProps) {
+  const locale = useLocale();
+  const t = accountMessages(locale).wizard;
   const [step, setStep] = useState(activeJobId ? 3 : 0);
 
   // Step 1
@@ -209,7 +236,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
         if (response.status === 404) {
           setJob(null);
           setJobId(null);
-          setSubmitError("לא מצאנו את הספר שבהכנה. אפשר להתחיל מחדש.");
+          setSubmitError(t.jobNotFound);
           setStep(2);
           return;
         }
@@ -232,14 +259,14 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
       cancelled = true;
       if (timer) clearTimeout(timer);
     };
-  }, [jobId]);
+  }, [jobId, t.jobNotFound]);
 
   const age = childAge === "" ? undefined : Number(childAge);
   const effectiveAgeGroup = ageGroup ?? ageGroupForAge(age);
 
-  const nameError = childName.trim() === "" ? "איך קוראים לגיבור או לגיבורה של הסיפור?" : "";
-  const genderError = childGender === null ? "בחרו בן או בת, כדי שהסיפור ייכתב בלשון הנכונה." : "";
-  const ideaError = idea.trim().length < INPUT_LIMITS.ideaMin ? "כתבו כמה מילים על הסיפור, או בחרו רעיון מהרשימה." : "";
+  const nameError = childName.trim() === "" ? t.nameError : "";
+  const genderError = childGender === null ? t.genderError : "";
+  const ideaError = idea.trim().length < INPUT_LIMITS.ideaMin ? t.ideaError : "";
 
   const toggleHobby = (hobby: string) => {
     setHobbies((current) =>
@@ -263,11 +290,11 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
     setPhotoError("");
     if (!file) return;
     if (!(PHOTO_LIMITS.contentTypes as readonly string[]).includes(file.type)) {
-      setPhotoError("אפשר להעלות רק תמונה מסוג JPEG, PNG או WebP.");
+      setPhotoError(t.photoType);
       return;
     }
     if (file.size > PHOTO_LIMITS.maxBytes) {
-      setPhotoError("התמונה גדולה מדי. אפשר להעלות תמונה עד 5 מ״ב.");
+      setPhotoError(t.photoSize);
       return;
     }
     setPhoto(file);
@@ -331,9 +358,9 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
         setStep(3);
         return;
       }
-      setSubmitError(data.error ?? "משהו השתבש. נסו שוב בעוד רגע.");
+      setSubmitError(submitErrorText(locale, t, response.status, data.error));
     } catch {
-      setSubmitError("אין חיבור לשרת. בדקו את החיבור ונסו שוב.");
+      setSubmitError(t.noServer);
     } finally {
       setSubmitting(false);
     }
@@ -357,22 +384,18 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-6">
       <header className="flex flex-col gap-2 text-center">
-        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">יוצרים ספר אישי</h1>
-        <p className="text-lg text-muted">ארבעה צעדים קצרים, והילד או הילדה שלכם הופכים לגיבורי סיפור מאויר.</p>
+        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{t.title}</h1>
+        <p className="text-lg text-muted">{t.intro}</p>
         {quotaLine ? <p className="text-sm text-muted">{quotaLine}</p> : null}
       </header>
 
       {demoMode ? (
         <MockNotice>
-          {mock.text && mock.image
-            ? "מצב הדגמה: שירותי הכתיבה והאיור לא מחוברים. ייווצר סיפור קבוע לדוגמה עם השם שתבחרו ועם איורים זמניים, והרעיון שתכתבו לא ישולב בו. גם ספר לדוגמה נספר במכסה השבועית."
-            : mock.text
-              ? "מצב הדגמה: שירות הכתיבה לא מחובר. ייווצר סיפור קבוע לדוגמה עם השם שתבחרו, והרעיון שתכתבו לא ישולב בו. גם ספר לדוגמה נספר במכסה השבועית."
-              : "מצב הדגמה: שירות האיור לא מחובר. הסיפור ייכתב במיוחד בשבילכם, אבל האיורים יהיו איורים זמניים לדוגמה."}
+          {mock.text && mock.image ? t.mockBoth : mock.text ? t.mockText : t.mockImage}
         </MockNotice>
       ) : null}
 
-      <Stepper current={step} />
+      <Stepper current={step} t={t} />
 
       {step < 3 ? (
         <form onSubmit={onSubmitForm} noValidate>
@@ -380,17 +403,18 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
           {step === 0 ? (
             <>
               <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-bold text-foreground outline-none">
-                על מי הסיפור?
+                {t.whoTitle}
               </h2>
               <Field
-                label="שם פרטי"
+                label={t.firstName}
                 htmlFor="child-name"
                 required
                 error={showErrors ? nameError : undefined}
-                hint="רק שם פרטי. הוא יופיע בסיפור."
+                hint={t.firstNameHint}
               >
                 <Input
                   id="child-name"
+                  dir="auto"
                   value={childName}
                   onChange={(event) => setChildName(event.target.value)}
                   maxLength={INPUT_LIMITS.childName}
@@ -402,14 +426,14 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
 
               <fieldset className="flex flex-col gap-2">
                 <legend className="mb-1.5 text-base font-semibold text-foreground">
-                  הסיפור ייכתב על
+                  {t.writtenAbout}
                   <span className="text-danger" aria-hidden="true">
                     {" *"}
                   </span>
                 </legend>
                 <div className="grid grid-cols-2 gap-3">
-                  <ChoiceCard selected={childGender === "boy"} onSelect={() => setChildGender("boy")} emoji="👦" title="בן" />
-                  <ChoiceCard selected={childGender === "girl"} onSelect={() => setChildGender("girl")} emoji="👧" title="בת" />
+                  <ChoiceCard selected={childGender === "boy"} onSelect={() => setChildGender("boy")} emoji="👦" title={t.boy} />
+                  <ChoiceCard selected={childGender === "girl"} onSelect={() => setChildGender("girl")} emoji="👧" title={t.girl} />
                 </div>
                 {showErrors && genderError ? (
                   <p role="alert" className="text-sm font-medium text-danger">
@@ -418,7 +442,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                 ) : null}
               </fieldset>
 
-              <Field label="גיל" htmlFor="child-age" hint="לא חובה. עוזר לנו להתאים את אורך הסיפור.">
+              <Field label={t.age} htmlFor="child-age" hint={t.ageHint}>
                 <Select
                   id="child-age"
                   value={childAge}
@@ -428,8 +452,8 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                   }}
                   aria-describedby="child-age-hint"
                 >
-                  <option value="">לא משנה</option>
-                  <option value="0">פחות משנה</option>
+                  <option value="">{t.anyAge}</option>
+                  <option value="0">{t.underOne}</option>
                   {Array.from({ length: 10 }, (_, i) => i + 1).map((value) => (
                     <option key={value} value={value}>
                       {value}
@@ -440,20 +464,21 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
 
               <fieldset className="flex flex-col gap-2">
                 <legend className="mb-1.5 text-base font-semibold text-foreground">
-                  מה אוהבים לעשות? <span className="font-normal text-muted">(עד {INPUT_LIMITS.hobbies})</span>
+                  {t.hobbies} <span className="font-normal text-muted">{t.upTo(INPUT_LIMITS.hobbies)}</span>
                 </legend>
                 <div className="flex flex-wrap gap-2">
                   {Array.from(new Set([...HOBBY_SUGGESTIONS, ...hobbies])).map((hobby) => (
                     <Chip key={hobby} onClick={() => toggleHobby(hobby)} selected={hobbies.includes(hobby)}>
-                      {hobby}
+                      <bdi dir="auto">{hobbyLabel(locale, hobby)}</bdi>
                     </Chip>
                   ))}
                 </div>
                 <div className="flex gap-2">
                   <Input
                     className="min-w-0"
-                    aria-label="תחביב אחר"
-                    placeholder="משהו אחר?"
+                    dir="auto"
+                    aria-label={t.otherHobbyAria}
+                    placeholder={t.otherHobby}
                     value={hobbyDraft}
                     maxLength={INPUT_LIMITS.hobby}
                     onChange={(event) => setHobbyDraft(event.target.value)}
@@ -469,28 +494,29 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                     onClick={addHobbyDraft}
                     disabled={hobbyDraft.trim() === "" || hobbies.length >= INPUT_LIMITS.hobbies}
                   >
-                    הוספה
+                    {t.add}
                   </Button>
                 </div>
               </fieldset>
 
               <fieldset className="flex flex-col gap-3">
                 <legend className="mb-1.5 text-base font-semibold text-foreground">
-                  איך הגיבור נראה? <span className="font-normal text-muted">(לא חובה)</span>
+                  {t.looks} <span className="font-normal text-muted">{t.optional}</span>
                 </legend>
                 {photoPreview ? (
                   <div className="flex items-center gap-4 rounded-lg bg-surface-2 p-3">
-                    <img src={photoPreview} alt="התמונה שנבחרה" className="size-20 rounded-md object-cover" />
-                    <p className="flex-1 text-sm text-muted">התמונה תישלח רק כשתלחצו על ״יוצרים את הספר״.</p>
-                    <Button variant="ghost" size="icon" aria-label="הסרת התמונה" onClick={removePhoto}>
+                    <img src={photoPreview} alt={t.chosenPhoto} className="size-20 rounded-md object-cover" />
+                    <p className="flex-1 text-sm text-muted">{t.photoSentOnSubmit}</p>
+                    <Button variant="ghost" size="icon" aria-label={t.removePhoto} onClick={removePhoto}>
                       <Trash2 aria-hidden="true" className="size-5" />
                     </Button>
                   </div>
                 ) : (
                   <Textarea
-                    aria-label="תיאור המראה במילים"
+                    aria-label={t.appearanceAria}
+                    dir="auto"
                     rows={2}
-                    placeholder="למשל: תלתלים חומים, משקפיים אדומים, תמיד עם כובע"
+                    placeholder={t.appearancePlaceholder}
                     value={appearance}
                     maxLength={INPUT_LIMITS.appearance}
                     onChange={(event) => setAppearance(event.target.value)}
@@ -508,7 +534,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                   {!photoPreview ? (
                     <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
                       <Camera aria-hidden="true" className="size-5" />
-                      או העלו תמונה
+                      {t.uploadPhoto}
                     </Button>
                   ) : null}
                 </div>
@@ -518,9 +544,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                   </p>
                 ) : null}
                 <p className="text-sm text-muted">
-                  {mock.text
-                    ? "במצב הדגמה אין שימוש בתמונה, והיא לא נשמרת."
-                    : "התמונה משמשת רק כדי לתאר במילים איך לצייר את הגיבור. היא לא נשמרת אצלנו ונמחקת מהזיכרון מיד אחר כך."}
+                  {mock.text ? t.photoMock : t.photoPrivacy}
                 </p>
               </fieldset>
             </>
@@ -529,12 +553,14 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
           {step === 1 ? (
             <>
               <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-bold text-foreground outline-none">
-                על מה הסיפור?
+                {t.whatTitle}
               </h2>
               <fieldset className="flex flex-col gap-2">
-                <legend className="mb-1.5 text-base font-semibold text-foreground">איזו הרגשה הסיפור ישאיר?</legend>
+                <legend className="mb-1.5 text-base font-semibold text-foreground">{t.mood}</legend>
                 <div className="flex flex-wrap gap-2">
-                  {STORY_MOODS.map((item) => (
+                  {STORY_MOODS.map((item) => {
+                    const text = moodText(locale, item.slug, item);
+                    return (
                     <Chip
                       key={item.slug}
                       tone="accent"
@@ -545,57 +571,64 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                           return;
                         }
                         const previous = STORY_MOODS.find((m) => m.slug === mood);
+                        const previousIdea = previous ? moodText(locale, previous.slug, previous).idea : undefined;
                         setMood(item.slug);
                         // Seeds the idea box, but never overwrites something the parent wrote.
-                        if (idea.trim() === "" || idea === previous?.idea) setIdea(item.idea);
+                        if (idea.trim() === "" || idea === previousIdea) setIdea(text.idea);
                       }}
                     >
-                      <span aria-hidden="true">{item.emoji}</span> {item.label}
+                      <span aria-hidden="true">{item.emoji}</span> {text.label}
                     </Chip>
-                  ))}
+                    );
+                  })}
                 </div>
               </fieldset>
               <Field
-                label="הרעיון בכמה מילים"
+                label={t.idea}
                 htmlFor="story-idea"
                 required
                 error={showErrors ? ideaError : undefined}
-                hint={`${idea.length} מתוך ${INPUT_LIMITS.idea} תווים`}
+                hint={t.ideaCount(idea.length, INPUT_LIMITS.idea)}
               >
                 <Textarea
                   id="story-idea"
+                  dir="auto"
                   rows={3}
                   value={idea}
                   maxLength={INPUT_LIMITS.idea}
                   onChange={(event) => setIdea(event.target.value)}
-                  placeholder="למשל: מסע לירח בחללית מקרטון"
+                  placeholder={t.ideaPlaceholder}
                   aria-invalid={showErrors && ideaError ? true : undefined}
                   aria-describedby={showErrors && ideaError ? "story-idea-error" : "story-idea-hint"}
                 />
               </Field>
               <div className="flex flex-col gap-2">
-                <p className="text-base font-semibold text-foreground">צריכים רעיון?</p>
+                <p className="text-base font-semibold text-foreground">{t.needIdea}</p>
                 <div className="flex flex-wrap gap-2">
-                  {IDEA_SUGGESTIONS.map((suggestion) => (
-                    <Chip
-                      key={suggestion}
-                      tone="accent"
-                      selected={idea === suggestion}
-                      onClick={() => setIdea(suggestion)}
-                      className="whitespace-normal py-2 text-start"
-                    >
-                      {suggestion}
-                    </Chip>
-                  ))}
+                  {IDEA_SUGGESTIONS.map((hebrew) => {
+                    const suggestion = ideaSuggestion(locale, hebrew);
+                    return (
+                      <Chip
+                        key={hebrew}
+                        tone="accent"
+                        selected={idea === suggestion}
+                        onClick={() => setIdea(suggestion)}
+                        className="whitespace-normal py-2 text-start"
+                      >
+                        {suggestion}
+                      </Chip>
+                    );
+                  })}
                 </div>
               </div>
               <Field
-                label="הקדשה (לא חובה)"
+                label={t.dedication}
                 htmlFor="book-dedication"
-                hint="תופיע במסך הפתיחה של הספר. למשל: לנועם, באהבה, סבתא"
+                hint={t.dedicationHint}
               >
                 <Input
                   id="book-dedication"
+                  dir="auto"
                   value={dedication}
                   onChange={(event) => setDedication(event.target.value)}
                   maxLength={INPUT_LIMITS.dedication}
@@ -608,25 +641,28 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
           {step === 2 ? (
             <>
               <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-bold text-foreground outline-none">
-                איך הספר ייראה?
+                {t.lookTitle}
               </h2>
               <fieldset className="flex flex-col gap-2">
-                <legend className="mb-1.5 text-base font-semibold text-foreground">למי הספר מתאים?</legend>
+                <legend className="mb-1.5 text-base font-semibold text-foreground">{t.forWhom}</legend>
                 <div className="grid gap-3 sm:grid-cols-3">
-                  {AGE_GROUP_INFO.map((group) => (
-                    <ChoiceCard
-                      key={group.slug}
-                      selected={effectiveAgeGroup === group.slug}
-                      onSelect={() => setAgeGroup(group.slug)}
-                      emoji={group.emoji}
-                      title={group.label}
-                      description={group.description}
-                    />
-                  ))}
+                  {AGE_GROUP_INFO.map((group) => {
+                    const text = taxonomyText(locale, "age", group.slug, group);
+                    return (
+                      <ChoiceCard
+                        key={group.slug}
+                        selected={effectiveAgeGroup === group.slug}
+                        onSelect={() => setAgeGroup(group.slug)}
+                        emoji={group.emoji}
+                        title={text.label}
+                        description={text.description}
+                      />
+                    );
+                  })}
                 </div>
               </fieldset>
               <fieldset className="flex flex-col gap-2">
-                <legend className="mb-1.5 text-base font-semibold text-foreground">איזה סוג סיפור?</legend>
+                <legend className="mb-1.5 text-base font-semibold text-foreground">{t.kind}</legend>
                 <div className="flex flex-wrap gap-2">
                   {CATEGORIES.map((item) => (
                     <Chip
@@ -635,13 +671,13 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                       selected={category === item.slug}
                       onClick={() => setCategory(item.slug)}
                     >
-                      {item.label}
+                      {taxonomyText(locale, "category", item.slug, item).label}
                     </Chip>
                   ))}
                 </div>
               </fieldset>
               <fieldset className="flex flex-col gap-2">
-                <legend className="mb-1.5 text-base font-semibold text-foreground">סגנון האיור</legend>
+                <legend className="mb-1.5 text-base font-semibold text-foreground">{t.style}</legend>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {STORY_STYLES.map((item) => (
                     <ChoiceCard
@@ -649,7 +685,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                       selected={style === item.slug}
                       onSelect={() => setStyle(item.slug)}
                       emoji={item.emoji}
-                      title={item.label}
+                      title={styleLabel(locale, item.slug, item.label)}
                     />
                   ))}
                 </div>
@@ -665,19 +701,19 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
           <div className="flex items-center justify-between gap-3">
             {step > 0 ? (
               <Button variant="ghost" onClick={() => setStep((current) => current - 1)} disabled={submitting}>
-                הקודם
+                {t.previous}
               </Button>
             ) : (
               <span />
             )}
             {step < 2 ? (
               <Button type="submit" size="lg">
-                הבא
+                {t.next}
               </Button>
             ) : (
               <Button type="submit" size="lg" loading={submitting}>
                 <Sparkles aria-hidden="true" className="size-5" />
-                יוצרים את הספר
+                {t.create}
               </Button>
             )}
           </div>
@@ -690,6 +726,8 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
           connectionLost={connectionLost}
           headingRef={headingRef}
           onTryAgain={tryAgain}
+          locale={locale}
+          t={t}
         />
       )}
     </div>
@@ -702,12 +740,16 @@ function ProgressPanel({
   connectionLost,
   headingRef,
   onTryAgain,
+  locale,
+  t,
 }: {
   job: JobView | null;
   steps: WizardStepInfo[];
   connectionLost: boolean;
   headingRef: RefObject<HTMLHeadingElement | null>;
   onTryAgain: () => void;
+  locale: Locale;
+  t: WizardMessages;
 }) {
   if (job?.status === "failed") {
     return (
@@ -716,13 +758,13 @@ function ProgressPanel({
           🌧️
         </span>
         <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-bold text-foreground outline-none">
-          הספר לא נוצר
+          {t.failedTitle}
         </h2>
         <p role="alert" className="text-lg text-muted">
-          {job.error ?? "משהו השתבש. נסו שוב בעוד רגע."}
+          {(locale === "he" ? job.error : undefined) ?? t.somethingWrong}
         </p>
         <Button size="lg" onClick={onTryAgain}>
-          לנסות שוב
+          {t.tryAgain}
         </Button>
       </Card>
     );
@@ -734,20 +776,23 @@ function ProgressPanel({
     return (
       <Card padding="lg" className="flex flex-col items-center gap-5 text-center">
         <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-bold text-foreground outline-none">
-          הספר מוכן! 🎉
+          {t.readyTitle}
         </h2>
         {cover ? (
           <img
             src={cover}
-            alt={`כריכת הספר ${book.title}`}
+            alt={t.coverAlt(book.title)}
             className="aspect-[3/4] w-48 rounded-lg object-cover shadow-pop"
           />
         ) : null}
-        <p className="font-story text-2xl text-foreground">{book.title}</p>
-        <p className="text-base text-muted">
-          {book.pageCount} עמודים. הספר פרטי: רק אתם רואים אותו, עד שתחליטו לשתף.
+        <p className="font-story text-2xl text-foreground" dir="auto">
+          {book.title}
         </p>
-        {job.message && job.message !== "הספר מוכן!" ? (
+        <p className="text-base text-muted">
+          {t.readyText(book.pageCount)}
+        </p>
+        {/* The server's extra notes are Hebrew only. */}
+        {locale === "he" && job.message && job.message !== "הספר מוכן!" ? (
           <p className="text-sm text-muted">{job.message.replace(/^הספר מוכן!\s*/, "")}</p>
         ) : null}
         {job.usedMock ? (
@@ -759,11 +804,11 @@ function ProgressPanel({
         <div className="flex flex-col items-center gap-3 sm:flex-row">
           <ButtonLink href={routes.read(book.slug)} size="lg">
             <BookOpen aria-hidden="true" className="size-6" />
-            בואו נקרא
+            {t.read}
           </ButtonLink>
           <ButtonLink href={routes.studioBook(book.id)} variant="outline">
             <Pencil aria-hidden="true" className="size-5" />
-            עריכה בסטודיו
+            {t.editInStudio}
           </ButtonLink>
         </div>
       </Card>
@@ -774,11 +819,11 @@ function ProgressPanel({
     return (
       <Card padding="lg" className="flex flex-col items-center gap-4 text-center">
         <h2 ref={headingRef} tabIndex={-1} className="text-2xl font-bold text-foreground outline-none">
-          הספר נוצר, אבל לא מצאנו אותו
+          {t.lostTitle}
         </h2>
-        <p className="text-lg text-muted">ייתכן שהוא נמחק. אפשר לחפש אותו בסטודיו.</p>
+        <p className="text-lg text-muted">{t.lostText}</p>
         <ButtonLink href={routes.studio()} variant="outline">
-          לסטודיו
+          {t.toStudio}
         </ButtonLink>
       </Card>
     );
@@ -793,11 +838,11 @@ function ProgressPanel({
   return (
     <Card padding="lg" className="flex flex-col gap-5">
       <h2 ref={headingRef} tabIndex={-1} className="text-center text-2xl font-bold text-foreground outline-none">
-        הספר בהכנה
+        {t.preparing}
       </h2>
       <div
         role="progressbar"
-        aria-label="התקדמות יצירת הספר"
+        aria-label={t.progressAria}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={progress}
@@ -810,7 +855,7 @@ function ProgressPanel({
       </div>
       <p aria-live="polite" className="flex items-center justify-center gap-2 text-center text-lg text-foreground">
         <Spinner size="sm" label="" />
-        <span>{job?.message || "מתחילים…"}</span>
+        <span>{(job ? (locale === "he" ? job.message : jobStepLabel(locale, job.step, "")) : "") || t.starting}</span>
       </p>
       <ol className="flex flex-col gap-2">
         {steps.map((item, index) => {
@@ -835,18 +880,18 @@ function ProgressPanel({
               </span>
               <span>
                 {item.label}
-                {done ? <span className="sr-only"> (הושלם)</span> : null}
+                {done ? <span className="sr-only">{t.completed}</span> : null}
               </span>
             </li>
           );
         })}
       </ol>
       <p className="text-center text-sm text-muted">
-        זה לוקח כמה דקות. אפשר לסגור את העמוד ולחזור אליו: הספר ימשיך להיווצר.
+        {t.takesMinutes}
       </p>
       {connectionLost ? (
         <p role="status" className="rounded-md bg-warning-soft px-4 py-3 text-center text-base text-foreground">
-          אין כרגע חיבור לשרת. ממשיכים לנסות.
+          {t.connectionLost}
         </p>
       ) : null}
     </Card>

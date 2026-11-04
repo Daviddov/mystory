@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { buttonClasses } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { libraryMessages } from "@/lib/i18n/library";
 
 /** Endpoint owned by the personal-area module: POST adds, DELETE removes. */
 export function favoriteApiUrl(bookId: string): string {
@@ -41,6 +43,7 @@ export function FavoriteButtonSlot({
   loginHref,
   className,
 }: FavoriteButtonSlotProps) {
+  const t = libraryMessages(useLocale()).favorite;
   const [favorite, setFavorite] = useState(initialFavorite);
   const [busy, setBusy] = useState(false);
   const [problem, setProblem] = useState<Problem>(null);
@@ -52,9 +55,9 @@ export function FavoriteButtonSlot({
       <div className={cn("flex flex-col gap-2", className)} data-slot="favorite-button">
         <Link href={loginHref} className={classes}>
           <Heart aria-hidden="true" />
-          שמירה במועדפים
+          {t.save}
         </Link>
-        <p className="text-sm text-muted">כדי לשמור ספרים במועדפים צריך להתחבר.</p>
+        <p className="text-sm text-muted">{t.signInNote}</p>
       </div>
     );
   }
@@ -92,21 +95,21 @@ export function FavoriteButtonSlot({
         className={classes}
       >
         <Heart aria-hidden="true" className={cn(favorite && "fill-danger text-danger")} />
-        {favorite ? "במועדפים שלי" : "שמירה במועדפים"}
+        {favorite ? t.saved : t.save}
       </button>
       <p role="status" aria-live="polite" className="min-h-5 text-sm text-muted">
         {problem === "login" ? (
           <>
-            כדי לשמור במועדפים צריך{" "}
+            {t.loginBefore}{" "}
             <Link href={loginHref} className="font-semibold text-secondary underline underline-offset-4">
-              להתחבר
+              {t.loginLink}
             </Link>
             .
           </>
         ) : problem === "unavailable" ? (
-          "המועדפים לא זמינים כרגע, והספר לא נשמר."
+          t.unavailable
         ) : problem === "failed" ? (
-          "לא הצלחנו לעדכן את המועדפים. נסו שוב בעוד רגע."
+          t.failed
         ) : null}
       </p>
     </div>

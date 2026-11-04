@@ -2,8 +2,10 @@
 
 import { Check } from "lucide-react";
 import { useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { buttonClasses } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { libraryMessages } from "@/lib/i18n/library";
 
 export interface ReadToggleButtonProps {
   bookId: string;
@@ -16,6 +18,7 @@ export interface ReadToggleButtonProps {
 
 /** Marks a book as read / not read for the signed-in user (POST /api/progress). */
 export function ReadToggleButton({ bookId, initialRead, pageIndex = 0, className }: ReadToggleButtonProps) {
+  const t = libraryMessages(useLocale()).readToggle;
   const [read, setRead] = useState(initialRead);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -52,10 +55,10 @@ export function ReadToggleButton({ bookId, initialRead, pageIndex = 0, className
         className={buttonClasses({ variant: "outline", size: "lg", className: "w-full sm:w-auto" })}
       >
         <Check aria-hidden="true" className={cn(read && "text-primary")} />
-        {read ? "קראתי את הספר" : "סימון כנקרא"}
+        {read ? t.read : t.mark}
       </button>
       <p role="status" aria-live="polite" className="min-h-5 text-sm text-muted">
-        {failed ? "לא הצלחנו לעדכן. נסו שוב בעוד רגע." : null}
+        {failed ? t.failed : null}
       </p>
     </div>
   );

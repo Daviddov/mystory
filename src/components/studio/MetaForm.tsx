@@ -2,7 +2,10 @@
 
 import { Plus, Trash2, Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Card, Chip, Field, Input, Select, Spinner, Textarea } from "@/components/ui";
+import { taxonomyText } from "@/lib/i18n/messages";
+import { META_FORM_MESSAGES } from "@/lib/i18n/studio-panels";
 import { mediaUrl } from "@/lib/media/url";
 import {
   IMAGE_ACCEPT,
@@ -17,8 +20,6 @@ import { AGE_GROUP_INFO, CATEGORIES, STARTER_TAGS, THEMES } from "@/lib/taxonomy
 import type { AgeGroup, BookCredits } from "@/lib/types";
 import type { EditorMeta } from "./types";
 
-const LICENSE_SUGGESTIONS = ["כל הזכויות שמורות", "CC BY 4.0", "CC BY-SA 4.0", "CC BY-NC 4.0", "CC0 (נחלת הכלל)"];
-
 export interface MetaFormProps {
   meta: EditorMeta;
   onChange: (patch: Partial<EditorMeta>) => void;
@@ -30,17 +31,17 @@ export interface MetaFormProps {
   version?: string;
 }
 
-/** Credit fields beyond author and illustrator, in the order they are shown. */
-const CREDIT_FIELDS: { key: Exclude<keyof BookCredits, "publisherLogo">; label: string; hint?: string; ltr?: boolean; wide?: boolean }[] = [
-  { key: "designer", label: "עיצוב" },
-  { key: "editor", label: "עריכה" },
-  { key: "translator", label: "תרגום לעברית", hint: "מי תרגם את הספר. חובה בספר מתורגם." },
-  { key: "creators", label: "יוצרי הספר (בלי חלוקה לתפקידים)", hint: "כשהמקור מונה את היוצרים ברשימה אחת." },
-  { key: "originalTitle", label: "השם המקורי של הספר", ltr: true },
-  { key: "publisher", label: "המוציא לאור המקורי", hint: "למשל Book Dash.", ltr: true },
-  { key: "publisherUrl", label: "אתר המוציא לאור", ltr: true },
-  { key: "attributionLine", label: "שורת הייחוס שהרישיון דורש", ltr: true, wide: true },
-  { key: "adaptation", label: "מה שונה מהמקור", hint: 'למשל: "Translation into Hebrew by ...".', ltr: true, wide: true },
+/** Credit fields beyond author and illustrator, in the order they are shown. Labels: META_FORM_MESSAGES.credit. */
+const CREDIT_FIELDS: { key: Exclude<keyof BookCredits, "publisherLogo">; ltr?: boolean; wide?: boolean }[] = [
+  { key: "designer" },
+  { key: "editor" },
+  { key: "translator" },
+  { key: "creators" },
+  { key: "originalTitle", ltr: true },
+  { key: "publisher", ltr: true },
+  { key: "publisherUrl", ltr: true },
+  { key: "attributionLine", ltr: true, wide: true },
+  { key: "adaptation", ltr: true, wide: true },
 ];
 
 function toggle(list: string[], value: string, max: number): string[] {
@@ -50,6 +51,8 @@ function toggle(list: string[], value: string, max: number): string[] {
 
 /** Book details: everything a reader sees on the book page and uses to find the book. */
 export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version }: MetaFormProps) {
+  const locale = useLocale();
+  const t = META_FORM_MESSAGES[locale];
   const coverInput = useRef<HTMLInputElement>(null);
   const [coverBusy, setCoverBusy] = useState(false);
   const [tagDraft, setTagDraft] = useState("");
@@ -73,12 +76,12 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_18rem]">
       <div className="flex flex-col gap-5">
         <Card className="flex flex-col gap-4">
-          <h2 className="text-2xl font-bold">פרטי הספר</h2>
+          <h2 className="text-2xl font-bold">{t.details}</h2>
           <Field
-            label="שם הספר"
+            label={t.title}
             htmlFor="meta-title"
             required
-            error={titleMissing ? "חסר שם לספר. השם הקודם נשאר שמור עד שתכתבו שם חדש." : undefined}
+            error={titleMissing ? t.titleMissing : undefined}
           >
             <Input
               id="meta-title"
@@ -88,7 +91,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
               onChange={(event) => onChange({ title: event.target.value })}
             />
           </Field>
-          <Field label="תקציר" htmlFor="meta-summary" hint="שניים או שלושה משפטים שמספרים על מה הספר.">
+          <Field label={t.summary} htmlFor="meta-summary" hint={t.summaryHint}>
             <Textarea
               id="meta-summary"
               rows={3}
@@ -98,7 +101,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
             />
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="כתיבה" htmlFor="meta-author">
+            <Field label={t.author} htmlFor="meta-author">
               <Input
                 id="meta-author"
                 value={meta.author}
@@ -106,7 +109,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                 onChange={(event) => onChange({ author: event.target.value })}
               />
             </Field>
-            <Field label="איור" htmlFor="meta-illustrator">
+            <Field label={t.illustrator} htmlFor="meta-illustrator">
               <Input
                 id="meta-illustrator"
                 value={meta.illustrator}
@@ -114,7 +117,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                 onChange={(event) => onChange({ illustrator: event.target.value })}
               />
             </Field>
-            <Field label="רישיון" htmlFor="meta-license" hint="מי רשאי להשתמש בספר. נדרש לפני הגשה לפרסום.">
+            <Field label={t.license} htmlFor="meta-license" hint={t.licenseHint}>
               <Input
                 id="meta-license"
                 list="meta-license-options"
@@ -123,12 +126,12 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                 onChange={(event) => onChange({ license: event.target.value })}
               />
               <datalist id="meta-license-options">
-                {LICENSE_SUGGESTIONS.map((license) => (
+                {t.licenseSuggestions.map((license) => (
                   <option key={license} value={license} />
                 ))}
               </datalist>
             </Field>
-            <Field label="מקור" htmlFor="meta-source" hint="קישור או תיאור, אם הספר מבוסס על מקור אחר.">
+            <Field label={t.source} htmlFor="meta-source" hint={t.sourceHint}>
               <Input
                 id="meta-source"
                 value={meta.source}
@@ -136,7 +139,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                 onChange={(event) => onChange({ source: event.target.value })}
               />
             </Field>
-            <Field label="גיל" htmlFor="meta-age">
+            <Field label={t.age} htmlFor="meta-age">
               <Select
                 id="meta-age"
                 value={meta.ageGroup}
@@ -144,14 +147,14 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
               >
                 {AGE_GROUP_INFO.map((age) => (
                   <option key={age.slug} value={age.slug}>
-                    {age.label}
+                    {taxonomyText(locale, "age", age.slug, age).label}
                   </option>
                 ))}
               </Select>
             </Field>
             <fieldset className="flex flex-col gap-2 sm:col-span-2">
               <legend className="font-semibold">
-                מתאים גם ל <span className="text-sm font-normal text-muted">(הספר יוצג גם בגילים האלה)</span>
+                {t.extraAges} <span className="text-sm font-normal text-muted">{t.extraAgesNote}</span>
               </legend>
               <div className="flex flex-wrap gap-2">
                 {AGE_GROUP_INFO.filter((age) => age.slug !== meta.ageGroup).map((age) => {
@@ -169,7 +172,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                         })
                       }
                     >
-                      {age.label}
+                      {taxonomyText(locale, "age", age.slug, age).label}
                     </Chip>
                   );
                 })}
@@ -181,19 +184,17 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
         <Card as="section" aria-labelledby="meta-credits-title" className="flex flex-col gap-4">
           <div>
             <h2 id="meta-credits-title" className="text-lg font-bold">
-              קרדיטים נוספים
+              {t.moreCredits}
             </h2>
-            <p className="text-muted">
-              לספרים ברישיון Creative Commons ולספרים מתורגמים. מה שממולא כאן מוצג בעמוד הספר, בסוף הקריאה ובהדפסה.
-            </p>
+            <p className="text-muted">{t.moreCreditsLead}</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {CREDIT_FIELDS.map((field) => (
               <Field
                 key={field.key}
-                label={field.label}
+                label={t.credit[field.key]?.label}
                 htmlFor={`meta-credit-${field.key}`}
-                hint={field.hint}
+                hint={t.credit[field.key]?.hint}
                 className={field.wide ? "sm:col-span-2" : undefined}
               >
                 <Input
@@ -211,10 +212,10 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
             <p className="flex items-center gap-3 text-sm text-muted">
               <img
                 src={mediaUrl(meta.credits.publisherLogo, version)}
-                alt={`הלוגו של ${meta.credits.publisher ?? "המוציא לאור"}`}
+                alt={t.publisherLogoAlt(meta.credits.publisher)}
                 className="h-10 w-auto rounded-sm bg-white p-1"
               />
-              הלוגו של המוציא לאור נשמר עם הספר ומוצג בקרדיט.
+              {t.publisherLogoNote}
             </p>
           ) : null}
         </Card>
@@ -222,7 +223,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
         <Card className="flex flex-col gap-5">
           <fieldset className="flex flex-col gap-2">
             <legend className="text-lg font-bold">
-              קטגוריות <span className="text-sm font-normal text-muted">(עד {MAX_CATEGORIES})</span>
+              {t.categories} <span className="text-sm font-normal text-muted">{t.upTo(MAX_CATEGORIES)}</span>
             </legend>
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map((category) => (
@@ -232,7 +233,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                   selected={meta.categories.includes(category.slug)}
                   onClick={() => onChange({ categories: toggle(meta.categories, category.slug, MAX_CATEGORIES) })}
                 >
-                  {category.label}
+                  {taxonomyText(locale, "category", category.slug, category).label}
                 </Chip>
               ))}
             </div>
@@ -240,7 +241,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
 
           <fieldset className="flex flex-col gap-2">
             <legend className="text-lg font-bold">
-              נושאים לשיחה <span className="text-sm font-normal text-muted">(עד {MAX_THEMES})</span>
+              {t.themes} <span className="text-sm font-normal text-muted">{t.upTo(MAX_THEMES)}</span>
             </legend>
             <div className="flex flex-wrap gap-2">
               {THEMES.map((theme) => (
@@ -250,14 +251,14 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                   selected={meta.themes.includes(theme.slug)}
                   onClick={() => onChange({ themes: toggle(meta.themes, theme.slug, MAX_THEMES) })}
                 >
-                  {theme.label}
+                  {taxonomyText(locale, "theme", theme.slug, theme).label}
                 </Chip>
               ))}
             </div>
           </fieldset>
 
           <div className="flex flex-col gap-2">
-            <Field label="תגיות" htmlFor="meta-tag" hint={`כתבו תגית ולחצו Enter. עד ${MAX_TAGS} תגיות.`}>
+            <Field label={t.tags} htmlFor="meta-tag" hint={t.tagsHint(MAX_TAGS)}>
               <div className="flex gap-2">
                 <Input
                   className="min-w-0"
@@ -274,21 +275,21 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                   aria-describedby="meta-tag-hint"
                 />
                 <Button variant="outline" onClick={() => addTag(tagDraft)} disabled={tagDraft.trim().length === 0}>
-                  הוספה
+                  {t.add}
                 </Button>
               </div>
             </Field>
             {meta.tags.length > 0 ? (
-              <ul aria-label="התגיות של הספר" className="flex flex-wrap gap-2">
+              <ul aria-label={t.bookTags} className="flex flex-wrap gap-2">
                 {meta.tags.map((tag) => (
                   <li key={tag}>
                     <button
                       type="button"
                       onClick={() => onChange({ tags: meta.tags.filter((item) => item !== tag) })}
-                      aria-label={`הסרת התגית ${tag}`}
+                      aria-label={t.removeTag(tag)}
                       className="inline-flex min-h-10 items-center gap-1 rounded-full bg-primary-soft px-3 font-medium"
                     >
-                      {tag}
+                      {taxonomyText(locale, "tag", tag, { label: tag }).label}
                       <X aria-hidden="true" className="size-4" />
                     </button>
                   </li>
@@ -297,10 +298,10 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
             ) : null}
             {suggestedTags.length > 0 && meta.tags.length < MAX_TAGS ? (
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-sm text-muted">הצעות:</span>
+                <span className="text-sm text-muted">{t.suggestions}</span>
                 {suggestedTags.map((tag) => (
                   <Chip key={tag} size="sm" onClick={() => addTag(tag)}>
-                    {tag}
+                    {taxonomyText(locale, "tag", tag, { label: tag }).label}
                   </Chip>
                 ))}
               </div>
@@ -309,15 +310,15 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
         </Card>
 
         <Card className="flex flex-col gap-3">
-          <h2 className="text-lg font-bold">שאלות לשיחה אחרי הקריאה</h2>
+          <h2 className="text-lg font-bold">{t.questions}</h2>
           {meta.discussionQuestions.length === 0 ? (
-            <p className="text-muted">שאלות קצרות שהורה יכול לשאול בסוף הסיפור.</p>
+            <p className="text-muted">{t.questionsLead}</p>
           ) : null}
           <ol className="flex flex-col gap-2">
             {meta.discussionQuestions.map((question, index) => (
               <li key={index} className="flex items-center gap-2">
                 <Input
-                  aria-label={`שאלה ${index + 1}`}
+                  aria-label={t.question(index + 1)}
                   value={question}
                   maxLength={MAX_QUESTION_LENGTH}
                   onChange={(event) => setQuestion(index, event.target.value)}
@@ -325,7 +326,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                 <Button
                   variant="ghost"
                   size="icon"
-                  aria-label={`מחיקת שאלה ${index + 1}`}
+                  aria-label={t.deleteQuestion(index + 1)}
                   onClick={() =>
                     onChange({ discussionQuestions: meta.discussionQuestions.filter((_q, i) => i !== index) })
                   }
@@ -343,7 +344,7 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
                 onClick={() => onChange({ discussionQuestions: [...meta.discussionQuestions, ""] })}
               >
                 <Plus aria-hidden="true" className="size-4" />
-                הוספת שאלה
+                {t.addQuestion}
               </Button>
             </div>
           ) : null}
@@ -351,10 +352,10 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
       </div>
 
       <Card as="aside" className="flex h-fit flex-col gap-3">
-        <h2 className="text-lg font-bold">תמונת השער</h2>
+        <h2 className="text-lg font-bold">{t.cover}</h2>
         <div className="relative mx-auto aspect-[3/4] w-full max-w-56 overflow-hidden rounded-md border border-border bg-surface-2">
           {cover ? (
-            <img src={cover} alt="תמונת השער" className="size-full object-cover" />
+            <img src={cover} alt={t.cover} className="size-full object-cover" />
           ) : (
             <div className="flex size-full items-center justify-center text-6xl" aria-hidden="true">
               📖
@@ -362,25 +363,25 @@ export function MetaForm({ meta, onChange, onCoverFile, firstPageImage, version 
           )}
           {coverBusy ? (
             <div className="absolute inset-0 flex items-center justify-center bg-overlay">
-              <Spinner label="מעלה…" />
+              <Spinner label={t.uploading} />
             </div>
           ) : null}
         </div>
         <Button variant="outline" size="sm" onClick={() => coverInput.current?.click()} disabled={coverBusy}>
           <Upload aria-hidden="true" className="size-4" />
-          {cover ? "החלפת השער" : "העלאת שער"}
+          {cover ? t.replaceCover : t.uploadCover}
         </Button>
         {firstPageImage && firstPageImage !== meta.coverImage ? (
           <Button variant="ghost" size="sm" onClick={() => onChange({ coverImage: firstPageImage })}>
-            שימוש באיור של העמוד הראשון
+            {t.useFirstPage}
           </Button>
         ) : null}
         {cover ? (
           <Button variant="ghost" size="sm" onClick={() => onChange({ coverImage: "" })}>
-            הסרת השער
+            {t.removeCover}
           </Button>
         ) : (
-          <p className="text-sm text-muted">בלי שער, בהגשה לפרסום ייבחר האיור הראשון בספר.</p>
+          <p className="text-sm text-muted">{t.noCoverNote}</p>
         )}
         <input
           ref={coverInput}

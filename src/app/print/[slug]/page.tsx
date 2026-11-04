@@ -13,6 +13,8 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Download } from "lucide-react";
 import { ButtonLink, Chip } from "@/components/ui";
 import { canViewBook, getCurrentUser } from "@/lib/auth";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
+import { getLocale } from "@/lib/i18n/server";
 import { mediaUrl } from "@/lib/media/url";
 import { bookHasNikud, creditLines, printablePages } from "@/lib/pdf/printable";
 import { getRepo } from "@/lib/repo";
@@ -74,8 +76,9 @@ export default async function PrintPage({ params, searchParams }: PrintPageProps
   const { slug } = await params;
   const search = await searchParams;
   const token = first(search.token)?.slice(0, 200);
-  const book = await loadBook(slug, token);
+  const [book, locale] = await Promise.all([loadBook(slug, token), getLocale()]);
   if (!book) notFound();
+  const t = READER_MESSAGES[locale].print;
 
   const canUseNikud = bookHasNikud(book);
   const nikud = canUseNikud && first(search.nikud) === "1";
@@ -99,38 +102,40 @@ export default async function PrintPage({ params, searchParams }: PrintPageProps
       <header className="print-toolbar flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-3">
           <ButtonLink href={backHref} variant="ghost">
-            <ArrowRight aria-hidden="true" className="size-5" />
-            חזרה לספר
+            <ArrowRight aria-hidden="true" className="size-5 ltr:-scale-x-100" />
+            {t.back}
           </ButtonLink>
         </div>
         <div>
-          <h1 className="text-3xl font-bold">הדפסת הספר: {book.title}</h1>
-          <p className="mt-2 max-w-2xl leading-relaxed text-muted">
-            {sheetCount} דפים בגודל A4 לרוחב: כריכה, עמוד סיפור בכל דף, ודף סיום עם שאלות לשיחה. בחלון ההדפסה כדאי לבחור
-            כיוון &quot;לרוחב&quot; ולבטל כותרות עליונות ותחתונות.
-          </p>
+          <h1 className="text-3xl font-bold">
+            {t.heading}
+            <bdi>{book.title}</bdi>
+          </h1>
+          <p className="mt-2 max-w-2xl leading-relaxed text-muted">{t.intro(sheetCount)}</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <PrintButton />
           <ButtonLink href={pdfHref} variant="secondary" prefetch={false} download>
             <Download aria-hidden="true" className="size-5" />
-            הורדת קובץ PDF
+            {t.pdf}
           </ButtonLink>
           {canUseNikud ? (
-            <div role="group" aria-label="ניקוד" className="flex items-center gap-2">
+            <div role="group" aria-label={t.nikud} className="flex items-center gap-2">
               <Chip href={selfHref(true)} selected={nikud}>
-                עם ניקוד
+                {t.withNikud}
               </Chip>
               <Chip href={selfHref(false)} selected={!nikud}>
-                בלי ניקוד
+                {t.withoutNikud}
               </Chip>
             </div>
           ) : null}
         </div>
-        <h2 className="sr-only">תצוגה מקדימה של הדפים</h2>
+        <h2 className="sr-only">{t.preview}</h2>
       </header>
 
-      <ol className="print-sheets" aria-label="דפי הספר">
+      {/* The sheets are the printed book (the same as the PDF): Hebrew and right to left whatever
+          the interface language, so an English visitor prints exactly what everyone else does. */}
+      <ol className="print-sheets" aria-label="דפי הספר" lang="he" dir="rtl">
         <li className="print-sheet" aria-label="כריכה">
           <div className={`print-sheet-inner${book.coverImage ? "" : " is-single"}`}>
             {book.coverImage ? (

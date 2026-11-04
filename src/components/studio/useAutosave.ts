@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import { STUDIO_SAVE_MESSAGES } from "@/lib/i18n/studio-editor";
 import { patchBookMeta, putBookPages, StudioApiError } from "@/lib/studio/client";
 import type { BookMetaPatch } from "@/lib/studio/shared";
 import type { BookWithPages, Page } from "@/lib/types";
@@ -11,7 +13,7 @@ type ServerPage = Omit<Page, "index">;
 
 export interface Autosave {
   state: SaveState;
-  /** Hebrew message of the last failed save. */
+  /** Message of the last failed save (from the server, or the interface-language fallback). */
   error: string | null;
   /**
    * True when the server refused a save because the book changed elsewhere
@@ -69,6 +71,8 @@ export class AutosaveQueue {
     } = { patchMeta: patchBookMeta, putPages: putBookPages },
     /** The `updatedAt` of the book as this tab loaded it. */
     private base?: string,
+    /** Shown when a save fails without a message from the server. */
+    private readonly fallbackError: string = STUDIO_SAVE_MESSAGES.he.error,
   ) {}
 
   /** The version of the book this tab has now; every later save is based on it. */
@@ -176,7 +180,7 @@ export class AutosaveQueue {
           this.emit("error", apiError.message, true);
           return false;
         }
-        this.emit("error", apiError?.message ?? "השמירה נכשלה");
+        this.emit("error", apiError?.message ?? this.fallbackError);
         if (this.active && (!apiError || apiError.retryable)) {
           this.clearTimer();
           this.timer = setTimeout(() => void this.flush(), RETRY_MS);
@@ -197,9 +201,10 @@ export function useAutosave(
   /** The `updatedAt` of the book as the page loaded it. */
   initialUpdatedAt?: string,
 ): Autosave {
-  // The initial version is only read when the queue is created; later versions arrive through setBase.
+  const fallbackError = STUDIO_SAVE_MESSAGES[useLocale()].error;
+  // The initial version and the fallback message are only read when the queue is created; later versions arrive through setBase.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const queue = useMemo(() => new AutosaveQueue(bookId, undefined, initialUpdatedAt), [bookId]);
+  const queue = useMemo(() => new AutosaveQueue(bookId, undefined, initialUpdatedAt, fallbackError), [bookId]);
   const [snapshot, setSnapshot] = useState<Snapshot>({ state: "saved", error: null });
 
   useEffect(() => {

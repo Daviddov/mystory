@@ -2,7 +2,9 @@
 
 import { Mic, Square } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";
+import { AUDIO_RECORDER_MESSAGES } from "@/lib/i18n/studio-panels";
 import { MAX_RECORDING_SECONDS } from "@/lib/studio/shared";
 
 const MIME_CANDIDATES = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
@@ -18,14 +20,14 @@ function formatSeconds(total: number): string {
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
 
-function microphoneErrorMessage(err: unknown): string {
+type RecorderMessages = (typeof AUDIO_RECORDER_MESSAGES)["he"];
+
+function microphoneErrorMessage(err: unknown, t: RecorderMessages): string {
   const name = err instanceof DOMException ? err.name : "";
-  if (name === "NotAllowedError" || name === "SecurityError") {
-    return "אין הרשאה למיקרופון. אשרו את הגישה בהגדרות הדפדפן ונסו שוב.";
-  }
-  if (name === "NotFoundError" || name === "OverconstrainedError") return "לא נמצא מיקרופון במכשיר הזה.";
-  if (name === "NotReadableError") return "המיקרופון תפוס על ידי תוכנה אחרת.";
-  return "לא הצלחנו להתחיל הקלטה.";
+  if (name === "NotAllowedError" || name === "SecurityError") return t.noPermission;
+  if (name === "NotFoundError" || name === "OverconstrainedError") return t.noMicrophone;
+  if (name === "NotReadableError") return t.microphoneBusy;
+  return t.cannotStart;
 }
 
 export interface AudioRecorderProps {
@@ -37,7 +39,12 @@ export interface AudioRecorderProps {
 }
 
 /** Records the parent's voice with MediaRecorder: one button to start, one to stop. */
-export function AudioRecorder({ onRecorded, disabled, label = "הקלטה בקול שלי" }: AudioRecorderProps) {
+export function AudioRecorder({ onRecorded, disabled, label }: AudioRecorderProps) {
+  const t = AUDIO_RECORDER_MESSAGES[useLocale()];
+  const tRef = useRef(t);
+  useEffect(() => {
+    tRef.current = t;
+  }, [t]);
   const [phase, setPhase] = useState<"idle" | "requesting" | "recording">("idle");
   const [seconds, setSeconds] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -78,7 +85,7 @@ export function AudioRecorder({ onRecorded, disabled, label = "הקלטה בקו
   const start = useCallback(async () => {
     setError(null);
     if (typeof MediaRecorder === "undefined" || !navigator.mediaDevices?.getUserMedia) {
-      setError("הדפדפן הזה לא תומך בהקלטה. אפשר להעלות קובץ שמע במקום.");
+      setError(tRef.current.unsupported);
       return;
     }
     setPhase("requesting");
@@ -88,7 +95,7 @@ export function AudioRecorder({ onRecorded, disabled, label = "הקלטה בקו
         audio: { echoCancellation: true, noiseSuppression: true },
       });
     } catch (err) {
-      setError(microphoneErrorMessage(err));
+      setError(microphoneErrorMessage(err, tRef.current));
       setPhase("idle");
       return;
     }
@@ -107,7 +114,7 @@ export function AudioRecorder({ onRecorded, disabled, label = "הקלטה בקו
         if (event.data.size > 0) chunksRef.current.push(event.data);
       };
       recorder.onerror = () => {
-        setError("ההקלטה נקטעה. נסו שוב.");
+        setError(tRef.current.interrupted);
       };
       recorder.onstop = () => {
         const type = recorder.mimeType || mimeType || "audio/webm";
@@ -118,7 +125,7 @@ export function AudioRecorder({ onRecorded, disabled, label = "הקלטה בקו
         if (discardRef.current) return;
         setPhase("idle");
         if (recording.size === 0) {
-          setError("לא נקלט קול. בדקו את המיקרופון ונסו שוב.");
+          setError(tRef.current.silent);
           return;
         }
         onRecordedRef.current(recording);
@@ -134,7 +141,7 @@ export function AudioRecorder({ onRecorded, disabled, label = "הקלטה בקו
       }, 250);
     } catch {
       stream.getTracks().forEach((track) => track.stop());
-      setError("לא הצלחנו להתחיל הקלטה.");
+      setError(tRef.current.cannotStart);
       setPhase("idle");
     }
   }, [releaseDevices, stop]);
@@ -145,17 +152,17 @@ export function AudioRecorder({ onRecorded, disabled, label = "הקלטה בקו
         <div className="flex flex-wrap items-center gap-3">
           <Button variant="danger" onClick={stop}>
             <Square aria-hidden="true" className="size-5" />
-            סיום ההקלטה
+            {t.stop}
           </Button>
           <span role="timer" className="inline-flex items-center gap-2 font-semibold tabular-nums">
             <span aria-hidden="true" className="size-3 animate-pulse rounded-full bg-danger" />
-            מקליט {formatSeconds(seconds)}
+            {t.recording(formatSeconds(seconds))}
           </span>
         </div>
       ) : (
         <Button variant="outline" onClick={start} disabled={disabled} loading={phase === "requesting"}>
           <Mic aria-hidden="true" className="size-5" />
-          {label}
+          {label ?? t.record}
         </Button>
       )}
       {error ? (

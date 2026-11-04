@@ -2,8 +2,10 @@
 
 import { CheckCircle2, CloudDownload, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, type ButtonSize } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { accountMessages, type AccountMessages } from "@/lib/i18n/account";
 import {
   OFFLINE_EVENT,
   OfflineDownloadError,
@@ -27,11 +29,28 @@ export interface OfflineDownloadButtonProps {
 
 type Status = "checking" | "unsupported" | "absent" | "downloading" | "saved" | "error";
 
+function downloadErrorText(err: unknown, t: AccountMessages["download"]): string {
+  if (!(err instanceof OfflineDownloadError)) return t.failed;
+  switch (err.kind) {
+    case "unsupported":
+      return t.errors.unsupported;
+    case "manifest":
+      return t.errors.manifest;
+    case "assets":
+      return t.errors.assets(err.failed.length);
+    case "storage":
+      return t.errors.storage;
+    default:
+      return err.message;
+  }
+}
+
 /**
  * "Download for offline": stores the pages, illustrations and narration of one
  * book on the device. It reports success only when every file was stored.
  */
 export function OfflineDownloadButton({ bookId, title, token, size = "md", className }: OfflineDownloadButtonProps) {
+  const t = accountMessages(useLocale()).download;
   const [status, setStatus] = useState<Status>("checking");
   const [progress, setProgress] = useState<DownloadProgress>({ done: 0, total: 0 });
   const [error, setError] = useState("");
@@ -82,7 +101,7 @@ export function OfflineDownloadButton({ bookId, title, token, size = "md", class
         setStatus("absent");
         return;
       }
-      setError(err instanceof OfflineDownloadError ? err.message : "ההורדה לא הצליחה. נסו שוב.");
+      setError(downloadErrorText(err, t));
       setStatus("error");
     }
   }
@@ -103,21 +122,20 @@ export function OfflineDownloadButton({ bookId, title, token, size = "md", class
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex min-h-10 items-center gap-1.5 rounded-full bg-success-soft px-4 text-sm font-semibold">
             <CheckCircle2 aria-hidden="true" className="size-5 text-success" />
-            שמור במכשיר
+            {t.saved}
           </span>
           {/* A full page load on purpose: the offline reader must work without the network. */}
           <a href={offlineReadPath(bookId)} className="text-sm font-semibold underline">
-            פתיחה בלי רשת
+            {t.openOffline}
           </a>
-          <Button variant="ghost" size="sm" onClick={remove} aria-label={title ? `הסרת ההורדה של ${title}` : "הסרת ההורדה"}>
+          <Button variant="ghost" size="sm" onClick={remove} aria-label={t.removeAria(title)}>
             <Trash2 aria-hidden="true" className="size-4" />
-            הסרה
+            {t.remove}
           </Button>
         </div>
         {ready ? null : (
           <p role="note" className="max-w-sm text-sm text-warning">
-            הספר נשמר, אבל הקריאה בלי רשת עדיין לא פעילה בדפדפן הזה. טענו את העמוד מחדש; אם ההודעה נשארת, הדפדפן
-            או כתובת האתר לא תומכים בכך.
+            {t.notActive}
           </p>
         )}
       </div>
@@ -133,10 +151,10 @@ export function OfflineDownloadButton({ bookId, title, token, size = "md", class
           loading={status === "downloading"}
           disabled={status === "checking"}
           onClick={start}
-          aria-label={`הורדה לקריאה בלי רשת${title ? `: ${title}` : ""}`}
+          aria-label={t.downloadAria(title)}
         >
           {status === "downloading" ? null : <CloudDownload aria-hidden="true" className="size-5" />}
-          {status === "downloading" ? `מוריד… ${percent}%` : "הורדה לקריאה בלי רשת"}
+          {status === "downloading" ? t.downloading(percent) : t.download}
         </Button>
       </div>
       <p role="status" aria-live="polite" className="text-sm">

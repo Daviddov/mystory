@@ -6,6 +6,9 @@ import { MAX_TAG_LENGTH, type RawSearchParams } from "@/components/library/filte
 import { listTagCounts } from "@/components/library/queries";
 import { routes } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
+import { libraryMessages } from "@/lib/i18n/library";
+import { taxonomyText } from "@/lib/i18n/messages";
+import { getLocale } from "@/lib/i18n/server";
 import { tagFromSlug, tagIndexable, tagSlug } from "@/lib/taxonomy";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -58,24 +61,28 @@ export default async function TagPage({ params, searchParams }: Props) {
   const wanted = tagSlug(fromUrl);
   const label = allTags.find((tag) => tagSlug(tag.label) === wanted)?.label ?? fromUrl;
   const tags = allTags.slice(0, 24);
+  const locale = await getLocale();
+  const t = libraryMessages(locale);
+  // Starter tags have English names; other tags are free Hebrew text and stay as they are.
+  const shownLabel = taxonomyText(locale, "tag", label, { label }).label;
 
   return (
     <BrowseView
       path={routes.tag(label)}
       searchParams={await searchParams}
       base={{ tag: label }}
-      eyebrow="תגית"
-      title={label}
+      eyebrow={t.tag.eyebrow}
+      title={locale === "he" ? label : <span dir="auto">{shownLabel}</span>}
       emoji="🏷️"
-      crumbs={[{ label: "כל הספרים", href: routes.books() }, { label }]}
-      siblingsLabel="תגיות נפוצות"
+      crumbs={[{ label: t.allBooksCrumb, href: routes.books() }, { label: shownLabel }]}
+      siblingsLabel={t.tag.siblings}
       siblings={tags.map((tag) => ({
-        label: tag.label,
+        label: taxonomyText(locale, "tag", tag.label, tag).label,
         href: routes.tag(tag.label),
         selected: tagSlug(tag.label) === wanted,
       }))}
       refineHref={routes.books({ tag: label })}
-      emptyTitle="עוד אין ספרים עם התגית הזאת"
+      emptyTitle={t.tag.empty}
     />
   );
 }

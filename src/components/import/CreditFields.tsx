@@ -1,6 +1,8 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Field, Input, Select } from "@/components/ui";
+import { CC_LICENSE_LABELS_EN, STUDIO_CREDIT_FIELDS } from "@/lib/i18n/studio-import";
 import { CC_LICENSES, getCcLicense } from "@/lib/importers/cc";
 import { BookLanguageSchema, type BookLanguage } from "@/lib/types";
 
@@ -40,30 +42,24 @@ export const EMPTY_CREDIT: CreditValues = {
 /** Optional text fields, in the order they are shown. */
 const EXTRA_FIELDS: {
   key: "designer" | "editor" | "translator" | "originalTitle" | "publisher" | "publisherUrl" | "attributionLine" | "adaptation";
-  label: string;
-  hint?: string;
   ltr?: boolean;
   wide?: boolean;
   max: number;
 }[] = [
-  { key: "designer", label: "מי עיצב", max: 200 },
-  { key: "editor", label: "מי ערך", max: 200 },
-  { key: "translator", label: "מי תרגם", hint: "אם הטקסט שמעלים הוא תרגום.", max: 200 },
-  { key: "originalTitle", label: "השם המקורי של הספר", ltr: true, max: 200 },
-  { key: "publisher", label: "המוציא לאור המקורי", hint: "למשל StoryWeaver, Pratham Books או Book Dash.", ltr: true, max: 200 },
-  { key: "publisherUrl", label: "אתר המוציא לאור", ltr: true, max: 500 },
+  { key: "designer", max: 200 },
+  { key: "editor", max: 200 },
+  { key: "translator", max: 200 },
+  { key: "originalTitle", ltr: true, max: 200 },
+  { key: "publisher", ltr: true, max: 200 },
+  { key: "publisherUrl", ltr: true, max: 500 },
   {
     key: "attributionLine",
-    label: "שורת הייחוס שהמוציא לאור מבקש",
-    hint: "בנוסח המקורי, כפי שהוא מופיע בספר או באתר המקור.",
     ltr: true,
     wide: true,
     max: 500,
   },
   {
     key: "adaptation",
-    label: "מה שונה מהמקור",
-    hint: 'למשל: "Translation into Hebrew by ...". הרישיונות דורשים לציין שינויים.',
     ltr: true,
     wide: true,
     max: 500,
@@ -85,13 +81,15 @@ export interface CreditFieldsProps {
  * be filled in whenever the source names them.
  */
 export function CreditFields({ value, onChange, errors = {}, disabled }: CreditFieldsProps) {
+  const locale = useLocale();
+  const t = STUDIO_CREDIT_FIELDS[locale];
   const set = (key: keyof CreditValues, next: string) => onChange({ ...value, [key]: next });
   const untranslated = value.language === "en";
   const license = getCcLicense(value.license);
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Field label="רישיון" htmlFor="cc-license" required error={errors.license}>
+      <Field label={t.license} htmlFor="cc-license" required error={errors.license}>
         <Select
           id="cc-license"
           value={value.license}
@@ -99,20 +97,20 @@ export function CreditFields({ value, onChange, errors = {}, disabled }: CreditF
           aria-invalid={errors.license ? true : undefined}
           onChange={(event) => set("license", event.target.value)}
         >
-          <option value="">בחרו רישיון…</option>
+          <option value="">{t.chooseLicense}</option>
           {CC_LICENSES.map((item) => (
             <option key={item.value} value={item.value}>
-              {item.label}
+              {locale === "en" ? (CC_LICENSE_LABELS_EN[item.value] ?? item.value) : item.label}
             </option>
           ))}
         </Select>
       </Field>
       <Field
-        label="קישור למקור"
+        label={t.sourceUrl}
         htmlFor="cc-source"
         required
         error={errors.sourceUrl}
-        hint="כתובת העמוד שממנו נלקח הספר."
+        hint={t.sourceHint}
       >
         <Input
           id="cc-source"
@@ -128,11 +126,11 @@ export function CreditFields({ value, onChange, errors = {}, disabled }: CreditF
         />
       </Field>
       <Field
-        label="קרדיט: מי כתב את הספר"
+        label={t.author}
         htmlFor="cc-author"
         required
         error={errors.author}
-        hint="השם כפי שהוא מופיע במקור."
+        hint={t.authorHint}
       >
         <Input
           id="cc-author"
@@ -144,7 +142,7 @@ export function CreditFields({ value, onChange, errors = {}, disabled }: CreditF
           onChange={(event) => set("author", event.target.value)}
         />
       </Field>
-      <Field label="מי אייר" htmlFor="cc-illustrator" error={errors.illustrator}>
+      <Field label={t.illustrator} htmlFor="cc-illustrator" error={errors.illustrator}>
         <Input
           id="cc-illustrator"
           dir="auto"
@@ -157,9 +155,9 @@ export function CreditFields({ value, onChange, errors = {}, disabled }: CreditF
       {EXTRA_FIELDS.map((field) => (
         <Field
           key={field.key}
-          label={field.label}
+          label={t.extra[field.key].label}
           htmlFor={`cc-${field.key}`}
-          hint={field.hint}
+          hint={t.extra[field.key].hint}
           error={errors[field.key]}
           className={field.wide ? "sm:col-span-2" : undefined}
         >
@@ -178,9 +176,9 @@ export function CreditFields({ value, onChange, errors = {}, disabled }: CreditF
         </Field>
       ))}
       <Field
-        label="שפת הטקסט שמעלים"
+        label={t.language}
         htmlFor="cc-language"
-        hint="ספר באנגלית נשמר כטיוטה, ומתרגמים אותו בעורך לפני שאפשר לפרסם. ספר בערבית מתפרסם בערבית."
+        hint={t.languageHint}
       >
         <Select
           id="cc-language"
@@ -188,19 +186,19 @@ export function CreditFields({ value, onChange, errors = {}, disabled }: CreditF
           disabled={disabled}
           onChange={(event) => onChange({ ...value, language: BookLanguageSchema.catch("he").parse(event.target.value) })}
         >
-          <option value="he">עברית</option>
-          <option value="en">אנגלית (יתורגם בעורך)</option>
-          <option value="ar">ערבית</option>
+          <option value="he">{t.langHe}</option>
+          <option value="en">{t.langEn}</option>
+          <option value="ar">{t.langAr}</option>
         </Select>
       </Field>
       {untranslated && license && !license.allowsAdaptation ? (
         <p role="alert" className="rounded-md bg-danger-soft px-4 py-3 text-base sm:col-span-2">
-          הרישיון שנבחר אוסר יצירות נגזרות, ותרגום הוא יצירה נגזרת. ספר כזה באנגלית לא יוכל להתפרסם בספרייה.
+          {t.noDerivativesEnglish}
         </p>
       ) : null}
       {license && !license.allowsAdaptation ? (
         <p role="note" className="rounded-md bg-warning-soft px-4 py-3 text-base sm:col-span-2">
-          הרישיון הזה לא מתיר יצירות נגזרות. מותר להציג את הספר כמו שהוא, אבל אסור לתרגם או לשנות אותו.
+          {t.noDerivatives}
         </p>
       ) : null}
     </div>

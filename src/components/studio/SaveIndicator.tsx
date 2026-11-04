@@ -1,15 +1,10 @@
 "use client";
 
 import { AlertTriangle, Check, CloudUpload, Pencil } from "lucide-react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
+import { STUDIO_SAVE_MESSAGES } from "@/lib/i18n/studio-editor";
 import type { SaveState } from "./useAutosave";
-
-const LABELS: Record<SaveState, string> = {
-  saved: "כל השינויים נשמרו",
-  dirty: "יש שינויים שעוד לא נשמרו",
-  saving: "שומר…",
-  error: "השמירה נכשלה",
-};
 
 export interface SaveIndicatorProps {
   state: SaveState;
@@ -20,6 +15,7 @@ export interface SaveIndicatorProps {
 
 /** Always-visible save state of the editor. */
 export function SaveIndicator({ state, error, onRetry, className }: SaveIndicatorProps) {
+  const LABELS = STUDIO_SAVE_MESSAGES[useLocale()];
   const Icon = state === "saved" ? Check : state === "saving" ? CloudUpload : state === "error" ? AlertTriangle : Pencil;
   return (
     <div
@@ -38,7 +34,7 @@ export function SaveIndicator({ state, error, onRetry, className }: SaveIndicato
       <span>{state === "error" && error ? `${LABELS.error}: ${error}` : LABELS[state]}</span>
       {state === "error" && onRetry ? (
         <button type="button" onClick={onRetry} className="rounded-full px-2 font-bold underline">
-          לנסות שוב
+          {LABELS.retry}
         </button>
       ) : null}
     </div>

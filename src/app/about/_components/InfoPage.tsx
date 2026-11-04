@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
+import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
 import { getT } from "@/lib/i18n/server";
 import { navFor } from "@/lib/nav";
 
@@ -63,28 +64,49 @@ export function InfoSection({ id, title, children }: { id?: string; title: strin
   );
 }
 
+const DRAFT = {
+  he: {
+    label: "טיוטה",
+    title: "טיוטה. המסמך עדיין לא עבר בדיקה משפטית.",
+    body: "הטקסט מתאר איך האתר אמור לפעול ומה אנחנו מתכוונים להתחייב אליו. הוא אינו מסמך משפטי מחייב ואינו ייעוץ משפטי, ויש לבדוק אותו עם עורך דין לפני פתיחת ההרשמה לציבור.",
+    updated: "עדכון אחרון של הטיוטה:",
+    missing: "חסר:",
+  },
+  en: {
+    label: "Draft",
+    title: "Draft. This document has not been legally reviewed yet.",
+    body: "The text describes how the site is meant to work and what we intend to commit to. It is not a binding legal document or legal advice, and must be checked with a lawyer before sign-up opens to the public.",
+    updated: "Draft last updated:",
+    missing: "Missing:",
+  },
+} satisfies Record<Locale, Record<string, string>>;
+
 /** Marks a legal text as a draft that has not been reviewed by a lawyer. */
-export function DraftNotice({ updated }: { updated: string }) {
+export function DraftNotice({ updated, locale = DEFAULT_LOCALE }: { updated: string; locale?: Locale }) {
+  const t = DRAFT[locale];
   return (
     <aside
       role="note"
-      aria-label="טיוטה"
+      aria-label={t.label}
       className="flex items-start gap-3 rounded-md border-2 border-warning bg-warning-soft px-5 py-4 text-foreground"
     >
       <TriangleAlert aria-hidden="true" className="mt-1 size-6 shrink-0 text-warning" />
       <div className="flex flex-col gap-1">
-        <p className="text-lg font-bold">טיוטה. המסמך עדיין לא עבר בדיקה משפטית.</p>
-        <p className="leading-relaxed">
-          הטקסט מתאר איך האתר אמור לפעול ומה אנחנו מתכוונים להתחייב אליו. הוא אינו מסמך משפטי מחייב ואינו ייעוץ משפטי,
-          ויש לבדוק אותו עם עורך דין לפני פתיחת ההרשמה לציבור.
+        <p className="text-lg font-bold">{t.title}</p>
+        <p className="leading-relaxed">{t.body}</p>
+        <p className="text-sm text-muted">
+          {t.updated} {updated}
         </p>
-        <p className="text-sm text-muted">עדכון אחרון של הטיוטה: {updated}</p>
       </div>
     </aside>
   );
 }
 
 /** A detail that is still missing from a draft, shown so nobody mistakes it for final text. */
-export function Missing({ children }: { children: ReactNode }) {
-  return <mark className="rounded-sm bg-accent-soft px-1.5 py-0.5 text-foreground">[חסר: {children}]</mark>;
+export function Missing({ children, locale = DEFAULT_LOCALE }: { children: ReactNode; locale?: Locale }) {
+  return (
+    <mark className="rounded-sm bg-accent-soft px-1.5 py-0.5 text-foreground">
+      [{DRAFT[locale].missing} {children}]
+    </mark>
+  );
 }

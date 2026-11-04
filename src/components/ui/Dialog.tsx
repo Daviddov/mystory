@@ -2,7 +2,9 @@
 
 import { X } from "lucide-react";
 import { useEffect, useId, useRef, type ReactNode } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { cn } from "@/lib/cn";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 
 export interface DialogProps {
   open: boolean;
@@ -33,6 +35,7 @@ export function Dialog({
   dismissible = true,
   className,
 }: DialogProps) {
+  const locale = useLocale();
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -80,7 +83,7 @@ export function Dialog({
               <button
                 type="button"
                 onClick={onClose}
-                aria-label="סגירה"
+                aria-label={READER_MESSAGES[locale].ui.close}
                 className="inline-flex size-touch shrink-0 items-center justify-center rounded-full hover:bg-surface-2"
               >
                 <X aria-hidden="true" />

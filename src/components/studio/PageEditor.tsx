@@ -13,8 +13,10 @@ import {
   Wand2,
 } from "lucide-react";
 import { useRef, useState, type DragEvent } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { MockNotice } from "@/components/MockNotice";
 import { Button, Card, Field, Input, Spinner, Textarea } from "@/components/ui";
+import { PAGE_EDITOR_MESSAGES } from "@/lib/i18n/studio-panels";
 import { cn } from "@/lib/cn";
 import { countWords } from "@/lib/hebrew";
 import { mediaUrl } from "@/lib/media/url";
@@ -27,35 +29,35 @@ import {
   nikudWordMismatch,
 } from "@/lib/studio/shared";
 import { getAgeGroup } from "@/lib/taxonomy";
-import type { AgeGroup } from "@/lib/types";
+import type { AgeGroup, BookLanguage } from "@/lib/types";
 import { AudioRecorder } from "./AudioRecorder";
 import type { EditorPage } from "./types";
 
 /** Vocalization marks for manual correction (most phone and laptop keyboards make them hard to type). */
-const NIKUD_MARKS: { mark: string; name: string }[] = [
-  { mark: "ָ", name: "קמץ" },
-  { mark: "ַ", name: "פתח" },
-  { mark: "ֵ", name: "צירה" },
-  { mark: "ֶ", name: "סגול" },
-  { mark: "ִ", name: "חיריק" },
-  { mark: "ֹ", name: "חולם" },
-  { mark: "ֻ", name: "קובוץ" },
-  { mark: "ְ", name: "שווא" },
-  { mark: "ּ", name: "דגש או שורוק" },
-  { mark: "ׁ", name: "שין ימנית" },
-  { mark: "ׂ", name: "שין שמאלית" },
-  { mark: "ֲ", name: "חטף פתח" },
-  { mark: "ֱ", name: "חטף סגול" },
-  { mark: "ֳ", name: "חטף קמץ" },
+const NIKUD_MARKS: { mark: string; name: keyof (typeof PAGE_EDITOR_MESSAGES)["he"]["nikudMarks"] }[] = [
+  { mark: "ָ", name: "qamats" },
+  { mark: "ַ", name: "patah" },
+  { mark: "ֵ", name: "tsere" },
+  { mark: "ֶ", name: "segol" },
+  { mark: "ִ", name: "hiriq" },
+  { mark: "ֹ", name: "holam" },
+  { mark: "ֻ", name: "qubuts" },
+  { mark: "ְ", name: "sheva" },
+  { mark: "ּ", name: "dagesh" },
+  { mark: "ׁ", name: "shinDot" },
+  { mark: "ׂ", name: "sinDot" },
+  { mark: "ֲ", name: "hatafPatah" },
+  { mark: "ֱ", name: "hatafSegol" },
+  { mark: "ֳ", name: "hatafQamats" },
 ];
-
-const AUDIO_SOURCE_LABELS = { tts: "הקראה אוטומטית", recorded: "הקלטה שלכם", mock: "קול הדגמה" } as const;
 
 export interface PageEditorProps {
   page: EditorPage;
   index: number;
   total: number;
   ageGroup: AgeGroup;
+  /** Language of the book's text: sets the direction of the text boxes (not the interface's). */
+  language?: BookLanguage;
   /** Cache-busting version for media URLs. */
   version?: string;
   onChange: (patch: Partial<EditorPage>) => void;
@@ -78,6 +80,7 @@ export function PageEditor({
   index,
   total,
   ageGroup,
+  language = "he",
   version,
   onChange,
   onMove,
@@ -90,6 +93,9 @@ export function PageEditor({
   hasHero,
   onIllustrate,
 }: PageEditorProps) {
+  const locale = useLocale();
+  const t = PAGE_EDITOR_MESSAGES[locale];
+  const textDir = language === "en" ? "ltr" : "rtl";
   const imageInput = useRef<HTMLInputElement>(null);
   const audioInput = useRef<HTMLInputElement>(null);
   const nikudArea = useRef<HTMLTextAreaElement>(null);
@@ -139,18 +145,18 @@ export function PageEditor({
   };
 
   return (
-    <Card as="section" aria-label={`עריכת עמוד ${index + 1}`} className="flex flex-col gap-5">
+    <Card as="section" aria-label={t.editPage(index + 1)} className="flex flex-col gap-5">
       <header className="flex flex-wrap items-center gap-2">
         <h2 className="me-auto text-2xl font-bold">
-          עמוד {index + 1} <span className="text-base font-normal text-muted">מתוך {total}</span>
+          {t.page(index + 1)} <span className="text-base font-normal text-muted">{t.of(total)}</span>
         </h2>
-        <Button variant="ghost" size="icon" aria-label="הזזת העמוד אחורה" disabled={index === 0} onClick={() => onMove(-1)}>
+        <Button variant="ghost" size="icon" aria-label={t.moveBack} disabled={index === 0} onClick={() => onMove(-1)}>
           <ArrowUp aria-hidden="true" />
         </Button>
         <Button
           variant="ghost"
           size="icon"
-          aria-label="הזזת העמוד קדימה"
+          aria-label={t.moveForward}
           disabled={index === total - 1}
           onClick={() => onMove(1)}
         >
@@ -158,11 +164,11 @@ export function PageEditor({
         </Button>
         <Button variant="outline" size="sm" onClick={onDuplicate}>
           <Copy aria-hidden="true" className="size-4" />
-          שכפול
+          {t.duplicate}
         </Button>
         <Button variant="outline" size="sm" onClick={onDelete} className="text-danger">
           <Trash2 aria-hidden="true" className="size-4" />
-          מחיקה
+          {t.delete}
         </Button>
       </header>
 
@@ -184,16 +190,16 @@ export function PageEditor({
             )}
           >
             {image ? (
-              <img src={image} alt={`האיור של עמוד ${index + 1}`} className="size-full object-contain" />
+              <img src={image} alt={t.pictureAlt(index + 1)} className="size-full object-contain" />
             ) : (
               <div className="flex flex-col items-center gap-2 p-4 text-center text-muted">
                 <ImagePlus aria-hidden="true" className="size-10" />
-                <p>גררו לכאן תמונה, או בחרו קובץ</p>
+                <p>{t.dropPicture}</p>
               </div>
             )}
             {page.uploading ? (
               <div className="absolute inset-0 flex items-center justify-center bg-overlay">
-                <Spinner label="מעלה תמונה…" />
+                <Spinner label={t.uploadingPicture} />
               </div>
             ) : null}
           </div>
@@ -205,7 +211,7 @@ export function PageEditor({
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" size="sm" onClick={() => imageInput.current?.click()} disabled={page.uploading}>
               <Upload aria-hidden="true" className="size-4" />
-              {image ? "החלפת התמונה" : "בחירת תמונה"}
+              {image ? t.replacePicture : t.choosePicture}
             </Button>
             {image && !page.uploading ? (
               <Button
@@ -213,7 +219,7 @@ export function PageEditor({
                 size="sm"
                 onClick={() => onChange({ image: undefined, preview: undefined, uploadError: undefined })}
               >
-                הסרת התמונה
+                {t.removePicture}
               </Button>
             ) : null}
             <input
@@ -230,20 +236,17 @@ export function PageEditor({
           </div>
           <div className="flex flex-col gap-2 rounded-md bg-surface-2 p-3">
             <Field
-              label="יצירת איור לפי הגיבור והסיפור"
+              label={t.illustrateLabel}
               htmlFor={`${idBase}-art-note`}
-              hint={
-                hasHero
-                  ? "לא חובה: מה חשוב לכם שיופיע באיור הזה."
-                  : "צרו קודם את תמונת הגיבור בחלק \"הגיבור של הסיפור\" למעלה."
-              }
+              hint={hasHero ? t.illustrateHint : t.illustrateNeedsHero}
             >
               <Input
                 id={`${idBase}-art-note`}
                 maxLength={MAX_ILLUSTRATION_NOTE}
                 value={illustrationNote}
                 onChange={(event) => setIllustrationNote(event.target.value)}
-                placeholder="למשל: הגיבורה מחזיקה את המטרייה הצהובה"
+                dir="auto"
+                placeholder={t.illustratePlaceholder}
                 disabled={!hasHero}
               />
             </Field>
@@ -255,7 +258,7 @@ export function PageEditor({
                 disabled={!hasHero || page.text.trim().length === 0 || page.uploading}
               >
                 <Paintbrush aria-hidden="true" className="size-4" />
-                {image ? "יצירת איור חדש" : "יצירת איור"}
+                {image ? t.illustrateAgain : t.illustrate}
               </Button>
             </div>
           </div>
@@ -264,22 +267,18 @@ export function PageEditor({
         {/* Text */}
         <div className="flex flex-col gap-4">
           <Field
-            label="הטקסט של העמוד"
+            label={t.pageText}
             htmlFor={`${idBase}-text`}
-            hint={
-              suggestedWords
-                ? `${words} מילים. לגיל הזה מומלץ בערך ${suggestedWords} מילים בעמוד.`
-                : `${words} מילים`
-            }
+            hint={suggestedWords ? t.wordsSuggested(words, suggestedWords) : t.words(words)}
           >
             <Textarea
               id={`${idBase}-text`}
-              dir="rtl"
+              dir={textDir}
               rows={6}
               maxLength={MAX_PAGE_TEXT}
               value={page.text}
               onChange={(event) => onChange({ text: event.target.value })}
-              placeholder="מה קורה בעמוד הזה?"
+              placeholder={t.textPlaceholder}
               className="font-story text-xl leading-loose"
               aria-describedby={`${idBase}-text-hint`}
             />
@@ -288,26 +287,26 @@ export function PageEditor({
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="secondary" size="sm" onClick={onAutoNikud} disabled={page.text.trim().length === 0}>
               <Wand2 aria-hidden="true" className="size-4" />
-              ניקוד אוטומטי
+              {t.autoNikud}
             </Button>
             {!nikudOpen ? (
               <Button variant="ghost" size="sm" onClick={() => setShowNikud(true)}>
-                ניקוד ידני
+                {t.manualNikud}
               </Button>
             ) : null}
           </div>
 
           {nikudOpen ? (
             <Field
-              label="הטקסט המנוקד"
+              label={t.nikudText}
               htmlFor={`${idBase}-nikud`}
-              hint="זה הטקסט שיוצג כשהקורא מפעיל ניקוד. אפשר לתקן אותו כאן."
-              error={mismatch ? "מספר המילים כאן שונה מהטקסט הרגיל, ולכן הדגשת המילים בזמן ההקראה לא תתאים." : undefined}
+              hint={t.nikudHint}
+              error={mismatch ? t.nikudMismatch : undefined}
             >
               <Textarea
                 id={`${idBase}-nikud`}
                 ref={nikudArea}
-                dir="rtl"
+                dir={textDir}
                 rows={6}
                 maxLength={MAX_PAGE_TEXT * 3}
                 value={page.textNikud ?? ""}
@@ -315,13 +314,13 @@ export function PageEditor({
                 aria-invalid={mismatch || undefined}
                 className="font-story text-2xl leading-loose"
               />
-              <div role="group" aria-label="הוספת סימן ניקוד במקום הסמן" className="flex flex-wrap gap-1">
+              <div role="group" aria-label={t.insertMark} className="flex flex-wrap gap-1">
                 {NIKUD_MARKS.map(({ mark, name }) => (
                   <button
                     key={mark}
                     type="button"
-                    title={name}
-                    aria-label={name}
+                    title={t.nikudMarks[name]}
+                    aria-label={t.nikudMarks[name]}
                     onClick={() => insertMark(mark)}
                     className="flex size-10 items-center justify-center rounded-sm border border-border bg-surface font-story text-2xl hover:bg-surface-2"
                   >
@@ -332,7 +331,7 @@ export function PageEditor({
               <div className="flex flex-wrap gap-2">
                 {!page.textNikud ? (
                   <Button variant="ghost" size="sm" onClick={() => onChange({ textNikud: page.text })}>
-                    העתקת הטקסט הרגיל לכאן
+                    {t.copyPlain}
                   </Button>
                 ) : (
                   <Button
@@ -343,7 +342,7 @@ export function PageEditor({
                       setShowNikud(false);
                     }}
                   >
-                    מחיקת הניקוד
+                    {t.deleteNikud}
                   </Button>
                 )}
               </div>
@@ -356,31 +355,31 @@ export function PageEditor({
       <div className="flex flex-col gap-3 rounded-md bg-surface-2 p-4">
         <h3 className="flex items-center gap-2 text-lg font-bold">
           <Volume2 aria-hidden="true" className="size-5" />
-          הקראה
+          {t.narration}
           {page.audio && page.audioSource ? (
             <span className="rounded-full bg-surface px-3 py-0.5 text-sm font-medium">
-              {AUDIO_SOURCE_LABELS[page.audioSource]}
+              {t.audioSource[page.audioSource]}
             </span>
           ) : null}
         </h3>
         {audio ? (
           <audio key={audio} controls preload="none" src={audio} className="w-full max-w-xl" />
         ) : (
-          <p className="text-muted">לעמוד הזה אין הקראה עדיין.</p>
+          <p className="text-muted">{t.noNarration}</p>
         )}
         {page.audio && page.audioSource === "mock" ? <MockNotice kind="tts" /> : null}
         {stale ? (
           <p role="alert" className="font-medium text-warning">
-            הטקסט השתנה אחרי ההקראה, ולכן ההקראה כבר לא תואמת. כדאי להקריא מחדש.
+            {t.narrationStale}
           </p>
         ) : null}
         {page.audio && page.audioSource === "recorded" ? (
-          <p className="text-sm text-muted">אם שיניתם את הטקסט אחרי ההקלטה, כדאי להקליט שוב.</p>
+          <p className="text-sm text-muted">{t.recordedNote}</p>
         ) : null}
         <div className="flex flex-wrap items-start gap-2">
           <Button variant="secondary" onClick={onAutoNarrate} disabled={page.text.trim().length === 0 || audioBusy}>
             <Sparkles aria-hidden="true" className="size-5" />
-            הקראה אוטומטית
+            {t.autoNarrate}
           </Button>
           <AudioRecorder
             key={page.key}
@@ -389,14 +388,14 @@ export function PageEditor({
           />
           <Button variant="outline" onClick={() => audioInput.current?.click()} loading={audioBusy}>
             <Upload aria-hidden="true" className="size-5" />
-            העלאת קובץ שמע
+            {t.uploadAudio}
           </Button>
           {page.audio ? (
             <Button
               variant="ghost"
               onClick={() => onChange({ audio: undefined, audioSource: undefined, wordTimings: undefined })}
             >
-              הסרת ההקראה
+              {t.removeNarration}
             </Button>
           ) : null}
           <input

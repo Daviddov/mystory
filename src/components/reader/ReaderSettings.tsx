@@ -1,16 +1,18 @@
 "use client";
 
 import { AArrowDown, AArrowUp, Moon, Timer } from "lucide-react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Chip, Dialog } from "@/components/ui";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { FONT_SIZES_REM, SLEEP_TIMER_MINUTES, formatCountdown } from "@/lib/reader/logic";
 import type { TextLayout } from "@/lib/reader/storage";
+import { textDirection, type BookLanguage } from "@/lib/types";
 import { SpeedControl } from "./SpeedControl";
 
-const TEXT_LAYOUTS: { value: TextLayout; label: string }[] = [
-  { value: "side", label: "ליד התמונה" },
-  { value: "below", label: "תמיד מתחת לתמונה" },
-  { value: "hidden", label: "בלי טקסט" },
-];
+const TEXT_LAYOUTS = ["side", "below", "hidden"] as const satisfies readonly TextLayout[];
+
+/** Letters of the text-size sample, in the language of the story being read. */
+const SAMPLES: Record<BookLanguage, string> = { he: "אבג", en: "Abc", ar: "أبج" };
 
 export interface ReaderSettingsProps {
   open: boolean;
@@ -26,6 +28,8 @@ export interface ReaderSettingsProps {
   reducedMotion?: boolean;
   /** The book has a vocalized version; without one the nikud switch is disabled. */
   nikudAvailable: boolean;
+  /** Language of the story text, for the text-size sample. Default Hebrew. */
+  sampleLanguage?: BookLanguage;
   nikud: boolean;
   onNikud: (value: boolean) => void;
   /** Starts the "listening before sleep" mode: dim theme, narration and a sleep timer. */
@@ -57,6 +61,7 @@ export function ReaderSettings({
   onLiveImages,
   reducedMotion = false,
   nikudAvailable,
+  sampleLanguage = "he",
   nikud,
   onNikud,
   onBedtimeListen,
@@ -73,18 +78,19 @@ export function ReaderSettings({
   onSleepCancel,
 }: ReaderSettingsProps) {
   const maxStep = FONT_SIZES_REM.length - 1;
+  const t = READER_MESSAGES[useLocale()].settings;
   return (
-    <Dialog open={open} onClose={onClose} title="הגדרות קריאה" size="md">
+    <Dialog open={open} onClose={onClose} title={t.title} size="md">
       <div className="flex flex-col gap-6">
         <section aria-labelledby="reader-font-title">
           <h3 id="reader-font-title" className="mb-2 text-lg font-bold">
-            גודל האותיות
+            {t.fontSize}
           </h3>
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
               size="icon"
-              aria-label="להקטין את האותיות"
+              aria-label={t.smaller}
               disabled={fontStep <= 0}
               onClick={() => onFontStep(fontStep - 1)}
             >
@@ -95,15 +101,15 @@ export function ReaderSettings({
               style={{ fontSize: `${FONT_SIZES_REM[fontStep]}rem`, lineHeight: 1.4 }}
               aria-live="polite"
             >
-              אבג
-              <span className="sr-only">
-                , גודל {fontStep + 1} מתוך {maxStep + 1}
+              <span lang={sampleLanguage} dir={textDirection(sampleLanguage)}>
+                {SAMPLES[sampleLanguage]}
               </span>
+              <span className="sr-only">{t.sizeOf(fontStep + 1, maxStep + 1)}</span>
             </p>
             <Button
               variant="outline"
               size="icon"
-              aria-label="להגדיל את האותיות"
+              aria-label={t.bigger}
               disabled={fontStep >= maxStep}
               onClick={() => onFontStep(fontStep + 1)}
             >
@@ -114,7 +120,7 @@ export function ReaderSettings({
 
         <section aria-labelledby="reader-nikud-title">
           <h3 id="reader-nikud-title" className="mb-2 text-lg font-bold">
-            ניקוד
+            {t.nikud}
           </h3>
           <label className={`flex min-h-touch items-center gap-3 ${nikudAvailable ? "cursor-pointer" : "opacity-60"}`}>
             <input
@@ -124,32 +130,30 @@ export function ReaderSettings({
               disabled={!nikudAvailable}
               onChange={(event) => onNikud(event.target.checked)}
             />
-            <span>להציג ניקוד</span>
+            <span>{t.showNikud}</span>
           </label>
-          {nikudAvailable ? null : <p className="mt-1 text-sm text-muted">לספר הזה אין גרסה מנוקדת.</p>}
+          {nikudAvailable ? null : <p className="mt-1 text-sm text-muted">{t.noNikud}</p>}
         </section>
 
         <section aria-labelledby="reader-layout-title">
           <h3 id="reader-layout-title" className="mb-2 text-lg font-bold">
-            מיקום הטקסט
+            {t.layout}
           </h3>
-          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="מיקום הטקסט">
-            {TEXT_LAYOUTS.map(({ value, label }) => (
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t.layout}>
+            {TEXT_LAYOUTS.map((value) => (
               <Chip key={value} selected={textLayout === value} tone="secondary" onClick={() => onTextLayout(value)}>
-                {label}
+                {value === "side" ? t.layoutSide : value === "below" ? t.layoutBelow : t.layoutHidden}
               </Chip>
             ))}
           </div>
           {textLayout === "side" ? (
-            <p className="mt-2 text-sm text-muted">
-              בתמונה מרובעת או גבוהה הטקסט יופיע לצידה. בתמונה רחבה או במסך צר הוא יופיע מתחתיה.
-            </p>
+            <p className="mt-2 text-sm text-muted">{t.layoutSideHint}</p>
           ) : null}
         </section>
 
         <section aria-labelledby="reader-pictures-title">
           <h3 id="reader-pictures-title" className="mb-2 text-lg font-bold">
-            איורים
+            {t.pictures}
           </h3>
           <label className="flex min-h-touch cursor-pointer items-center gap-3">
             <input
@@ -158,24 +162,22 @@ export function ReaderSettings({
               checked={liveImages}
               onChange={(event) => onLiveImages(event.target.checked)}
             />
-            <span>תמונות חיות</span>
+            <span>{t.livePictures}</span>
           </label>
           <p className="mt-1 text-sm text-muted">
-            {reducedMotion
-              ? "המכשיר מוגדר להפחתת תנועה, ולכן האיורים נשארים דוממים."
-              : "תנועה איטית ועדינה באיורים, וסרטון קצר בעמודים שהאיור שלהם הונפש. כשהאפשרות כבויה האיורים דוממים."}
+            {reducedMotion ? t.reducedMotion : t.livePicturesHint}
           </p>
         </section>
 
         <section aria-labelledby="reader-audio-title">
           <h3 id="reader-audio-title" className="mb-2 text-lg font-bold">
-            הקראה
+            {t.narration}
           </h3>
           {hasAudio ? (
             <div className="flex flex-col gap-3">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="text-muted" aria-hidden="true">
-                  מהירות:
+                  {t.speed}
                 </span>
                 <SpeedControl rate={rate} onRate={onRate} />
               </div>
@@ -186,7 +188,7 @@ export function ReaderSettings({
                   checked={autoAdvance}
                   onChange={(event) => onAutoAdvance(event.target.checked)}
                 />
-                <span>לעבור לעמוד הבא לבד בסוף ההקראה</span>
+                <span>{t.autoAdvance}</span>
               </label>
               {hasSoundtrack ? (
                 <label className="flex min-h-touch cursor-pointer items-center gap-3">
@@ -196,12 +198,12 @@ export function ReaderSettings({
                     checked={soundtrack}
                     onChange={(event) => onSoundtrack?.(event.target.checked)}
                   />
-                  <span>מוזיקת רקע מתחת להקראה</span>
+                  <span>{t.soundtrack}</span>
                 </label>
               ) : null}
             </div>
           ) : (
-            <p className="text-muted">לספר הזה אין עדיין הקראה. אפשר לקרוא אותו יחד בקול.</p>
+            <p className="text-muted">{t.noAudio}</p>
           )}
         </section>
 
@@ -209,11 +211,11 @@ export function ReaderSettings({
           <section aria-labelledby="reader-bedtime-title">
             <h3 id="reader-bedtime-title" className="mb-2 flex items-center gap-2 text-lg font-bold">
               <Moon aria-hidden="true" className="size-5" />
-              האזנה לפני השינה
+              {t.bedtime}
             </h3>
-            <p className="mb-3 text-muted">מצב לילה, הקראה רציפה עם התמונות וטיימר שינה של 30 דקות. הבקרים זמינים גם במסך הנעילה.</p>
+            <p className="mb-3 text-muted">{t.bedtimeHint}</p>
             <Button variant="secondary" onClick={onBedtimeListen}>
-              להתחיל להאזין
+              {t.bedtimeStart}
             </Button>
           </section>
         ) : null}
@@ -221,23 +223,23 @@ export function ReaderSettings({
         <section aria-labelledby="reader-sleep-title">
           <h3 id="reader-sleep-title" className="mb-2 flex items-center gap-2 text-lg font-bold">
             <Timer aria-hidden="true" className="size-5" />
-            טיימר שינה
+            {t.sleepTimer}
           </h3>
-          <p className="mb-3 text-muted">בסוף הזמן ההקראה נעצרת והמסך מחשיך.</p>
+          <p className="mb-3 text-muted">{t.sleepHint}</p>
           <div className="flex flex-wrap items-center gap-2">
             {SLEEP_TIMER_MINUTES.map((minutes) => (
               <Chip key={minutes} tone="primary" onClick={() => onSleepStart(minutes)}>
-                {minutes} דקות
+                {t.minutes(minutes)}
               </Chip>
             ))}
           </div>
           {sleepRemaining !== null ? (
             <p className="mt-3 flex flex-wrap items-center gap-3" role="status">
               <span>
-                נשארו <strong dir="ltr">{formatCountdown(sleepRemaining)}</strong>
+                {t.left} <strong dir="ltr">{formatCountdown(sleepRemaining)}</strong>
               </span>
               <Button variant="outline" size="sm" onClick={onSleepCancel}>
-                לבטל את הטיימר
+                {t.cancelTimer}
               </Button>
             </p>
           ) : null}

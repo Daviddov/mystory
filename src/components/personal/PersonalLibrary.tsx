@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { BookCard } from "@/components/BookCard";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { ButtonLink, EmptyState, Spinner } from "@/components/ui";
+import { accountMessages } from "@/lib/i18n/account";
 import { routes } from "@/lib/routes";
 import type { Book } from "@/lib/types";
 import { FavoriteButton } from "./FavoriteButton";
@@ -18,11 +20,9 @@ export interface PersonalLibraryProps {
 
 const GRID = "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6";
 
-const dateFormat = new Intl.DateTimeFormat("he-IL", { day: "numeric", month: "long" });
-
-function formatDate(iso: string): string {
+function formatDate(iso: string, dateLocale: string): string {
   const date = new Date(iso);
-  return Number.isNaN(date.getTime()) ? "" : dateFormat.format(date);
+  return Number.isNaN(date.getTime()) ? "" : new Intl.DateTimeFormat(dateLocale, { day: "numeric", month: "long" }).format(date);
 }
 
 type LoadState = { key: string; books: Map<string, Book>; failed: boolean };
@@ -34,6 +34,9 @@ type LoadState = { key: string; books: Map<string, Book>; failed: boolean };
  */
 export function PersonalLibrary({ mode = "all", signedIn }: PersonalLibraryProps) {
   const personal = usePersonal();
+  const locale = useLocale();
+  const messages = accountMessages(locale);
+  const t = messages.library;
   const ids = useMemo(() => {
     const set = new Set<string>(personal.favorites.map((f) => f.bookId));
     if (mode === "all") for (const p of personal.progress) set.add(p.bookId);
@@ -80,12 +83,12 @@ export function PersonalLibrary({ mode = "all", signedIn }: PersonalLibraryProps
     <>
       {loaded.failed && key ? (
         <p role="alert" className="rounded-md bg-danger-soft px-4 py-3">
-          לא הצלחנו לטעון את הספרים. בדקו את החיבור לרשת ונסו שוב.
+          {t.loadFailed}
         </p>
       ) : null}
       {signedIn && personal.status === "error" ? (
         <p role="status" className="rounded-md bg-warning-soft px-4 py-3">
-          אין כרגע קשר עם החשבון, ולכן מוצג מה ששמור במכשיר הזה. השינויים יסתנכרנו כשהחיבור יחזור.
+          {t.accountOffline}
         </p>
       ) : null}
     </>
@@ -96,26 +99,26 @@ export function PersonalLibrary({ mode = "all", signedIn }: PersonalLibraryProps
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id="favorites-title" className="text-2xl font-extrabold">
           <span aria-hidden="true">❤️ </span>
-          המועדפים שלי
+          {t.favorites}
         </h2>
         {mode === "all" && favorites.length > 6 ? (
           <ButtonLink href={routes.favorites()} variant="ghost" size="sm">
-            לכל המועדפים
+            {t.allFavorites}
           </ButtonLink>
         ) : null}
       </div>
       {favorites.length === 0 ? (
         <EmptyState
           icon="❤️"
-          title="עדיין אין מועדפים"
-          description="לחיצה על הלב ליד ספר שומרת אותו כאן, כדי שיהיה קל לחזור אליו."
-          action={<ButtonLink href={routes.books()}>לכל הספרים</ButtonLink>}
+          title={t.noFavoritesTitle}
+          description={t.noFavoritesDescription}
+          action={<ButtonLink href={routes.books()}>{t.allBooks}</ButtonLink>}
         />
       ) : (
         <ul className={GRID}>
           {(mode === "all" ? favorites.slice(0, 12) : favorites).map((book) => (
             <li key={book.id}>
-              <BookCard book={book} footer={<FavoriteButton bookId={book.id} title={book.title} />} />
+              <BookCard book={book} locale={locale} footer={<FavoriteButton bookId={book.id} title={book.title} />} />
             </li>
           ))}
         </ul>
@@ -139,14 +142,14 @@ export function PersonalLibrary({ mode = "all", signedIn }: PersonalLibraryProps
       <section aria-labelledby="continue-title" className="flex flex-col gap-4">
         <h2 id="continue-title" className="text-2xl font-extrabold">
           <span aria-hidden="true">📖 </span>
-          ממשיכים לקרוא
+          {t.continueReading}
         </h2>
         {inProgress.length === 0 ? (
           <EmptyState
             icon="📖"
-            title="אין ספר פתוח"
-            description="ספר שמתחילים לקרוא יחכה כאן, בדיוק בעמוד שבו עצרתם."
-            action={<ButtonLink href={routes.books()}>בוחרים ספר</ButtonLink>}
+            title={t.noOpenTitle}
+            description={t.noOpenDescription}
+            action={<ButtonLink href={routes.books()}>{t.chooseBook}</ButtonLink>}
           />
         ) : (
           <ul className={GRID}>
@@ -154,8 +157,9 @@ export function PersonalLibrary({ mode = "all", signedIn }: PersonalLibraryProps
               <li key={book.id}>
                 <BookCard
                   book={book}
+                  locale={locale}
                   href={routes.read(book.slug, progress.pageIndex + 1)}
-                  badge={`עמוד ${progress.pageIndex + 1}`}
+                  badge={t.pageBadge(progress.pageIndex + 1)}
                 />
               </li>
             ))}
@@ -168,27 +172,29 @@ export function PersonalLibrary({ mode = "all", signedIn }: PersonalLibraryProps
       <section aria-labelledby="history-title" className="flex flex-col gap-4">
         <h2 id="history-title" className="text-2xl font-extrabold">
           <span aria-hidden="true">🕰️ </span>
-          קראנו לאחרונה
+          {t.recent}
         </h2>
         {history.length === 0 ? (
-          <p className="text-muted">הספרים שתקראו יופיעו כאן.</p>
+          <p className="text-muted">{t.noHistory}</p>
         ) : (
           <ul className="flex flex-col divide-y divide-border rounded-lg border border-border bg-surface">
             {history.slice(0, 30).map(({ book, progress }) => (
               <li key={book.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-                <Link href={routes.book(book.slug)} className="min-w-0 flex-1 text-lg font-bold hover:underline">
+                <Link href={routes.book(book.slug)} dir="auto" className="min-w-0 flex-1 text-lg font-bold hover:underline">
                   {book.title}
                 </Link>
                 <span className="text-sm text-muted">
-                  {progress.completed ? "קראנו עד הסוף" : `עצרנו בעמוד ${progress.pageIndex + 1}`}
-                  {formatDate(progress.updatedAt) ? ` · ${formatDate(progress.updatedAt)}` : ""}
+                  {progress.completed ? t.finished : t.stoppedAt(progress.pageIndex + 1)}
+                  {formatDate(progress.updatedAt, messages.dateLocale)
+                    ? ` · ${formatDate(progress.updatedAt, messages.dateLocale)}`
+                    : ""}
                 </span>
                 <ButtonLink
                   href={progress.completed ? routes.read(book.slug) : routes.read(book.slug, progress.pageIndex + 1)}
                   variant="outline"
                   size="sm"
                 >
-                  {progress.completed ? "לקרוא שוב" : "להמשיך"}
+                  {progress.completed ? t.readAgain : t.continue}
                 </ButtonLink>
               </li>
             ))}

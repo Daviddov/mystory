@@ -13,7 +13,9 @@ import { rectSortingStrategy, SortableContext, sortableKeyboardCoordinates, useS
 import { CSS } from "@dnd-kit/utilities";
 import { AlertTriangle, GripVertical, Volume2 } from "lucide-react";
 import { useId } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Spinner } from "@/components/ui";
+import { STUDIO_PAGE_LIST_MESSAGES } from "@/lib/i18n/studio-editor";
 import { cn } from "@/lib/cn";
 import { mediaUrl } from "@/lib/media/url";
 import type { EditorPage } from "./types";
@@ -32,6 +34,7 @@ export interface PageListProps {
 /** Page thumbnails with drag-to-reorder (pointer, touch and keyboard). */
 export function PageList({ pages, selectedKey, onSelect, onReorder, version, disabled }: PageListProps) {
   const dndId = useId();
+  const t = STUDIO_PAGE_LIST_MESSAGES[useLocale()];
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
@@ -46,7 +49,7 @@ export function PageList({ pages, selectedKey, onSelect, onReorder, version, dis
     <DndContext id={dndId} sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={pages.map((page) => page.key)} strategy={rectSortingStrategy} disabled={disabled}>
         <ol
-          aria-label="עמודי הספר"
+          aria-label={t.list}
           className="flex gap-2 overflow-x-auto pb-2 lg:max-h-[70dvh] lg:flex-col lg:overflow-y-auto lg:overflow-x-visible lg:pb-0 lg:pe-1"
         >
           {pages.map((page, index) => (
@@ -81,6 +84,7 @@ function PageListItem({ page, index, selected, onSelect, version, disabled }: Pa
   });
   const image = page.preview ?? mediaUrl(page.image, version);
   const snippet = page.text.trim();
+  const t = STUDIO_PAGE_LIST_MESSAGES[useLocale()];
 
   return (
     <li
@@ -98,7 +102,7 @@ function PageListItem({ page, index, selected, onSelect, version, disabled }: Pa
         {...attributes}
         {...listeners}
         disabled={disabled}
-        aria-label={`גרירת עמוד ${index + 1} לשינוי הסדר`}
+        aria-label={t.drag(index + 1)}
         className="flex w-8 shrink-0 cursor-grab touch-none items-center justify-center rounded-s-sm text-muted hover:bg-surface-2 active:cursor-grabbing disabled:cursor-default disabled:opacity-40"
       >
         <GripVertical aria-hidden="true" className="size-5" />
@@ -119,17 +123,17 @@ function PageListItem({ page, index, selected, onSelect, version, disabled }: Pa
           )}
           {page.uploading ? (
             <span className="absolute inset-0 flex items-center justify-center bg-overlay">
-              <Spinner size="sm" label="מעלה תמונה" />
+              <Spinner size="sm" label={t.uploading} />
             </span>
           ) : null}
         </span>
         <span className="flex min-w-0 flex-1 flex-col">
           <span className="flex items-center gap-1 text-sm font-bold">
-            עמוד {index + 1}
-            {page.audio ? <Volume2 aria-label="יש הקראה" className="size-4 text-secondary" /> : null}
-            {page.uploadError ? <AlertTriangle aria-label="העלאת התמונה נכשלה" className="size-4 text-danger" /> : null}
+            {t.page(index + 1)}
+            {page.audio ? <Volume2 aria-label={t.hasAudio} className="size-4 text-secondary" /> : null}
+            {page.uploadError ? <AlertTriangle aria-label={t.uploadFailed} className="size-4 text-danger" /> : null}
           </span>
-          <span className="line-clamp-1 text-xs text-muted lg:line-clamp-2">{snippet || "בלי טקסט"}</span>
+          <span className="line-clamp-1 text-xs text-muted lg:line-clamp-2">{snippet || t.noText}</span>
         </span>
       </button>
     </li>

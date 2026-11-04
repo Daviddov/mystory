@@ -5,6 +5,8 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { authMode, safeNextPath } from "@/lib/auth";
+import { accountMessages } from "@/lib/i18n/account";
+import { getLocale } from "@/lib/i18n/server";
 
 export interface SignInState {
   error?: string;
@@ -13,8 +15,6 @@ export interface SignInState {
 }
 
 const EmailSchema = z.string().trim().toLowerCase().email().max(254);
-
-const UNAVAILABLE = "ההתחברות עם חשבון אינה זמינה באתר הזה.";
 
 /**
  * Absolute origin for the links Supabase sends the visitor back to.
@@ -38,10 +38,11 @@ async function callbackUrl(next: string): Promise<string> {
 
 /** For useActionState: fields `email`, `next`. Sends a one-time sign-in link. */
 export async function sendMagicLinkAction(_prev: SignInState, formData: FormData): Promise<SignInState> {
-  if (authMode() !== "supabase") return { error: UNAVAILABLE };
+  const t = accountMessages(await getLocale()).auth;
+  if (authMode() !== "supabase") return { error: t.supabaseUnavailable };
 
   const parsed = EmailSchema.safeParse(String(formData.get("email") ?? ""));
-  if (!parsed.success) return { error: "כתובת האימייל לא נראית תקינה." };
+  if (!parsed.success) return { error: t.badEmail };
   const next = safeNextPath(String(formData.get("next") ?? ""), "/");
 
   const { createSupabaseServerClient } = await import("@/lib/auth/supabase");
@@ -52,8 +53,8 @@ export async function sendMagicLinkAction(_prev: SignInState, formData: FormData
   });
   if (error) {
     console.warn("[auth] magic link failed:", error.message);
-    if (error.status === 429) return { error: "נשלחו יותר מדי בקשות. נסו שוב בעוד כמה דקות." };
-    return { error: "לא הצלחנו לשלוח את הקישור. בדקו את הכתובת ונסו שוב." };
+    if (error.status === 429) return { error: t.tooManyRequests };
+    return { error: t.sendFailed };
   }
   return { sentTo: parsed.data };
 }

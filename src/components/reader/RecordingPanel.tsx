@@ -3,9 +3,10 @@
 import { Check, Pencil, Plus, Send, Trash2, Undo2, X } from "lucide-react";
 import { useState } from "react";
 import { AudioRecorder } from "@/components/studio/AudioRecorder";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Spinner } from "@/components/ui";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import {
-  RECORDING_STATUS_LABELS,
   createRecordingRequest,
   deletePageRequest,
   renameRecordingRequest,
@@ -49,6 +50,7 @@ export function RecordingPanel({
   onSaved,
   onClose,
 }: RecordingPanelProps) {
+  const t = READER_MESSAGES[useLocale()].recording;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -86,14 +88,14 @@ export function RecordingPanel({
       },
       () => {
         if (pageIndex < pageCount - 1) onSaved();
-        else setMessage("הקלטתם את כל הספר! אפשר לשמוע אותו בבחירת הקול.");
+        else setMessage(t.allDone);
       },
     );
   }
 
   return (
     <section
-      aria-label="הקלטה בקול שלי"
+      aria-label={t.region}
       className="flex shrink-0 flex-col gap-2 border-t border-border bg-surface px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2 sm:px-6"
     >
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -108,25 +110,25 @@ export function RecordingPanel({
           >
             <input
               autoFocus
-              aria-label="שם ההקלטה"
+              aria-label={t.name}
               maxLength={60}
               value={draftTitle}
               onChange={(event) => setDraftTitle(event.target.value)}
               className="min-h-10 w-48 rounded-md border border-border-strong bg-background px-3"
             />
-            <Button type="submit" size="icon" variant="ghost" aria-label="שמירת השם">
+            <Button type="submit" size="icon" variant="ghost" aria-label={t.saveName}>
               <Check aria-hidden="true" />
             </Button>
           </form>
         ) : (
           <p className="flex items-center gap-1 font-bold">
             <span aria-hidden="true">🎙️</span>
-            {recording ? recording.title : "הקלטה חדשה"}
+            {recording ? <bdi>{recording.title}</bdi> : t.newRecording}
             {recording ? (
               <Button
                 size="icon"
                 variant="ghost"
-                aria-label="שינוי שם ההקלטה"
+                aria-label={t.rename}
                 onClick={() => {
                   setDraftTitle(recording.title);
                   setRenaming(true);
@@ -138,17 +140,17 @@ export function RecordingPanel({
           </p>
         )}
         <p className="text-sm text-muted">
-          הוקלטו {recordedCount} מתוך {pageCount} עמודים
-          {recording ? ` · ${RECORDING_STATUS_LABELS[recording.status]}` : ""}
+          {t.progress(recordedCount, pageCount)}
+          {recording ? ` · ${t.status[recording.status]}` : ""}
         </p>
         <div className="ms-auto flex items-center gap-1">
           {recording ? (
             <Button size="sm" variant="ghost" onClick={onStartNew} disabled={busy}>
               <Plus aria-hidden="true" className="size-4" />
-              הקלטה חדשה
+              {t.newRecording}
             </Button>
           ) : null}
-          <Button size="icon" variant="ghost" aria-label="סיום מצב ההקלטה" title="סיום מצב ההקלטה" onClick={onClose}>
+          <Button size="icon" variant="ghost" aria-label={t.close} title={t.close} onClick={onClose}>
             <X aria-hidden="true" />
           </Button>
         </div>
@@ -156,16 +158,16 @@ export function RecordingPanel({
 
       <div className="flex flex-wrap items-center gap-3">
         <AudioRecorder
-          label={take ? `להקליט שוב את עמוד ${pageIndex + 1}` : `להקליט את עמוד ${pageIndex + 1}`}
+          label={take ? t.recordAgain(pageIndex + 1) : t.recordPage(pageIndex + 1)}
           disabled={busy}
           onRecorded={(blob) => void saveTake(blob)}
         />
-        {busy ? <Spinner size="sm" label="שומרים" /> : null}
+        {busy ? <Spinner size="sm" label={t.saving} /> : null}
         {take && !busy ? (
           <>
             <span className="inline-flex items-center gap-1 text-sm font-semibold text-success">
               <Check aria-hidden="true" className="size-4" />
-              לעמוד הזה יש הקלטה
+              {t.hasTake}
             </span>
             <Button
               size="sm"
@@ -173,7 +175,7 @@ export function RecordingPanel({
               onClick={() => recording && void run(() => deletePageRequest(recording.id, pageIndex))}
             >
               <Trash2 aria-hidden="true" className="size-4" />
-              למחוק
+              {t.delete}
             </Button>
           </>
         ) : null}
@@ -187,12 +189,12 @@ export function RecordingPanel({
               onClick={() =>
                 void run(
                   () => shareRecordingRequest(recording.id, "submit"),
-                  () => setMessage("ההקלטה נשלחה לאישור. אחרי האישור כל הקוראים יוכלו לבחור בה."),
+                  () => setMessage(t.submitted),
                 )
               }
             >
               <Send aria-hidden="true" className="size-4" />
-              לשתף עם כולם
+              {t.share}
             </Button>
           ) : (
             <Button
@@ -203,13 +205,13 @@ export function RecordingPanel({
               onClick={() => void run(() => shareRecordingRequest(recording.id, "withdraw"))}
             >
               <Undo2 aria-hidden="true" className="size-4" />
-              להפסיק לשתף
+              {t.unshare}
             </Button>
           )
         ) : null}
       </div>
       {recording?.reviewNote && recording.status === "private" ? (
-        <p className="rounded-md bg-warning-soft px-3 py-1.5 text-sm">הערה מהעורכים: {recording.reviewNote}</p>
+        <p className="rounded-md bg-warning-soft px-3 py-1.5 text-sm">{t.reviewNote(recording.reviewNote)}</p>
       ) : null}
       {error ? (
         <p role="alert" className="text-sm font-medium text-danger">
@@ -222,7 +224,7 @@ export function RecordingPanel({
         </p>
       ) : null}
       <p className="text-xs text-muted">
-        ההקלטות נשמרות במדף שלי. שינוי בהקלטה משותפת מפסיק את השיתוף עד שתשלחו אותה שוב לאישור.
+        {t.hint}
       </p>
     </section>
   );

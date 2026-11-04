@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import { useState, type FormEvent } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Textarea } from "@/components/ui";
 import type { CommentView } from "@/lib/comments";
 import { cn } from "@/lib/cn";
+import type { Locale } from "@/lib/i18n/locale";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { COMMENT_MAX_LENGTH } from "@/lib/types";
 
 export interface BookCommentsProps {
@@ -20,12 +23,16 @@ export interface BookCommentsProps {
   className?: string;
 }
 
-const dateFormat = new Intl.DateTimeFormat("he-IL", {
+const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
   day: "numeric",
   month: "long",
   year: "numeric",
   timeZone: "Asia/Jerusalem",
-});
+};
+const DATE_FORMATS: Record<Locale, Intl.DateTimeFormat> = {
+  he: new Intl.DateTimeFormat("he-IL", DATE_OPTIONS),
+  en: new Intl.DateTimeFormat("en-GB", DATE_OPTIONS),
+};
 
 /**
  * Readers' comments on a book. Everyone who may see the book reads them;
@@ -33,6 +40,8 @@ const dateFormat = new Intl.DateTimeFormat("he-IL", {
  * Comments are rendered as plain text.
  */
 export function BookComments({ bookId, initialComments, signedIn, loginHref, shareToken, className }: BookCommentsProps) {
+  const locale = useLocale();
+  const t = READER_MESSAGES[locale].comments;
   const [comments, setComments] = useState<CommentView[]>(initialComments);
   const [draft, setDraft] = useState("");
   const [busy, setBusy] = useState(false);
@@ -54,13 +63,15 @@ export function BookComments({ bookId, initialComments, signedIn, loginHref, sha
       });
       if (!response.ok) {
         const data = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(response.status === 429 && data?.error ? data.error : "לא הצלחנו לשמור את התגובה. נסו שוב.");
+        // The server's rate-limit message is Hebrew; English readers get this module's.
+        const tooFast = response.status === 429 && data?.error ? (locale === "he" ? data.error : t.tooFast) : "";
+        throw new Error(tooFast || t.saveFailed);
       }
       const { comment } = (await response.json()) as { comment: CommentView };
       setComments((list) => [comment, ...list]);
       setDraft("");
     } catch (err) {
-      setProblem(err instanceof Error ? err.message : "לא הצלחנו לשמור את התגובה. נסו שוב.");
+      setProblem(err instanceof Error ? err.message : t.saveFailed);
     } finally {
       setBusy(false);
     }
@@ -68,7 +79,7 @@ export function BookComments({ bookId, initialComments, signedIn, loginHref, sha
 
   async function remove(id: string) {
     if (deleting) return;
-    if (!window.confirm("למחוק את התגובה?")) return;
+    if (!window.confirm(t.confirmDelete)) return;
     setDeleting(id);
     setProblem(null);
     try {
@@ -76,7 +87,7 @@ export function BookComments({ bookId, initialComments, signedIn, loginHref, sha
       if (!response.ok && response.status !== 404) throw new Error(String(response.status));
       setComments((list) => list.filter((c) => c.id !== id));
     } catch {
-      setProblem("לא הצלחנו למחוק את התגובה. נסו שוב.");
+      setProblem(t.deleteFailed);
     } finally {
       setDeleting(null);
     }
@@ -85,14 +96,14 @@ export function BookComments({ bookId, initialComments, signedIn, loginHref, sha
   return (
     <section aria-labelledby="book-comments-title" className={cn("flex flex-col gap-5", className)} data-testid="book-comments">
       <h2 id="book-comments-title" className="text-2xl font-bold sm:text-3xl">
-        תגובות על הספר
+        {t.title}
         {comments.length ? <span className="text-lg font-normal text-muted"> ({comments.length})</span> : null}
       </h2>
 
       {signedIn ? (
         <form onSubmit={submit} className="flex flex-col gap-2">
           <label htmlFor="book-comment-body" className="text-base font-semibold">
-            מה חשבתם על הספר?
+            {t.prompt}
           </label>
           <Textarea
             id="book-comment-body"
@@ -100,23 +111,23 @@ export function BookComments({ bookId, initialComments, signedIn, loginHref, sha
             onChange={(event) => setDraft(event.target.value)}
             maxLength={COMMENT_MAX_LENGTH}
             rows={3}
-            placeholder="כתבו תגובה…"
+            placeholder={t.placeholder}
             aria-describedby="book-comment-hint"
             disabled={busy}
           />
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p id="book-comment-hint" className="text-sm text-muted">
-              התגובה תוצג לכל הקוראים עם השם שלכם. {draft.length}/{COMMENT_MAX_LENGTH}
+              {t.hint} {draft.length}/{COMMENT_MAX_LENGTH}
             </p>
             <Button type="submit" loading={busy} disabled={!trimmed}>
-              פרסום תגובה
+              {t.post}
             </Button>
           </div>
         </form>
       ) : (
         <p className="text-base">
           <Link href={loginHref} className="font-semibold text-secondary underline underline-offset-4">
-            התחברו כדי להגיב
+            {t.signIn}
           </Link>
         </p>
       )}
@@ -133,17 +144,17 @@ export function BookComments({ bookId, initialComments, signedIn, loginHref, sha
             <li key={comment.id} className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4">
               <div className="flex items-center justify-between gap-3">
                 <p className="text-sm">
-                  <span className="font-semibold">{comment.authorName}</span>
+                  <bdi className="font-semibold">{comment.authorName}</bdi>
                   <span className="text-muted"> · </span>
                   <time dateTime={comment.createdAt} className="text-muted">
-                    {dateFormat.format(new Date(comment.createdAt))}
+                    {DATE_FORMATS[locale].format(new Date(comment.createdAt))}
                   </time>
                 </p>
                 {comment.canDelete ? (
                   <Button
                     variant="ghost"
                     size="icon"
-                    aria-label={`מחיקת התגובה של ${comment.authorName}`}
+                    aria-label={t.deleteOf(comment.authorName)}
                     loading={deleting === comment.id}
                     onClick={() => void remove(comment.id)}
                   >
@@ -151,12 +162,16 @@ export function BookComments({ bookId, initialComments, signedIn, loginHref, sha
                   </Button>
                 ) : null}
               </div>
-              <p className="whitespace-pre-line break-words text-lg leading-relaxed">{comment.body}</p>
+              <p dir="auto" className="whitespace-pre-line break-words text-lg leading-relaxed">
+                {comment.body}
+              </p>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-base text-muted">עוד אין תגובות. {signedIn ? "היו הראשונים להגיב!" : ""}</p>
+        <p className="text-base text-muted">
+          {t.none} {signedIn ? t.beFirst : ""}
+        </p>
       )}
     </section>
   );

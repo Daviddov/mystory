@@ -2,7 +2,9 @@
 
 import { ChevronDown, Paintbrush, Sparkles, Trash2, Upload, UserRound } from "lucide-react";
 import { useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Card, Field, Textarea } from "@/components/ui";
+import { HERO_PANEL_MESSAGES, illustrationStyleLabel } from "@/lib/i18n/studio-panels";
 import { cn } from "@/lib/cn";
 import { ILLUSTRATION_STYLES } from "@/lib/generation/presets";
 import { mediaUrl } from "@/lib/media/url";
@@ -36,6 +38,8 @@ export function HeroPanel({
   onUpload,
   onIllustrateMissing,
 }: HeroPanelProps) {
+  const locale = useLocale();
+  const t = HERO_PANEL_MESSAGES[locale];
   const fileInput = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(!hero?.image);
   const description = hero?.description ?? "";
@@ -65,12 +69,10 @@ export function HeroPanel({
         )}
         <span className="flex flex-1 flex-col">
           <h2 id="hero-panel-title" className="text-xl font-bold">
-            הגיבור של הסיפור
+            {t.heading}
           </h2>
           <span className="text-muted">
-            {image
-              ? "האיורים של העמודים נוצרים לפי התמונה הזאת, כדי שהגיבור ייראה אותו דבר בכל עמוד."
-              : "צרו תמונה של הגיבור, ואז אפשר ליצור איור לכל עמוד לפי הגיבור, הסיפור והעמוד."}
+            {image ? t.withImage : t.withoutImage}
           </span>
         </span>
         <ChevronDown aria-hidden="true" className={cn("size-6 shrink-0 transition-transform", open && "rotate-180")} />
@@ -81,7 +83,7 @@ export function HeroPanel({
           <div className="flex flex-col gap-2">
             <div className="flex aspect-square items-center justify-center overflow-hidden rounded-md border-2 border-dashed border-border-strong bg-surface-2">
               {image ? (
-                <img src={image} alt="תמונת הגיבור" className="size-full object-contain" />
+                <img src={image} alt={t.heroAlt} className="size-full object-contain" />
               ) : (
                 <UserRound aria-hidden="true" className="size-16 text-muted" />
               )}
@@ -89,12 +91,12 @@ export function HeroPanel({
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" size="sm" onClick={() => fileInput.current?.click()}>
                 <Upload aria-hidden="true" className="size-4" />
-                העלאת תמונה
+                {t.upload}
               </Button>
               {hero ? (
                 <Button variant="ghost" size="sm" className="text-danger" onClick={() => onChange(undefined)}>
                   <Trash2 aria-hidden="true" className="size-4" />
-                  הסרה
+                  {t.remove}
                 </Button>
               ) : null}
             </div>
@@ -113,9 +115,9 @@ export function HeroPanel({
 
           <div className="flex flex-col gap-4">
             <Field
-              label="איך הגיבור נראה?"
+              label={t.looks}
               htmlFor="hero-description"
-              hint="גיל, שיער, צבע עור, בגדים בצבעים קבועים ופרט אחד מיוחד. אם תשאירו ריק, נכתוב תיאור לפי הסיפור."
+              hint={t.looksHint}
             >
               <Textarea
                 id="hero-description"
@@ -123,12 +125,12 @@ export function HeroPanel({
                 maxLength={MAX_HERO_DESCRIPTION}
                 value={description}
                 onChange={(event) => change({ description: event.target.value })}
-                placeholder="למשל: ילדה בת שש עם צמה ג'ינג'ית, חולצה צהובה, מכנסיים כחולים ומגפיים אדומים"
+                placeholder={t.looksPlaceholder}
               />
             </Field>
 
             <fieldset className="flex flex-col gap-2">
-              <legend className="mb-1 font-semibold">סגנון האיור</legend>
+              <legend className="mb-1 font-semibold">{t.style}</legend>
               <div className="flex flex-wrap gap-2">
                 {ILLUSTRATION_STYLES.map((option) => (
                   <button
@@ -142,24 +144,24 @@ export function HeroPanel({
                     )}
                   >
                     <span aria-hidden="true">{option.emoji} </span>
-                    {option.label}
+                    {illustrationStyleLabel(locale, option)}
                   </button>
                 ))}
               </div>
               {hero?.image ? (
-                <p className="text-sm text-muted">שינוי הסגנון ישפיע על האיורים הבאים. כדאי ליצור גם את הגיבור מחדש באותו סגנון.</p>
+                <p className="text-sm text-muted">{t.styleNote}</p>
               ) : null}
             </fieldset>
 
             <div className="flex flex-wrap gap-2">
               <Button onClick={() => onGenerate(description.trim(), style)}>
                 <Sparkles aria-hidden="true" className="size-5" />
-                {image ? "יצירת הגיבור מחדש" : "יצירת תמונת הגיבור"}
+                {image ? t.regenerate : t.generate}
               </Button>
               {hero ? (
                 <Button variant="secondary" onClick={onIllustrateMissing} disabled={missingImages === 0}>
                   <Paintbrush aria-hidden="true" className="size-5" />
-                  {missingImages > 0 ? `איור ${missingImages} העמודים שאין להם תמונה` : "לכל העמודים יש תמונה"}
+                  {missingImages > 0 ? t.illustrateMissing(missingImages) : t.allIllustrated}
                 </Button>
               ) : null}
             </div>

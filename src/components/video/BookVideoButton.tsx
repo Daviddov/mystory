@@ -2,8 +2,10 @@
 
 import { Clapperboard, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { mediaUrl } from "@/lib/media/url";
 import { createBookVideo, VideoCancelledError, videoSupported, type VideoPage } from "./book-video";
 
@@ -25,6 +27,7 @@ type Status = "checking" | "unsupported" | "idle" | "working" | "error";
  * takes as long as the narration, because the browser records in real time.
  */
 export function BookVideoButton({ title, slug, coverImage, version, pages, className }: BookVideoButtonProps) {
+  const t = READER_MESSAGES[useLocale()].video;
   const [status, setStatus] = useState<Status>("checking");
   const [step, setStep] = useState({ done: 0, total: 0 });
   const [error, setError] = useState("");
@@ -68,7 +71,7 @@ export function BookVideoButton({ title, slug, coverImage, version, pages, class
         setStatus("idle");
         return;
       }
-      setError("יצירת הסרטון לא הצליחה. נסו שוב, עדיף בדפדפן Chrome.");
+      setError(t.failed);
       setStatus("error");
     }
   }
@@ -84,20 +87,20 @@ export function BookVideoButton({ title, slug, coverImage, version, pages, class
           loading={status === "working"}
           disabled={status === "checking"}
           onClick={start}
-          aria-label={`יצירת סרטון מהספר: ${title}`}
+          aria-label={t.label(title)}
         >
           {status === "working" ? null : <Clapperboard aria-hidden="true" className="size-5" />}
-          {status === "working" ? `יוצר סרטון… עמוד ${Math.min(step.done + 1, step.total)} מתוך ${step.total}` : "יצירת סרטון"}
+          {status === "working" ? t.working(Math.min(step.done + 1, step.total), step.total) : t.make}
         </Button>
         {status === "working" ? (
           <Button variant="ghost" size="sm" onClick={() => abortRef.current?.abort()}>
             <X aria-hidden="true" className="size-4" />
-            ביטול
+            {t.cancel}
           </Button>
         ) : null}
       </div>
       <p role="status" aria-live="polite" className="max-w-sm text-sm">
-        {status === "working" ? "הסרטון נוצר בזמן אמת, בגודל ההקראה. כדאי להשאיר את הלשונית פתוחה." : null}
+        {status === "working" ? t.hint : null}
         {status === "error" ? <span className="text-danger">{error}</span> : null}
       </p>
     </div>

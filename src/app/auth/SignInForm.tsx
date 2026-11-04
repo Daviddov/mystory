@@ -1,7 +1,9 @@
 "use client";
 
 import { useActionState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Field, Input } from "@/components/ui";
+import { accountMessages } from "@/lib/i18n/account";
 import { googleSignInAction, sendMagicLinkAction, type SignInState } from "./actions";
 
 const INITIAL: SignInState = {};
@@ -13,19 +15,20 @@ const INITIAL: SignInState = {};
 export function SignInForm({ next, error }: { next: string; error?: string }) {
   const [state, formAction, pending] = useActionState(sendMagicLinkAction, INITIAL);
   const message = state.error ?? error;
+  const t = accountMessages(useLocale()).auth;
 
   if (state.sentTo) {
     return (
       <div role="status" className="flex flex-col gap-3 rounded-md bg-success-soft px-4 py-4">
-        <p className="text-xl font-bold">שלחנו לכם קישור כניסה</p>
+        <p className="text-xl font-bold">{t.sentTitle}</p>
         <p>
-          הקישור נשלח אל{" "}
+          {t.sentBefore}{" "}
           <bdi dir="ltr" className="font-medium">
             {state.sentTo}
           </bdi>
-          . פתחו את האימייל באותו מכשיר ובאותו דפדפן, ולחצו על הקישור כדי להיכנס.
+          {t.sentAfter}
         </p>
-        <p className="text-muted">לא הגיע? בדקו בתיקיית הספאם, או רעננו את הדף ונסו שוב.</p>
+        <p className="text-muted">{t.notArrived}</p>
       </div>
     );
   }
@@ -41,17 +44,17 @@ export function SignInForm({ next, error }: { next: string; error?: string }) {
       <form action={googleSignInAction}>
         <input type="hidden" name="next" value={next} />
         <Button type="submit" size="lg" variant="outline" fullWidth>
-          כניסה עם Google
+          {t.google}
         </Button>
       </form>
 
       <p className="text-center text-muted" aria-hidden="true">
-        או
+        {t.or}
       </p>
 
       <form action={formAction} className="flex flex-col gap-5">
         <input type="hidden" name="next" value={next} />
-        <Field label="אימייל" htmlFor="sign-in-email" hint="נשלח אליכם קישור כניסה חד-פעמי. בלי סיסמה." required>
+        <Field label={t.email} htmlFor="sign-in-email" hint={t.emailHint} required>
           <Input
             id="sign-in-email"
             name="email"
@@ -64,7 +67,7 @@ export function SignInForm({ next, error }: { next: string; error?: string }) {
           />
         </Field>
         <Button type="submit" size="lg" loading={pending}>
-          שלחו לי קישור כניסה
+          {t.sendLink}
         </Button>
       </form>
     </div>

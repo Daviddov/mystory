@@ -2,9 +2,12 @@
 
 import { BookOpen, Check, Copy, Download, Link2, Lock, Printer, Send, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, ButtonLink, buttonClasses, Card, Chip, Input } from "@/components/ui";
+import { STUDIO_STATUS_LABELS } from "@/lib/i18n/studio";
+import { PUBLISH_PANEL_MESSAGES, publishProblemText } from "@/lib/i18n/studio-panels";
 import { routes } from "@/lib/routes";
-import { STATUS_LABELS, STATUS_TONES, type PublishProblem } from "@/lib/studio/shared";
+import { STATUS_TONES, type PublishProblem } from "@/lib/studio/shared";
 import type { BookStatus } from "@/lib/types";
 import type { ServerInfo } from "./types";
 
@@ -21,13 +24,6 @@ export interface PublishPanelProps {
   onGoToPage: (pageIndex: number) => void;
 }
 
-const STATUS_HELP: Record<BookStatus, string> = {
-  draft: "הספר בעבודה. רק אתם רואים אותו.",
-  private: "הספר פרטי. רק אתם רואים אותו, ומי שקיבל מכם קישור שיתוף.",
-  pending: "הספר הוגש לפרסום וממתין לאישור של עורך. עד אז הוא נשאר פרטי.",
-  published: "הספר מפורסם בספרייה, וכל אחד יכול לקרוא אותו.",
-};
-
 /** Privacy, share link, submission for publication and deletion. */
 export function PublishPanel({
   info,
@@ -39,6 +35,8 @@ export function PublishPanel({
   onDelete,
   onGoToPage,
 }: PublishPanelProps) {
+  const locale = useLocale();
+  const t = PUBLISH_PANEL_MESSAGES[locale];
   const [copied, setCopied] = useState(false);
   const shareUrl =
     info.shareToken && typeof window !== "undefined"
@@ -62,14 +60,14 @@ export function PublishPanel({
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
       <Card className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-2xl font-bold">מצב הספר</h2>
-          <Chip tone={STATUS_TONES[info.status]}>{STATUS_LABELS[info.status]}</Chip>
+          <h2 className="text-2xl font-bold">{t.status}</h2>
+          <Chip tone={STATUS_TONES[info.status]}>{STUDIO_STATUS_LABELS[locale][info.status]}</Chip>
         </div>
-        <p className="leading-relaxed">{STATUS_HELP[info.status]}</p>
+        <p className="leading-relaxed">{t.statusHelp[info.status]}</p>
 
         {info.reviewNote ? (
           <div role="note" className="rounded-md bg-warning-soft p-4">
-            <p className="font-bold">הערת העורך:</p>
+            <p className="font-bold">{t.reviewNote}</p>
             <p className="whitespace-pre-wrap">{info.reviewNote}</p>
           </div>
         ) : null}
@@ -77,19 +75,17 @@ export function PublishPanel({
         {lockedForOwner ? (
           <p className="flex items-start gap-2 rounded-md bg-surface-2 p-4">
             <Lock aria-hidden="true" className="mt-1 size-5 shrink-0" />
-            {info.status === "pending"
-              ? "ספר שהוגש לפרסום נעול לעריכה עד שעורך יעבור עליו. כדי לערוך אותו צריך לבטל את ההגשה, ואז להגיש אותו שוב."
-              : "ספר שפורסם נעול לעריכה. כדי לערוך אותו צריך להחזיר אותו למצב פרטי, ואז להגיש אותו שוב לאישור."}
+            {info.status === "pending" ? t.lockedPending : t.lockedPublished}
           </p>
         ) : null}
 
         {info.status !== "published" ? (
           <div className="flex flex-col gap-2">
-            <h3 className="text-lg font-bold">מוכן להגשה?</h3>
+            <h3 className="text-lg font-bold">{t.readyTitle}</h3>
             {ready ? (
               <p className="flex items-center gap-2 font-medium text-success">
                 <Check aria-hidden="true" className="size-5" />
-                הכול מוכן. אפשר להגיש את הספר לפרסום.
+                {t.ready}
               </p>
             ) : (
               <ul className="flex flex-col gap-1">
@@ -104,10 +100,10 @@ export function PublishPanel({
                         className="text-start underline"
                         onClick={() => onGoToPage(problem.pageIndex as number)}
                       >
-                        {problem.message}
+                        {publishProblemText(locale, problem)}
                       </button>
                     ) : (
-                      <span>{problem.message}</span>
+                      <span>{publishProblemText(locale, problem)}</span>
                     )}
                   </li>
                 ))}
@@ -120,29 +116,29 @@ export function PublishPanel({
           {info.status === "draft" ? (
             <Button variant="outline" onClick={() => onStatus("private")}>
               <Lock aria-hidden="true" className="size-5" />
-              שמירה כספר פרטי
+              {t.savePrivate}
             </Button>
           ) : null}
           {info.status === "draft" || info.status === "private" ? (
             <Button onClick={() => onStatus("pending")} disabled={!ready}>
               <Send aria-hidden="true" className="size-5" />
-              הגשה לפרסום בספרייה
+              {t.submit}
             </Button>
           ) : null}
           {info.status === "pending" ? (
             <Button variant="outline" onClick={() => onStatus("private")}>
-              ביטול ההגשה והשארה כפרטי
+              {t.cancelSubmit}
             </Button>
           ) : null}
           {info.status === "published" ? (
             <Button variant="outline" onClick={() => onStatus("private")}>
               <Lock aria-hidden="true" className="size-5" />
-              הסרה מהספרייה והחזרה לפרטי
+              {t.unpublish}
             </Button>
           ) : null}
           {canPublish && info.status !== "published" ? (
             <Button variant="secondary" onClick={() => onStatus("published")} disabled={!ready}>
-              פרסום עכשיו (עורכים)
+              {t.publishNow}
             </Button>
           ) : null}
         </div>
@@ -152,38 +148,38 @@ export function PublishPanel({
         <Card className="flex flex-col gap-3">
           <h2 className="flex items-center gap-2 text-2xl font-bold">
             <Link2 aria-hidden="true" />
-            קישור שיתוף
+            {t.shareLink}
           </h2>
           {info.shareToken ? (
             <>
-              <p>כל מי שמקבל את הקישור יכול לקרוא את הספר, גם בלי להתחבר.</p>
+              <p>{t.shareLead}</p>
               <div className="flex gap-2">
                 <Input
                   className="min-w-0"
                   readOnly
                   dir="ltr"
-                  aria-label="קישור השיתוף"
+                  aria-label={t.shareField}
                   value={shareUrl}
                   onFocus={(event) => event.target.select()}
                 />
                 <Button variant="secondary" onClick={copy}>
                   {copied ? <Check aria-hidden="true" className="size-5" /> : <Copy aria-hidden="true" className="size-5" />}
-                  {copied ? "הועתק" : "העתקה"}
+                  {copied ? t.copied : t.copy}
                 </Button>
               </div>
               <div>
                 <Button variant="ghost" size="sm" onClick={onRemoveShare}>
-                  ביטול הקישור
+                  {t.removeShare}
                 </Button>
               </div>
             </>
           ) : (
             <>
-              <p>אפשר לשלוח את הספר לסבא וסבתא או לחברים בלי לפרסם אותו בספרייה.</p>
+              <p>{t.shareInvite}</p>
               <div>
                 <Button variant="secondary" onClick={onCreateShare}>
                   <Link2 aria-hidden="true" className="size-5" />
-                  יצירת קישור שיתוף
+                  {t.createShare}
                 </Button>
               </div>
             </>
@@ -191,24 +187,24 @@ export function PublishPanel({
         </Card>
 
         <Card className="flex flex-col gap-3">
-          <h2 className="text-2xl font-bold">עוד פעולות</h2>
+          <h2 className="text-2xl font-bold">{t.moreActions}</h2>
           <div className="flex flex-wrap gap-2">
             <ButtonLink variant="outline" href={routes.read(info.slug)} target="_blank" rel="noopener">
               <BookOpen aria-hidden="true" className="size-5" />
-              פתיחה בנגן הקריאה
+              {t.openReader}
             </ButtonLink>
             <ButtonLink variant="outline" href={routes.print(info.slug)} target="_blank" rel="noopener">
               <Printer aria-hidden="true" className="size-5" />
-              הדפסה ו-PDF
+              {t.print}
             </ButtonLink>
             {/* A plain link: the route answers with a file download, not a page. */}
             <a href={routes.exportBook(info.id)} download className={buttonClasses({ variant: "outline" })}>
               <Download aria-hidden="true" className="size-5" />
-              ייצוא לקובץ zip
+              {t.exportZip}
             </a>
             <Button variant="outline" onClick={onDelete} disabled={lockedForOwner} className="text-danger">
               <Trash2 aria-hidden="true" className="size-5" />
-              מחיקת הספר
+              {t.deleteBook}
             </Button>
           </div>
         </Card>

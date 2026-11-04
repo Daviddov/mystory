@@ -9,12 +9,16 @@
  */
 import { BookOpen, Check, ListMusic, ListPlus, Moon, Pause, Play, SkipBack, SkipForward, Timer } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { MockNotice } from "@/components/MockNotice";
 import { ListenWatch } from "./ListenWatch";
 import { setInPlaylist } from "./playlist";
 import { Button, Card, Chip, EmptyState } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { AGE_GROUP_INFO, ageGroupsLabel, readingTimeLabel } from "@/lib/taxonomy";
+import { ageGroupsText, readingTimeText } from "@/lib/i18n/labels";
+import { libraryMessages } from "@/lib/i18n/library";
+import { taxonomyText } from "@/lib/i18n/messages";
+import { AGE_GROUP_INFO } from "@/lib/taxonomy";
 import {
   fadeVolume,
   filterTracks,
@@ -33,6 +37,9 @@ const MAX_ERRORS = 3;
 /** localStorage key of the story ids the listener switched off. */
 const EXCLUDED_KEY = "mystory:listen-excluded";
 
+/** Messages shown under the controls; the text is looked up in the interface language. */
+type Notice = "sleepDone" | "audioFailed" | "playlistFailed";
+
 type Sleep = { mode: "off" } | { mode: "time"; deadline: number; minutes: number } | { mode: "story" };
 
 export interface ListenPlayerProps {
@@ -43,6 +50,8 @@ export interface ListenPlayerProps {
 }
 
 export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }: ListenPlayerProps) {
+  const locale = useLocale();
+  const t = libraryMessages(locale).player;
   const [age, setAge] = useState<AgeFilter>(initialAge);
   const [playlist, setPlaylist] = useState<ReadonlySet<string>>(() => new Set(playlistIds ?? []));
   // Start on the user's own playlist when it has books.
@@ -51,7 +60,8 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
   const [playing, setPlaying] = useState(false);
   const [sleep, setSleep] = useState<Sleep>({ mode: "off" });
   const [remaining, setRemaining] = useState<number | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
+  const [notice, setMessage] = useState<Notice | null>(null);
+  const message = notice ? t[notice] : null;
 
   const [excluded, setExcluded] = useState<ReadonlySet<string>>(new Set());
   // Stories of the chosen age; the queue is those the listener left ticked.
@@ -105,7 +115,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
     sleepRef.current = { mode: "off" };
     setSleep({ mode: "off" });
     setRemaining(null);
-    setMessage("הטיימר הסתיים וההשמעה נעצרה. לילה טוב!");
+    setMessage("sleepDone");
   }, []);
 
   /** Applies the sleep timer: fades out near the end and stops at the deadline. */
@@ -162,7 +172,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
     if (errorCount.current >= MAX_ERRORS) {
       errorCount.current = 0;
       setPlaying(false);
-      setMessage("לא הצלחנו להשמיע את ההקלטה. בדקו את החיבור לרשת ונסו שוב.");
+      setMessage("audioFailed");
       return;
     }
     advance(true);
@@ -257,7 +267,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
   const togglePlaylist = async (id: string) => {
     const wanted = !playlist.has(id);
     if (!(await setInPlaylist(id, wanted))) {
-      setMessage("לא הצלחנו לעדכן את רשימת ההשמעה. נסו שוב בעוד רגע.");
+      setMessage("playlistFailed");
       return;
     }
     // A story leaving the list while only the list is shown also leaves the queue.
@@ -359,13 +369,13 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
     }
     navigator.mediaSession.metadata = new MediaMetadata({
       title: current.title,
-      artist: current.author || "הסיפור שלי",
-      album: "האזנה לפני השינה",
+      artist: current.author || t.siteName,
+      album: t.album,
       artwork: current.coverUrl
         ? [{ src: current.coverUrl, sizes: "600x800", ...(current.coverType ? { type: current.coverType } : {}) }]
         : [],
     });
-  }, [current]);
+  }, [current, t]);
 
   useEffect(() => {
     if (typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
@@ -393,15 +403,15 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
 
       <section aria-labelledby="listen-age" className="flex flex-col gap-3">
         <h2 id="listen-age" className="text-xl font-bold">
-          למי מקריאים הערב?
+          {t.whoTonight}
         </h2>
         <div className="flex flex-wrap gap-2">
           <Chip onClick={() => chooseAge("all")} selected={age === "all"}>
-            כל הגילים
+            {t.allAges}
           </Chip>
           {AGE_GROUP_INFO.map((group) => (
             <Chip key={group.slug} icon={group.emoji} onClick={() => chooseAge(group.slug)} selected={age === group.slug}>
-              {group.label}
+              {taxonomyText(locale, "age", group.slug, group).label}
             </Chip>
           ))}
         </div>
@@ -410,14 +420,14 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
       {playlistIds !== null ? (
         <section aria-labelledby="listen-source" className="flex flex-col gap-3">
           <h2 id="listen-source" className="text-xl font-bold">
-            מה להשמיע?
+            {t.whatToPlay}
           </h2>
           <div className="flex flex-wrap gap-2">
             <Chip icon="🎵" onClick={() => chooseMine(true)} selected={mineOnly}>
-              רשימת ההשמעה שלי ({playlist.size})
+              {t.myPlaylist(playlist.size)}
             </Chip>
             <Chip onClick={() => chooseMine(false)} selected={!mineOnly}>
-              כל הסיפורים
+              {t.allStories}
             </Chip>
           </div>
         </section>
@@ -428,20 +438,16 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
       {visible.length === 0 ? (
         <EmptyState
           icon="🌙"
-          title={mineOnly ? "רשימת ההשמעה שלכם ריקה" : "אין עדיין סיפורים מוקלטים לגיל הזה"}
-          description={
-            mineOnly
-              ? "אפשר להוסיף סיפורים עם כפתור הרשימה ליד כל סיפור ב'כל הסיפורים', או מעמוד הספר."
-              : "אפשר לבחור גיל אחר, או לחזור אחרי שיתווספו הקלטות."
-          }
+          title={mineOnly ? t.emptyPlaylistTitle : t.emptyAgeTitle}
+          description={mineOnly ? t.emptyPlaylistDescription : t.emptyAgeDescription}
           action={
             mineOnly ? (
               <Button variant="secondary" onClick={() => chooseMine(false)}>
-                לכל הסיפורים
+                {t.toAllStories}
               </Button>
             ) : age !== "all" ? (
               <Button variant="secondary" onClick={() => chooseAge("all")}>
-                להציג את כל הגילים
+                {t.showAllAges}
               </Button>
             ) : undefined
           }
@@ -450,7 +456,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
         <>
           <Card as="section" aria-labelledby="listen-now" padding="lg" className="flex flex-col gap-5">
             <h2 id="listen-now" className="sr-only">
-              מתנגן עכשיו
+              {t.nowPlaying}
             </h2>
             <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-center">
               <div className="aspect-[3/4] w-32 shrink-0 overflow-hidden rounded-md bg-surface-2 sm:w-36">
@@ -465,13 +471,15 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
               <div className="flex min-w-0 flex-1 flex-col items-center gap-3 text-center sm:items-start sm:text-start">
                 {/* Not a live region: announcing every page would talk over the narration. */}
                 <div className="flex flex-col gap-1">
-                  <p className="text-2xl font-bold leading-snug">{current ? current.title : "מוכנים לסיפור?"}</p>
+                  <p dir={current ? "auto" : undefined} className="text-2xl font-bold leading-snug">
+                    {current ? current.title : t.ready}
+                  </p>
                   <p className="text-muted">
                     {current
-                      ? `חלק ${pageNumber} מתוך ${current.pages.length}`
+                      ? t.part(pageNumber, current.pages.length)
                       : queue.length === 0
-                        ? "לא סומן אף סיפור. מסמנים סיפורים ברשימה למטה."
-                        : `${queue.length} סיפורים מחכים ברצף. לוחצים על הכפתור ומתחילים.`}
+                        ? t.noneTicked
+                        : t.waiting(queue.length)}
                   </p>
                 </div>
                 {current ? (
@@ -479,7 +487,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                     className="h-2 w-full max-w-sm overflow-hidden rounded-full accent-primary"
                     value={pageNumber}
                     max={current.pages.length}
-                    aria-label="התקדמות בסיפור"
+                    aria-label={t.progress}
                   />
                 ) : null}
                 {/* Playback controls keep their left-to-right order in every language. */}
@@ -487,7 +495,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                   <Button
                     variant="outline"
                     size="icon"
-                    aria-label="לתחילת הסיפור או לסיפור הקודם"
+                    aria-label={t.previous}
                     onClick={goPrevious}
                     disabled={!current}
                   >
@@ -496,7 +504,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                   <Button
                     variant="primary"
                     size="icon-lg"
-                    aria-label={playing ? "השהיה" : "הפעלה"}
+                    aria-label={playing ? t.pause : t.play}
                     onClick={toggle}
                     disabled={queue.length === 0}
                   >
@@ -506,13 +514,13 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                       <Play aria-hidden="true" className="size-8" />
                     )}
                   </Button>
-                  <Button variant="outline" size="icon" aria-label="לסיפור הבא" onClick={goNext} disabled={queue.length === 0}>
+                  <Button variant="outline" size="icon" aria-label={t.next} onClick={goNext} disabled={queue.length === 0}>
                     <SkipForward aria-hidden="true" className="size-6" />
                   </Button>
                 </div>
                 <Button variant="secondary" onClick={startWatching} disabled={queue.length === 0}>
                   <BookOpen aria-hidden="true" />
-                  לצפות בסיפורים עם התמונות
+                  {t.watch}
                 </Button>
               </div>
             </div>
@@ -524,12 +532,12 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
           <section aria-labelledby="listen-sleep" className="flex flex-col gap-3">
             <h2 id="listen-sleep" className="flex items-center gap-2 text-xl font-bold">
               <Timer aria-hidden="true" className="size-6 text-secondary" />
-              טיימר שינה
+              {t.sleepTimer}
             </h2>
-            <p className="text-muted">ההשמעה תיחלש בעדינות ותיעצר לבד.</p>
+            <p className="text-muted">{t.sleepNote}</p>
             <div className="flex flex-wrap gap-2">
               <Chip onClick={() => chooseSleep({ mode: "off" })} selected={sleep.mode === "off"}>
-                בלי טיימר
+                {t.noTimer}
               </Chip>
               {SLEEP_MINUTES.map((minutes) => (
                 <Chip
@@ -537,18 +545,18 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                   onClick={() => chooseSleep({ mode: "time", minutes, deadline: Date.now() + minutes * 60_000 })}
                   selected={sleep.mode === "time" && sleep.minutes === minutes}
                 >
-                  {minutes} דקות
+                  {t.minutes(minutes)}
                 </Chip>
               ))}
               <Chip onClick={() => chooseSleep({ mode: "story" })} selected={sleep.mode === "story"}>
-                עד סוף הסיפור
+                {t.endOfStory}
               </Chip>
             </div>
             {sleep.mode === "time" && remaining !== null ? (
               <p className="flex items-center gap-2 font-semibold">
                 <Moon aria-hidden="true" className="size-5 text-secondary" />
                 <span>
-                  ההשמעה תיעצר בעוד{" "}
+                  {t.stopsIn}{" "}
                   <span role="timer" dir="ltr" className="tabular-nums">
                     {formatRemaining(remaining)}
                   </span>
@@ -558,21 +566,19 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
             {sleep.mode === "story" ? (
               <p className="flex items-center gap-2 font-semibold">
                 <Moon aria-hidden="true" className="size-5 text-secondary" />
-                ההשמעה תיעצר בסוף הסיפור הנוכחי.
+                {t.stopsAtEnd}
               </p>
             ) : null}
           </section>
 
           <section aria-labelledby="listen-queue" className="flex flex-col gap-3">
             <h2 id="listen-queue" className="text-xl font-bold">
-              הסיפורים ברצף
+              {t.queueTitle}
             </h2>
             <div className="flex flex-wrap items-center gap-2">
-              <p className="text-muted">
-                {queue.length} מתוך {visible.length} סיפורים מסומנים.
-              </p>
-              <Chip onClick={() => selectAll(true)}>סימון הכול</Chip>
-              <Chip onClick={() => selectAll(false)}>ניקוי הסימון</Chip>
+              <p className="text-muted">{t.ticked(queue.length, visible.length)}</p>
+              <Chip onClick={() => selectAll(true)}>{t.selectAll}</Chip>
+              <Chip onClick={() => selectAll(false)}>{t.clearAll}</Chip>
             </div>
             <ul className="flex flex-col gap-2">
               {visible.map((track) => {
@@ -585,7 +591,7 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                       type="button"
                       role="checkbox"
                       aria-checked={included}
-                      aria-label={`לכלול את ${track.title} ברצף`}
+                      aria-label={t.include(track.title)}
                       onClick={() => toggleTrack(track.id)}
                       className={cn(
                         "flex min-h-touch-lg w-14 shrink-0 items-center justify-center rounded-md border-2 transition-colors",
@@ -623,24 +629,24 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                         {isCurrent && playing ? "♪" : included ? index + 1 : "–"}
                       </span>
                       <span className="flex min-w-0 flex-1 flex-col">
-                        <span className="truncate text-lg font-semibold">{track.title}</span>
+                        <span dir="auto" className="truncate text-lg font-semibold">
+                          {track.title}
+                        </span>
                         <span className="text-sm text-muted">
-                          {ageGroupsLabel(track.ageGroups)} · {readingTimeLabel(track.readingMinutes)}
-                          {track.hasMockAudio ? " · קול הדגמה" : ""}
+                          {ageGroupsText(locale, track.ageGroups)} · {readingTimeText(locale, track.readingMinutes)}
+                          {track.hasMockAudio ? t.demoVoice : ""}
                         </span>
                       </span>
-                      {isCurrent ? <span className="shrink-0 text-sm font-semibold">{playing ? "מתנגן" : "מושהה"}</span> : null}
+                      {isCurrent ? <span className="shrink-0 text-sm font-semibold">{playing ? t.playing : t.paused}</span> : null}
                     </button>
                     {playlistIds !== null ? (
                       <button
                         type="button"
                         aria-pressed={playlist.has(track.id)}
                         aria-label={
-                          playlist.has(track.id)
-                            ? `הסרת ${track.title} מרשימת ההשמעה`
-                            : `הוספת ${track.title} לרשימת ההשמעה`
+                          playlist.has(track.id) ? t.removeTrack(track.title) : t.addTrack(track.title)
                         }
-                        title={playlist.has(track.id) ? "הסרה מרשימת ההשמעה" : "הוספה לרשימת ההשמעה"}
+                        title={playlist.has(track.id) ? t.removeTitle : t.addTitle}
                         onClick={() => void togglePlaylist(track.id)}
                         className={cn(
                           "flex min-h-touch-lg w-14 shrink-0 items-center justify-center rounded-md border-2 transition-colors",

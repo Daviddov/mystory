@@ -118,6 +118,12 @@ describe("ListenPlayer", () => {
     expect(screen.getByRole("note")).toHaveTextContent("קול הדגמה");
   });
 
+  it("links every story in the list to its book page", () => {
+    render(<ListenPlayer tracks={tracks} />);
+    expect(screen.getByRole("link", { name: "לעמוד הספר סיפור a" })).toHaveAttribute("href", "/book/a");
+    expect(screen.getByRole("link", { name: "לעמוד הספר סיפור b" })).toHaveAttribute("href", "/book/b");
+  });
+
   it("stops at the end of the story when the sleep timer says so", () => {
     render(<ListenPlayer tracks={tracks} />);
     fireEvent.click(screen.getByRole("button", { name: "הפעלה" }));

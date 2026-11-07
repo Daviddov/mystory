@@ -9,6 +9,7 @@
  * renders ListenView with the real values.
  */
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ListenPlayer } from "@/components/listen/ListenPlayer";
 import { buildListenTracks, parseAgeFilter } from "@/components/listen/tracks";
 import { ButtonLink, EmptyState } from "@/components/ui";
@@ -68,6 +69,10 @@ export async function ListenView({ age, viewer }: { age: string | undefined; vie
           {t.title}
         </h1>
         <p className="max-w-2xl text-lg leading-relaxed text-muted">{t.lead}</p>
+        <Link href={routes.category("bedtime")} className="text-lg font-semibold text-primary underline">
+          <span aria-hidden="true">🌙 </span>
+          {t.bedtimeLink}
+        </Link>
       </header>
 
       {tracks.length === 0 ? (

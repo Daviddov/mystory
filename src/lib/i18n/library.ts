@@ -150,6 +150,7 @@ export const LIBRARY_MESSAGES = defineMessages(
         "הרצף מתמלא מספרים בספרייה שיש להם הקראה, ועדיין לא הוקלט אף ספר. בינתיים אפשר לקרוא יחד מהספרייה.",
       allBooks: "לכל הספרים",
       loading: "מכינים את רצף הסיפורים…",
+      bedtimeLink: "סיפורים לפני השינה לקריאה, עם ניקוד ואיורים",
     },
     player: {
       sleepDone: "הטיימר הסתיים וההשמעה נעצרה. לילה טוב!",
@@ -198,6 +199,7 @@ export const LIBRARY_MESSAGES = defineMessages(
       addTrack: (title: string) => `הוספת ${title} לרשימת ההשמעה`,
       removeTitle: "הסרה מרשימת ההשמעה",
       addTitle: "הוספה לרשימת ההשמעה",
+      openBook: (title: string) => `לעמוד הספר ${title}`,
     },
     playlistButton: {
       inPlaylist: "ברשימת ההשמעה שלי",
@@ -349,6 +351,7 @@ export const LIBRARY_MESSAGES = defineMessages(
         "The queue fills with library books that have narration, and none has been recorded yet. Meanwhile, you can read together from the library.",
       allBooks: "See all books",
       loading: "Getting the stories ready…",
+      bedtimeLink: "Bedtime stories to read, with vowels and pictures",
     },
     player: {
       sleepDone: "The timer ended and playback stopped. Good night!",
@@ -398,6 +401,7 @@ export const LIBRARY_MESSAGES = defineMessages(
       addTrack: (title: string) => `Add ${title} to the playlist`,
       removeTitle: "Remove from playlist",
       addTitle: "Add to playlist",
+      openBook: (title: string) => `Book page of ${title}`,
     },
     playlistButton: {
       inPlaylist: "In my playlist",

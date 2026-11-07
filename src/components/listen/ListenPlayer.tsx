@@ -8,6 +8,7 @@
  * story title, cover and play / next / previous controls on the lock screen.
  */
 import { BookOpen, Check, ListMusic, ListPlus, Moon, Pause, Play, SkipBack, SkipForward, Timer } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { MockNotice } from "@/components/MockNotice";
@@ -17,6 +18,7 @@ import { Button, Card, Chip, EmptyState } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { ageGroupsText, readingTimeText } from "@/lib/i18n/labels";
 import { libraryMessages } from "@/lib/i18n/library";
+import { routes } from "@/lib/routes";
 import { taxonomyText } from "@/lib/i18n/messages";
 import { AGE_GROUP_INFO } from "@/lib/taxonomy";
 import {
@@ -639,6 +641,14 @@ export function ListenPlayer({ tracks, initialAge = "all", playlistIds = null }:
                       </span>
                       {isCurrent ? <span className="shrink-0 text-sm font-semibold">{playing ? t.playing : t.paused}</span> : null}
                     </button>
+                    <Link
+                      href={routes.book(track.slug)}
+                      aria-label={t.openBook(track.title)}
+                      title={t.openBook(track.title)}
+                      className="flex min-h-touch-lg w-14 shrink-0 items-center justify-center rounded-md border-2 border-border bg-surface transition-colors hover:bg-surface-2"
+                    >
+                      <BookOpen aria-hidden="true" className="size-6" />
+                    </Link>
                     {playlistIds !== null ? (
                       <button
                         type="button"

@@ -50,6 +50,7 @@ import {
   otherLanguageText,
   pageDisplayText,
   resolveStartPage,
+  sharedSoundtrackFor,
   swipeToAction,
   switchableLanguages,
   usableTimings,
@@ -538,11 +539,19 @@ function Player({
   const { narrating, stop: stopNarration, audioRef } = narration;
 
   // Background music under the narration; the sleep timer fades it out with the voice.
-  const hasSoundtrack = !!book.soundtrack;
-  const soundtrackOn = hasSoundtrack && (prefs.soundtrack ?? true);
+  // Every narrated book can have music: its own, or a shared mood track. A book's own music is on until the
+  // listener switches it off; the shared one is an option the listener switches on.
+  const hasSoundtrack = hasAnyAudio;
+  const soundtrackOn = hasSoundtrack && (prefs.soundtrack ?? !!book.soundtrack);
+  // Nothing is loaded while the music is off.
+  const soundtrackSrc = !soundtrackOn
+    ? ""
+    : book.soundtrack
+      ? mediaUrl(book.soundtrack, book.updatedAt, shareToken)
+      : sharedSoundtrackFor(book);
   const [sleepFade, setSleepFade] = useState(1);
   const { audioRef: soundtrackRef, unlock: unlockSoundtrack } = useSoundtrack(
-    hasSoundtrack ? mediaUrl(book.soundtrack, book.updatedAt, shareToken) : "",
+    soundtrackSrc,
     narrating && !atEnd && !recordMode,
     soundtrackOn ? SOUNDTRACK_LEVEL * sleepFade : 0,
   );
@@ -1408,7 +1417,7 @@ function Player({
       {/* One audio element for the whole book; see useNarration. */}
       <audio ref={audioRef} src={audioSrc || undefined} preload="auto" {...narration.audioEvents} />
       {hasSoundtrack ? (
-        <audio ref={soundtrackRef} src={mediaUrl(book.soundtrack, book.updatedAt, shareToken)} loop preload="none" />
+        <audio ref={soundtrackRef} src={soundtrackSrc || undefined} loop preload="none" />
       ) : null}
 
       {/* Warm the cache for the next page. */}
@@ -1484,7 +1493,7 @@ function Player({
         nikud={nikudOn}
         onNikud={(value) => updatePrefs({ nikud: value })}
         hasAudio={hasAnyAudio}
-        hasSoundtrack={hasSoundtrack && hasAnyAudio}
+        hasSoundtrack={hasSoundtrack}
         soundtrack={soundtrackOn}
         onSoundtrack={(value) => updatePrefs({ soundtrack: value })}
         onBedtimeListen={() => {

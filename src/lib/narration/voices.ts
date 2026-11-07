@@ -3,7 +3,6 @@
  * only (no network), so routes, tests and the studio's server pages can use it.
  *
  *   gemini      the curated catalog (generation/presets.ts) + TTS_VOICE + TTS_ALLOWED_VOICES
- *   elevenlabs  TTS_VOICE + TTS_ALLOWED_VOICES (labelled by id)
  *   mock        none
  */
 import { aiEnv } from "../config";

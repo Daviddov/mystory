@@ -95,7 +95,7 @@ export interface TtsOptions {
   style?: string;
   /**
    * Free-text narration wishes (at most 300 characters, cleaned). Honoured only by a
-   * provider that can take free text; ElevenLabs cannot and ignores them.
+   * provider that can take free text (Gemini).
    */
   notes?: string;
   /** Cancels the call (the caller's own deadline, or a request the user abandoned). */

@@ -31,7 +31,6 @@ export const adminPaths = {
   book: (id: string) => `${base}/books/${encodeURIComponent(id)}`,
   collections: () => `${base}/collections`,
   taxonomy: () => `${base}/taxonomy`,
-  importBooks: () => `${base}/import`,
   users: () => `${base}/users`,
 } as const;
 
@@ -45,6 +44,5 @@ export const adminApi = {
   collections: () => "/api/admin/collections",
   collection: (id: string) => `/api/admin/collections/${encodeURIComponent(id)}`,
   settings: () => "/api/admin/settings",
-  importBookDash: () => "/api/admin/import/bookdash",
   user: (id: string) => `/api/admin/users/${encodeURIComponent(id)}`,
 } as const;

@@ -27,7 +27,7 @@
  * at 24 kHz; it is wrapped in a WAV header here (audio/wav).
  *
  * Style: the narration preset's English `prompt` plus the user's FREE-TEXT notes
- * are sent as that style, so unlike ElevenLabs the notes ARE honoured.
+ * are sent as that style, so the notes ARE honoured.
  *
  * WORD TIMINGS ARE ESTIMATED. Gemini TTS returns no timings, so the real audio
  * duration is shared out over the words by length (letters without nikud) plus a

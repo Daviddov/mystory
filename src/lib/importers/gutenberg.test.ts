@@ -3,7 +3,7 @@ import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { publishProblems } from "@/lib/studio/shared";
 import { createTempData, type TempData } from "@/test/temp-data";
-import type { FetchLike } from "./bookdash";
+import type { FetchLike } from "./fetch";
 import {
   GUTENBERG,
   GUTENBERG_BOOKS,

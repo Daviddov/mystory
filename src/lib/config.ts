@@ -88,24 +88,12 @@ export const aiEnv = {
    */
   nikudProvider: () => env("NIKUD_PROVIDER"),
   dictaApiUrl: () => env("DICTA_API_URL"),
-  /**
-   * TTS vendor: "gemini" (Google AI Studio, providers/gemini-tts.ts) or "elevenlabs" (providers/tts.ts).
-   * Unset: picked from TTS_API_KEY (an sk_... key is ElevenLabs, any other Gemini); no key uses the mock.
-   */
-  ttsProvider: () => {
-    const key = env("TTS_API_KEY");
-    return env("TTS_PROVIDER") ?? (key ? (key.startsWith("sk_") ? "elevenlabs" : "gemini") : undefined);
-  },
-  ttsApiKey: () => env("TTS_API_KEY"),
+  /** TTS vendor: "gemini" (Google AI Studio, providers/gemini-tts.ts). Unset: Gemini when TTS_API_KEY is set, else the mock. */
+  ttsProvider: () => env("TTS_PROVIDER") ?? (env("TTS_API_KEY") ? "gemini" : undefined),
   /** AI Studio key for Gemini TTS only, no fallback to another service's key. */
-  geminiTtsApiKey: () => {
-    const own = env("TTS_API_KEY");
-    // An ElevenLabs key (sk_...) left in TTS_API_KEY must never be sent to Google.
-    return own && !own.startsWith("sk_") ? own : undefined;
-  },
-  /** Model id; each vendor has its own default. */
+  geminiTtsApiKey: () => env("TTS_API_KEY"),
   ttsModel: () => env("TTS_MODEL"),
-  /** Default voice: an ElevenLabs voice id, or a Gemini prebuilt voice name (default "Sulafat"). */
+  /** Default voice: a Gemini prebuilt voice name (default "Sulafat"). */
   ttsVoice: () => env("TTS_VOICE"),
   /**
    * Voice ids a caller may choose for narration, besides TTS_VOICE (comma
@@ -116,7 +104,6 @@ export const aiEnv = {
     [env("TTS_VOICE"), ...(env("TTS_ALLOWED_VOICES") ?? "").split(",")]
       .map((voice) => voice?.trim() ?? "")
       .filter((voice) => voice.length > 0),
-  ttsRegion: () => env("TTS_REGION"),
   /** Name of the image vendor implemented in providers/image.ts. Unset: "gemini" when IMAGE_API_KEY is set, else the mock. */
   imageProvider: () => env("IMAGE_PROVIDER") ?? (env("IMAGE_API_KEY") ? "gemini" : undefined),
   imageApiKey: () => env("IMAGE_API_KEY"),

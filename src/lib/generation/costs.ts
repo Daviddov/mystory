@@ -23,7 +23,6 @@
  *    4x4 = 16); input tokens for the reference image are ignored (cents/1000).
  *  - Gemini voice: 25 audio tokens per second; speech ~ 12 characters per
  *    second of audio. Text input tokens at 1 per 2.5 characters.
- *  - ElevenLabs: billed per character of text sent.
  *  - Story writing: outline + pages + review + one revision = 4 text calls.
  */
 
@@ -67,8 +66,6 @@ export const PRICE_TABLE = {
     "gemini-3.1-flash-tts-preview": { in: r(1), out: r(20), confirmed: true },
     "gemini-2.5-flash-preview-tts": { in: r(0.5), out: r(10), confirmed: true },
   },
-  /** ElevenLabs, USD per 1K characters. Source: https://elevenlabs.io/pricing/api (read 2026-10-19). */
-  elevenlabsPer1kChars: { v3: 0.08, flashOrTurbo: 0.04 },
   /** Veo 3.1 at 720p, USD per second. Source: same Gemini pricing page. */
   veoPerSecond720p: {
     "veo-3.1-lite-generate-preview": 0.05,
@@ -82,7 +79,6 @@ export const PRICE_TABLE = {
 export const DEFAULT_TEXT_MODEL = "gemini-3.8-flash";
 export const DEFAULT_IMAGE_MODEL = "gemini-nano-banana-2.1";
 export const DEFAULT_GEMINI_TTS = "gemini-3.8-flash-tts";
-export const DEFAULT_ELEVENLABS_MODEL = "eleven_v3";
 export const DEFAULT_VIDEO_MODEL = "veo-3.1-lite-generate-preview";
 
 function pick(rate: Rate, now: Date): number {
@@ -154,21 +150,11 @@ export function buildCostContext(
   // Narration
   const ttsProvider = status.tts.name.toLowerCase();
   const ttsOverride = envNumber(env, "COST_TTS_PER_1K_CHARS");
-  let ttsModel: string;
-  let ttsPer1k: number;
-  let ttsConfirmed: boolean;
-  if (ttsProvider === "elevenlabs") {
-    ttsModel = model("TTS_MODEL", DEFAULT_ELEVENLABS_MODEL);
-    const cheap = /flash|turbo/i.test(ttsModel);
-    ttsPer1k = cheap ? PRICE_TABLE.elevenlabsPer1kChars.flashOrTurbo : PRICE_TABLE.elevenlabsPer1kChars.v3;
-    ttsConfirmed = cheap || /v3/i.test(ttsModel);
-  } else {
-    ttsModel = model("TTS_MODEL", DEFAULT_GEMINI_TTS);
-    const row = (PRICE_TABLE.geminiTts as Record<string, { in: Rate; out: Rate; confirmed: boolean }>)[ttsModel];
-    const use = row ?? PRICE_TABLE.geminiTts[DEFAULT_GEMINI_TTS];
-    ttsPer1k = geminiTtsPer1kChars(pick(use.in, now), pick(use.out, now));
-    ttsConfirmed = row?.confirmed ?? false;
-  }
+  const ttsModel = model("TTS_MODEL", DEFAULT_GEMINI_TTS);
+  const row = (PRICE_TABLE.geminiTts as Record<string, { in: Rate; out: Rate; confirmed: boolean }>)[ttsModel];
+  const use = row ?? PRICE_TABLE.geminiTts[DEFAULT_GEMINI_TTS];
+  const ttsPer1k = geminiTtsPer1kChars(pick(use.in, now), pick(use.out, now));
+  const ttsConfirmed = row?.confirmed ?? false;
   const tts = {
     mock: status.tts.isMock,
     provider: status.tts.isMock ? "mock" : ttsProvider,
@@ -312,14 +298,8 @@ export function estimateNarration(ctx: CostContext, o: { chars: number }): CostE
     mock: false,
     free: false,
     confirmed: ctx.tts.confirmed,
-    covers:
-      ctx.tts.provider === "elevenlabs"
-        ? `הקראה של כ-${o.chars} תווים בקול של ElevenLabs, לפי מספר התווים.`
-        : `הקראה של כ-${o.chars} תווים בקול של Gemini, לפי אורך הטקסט והאודיו שנוצר.`,
-    coversEn:
-      ctx.tts.provider === "elevenlabs"
-        ? `Narrating about ${o.chars} characters in an ElevenLabs voice, priced by character.`
-        : `Narrating about ${o.chars} characters in a Gemini voice, priced by text and audio length.`,
+    covers: `הקראה של כ-${o.chars} תווים בקול של Gemini, לפי אורך הטקסט והאודיו שנוצר.`,
+    coversEn: `Narrating about ${o.chars} characters in a Gemini voice, priced by text and audio length.`,
   };
 }
 

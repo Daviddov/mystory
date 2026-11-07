@@ -126,9 +126,9 @@ describe("narration voices", () => {
     expect(defaultNarrationVoice("gemini", "Puck")).toBe("Puck");
   });
 
-  it("lists configured ids for ElevenLabs and nothing for the mock", async () => {
+  it("lists configured ids for another vendor and nothing for the mock", async () => {
     const { getNarrationVoices } = await import("./presets");
-    expect(getNarrationVoices("elevenlabs", ["a1", "b2", "a1"]).map((v) => v.id)).toEqual(["a1", "b2"]);
+    expect(getNarrationVoices("azure", ["a1", "b2", "a1"]).map((v) => v.id)).toEqual(["a1", "b2"]);
     expect(getNarrationVoices("mock", ["a1"])).toEqual([]);
   });
 });

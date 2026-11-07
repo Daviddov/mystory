@@ -5,31 +5,15 @@
  *
  * Environment:
  *   STT_PROVIDER  "whisper"     faster-whisper on this machine (scripts/stt/transcribe.py)
- *                 "elevenlabs"  ElevenLabs Scribe
- *   STT_MODEL     whisper: a CTranslate2 Whisper model, default "ivrit-ai/whisper-large-v3-turbo-ct2"
- *                 elevenlabs: default "scribe_v2"
- *   STT_PYTHON    whisper: the Python that has faster-whisper, default "python"
+ *   STT_MODEL     a CTranslate2 Whisper model, default "ivrit-ai/whisper-large-v3-turbo-ct2"
+ *   STT_PYTHON    the Python that has faster-whisper, default "python"
  *                 (may carry arguments, e.g. "py -3.12")
- *   STT_API_KEY   elevenlabs: API key; defaults to TTS_API_KEY
- *
- * ElevenLabs VERIFIED against the API reference on 2026-10-17
- * (https://elevenlabs.io/docs/api-reference/speech-to-text/convert):
- *
- *   POST https://api.elevenlabs.io/v1/speech-to-text   (multipart/form-data)
- *   headers: xi-api-key
- *   form:    model_id, file, language_code ("he" / "heb"), timestamps_granularity ("word")
- *   200:     { language_code, text, words: [{ text, type: "word" | "spacing" | "audio_event",
- *              start, end, ... }] }
- *
- * NOT VERIFIED: a real Scribe request has never been made from this code (the
- * quota was exhausted). The whisper path was run on the library's recordings.
  */
 import { spawn } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { z } from "zod";
-import { aiEnv } from "../../config";
 import type { RecognizedWord } from "../../narration/recognized";
 
 export interface SttFile {
@@ -57,16 +41,12 @@ function env(name: string): string | undefined {
 }
 
 const DEFAULT_WHISPER_MODEL = "ivrit-ai/whisper-large-v3-turbo-ct2";
-const DEFAULT_SCRIBE_MODEL = "scribe_v2";
-const SCRIBE_URL = "https://api.elevenlabs.io/v1/speech-to-text";
-const REQUEST_TIMEOUT_MS = 180_000;
 
 export function createSttProvider(): SttProvider {
   const vendor = (env("STT_PROVIDER") ?? "").toLowerCase();
   if (vendor === "whisper") return whisperProvider();
-  if (vendor === "elevenlabs") return scribeProvider();
   throw new SttProviderError(
-    vendor ? `STT_PROVIDER "${vendor}" is not implemented. Use "whisper" or "elevenlabs".` : `STT_PROVIDER is not set ("whisper" or "elevenlabs")`,
+    vendor ? `STT_PROVIDER "${vendor}" is not implemented. Use "whisper".` : `STT_PROVIDER is not set ("whisper")`,
   );
 }
 
@@ -105,66 +85,6 @@ function whisperProvider(): SttProvider {
       } finally {
         rmSync(dir, { recursive: true, force: true });
       }
-    },
-  };
-}
-
-// --- ElevenLabs Scribe ----------------------------------------------------------
-
-const ScribeResponseSchema = z.object({
-  words: z.array(
-    z.object({
-      text: z.string(),
-      type: z.string(),
-      start: z.number().nullish(),
-      end: z.number().nullish(),
-    }),
-  ),
-});
-
-function scribeProvider(): SttProvider {
-  const apiKey = env("STT_API_KEY") ?? aiEnv.ttsApiKey();
-  if (!apiKey) throw new SttProviderError("STT_API_KEY (or TTS_API_KEY) is not set");
-  const model = env("STT_MODEL") ?? DEFAULT_SCRIBE_MODEL;
-
-  async function one(file: SttFile): Promise<RecognizedWord[] | null> {
-    const form = new FormData();
-    form.set("model_id", model);
-    form.set("language_code", "he");
-    form.set("timestamps_granularity", "word");
-    form.set("tag_audio_events", "false");
-    form.set(
-      "file",
-      new Blob([readFileSync(file.path)], { type: file.contentType ?? "application/octet-stream" }),
-      path.basename(file.path),
-    );
-    const response = await fetch(SCRIBE_URL, {
-      method: "POST",
-      headers: { "xi-api-key": apiKey as string },
-      body: form,
-      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    });
-    if (!response.ok) {
-      const detail = (await response.text().catch(() => "")).slice(0, 300);
-      // Out of quota, bad key...: every further request would fail the same way.
-      if (response.status === 401 || response.status === 402 || response.status === 429) {
-        throw new SttProviderError(`ElevenLabs answered ${response.status}: ${detail}`);
-      }
-      console.warn(`STT: ElevenLabs answered ${response.status} for ${file.path}: ${detail}`);
-      return null;
-    }
-    const body = ScribeResponseSchema.parse(await response.json());
-    return body.words
-      .filter((w) => w.type === "word" && w.start != null && w.end != null && w.text.trim() !== "")
-      .map((w) => ({ word: w.text.trim(), start: w.start as number, end: w.end as number }));
-  }
-
-  return {
-    name: `elevenlabs:${model}`,
-    async transcribe(files) {
-      const results: (RecognizedWord[] | null)[] = [];
-      for (const file of files) results.push(await one(file));
-      return results;
     },
   };
 }

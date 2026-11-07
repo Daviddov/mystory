@@ -21,11 +21,6 @@ describe("TTS provider selection", () => {
     expect(provider.isMock).toBe(false);
   });
 
-  it("keeps ElevenLabs selectable and ignoring notes", () => {
-    vi.stubEnv("TTS_PROVIDER", "elevenlabs");
-    expect(getAiStatus().tts).toEqual({ name: "elevenlabs", isMock: false });
-    expect(ttsHonoursNotes()).toBe(false);
-  });
 });
 
 describe("provider defaults from keys", () => {
@@ -40,12 +35,6 @@ describe("provider defaults from keys", () => {
     expect(status.image).toEqual({ name: "gemini", isMock: false });
     expect(status.tts).toEqual({ name: "gemini", isMock: false });
     expect(status.video).toEqual({ name: "gemini", isMock: false });
-  });
-
-  it("an ElevenLabs key alone means ElevenLabs", () => {
-    vi.stubEnv("TTS_PROVIDER", "");
-    vi.stubEnv("TTS_API_KEY", "sk_abc");
-    expect(getAiStatus().tts.name).toBe("elevenlabs");
   });
 
   it("nikud uses Gemini when a Gemini key exists, Dicta when asked, the mock otherwise", () => {

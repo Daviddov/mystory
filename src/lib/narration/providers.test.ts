@@ -4,7 +4,6 @@
  */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { assembleDictaText, chunkText, createDictaNikudProvider } from "../ai/providers/dicta-nikud";
-import { createTtsProvider } from "../ai/providers/tts";
 import { splitWords } from "../hebrew";
 
 function jsonResponse(body: unknown, status = 200): Response {
@@ -91,103 +90,5 @@ describe("Dicta nikud provider", () => {
     expect(chunks.every((chunk) => chunk.length <= 100)).toBe(true);
     expect(chunks.join("")).toBe(text);
     expect(chunks.flatMap((chunk) => splitWords(chunk))).toEqual(splitWords(text));
-  });
-});
-
-describe("ElevenLabs TTS provider", () => {
-  function configure(extra: Record<string, string> = {}) {
-    vi.stubEnv("TTS_PROVIDER", "elevenlabs");
-    vi.stubEnv("TTS_API_KEY", "test-key");
-    vi.stubEnv("TTS_VOICE", "voice123");
-    vi.stubEnv("TTS_MODEL", "");
-    vi.stubEnv("TTS_OUTPUT_FORMAT", "");
-    vi.stubEnv("TTS_REGION", "");
-    vi.stubEnv("TTS_STRIP_NIKUD", "");
-    for (const [key, value] of Object.entries(extra)) vi.stubEnv(key, value);
-  }
-
-  function elevenLabsBody(spoken: string) {
-    const characters = Array.from(spoken);
-    return {
-      audio_base64: Buffer.from("fake-mp3-bytes").toString("base64"),
-      alignment: {
-        characters,
-        character_start_times_seconds: characters.map((_, i) => i * 0.1),
-        character_end_times_seconds: characters.map((_, i) => (i + 1) * 0.1),
-      },
-      normalized_alignment: null,
-    };
-  }
-
-  it("calls with-timestamps and converts character times to word timings", async () => {
-    configure();
-    const text = "גַּן יָרֹק, יָפֶה!";
-    const fetchMock = vi.fn(async () => jsonResponse(elevenLabsBody(text)));
-    vi.stubGlobal("fetch", fetchMock);
-
-    const provider = await createTtsProvider();
-    expect(provider).toMatchObject({ name: "elevenlabs", isMock: false });
-    const result = await provider.synthesize(text, { speed: 0.9 });
-
-    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
-    expect(url).toBe(
-      "https://api.elevenlabs.io/v1/text-to-speech/voice123/with-timestamps?output_format=mp3_44100_128",
-    );
-    expect((init.headers as Record<string, string>)["xi-api-key"]).toBe("test-key");
-    expect(JSON.parse(init.body as string)).toEqual({
-      text,
-      model_id: "eleven_v3",
-      language_code: "he",
-      voice_settings: { speed: 0.9 },
-    });
-
-    expect(result.isMock).toBe(false);
-    expect(result.contentType).toBe("audio/mpeg");
-    expect(new TextDecoder().decode(result.audio)).toBe("fake-mp3-bytes");
-    expect(result.wordTimings.map((t) => t.word)).toEqual(splitWords(text));
-    expect(result.durationSeconds).toBeCloseTo(Array.from(text).length * 0.1, 5);
-  });
-
-  it("can send the text without nikud and still time the vocalized words", async () => {
-    configure({ TTS_STRIP_NIKUD: "1", TTS_REGION: "eu", TTS_MODEL: "eleven_multilingual_v2", TTS_OUTPUT_FORMAT: "wav_22050" });
-    const fetchMock = vi.fn(async () => jsonResponse(elevenLabsBody("גן ירק")));
-    vi.stubGlobal("fetch", fetchMock);
-
-    const result = await (await createTtsProvider()).synthesize("גַּן יָרֹק", { voice: "other" });
-    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
-    expect(url).toBe(
-      "https://api.eu.residency.elevenlabs.io/v1/text-to-speech/other/with-timestamps?output_format=wav_22050",
-    );
-    // language_code is documented as unsupported on multilingual_v2, so it is left out.
-    expect(JSON.parse(init.body as string)).toEqual({ text: "גן ירק", model_id: "eleven_multilingual_v2" });
-    expect(result.contentType).toBe("audio/wav");
-    expect(result.wordTimings).toEqual([
-      { word: "גַּן", start: 0, end: 0.2 },
-      { word: "יָרֹק", start: 0.3, end: 0.6 },
-    ]);
-  });
-
-  it("fails loudly on configuration and vendor errors", async () => {
-    configure({ TTS_PROVIDER: "azure" });
-    await expect(createTtsProvider()).rejects.toThrow(/not implemented/);
-
-    configure({ TTS_API_KEY: "" });
-    await expect(createTtsProvider()).rejects.toThrow(/TTS_API_KEY/);
-
-    configure({ TTS_OUTPUT_FORMAT: "pcm_16000" });
-    await expect(createTtsProvider()).rejects.toThrow(/not supported/);
-
-    configure({ TTS_VOICE: "" });
-    await expect((await createTtsProvider()).synthesize("שלום")).rejects.toThrow(/TTS_VOICE/);
-
-    configure();
-    vi.stubGlobal("fetch", vi.fn(async () => jsonResponse({ detail: "quota" }, 401)));
-    await expect((await createTtsProvider()).synthesize("שלום")).rejects.toThrow(/HTTP 401/);
-
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(async () => jsonResponse({ audio_base64: "AAAA", alignment: null })),
-    );
-    await expect((await createTtsProvider()).synthesize("שלום")).rejects.toThrow(/no character alignment/);
   });
 });

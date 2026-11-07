@@ -13,7 +13,7 @@ export interface NarrationOptions {
   speed?: number;
   /** Narration style preset slug (NARRATION_STYLES); the pipeline falls back to the book's hero.narrationStyle. */
   style?: string;
-  /** Free-text narration wishes, at most 300 characters. Gemini honours them; ElevenLabs ignores them. */
+  /** Free-text narration wishes, at most 300 characters. Only Gemini honours them. */
   notes?: string;
   /** Replace a parent's own recording. Off by default: a recording is never overwritten silently. */
   overwriteRecorded?: boolean;
@@ -86,7 +86,7 @@ export type NarrationEvent =
       nikudProvider: string;
       ttsMock: boolean;
       nikudMock: boolean;
-      /** True when narration notes were sent but the TTS provider cannot use free text (ElevenLabs). */
+      /** True when narration notes were sent but the TTS provider cannot use free text (the demo voice). */
       styleNotesIgnored?: boolean;
     }
   | { type: "page"; done: number; total: number; result: PageNarrationResult }

@@ -5,7 +5,7 @@
  *   text   ANTHROPIC_API_KEY       -> providers/claude-text.ts
  *   nikud  NIKUD_PROVIDER=gemini   -> providers/gemini-nikud.ts (Dicta when Gemini fails; key TEXT_API_KEY)
  *          NIKUD_PROVIDER=dicta    -> providers/dicta-nikud.ts
- *   tts    TTS_PROVIDER=<vendor>   -> providers/tts.ts  (gemini = AI Studio, key TTS_API_KEY; elevenlabs)
+ *   tts    TTS_PROVIDER=gemini     -> providers/tts.ts  (AI Studio, key TTS_API_KEY)
  *   image  IMAGE_PROVIDER=<vendor> -> providers/image.ts
  *   video  VIDEO_PROVIDER=<vendor> -> providers/video.ts  (gemini = Veo; key VIDEO_API_KEY)
  *
@@ -68,7 +68,7 @@ function isTtsConfigured(): boolean {
   const name = aiEnv.ttsProvider()?.toLowerCase();
   return name !== undefined && name !== "mock";
 }
-/** True when the active TTS vendor follows free-text narration notes (Gemini does, ElevenLabs does not). */
+/** True when the active TTS vendor follows free-text narration notes (Gemini does, the demo voice does not). */
 export function ttsHonoursNotes(): boolean {
   return isTtsConfigured() && aiEnv.ttsProvider()?.toLowerCase() === "gemini";
 }

@@ -14,7 +14,7 @@ import {
   parseAfricanStorybookIndex,
   parseAfricanStorybookStory,
 } from "./african-storybook";
-import type { FetchLike } from "./bookdash";
+import type { FetchLike } from "./fetch";
 
 const FIXTURES = path.resolve(process.cwd(), "src/lib/importers/__fixtures__");
 /** Copied unchanged from global-asp/asp-source (master): en/0010_the-animals-of-uganda.md. */

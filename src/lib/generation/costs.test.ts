@@ -70,10 +70,6 @@ describe("env overrides", () => {
     expect(ctx.image.confirmed).toBe(false);
     expect(ctx.usdToIls).toBe(3.7);
   });
-  it("uses ElevenLabs per-character pricing", () => {
-    expect(buildCostContext({ ...REAL, tts: real("elevenlabs") }, {}, NOW).tts.per1kChars).toBe(0.08);
-    expect(buildCostContext({ ...REAL, tts: real("elevenlabs") }, { TTS_MODEL: "eleven_flash_v2_5" }, NOW).tts.per1kChars).toBe(0.04);
-  });
 });
 
 describe("estimates", () => {
@@ -99,8 +95,6 @@ describe("estimates", () => {
     const ten = estimateNarration(ctx, { chars: 1000 });
     expect(ten.usd).toBeCloseTo(ctx.tts.per1kChars, 8);
     expect(estimateNarration(ctx, { chars: 3000 }).usd).toBeCloseTo(3 * ten.usd, 8);
-    const eleven = buildCostContext({ ...REAL, tts: real("elevenlabs") }, {}, NOW);
-    expect(estimateNarration(eleven, { chars: 2500 }).usd).toBeCloseTo(0.2, 8);
   });
 
   it("animation is clips x seconds x price", () => {

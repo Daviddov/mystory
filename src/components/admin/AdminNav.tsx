@@ -25,7 +25,6 @@ export function AdminNav({ pendingCount, showUsers }: AdminNavProps) {
     { href: adminPaths.books(), label: "כל הספרים" },
     { href: adminPaths.collections(), label: "אוספים וספר השבוע" },
     { href: adminPaths.taxonomy(), label: "תגיות ונושאים" },
-    { href: adminPaths.importBooks(), label: "ייבוא ספרים חופשיים" },
     ...(showUsers ? [{ href: adminPaths.users(), label: "משתמשים" }] : []),
   ];
   return (

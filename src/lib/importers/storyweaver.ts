@@ -33,7 +33,7 @@ import { putImage, prepareImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { Repository } from "../repo/types";
 import { SLUG_PATTERN, textDirection, type AgeGroup, type BookCredits, type BookLanguage, type BookWithPages, type Page } from "../types";
-import type { FetchLike } from "./bookdash";
+import type { FetchLike } from "./fetch";
 import { getCcLicense } from "./cc";
 import { IMPORT_LIMITS } from "./limits";
 import { detectImageType } from "./media-sniff";

@@ -25,9 +25,7 @@ each with (silent) demo narration.
 | `npm run narrate -- <slug>… \| --all \| --seed [--force] [--pages 1,3]` | Run the nikud + narration pipeline on local books |
 | `npm run pipeline:status -- [--details]` | What stands between the local books and the library: missing details, pages and characters still to narrate |
 | `npm run book-meta -- <bookId> <file> [--submit]` / `-- --batch <file>` | Set metadata and credits from a JSON patch; `--batch` takes `{ "<bookId>": patch }` for many books |
-| `npm run bookdash:credits -- [<slug>…] [--dry-run]` | Fill author, illustrator, designer and editor of Book Dash books from their page on bookdash.org |
 | `npm run daily-story -- [--force] [--dry-run]` | Create today's AI story as a `pending` book (local data only) |
-| `npm run import:bookdash -- <slug>… \| --all \| --list [--owner <email>] [--force]` | Import Book Dash books (CC BY 4.0) as English drafts; see "Free books and translation" |
 
 To sign in on a production build (`npm start`) without Supabase, set
 `ALLOW_DEV_LOGIN=1`; the password-less development login is otherwise refused
@@ -45,7 +43,7 @@ there. An email listed in `ADMIN_EMAILS` gets the admin role.
 | AI wizard | `/create`, `POST /api/generate`, `GET /api/generate/[jobId]`, `POST /api/generate/daily` |
 | Personal | `/me`, `/me/favorites`, `/share/[token]`, `/api/favorites`, `/api/progress`, `/api/share/[bookId]`, `POST /api/views/[bookId]` |
 | Offline / PWA | `/offline`, `/offline/read`, `public/sw.js`, `manifest.webmanifest` |
-| Admin | `/admin`, `/admin/queue`, `/admin/pipeline`, `/admin/books`, `/admin/collections`, `/admin/taxonomy`, `/admin/import`, `/admin/users`, `/api/admin/**` |
+| Admin | `/admin`, `/admin/queue`, `/admin/pipeline`, `/admin/books`, `/admin/collections`, `/admin/taxonomy`, `/admin/users`, `/api/admin/**` |
 | Info | `/about`, `/faq`, `/privacy`, `/terms` (the last two are unreviewed drafts with `[חסר]` placeholders) |
 
 Book lifecycle: `draft` → `private` (share link possible) → `pending`
@@ -106,9 +104,9 @@ mock output is always labelled as such in the UI.
 | Session | `AUTH_SECRET`, `ADMIN_EMAILS`, `ALLOW_DEV_LOGIN` | Random secret in `data/.auth-secret` (warning printed) |
 | Story text, OCR | `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` (default `claude-opus-5-5`) | One fixed sample story; OCR buttons hidden (no mock OCR) |
 | Nikud | `NIKUD_PROVIDER=dicta`, `DICTA_API_URL` | Text returned unchanged, never stored as nikud |
-| Narration | `TTS_PROVIDER=elevenlabs`, `TTS_API_KEY`, `TTS_VOICE` (required), `TTS_REGION`, `TTS_MODEL`, `TTS_OUTPUT_FORMAT`, `TTS_STRIP_NIKUD` | Silent audio, evenly spaced word timings, "demo voice" notice |
+| Narration | `TTS_PROVIDER=gemini`, `TTS_API_KEY`, `TTS_VOICE`, `TTS_MODEL` | Silent audio, evenly spaced word timings, "demo voice" notice |
 | Illustrations | `IMAGE_PROVIDER=gemini`, `IMAGE_API_KEY`, `IMAGE_MODEL` | Labelled SVG placeholder |
-| Other | `NEXT_PUBLIC_SITE_URL`, `DATA_DIR`, `AI_WEEKLY_QUOTA`, `CRON_SECRET`, `NEXT_PUBLIC_ENABLE_SW`, `GITHUB_TOKEN` | Sensible defaults |
+| Other | `NEXT_PUBLIC_SITE_URL`, `DATA_DIR`, `AI_WEEKLY_QUOTA`, `CRON_SECRET`, `NEXT_PUBLIC_ENABLE_SW` | Sensible defaults |
 | Limits | `RATE_LIMIT_NARRATION_PER_HOUR` (30), `RATE_LIMIT_NIKUD_PER_HOUR` (400), `RATE_LIMIT_OCR_PER_HOUR` (150), `RATE_LIMIT_TRANSLATE_PER_HOUR` (60), `RATE_LIMIT_PDF_PER_HOUR` (60), `RATE_LIMIT_VIEWS_PER_HOUR` (120), `TTS_ALLOWED_VOICES` | The defaults in brackets; only `TTS_VOICE` may be requested |
 
 **None of the real vendors has been called yet.** The Claude, ElevenLabs,
@@ -138,24 +136,12 @@ refreshes the session and redirects `/login` there.
 
 ## Free books and translation
 
-Book Dash publishes picture books under CC BY 4.0 in the GitHub repository
-`bookdash/bookdash-books`. `npm run import:bookdash` (or `/admin/import`, for
-editors and admins) downloads a book's text and its text-free illustrations and
-creates a **draft in English**: `language: "en"`, the English text in both
-`text` and `originalText`, the illustration descriptions in `imageAlt`, and the
-credit in `credits` (publisher, link, logo, attribution line). A book is found
-again by its Book Dash slug (id `bookdash-<slug>`) and is skipped on a second
-import unless `--force`, which replaces it together with its translation.
-`GITHUB_TOKEN` is optional; it only raises GitHub's limit for the catalogue
-listing.
+Book Dash books (CC BY 4.0) were imported once as English drafts and the
+importer has since been removed; the books stay in the library with their
+credits. Other free sources still have scripts (`npm run import:storyweaver`,
+`import:african-storybook`, `import:gdl`, `import:gutenberg`, `import:letsread`).
+A book without an author cannot be submitted.
 
-- **Credits are incomplete on purpose.** The repository names the people behind
-  a book as one list ("creator: A, B, C") without roles, so the importer stores
-  that list in `credits.creators` and leaves author, illustrator, designer and
-  editor empty rather than guess. The studio and `/admin/import` flag such a
-  book. `npm run bookdash:credits` reads the roles from the book's page on
-  bookdash.org and fills the empty fields. A book without an author cannot be
-  submitted.
 - **Translation.** In the studio a book whose original language is not Hebrew
   gets a "תרגום" tab: one button translates the whole book in a single Claude
   call (`src/lib/translation`), and every page shows the original next to the

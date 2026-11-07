@@ -10,6 +10,7 @@ import {
   pageDisplayText,
   progressPercent,
   resolveStartPage,
+  sharedSoundtrackFor,
   swipeToAction,
   switchableLanguages,
   toPlayerBook,
@@ -228,5 +229,20 @@ describe("version slots", () => {
     expect(pageVersion(book, withAr, "ar")?.text).toBe("مرحبا");
     expect(withPageVersion(book, withAr, "ar", undefined)).toEqual(page);
     expect(withPageVersion(book, page, "en", { text: "Hello" }).translation).toEqual({ text: "Hello" });
+  });
+});
+
+describe("shared background music", () => {
+  it("picks a mood from the categories, strongest first", () => {
+    expect(sharedSoundtrackFor({ categories: ["animals", "humor"], ageGroup: "3-5" })).toBe("/soundtracks/playful.mp3");
+    expect(sharedSoundtrackFor({ categories: ["nature", "bedtime"], ageGroup: "3-5" })).toBe("/soundtracks/calm.mp3");
+    expect(sharedSoundtrackFor({ categories: ["fantasy"], ageGroup: "6-8" })).toBe("/soundtracks/adventure.mp3");
+    expect(sharedSoundtrackFor({ categories: ["parasha", "judaism"], ageGroup: "3-5" })).toBe("/soundtracks/warm.mp3");
+  });
+
+  it("falls back to the calm track, and always uses it for the youngest", () => {
+    expect(sharedSoundtrackFor({ categories: ["educational"], ageGroup: "3-5" })).toBe("/soundtracks/calm.mp3");
+    expect(sharedSoundtrackFor({ categories: [], ageGroup: "6-8" })).toBe("/soundtracks/calm.mp3");
+    expect(sharedSoundtrackFor({ categories: ["humor"], ageGroup: "0-2" })).toBe("/soundtracks/calm.mp3");
   });
 });

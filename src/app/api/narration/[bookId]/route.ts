@@ -155,7 +155,7 @@ export async function POST(request: Request, context: RouteParams): Promise<Resp
         nikudProvider: deps.nikud.name,
         ttsMock: deps.tts.isMock,
         nikudMock: deps.nikud.isMock,
-        // ElevenLabs cannot follow free text; say so instead of pretending (Gemini uses the notes).
+        // The demo voice cannot follow free text; say so instead of pretending (Gemini uses the notes).
         ...((options.notes || book.hero?.narrationNotes) && !ttsHonoursNotes()
           ? { styleNotesIgnored: true }
           : {}),

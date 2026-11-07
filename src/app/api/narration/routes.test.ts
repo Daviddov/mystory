@@ -165,7 +165,7 @@ describe("narration routes", () => {
   });
 
   it("answers 503 when the configured TTS provider is unusable", async () => {
-    vi.stubEnv("TTS_PROVIDER", "elevenlabs");
+    vi.stubEnv("TTS_PROVIDER", "azure");
     vi.stubEnv("TTS_API_KEY", "");
     vi.spyOn(console, "error").mockImplementation(() => undefined);
     const response = await POST(post(), context(bookId));

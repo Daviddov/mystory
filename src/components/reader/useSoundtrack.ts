@@ -36,7 +36,8 @@ export function useSoundtrack(src: string, playing: boolean, level: number): Sou
 
   const unlock = useCallback(() => {
     const audio = audioRef.current;
-    if (!audio || !src) return;
+    if (!audio) return;
+    // The gain chain is made even while the music is off, so switching it on later is just as quiet on iOS.
     if (!chainRef.current && typeof window !== "undefined" && "AudioContext" in window) {
       try {
         const context = new AudioContext();
@@ -49,7 +50,7 @@ export function useSoundtrack(src: string, playing: boolean, level: number): Sou
       }
     }
     void chainRef.current?.context.resume().catch(() => {});
-    if (audio.paused) {
+    if (src && audio.paused) {
       if (!chainRef.current) audio.volume = 0;
       audio.play().catch(() => {
         // Refused without a tap; the effect below tries again when the narration starts.

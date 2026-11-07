@@ -42,7 +42,7 @@ import { putImage, prepareImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { Repository } from "../repo/types";
 import { SLUG_PATTERN, type AgeGroup, type BookCredits, type BookWithPages, type Page } from "../types";
-import type { FetchLike } from "./bookdash";
+import type { FetchLike } from "./fetch";
 import { getCcLicense } from "./cc";
 import { IMPORT_LIMITS } from "./limits";
 import { detectImageType } from "./media-sniff";
@@ -66,8 +66,8 @@ export const GDL = {
 } as const;
 
 /**
- * Publishers whose books are imported from their own sources (see bookdash.ts
- * and storyweaver.ts), so their GDL copies are skipped. A book is skipped when
+ * Publishers whose books are imported from their own sources (storyweaver.ts and
+ * african-storybook.ts, Book Dash was imported once), so their GDL copies are skipped. A book is skipped when
  * the catalogue, its cover or its credits pages name one of them.
  */
 export const GDL_SKIPPED_PUBLISHERS: readonly { name: string; pattern: RegExp }[] = [

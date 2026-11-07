@@ -49,7 +49,7 @@ import { putImage, prepareImage } from "../media/optimize";
 import { bookMediaPath, bookMediaPrefix, extensionForContentType } from "../media/url";
 import type { Repository } from "../repo/types";
 import { SLUG_PATTERN, type AgeGroup, type BookCredits, type BookWithPages, type Page } from "../types";
-import type { FetchLike } from "./bookdash";
+import type { FetchLike } from "./fetch";
 import { getCcLicense } from "./cc";
 import { gdlLicensesInText, normalizeGdlLicense } from "./gdl";
 import { IMPORT_LIMITS } from "./limits";
@@ -77,8 +77,8 @@ export const LETSREAD = {
 } as const;
 
 /**
- * Publishers whose books are imported from their own sources (see bookdash.ts,
- * storyweaver.ts and african-storybook.ts), so their Let's Read copies are
+ * Publishers whose books are imported from their own sources (storyweaver.ts and
+ * african-storybook.ts; Book Dash was imported once), so their Let's Read copies are
  * skipped. A book is skipped when its publisher, the address of its original
  * or its attribution page names one of them.
  */

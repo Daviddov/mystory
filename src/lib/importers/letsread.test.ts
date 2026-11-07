@@ -4,7 +4,7 @@ import JSZip from "jszip";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { publishProblems } from "@/lib/studio/shared";
 import { createTempData, type TempData } from "@/test/temp-data";
-import type { FetchLike } from "./bookdash";
+import type { FetchLike } from "./fetch";
 import {
   LETSREAD,
   LetsReadClient,

@@ -388,12 +388,8 @@ export interface NarrationStyle {
   description: string;
   /** Relative speaking speed, 1 = the voice's normal pace. */
   speed: number;
-  voiceSettings: { stability: number; style: number; similarityBoost?: number };
-  /** ElevenLabs v3 audio tag prepended to the text, e.g. "[whispers]". */
-  audioTag?: string;
   /**
    * English delivery instruction for Gemini TTS (sent as the style of the text, never spoken).
-   * ElevenLabs ignores it and uses speed / voiceSettings / audioTag.
    */
   prompt: string;
 }
@@ -405,7 +401,6 @@ export const NARRATION_STYLES: NarrationStyle[] = [
     emoji: "🧡",
     description: "קול חם וטבעי, קצב נעים, כמו הורה שקורא ליד המיטה",
     speed: 0.95,
-    voiceSettings: { stability: 0.5, style: 0.3, similarityBoost: 0.75 },
     prompt: "a warm, natural storyteller reading a picture book to a child at bedtime, unhurried, with gentle expression",
   },
   {
@@ -414,8 +409,6 @@ export const NARRATION_STYLES: NarrationStyle[] = [
     emoji: "🎩",
     description: "קצב קופצני ומשחקי שמדגיש חרוזים, בסגנון דוקטור סוס",
     speed: 1.05,
-    voiceSettings: { stability: 0.2, style: 0.6, similarityBoost: 0.75 },
-    audioTag: "[playfully]",
     prompt: "playful and bouncy, with a lively rhythm that lands on every rhyme, like a fun Dr. Seuss read-aloud",
   },
   {
@@ -424,8 +417,6 @@ export const NARRATION_STYLES: NarrationStyle[] = [
     emoji: "🌙",
     description: "איטי ורך, עם הפסקות רגועות שמרדימות",
     speed: 0.85,
-    voiceSettings: { stability: 0.85, style: 0.1, similarityBoost: 0.8 },
-    audioTag: "[softly]",
     prompt: "very calm, soft and slow, with relaxed pauses between sentences, soothing a child to sleep",
   },
   {
@@ -434,8 +425,6 @@ export const NARRATION_STYLES: NarrationStyle[] = [
     emoji: "🚀",
     description: "אנרגטי ונלהב, עם מתח והפתעה",
     speed: 1.08,
-    voiceSettings: { stability: 0.3, style: 0.7, similarityBoost: 0.75 },
-    audioTag: "[excited]",
     prompt: "energetic and excited, full of suspense and surprise, as in an adventure story for children",
   },
   {
@@ -444,8 +433,6 @@ export const NARRATION_STYLES: NarrationStyle[] = [
     emoji: "🤫",
     description: "קול נמוך וקרוב, כאילו מספרים סוד",
     speed: 0.9,
-    voiceSettings: { stability: 0.6, style: 0.2, similarityBoost: 0.8 },
-    audioTag: "[whispers]",
     prompt: "a gentle close whisper, low and intimate, as if sharing a secret with a child",
   },
   {
@@ -454,7 +441,6 @@ export const NARRATION_STYLES: NarrationStyle[] = [
     emoji: "🔤",
     description: "הגייה ברורה וקצב איטי, כדי לעקוב אחרי המילים",
     speed: 0.8,
-    voiceSettings: { stability: 0.8, style: 0, similarityBoost: 0.85 },
     prompt: "clear and slow with precise articulation of every word, so an early reader can follow along",
   },
 ];
@@ -479,7 +465,7 @@ export interface NarrationVoice {
 }
 
 /** Providers whose voice list is a fixed catalog in code. */
-export type NarrationVoiceProvider = "gemini" | "elevenlabs" | "mock" | (string & {});
+export type NarrationVoiceProvider = "gemini" | "mock" | (string & {});
 
 /**
  * Prebuilt Gemini TTS voices that suit Hebrew children's stories. The names and
@@ -504,14 +490,14 @@ export const GEMINI_NARRATION_VOICES: NarrationVoice[] = [
 
 export const DEFAULT_GEMINI_VOICE = "Sulafat";
 
-/** A voice known only by its id (ElevenLabs ids carry no readable name). */
+/** A voice known only by its id. */
 function voiceFromId(id: string): NarrationVoice {
   return { id, label: id, description: "קול שהוגדר באתר", gender: "neutral" };
 }
 
 /**
  * The voices a person can pick for a provider. Gemini: the curated catalog.
- * Anything else (ElevenLabs): the configured ids, labelled by id, since the
+ * Anything else: the configured ids, labelled by id, since the
  * names are unknown here. `configuredIds` = TTS_VOICE followed by TTS_ALLOWED_VOICES.
  */
 export function getNarrationVoices(

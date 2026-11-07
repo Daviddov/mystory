@@ -38,6 +38,38 @@ export function defaultFontStep(ageGroup: AgeGroup): number {
 export const PLAYBACK_RATES = [0.9, 1, 1.1] as const;
 export const SLEEP_TIMER_MINUTES = [5, 10, 15, 30] as const;
 
+/** Moods of the shared background music (public/soundtracks/<mood>.mp3). */
+export const SHARED_SOUNDTRACK_MOODS = ["calm", "playful", "adventure", "warm"] as const;
+export type SoundtrackMood = (typeof SHARED_SOUNDTRACK_MOODS)[number];
+
+/** Category slugs that decide the mood, strongest first. Books with none of them get the calm one. */
+const MOOD_BY_CATEGORY: readonly (readonly [string, SoundtrackMood])[] = [
+  ["bedtime", "calm"],
+  ["humor", "playful"],
+  ["adventures", "adventure"],
+  ["fantasy", "adventure"],
+  ["nature", "adventure"],
+  ["animals", "playful"],
+  ["friendship", "playful"],
+  ["parasha", "warm"],
+  ["judaism", "warm"],
+  ["values", "warm"],
+  ["overcoming", "warm"],
+  ["transitions", "warm"],
+  ["home-education", "warm"],
+  ["fables", "warm"],
+];
+
+/**
+ * The background music a book gets when it has none of its own: one of the
+ * shared mood tracks, picked from its categories (the youngest readers always
+ * get the calm one). The result is a site path that mediaUrl() leaves as it is.
+ */
+export function sharedSoundtrackFor(book: { categories: readonly string[]; ageGroup: AgeGroup }): string {
+  const found = book.ageGroup === "0-2" ? "calm" : MOOD_BY_CATEGORY.find(([slug]) => book.categories.includes(slug))?.[1];
+  return `/soundtracks/${found ?? "calm"}.mp3`;
+}
+
 export function clamp(value: number, min: number, max: number): number {
   if (Number.isNaN(value)) return min;
   return Math.min(max, Math.max(min, value));

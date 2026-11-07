@@ -362,7 +362,7 @@ export interface NarrationInfo {
   voices: NarrationVoice[];
   /** Voice used when the book has none chosen. */
   defaultVoice?: string;
-  /** False when the provider ignores the free-text notes (ElevenLabs, the demo voice). */
+  /** False when the provider ignores the free-text notes (the demo voice). */
   notesHonoured: boolean;
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { Trash2 } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";

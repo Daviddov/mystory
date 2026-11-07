@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { ChevronDown } from "lucide-react";
 import type { Locale } from "@/lib/i18n/locale";
 import { getLocale } from "@/lib/i18n/server";

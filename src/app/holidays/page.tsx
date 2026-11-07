@@ -10,7 +10,11 @@ export const revalidate = 600;
 const HEBREW_METADATA: Metadata = occasionIndexMetadata("holiday");
 
 export function generateMetadata(): Promise<Metadata> {
-  return localizeTitle(HEBREW_METADATA, "Holiday stories for children: stories for Shabbat and the Jewish holidays");
+  return localizeTitle(
+    HEBREW_METADATA,
+    "Holiday stories for children: stories for Shabbat and the Jewish holidays",
+    "Illustrated children's stories for Shabbat, Rosh Hashanah, Sukkot, Hanukkah, Tu BiShvat, Purim, Passover and Shavuot, with nikud and narration. Free, with no sign-up.",
+  );
 }
 
 export default function HolidaysPage() {

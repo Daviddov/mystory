@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { BookOpen, Clock } from "lucide-react";
 import { ButtonLink, Chip } from "@/components/ui";
 import { mediaUrl } from "@/lib/media/url";

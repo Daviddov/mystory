@@ -23,7 +23,11 @@ const HEBREW_METADATA: Metadata = pageMetadata({
 });
 
 export function generateMetadata(): Promise<Metadata> {
-  return localizeTitle(HEBREW_METADATA, "Collections of children's stories");
+  return localizeTitle(
+    HEBREW_METADATA,
+    "Collections of children's stories",
+    "Curated collections of children's stories for the seasons, the holidays and special moments like the hour before bed: illustrated, with nikud and narration. Free.",
+  );
 }
 
 export default async function CollectionsPage() {

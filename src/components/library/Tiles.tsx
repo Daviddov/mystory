@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { cn } from "@/lib/cn";
 import { routes } from "@/lib/routes";
 import { SectionTitle } from "./SectionTitle";

@@ -10,6 +10,7 @@ import { afterEach, vi } from "vitest";
 vi.mock("next/headers", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/headers")>()),
   cookies: async () => new Map<string, { name: string; value: string }>(),
+  headers: async () => new Headers(),
 }));
 
 afterEach(() => {

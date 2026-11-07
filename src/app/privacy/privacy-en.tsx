@@ -1,5 +1,5 @@
 /** The privacy policy in English, for visitors who chose the English interface. Same sections as the Hebrew one. */
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { routes } from "@/lib/routes";
 import { InfoPage, InfoSection } from "../about/_components/InfoPage";
 

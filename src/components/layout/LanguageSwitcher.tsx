@@ -3,12 +3,15 @@
 import { Languages } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE, type Locale } from "@/lib/i18n/locale";
+import { englishPath, hasEnglishPage, hebrewPath } from "@/lib/i18n/paths";
 import { useT } from "../i18n/LocaleProvider";
 
 /**
  * Switches the interface between Hebrew and English. The choice is a cookie,
- * so addresses stay the same; the page reloads because the static library
- * pages are cached in Hebrew and only a new request reaches the English twin.
+ * and a page that has an English address (/en/...) moves between it and the
+ * Hebrew one; other pages keep their address. The page reloads because the
+ * static library pages are cached in Hebrew and only a new request reaches the
+ * English twin.
  */
 export function LanguageSwitcher({ className }: { className?: string }) {
   const { locale, t } = useT();
@@ -19,7 +22,13 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       lang={next}
       onClick={() => {
         document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; samesite=lax`;
-        window.location.reload();
+        const { pathname, search, hash } = window.location;
+        const hebrew = hebrewPath(pathname);
+        if (!hasEnglishPage(hebrew)) {
+          window.location.reload();
+          return;
+        }
+        window.location.assign(`${next === "en" ? englishPath(hebrew) : hebrew}${search}${hash}`);
       }}
       title={t.header.switchLanguage}
       aria-label={t.header.switchLanguage}

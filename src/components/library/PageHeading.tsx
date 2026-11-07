@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { ChevronLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/JsonLd";

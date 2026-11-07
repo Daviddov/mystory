@@ -10,7 +10,11 @@ export const revalidate = 600;
 const HEBREW_METADATA: Metadata = occasionIndexMetadata("parasha");
 
 export function generateMetadata(): Promise<Metadata> {
-  return localizeTitle(HEBREW_METADATA, "Weekly Torah portion stories for children");
+  return localizeTitle(
+    HEBREW_METADATA,
+    "Weekly Torah portion stories for children",
+    "Children's stories for every weekly Torah portion (parasha), from Bereshit to Devarim: illustrated, with nikud and narration. Free, with no sign-up.",
+  );
 }
 
 export default function ParashotPage() {

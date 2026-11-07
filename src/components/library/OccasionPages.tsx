@@ -4,7 +4,7 @@
  * Server Components.
  */
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { cache } from "react";
 import { cn } from "@/lib/cn";
 import { TORAH_BOOKS } from "@/lib/generation/parasha";

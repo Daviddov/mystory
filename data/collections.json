@@ -17,7 +17,12 @@
     "description": "שלוליות, מגפיים ורעמים רחוקים: ספרים לימי חורף שנשארים בהם בבית.",
     "bookIds": [
       "seed-boots",
-      "seed-snail"
+      "gdl-14128",
+      "asp-0219",
+      "bookdash-there-must-be-a-rainbow",
+      "parasha-bechukotai",
+      "ai-abba-hilkiah",
+      "parasha-noach"
     ],
     "season": "winter"
   },

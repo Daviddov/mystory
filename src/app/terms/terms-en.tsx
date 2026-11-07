@@ -1,5 +1,5 @@
 /** The draft terms of use in English, for visitors who chose the English interface. Same sections as the Hebrew ones. */
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { routes } from "@/lib/routes";
 import { DraftNotice, InfoPage, InfoSection, Missing } from "../about/_components/InfoPage";
 

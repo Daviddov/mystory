@@ -32,6 +32,7 @@ export const adminPaths = {
   collections: () => `${base}/collections`,
   taxonomy: () => `${base}/taxonomy`,
   users: () => `${base}/users`,
+  health: () => `${base}/health`,
 } as const;
 
 export const adminApi = {
@@ -44,5 +45,6 @@ export const adminApi = {
   collections: () => "/api/admin/collections",
   collection: (id: string) => `/api/admin/collections/${encodeURIComponent(id)}`,
   settings: () => "/api/admin/settings",
+  health: () => "/api/admin/health",
   user: (id: string) => `/api/admin/users/${encodeURIComponent(id)}`,
 } as const;

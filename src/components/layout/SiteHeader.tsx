@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { LogIn, LogOut, Menu, Search, Shield, UserRound } from "lucide-react";
 import { getCurrentUser, hasRole } from "@/lib/auth";
 import { logoutAction } from "@/lib/auth/actions";

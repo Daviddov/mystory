@@ -22,7 +22,7 @@ import { localizeTitle } from "@/lib/i18n/metadata";
 import HomePage, { generateMetadata as homeMetadata } from "../../page";
 import AgePage, { generateMetadata as ageMetadata } from "../../age/[group]/page";
 import { BookView, bookMetadata } from "../../book/[slug]/book-view";
-import { BOOKS_TITLE_EN, BooksView, booksMetadata } from "../../books/books-view";
+import { BOOKS_DESCRIPTION_EN, BOOKS_TITLE_EN, BooksView, booksMetadata } from "../../books/books-view";
 import CategoryPage, { generateMetadata as categoryMetadata } from "../../category/[slug]/page";
 import CollectionPage, { generateMetadata as collectionMetadata } from "../../collections/[slug]/page";
 import CollectionsPage, { generateMetadata as collectionsMetadata } from "../../collections/page";
@@ -56,7 +56,7 @@ function resolve(path: readonly string[], searchParams: Promise<RawSearchParams>
     if (section === "books") {
       return {
         page: async () => BooksView({ searchParams: await searchParams, viewer: await getCurrentUser() }),
-        metadata: async () => localizeTitle(booksMetadata(await searchParams), BOOKS_TITLE_EN),
+        metadata: async () => localizeTitle(booksMetadata(await searchParams), BOOKS_TITLE_EN, BOOKS_DESCRIPTION_EN),
       };
     }
     if (section === "collections") return { page: () => CollectionsPage(), metadata: () => collectionsMetadata() };

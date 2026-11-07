@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { ButtonLink } from "@/components/ui";
 import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";

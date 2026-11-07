@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { libraryMessages } from "@/lib/i18n/library";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
 import { routes } from "@/lib/routes";

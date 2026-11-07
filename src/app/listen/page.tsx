@@ -9,7 +9,7 @@
  * renders ListenView with the real values.
  */
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { ListenPlayer } from "@/components/listen/ListenPlayer";
 import { buildListenTracks, parseAgeFilter } from "@/components/listen/tracks";
 import { ButtonLink, EmptyState } from "@/components/ui";
@@ -32,7 +32,11 @@ const HEBREW_METADATA: Metadata = pageMetadata({
 });
 
 export function generateMetadata(): Promise<Metadata> {
-  return localizeTitle(HEBREW_METADATA, "Bedtime stories to listen to: recorded children's stories");
+  return localizeTitle(
+    HEBREW_METADATA,
+    "Bedtime stories to listen to: recorded children's stories",
+    "Free bedtime stories to listen to: a continuous queue of narrated children's stories. Pick an age, set a sleep timer and listen with eyes closed.",
+  );
 }
 
 /** Upper bound on the queue, so the page stays light. */

@@ -26,6 +26,7 @@ export function AdminNav({ pendingCount, showUsers }: AdminNavProps) {
     { href: adminPaths.collections(), label: "אוספים וספר השבוע" },
     { href: adminPaths.taxonomy(), label: "תגיות ונושאים" },
     ...(showUsers ? [{ href: adminPaths.users(), label: "משתמשים" }] : []),
+    ...(showUsers ? [{ href: adminPaths.health(), label: "בדיקת מפתחות" }] : []),
   ];
   return (
     <nav aria-label="ניווט בלוח הניהול" className="scrollbar-none -mx-1 overflow-x-auto">

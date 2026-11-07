@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { PersonalLibrary } from "@/components/personal/PersonalLibrary";
 import { PersonalSync } from "@/components/personal/PersonalSync";
 import { ButtonLink } from "@/components/ui";

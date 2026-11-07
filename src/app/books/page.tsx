@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BOOKS_TITLE_EN, BooksView, booksMetadata } from "./books-view";
+import { BOOKS_DESCRIPTION_EN, BOOKS_TITLE_EN, BooksView, booksMetadata } from "./books-view";
 import { localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
@@ -13,7 +13,7 @@ export const revalidate = 600;
 const HEBREW_METADATA: Metadata = booksMetadata({});
 
 export function generateMetadata(): Promise<Metadata> {
-  return localizeTitle(HEBREW_METADATA, BOOKS_TITLE_EN);
+  return localizeTitle(HEBREW_METADATA, BOOKS_TITLE_EN, BOOKS_DESCRIPTION_EN);
 }
 
 export default function BooksPage() {

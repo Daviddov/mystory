@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { normalizeSeason } from "@/components/library/seasons";
 import { siteUrl } from "@/lib/config";
+import { englishPath, hasEnglishPage } from "@/lib/i18n/paths";
 import { OCCASIONS, groupBooksByOccasion, occasionBookIds, occasionHref, occasionIndexable } from "@/lib/occasions";
 import { getRepo } from "@/lib/repo";
 import { mediaUrl } from "@/lib/media/url";
@@ -35,7 +36,7 @@ function bookImages(book: { coverImage: string; updatedAt: string; pages?: { ima
  * collections and published books. Listings carry the lastmod of their newest
  * book, so search engines can trust it and recrawl only what changed.
  */
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+async function hebrewEntries(): Promise<MetadataRoute.Sitemap> {
   const base = siteUrl();
   const entry = (path: string, extra: Omit<Entry, "url"> = {}): Entry => ({ url: `${base}${path}`, ...extra });
 
@@ -145,4 +146,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   return entries;
+}
+
+/**
+ * Every page that has an English twin (/en/...) is listed in both languages,
+ * each entry naming the other (hreflang), as Google asks. The English entry
+ * carries no images: they belong to the Hebrew page.
+ */
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const base = siteUrl();
+  const entries = await hebrewEntries();
+  return entries.flatMap((entry) => {
+    const path = entry.url.slice(base.length) || "/";
+    if (!entry.url.startsWith(base) || !hasEnglishPage(path)) return [entry];
+    const english = `${base}${englishPath(path)}`;
+    const alternates = { languages: { he: entry.url, en: english, "x-default": entry.url } };
+    return [
+      { ...entry, alternates },
+      { ...entry, url: english, images: undefined, alternates },
+    ];
+  });
 }

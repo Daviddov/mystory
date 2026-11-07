@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { getT } from "@/lib/i18n/server";
 import { navFor, type NavLink } from "@/lib/nav";
 import { routes } from "@/lib/routes";

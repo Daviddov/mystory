@@ -18,7 +18,7 @@ import { toPublicBook } from "@/lib/public-book";
 import { routes } from "@/lib/routes";
 import { pageMetadata, SITE_TITLE, siteJsonLd } from "@/lib/seo";
 import { THEMES } from "@/lib/taxonomy";
-import { localizeTitle } from "@/lib/i18n/metadata";
+import { SITE_DESCRIPTION_EN, localizeTitle } from "@/lib/i18n/metadata";
 
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
@@ -33,7 +33,7 @@ const page = pageMetadata({ title: TITLE, description: DESCRIPTION, path: routes
 const HEBREW_METADATA: Metadata = { ...page, title: { absolute: TITLE } };
 
 export function generateMetadata(): Promise<Metadata> {
-  return localizeTitle(HEBREW_METADATA, { absolute: "Children's stories to read and listen to, with nikud, free | My Story" });
+  return localizeTitle(HEBREW_METADATA, { absolute: "Children's stories to read and listen to, with nikud, free | My Story" }, SITE_DESCRIPTION_EN);
 }
 
 export default async function HomePage() {

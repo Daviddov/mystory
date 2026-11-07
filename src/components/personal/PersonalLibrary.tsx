@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { useEffect, useMemo, useState } from "react";
 import { BookCard } from "@/components/BookCard";
 import { useLocale } from "@/components/i18n/LocaleProvider";

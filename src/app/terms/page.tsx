@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { getLocale } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
 import { DraftNotice, InfoPage, InfoSection, Missing } from "../about/_components/InfoPage";

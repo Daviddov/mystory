@@ -2,8 +2,11 @@ import { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { FILTER_KEYS } from "@/components/library/filters";
 import { SESSION_COOKIE } from "@/lib/auth/session";
+import { ENGLISH_PAGE } from "@/lib/i18n/paths";
 import {
   LIBRARY_QUERY_KEYS,
+  LOCALE_HEADER,
+  englishRewrite,
   LOCAL_SESSION_COOKIE,
   agentLinks,
   libraryRewrite,
@@ -63,6 +66,29 @@ describe("libraryRewrite", () => {
   it("knows every query key the listings read and the local session cookie", () => {
     expect([...LIBRARY_QUERY_KEYS].sort()).toEqual([...FILTER_KEYS, "sort", "page"].sort());
     expect(LOCAL_SESSION_COOKIE).toBe(SESSION_COOKIE);
+  });
+});
+
+describe("englishRewrite", () => {
+  it("sends the English library pages to the live twin and the information pages to themselves", () => {
+    expect(englishRewrite("/en")).toBe("/live");
+    expect(englishRewrite("/en/books")).toBe("/live/books");
+    expect(englishRewrite("/en/book/snail")).toBe("/live/book/snail");
+    expect(englishRewrite("/en/parasha/bereshit")).toBe("/live/parasha/bereshit");
+    expect(englishRewrite("/en/about")).toBe("/about");
+    expect(englishRewrite("/en/faq")).toBe("/faq");
+  });
+
+  it("leaves other addresses alone", () => {
+    for (const path of ["/", "/books", "/en/read/snail", "/en/studio", "/en/login", "/en/book", "/en/book/a/b", "/english", "/en2/books"]) {
+      expect(englishRewrite(path), path).toBeNull();
+    }
+  });
+
+  it("covers the same pages as the shared pattern", () => {
+    for (const path of ["/", "/books", "/book/x", "/about", "/faq", "/tag/%D7%92", "/read/x", "/studio", "/book", "/api/x"]) {
+      expect(englishRewrite(path === "/" ? "/en" : `/en${path}`) !== null, path).toBe(ENGLISH_PAGE.test(path));
+    }
   });
 });
 
@@ -181,6 +207,19 @@ describe("proxy in local mode", () => {
 
     const reader = await proxy(new NextRequest("http://localhost/read/snail"));
     expect(reader.headers.get("link")).toBe('</llms.txt>; rel="describedby"; type="text/markdown"');
+  });
+
+  it("serves /en addresses in English, and never trusts the language header from a client", async () => {
+    const english = await proxy(new NextRequest("http://localhost/en/book/snail"));
+    expect(rewriteOf(english)).toBe("http://localhost/live/book/snail");
+    expect(english.headers.get("x-middleware-request-" + LOCALE_HEADER)).toBe("en");
+    expect(english.headers.get("set-cookie")).toContain("mystory_lang=en");
+
+    const hebrew = await proxy(new NextRequest("http://localhost/book/snail", { headers: { [LOCALE_HEADER]: "en" } }));
+    expect(rewriteOf(hebrew)).toBeNull();
+    expect(hebrew.headers.get("x-middleware-request-" + LOCALE_HEADER)).toBeNull();
+
+    expect((await proxy(new NextRequest("http://localhost/en/read/snail"))).headers.get("x-middleware-rewrite")).toBeNull();
   });
 
   it("refuses direct visits to the live twin and the Markdown versions", async () => {

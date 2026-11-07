@@ -23,7 +23,12 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  return localizeTitle(occasionMetadata("parasha", slug), `Parashat ${occasionNameEn("parasha", slug)}: stories for children`);
+  const name = occasionNameEn("parasha", slug);
+  return localizeTitle(
+    occasionMetadata("parasha", slug),
+    `Parashat ${name}: stories for children`,
+    `Children's stories for Parashat ${name}, the weekly Torah portion: illustrated, with nikud and narration. Free, with no sign-up.`,
+  );
 }
 
 export default async function ParashaPage({ params, searchParams }: Props) {

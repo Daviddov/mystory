@@ -23,7 +23,12 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  return localizeTitle(occasionMetadata("holiday", slug), `${occasionNameEn("holiday", slug)} stories for children`);
+  const name = occasionNameEn("holiday", slug);
+  return localizeTitle(
+    occasionMetadata("holiday", slug),
+    `${name} stories for children`,
+    `Children's stories for ${name}: illustrated, with nikud and narration. Free, with no sign-up.`,
+  );
 }
 
 export default async function HolidayPage({ params, searchParams }: Props) {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { CloudDownload, Headphones, Mic, Pencil, Plus } from "lucide-react";
 import { MyRecordingActions } from "@/components/personal/MyRecordingActions";
 import { PersonalLibrary } from "@/components/personal/PersonalLibrary";

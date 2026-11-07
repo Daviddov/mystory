@@ -23,6 +23,7 @@ import { BOOK_GRID_CLASSES } from "@/components/BookGrid";
 import { useT } from "@/components/i18n/LocaleProvider";
 import { Button, Spinner, buttonClasses } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { localizedPath } from "@/lib/i18n/paths";
 import { buildHref } from "./filters";
 import {
   appendItems,
@@ -140,7 +141,7 @@ export function InfiniteBookGrid({
       {page > 1 ? (
         <p className="flex justify-center">
           <a
-            href={buildHref(path, { ...params, page: page > 2 ? page - 1 : undefined })}
+            href={localizedPath(buildHref(path, { ...params, page: page > 2 ? page - 1 : undefined }), locale)}
             rel="prev"
             className={buttonClasses({ variant: "ghost", size: "sm" })}
           >
@@ -184,7 +185,7 @@ export function InfiniteBookGrid({
             </p>
           ) : (
             <a
-              href={buildHref(path, { ...params, page: nextPage })}
+              href={localizedPath(buildHref(path, { ...params, page: nextPage }), locale)}
               rel="next"
               onClick={onMoreClick}
               className={buttonClasses({ variant: "outline", size: "md" })}

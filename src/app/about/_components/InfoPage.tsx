@@ -1,5 +1,5 @@
 /** Shared layout of the information pages: about, FAQ, privacy policy and terms. */
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";

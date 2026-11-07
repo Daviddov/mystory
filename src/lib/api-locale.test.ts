@@ -5,6 +5,7 @@ let lang: string | undefined;
 vi.mock("next/headers", async (importOriginal) => ({
   ...(await importOriginal<typeof import("next/headers")>()),
   cookies: async () => ({ get: (name: string) => (name === "mystory_lang" && lang ? { name, value: lang } : undefined) }),
+  headers: async () => new Headers(),
 }));
 
 const { apiError, jsonError } = await import("./api");

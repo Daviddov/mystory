@@ -47,6 +47,7 @@ import {
   needsTranslation,
   SLUG_PATTERN,
   textDirection,
+  type Book,
   type BookStatus,
   type BookWithPages,
   type User,
@@ -85,6 +86,19 @@ function httpUrl(value: string): string | null {
   }
 }
 
+/** The book's English version, when it has one (its title and summary). */
+function englishVersion(book: Book) {
+  return [book.translation, ...(book.extraTranslations ?? [])].find((version) => version?.language === "en");
+}
+
+/** English description of a book page: its English summary when it has one, else what the book is. */
+function bookDescriptionEn(book: Book, title: string, kindEn: string): string {
+  const summary = englishVersion(book)?.summary?.replace(/\s+/g, " ").trim();
+  if (summary) return summary.length <= 155 ? summary : `${summary.slice(0, 154).trimEnd()}…`;
+  const minutes = book.readingMinutes > 0 ? `, a ${book.readingMinutes}-minute read` : "";
+  return `${title}: ${kindEn}${minutes}. Free to read online at My Story.`;
+}
+
 export async function bookMetadata(slug: string, viewer: User | null): Promise<Metadata> {
   const book = await loadVisibleBook(slug, viewer);
   if (!book) return localizeTitle({ title: "הספר לא נמצא", robots: { index: false } });
@@ -104,6 +118,7 @@ export async function bookMetadata(slug: string, viewer: User | null): Promise<M
     : summary.length <= 90
       ? `${summary}. ${details}`
       : plainText(book.summary, 155);
+  const titleEn = plainText(englishVersion(book)?.title) || title;
   const kindEn = `a children's story to read${hasAudio ? " and listen to" : ""}${voweled ? " with nikud" : ""}`;
   return localizeTitle({
     title: `${title}: ${kind}`,
@@ -123,7 +138,7 @@ export async function bookMetadata(slug: string, viewer: User | null): Promise<M
       tags: book.tags,
     },
     twitter: { card: "summary_large_image", title, description },
-  }, `${title}: ${kindEn}`);
+  }, `${titleEn}: ${kindEn}`, bookDescriptionEn(book, titleEn, kindEn));
 }
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {

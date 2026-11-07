@@ -28,6 +28,10 @@ import type { User } from "@/lib/types";
 /** English tab title of the all-books listing (see localizeTitle in src/lib/i18n/metadata.ts). */
 export const BOOKS_TITLE_EN = "All children's books: stories to read and listen to";
 
+/** English description of the all-books listing. */
+export const BOOKS_DESCRIPTION_EN =
+  "Every children's book in the library, free to read: illustrated stories with nikud and narration, filtered by age, category, reading time and discussion topic.";
+
 export function booksMetadata(searchParams: RawSearchParams): Metadata {
   const query = parseLibraryQuery(searchParams);
   const filtered = hasActiveFilters(query);

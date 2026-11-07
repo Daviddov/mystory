@@ -1,7 +1,7 @@
 "use client";
 
 import { BookOpen, Headphones, Info } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import type { ReactNode } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";

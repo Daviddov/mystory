@@ -55,6 +55,16 @@ function wantsOtherLocale(request: NextRequest): boolean {
   return value !== undefined && value !== "he";
 }
 
+/** Address prefix of the English pages. Same value as EN_PREFIX in src/lib/i18n/paths.ts. */
+export const EN_PREFIX = "/en";
+
+/** Request header that tells the page it is served from an /en address. Same value as LOCALE_HEADER in src/lib/i18n/paths.ts. */
+export const LOCALE_HEADER = "x-mystory-locale";
+
+/** Pages that have an English twin at /en. Same pattern as ENGLISH_PAGE in src/lib/i18n/paths.ts. */
+const ENGLISH_PAGE =
+  /^\/(?:books|collections|parasha|holidays|listen|about|faq|(?:book|age|category|theme|time|tag|collections|parasha|holidays)\/[^/]+)?$/;
+
 /** Query-string keys the library listings read (src/components/library/filters.ts). */
 export const LIBRARY_QUERY_KEYS: readonly string[] = ["age", "category", "theme", "time", "tag", "q", "audio", "nikud", "anim", "read", "lang", "sort", "page"];
 
@@ -79,6 +89,20 @@ export function libraryRewrite(pathname: string, searchParams: URLSearchParams, 
   const queried = LIBRARY_LISTING.test(pathname) && LIBRARY_QUERY_KEYS.some((key) => searchParams.has(key));
   if (!signedIn && !queried) return null;
   return pathname === "/" ? LIVE_PREFIX : `${LIVE_PREFIX}${pathname}`;
+}
+
+/**
+ * An English address (/en, /en/book/snail ...) is the Hebrew page rendered in
+ * English: the library pages go to their dynamic twin under /live (which
+ * reads the language from the request), the information pages render as they
+ * are. Returns the rewrite target, or null for any other address (including
+ * /en/ followed by something that has no English page, which is a 404).
+ */
+export function englishRewrite(pathname: string): string | null {
+  const path = pathname === EN_PREFIX ? "/" : pathname.startsWith(`${EN_PREFIX}/`) ? pathname.slice(EN_PREFIX.length) : null;
+  if (path === null || !ENGLISH_PAGE.test(path)) return null;
+  if (path === "/about" || path === "/faq") return path;
+  return path === "/" ? LIVE_PREFIX : `${LIVE_PREFIX}${path}`;
 }
 
 /** Prefix of the Markdown versions of the library pages (src/app/md). */
@@ -155,8 +179,19 @@ function rewriteTo(request: NextRequest, pathname: string): URL {
   return target;
 }
 
+/** The language cookie a visit to an English address sets, so the pages that follow (reader, account) stay English. */
+function rememberEnglish(response: NextResponse): NextResponse {
+  response.cookies.set(LOCALE_COOKIE, "en", { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+  return response;
+}
+
 export async function proxy(request: NextRequest): Promise<NextResponse> {
   if (isPrivatePath(request.nextUrl.pathname)) return notFound();
+
+  // Only this proxy may say a request is for an English address: drop what a client sent.
+  request.headers.delete(LOCALE_HEADER);
+  const english = englishRewrite(request.nextUrl.pathname);
+  if (english) request.headers.set(LOCALE_HEADER, "en");
 
   // Markdown first: it is public and the same for everyone, so it needs no session.
   const markdown = markdownRewrite(request.nextUrl.pathname, request.headers.get("accept"));
@@ -173,12 +208,15 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   if (!url || !anonKey) {
     // Local mode: a session cookie is enough to send the visitor to the live
     // page, which then checks the session itself.
+    if (english) {
+      return withAgentLinks(rememberEnglish(NextResponse.rewrite(rewriteTo(request, english), { request })), request.nextUrl.pathname);
+    }
     const live = libraryRewrite(
       request.nextUrl.pathname,
       request.nextUrl.searchParams,
       request.cookies.has(LOCAL_SESSION_COOKIE) || wantsOtherLocale(request),
     );
-    const page = live ? NextResponse.rewrite(rewriteTo(request, live)) : NextResponse.next();
+    const page = live ? NextResponse.rewrite(rewriteTo(request, live), { request }) : NextResponse.next({ request });
     return withAgentLinks(page, request.nextUrl.pathname);
   }
 
@@ -219,7 +257,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     target.searchParams.set("next", `${pathname}${search}`);
   }
   if (!target) {
-    const live = libraryRewrite(pathname, request.nextUrl.searchParams, signedIn || wantsOtherLocale(request));
+    const live = english ?? libraryRewrite(pathname, request.nextUrl.searchParams, signedIn || wantsOtherLocale(request));
     if (!live) return withAgentLinks(response, pathname);
     // Same request (with any refreshed session cookies), rendered by the live route.
     const rewritten = NextResponse.rewrite(rewriteTo(request, live), { request });
@@ -228,7 +266,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
       const value = response.headers.get(name);
       if (value) rewritten.headers.set(name, value);
     }
-    return withAgentLinks(rewritten, pathname);
+    return withAgentLinks(english ? rememberEnglish(rewritten) : rewritten, pathname);
   }
 
   // Keep any refreshed session cookies on the redirect.

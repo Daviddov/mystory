@@ -8,7 +8,7 @@
  * story title, cover and play / next / previous controls on the lock screen.
  */
 import { BookOpen, Check, ListMusic, ListPlus, Moon, Pause, Play, SkipBack, SkipForward, Timer } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { MockNotice } from "@/components/MockNotice";

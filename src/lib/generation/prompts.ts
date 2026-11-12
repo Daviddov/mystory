@@ -104,7 +104,7 @@ function writingRules(input: Pick<WizardInput, "language">): string {
   }
   const flavour =
     language === "ar"
-      ? "Modern Standard Arabic that children understand, without diacritics unless needed to avoid ambiguity"
+      ? "Modern Standard Arabic that children understand, spelled correctly (always write the hamza: أ إ ؤ ئ, and ة and ى correctly), without short-vowel diacritics unless needed to avoid ambiguity, using only real Arabic words"
       : "English";
   return (
     `Write the story text in natural, warm, simple ${flavour}, as a parent would read it aloud to a small child, rhymed and rhythmic. ` +

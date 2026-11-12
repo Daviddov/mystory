@@ -6,6 +6,7 @@
  * Environment:
  *   STT_PROVIDER  "whisper"     faster-whisper on this machine (scripts/stt/transcribe.py)
  *   STT_MODEL     a CTranslate2 Whisper model, default "ivrit-ai/whisper-large-v3-turbo-ct2"
+ *   STT_LANGUAGE  spoken language code, default "he" (use a multilingual STT_MODEL for others)
  *   STT_PYTHON    the Python that has faster-whisper, default "python"
  *                 (may carry arguments, e.g. "py -3.12")
  */
@@ -71,7 +72,7 @@ function whisperProvider(): SttProvider {
         writeFileSync(input, JSON.stringify(files.map((file) => path.resolve(file.path))));
         await new Promise<void>((resolve, reject) => {
           // Progress goes to stderr, which is passed through.
-          const child = spawn(python, [...pythonArgs, "-I", script, model, input, output], {
+          const child = spawn(python, [...pythonArgs, "-I", script, model, input, output, env("STT_LANGUAGE") ?? "he"], {
             stdio: ["ignore", "inherit", "inherit"],
           });
           child.on("error", (error) => reject(new SttProviderError(`cannot run ${python}: ${error.message}`)));

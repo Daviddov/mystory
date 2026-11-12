@@ -1,0 +1,291 @@
+{
+  "updates": [
+    {
+      "id": "seed-col-bedtime",
+      "addBookIds": [
+        "ai-od-sipur-echad",
+        "bk_n2bj7mmf0ezf",
+        "bookdash-katiitis-song",
+        "gdl-13694",
+        "storyweaver-20206",
+        "asp-0014",
+        "bookdash-what-if",
+        "bookdash-walking-together",
+        "letsread-97f895ce-73a1-477c-9998-cec1af923503",
+        "asp-0219"
+      ],
+      "removeBookIds": []
+    },
+    {
+      "id": "seed-col-winter",
+      "addBookIds": [
+        "gdl-159",
+        "bookdash-tortoise-finds-his-home"
+      ],
+      "removeBookIds": []
+    }
+  ],
+  "new": [
+    {
+      "id": "col-rhyming-stories",
+      "slug": "rhyming-stories",
+      "title": "ספרים בחרוזים",
+      "description": "סיפורים שמתגלגלים על הלשון, עם חריזה שמזמינה לקרוא בקול, לשיר ולחזור שוב ושוב.",
+      "bookIds": [
+        "ai-rak-matok-rak-matok",
+        "ai-bear-cub-now",
+        "ai-saba-eliezer-carrot",
+        "ai-gili-hagibora",
+        "ai-hamster-plutzi",
+        "storyweaver-28121"
+      ]
+    },
+    {
+      "id": "col-animal-stories",
+      "slug": "animal-stories",
+      "title": "סיפורי חיות",
+      "description": "ארנבים, אריות, קופים וצבים: חיות שמדברות, מחפשות, מפחדות ומתחברות, בדיוק כמו הילדים.",
+      "bookIds": [
+        "bookdash-amazing-daisy",
+        "gdl-13662",
+        "gdl-13694",
+        "bookdash-the-lion-who-wouldnt-try",
+        "bookdash-tortoise-finds-his-home",
+        "gdl-13684",
+        "letsread-52e5c95e-d5e8-4da2-bb02-2601ba0de132",
+        "letsread-97f895ce-73a1-477c-9998-cec1af923503",
+        "ai-bear-cub-now",
+        "bookdash-mrs-penguins-palace",
+        "ai-hamster-plutzi",
+        "storyweaver-102262",
+        "storyweaver-213364",
+        "storyweaver-60809",
+        "storyweaver-876",
+        "ai-esrim-veshiva-barvazim",
+        "letsread-1cfb9350-48f6-4879-99ba-aee679cfe5f8",
+        "letsread-bb4dd88d-233e-4f6b-8f9f-7b85cd0dacb1",
+        "letsread-1e810723-2379-4615-8b43-b11a1aeb1d0a",
+        "bookdash-katiitis-song",
+        "gdl-14128"
+      ]
+    },
+    {
+      "id": "col-journey-to-africa",
+      "slug": "journey-to-africa",
+      "title": "מסע לאפריקה",
+      "description": "סיפורים מהצבעוניות של אפריקה: ג׳ונגל, כפר, גשם ושירי אמא, עם חיות וילדים שנשארים בלב.",
+      "bookIds": [
+        "asp-0155",
+        "bookdash-the-lion-who-wouldnt-try",
+        "bookdash-katiitis-song",
+        "asp-0011",
+        "asp-0014",
+        "asp-0016",
+        "asp-0219",
+        "bookdash-there-must-be-a-rainbow",
+        "bookdash-tortoise-finds-his-home",
+        "bookdash-what-if",
+        "bookdash-amazing-daisy",
+        "bookdash-mrs-penguins-palace",
+        "bookdash-walking-together"
+      ]
+    },
+    {
+      "id": "col-school-and-kindergarten",
+      "slug": "school-and-kindergarten",
+      "title": "יום בגן ובבית הספר",
+      "description": "ספרים לילדים שמתכוננים לגן או לכיתה א׳: חברים חדשים, פחדים קטנים, ציור, ספירה וגדילה.",
+      "bookIds": [
+        "asp-0155",
+        "bk_ogxt95xa5sz5",
+        "ai-hagan-shebo-shum-davar",
+        "ai-hamster-plutzi",
+        "gdl-13870",
+        "storyweaver-248117",
+        "storyweaver-104166",
+        "gdl-13651",
+        "gdl-249"
+      ]
+    },
+    {
+      "id": "col-family-time",
+      "slug": "family-time",
+      "title": "משפחה וקרובים",
+      "description": "אמא, אבא, אחים וסבתא: רגעים קטנים בבית, משחקי מחבואים וארוחות משפחתיות שמחממים את הלב.",
+      "bookIds": [
+        "gdl-249",
+        "gdl-277",
+        "asp-0011",
+        "ai-od-sipur-echad",
+        "ai-mika-shokolad",
+        "ai-bear-cub-now",
+        "bookdash-walking-together",
+        "storyweaver-248117",
+        "gdl-13976",
+        "letsread-8ea24f89-25b2-4093-bfa6-5590f26f67a8",
+        "asp-0016",
+        "ai-saba-eliezer-carrot",
+        "bookdash-springloaded",
+        "storyweaver-20206"
+      ]
+    },
+    {
+      "id": "col-grandparents",
+      "slug": "grandparents",
+      "title": "סבא וסבתא",
+      "description": "ספרים על סבים וסבתות: גינה של סבא, מטרייה מסבתא, ומחבואים בצל העץ הגדול.",
+      "bookIds": [
+        "ai-saba-eliezer-carrot",
+        "gdl-14128",
+        "storyweaver-20206",
+        "gdl-277",
+        "gdl-249"
+      ]
+    },
+    {
+      "id": "col-tasty-food",
+      "slug": "tasty-food",
+      "title": "אוכל טעים",
+      "description": "ממתקים, ירקות ופירות: ספרים שפותחים את התיאבון ומלמדים שבסוף הכול עניין של טעם.",
+      "bookIds": [
+        "ai-rak-matok-rak-matok",
+        "ai-mika-shokolad",
+        "ai-bear-cub-now",
+        "ai-saba-eliezer-carrot",
+        "gdl-13870",
+        "gdl-13662",
+        "storyweaver-8040",
+        "storyweaver-213364",
+        "letsread-8ea24f89-25b2-4093-bfa6-5590f26f67a8",
+        "letsread-3160d134-c501-4612-9906-fa5abc8c8db8",
+        "gdl-159"
+      ]
+    },
+    {
+      "id": "col-funny-stories",
+      "slug": "funny-stories",
+      "title": "סיפורים מצחיקים",
+      "description": "עכבר בבית, גבס בצבעים, אריה על פיל: סיפורים שמצחיקים את הילדים, ואת ההורים גם.",
+      "bookIds": [
+        "ai-rak-matok-rak-matok",
+        "ai-od-sipur-echad",
+        "ai-hagan-shebo-shum-davar",
+        "ai-esrim-veshiva-barvazim",
+        "asp-0001",
+        "asp-0356",
+        "gdl-13976",
+        "storyweaver-876",
+        "storyweaver-60809",
+        "storyweaver-7960",
+        "bookdash-the-elephant-in-the-room",
+        "bookdash-springloaded",
+        "letsread-9b6722ab-f47a-48a2-b6e1-4c7c02e96e8e",
+        "storyweaver-245752",
+        "ai-hamster-plutzi"
+      ]
+    },
+    {
+      "id": "col-garden-and-plants",
+      "slug": "garden-and-plants",
+      "title": "גינה, עצים וזרעים",
+      "description": "שותלים, משקים ומחכים: סיפורים על גינות, עצים ופרחים, ועל החרקים שגרים בהם.",
+      "bookIds": [
+        "letsread-3160d134-c501-4612-9906-fa5abc8c8db8",
+        "ai-saba-eliezer-carrot",
+        "gdl-159",
+        "gdl-13937",
+        "letsread-8ea24f89-25b2-4093-bfa6-5590f26f67a8",
+        "letsread-bb4dd88d-233e-4f6b-8f9f-7b85cd0dacb1",
+        "gdl-14175",
+        "gdl-13857",
+        "storyweaver-20206"
+      ],
+      "season": "spring"
+    },
+    {
+      "id": "col-learning-and-discovering",
+      "slug": "learning-and-discovering",
+      "title": "לומדים ומגלים",
+      "description": "ספירה, צבעים וגדלים: ספרים קטנים ושמחים שמלמדים תוך כדי הנאה.",
+      "bookIds": [
+        "gdl-13870",
+        "storyweaver-8040",
+        "gdl-13937",
+        "storyweaver-28121",
+        "asp-0001",
+        "bookdash-whose-button-is-this",
+        "letsread-844afc3f-ff99-49f5-8933-f59a6c26e3ea"
+      ]
+    },
+    {
+      "id": "col-friends-together",
+      "slug": "friends-together",
+      "title": "חברים ביחד",
+      "description": "חברות אמיתית: לעזור, להסתדר עם שכן, לקבל את השונה ולא להשאיר אף אחד מאחור.",
+      "bookIds": [
+        "gdl-13694",
+        "gdl-13857",
+        "letsread-1e810723-2379-4615-8b43-b11a1aeb1d0a",
+        "letsread-db2ed7af-7b24-426b-aa81-baadb352f0ef",
+        "storyweaver-102262",
+        "bookdash-tortoise-finds-his-home",
+        "bookdash-the-elephant-in-the-room",
+        "gdl-14175",
+        "gdl-13651",
+        "bk_ogxt95xa5sz5",
+        "letsread-52e5c95e-d5e8-4da2-bb02-2601ba0de132",
+        "asp-0016"
+      ]
+    },
+    {
+      "id": "col-brave-and-feelings",
+      "slug": "brave-and-feelings",
+      "title": "אומץ ורגשות",
+      "description": "כעס, פחד, ביישנות ואומץ: ספרים שעוזרים לילדים לדבר על מה שמרגישים.",
+      "bookIds": [
+        "ai-gili-hagibora",
+        "bookdash-the-lion-who-wouldnt-try",
+        "bookdash-amazing-daisy",
+        "letsread-52e5c95e-d5e8-4da2-bb02-2601ba0de132",
+        "letsread-1cfb9350-48f6-4879-99ba-aee679cfe5f8",
+        "asp-0014",
+        "storyweaver-104166",
+        "ai-bear-cub-now",
+        "ai-hamster-plutzi",
+        "storyweaver-876",
+        "gdl-13684",
+        "librivox-three-billy-goats-gruff-he"
+      ]
+    },
+    {
+      "id": "col-imagination-and-adventure",
+      "slug": "imagination-and-adventure",
+      "title": "דמיון והרפתקאות",
+      "description": "פיל בחדר, גן שבו הכול זז, וכובע שמעיף: ספרים שמזמינים את הדמיון לצאת לטיול.",
+      "bookIds": [
+        "bookdash-what-if",
+        "bookdash-the-elephant-in-the-room",
+        "ai-hagan-shebo-shum-davar",
+        "bk_ogxt95xa5sz5",
+        "bookdash-springloaded",
+        "bookdash-whose-button-is-this",
+        "gdl-13662",
+        "bookdash-tortoise-finds-his-home"
+      ]
+    },
+    {
+      "id": "col-animal-fables",
+      "slug": "animal-fables",
+      "title": "אגדות ומשלי חיות",
+      "description": "אריות, תיישים וקופים ערמומיים: סיפורי עם ומשלים קצרים עם מוסר חביב.",
+      "bookIds": [
+        "librivox-three-billy-goats-gruff-he",
+        "storyweaver-213364",
+        "storyweaver-60809",
+        "storyweaver-245752",
+        "letsread-9b6722ab-f47a-48a2-b6e1-4c7c02e96e8e",
+        "bookdash-the-lion-who-wouldnt-try"
+      ]
+    }
+  ]
+}

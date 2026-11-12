@@ -1,0 +1,9 @@
+{
+  "updates": [
+    {"id":"col-chelm","addBookIds":["ai-chelm-oven-letter","ai-chelm-square","ai-chelm-fire-pump","ai-chelm-hay-wagon","ai-chelm-charity-box"],"removeBookIds":[]},
+    {"id":"col-hershele","addBookIds":["ai-hershele-afar-eretz-yisrael-banaalayim","ai-neevadti-bayaar"],"removeBookIds":[]}
+  ],
+  "new": [
+    {"id":"col-shabbat","slug":"shabbat","title":"סיפורי שבת","description":"סיפורים לליל שישי ולשבת בבוקר: שלג שלא מפריע לשבת בחלם, אורחים שמגיעים בדיוק בזמן, ילד שקונה את הטוב ביותר לכבוד שבת וחכמים שלא מאבדים סבלנות ערב שבת. סיפורים חמים להקראה סביב השולחן.","bookIds":["ai-hershele-vehashabbat-hareeva","ai-chelm-hasheleg-halavan","ai-yosef-mokir-shabbat","chazal-hillel-patience","chazal-rabbi-tarfon-and-his-mother","ai-haresen-haganuv","parasha-vayakhel"]}
+  ]
+}

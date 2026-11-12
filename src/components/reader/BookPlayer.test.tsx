@@ -350,7 +350,7 @@ describe("BookPlayer", () => {
     expect(screen.getByText("שלום")).not.toHaveClass("word-highlight");
   });
 
-  it("stops narration and darkens the screen when the sleep timer ends", async () => {
+  it("lets the story finish when the sleep timer ends mid-story", async () => {
     vi.useFakeTimers();
     render(<BookPlayer book={makeBook({ pages: narratedPages })} />);
     fireEvent.click(screen.getByRole("button", { name: "להשמיע את הסיפור" }));
@@ -360,10 +360,7 @@ describe("BookPlayer", () => {
     await act(async () => {
       await vi.advanceTimersByTimeAsync(5 * 60_000 + 1000);
     });
-    expect(pause).toHaveBeenCalled();
-    expect(screen.getByText("לילה טוב")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "להמשיך לקרוא" }));
-    expect(screen.getByRole("button", { name: "להשמיע את הסיפור" })).toBeInTheDocument();
+    expect(screen.queryByText("לילה טוב")).not.toBeInTheDocument();
   });
 
   it("toggles the bedtime theme", () => {
@@ -555,24 +552,11 @@ describe("BookPlayer: living pictures", () => {
     expect(stageVideo(container)).not.toBeNull();
   });
 
-  it("turns living pictures off from the settings and remembers it", () => {
-    const { container, unmount } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
+  it("has no switch for living pictures: they are always on", () => {
+    const { container } = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
     expect(stageVideo(container)).not.toBeNull();
-
     fireEvent.click(screen.getByRole("button", { name: "הגדרות קריאה" }));
-    const toggle = screen.getByRole("checkbox", { name: "תמונות חיות" });
-    expect(toggle).toBeChecked();
-    fireEvent.click(toggle);
-
-    expect(stageVideo(container)).toBeNull();
-    const image = container.querySelector("main img")!;
-    expect(image.getAttribute("src")).toContain("/media/books/bk_test/page-1.png");
-    expect(image).not.toHaveClass("mystory-kenburns");
-    expect(JSON.parse(window.localStorage.getItem("mystory:reader-prefs") ?? "{}")).toMatchObject({ liveImages: false });
-
-    unmount();
-    const again = render(<BookPlayer book={makeBook({ pages: animatedPages })} />);
-    expect(stageVideo(again.container)).toBeNull();
+    expect(screen.queryByRole("checkbox", { name: "תמונות חיות" })).toBeNull();
   });
 
   it("pauses the clip while the tab is hidden and resumes when it is back", () => {

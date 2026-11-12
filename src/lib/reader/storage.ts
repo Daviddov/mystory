@@ -28,6 +28,8 @@ const ReaderPrefsSchema = z.object({
   original: z.boolean().optional(),
   /** Which other language `original` shows, when a book has several (see switchableLanguages). */
   secondLanguage: BookLanguageSchema.optional(),
+  /** Language the text is shown in when it differs from the narrated one. Missing = same as the narration. */
+  textLanguage: BookLanguageSchema.optional(),
   rate: z
     .number()
     // Speeds saved before the rates changed (0.75, 1.25) still load, then show no chip selected.

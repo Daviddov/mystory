@@ -5,6 +5,8 @@
  *   npx tsx scripts/align-recordings.ts [--book <slug>]... [--recordings] [--force] [--dry-run]
  *     --book <slug>  book pages narrated with a recording (audioSource "recorded", e.g.
  *                    uploaded in the studio) of this book; repeatable
+ *     --language <code>  with --book: time the narration of that language version (e.g. ar) instead of the Hebrew;
+ *                    also set STT_LANGUAGE=<code> and a multilingual STT_MODEL (e.g. Systran/faster-whisper-large-v3)
  *     --recordings   pages of the family recordings (data/recordings.json)
  *                    With neither option: every book and every family recording.
  *     --force        time again pages that already have timings
@@ -26,7 +28,7 @@ import { LocalMediaStore } from "../src/lib/media/local";
 import { timingsFromRecognizedWords } from "../src/lib/narration/recognized";
 import { usableTimings } from "../src/lib/reader/logic";
 import { LocalRepository } from "../src/lib/repo/local";
-import type { BookWithPages, WordTiming } from "../src/lib/types";
+import { pageVersion, withPageVersion, type BookLanguage, type BookWithPages, type WordTiming } from "../src/lib/types";
 
 function loadEnvFiles(): void {
   for (const file of [".env.local", ".env"]) {
@@ -68,6 +70,7 @@ async function main(): Promise<void> {
   let recordings = false;
   let force = false;
   let dryRun = false;
+  let language: BookLanguage | undefined;
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
     if (arg === "--book") {
@@ -77,6 +80,7 @@ async function main(): Promise<void> {
     } else if (arg === "--recordings") recordings = true;
     else if (arg === "--force") force = true;
     else if (arg === "--dry-run") dryRun = true;
+    else if (arg === "--language") language = args[++i] as BookLanguage;
     else throw new Error(`unknown argument ${arg}`);
   }
   const everything = slugs.length === 0 && !recordings;
@@ -102,13 +106,14 @@ async function main(): Promise<void> {
   for (const book of bookTargets) {
     books.set(book.id, book);
     for (const page of book.pages) {
-      if (!page.audio || page.audioSource !== "recorded" || page.text.trim() === "") continue;
-      if (!force && usableTimings(page)) continue;
+      const v = language ? pageVersion(book, page, language) : page;
+      if (!v || !v.audio || v.audioSource !== "recorded" || v.text.trim() === "") continue;
+      if (!force && usableTimings(v)) continue;
       jobs.push({
-        label: `${book.slug} p${page.index + 1}`,
-        audio: page.audio,
-        file: media.resolve(page.audio),
-        text: page.text,
+        label: `${book.slug}${language ? " " + language : ""} p${page.index + 1}`,
+        audio: v.audio,
+        file: media.resolve(v.audio),
+        text: v.text,
         bookId: book.id,
         pageIndex: page.index,
       });
@@ -182,6 +187,11 @@ async function main(): Promise<void> {
     await repo.replacePages(
       bookId,
       book.pages.map((page) => {
+        if (language) {
+          const v = pageVersion(book, page, language);
+          const timings = v && pages.get(`${page.index}:${v.audio}`);
+          return v && timings ? withPageVersion(book, page, language, { ...v, wordTimings: timings }) : page;
+        }
         const timings = pages.get(`${page.index}:${page.audio}`);
         return timings ? { ...page, wordTimings: timings } : page;
       }),

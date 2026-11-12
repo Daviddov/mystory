@@ -440,7 +440,7 @@ function Player({
   const autoAdvance = prefs.autoAdvance ?? true;
   const textLayout = prefs.textLayout ?? "side";
   // Living pictures are on by default; the device's reduced-motion setting always wins.
-  const liveImages = prefs.liveImages ?? true;
+  const liveImages = true;
   const reducedMotion = useReducedMotion();
   const animatePictures = liveImages && !reducedMotion;
   const nikudAvailable = useMemo(() => bookHasNikud(book), [book]);
@@ -512,8 +512,10 @@ function Player({
   const timings = storedTimings ?? estimatedTimings;
   const isLastPage = index === pageCount - 1;
 
+  const finishingRef = useRef(false);
   const handlePageEnded = useCallback(() => {
-    if (!autoAdvance) return;
+    // A finishing sleep timer turns the pages by itself, to reach the end of the story.
+    if (!autoAdvance && !finishingRef.current) return;
     clearAdvance();
     // A short breath between pages, so the turn does not feel abrupt.
     advanceTimer.current = window.setTimeout(() => turn(1), 700);
@@ -549,7 +551,7 @@ function Player({
     : book.soundtrack
       ? mediaUrl(book.soundtrack, book.updatedAt, shareToken)
       : sharedSoundtrackFor(book);
-  const [sleepFade, setSleepFade] = useState(1);
+  const sleepFade = 1;
   const { audioRef: soundtrackRef, unlock: unlockSoundtrack } = useSoundtrack(
     soundtrackSrc,
     narrating && !atEnd && !recordMode,
@@ -604,8 +606,6 @@ function Player({
   }, [narrating, autoAdvance, atEnd, audioSrc, currentWordCount, turn]);
 
   // ---- Sleep timer --------------------------------------------------------
-  const [asleep, setAsleep] = useState(false);
-  const [choosing, setChoosing] = useState(startScreen);
   // While the story is read aloud the top bar and the controls step aside so the picture and the
   // words get the whole screen; a tap on the page brings them back for a few seconds.
   const [peekBars, setPeekBars] = useState(false);
@@ -618,24 +618,33 @@ function Player({
     if (!narrating) setPeekBars(false);
   }, [narrating]);
   const barsHidden = isPage && narrating && !peekBars && !atEnd;
-  const handleSleepFire = useCallback(() => {
+  const [asleep, setAsleep] = useState(false);
+  const [choosing, setChoosing] = useState(startScreen);
+  // When the timer runs out, a story being narrated is finished first: the screen goes dark
+  // only after the last page, never in the middle of the story.
+  const [finishing, setFinishing] = useState(false);
+  useEffect(() => {
+    finishingRef.current = finishing;
+  }, [finishing]);
+  const fallAsleep = useCallback(() => {
     clearAdvance();
     stopNarration();
     setSettingsOpen(false);
+    setFinishing(false);
     setAsleep(true);
   }, [clearAdvance, stopNarration]);
-  const handleSleepTick = useCallback(
-    (secondsLeft: number | null) => {
-      const audio = audioRef.current;
-      if (!audio) return;
-      // Fade out over the last ten seconds instead of cutting off mid-word.
-      const fade = secondsLeft !== null && secondsLeft < 10 ? Math.max(0.05, secondsLeft / 10) : 1;
-      audio.volume = fade;
-      setSleepFade(fade);
-    },
-    [audioRef],
-  );
-  const sleep = useSleepTimer(handleSleepFire, handleSleepTick);
+  const handleSleepFire = useCallback(() => {
+    if (narrating && !atEnd) {
+      setSettingsOpen(false);
+      setFinishing(true);
+    } else {
+      fallAsleep();
+    }
+  }, [narrating, atEnd, fallAsleep]);
+  useEffect(() => {
+    if (finishing && atEnd) fallAsleep();
+  }, [finishing, atEnd, fallAsleep]);
+  const sleep = useSleepTimer(handleSleepFire);
 
   // ---- Bedtime theme and fullscreen ---------------------------------------
   const bedtime = useTheme() === "bedtime";
@@ -821,6 +830,10 @@ function Player({
       const target = event.target as Element;
       if (target.closest("button, a, input, select, textarea, [role='status']")) return;
       if (timings && target.closest("[data-word]")) return;
+      if (isPage && narrating) {
+        setPeekBars((shown) => !shown);
+        return;
+      }
       turn(1);
       return;
     }
@@ -830,10 +843,6 @@ function Player({
   const onWordTap = (wordIndex: number) => {
     // The tap that ends a swipe must not also play a word.
     if (performance.now() - lastSwipeAt.current < 400) return;
-      if (isPage && narrating) {
-        setPeekBars((shown) => !shown);
-        return;
-      }
     narration.playWord(wordIndex);
   };
 
@@ -908,15 +917,39 @@ function Player({
     return () => window.clearTimeout(id);
   }, [showImage, imageRatio, shapeKey]);
   const shapeSettled = imageRatio !== null || !imageReady || shapeGaveUp === shapeKey;
-  const sideBySide = showImage && textLayout === "side" && imageRatio !== null && imageRatio <= SIDE_BY_SIDE_MAX_RATIO;
+  const sideBySide = showImage && textLayout !== "hidden" && imageRatio !== null && imageRatio <= SIDE_BY_SIDE_MAX_RATIO;
   const tallPicture = showImage && showText && imageRatio !== null && imageRatio < 0.95;
-  const text = current ? (inOriginal ? originalText : pageDisplayText(current, nikudOn)) : "";
-  const textLanguage = inOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
-  const shownTitle = originalLanguage ? bookVersions(book).find((version) => version.language === originalLanguage)?.title : undefined;
-  const title = (showOriginal && (shownTitle || book.credits?.originalTitle)) || book.title;
   // The language button steps through the book's own language and every other one, in order.
   const languageCycle = [bookLanguage(book), ...otherLanguages];
   const shownLanguage = showOriginal && originalLanguage ? originalLanguage : bookLanguage(book);
+  // The text can be shown in another language than the one narrated (to learn a language by
+  // listening to it while reading in one's own). Missing or unavailable = follow the narration.
+  const chosenTextLanguage =
+    prefs.textLanguage && languageCycle.includes(prefs.textLanguage) ? prefs.textLanguage : shownLanguage;
+  const separateText = chosenTextLanguage !== shownLanguage;
+  const separateTextValue = current && separateText
+    ? chosenTextLanguage === bookLanguage(book)
+      ? pageDisplayText(current, nikudOn)
+      : otherLanguageText(book, current, chosenTextLanguage)
+    : "";
+  const separateTextShown = separateTextValue !== "";
+  const text = current
+    ? separateTextShown
+      ? separateTextValue
+      : inOriginal
+        ? originalText
+        : pageDisplayText(current, nikudOn)
+    : "";
+  const textLanguage: BookLanguage = separateTextShown
+    ? chosenTextLanguage
+    : inOriginal && originalLanguage
+      ? originalLanguage
+      : bookLanguage(book);
+  const titleLanguage = separateTextShown ? chosenTextLanguage : shownLanguage;
+  const titleVersion = bookVersions(book).find((version) => version.language === titleLanguage)?.title;
+  const title =
+    (titleLanguage !== bookLanguage(book) && (titleVersion || (titleLanguage === book.originalLanguage ? book.credits?.originalTitle : undefined))) ||
+    book.title;
   const otherLanguage = otherLanguages.length > 0 ? languageCycle[(languageCycle.indexOf(shownLanguage) + 1) % languageCycle.length] : null;
 
   // The play button and the voice picker; recording mode has its own panel instead.
@@ -1281,8 +1314,8 @@ function Player({
                 <StoryText
                   text={text}
                   lang={textLanguage}
-                  activeWord={narration.activeWord}
-                  onWordTap={timings ? onWordTap : undefined}
+                  activeWord={separateTextShown ? -1 : narration.activeWord}
+                  onWordTap={timings && !separateTextShown ? onWordTap : undefined}
                 />
               </div>
             ) : null}
@@ -1341,6 +1374,7 @@ function Player({
           dir={readingDir}
           className={cn(
             "mystory-reader-controls z-10 flex shrink-0 flex-col items-center gap-1 px-2 pt-1 sm:px-6",
+            barsHidden && "hidden",
             !recordMode && "pb-[max(0.375rem,env(safe-area-inset-bottom))]",
           )}
         >
@@ -1374,7 +1408,6 @@ function Player({
                   disabled={!audioSrc}
                   onClick={toggleNarration}
                   className={cn("mystory-reader-play size-16 shrink-0 rounded-full", narrating && "mystory-reader-playing")}
-            barsHidden && "hidden",
                 >
                   {narrating ? <Pause aria-hidden="true" className="size-8" /> : <Play aria-hidden="true" className="size-8" />}
                 </Button>
@@ -1500,13 +1533,14 @@ function Player({
         onClose={() => setSettingsOpen(false)}
         fontStep={fontStep}
         onFontStep={(step) => updatePrefs({ fontStep: clamp(step, 0, FONT_SIZES_REM.length - 1) })}
-        textLayout={textLayout}
-        onTextLayout={(value) => updatePrefs({ textLayout: value })}
-        liveImages={liveImages}
-        onLiveImages={(value) => updatePrefs({ liveImages: value })}
-        reducedMotion={reducedMotion}
+        showText={textLayout !== "hidden"}
+        onShowText={(value) => updatePrefs({ textLayout: value ? "side" : "hidden" })}
         nikudAvailable={nikudAvailable}
         sampleLanguage={textLanguage}
+        textLanguages={languageCycle}
+        textLanguage={chosenTextLanguage}
+        narratedLanguage={shownLanguage}
+        onTextLanguage={(value) => updatePrefs({ textLanguage: value === shownLanguage ? undefined : value })}
         nikud={nikudOn}
         onNikud={(value) => updatePrefs({ nikud: value })}
         hasAudio={hasAnyAudio}

@@ -59,6 +59,62 @@ export async function sendMagicLinkAction(_prev: SignInState, formData: FormData
   return { sentTo: parsed.data };
 }
 
+const PasswordSchema = z.string().min(8).max(72);
+
+/**
+ * For useActionState: fields `email`, `password`, `next`. Opens an account; the
+ * address must be confirmed through the emailed link before the first sign-in.
+ * The answer is the same whether or not the address already has an account.
+ */
+export async function signUpAction(_prev: SignInState, formData: FormData): Promise<SignInState> {
+  const t = accountMessages(await getLocale()).auth;
+  if (authMode() !== "supabase") return { error: t.supabaseUnavailable };
+
+  const email = EmailSchema.safeParse(String(formData.get("email") ?? ""));
+  if (!email.success) return { error: t.badEmail };
+  const password = PasswordSchema.safeParse(String(formData.get("password") ?? ""));
+  if (!password.success) return { error: t.badPassword };
+  const next = safeNextPath(String(formData.get("next") ?? ""), "/");
+
+  const { createSupabaseServerClient } = await import("@/lib/auth/supabase");
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.auth.signUp({
+    email: email.data,
+    password: password.data,
+    options: { emailRedirectTo: await callbackUrl(next) },
+  });
+  if (error) {
+    console.warn("[auth] sign-up failed:", error.message);
+    if (error.status === 429) return { error: t.tooManyRequests };
+    if (error.code === "weak_password") return { error: t.badPassword };
+    return { error: t.signUpFailed };
+  }
+  return { sentTo: email.data };
+}
+
+/** For useActionState: fields `email`, `password`, `next`. Signs in with email and password. */
+export async function passwordSignInAction(_prev: SignInState, formData: FormData): Promise<SignInState> {
+  const t = accountMessages(await getLocale()).auth;
+  if (authMode() !== "supabase") return { error: t.supabaseUnavailable };
+
+  const email = EmailSchema.safeParse(String(formData.get("email") ?? ""));
+  if (!email.success) return { error: t.badEmail };
+  const password = String(formData.get("password") ?? "");
+  if (password === "" || password.length > 72) return { error: t.wrongCredentials };
+  const next = safeNextPath(String(formData.get("next") ?? ""), "/");
+
+  const { createSupabaseServerClient } = await import("@/lib/auth/supabase");
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.auth.signInWithPassword({ email: email.data, password });
+  if (error) {
+    console.warn("[auth] password sign-in failed:", error.message);
+    if (error.status === 429) return { error: t.tooManyRequests };
+    if (error.code === "email_not_confirmed") return { error: t.notConfirmed };
+    return { error: t.wrongCredentials };
+  }
+  redirect(next);
+}
+
 /** Form action: field `next`. Redirects the browser to Google. */
 export async function googleSignInAction(formData: FormData): Promise<void> {
   const next = safeNextPath(String(formData.get("next") ?? ""), "/");

@@ -1,0 +1,1111 @@
+{
+ "syncedAt": "2026-11-12T21:52:41.457Z",
+ "books": {
+  "ai-aba-ani-reeva": {
+   "local": "68ed137a26cd09a4112a4989a14f43eaba8f55d2",
+   "remote": "68ed137a26cd09a4112a4989a14f43eaba8f55d2"
+  },
+  "ai-aba-basuper": {
+   "local": "e308d5d64a7b1d5c0315221de0be7fafaadc8fca",
+   "remote": "e308d5d64a7b1d5c0315221de0be7fafaadc8fca"
+  },
+  "parasha-vayera-sodom": {
+   "local": "47d0c71311f1fdb72a9863861d4949a41eedb65e",
+   "remote": "47d0c71311f1fdb72a9863861d4949a41eedb65e"
+  },
+  "parasha-vayera-akedah": {
+   "local": "7ac8260d385a8da10355a488858676cc8b07c3f9",
+   "remote": "7ac8260d385a8da10355a488858676cc8b07c3f9"
+  },
+  "parasha-lech-lecha": {
+   "local": "55c2e955e45e302f33937aec8411008ede4548c0",
+   "remote": "55c2e955e45e302f33937aec8411008ede4548c0"
+  },
+  "parasha-vaera": {
+   "local": "0f76b539965c3139d9079637d32f009b3124dbe8",
+   "remote": "0f76b539965c3139d9079637d32f009b3124dbe8"
+  },
+  "chazal-hillel-one-foot": {
+   "local": "8ef792a418fde443cb30283c20414d2da7c88102",
+   "remote": "8ef792a418fde443cb30283c20414d2da7c88102"
+  },
+  "bookdash-amazing-daisy": {
+   "local": "6ce0381cc426d81bdf7073eb6c51308c0e2cf606",
+   "remote": "6ce0381cc426d81bdf7073eb6c51308c0e2cf606"
+  },
+  "parasha-vayigash": {
+   "local": "f44845bc7f319318ed88f66830ffc7429c5646ce",
+   "remote": "f44845bc7f319318ed88f66830ffc7429c5646ce"
+  },
+  "asp-0001": {
+   "local": "cec002b640ad6e832d1b04753550616f44833014",
+   "remote": "cec002b640ad6e832d1b04753550616f44833014"
+  },
+  "asp-0011": {
+   "local": "98014ba06105d7ffe6d60dc3a144c86b7eaf2dd9",
+   "remote": "98014ba06105d7ffe6d60dc3a144c86b7eaf2dd9"
+  },
+  "asp-0014": {
+   "local": "7220b9458ac76f2fb60152e7442a6085043bdf6a",
+   "remote": "7220b9458ac76f2fb60152e7442a6085043bdf6a"
+  },
+  "asp-0016": {
+   "local": "079ee604f3f4806d6a45b87c88ce7e10d198aff3",
+   "remote": "079ee604f3f4806d6a45b87c88ce7e10d198aff3"
+  },
+  "asp-0051": {
+   "local": "7cb0b9a2f617e2018982787c15e190fe30f026e5",
+   "remote": "7cb0b9a2f617e2018982787c15e190fe30f026e5"
+  },
+  "asp-0056": {
+   "local": "dc0a28026411569a39c47f091f6c2e0125903309",
+   "remote": "dc0a28026411569a39c47f091f6c2e0125903309"
+  },
+  "asp-0099": {
+   "local": "ac1f02d9e2213fe028bcbbd4bb65064cb41437aa",
+   "remote": "ac1f02d9e2213fe028bcbbd4bb65064cb41437aa"
+  },
+  "asp-0106": {
+   "local": "2a167453228c5fbdeab66c2bd45ff6845245c13b",
+   "remote": "2a167453228c5fbdeab66c2bd45ff6845245c13b"
+  },
+  "asp-0109": {
+   "local": "e84266ad3dbf5137e5bece3291bd5bd6305b2be3",
+   "remote": "e84266ad3dbf5137e5bece3291bd5bd6305b2be3"
+  },
+  "asp-0117": {
+   "local": "9eeb65450254db33623b827fb07b30b0f5cbf52e",
+   "remote": "9eeb65450254db33623b827fb07b30b0f5cbf52e"
+  },
+  "asp-0121": {
+   "local": "ebd4b0d536fa19b5eaed9dda2473b5cb03aff4b5",
+   "remote": "ebd4b0d536fa19b5eaed9dda2473b5cb03aff4b5"
+  },
+  "asp-0143": {
+   "local": "e5fa01b695e4fb35bcc0c05555d0e66a243113c0",
+   "remote": "e5fa01b695e4fb35bcc0c05555d0e66a243113c0"
+  },
+  "asp-0149": {
+   "local": "8705c0e726ecb6dc85cf615ac7ad1a421d4ddb6b",
+   "remote": "8705c0e726ecb6dc85cf615ac7ad1a421d4ddb6b"
+  },
+  "asp-0155": {
+   "local": "309bdb3d859ccc1fb62dfce1ac6093b50e4b6d0f",
+   "remote": "309bdb3d859ccc1fb62dfce1ac6093b50e4b6d0f"
+  },
+  "asp-0159": {
+   "local": "3317d3e2b5216ad4136f3f440a82958de5c34dac",
+   "remote": "3317d3e2b5216ad4136f3f440a82958de5c34dac"
+  },
+  "asp-0174": {
+   "local": "4ff92b6a5fb208bc7d5fe815047254f30bea3921",
+   "remote": "4ff92b6a5fb208bc7d5fe815047254f30bea3921"
+  },
+  "asp-0177": {
+   "local": "84375b9f7cf59ca19363d969d0abee489211b453",
+   "remote": "84375b9f7cf59ca19363d969d0abee489211b453"
+  },
+  "asp-0181": {
+   "local": "9ad4d4336623fd3f6190e2e039c1fde049af45de",
+   "remote": "9ad4d4336623fd3f6190e2e039c1fde049af45de"
+  },
+  "asp-0182": {
+   "local": "f48b2c70914d49a349ec0e3752c27092a16d9c5f",
+   "remote": "f48b2c70914d49a349ec0e3752c27092a16d9c5f"
+  },
+  "asp-0188": {
+   "local": "69d784920d37bf932b4e686fc8a9aa09e22a67b1",
+   "remote": "69d784920d37bf932b4e686fc8a9aa09e22a67b1"
+  },
+  "asp-0219": {
+   "local": "e931261fe273af60c71fbf7769eb1ba803df0814",
+   "remote": "e931261fe273af60c71fbf7769eb1ba803df0814"
+  },
+  "asp-0243": {
+   "local": "d1e8f9ece8060eac72079785aa8f88dbc2be753a",
+   "remote": "d1e8f9ece8060eac72079785aa8f88dbc2be753a"
+  },
+  "asp-0248": {
+   "local": "bb24380ec9add8e6477fabdd12477c0dabac5153",
+   "remote": "bb24380ec9add8e6477fabdd12477c0dabac5153"
+  },
+  "asp-0257": {
+   "local": "104b15edf1477f81f8364b66fd22fd6d5228e636",
+   "remote": "104b15edf1477f81f8364b66fd22fd6d5228e636"
+  },
+  "asp-0265": {
+   "local": "c9a511db96cb392f5496535dabffe79fe7b1c217",
+   "remote": "c9a511db96cb392f5496535dabffe79fe7b1c217"
+  },
+  "asp-0291": {
+   "local": "3dd96b7669472d45301ebc64174b67e6763ff1e4",
+   "remote": "3dd96b7669472d45301ebc64174b67e6763ff1e4"
+  },
+  "asp-0295": {
+   "local": "6c7ea8175c28f74226a8d77bcba0d37887ebd420",
+   "remote": "6c7ea8175c28f74226a8d77bcba0d37887ebd420"
+  },
+  "asp-0324": {
+   "local": "1688b7520825f4099e98d2ad359bae0ba88031eb",
+   "remote": "1688b7520825f4099e98d2ad359bae0ba88031eb"
+  },
+  "asp-0356": {
+   "local": "f41089fa553a854812b39d80009abd4999044ebd",
+   "remote": "f41089fa553a854812b39d80009abd4999044ebd"
+  },
+  "parasha-emor": {
+   "local": "7be927694615987c8a4efbbf3a26a4d482acff2f",
+   "remote": "7be927694615987c8a4efbbf3a26a4d482acff2f"
+  },
+  "parasha-bereshit": {
+   "local": "fc3bed03d54f76e1ed9e76c6bb4872b4134b6bd8",
+   "remote": "fc3bed03d54f76e1ed9e76c6bb4872b4134b6bd8"
+  },
+  "parasha-reeh": {
+   "local": "50238259a9151ad34504a7798333f28f8a480dc3",
+   "remote": "50238259a9151ad34504a7798333f28f8a480dc3"
+  },
+  "parasha-tzav": {
+   "local": "1fb93eca33865386eae93b90d27395ea257c33ef",
+   "remote": "1fb93eca33865386eae93b90d27395ea257c33ef"
+  },
+  "ai-berel-habeigel": {
+   "local": "2670efc8bfd000fff6bfea8065a99a443b877b6a",
+   "remote": "2670efc8bfd000fff6bfea8065a99a443b877b6a"
+  },
+  "chazal-beruriah-and-the-neighbors": {
+   "local": "7855960a273be93b89ac2316a54f9591dd6523ad",
+   "remote": "7855960a273be93b89ac2316a54f9591dd6523ad"
+  },
+  "parasha-pekudei": {
+   "local": "336356a7f786ed3f5413019b52c9ab372ba432df",
+   "remote": "336356a7f786ed3f5413019b52c9ab372ba432df"
+  },
+  "parasha-terumah": {
+   "local": "ae14fc0c9e7414e0c6180beb2229768d09cb440a",
+   "remote": "ae14fc0c9e7414e0c6180beb2229768d09cb440a"
+  },
+  "parasha-ki-tavo-curses": {
+   "local": "4803efae6eaf8f9a684a890d3c024ae204c4d4ad",
+   "remote": "4803efae6eaf8f9a684a890d3c024ae204c4d4ad"
+  },
+  "ai-chelm-cold-fence": {
+   "local": "fee9631cd3b9af5c00105732be53ae9dc0627531",
+   "remote": "fee9631cd3b9af5c00105732be53ae9dc0627531"
+  },
+  "ai-chelm-half-beam": {
+   "local": "331210b70ac550bafce35a8835f9f25835dff95b",
+   "remote": "331210b70ac550bafce35a8835f9f25835dff95b"
+  },
+  "ai-chelm-hasheleg-halavan": {
+   "local": "0e3763819c1f1c10822e01776767525d46af4ee2",
+   "remote": "0e3763819c1f1c10822e01776767525d46af4ee2"
+  },
+  "ai-chelm-watchman-coat": {
+   "local": "65c1f316c6e05fdc6e10568c0ff03abce7ddc52d",
+   "remote": "65c1f316c6e05fdc6e10568c0ff03abce7ddc52d"
+  },
+  "ai-chelm-oven-letter": {
+   "local": "29c191fe107d28852a5bf1554b4b035226783c61",
+   "remote": "29c191fe107d28852a5bf1554b4b035226783c61"
+  },
+  "ai-chelm-square": {
+   "local": "0c3086a8ef2d4d597e823a9cfc4961ae28bbb7da",
+   "remote": "0c3086a8ef2d4d597e823a9cfc4961ae28bbb7da"
+  },
+  "ai-chelm-fire-pump": {
+   "local": "b92b9d5fb1dbe0d1a9ef2f52698c3d192ba402d2",
+   "remote": "b92b9d5fb1dbe0d1a9ef2f52698c3d192ba402d2"
+  },
+  "ai-chelm-hay-wagon": {
+   "local": "57886cae58c6973c40e16f2a9d3ad7430993c9f3",
+   "remote": "57886cae58c6973c40e16f2a9d3ad7430993c9f3"
+  },
+  "ai-chelm-charity-box": {
+   "local": "7e2ede0669a566461c0852d2dcfc0b1fb98921cf",
+   "remote": "7e2ede0669a566461c0852d2dcfc0b1fb98921cf"
+  },
+  "ai-chelm-hazricha": {
+   "local": "2750ca7c8df8ffaaafcdcb75268fa93a7b594682",
+   "remote": "2750ca7c8df8ffaaafcdcb75268fa93a7b594682"
+  },
+  "ai-chelm-yareach-bechavit": {
+   "local": "726e743a0eab657c2422fdfc8e6e4e8ab12cb254",
+   "remote": "726e743a0eab657c2422fdfc8e6e4e8ab12cb254"
+  },
+  "parasha-pinchas": {
+   "local": "32235c27c4c82761cb1fba76bae85d9a4afb8d5c",
+   "remote": "32235c27c4c82761cb1fba76bae85d9a4afb8d5c"
+  },
+  "parasha-vayakhel": {
+   "local": "1c07abca7b7bb3f52da8628585ab1f24584c2a19",
+   "remote": "1c07abca7b7bb3f52da8628585ab1f24584c2a19"
+  },
+  "chazal-honi-carob-tree": {
+   "local": "dee2bb36d79e197d08cf4b4fa234382bad987d79",
+   "remote": "dee2bb36d79e197d08cf4b4fa234382bad987d79"
+  },
+  "parasha-vayelech": {
+   "local": "a96a1fdc92ec1ed67d270389a19641c24af7d629",
+   "remote": "a96a1fdc92ec1ed67d270389a19641c24af7d629"
+  },
+  "chazal-dama-ben-netina": {
+   "local": "3095ce16b91d51632b6529ff15791c0d7f6dd206",
+   "remote": "3095ce16b91d51632b6529ff15791c0d7f6dd206"
+  },
+  "ai-dubi-dov-mitatzben": {
+   "local": "d8c7abfbd43f328be6133e732366c5312ddb733c",
+   "remote": "d8c7abfbd43f328be6133e732366c5312ddb733c"
+  },
+  "ai-dubi-dov-vehaugiyot": {
+   "local": "fef9ab4fd5cec3b47c1554ec0b04fd663b9354b0",
+   "remote": "fef9ab4fd5cec3b47c1554ec0b04fd663b9354b0"
+  },
+  "ai-bear-cub-now": {
+   "local": "8b1f1abc9a221df52b08315e9d1befcc510abc7a",
+   "remote": "8b1f1abc9a221df52b08315e9d1befcc510abc7a"
+  },
+  "ai-esrim-veshiva-barvazim": {
+   "local": "658f329dabfa74483ea9553cae69cdad332e42fa",
+   "remote": "658f329dabfa74483ea9553cae69cdad332e42fa"
+  },
+  "ai-flap-flap-hanaal": {
+   "local": "eaf42071797951d62de35e0762a4e9f30ca05bf1",
+   "remote": "eaf42071797951d62de35e0762a4e9f30ca05bf1"
+  },
+  "gdl-13857": {
+   "local": "08d8acd0820733ca85b5a09263dc46363f858e70",
+   "remote": "08d8acd0820733ca85b5a09263dc46363f858e70"
+  },
+  "gdl-159": {
+   "local": "9ea4e8eee2727107b192dc5853782009dbd5bf4b",
+   "remote": "9ea4e8eee2727107b192dc5853782009dbd5bf4b"
+  },
+  "gdl-13870": {
+   "local": "7ef329bb4446565e1b9213dac65bccbac863c811",
+   "remote": "7ef329bb4446565e1b9213dac65bccbac863c811"
+  },
+  "gdl-14128": {
+   "local": "b03f4616b1ce0d9da1b64f0ea76ef2dec6b45d38",
+   "remote": "b03f4616b1ce0d9da1b64f0ea76ef2dec6b45d38"
+  },
+  "gdl-249": {
+   "local": "8ee04110665e0b573992fe642dc6b2e837fd2005",
+   "remote": "8ee04110665e0b573992fe642dc6b2e837fd2005"
+  },
+  "gdl-13976": {
+   "local": "ce303a490bbe81865d21cc7f869e7412526de4ec",
+   "remote": "ce303a490bbe81865d21cc7f869e7412526de4ec"
+  },
+  "gdl-13937": {
+   "local": "15ce8b36b73ac729a2fd2cf57a8ddee2ee3e85d9",
+   "remote": "15ce8b36b73ac729a2fd2cf57a8ddee2ee3e85d9"
+  },
+  "gdl-277": {
+   "local": "751d0f71cff2974a5e21b2a807d1e5e839f000a7",
+   "remote": "751d0f71cff2974a5e21b2a807d1e5e839f000a7"
+  },
+  "gdl-13662": {
+   "local": "500c4abd02eb94ea498031db4e6ab7382d6aee2b",
+   "remote": "500c4abd02eb94ea498031db4e6ab7382d6aee2b"
+  },
+  "gdl-13694": {
+   "local": "26947f3550bc0fab91fe6c63afc4e13803f419c4",
+   "remote": "26947f3550bc0fab91fe6c63afc4e13803f419c4"
+  },
+  "gdl-13651": {
+   "local": "12b4bf5d4a92190914d6e0b5fbee4cf8f1cb6fb4",
+   "remote": "12b4bf5d4a92190914d6e0b5fbee4cf8f1cb6fb4"
+  },
+  "gdl-14175": {
+   "local": "cc5d4ea7013e66e313dc44216c03f1fbe1e83353",
+   "remote": "cc5d4ea7013e66e313dc44216c03f1fbe1e83353"
+  },
+  "ai-gili-hagibora": {
+   "local": "3413431a3cc24e30231a7039cdfe5824d1a1d4d5",
+   "remote": "3413431a3cc24e30231a7039cdfe5824d1a1d4d5"
+  },
+  "parasha-mishpatim": {
+   "local": "ba0821456f2c0c956fde60710a7efb183a8d8e83",
+   "remote": "ba0821456f2c0c956fde60710a7efb183a8d8e83"
+  },
+  "parasha-nitzavim": {
+   "local": "fb6eee540fc18ace40564064beb3e44e3d69810f",
+   "remote": "fb6eee540fc18ace40564064beb3e44e3d69810f"
+  },
+  "chazal-nachum-gam-zu": {
+   "local": "ec43db3b8ccba37910d00bc7b260e5319703cfb9",
+   "remote": "ec43db3b8ccba37910d00bc7b260e5319703cfb9"
+  },
+  "seed-map": {
+   "local": "d4c00a0f85cdc65b53e9d25568348f6ceb8f77f0",
+   "remote": "d4c00a0f85cdc65b53e9d25568348f6ceb8f77f0"
+  },
+  "bk_60gmjag6lnzl": {
+   "local": "4a03a48d0f2ae029e5b84691b9390d29c2be3661",
+   "remote": "4a03a48d0f2ae029e5b84691b9390d29c2be3661"
+  },
+  "chazal-akiva-and-the-stone": {
+   "local": "ec90c8fa8a118480408234a4b7cf533a666535bf",
+   "remote": "ec90c8fa8a118480408234a4b7cf533a666535bf"
+  },
+  "chazal-stones-in-the-road": {
+   "local": "792eabbcdd9c090a02ea430e131169ce9cd39b09",
+   "remote": "792eabbcdd9c090a02ea430e131169ce9cd39b09"
+  },
+  "ai-hagan-shebo-shum-davar": {
+   "local": "bf86f258e7d969498bf79797e5da583e01d4ef22",
+   "remote": "bf86f258e7d969498bf79797e5da583e01d4ef22"
+  },
+  "ai-hamatbea-hamitgalgel": {
+   "local": "abfd26a903860d7a05418f45f7aef33feca1e912",
+   "remote": "abfd26a903860d7a05418f45f7aef33feca1e912"
+  },
+  "ai-haroe-vehamapa-halevana": {
+   "local": "ca3f76bf89e2097e43a0ffcfa35f6127fd06f9d6",
+   "remote": "ca3f76bf89e2097e43a0ffcfa35f6127fd06f9d6"
+  },
+  "ai-hasevivon-lo-otzer": {
+   "local": "8d5e193902d18efd66df7b48e8cb5f1ba2f6ff64",
+   "remote": "8d5e193902d18efd66df7b48e8cb5f1ba2f6ff64"
+  },
+  "ai-hashamash-lo-nach": {
+   "local": "0d283bbdadd3702d31cbd36ff4a40e80c7053831",
+   "remote": "0d283bbdadd3702d31cbd36ff4a40e80c7053831"
+  },
+  "ai-hatinok-hakatan-balagan": {
+   "local": "4dc282b72cd506ea0c89409c1766f7dba1c8cb6e",
+   "remote": "4dc282b72cd506ea0c89409c1766f7dba1c8cb6e"
+  },
+  "ai-hatul-shel-chalonot": {
+   "local": "b49d7337fe4a41d72a9cef90df5d44e72938af4a",
+   "remote": "b49d7337fe4a41d72a9cef90df5d44e72938af4a"
+  },
+  "parasha-balak": {
+   "local": "8affd2bab1c2b04e34ae072dbe64a74d7e60e9a8",
+   "remote": "8affd2bab1c2b04e34ae072dbe64a74d7e60e9a8"
+  },
+  "parasha-vayera": {
+   "local": "3f594685605b169cbb67329fd12fbf9fd99f4d7a",
+   "remote": "3f594685605b169cbb67329fd12fbf9fd99f4d7a"
+  },
+  "chazal-truthful-king-katzia": {
+   "local": "5b37cf8bc6b3a6abedbd22bd1ec0bf798d5aab31",
+   "remote": "5b37cf8bc6b3a6abedbd22bd1ec0bf798d5aab31"
+  },
+  "parasha-chukat": {
+   "local": "bdc58065280639e8f72155c1c7ae43240feab23c",
+   "remote": "bdc58065280639e8f72155c1c7ae43240feab23c"
+  },
+  "parasha-acharei-mot": {
+   "local": "95096a90241b7a8f602f73201adc8cc628cc2da0",
+   "remote": "95096a90241b7a8f602f73201adc8cc628cc2da0"
+  },
+  "parasha-vayechi": {
+   "local": "c366ea220093437d0e8a75f420ef0fd0c467616a",
+   "remote": "c366ea220093437d0e8a75f420ef0fd0c467616a"
+  },
+  "parasha-bamidbar": {
+   "local": "6c987327269a37c2282dec21f6e2f1ed14c7fd1c",
+   "remote": "6c987327269a37c2282dec21f6e2f1ed14c7fd1c"
+  },
+  "chazal-joshua-and-the-clever-child": {
+   "local": "6794b17001c9a931eb9d38cdd201bc3b52e6cd14",
+   "remote": "6794b17001c9a931eb9d38cdd201bc3b52e6cd14"
+  },
+  "ai-hershele-afar-eretz-yisrael-banaalayim": {
+   "local": "28738fb65c92606b0258daa93e37361697897048",
+   "remote": "28738fb65c92606b0258daa93e37361697897048"
+  },
+  "ai-hershele-rabi-leyom-echad": {
+   "local": "a65facbab9b9123d2b58b33f86c0fbff6b3cc77d",
+   "remote": "a65facbab9b9123d2b58b33f86c0fbff6b3cc77d"
+  },
+  "ai-hershele-vehapanim-haavudot": {
+   "local": "9551558fb12dc0ea6ddde3cbd6566ee9c5d89943",
+   "remote": "9551558fb12dc0ea6ddde3cbd6566ee9c5d89943"
+  },
+  "ai-hershele-vehashabbat-hareeva": {
+   "local": "c706971358ec9b06e76e45dda50fb75aeb821880",
+   "remote": "c706971358ec9b06e76e45dda50fb75aeb821880"
+  },
+  "gdl-13684": {
+   "local": "7f155855643d919037afe8c3942258f563bba241",
+   "remote": "7f155855643d919037afe8c3942258f563bba241"
+  },
+  "parasha-haazinu": {
+   "local": "3bf2e312d489dede8d022ff036d297dff8a0d885",
+   "remote": "3bf2e312d489dede8d022ff036d297dff8a0d885"
+  },
+  "parasha-matot": {
+   "local": "9d170fcab82b17c763805c0ebf8a69c54d34afe7",
+   "remote": "9d170fcab82b17c763805c0ebf8a69c54d34afe7"
+  },
+  "parasha-shoftim": {
+   "local": "c84ca38a562add6762fd0aa9fa27cf22086da27c",
+   "remote": "c84ca38a562add6762fd0aa9fa27cf22086da27c"
+  },
+  "parasha-ki-tetze": {
+   "local": "e404d3d0aaea870fe2908838eba4f934a818af7f",
+   "remote": "e404d3d0aaea870fe2908838eba4f934a818af7f"
+  },
+  "chazal-akiva-all-for-good": {
+   "local": "2e54f3d83ddf971beba593a2599d06183246a479",
+   "remote": "2e54f3d83ddf971beba593a2599d06183246a479"
+  },
+  "chazal-hillel-on-the-roof": {
+   "local": "eb39bf032dc5d2c84c66e34caf3eed877b9a059f",
+   "remote": "eb39bf032dc5d2c84c66e34caf3eed877b9a059f"
+  },
+  "parasha-ki-tisa": {
+   "local": "791219d8c70a2dd12b4ca6822a89f59502c746f7",
+   "remote": "791219d8c70a2dd12b4ca6822a89f59502c746f7"
+  },
+  "parasha-korach": {
+   "local": "40e1376b8af0e00030724a11da5d019e17629d9f",
+   "remote": "40e1376b8af0e00030724a11da5d019e17629d9f"
+  },
+  "bk_8g1ureznd3m6": {
+   "local": "1915c7f7401315850aed13ffb16a579d5edb7ca0",
+   "remote": "1915c7f7401315850aed13ffb16a579d5edb7ca0"
+  },
+  "parasha-masei": {
+   "local": "74bded38f501520e445e98a40958a958a9f59cb3",
+   "remote": "74bded38f501520e445e98a40958a958a9f59cb3"
+  },
+  "chazal-shimon-ben-shetach-pearl": {
+   "local": "83d998b3664e83ebc5b20e5a0051742e0148875b",
+   "remote": "83d998b3664e83ebc5b20e5a0051742e0148875b"
+  },
+  "parasha-naso": {
+   "local": "bd40b162ce1dc39d27424ed2d87ed49a86c9188b",
+   "remote": "bd40b162ce1dc39d27424ed2d87ed49a86c9188b"
+  },
+  "chazal-chanina-vinegar-candles": {
+   "local": "f6697280138fd5cc5d66e53953e154ac4b742855",
+   "remote": "f6697280138fd5cc5d66e53953e154ac4b742855"
+  },
+  "parasha-kedoshim": {
+   "local": "68750200973a69e85fb0228d593363a8a1e2293c",
+   "remote": "68750200973a69e85fb0228d593363a8a1e2293c"
+  },
+  "parasha-behar": {
+   "local": "d6af0c07cd48f20bdbd0b4ba14cc8c551f13c399",
+   "remote": "d6af0c07cd48f20bdbd0b4ba14cc8c551f13c399"
+  },
+  "parasha-eikev": {
+   "local": "cd3656cf823996b52a9eea49590446fa8667910d",
+   "remote": "cd3656cf823996b52a9eea49590446fa8667910d"
+  },
+  "parasha-ki-tavo": {
+   "local": "cda8b5285da0f6ae7f0220a8a26458f56964ed4a",
+   "remote": "cda8b5285da0f6ae7f0220a8a26458f56964ed4a"
+  },
+  "parasha-vezot-haberacha": {
+   "local": "431f45618c6ff1983dc9d7a29be71c4f55e06b7a",
+   "remote": "431f45618c6ff1983dc9d7a29be71c4f55e06b7a"
+  },
+  "bk_ogxt95xa5sz5": {
+   "local": "2d02011d6e2f7fd958b038d0fe75b08c3b1fba94",
+   "remote": "2d02011d6e2f7fd958b038d0fe75b08c3b1fba94"
+  },
+  "chazal-rabbi-tarfon-and-his-mother": {
+   "local": "6fa2bb2888fb2f863dfc85e3e77e2fd6ad5a0dde",
+   "remote": "6fa2bb2888fb2f863dfc85e3e77e2fd6ad5a0dde"
+  },
+  "chazal-old-man-planting-figs": {
+   "local": "9054a748c492f5d3bc2c395f87e837d775a0ac9e",
+   "remote": "9054a748c492f5d3bc2c395f87e837d775a0ac9e"
+  },
+  "ai-hamster-plutzi": {
+   "local": "4052150aaa4ce562ac6dfe064ea4a53ab7cd6b10",
+   "remote": "4052150aaa4ce562ac6dfe064ea4a53ab7cd6b10"
+  },
+  "bookdash-katiitis-song": {
+   "local": "e65dc7b08deacd6e3c07731a16f43c49614d0128",
+   "remote": "e65dc7b08deacd6e3c07731a16f43c49614d0128"
+  },
+  "parasha-shelach": {
+   "local": "5f172d137c7ae322dc747624e7fe7bbd63b3544d",
+   "remote": "5f172d137c7ae322dc747624e7fe7bbd63b3544d"
+  },
+  "letsread-074e8cd0-a9d7-449b-81a9-0bddb7242dff": {
+   "local": "3df7c71fbf92c0bb92433b1a00537690353a8b5a",
+   "remote": "3df7c71fbf92c0bb92433b1a00537690353a8b5a"
+  },
+  "letsread-8f4428e0-09a8-4718-80a9-f67d13a34b19": {
+   "local": "599032a733aec47f98b3f8f6f996d042255df9df",
+   "remote": "599032a733aec47f98b3f8f6f996d042255df9df"
+  },
+  "letsread-423e53c1-d628-4f34-b15e-d43911eacbd9": {
+   "local": "109edcadf87aa0a3abbf6a65493b7665c77bde22",
+   "remote": "109edcadf87aa0a3abbf6a65493b7665c77bde22"
+  },
+  "letsread-5c8e0d67-a418-4f91-ae45-c47ef18667a8": {
+   "local": "3588f499bcce0e370009ac06c3689d7a2641d16e",
+   "remote": "3588f499bcce0e370009ac06c3689d7a2641d16e"
+  },
+  "letsread-4e6a8d74-53f0-46f7-9162-4e44ec20fe7c": {
+   "local": "ea0b486fd4422e42851139d805209e58635dc986",
+   "remote": "ea0b486fd4422e42851139d805209e58635dc986"
+  },
+  "letsread-bb4dd88d-233e-4f6b-8f9f-7b85cd0dacb1": {
+   "local": "07dd90503bb2fa05b6ce24d39d6b771f77d016c0",
+   "remote": "07dd90503bb2fa05b6ce24d39d6b771f77d016c0"
+  },
+  "letsread-891e78b5-e9e1-4c54-8776-76d9783a4922": {
+   "local": "6ad00c9ae4944d7e74f43e64776b11b860ceab8c",
+   "remote": "6ad00c9ae4944d7e74f43e64776b11b860ceab8c"
+  },
+  "letsread-fb8beeab-f1e4-4ff1-861e-4699f1ec3785": {
+   "local": "d37fcc79fac8fb11ad7f478e5cbbb0b9182aae7f",
+   "remote": "d37fcc79fac8fb11ad7f478e5cbbb0b9182aae7f"
+  },
+  "letsread-9656e991-681e-4896-8321-9a99a338601d": {
+   "local": "aecc03b901c4c5e0175aeb4c008f91d8a976081b",
+   "remote": "aecc03b901c4c5e0175aeb4c008f91d8a976081b"
+  },
+  "letsread-b14e6674-3bfb-4096-981c-94d2d0a5dd71": {
+   "local": "64b43bd22605249468ad2771867c5300ac993e47",
+   "remote": "64b43bd22605249468ad2771867c5300ac993e47"
+  },
+  "letsread-49d7f294-f5b7-413c-b056-09b3007b8149": {
+   "local": "4b74a18599f663477132870762052ccbe1118afc",
+   "remote": "4b74a18599f663477132870762052ccbe1118afc"
+  },
+  "letsread-42e06811-c843-4b39-b743-3978aade24f8": {
+   "local": "b0e584e4fdfbc549869bc683a80ccbc454ab0bf3",
+   "remote": "b0e584e4fdfbc549869bc683a80ccbc454ab0bf3"
+  },
+  "letsread-8ea24f89-25b2-4093-bfa6-5590f26f67a8": {
+   "local": "f8d1d4ef442dc60b834c7210e58d5d11db5852df",
+   "remote": "f8d1d4ef442dc60b834c7210e58d5d11db5852df"
+  },
+  "letsread-d4ff5216-c992-4e8f-97d2-dd2c6cbb382c": {
+   "local": "12603374978cc12989701a6025d58468f2543b4a",
+   "remote": "12603374978cc12989701a6025d58468f2543b4a"
+  },
+  "letsread-29b227e2-4b81-4f78-941f-e1bb216a6a40": {
+   "local": "45a796cd71fe8fdd2dad8d071b3ed4f86660124c",
+   "remote": "45a796cd71fe8fdd2dad8d071b3ed4f86660124c"
+  },
+  "letsread-89ebcf14-a7e8-4687-828c-e867b9af874f": {
+   "local": "65a6097591d088a5fb0a1c8019161317c7a6944f",
+   "remote": "65a6097591d088a5fb0a1c8019161317c7a6944f"
+  },
+  "letsread-2f85e622-53c5-46dc-973d-9f1ad4d773e5": {
+   "local": "de84f2eb6ef2654fc5fca6ec4d542ba3084b81f4",
+   "remote": "de84f2eb6ef2654fc5fca6ec4d542ba3084b81f4"
+  },
+  "letsread-8954d48c-d93a-44b8-9115-ee30a13be489": {
+   "local": "9cc048f4967055506faa6363db7b3070464eea43",
+   "remote": "9cc048f4967055506faa6363db7b3070464eea43"
+  },
+  "letsread-75bb4ec9-a9c4-4b19-a11c-c7f8271984f5": {
+   "local": "3ed6105444204f9b32dc9167ea0101bc676462fa",
+   "remote": "3ed6105444204f9b32dc9167ea0101bc676462fa"
+  },
+  "letsread-cdfe2d1e-d832-43ef-a1cc-ad6473574d95": {
+   "local": "3cbd5a7aca065082c6cd770c19d341dd8d79b252",
+   "remote": "3cbd5a7aca065082c6cd770c19d341dd8d79b252"
+  },
+  "letsread-92486b98-77f5-4a39-9e94-80c9022d4164": {
+   "local": "ccfcc77c9055e1e035b58f455af1f0f6c7b03841",
+   "remote": "ccfcc77c9055e1e035b58f455af1f0f6c7b03841"
+  },
+  "letsread-760381a9-9811-4d14-935a-16d76f79de68": {
+   "local": "9413dda295e66e85ad53fe0a7e366e7aeab1cab5",
+   "remote": "9413dda295e66e85ad53fe0a7e366e7aeab1cab5"
+  },
+  "letsread-e8561392-df96-4660-af46-b72f1aecb20e": {
+   "local": "2141a749836fcfa859997c5e4d7a4d949422255e",
+   "remote": "2141a749836fcfa859997c5e4d7a4d949422255e"
+  },
+  "letsread-7f43c1bd-3412-438e-97f4-cd71cf22cb1b": {
+   "local": "e6b864b1b89c12b05fb0f65de40d6debaf853f57",
+   "remote": "e6b864b1b89c12b05fb0f65de40d6debaf853f57"
+  },
+  "letsread-c2fde92a-2bee-4a66-84c9-c6a34ff9b816": {
+   "local": "482f54a1f6e7d9a30fa87d70b03d045d8ad8522c",
+   "remote": "482f54a1f6e7d9a30fa87d70b03d045d8ad8522c"
+  },
+  "letsread-742426bb-9fbc-46fb-b9e2-4ff812665858": {
+   "local": "3bd6be95a009067ce5339dda6acdcdc8cc57b6f5",
+   "remote": "3bd6be95a009067ce5339dda6acdcdc8cc57b6f5"
+  },
+  "letsread-3905834a-62db-442a-9a3e-40e7023f2dbc": {
+   "local": "1837bfdca46a778ca286bc6b4049e9ffd560f9dd",
+   "remote": "1837bfdca46a778ca286bc6b4049e9ffd560f9dd"
+  },
+  "letsread-1cfb9350-48f6-4879-99ba-aee679cfe5f8": {
+   "local": "07dd806f61b640dac231f383843b6aed1cf2cb59",
+   "remote": "07dd806f61b640dac231f383843b6aed1cf2cb59"
+  },
+  "letsread-a1a826f7-1ef4-4e93-94f0-c6aba724539c": {
+   "local": "922d993ff770d36d270e8a306ade5a5961e1c569",
+   "remote": "922d993ff770d36d270e8a306ade5a5961e1c569"
+  },
+  "letsread-704042d7-66d9-4243-857e-92a12add4096": {
+   "local": "47bca2935e9d08e6afcd5db953888363fb74a9ec",
+   "remote": "47bca2935e9d08e6afcd5db953888363fb74a9ec"
+  },
+  "letsread-e35de0e2-ed33-4c07-ab2d-c998cbf844d3": {
+   "local": "2a07f680e24a609ec5c9ca1e386b6026a85d94e1",
+   "remote": "2a07f680e24a609ec5c9ca1e386b6026a85d94e1"
+  },
+  "letsread-844afc3f-ff99-49f5-8933-f59a6c26e3ea": {
+   "local": "31b8b4ac0da82fe7b83178c75aa2e6ba18de70f5",
+   "remote": "31b8b4ac0da82fe7b83178c75aa2e6ba18de70f5"
+  },
+  "letsread-d37a309c-f84f-410f-908c-759c3454c9f3": {
+   "local": "34ecc4ca303acc24fb0a8840c68b8458e40627df",
+   "remote": "34ecc4ca303acc24fb0a8840c68b8458e40627df"
+  },
+  "letsread-1e810723-2379-4615-8b43-b11a1aeb1d0a": {
+   "local": "da8fa5ccebf4cd7d52f8176c9a279134f6496124",
+   "remote": "da8fa5ccebf4cd7d52f8176c9a279134f6496124"
+  },
+  "letsread-9b6722ab-f47a-48a2-b6e1-4c7c02e96e8e": {
+   "local": "92d567fa0773f3e913c75cc9b6ce2a75edb91bba",
+   "remote": "92d567fa0773f3e913c75cc9b6ce2a75edb91bba"
+  },
+  "letsread-674e742b-7ca8-4e1b-9b81-9542f47dcda0": {
+   "local": "c8e79ebd56c183dc2059d6a8dd2b4fe60ccad528",
+   "remote": "c8e79ebd56c183dc2059d6a8dd2b4fe60ccad528"
+  },
+  "letsread-e35ecf11-7fb6-4353-805f-8dd9c9afcc5b": {
+   "local": "4a8706def124001f7050fb1ddf200c2bbf48bdc5",
+   "remote": "4a8706def124001f7050fb1ddf200c2bbf48bdc5"
+  },
+  "letsread-52e5c95e-d5e8-4da2-bb02-2601ba0de132": {
+   "local": "a2de763f57d86f9814f55145da6aa44addc74ee6",
+   "remote": "a2de763f57d86f9814f55145da6aa44addc74ee6"
+  },
+  "letsread-db2ed7af-7b24-426b-aa81-baadb352f0ef": {
+   "local": "625b8acdb0b2dc629e33ce7ee2da6f8beed3c251",
+   "remote": "625b8acdb0b2dc629e33ce7ee2da6f8beed3c251"
+  },
+  "letsread-3160d134-c501-4612-9906-fa5abc8c8db8": {
+   "local": "cf1bde3dec6c219f546b8ca28f7ab7be0dbf199a",
+   "remote": "cf1bde3dec6c219f546b8ca28f7ab7be0dbf199a"
+  },
+  "letsread-a20ccabf-f6d0-4e7f-bbfb-0d441c9b5996": {
+   "local": "90980e37c101348a354cc8eb4293c73f22f31a5c",
+   "remote": "90980e37c101348a354cc8eb4293c73f22f31a5c"
+  },
+  "letsread-97f895ce-73a1-477c-9998-cec1af923503": {
+   "local": "421517199ad6c462745c6f8dc25b2121bd95b3cf",
+   "remote": "421517199ad6c462745c6f8dc25b2121bd95b3cf"
+  },
+  "seed-star": {
+   "local": "5b88c5af420fbad13b7fcb135f8475027062242f",
+   "remote": "5b88c5af420fbad13b7fcb135f8475027062242f"
+  },
+  "chazal-elazar-and-the-craftsman": {
+   "local": "b277ecfa937e44e79cab96350627571c2f75abb7",
+   "remote": "b277ecfa937e44e79cab96350627571c2f75abb7"
+  },
+  "ai-lula-hashualah": {
+   "local": "791a398505b79aa8051a05f942e893a3dadee933",
+   "remote": "791a398505b79aa8051a05f942e893a3dadee933"
+  },
+  "holidays-asara-betevet": {
+   "local": "413be898c25c86b665a7763cd28ab6836786ec1e",
+   "remote": "413be898c25c86b665a7763cd28ab6836786ec1e"
+  },
+  "ai-eliezer-hanoten": {
+   "local": "0d739889f53617c1f2f281de168248b39cace922",
+   "remote": "0d739889f53617c1f2f281de168248b39cace922"
+  },
+  "ai-mika-bom-bom": {
+   "local": "55d1006d2322c86bacc65916710b7cd66139a65c",
+   "remote": "55d1006d2322c86bacc65916710b7cd66139a65c"
+  },
+  "ai-mika-shokolad": {
+   "local": "19bf0e5d66aa102de4b241fe27266c0c4ba5ff97",
+   "remote": "19bf0e5d66aa102de4b241fe27266c0c4ba5ff97"
+  },
+  "ai-mila-veod-mila": {
+   "local": "12d0f62e59df7c7fc2b3e144f5bfd5940172620c",
+   "remote": "7635abacc09532b0cafb2eff811450ed1ce46c8e"
+  },
+  "bookdash-mrs-penguins-palace": {
+   "local": "1fb994164e8344123b7cb7e993af7e743ebbabc1",
+   "remote": "1fb994164e8344123b7cb7e993af7e743ebbabc1"
+  },
+  "parasha-shemot": {
+   "local": "6fc014b297ed0f52dd08cf03965dbd485feb3322",
+   "remote": "6fc014b297ed0f52dd08cf03965dbd485feb3322"
+  },
+  "parasha-devarim": {
+   "local": "059f7dd09c02ef3340fcad64aab46947dd786653",
+   "remote": "059f7dd09c02ef3340fcad64aab46947dd786653"
+  },
+  "chazal-hillel-patience": {
+   "local": "4c1516ae2384dffa98464985993dbad5123e1b0f",
+   "remote": "4c1516ae2384dffa98464985993dbad5123e1b0f"
+  },
+  "parasha-noach": {
+   "local": "c1851527d79de0e516677439e817b82a0af97bc3",
+   "remote": "c1851527d79de0e516677439e817b82a0af97bc3"
+  },
+  "parasha-beshalach": {
+   "local": "cab0f29b8cfde6717a988ab0a894c710b58c0490",
+   "remote": "cab0f29b8cfde6717a988ab0a894c710b58c0490"
+  },
+  "ai-neevadti-bayaar": {
+   "local": "1e5186001c7e989f07345d75a7de9b2ca520dedf",
+   "remote": "1e5186001c7e989f07345d75a7de9b2ca520dedf"
+  },
+  "ai-nili-shabbat-mom": {
+   "local": "fe262c848136450a2b85ff782e903b97b6efe09a",
+   "remote": "fe262c848136450a2b85ff782e903b97b6efe09a"
+  },
+  "ai-noa-vehayom-shehithapech": {
+   "local": "9f1254801e14ab4cf4b88b5cae6e73778d1687c3",
+   "remote": "9f1254801e14ab4cf4b88b5cae6e73778d1687c3"
+  },
+  "ai-mashal-noach-vehaof": {
+   "local": "4a29287d186be79ba36f7d893add7d9752d5d1fc",
+   "remote": "4a29287d186be79ba36f7d893add7d9752d5d1fc"
+  },
+  "ai-nofiki-kofiki": {
+   "local": "57384e8e53ca0bc38f2ff09d8445d2efecce4429",
+   "remote": "57384e8e53ca0bc38f2ff09d8445d2efecce4429"
+  },
+  "parasha-bo": {
+   "local": "01d769872a4db9714a6aa17772de51c479eac440",
+   "remote": "01d769872a4db9714a6aa17772de51c479eac440"
+  },
+  "parasha-metzora": {
+   "local": "c243e242d8667df33c243011506cfd6435cca095",
+   "remote": "c243e242d8667df33c243011506cfd6435cca095"
+  },
+  "ai-od-sipur-echad": {
+   "local": "c70c9ac72731501d5ae88afdb244a359bfabd25b",
+   "remote": "c70c9ac72731501d5ae88afdb244a359bfabd25b"
+  },
+  "ai-oy-nigmeru-hanerot": {
+   "local": "9176d851d84db4fc21a2d540f43ae1cf215068eb",
+   "remote": "9176d851d84db4fc21a2d540f43ae1cf215068eb"
+  },
+  "ai-rak-matok-rak-matok": {
+   "local": "acd7fcdc7c764eb13fb3a225e2372be4dd44036e",
+   "remote": "acd7fcdc7c764eb13fb3a225e2372be4dd44036e"
+  },
+  "parasha-chayei-sarah": {
+   "local": "ce687f0979e054e4603800e9a1a7bc5340bd88ce",
+   "remote": "ce687f0979e054e4603800e9a1a7bc5340bd88ce"
+  },
+  "chazal-rabbi-and-the-calf": {
+   "local": "e95c45719a74e125441453f81d765ef356db55b1",
+   "remote": "e95c45719a74e125441453f81d765ef356db55b1"
+  },
+  "ai-saba-eliezer-carrot": {
+   "local": "9524141d63b6ef02b4e1e57b614b33c003e37766",
+   "remote": "9524141d63b6ef02b4e1e57b614b33c003e37766"
+  },
+  "ai-safam-shel-sukar": {
+   "local": "5a5a472cefaf1207c6f24d4d7acef65fbb11ee86",
+   "remote": "5a5a472cefaf1207c6f24d4d7acef65fbb11ee86"
+  },
+  "parasha-yitro": {
+   "local": "442cbb787d725a91abe744662efabc14bd717df4",
+   "remote": "442cbb787d725a91abe744662efabc14bd717df4"
+  },
+  "parasha-behaalotecha": {
+   "local": "02d08b8e4df482e95d1e720ac76ac76e79d72e9c",
+   "remote": "02d08b8e4df482e95d1e720ac76ac76e79d72e9c"
+  },
+  "chazal-honi-seventy-years": {
+   "local": "9fb84992b7025298ced48f18762ecc8e53da98a1",
+   "remote": "9fb84992b7025298ced48f18762ecc8e53da98a1"
+  },
+  "ai-haresen-haganuv": {
+   "local": "879260b0bc7a761328d4ac534268e076cbe82349",
+   "remote": "879260b0bc7a761328d4ac534268e076cbe82349"
+  },
+  "librivox-three-billy-goats-gruff-he": {
+   "local": "3fc871d76d5a5e75daa7723aca2c7a7e74148256",
+   "remote": "3fc871d76d5a5e75daa7723aca2c7a7e74148256"
+  },
+  "parasha-vaetchanan": {
+   "local": "c2919b835e8b801707dce0084c6904a77a783036",
+   "remote": "c2919b835e8b801707dce0084c6904a77a783036"
+  },
+  "bk_n2bj7mmf0ezf": {
+   "local": "f74aafb18ff842686ed4b95e2458c41f8756a895",
+   "remote": "f74aafb18ff842686ed4b95e2458c41f8756a895"
+  },
+  "parasha-vayikra": {
+   "local": "12d76ce8c4dd45af2845d266106e6e23a26a61b9",
+   "remote": "12d76ce8c4dd45af2845d266106e6e23a26a61b9"
+  },
+  "parasha-tetzaveh": {
+   "local": "cc55050fea8d2a1b023cd542c21a86f10c2a7390",
+   "remote": "cc55050fea8d2a1b023cd542c21a86f10c2a7390"
+  },
+  "bookdash-springloaded": {
+   "local": "89ce259efd9d57a140177668dfcc1f508307854e",
+   "remote": "89ce259efd9d57a140177668dfcc1f508307854e"
+  },
+  "storyweaver-102262": {
+   "local": "cf283d783769a39d910548298e2c90113c074964",
+   "remote": "cf283d783769a39d910548298e2c90113c074964"
+  },
+  "storyweaver-104166": {
+   "local": "2e38dd9ff61d1283fd9d4e545fec0577e033923b",
+   "remote": "2e38dd9ff61d1283fd9d4e545fec0577e033923b"
+  },
+  "storyweaver-14406": {
+   "local": "60a448275b23c07d710649f89fad097e5ddaffae",
+   "remote": "60a448275b23c07d710649f89fad097e5ddaffae"
+  },
+  "storyweaver-20206": {
+   "local": "fd21ecee1e184a101785de55bec22d2b1b6bb563",
+   "remote": "fd21ecee1e184a101785de55bec22d2b1b6bb563"
+  },
+  "storyweaver-213364": {
+   "local": "4d173dafb785e060df9316ea35d6301a73e2683a",
+   "remote": "4d173dafb785e060df9316ea35d6301a73e2683a"
+  },
+  "storyweaver-245752": {
+   "local": "2f4a6ed8091d92e97ba575bf316e042001be454e",
+   "remote": "2f4a6ed8091d92e97ba575bf316e042001be454e"
+  },
+  "storyweaver-247998": {
+   "local": "8ae629d177f73efb3621f4e5c9f5e0da05ee4497",
+   "remote": "8ae629d177f73efb3621f4e5c9f5e0da05ee4497"
+  },
+  "storyweaver-248117": {
+   "local": "087e8402db5f03ea3ff78e22c53c98f82a2c963d",
+   "remote": "087e8402db5f03ea3ff78e22c53c98f82a2c963d"
+  },
+  "storyweaver-267318": {
+   "local": "6420638aab3953a14453a8e8c0582d174a36a6a2",
+   "remote": "6420638aab3953a14453a8e8c0582d174a36a6a2"
+  },
+  "storyweaver-28121": {
+   "local": "552dc6c450b3f4445f42447083ccbe6faf67d72f",
+   "remote": "552dc6c450b3f4445f42447083ccbe6faf67d72f"
+  },
+  "storyweaver-328867": {
+   "local": "e46af54576b04a476b742ed4f0145e2012b5ae94",
+   "remote": "e46af54576b04a476b742ed4f0145e2012b5ae94"
+  },
+  "storyweaver-43043": {
+   "local": "e6692343ba99575432972ee9aa99f05d5b2d0ba0",
+   "remote": "e6692343ba99575432972ee9aa99f05d5b2d0ba0"
+  },
+  "storyweaver-60809": {
+   "local": "4b0ba1a618e6432cfc7edd7c386aabb2dec52f74",
+   "remote": "4b0ba1a618e6432cfc7edd7c386aabb2dec52f74"
+  },
+  "storyweaver-7960": {
+   "local": "53e0f27e8c8050bc88d2d35fec0e73b10d4e5cd9",
+   "remote": "53e0f27e8c8050bc88d2d35fec0e73b10d4e5cd9"
+  },
+  "storyweaver-8040": {
+   "local": "a8ab0bd1fb30dfd5c454daa8f718bfc3c5338950",
+   "remote": "a8ab0bd1fb30dfd5c454daa8f718bfc3c5338950"
+  },
+  "storyweaver-876": {
+   "local": "5c99fdc8886ad20120f81c09bb9622a3d63bf4b1",
+   "remote": "5c99fdc8886ad20120f81c09bb9622a3d63bf4b1"
+  },
+  "storyweaver-8835": {
+   "local": "977e3382c7281a32db6310c99a3c3b50a88426d7",
+   "remote": "977e3382c7281a32db6310c99a3c3b50a88426d7"
+  },
+  "seed-boots": {
+   "local": "a7d5e67fd63a67203713d4c01405aa2c696a91ef",
+   "remote": "a7d5e67fd63a67203713d4c01405aa2c696a91ef"
+  },
+  "bookdash-the-elephant-in-the-room": {
+   "local": "612ffcd2b778d0313fcc33c2c3adcc2d0bd94d70",
+   "remote": "612ffcd2b778d0313fcc33c2c3adcc2d0bd94d70"
+  },
+  "bookdash-the-lion-who-wouldnt-try": {
+   "local": "e3b7bc4898917b431f8293efae167eaa5d31e774",
+   "remote": "e3b7bc4898917b431f8293efae167eaa5d31e774"
+  },
+  "seed-robot": {
+   "local": "3dd757d0fba8af07888634cd30bec6047cbdefe6",
+   "remote": "3dd757d0fba8af07888634cd30bec6047cbdefe6"
+  },
+  "seed-snail": {
+   "local": "fc2b2603e1470c30aa8c114b54615093dad9a211",
+   "remote": "c2ef7c0e98b729af528966d1eed60e247a701062"
+  },
+  "bookdash-there-must-be-a-rainbow": {
+   "local": "ca8f27b9274b72607610dc43eb9616e4c1959380",
+   "remote": "ca8f27b9274b72607610dc43eb9616e4c1959380"
+  },
+  "ai-abba-hilkiah": {
+   "local": "d3684cb6c786551e9b7a3ea6620b4be99786131f",
+   "remote": "d3684cb6c786551e9b7a3ea6620b4be99786131f"
+  },
+  "parasha-shemini": {
+   "local": "ac5b5e493d5c4a30a45e29b4940bee60cb2815f4",
+   "remote": "ac5b5e493d5c4a30a45e29b4940bee60cb2815f4"
+  },
+  "bookdash-tortoise-finds-his-home": {
+   "local": "0ad2f40c9959eb33bc9e1602260f408184ba18a7",
+   "remote": "0ad2f40c9959eb33bc9e1602260f408184ba18a7"
+  },
+  "ai-hasulam-shel-haefrochim": {
+   "local": "ecfece4b8dbbb5f4121774b1450eacd54add4ab9",
+   "remote": "ecfece4b8dbbb5f4121774b1450eacd54add4ab9"
+  },
+  "ai-tuk-tuk-tuk-balayla": {
+   "local": "f535a8e3d8cad32bfec0dbd3eef22ba819ce1747",
+   "remote": "f535a8e3d8cad32bfec0dbd3eef22ba819ce1747"
+  },
+  "parasha-tazria": {
+   "local": "362ef2350db83217d01453d3dab43ebde1716291",
+   "remote": "362ef2350db83217d01453d3dab43ebde1716291"
+  },
+  "bookdash-walking-together": {
+   "local": "db69ec1567fa767893c6034512c7e8998321f16a",
+   "remote": "db69ec1567fa767893c6034512c7e8998321f16a"
+  },
+  "bookdash-what-if": {
+   "local": "f7f86ab35d3166cba8e135159a15886e423b1868",
+   "remote": "f7f86ab35d3166cba8e135159a15886e423b1868"
+  },
+  "seed-garden": {
+   "local": "dcdf455fd7ce3195af0ee207bb4ac528fe019060",
+   "remote": "090784f309e253f89e8023f0857a05e05536a54b"
+  },
+  "bookdash-whose-button-is-this": {
+   "local": "68f899f45c5f184bdf2789a582b137c75b967280",
+   "remote": "68f899f45c5f184bdf2789a582b137c75b967280"
+  },
+  "parasha-toldot": {
+   "local": "9d6477ae06288527ae097bb08fb1a99f47025b73",
+   "remote": "9d6477ae06288527ae097bb08fb1a99f47025b73"
+  },
+  "parasha-vayishlach": {
+   "local": "bb26c54e4fb16bc05d091132747c990a93391f6b",
+   "remote": "bb26c54e4fb16bc05d091132747c990a93391f6b"
+  },
+  "parasha-vayetze": {
+   "local": "d580073ff97947df3d6cf5a538aa4ba142096e98",
+   "remote": "d580073ff97947df3d6cf5a538aa4ba142096e98"
+  },
+  "ai-yosef-mokir-shabbat": {
+   "local": "a0ea9416bebe5a4806f44350767700723e71ca9b",
+   "remote": "a0ea9416bebe5a4806f44350767700723e71ca9b"
+  },
+  "parasha-bechukotai": {
+   "local": "5705fc7c6c0bf1bc222ea3df035e32ed9fa61a75",
+   "remote": "5705fc7c6c0bf1bc222ea3df035e32ed9fa61a75"
+  },
+  "parasha-miketz": {
+   "local": "a31e2be2bacef33b190af69ca0bbe310b9c89f2a",
+   "remote": "a31e2be2bacef33b190af69ca0bbe310b9c89f2a"
+  },
+  "parasha-vayeshev": {
+   "local": "4e04aa7a115b571d28c90b71fc03b0012abf249e",
+   "remote": "4e04aa7a115b571d28c90b71fc03b0012abf249e"
+  }
+ },
+ "collections": {
+  "seed-col-bedtime": {
+   "local": "0fe9a9e558bfc05f9546cb0339ff6f647303ee37",
+   "remote": "0fe9a9e558bfc05f9546cb0339ff6f647303ee37"
+  },
+  "seed-col-winter": {
+   "local": "e7afbde4fc45a10bb461d16df81de395c163dcaa",
+   "remote": "e7afbde4fc45a10bb461d16df81de395c163dcaa"
+  },
+  "col-chelm": {
+   "local": "3fd2f068197208ed983bacd7aae34ce33c7728c4",
+   "remote": "3fd2f068197208ed983bacd7aae34ce33c7728c4"
+  },
+  "col-hershele": {
+   "local": "9032510fbb2893df314c6d0d44287344454b86e0",
+   "remote": "9032510fbb2893df314c6d0d44287344454b86e0"
+  },
+  "col-baal-shem-tov": {
+   "local": "96d1c9c252c39457a48dc83c8c864f94f0f0d855",
+   "remote": "96d1c9c252c39457a48dc83c8c864f94f0f0d855"
+  },
+  "col-chazal": {
+   "local": "946db6abb1e377870052acff4cbc8f8b0d981079",
+   "remote": "946db6abb1e377870052acff4cbc8f8b0d981079"
+  },
+  "col-hanukkah": {
+   "local": "9fdf787e207363f0dc8d3eded6d298f1b03a4592",
+   "remote": "9fdf787e207363f0dc8d3eded6d298f1b03a4592"
+  },
+  "col-folk-tales": {
+   "local": "8a957b9be57832cb224c1f0496b96b3201c33804",
+   "remote": "8a957b9be57832cb224c1f0496b96b3201c33804"
+  },
+  "col-shabbat": {
+   "local": "b0214c9859a36c176aa74a67017370b7dfce58b8",
+   "remote": "b0214c9859a36c176aa74a67017370b7dfce58b8"
+  },
+  "col-rhyming-stories": {
+   "local": "dbc268d50312eabd2fccefc15c48182f883328b2",
+   "remote": "dbc268d50312eabd2fccefc15c48182f883328b2"
+  },
+  "col-animal-stories": {
+   "local": "17410bf2d1696549d2b36fa501be76634fd9ef83",
+   "remote": "17410bf2d1696549d2b36fa501be76634fd9ef83"
+  },
+  "col-journey-to-africa": {
+   "local": "723f92439b59685589e70634ea6051d8c4f0ac62",
+   "remote": "723f92439b59685589e70634ea6051d8c4f0ac62"
+  },
+  "col-school-and-kindergarten": {
+   "local": "615e080f61bde8a789aa82515fa15545a373866f",
+   "remote": "615e080f61bde8a789aa82515fa15545a373866f"
+  },
+  "col-family-time": {
+   "local": "3b0eed1d5b611decb458efa837cfe38822834a34",
+   "remote": "3b0eed1d5b611decb458efa837cfe38822834a34"
+  },
+  "col-grandparents": {
+   "local": "8e7e84dcf66fb47569e6952fa2a0ef8dec6b642a",
+   "remote": "8e7e84dcf66fb47569e6952fa2a0ef8dec6b642a"
+  },
+  "col-tasty-food": {
+   "local": "724ecbac3c411fac35576c3d45b71faf8db34ebf",
+   "remote": "724ecbac3c411fac35576c3d45b71faf8db34ebf"
+  },
+  "col-funny-stories": {
+   "local": "61d6ac1405c1bafa3677618759319bf4ad2f7243",
+   "remote": "61d6ac1405c1bafa3677618759319bf4ad2f7243"
+  },
+  "col-garden-and-plants": {
+   "local": "3dc0eefa7d85aaca5ece3d9a21e49b68c77ec1dd",
+   "remote": "3dc0eefa7d85aaca5ece3d9a21e49b68c77ec1dd"
+  },
+  "col-learning-and-discovering": {
+   "local": "66bad800891f89d96f3dbbf1173c9a6dbaf4d1ef",
+   "remote": "66bad800891f89d96f3dbbf1173c9a6dbaf4d1ef"
+  },
+  "col-friends-together": {
+   "local": "c094b61ad21c2df316d7b304058735f961648ae8",
+   "remote": "c094b61ad21c2df316d7b304058735f961648ae8"
+  },
+  "col-brave-and-feelings": {
+   "local": "322459a142467c646ccb36dc4e0b6cbbc94cc723",
+   "remote": "322459a142467c646ccb36dc4e0b6cbbc94cc723"
+  },
+  "col-imagination-and-adventure": {
+   "local": "a41cd327c5cde61ca434b0fd7f476d4fb076d140",
+   "remote": "a41cd327c5cde61ca434b0fd7f476d4fb076d140"
+  },
+  "col-animal-fables": {
+   "local": "9533565912b95a5ceece87cf6dbd47337e77268f",
+   "remote": "9533565912b95a5ceece87cf6dbd47337e77268f"
+  }
+ },
+ "bookOfTheWeek": {
+  "local": "dd29ecf524b030a65261e3059c48ab9e1ecb2585",
+  "remote": "7f970737838c3f85c607560c0f8629fdc78f2063"
+ }
+}

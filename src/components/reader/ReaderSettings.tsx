@@ -5,11 +5,8 @@ import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, Chip, Dialog } from "@/components/ui";
 import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { FONT_SIZES_REM, SLEEP_TIMER_MINUTES, formatCountdown } from "@/lib/reader/logic";
-import type { TextLayout } from "@/lib/reader/storage";
 import { textDirection, type BookLanguage } from "@/lib/types";
 import { SpeedControl } from "./SpeedControl";
-
-const TEXT_LAYOUTS = ["side", "below", "hidden"] as const satisfies readonly TextLayout[];
 
 /** Letters of the text-size sample, in the language of the story being read. */
 const SAMPLES: Record<BookLanguage, string> = { he: "אבג", en: "Abc", ar: "أبج" };
@@ -19,17 +16,19 @@ export interface ReaderSettingsProps {
   onClose: () => void;
   fontStep: number;
   onFontStep: (step: number) => void;
-  textLayout: TextLayout;
-  onTextLayout: (layout: TextLayout) => void;
-  /** "Living pictures": gentle motion over the illustrations and the clips of animated pages. */
-  liveImages: boolean;
-  onLiveImages: (value: boolean) => void;
-  /** The device asks for less motion, which keeps the pictures still whatever this setting says. */
-  reducedMotion?: boolean;
+  /** Whether the story text is shown next to / under the picture. */
+  showText: boolean;
+  onShowText: (value: boolean) => void;
   /** The book has a vocalized version; without one the nikud switch is disabled. */
   nikudAvailable: boolean;
   /** Language of the story text, for the text-size sample. Default Hebrew. */
   sampleLanguage?: BookLanguage;
+  /** Languages the text can be shown in (the book's own and its versions); the picker shows only with two or more. */
+  textLanguages?: BookLanguage[];
+  /** The language the text is shown in now, and the one being narrated. */
+  textLanguage?: BookLanguage;
+  narratedLanguage?: BookLanguage;
+  onTextLanguage?: (language: BookLanguage) => void;
   nikud: boolean;
   onNikud: (value: boolean) => void;
   /** Starts the "listening before sleep" mode: dim theme, narration and a sleep timer. */
@@ -55,13 +54,14 @@ export function ReaderSettings({
   onClose,
   fontStep,
   onFontStep,
-  textLayout,
-  onTextLayout,
-  liveImages,
-  onLiveImages,
-  reducedMotion = false,
+  showText,
+  onShowText,
   nikudAvailable,
   sampleLanguage = "he",
+  textLanguages = [],
+  textLanguage,
+  narratedLanguage,
+  onTextLanguage,
   nikud,
   onNikud,
   onBedtimeListen,
@@ -118,6 +118,31 @@ export function ReaderSettings({
           </div>
         </section>
 
+        {textLanguages.length > 1 && onTextLanguage ? (
+          <section aria-labelledby="reader-textlang-title">
+            <h3 id="reader-textlang-title" className="mb-2 text-lg font-bold">
+              {t.textLanguage}
+            </h3>
+            <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t.textLanguage}>
+              {textLanguages.map((language) => (
+                <Chip
+                  key={language}
+                  selected={textLanguage === language}
+                  tone="secondary"
+                  onClick={() => onTextLanguage(language)}
+                >
+                  {t.languageName(language)}
+                </Chip>
+              ))}
+            </div>
+            <p className="mt-2 text-sm text-muted">
+              {narratedLanguage && textLanguage && narratedLanguage !== textLanguage
+                ? t.textLanguageSeparate(t.languageName(narratedLanguage))
+                : t.textLanguageHint}
+            </p>
+          </section>
+        ) : null}
+
         <section aria-labelledby="reader-nikud-title">
           <h3 id="reader-nikud-title" className="mb-2 text-lg font-bold">
             {t.nikud}
@@ -139,34 +164,15 @@ export function ReaderSettings({
           <h3 id="reader-layout-title" className="mb-2 text-lg font-bold">
             {t.layout}
           </h3>
-          <div className="flex flex-wrap items-center gap-2" role="group" aria-label={t.layout}>
-            {TEXT_LAYOUTS.map((value) => (
-              <Chip key={value} selected={textLayout === value} tone="secondary" onClick={() => onTextLayout(value)}>
-                {value === "side" ? t.layoutSide : value === "below" ? t.layoutBelow : t.layoutHidden}
-              </Chip>
-            ))}
-          </div>
-          {textLayout === "side" ? (
-            <p className="mt-2 text-sm text-muted">{t.layoutSideHint}</p>
-          ) : null}
-        </section>
-
-        <section aria-labelledby="reader-pictures-title">
-          <h3 id="reader-pictures-title" className="mb-2 text-lg font-bold">
-            {t.pictures}
-          </h3>
           <label className="flex min-h-touch cursor-pointer items-center gap-3">
             <input
               type="checkbox"
               className="size-6 accent-[var(--secondary)]"
-              checked={liveImages}
-              onChange={(event) => onLiveImages(event.target.checked)}
+              checked={showText}
+              onChange={(event) => onShowText(event.target.checked)}
             />
-            <span>{t.livePictures}</span>
+            <span>{t.showText}</span>
           </label>
-          <p className="mt-1 text-sm text-muted">
-            {reducedMotion ? t.reducedMotion : t.livePicturesHint}
-          </p>
         </section>
 
         <section aria-labelledby="reader-audio-title">

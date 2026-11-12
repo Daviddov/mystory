@@ -20,6 +20,7 @@ import numpy as np
 from faster_whisper import WhisperModel
 
 model_name, src, out = sys.argv[1], sys.argv[2], sys.argv[3]
+language = sys.argv[4] if len(sys.argv) > 4 else "he"  # optional ISO code, for other-language versions
 with open(src, encoding="utf-8") as f:
     files = json.load(f)
 
@@ -37,7 +38,7 @@ for i, path in enumerate(files):
         continue
     audio = np.frombuffer(decoded.stdout, dtype=np.float32)
     segments, _ = model.transcribe(
-        audio, language="he", word_timestamps=True, beam_size=5, condition_on_previous_text=False
+        audio, language=language, word_timestamps=True, beam_size=5, condition_on_previous_text=False
     )
     words = [
         {"word": w.word.strip(), "start": round(w.start, 3), "end": round(w.end, 3)}

@@ -70,6 +70,7 @@ import { PreviewPane } from "./PreviewPane";
 import { PublishPanel } from "./PublishPanel";
 import { SaveIndicator } from "./SaveIndicator";
 import { StagesPanel, type NarrateAllOptions } from "./StagesPanel";
+import { LanguagesPanel } from "./LanguagesPanel";
 import { TranslationPanel } from "./TranslationPanel";
 import {
   composeBook,
@@ -85,12 +86,12 @@ import {
 } from "./types";
 import { useAutosave } from "./useAutosave";
 
-type Tab = "stages" | "pages" | "translate" | "details" | "preview" | "publish";
+type Tab = "stages" | "pages" | "translate" | "languages" | "details" | "preview" | "publish";
 
 /** Shown only for a book whose original language is not Hebrew. */
 const TRANSLATE_TAB: Tab = "translate";
 
-const TABS: Tab[] = ["stages", "pages", "details", "preview", "publish"];
+const TABS: Tab[] = ["stages", "pages", "languages", "details", "preview", "publish"];
 
 interface ConfirmRequest {
   title: string;
@@ -1338,6 +1339,18 @@ export function StudioEditor({ book, canPublish, costs }: StudioEditorProps) {
               onChangeMeta={updateMeta}
               onTranslate={requestTranslation}
               onAccept={(translator) => void runTranslation("accept", translator)}
+            />
+          </div>
+        ) : null}
+
+        {tab === "languages" ? (
+          <div inert={locked} className={cn(locked && "opacity-60")}>
+            <LanguagesPanel
+              bookId={bookId}
+              ensureSaved={flush}
+              onServerBook={applyServerBook}
+              onNotice={(tone, text) => setNotice({ tone, text })}
+              onConfirm={setConfirm}
             />
           </div>
         ) : null}

@@ -95,6 +95,8 @@ export function checkRateLimit(scope: string, key: string, rule: RateLimitRule, 
 export const RATE_LIMIT_DEFAULTS = {
   /** POST /api/narration/<bookId>: one run narrates up to a whole book. */
   NARRATION: 30,
+  /** POST /api/studio/books/<id>/versions/<language>/narrate: one call per page of a language version. */
+  NARRATE_VERSION: 400,
   /** POST /api/narration/sample: one short sample sentence in the chosen voice (a little TTS quota). */
   SAMPLE: 20,
   /** POST /api/narration/nikud: one call per page ("nikud for all pages" sends one per page). */

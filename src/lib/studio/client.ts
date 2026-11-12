@@ -5,7 +5,7 @@
  * may be missing; those calls report `available: false` instead of throwing.
  */
 import type { NarrationVoice } from "../generation/presets";
-import type { BookWithPages, Page } from "../types";
+import type { BookLanguage, BookWithPages, Page } from "../types";
 import type { DetailSuggestions } from "./details";
 import type { BookMetaPatch, CreateBookInput, PublishProblem, UploadKind } from "./shared";
 
@@ -184,6 +184,53 @@ export async function translateBookToHebrew(id: string, translator: string): Pro
 /** Marks a hand-made translation as done: the book becomes a Hebrew book. */
 export async function acceptTranslation(id: string, translator: string): Promise<TranslationOutcome> {
   return request<TranslationOutcome>(`${bookUrl(id)}/translate`, json("POST", { action: "accept", translator }));
+}
+
+// ---------------------------------------------------------------------------
+// Language versions ("add a language")
+// ---------------------------------------------------------------------------
+
+export interface VersionOutcome {
+  /** 'mock': no translation service is configured and the book was NOT changed. */
+  status: "translated" | "saved" | "removed" | "mock";
+  isMock?: boolean;
+  book: BookWithPages;
+}
+
+const versionsUrl = (id: string) => `${bookUrl(id)}/versions`;
+
+/** Translates the whole book into `language` (one AI call) and stores it next to the book's own text. */
+export async function translateBookToLanguage(id: string, language: BookLanguage, translator: string): Promise<VersionOutcome> {
+  return request<VersionOutcome>(versionsUrl(id), json("POST", { action: "translate", language, translator }));
+}
+
+/** Stores texts a person typed (one per page) as the version in `language`. */
+export async function saveLanguageVersion(
+  id: string,
+  language: BookLanguage,
+  input: { title: string; summary?: string; pages: string[]; translator?: string },
+): Promise<VersionOutcome> {
+  return request<VersionOutcome>(versionsUrl(id), json("POST", { action: "save", language, ...input }));
+}
+
+export async function removeLanguageVersion(id: string, language: BookLanguage): Promise<VersionOutcome> {
+  return request<VersionOutcome>(versionsUrl(id), json("POST", { action: "remove", language }));
+}
+
+export interface VersionNarrationOutcome {
+  status: "narrated" | "skipped" | "stale";
+  isMock: boolean;
+  book: BookWithPages;
+}
+
+/** Narrates one page (zero-based) of a language version. */
+export async function narrateLanguagePage(
+  id: string,
+  language: BookLanguage,
+  pageIndex: number,
+  force = false,
+): Promise<VersionNarrationOutcome> {
+  return request<VersionNarrationOutcome>(`${versionsUrl(id)}/${language}/narrate`, json("POST", { pageIndex, force }));
 }
 
 export interface HeroImageOutcome {

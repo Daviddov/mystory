@@ -165,6 +165,11 @@ export function OfflineReader() {
         >
           <X aria-hidden="true" />
         </a>
+        <a href="/" aria-label="📖" className="inline-flex size-touch shrink-0 items-center justify-center rounded-full">
+          <span aria-hidden="true" className="flex size-9 items-center justify-center rounded-2xl bg-primary-soft text-xl shadow-card">
+            📖
+          </span>
+        </a>
         <h1 className="min-w-0 flex-1 truncate text-lg font-bold" dir="auto">
           {book.title}
         </h1>

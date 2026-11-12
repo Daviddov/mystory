@@ -13,6 +13,7 @@ import { getLocale } from "@/lib/i18n/server";
 import { getAgeGroup } from "@/lib/taxonomy";
 import { bookAgeGroups, type BookWithPages } from "@/lib/types";
 import { localizeTitle } from "@/lib/i18n/metadata";
+import { plainText, SITE_NAME } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -30,8 +31,15 @@ async function loadSharedBook(token: string): Promise<BookWithPages | null> {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = await loadSharedBook((await params).token);
+  const description = book ? plainText(book.summary, 155) || undefined : undefined;
   return localizeTitle({
     title: book ? book.title : "ספר משותף",
+    description,
+    // The share image is drawn from the cover by ./opengraph-image.ts.
+    openGraph: book
+      ? { title: book.title, description, type: "book", locale: "he_IL", siteName: SITE_NAME }
+      : undefined,
+    twitter: book ? { card: "summary_large_image", title: book.title, description } : undefined,
     // A share link is a secret: keep it out of search engines and out of Referer headers.
     robots: { index: false, follow: false },
     referrer: "no-referrer",

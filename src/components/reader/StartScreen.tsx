@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button } from "@/components/ui";
 import { READER_MESSAGES } from "@/lib/i18n/reader";
+import { routes } from "@/lib/routes";
 
 export interface StartScreenProps {
   title: string;
@@ -37,7 +38,9 @@ export function StartScreen({
   download,
   detailsHref,
 }: StartScreenProps) {
-  const t = READER_MESSAGES[useLocale()].start;
+  const messages = READER_MESSAGES[useLocale()];
+  const t = messages.start;
+  const player = messages.player;
   return (
     <div
       role="dialog"
@@ -57,6 +60,20 @@ export function StartScreen({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/20 via-background/50 to-background/90"
       />
+      {/* The start screen covers the reader's top bar, so the logo leads home from here. */}
+      <Link
+        href={routes.home()}
+        aria-label={player.home}
+        title={player.homeTitle}
+        className="group absolute start-3 top-3 z-10 inline-flex size-touch items-center justify-center rounded-full"
+      >
+        <span
+          aria-hidden="true"
+          className="flex size-10 items-center justify-center rounded-2xl bg-primary-soft text-2xl shadow-card transition-transform duration-300 group-hover:-rotate-6"
+        >
+          📖
+        </span>
+      </Link>
       <div className="relative flex w-full max-w-md flex-col items-center gap-6 text-center">
         {cover ? (
           <img

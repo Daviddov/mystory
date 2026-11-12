@@ -74,6 +74,15 @@ export async function generateMetadata({ params, searchParams }: ReadPageProps):
       title: `קוראים: ${plainText(book.title)}`,
       description: plainText(book.summary, 155) || undefined,
       alternates: { canonical: routes.book(book.slug) },
+      // The share image is the cover, drawn by ./opengraph-image.ts.
+      openGraph: {
+        title: plainText(book.title),
+        description: plainText(book.summary, 155) || undefined,
+        type: "book",
+        locale: "he_IL",
+        siteName: "הסיפור שלי",
+      },
+      twitter: { card: "summary_large_image", title: plainText(book.title) },
     },
     `Reading: ${plainText(book.title)}`,
   );

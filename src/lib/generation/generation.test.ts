@@ -155,7 +155,7 @@ describe("story language", () => {
     const ar = input({ language: "ar" });
     expect(outlinePrompt(ar).system).toMatch(/outline in Arabic/);
     const pages = pagesPrompt(ar, outline);
-    expect(pages.system).toMatch(/Modern Standard Arabic/);
+    expect(pages.system).toMatch(/spoken Palestinian Arabic/);
     expect(pages.system).not.toMatch(/Hebrew/);
     expect(pages.prompt).toMatch(/feminine Arabic forms/);
     expect(metadataPrompt(ar, []).prompt).toMatch(/Return, in Arabic/);

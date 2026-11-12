@@ -102,10 +102,15 @@ function writingRules(input: Pick<WizardInput, "language">): string {
       "Use correct grammatical gender for the hero throughout. Do not use English words or emoji in the story text."
     );
   }
-  const flavour =
-    language === "ar"
-      ? "Modern Standard Arabic that children understand, spelled correctly (always write the hamza: أ إ ؤ ئ, and ة and ى correctly), without short-vowel diacritics unless needed to avoid ambiguity, using only real Arabic words"
-      : "English";
+  if (language === "ar") {
+    return (
+      "Write the story text in spoken Palestinian Arabic, the colloquial Levantine dialect a Palestinian parent speaks to a small child " +
+      "(words like بدّي، شو، هلأ، كتير، هيك، مش، هاد، إنت، عالباب, verbs like بيروح، بتحكي), written in Arabic script with natural colloquial spelling. " +
+      "It must not read like Modern Standard Arabic: no formal فُصحى grammar, no case endings, no words nobody says aloud. Keep rhyme and rhythm in the spoken form. " +
+      "Use correct grammatical gender for the hero throughout. Write only Arabic in the story text: no words from other languages and no emoji."
+    );
+  }
+  const flavour = "English";
   return (
     `Write the story text in natural, warm, simple ${flavour}, as a parent would read it aloud to a small child, rhymed and rhythmic. ` +
     `Use correct grammatical gender for the hero throughout. Write only ${LANGUAGE_NAMES_EN[language]} in the story text: no words from other languages and no emoji.`

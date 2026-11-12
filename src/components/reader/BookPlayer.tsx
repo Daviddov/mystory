@@ -606,6 +606,18 @@ function Player({
   // ---- Sleep timer --------------------------------------------------------
   const [asleep, setAsleep] = useState(false);
   const [choosing, setChoosing] = useState(startScreen);
+  // While the story is read aloud the top bar and the controls step aside so the picture and the
+  // words get the whole screen; a tap on the page brings them back for a few seconds.
+  const [peekBars, setPeekBars] = useState(false);
+  useEffect(() => {
+    if (!peekBars) return;
+    const timer = window.setTimeout(() => setPeekBars(false), 4000);
+    return () => window.clearTimeout(timer);
+  }, [peekBars]);
+  useEffect(() => {
+    if (!narrating) setPeekBars(false);
+  }, [narrating]);
+  const barsHidden = isPage && narrating && !peekBars && !atEnd;
   const handleSleepFire = useCallback(() => {
     clearAdvance();
     stopNarration();
@@ -818,6 +830,10 @@ function Player({
   const onWordTap = (wordIndex: number) => {
     // The tap that ends a swipe must not also play a word.
     if (performance.now() - lastSwipeAt.current < 400) return;
+      if (isPage && narrating) {
+        setPeekBars((shown) => !shown);
+        return;
+      }
     narration.playWord(wordIndex);
   };
 
@@ -1020,7 +1036,7 @@ function Player({
       ) : null}
 
       {/* Top bar */}
-      <header className="mystory-reader-header flex shrink-0 items-center gap-0.5 px-1 py-1.5 sm:gap-2 sm:px-4">
+      <header className={cn("mystory-reader-header flex shrink-0 items-center gap-0.5 px-1 py-1.5 sm:gap-2 sm:px-4", barsHidden && "hidden")}>
         {exitControl("icon")}
         {/* The full-page reader hides the site header, so its logo leads home from here. */}
         {isPage ? (
@@ -1358,6 +1374,7 @@ function Player({
                   disabled={!audioSrc}
                   onClick={toggleNarration}
                   className={cn("mystory-reader-play size-16 shrink-0 rounded-full", narrating && "mystory-reader-playing")}
+            barsHidden && "hidden",
                 >
                   {narrating ? <Pause aria-hidden="true" className="size-8" /> : <Play aria-hidden="true" className="size-8" />}
                 </Button>

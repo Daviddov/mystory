@@ -8,7 +8,7 @@
  */
 import { z } from "zod";
 import { CATEGORY_SLUGS } from "../taxonomy";
-import { AgeGroupSchema } from "../types";
+import { AgeGroupSchema, BookLanguageSchema, type BookLanguage } from "../types";
 import { STORY_MOOD_SLUGS, STORY_STYLE_SLUGS } from "./options";
 
 export const INPUT_LIMITS = {
@@ -73,6 +73,8 @@ export const WizardInputSchema = z
     mood: z.enum(STORY_MOOD_SLUGS).optional(),
     idea: freeText(INPUT_LIMITS.idea).pipe(z.string().min(INPUT_LIMITS.ideaMin)),
     ageGroup: AgeGroupSchema,
+    /** The language the story is written and narrated in. Absent means Hebrew. */
+    language: BookLanguageSchema.optional(),
     category: z.string().refine((slug) => CATEGORY_SLUGS.includes(slug), "unknown category"),
     style: z.enum(STORY_STYLE_SLUGS),
   })
@@ -88,6 +90,11 @@ export type WizardInputDraft = z.input<typeof WizardInputSchema>;
  * name, age, hobbies, appearance and the free-text idea are deliberately left
  * out: jobs are kept for quota accounting and must not become a child profile.
  */
+/** The language of the story the wizard input asks for. */
+export function inputLanguage(input: Pick<WizardInput, "language">): BookLanguage {
+  return input.language ?? "he";
+}
+
 export function jobInputRecord(input: WizardInput, hadPhoto: boolean): Record<string, unknown> {
   return { ageGroup: input.ageGroup, category: input.category, style: input.style, hadPhoto };
 }

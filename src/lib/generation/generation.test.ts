@@ -11,7 +11,7 @@ import { mockPages } from "./mock-story";
 import { AGE_WRITING_RULES } from "./options";
 import { EphemeralPhoto, sniffImageType } from "./photo";
 import { checkAgeFit, runGeneration } from "./pipeline";
-import { outlinePrompt, type Review, type StoryPage } from "./prompts";
+import { metadataPrompt, outlinePrompt, pagesPrompt, type Review, type StoryPage } from "./prompts";
 import { MAX_ATTEMPTS_PER_DAY, getQuotaState } from "./quota";
 import type { VisionImage, VisionTextProvider } from "./vision";
 
@@ -140,6 +140,55 @@ describe("age tuning", () => {
     expect(checkAgeFit(pages, "0-2").verdict).toBe("major");
     const slightly: StoryPage[] = Array.from({ length: 6 }, () => ({ text: "מילה ".repeat(18), illustrationPrompt: "x" }));
     expect(checkAgeFit(slightly, "0-2").verdict).toBe("minor");
+  });
+});
+
+describe("story language", () => {
+  it("defaults to Hebrew and rejects unknown languages", () => {
+    expect(input().language).toBeUndefined();
+    expect(pagesPrompt(input(), { premise: "", problem: "", resolution: "", refrain: "", beats: [] }).system).toMatch(/modern Hebrew/);
+    expect(WizardInputSchema.safeParse({ ...BASE, language: "fr" }).success).toBe(false);
+  });
+
+  it("asks the model for the chosen language in every step", () => {
+    const outline = { premise: "", problem: "", resolution: "", refrain: "", beats: [] };
+    const ar = input({ language: "ar" });
+    expect(outlinePrompt(ar).system).toMatch(/outline in Arabic/);
+    const pages = pagesPrompt(ar, outline);
+    expect(pages.system).toMatch(/Modern Standard Arabic/);
+    expect(pages.system).not.toMatch(/Hebrew/);
+    expect(pages.prompt).toMatch(/feminine Arabic forms/);
+    expect(metadataPrompt(ar, []).prompt).toMatch(/Return, in Arabic/);
+    expect(pagesPrompt(input({ language: "en" }), outline).system).toMatch(/simple English/);
+  });
+
+  it("saves the book in that language and skips nikud", async () => {
+    const job = await data.repo.createJob({ ownerId: "u_parent", kind: "wizard" });
+    let nikudCalls = 0;
+    const { book } = await runGeneration(
+      {
+        repo: data.repo,
+        media: data.media,
+        text: mockTextProvider,
+        image: mockImageProvider,
+        nikud: {
+          name: "spy",
+          isMock: false,
+          async addNikud(text: string) {
+            nikudCalls++;
+            return { text, isMock: false };
+          },
+        },
+      },
+      { jobId: job.id, ownerId: "u_parent", input: input({ language: "en" }) },
+    );
+    expect(nikudCalls).toBe(0);
+    expect((await data.repo.getBookById(book!.id))!.language).toBe("en");
+    const hebrew = await runGeneration(
+      { repo: data.repo, media: data.media, text: mockTextProvider, image: mockImageProvider },
+      { jobId: (await data.repo.createJob({ ownerId: "u_parent", kind: "wizard" })).id, ownerId: "u_parent", input: input() },
+    );
+    expect((await data.repo.getBookById(hebrew.book!.id))!.language).toBeUndefined();
   });
 });
 

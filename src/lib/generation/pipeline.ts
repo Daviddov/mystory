@@ -25,7 +25,7 @@ import type { JobPatch, Repository } from "../repo/types";
 import { CATEGORY_SLUGS, THEME_SLUGS } from "../taxonomy";
 import type { BookStatus, BookWithPages, GenerationJob, Page } from "../types";
 import type { WizardInput } from "./input";
-import { cleanFreeText } from "./input";
+import { cleanFreeText, inputLanguage } from "./input";
 import { mockCharacter, mockMetadata, mockOutline, mockPages, mockReview } from "./mock-story";
 import { AGE_WRITING_RULES, getStoryStyle } from "./options";
 import { illustrationDirection } from "./presets";
@@ -252,6 +252,7 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
   const log = deps.log ?? (() => {});
   const cost = new CostMeter();
   const bookId = newId("bk");
+  const language = inputLanguage(input);
   const notes: string[] = [];
   let usedMock = false;
   let savedBook: BookWithPages | null = null;
@@ -456,7 +457,8 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
     // 7. Nikud for every page, then a second reader proofreads it. A failure only leaves pages
     // without nikud, which narration tries to fill in.
     let nikudTexts: (string | undefined)[] = [];
-    if (deps.nikud) {
+    // Nikud exists only for Hebrew; a story in another language goes straight to narration.
+    if (deps.nikud && language === "he") {
       await enter("nikud");
       if (deps.nikud.isMock) usedMock = true;
       const vocalized = await vocalizeStory(
@@ -498,6 +500,7 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
       themes: Array.from(new Set(meta.themes.filter((slug) => THEME_SLUGS.includes(slug)))).slice(0, 3),
       discussionQuestions: clampList(meta.discussionQuestions, 4, 200),
       origin: "ai",
+      ...(language !== "he" ? { language } : {}),
       ...(input.dedication ? { dedication: input.dedication } : {}),
       // The studio redraws pages from this hero.
       hero: { description: character, style: input.style, image: characterPath },

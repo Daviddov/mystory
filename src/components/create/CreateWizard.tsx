@@ -33,11 +33,12 @@ import {
 } from "@/lib/i18n/account";
 import type { Locale } from "@/lib/i18n/locale";
 import { taxonomyText } from "@/lib/i18n/messages";
+import { STUDIO_LANGUAGE_NAMES } from "@/lib/i18n/studio";
 import { findServerMessage, hasHebrew, showServerMessage } from "@/lib/i18n/server-errors";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
 import { AGE_GROUP_INFO, CATEGORIES } from "@/lib/taxonomy";
-import type { AgeGroup, JobStatus } from "@/lib/types";
+import { BOOK_LANGUAGES, type AgeGroup, type BookLanguage, type JobStatus } from "@/lib/types";
 
 export interface WizardMockFlags {
   text: boolean;
@@ -185,6 +186,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
   const [dedication, setDedication] = useState("");
   // Step 3
   const [ageGroup, setAgeGroup] = useState<AgeGroup | null>(null);
+  const [language, setLanguage] = useState<BookLanguage>("he");
   const [category, setCategory] = useState<string>("adventures");
   const [style, setStyle] = useState<StoryStyle>("storybook-cartoon");
   // Step 4
@@ -336,6 +338,7 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
       ...(mood ? { mood } : {}),
       ...(dedication.trim() ? { dedication } : {}),
       ageGroup: effectiveAgeGroup,
+      ...(language !== "he" ? { language } : {}),
       category,
       style,
     };
@@ -664,6 +667,17 @@ export function CreateWizard({ activeJobId, quotaLine, mock, steps }: CreateWiza
                     );
                   })}
                 </div>
+              </fieldset>
+              <fieldset className="flex flex-col gap-2">
+                <legend className="mb-1.5 text-base font-semibold text-foreground">{t.languageLegend}</legend>
+                <div className="flex flex-wrap gap-2">
+                  {BOOK_LANGUAGES.map((item) => (
+                    <Chip key={item} selected={language === item} onClick={() => setLanguage(item)}>
+                      {STUDIO_LANGUAGE_NAMES[locale][item]}
+                    </Chip>
+                  ))}
+                </div>
+                <p className="text-sm text-muted">{t.languageHint}</p>
               </fieldset>
               <fieldset className="flex flex-col gap-2">
                 <legend className="mb-1.5 text-base font-semibold text-foreground">{t.kind}</legend>

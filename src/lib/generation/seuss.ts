@@ -30,3 +30,16 @@ export const SEUSS_PRINCIPLES = [
 export const SEUSS_REVIEW_NOTE =
   "The house style is Dr. Seuss-like rhymed Hebrew (rhythm, anticipating rhyme, a refrain, repetition with a change, escalation, no moral sentence). " +
   "A story with no rhyme or no refrain is at most `minor` on that account, never `major`.";
+
+/** The default writing voice for the language of the story (the Hebrew text above is the original). */
+export function seussPrinciples(language: string): string {
+  if (language === "Hebrew") return SEUSS_PRINCIPLES;
+  return SEUSS_PRINCIPLES.replace("in Hebrew with", `in ${language} with`).replace(
+    /\(Hebrew endings that rhyme easily:[^)]*\)/,
+    `(use endings that rhyme naturally in ${language})`,
+  );
+}
+
+export function seussReviewNote(language: string): string {
+  return SEUSS_REVIEW_NOTE.replace("rhymed Hebrew", `rhymed ${language}`);
+}

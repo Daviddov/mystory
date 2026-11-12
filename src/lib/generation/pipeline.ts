@@ -418,6 +418,7 @@ export async function runGeneration(deps: PipelineDeps, params: PipelineParams):
       for (const i of group.filter((index) => !imagePaths[index])) {
         log(`[generation ${jobId}] grid panel ${i + 1} redrawn alone`);
         await draw([i]);
+        if (!imagePaths[i]) notes.push(`העמוד ה-${i + 1} נשאר בלי איור. אפשר לאייר אותו מהסטודיו.`);
       }
       finished += group.length;
       await update({

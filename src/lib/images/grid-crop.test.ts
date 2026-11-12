@@ -84,4 +84,21 @@ describe("cropGrid", () => {
     expect(panels).toHaveLength(1);
     expect(panels[0].width).toBe(500);
   });
+
+  it("follows the drawn rows when the model leaves the last row blank (5 panels in a 3x3 grid)", async () => {
+    // Two tall rows (3 + 2 panels) that fill the whole image, as the model drew the failing book.
+    const full = await makeGrid([500, 500, 500], [700, 700], 8);
+    const cropped = await cropGrid(full, { cols: 3, rows: 3, aspect: 4 / 3, count: 5 });
+    expect(cropped.panels).toHaveLength(5);
+    expect(cropped.panels.every((panel) => !panel.suspect)).toBe(true);
+    expect(cropped.warnings).toEqual([]);
+  });
+
+  it("flags a panel with a white gutter inside it when the cut had to be guessed", async () => {
+    const full = await makeGrid([500, 500, 500], [700, 700], 8);
+    // No count: an equal split into 3 rows lands inside the pictures.
+    const { panels, warnings } = await cropGrid(full, { cols: 3, rows: 3, aspect: 4 / 3 });
+    expect(panels.some((panel) => panel.suspect)).toBe(true);
+    expect(warnings.some((w) => w.includes("פס לבן"))).toBe(true);
+  });
 });

@@ -246,12 +246,14 @@ export async function renderGrid(
 
   const { cols, rows } = GRID_SIZES[layout];
   try {
-    const cropped = await cropGrid(gridResult.image, { cols, rows, aspect: 4 / 3 });
+    const cropped = await cropGrid(gridResult.image, { cols, rows, aspect: 4 / 3, count: scenes.length });
     warnings.push(...cropped.warnings);
     for (let i = 0; i < scenes.length; i++) {
       const panel = cropped.panels.find((p) => p.row * cols + p.col === i);
       if (!panel) {
         warnings.push(`העמוד ה-${i + 1} ברשת לא נחתך כראוי. אפשר לאייר אותו שוב.`);
+      } else if (panel.suspect) {
+        warnings.push(`העמוד ה-${i + 1} ברשת נחתך לא נכון (נראה בו פס לבן באמצע). אפשר לאייר אותו שוב.`);
       } else if (await looksBlank(panel.bytes)) {
         warnings.push(`העמוד ה-${i + 1} ברשת יצא ריק. אפשר לאייר אותו שוב.`);
       } else {

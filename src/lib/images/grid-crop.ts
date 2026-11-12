@@ -23,6 +23,11 @@ export interface GridCropOptions {
   trim?: number;
   /** Width / height to centre-crop every panel to, e.g. 4 / 3. */
   aspect?: number;
+  /**
+   * How many panels are really drawn (the rest of the grid is blank). With it the cut lines follow
+   * the drawn content, so a model that drew fewer or uneven rows still gets cut right.
+   */
+  count?: number;
 }
 
 export interface GridPanel {
@@ -32,6 +37,8 @@ export interface GridPanel {
   height: number;
   row: number;
   col: number;
+  /** A white gutter line runs through the panel: the cut fell inside a picture or between two. */
+  suspect: boolean;
 }
 
 export interface GridCropResult {
@@ -58,7 +65,10 @@ interface Raw {
   channels: number;
 }
 
-/** Standard deviation of the grey value along one column (axis "x") or row (axis "y") span. */
+/**
+ * How far one column (axis "x") or row (axis "y") span is from a plain white gutter line: the
+ * standard deviation of its grey value, plus a penalty for being darker than white. 0 = clean white.
+ */
 function lineScore(raw: Raw, axis: "x" | "y", pos: number, from: number, to: number): number {
   const length = Math.max(1, to - from);
   const step = Math.max(1, Math.ceil(length / MAX_SAMPLES));
@@ -75,7 +85,7 @@ function lineScore(raw: Raw, axis: "x" | "y", pos: number, from: number, to: num
     sumSq += grey * grey;
   }
   const mean = sum / n;
-  return Math.sqrt(Math.max(0, sumSq / n - mean * mean));
+  return Math.sqrt(Math.max(0, sumSq / n - mean * mean)) + Math.max(0, 240 - mean) * 0.5;
 }
 
 /**
@@ -127,6 +137,49 @@ function spans(raw: Raw, axis: "x" | "y", total: number, parts: number, from: nu
   return starts.map((start, i) => [start, ends[i]] as [number, number]);
 }
 
+/**
+ * The stretches of the image that hold drawing, found from the white lines between them instead of
+ * from an equal split. Short white gaps inside a picture do not split it; specks are ignored.
+ */
+function contentRuns(raw: Raw, axis: "x" | "y", total: number, from: number, to: number): [number, number][] {
+  const minGap = Math.max(3, Math.round(total * 0.003));
+  const minLength = Math.max(8, Math.round(total * 0.04));
+  const runs: [number, number][] = [];
+  let start = -1;
+  let last = -1;
+  for (let p = 0; p < total; p++) {
+    if (lineScore(raw, axis, p, from, to) > BAND_TOLERANCE) {
+      if (start < 0) start = p;
+      last = p;
+    } else if (start >= 0 && p - last > minGap) {
+      runs.push([start, last + 1]);
+      start = -1;
+    }
+  }
+  if (start >= 0) runs.push([start, last + 1]);
+  return runs.filter(([a, b]) => b - a >= minLength);
+}
+
+/**
+ * True when a white gutter line runs across the inside of a panel (not at its edges): the panel
+ * then shows parts of two pictures, or a picture cut in two.
+ */
+function hasInnerGutter(raw: Raw, left: number, top: number, width: number, height: number): boolean {
+  const run = (axis: "x" | "y", length: number, from: number, to: number, base: number): boolean => {
+    const need = Math.max(3, Math.round(length * 0.012));
+    let streak = 0;
+    for (let p = Math.round(length * 0.1); p < Math.round(length * 0.9); p++) {
+      if (lineScore(raw, axis, base + p, from, to) <= BAND_TOLERANCE) {
+        if (++streak >= need) return true;
+      } else {
+        streak = 0;
+      }
+    }
+    return false;
+  };
+  return run("y", height, left, left + width, top) || run("x", width, top, top + height, left);
+}
+
 export async function cropGrid(bytes: Uint8Array, options: GridCropOptions): Promise<GridCropResult> {
   const { cols, rows, aspect } = options;
   const trim = options.trim ?? 6;
@@ -142,12 +195,19 @@ export async function cropGrid(bytes: Uint8Array, options: GridCropOptions): Pro
   const H = raw.height;
   const warnings: string[] = [];
 
-  const rowSpans = spans(raw, "y", H, rows, 0, W);
+  const filled = Math.min(rows * cols, Math.max(1, options.count ?? rows * cols));
+  const usedRows = Math.ceil(filled / cols);
+  // Cut along the drawn content when it matches what was asked for; otherwise fall back to an equal split.
+  const drawnRows = options.count === undefined ? [] : contentRuns(raw, "y", H, 0, W);
+  const byContent = drawnRows.length === usedRows;
+  const rowSpans = byContent ? drawnRows : spans(raw, "y", H, rows, 0, W);
   const panels: GridPanel[] = [];
-  for (let row = 0; row < rows; row++) {
+  for (let row = 0; row < (byContent ? usedRows : rows); row++) {
     const [y0, y1] = rowSpans[row];
-    const colSpans = spans(raw, "x", W, cols, y0, y1);
-    for (let col = 0; col < cols; col++) {
+    const wanted = byContent ? Math.min(cols, filled - row * cols) : cols;
+    const drawnCols = byContent ? contentRuns(raw, "x", W, y0, y1) : [];
+    const colSpans = drawnCols.length === wanted ? drawnCols : spans(raw, "x", W, cols, y0, y1);
+    for (let col = 0; col < wanted; col++) {
       const [x0, x1] = colSpans[col];
       const number = row * cols + col + 1;
       let left = x0 + trim;
@@ -169,6 +229,7 @@ export async function cropGrid(bytes: Uint8Array, options: GridCropOptions): Pro
           height = nh;
         }
       }
+      const suspect = hasInnerGutter(raw, left, top, width, height);
       const png = await sharp(raw.data, { raw: { width: W, height: H, channels: raw.channels as 3 } })
         .extract({ left, top, width, height })
         .png()
@@ -180,7 +241,9 @@ export async function cropGrid(bytes: Uint8Array, options: GridCropOptions): Pro
         height,
         row,
         col,
+        suspect,
       });
+      if (suspect) warnings.push(`פאנל ${number} נחתך כנראה לא נכון: יש בו פס לבן באמצע.`);
       if (width < MIN_PANEL_WIDTH) {
         warnings.push(`פאנל ${number} צר (${width} פיקסלים) והאיור יצא בחדות נמוכה.`);
       }

@@ -12,7 +12,11 @@ import { hasRole } from "@/lib/auth";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { BookLanguageSchema } from "@/lib/types";
-import { plainText } from "@/lib/seo";
+import { absoluteUrl, plainText } from "@/lib/seo";
+import { toCommentView } from "@/lib/comments";
+import { BookComments } from "@/components/personal/BookComments";
+import { StarRating } from "@/components/personal/StarRating";
+import { ShareButtons } from "@/components/ShareButtons";
 import { localizeTitle } from "@/lib/i18n/metadata";
 
 export const dynamic = "force-dynamic";
@@ -98,11 +102,16 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
   if (!result.ok) notFound();
   const { book, user, isOwnerOrStaff, viaToken } = result;
 
-  const [serverProgress, recommendations, recordings] = await Promise.all([
+  const repo = await getRepo();
+  const [serverProgress, recommendations, recordings, ratingSummary, myRating, comments] = await Promise.all([
     query.page === undefined ? loadServerProgress(user, book.id) : null,
     recommendBooks(book),
-    getRepo().then((repo) => recordingsForReader(repo, book.id, user)),
+    recordingsForReader(repo, book.id, user),
+    repo.getRatingSummary(book.id).catch(() => ({ average: 0, count: 0 })),
+    user ? repo.getRating(user.id, book.id).catch(() => null) : Promise.resolve(null),
+    repo.listComments(book.id).catch(() => []),
   ]);
+  const readPath = routes.read(book.slug);
 
   const exitHref =
     book.status === "published" ? routes.book(book.slug) : isOwnerOrStaff ? routes.studioBook(book.id) : routes.home();
@@ -152,6 +161,30 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
       }
       countView={book.status === "published"}
       endScreenStaffPanel={publishPanel}
+      endScreenFeedback={
+        <>
+          <StarRating
+            bookId={book.id}
+            initialAverage={ratingSummary.average}
+            initialCount={ratingSummary.count}
+            initialMine={myRating?.stars ?? null}
+            signedIn={user !== null}
+            loginHref={routes.login(readPath)}
+          />
+          {book.status === "published" ? (
+            <ShareButtons url={absoluteUrl(routes.book(book.slug)) ?? routes.book(book.slug)} title={plainText(book.title)} />
+          ) : null}
+        </>
+      }
+      endScreenComments={
+        <BookComments
+          bookId={book.id}
+          initialComments={comments.map((comment) => toCommentView(comment, user))}
+          signedIn={user !== null}
+          loginHref={routes.login(readPath)}
+          shareToken={viaToken ? query.token : undefined}
+        />
+      }
     />
   );
 }

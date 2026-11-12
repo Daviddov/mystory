@@ -139,6 +139,10 @@ export interface BookPlayerProps {
   countView?: boolean;
   /** Shown on the end screen under its header: the publish panel for an editor reading an unpublished book. */
   endScreenStaffPanel?: ReactNode;
+  /** Rating and share controls on the end screen. */
+  endScreenFeedback?: ReactNode;
+  /** Comments section on the end screen. */
+  endScreenComments?: ReactNode;
   /** Called once when the reader reaches the end of the book (the bedtime queue then opens the next book). */
   onFinished?: () => void;
   className?: string;
@@ -347,6 +351,8 @@ function Player({
   downloadControl,
   countView = false,
   endScreenStaffPanel,
+  endScreenFeedback,
+  endScreenComments,
   onFinished,
   className,
 }: BookPlayerProps) {
@@ -1221,6 +1227,8 @@ function Player({
             creditsBook={book}
             mediaToken={shareToken}
             staffPanel={endScreenStaffPanel}
+            feedback={endScreenFeedback}
+            comments={endScreenComments}
           />
         ) : (
           <div

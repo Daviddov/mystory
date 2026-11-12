@@ -23,6 +23,10 @@ export interface EndScreenProps {
   mediaToken?: string;
   /** Extra panel right under the header (the publish panel an editor sees on an unpublished book). */
   staffPanel?: ReactNode;
+  /** Rating and share controls, right under the header. */
+  feedback?: ReactNode;
+  /** Readers' comments, under the discussion questions. */
+  comments?: ReactNode;
 }
 
 /** Emoji that fall once behind the "end of story" heading (skipped under reduced motion). */
@@ -45,6 +49,8 @@ export function EndScreen({
   creditsBook,
   mediaToken,
   staffPanel,
+  feedback,
+  comments,
 }: EndScreenProps) {
   const locale = useLocale();
   const t = READER_MESSAGES[locale].end;
@@ -85,6 +91,8 @@ export function EndScreen({
 
       {staffPanel}
 
+      {feedback ? <div className="flex flex-col items-center gap-4">{feedback}</div> : null}
+
       {discussionQuestions.length > 0 ? (
         <section
           aria-labelledby="reader-questions-title"
@@ -108,6 +116,10 @@ export function EndScreen({
             ))}
           </ol>
         </section>
+      ) : null}
+
+      {comments ? (
+        <div className="rounded-[1.75rem] bg-surface p-6 shadow-card ring-1 ring-border/60 sm:p-8">{comments}</div>
       ) : null}
 
       {recommendations.length > 0 ? (

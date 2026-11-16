@@ -1,5 +1,5 @@
 import { getMediaStore, isValidMediaPath } from "@/lib/media";
-import { coverShareImage, OG_SIZE } from "@/lib/og-image";
+import { coverShareImage, OG_SIZE, shareImagePath } from "@/lib/og-image";
 import { getRepo } from "@/lib/repo";
 
 // The share card of a share link is drawn from the book's cover. The link's token is the
@@ -15,7 +15,9 @@ export default async function Image({ params }: { params: Promise<{ token: strin
   const { token } = await params;
   if (!TOKEN_RE.test(token)) return coverShareImage(null);
   const book = await (await getRepo()).getBookByShareToken(token);
-  if (!book || book.shareToken !== token || !isValidMediaPath(book.coverImage)) return coverShareImage(null);
-  const object = await (await getMediaStore()).get(book.coverImage);
+  if (!book || book.shareToken !== token) return coverShareImage(null);
+  const path = shareImagePath(book, isValidMediaPath);
+  if (!path) return coverShareImage(null);
+  const object = await (await getMediaStore()).get(path);
   return coverShareImage(object);
 }

@@ -71,3 +71,13 @@ export async function coverShareImage(cover: { bytes: Uint8Array; contentType: s
     return siteShareImage();
   }
 }
+
+/** Media path to draw a book's share card from: its cover, or else the picture of its first illustrated page. */
+export function shareImagePath(
+  book: { coverImage: string; pages?: { image?: string }[] },
+  isValid: (path: string) => boolean,
+): string | null {
+  if (book.coverImage && isValid(book.coverImage)) return book.coverImage;
+  const first = (book.pages ?? []).map((page) => page.image ?? "").find((image) => image !== "" && isValid(image));
+  return first ?? null;
+}

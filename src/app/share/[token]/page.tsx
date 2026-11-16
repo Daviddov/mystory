@@ -4,7 +4,9 @@ import { BookOpen, Clock, Printer } from "lucide-react";
 import { BookCredits } from "@/components/BookCredits";
 import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { ButtonLink, Card, Chip } from "@/components/ui";
+import { isValidMediaPath } from "@/lib/media";
 import { mediaUrl } from "@/lib/media/url";
+import { shareImagePath } from "@/lib/og-image";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { accountMessages } from "@/lib/i18n/account";
@@ -55,7 +57,7 @@ export default async function SharePage({ params }: Props) {
   const t = accountMessages(locale).share;
 
   // The cover of an unpublished book is served only with the share token (see /media).
-  const cover = mediaUrl(book.coverImage, book.updatedAt, book.status === "published" ? undefined : token);
+  const cover = mediaUrl(shareImagePath(book, isValidMediaPath) ?? "", book.updatedAt, book.status === "published" ? undefined : token);
   const ages = bookAgeGroups(book);
   const age = getAgeGroup(ages[0]);
   const isPublic = book.status === "published";

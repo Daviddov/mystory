@@ -26,6 +26,7 @@ each with (silent) demo narration.
 | `npm run pipeline:status -- [--details]` | What stands between the local books and the library: missing details, pages and characters still to narrate |
 | `npm run book-meta -- <bookId> <file> [--submit]` / `-- --batch <file>` | Set metadata and credits from a JSON patch; `--batch` takes `{ "<bookId>": patch }` for many books |
 | `npm run daily-story -- [--force] [--dry-run]` | Create today's AI story as a `pending` book (local data only) |
+| `npm run export:media -- <slug>… [--video] [--short] [--podcast] [--publish <show>] [--site <url>]` | YouTube video, 9:16 Short, podcast episode and upload text in `exports/<slug>/`; `--publish` adds the episode to `/podcast/<show>/feed.xml` (needs ffmpeg) |
 
 To sign in on a production build (`npm start`) without Supabase, set
 `ALLOW_DEV_LOGIN=1`; the password-less development login is otherwise refused

@@ -64,3 +64,6 @@ next-env.d.ts
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Videos, podcast episodes and covers made by scripts/export-media.ts.
+/exports/

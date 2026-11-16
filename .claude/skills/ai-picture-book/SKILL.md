@@ -128,7 +128,9 @@ Also: the page's CSP blocks inline `<script>` and eval, so paste the driver thro
 paste [scripts/aistudio-book-driver.js](scripts/aistudio-book-driver.js) instead of the per-page driver, `bookDriver.q = ["<slug>", ...]`.
 It sends the pages joined by a blank line, captures the WAV Blob that the Download button builds, and posts `<slug>-book.wav` to the receiver.
 Then `npx tsx .claude/skills/ai-picture-book/scripts/split-book-audio.ts <slug> <dir>/<slug>-book.wav <dir>/pages` cuts it into pages at the pauses
-(voice detection + the reader's word estimator, no whisper; cuts checked against ffmpeg silencedetect all fell in pauses; pages flagged "no clear pause" need a listen),
+(without STT_PROVIDER: voice detection + the reader's word estimator, which can drift by a sentence; with `STT_PROVIDER=whisper STT_PYTHON="py -3.12"` set
+(preferred since 2026-11-15) the whole audio is recognized, each cut is placed where the page's first words were heard, and sentences the voice added
+that are not in the text (runs of 4+ unmatched words) are cut out; pages flagged "check this page" need a listen),
 then `attach-narration.ts <slug> <dir>/pages`.
 Pitfalls seen: a stale audio is returned when AI Studio silently ignores a Run (the driver compares blob sizes and waits 90 s before re-running);
 the receiver tab can stop answering (getFile retries); two receivers on one port serve the wrong folder; `Failed to generate` = quota, stop.

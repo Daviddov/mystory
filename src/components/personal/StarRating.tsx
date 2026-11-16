@@ -17,6 +17,8 @@ export interface StarRatingProps {
   signedIn: boolean;
   /** Login page URL that returns to this book. */
   loginHref: string;
+  /** Share token of a private book opened through a share link. */
+  shareToken?: string;
   className?: string;
 }
 
@@ -39,6 +41,7 @@ export function StarRating({
   initialMine,
   signedIn,
   loginHref,
+  shareToken,
   className,
 }: StarRatingProps) {
   const locale = useLocale();
@@ -58,7 +61,7 @@ export function StarRating({
       const response = await fetch(`/api/ratings/${encodeURIComponent(bookId)}`, {
         method: remove ? "DELETE" : "PUT",
         headers: { "content-type": "application/json" },
-        body: remove ? undefined : JSON.stringify({ stars }),
+        body: remove ? undefined : JSON.stringify(shareToken ? { stars, token: shareToken } : { stars }),
       });
       if (!response.ok) throw new Error(String(response.status));
       const data = (await response.json()) as RatingState;

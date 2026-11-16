@@ -11,7 +11,7 @@ import { recordingsForReader } from "@/lib/recordings/service";
 import { hasRole } from "@/lib/auth";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
-import { BookLanguageSchema } from "@/lib/types";
+import { BookLanguageSchema, bookLanguage } from "@/lib/types";
 import { absoluteUrl, plainText } from "@/lib/seo";
 import { toCommentView } from "@/lib/comments";
 import { BookComments } from "@/components/personal/BookComments";
@@ -141,7 +141,7 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
       syncProgress={user !== null}
       recordings={recordings}
       initialVoice={query.voice}
-      startLanguage={query.lang && switchableLanguages(book).includes(query.lang) ? query.lang : undefined}
+      startLanguage={query.lang && (query.lang === bookLanguage(book) || switchableLanguages(book).includes(query.lang)) ? query.lang : undefined}
       recorder={{
         signedIn: user !== null,
         loginHref: routes.login(routes.read(book.slug)),
@@ -170,6 +170,7 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
             initialMine={myRating?.stars ?? null}
             signedIn={user !== null}
             loginHref={routes.login(readPath)}
+            shareToken={viaToken ? query.token : undefined}
           />
           {book.status === "published" ? (
             <ShareButtons url={absoluteUrl(routes.book(book.slug)) ?? routes.book(book.slug)} title={plainText(book.title)} />

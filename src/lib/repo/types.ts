@@ -43,7 +43,7 @@ export interface BookFilter {
   timeBucket?: ReadingTimeBucket;
   /** Exact author as stored; '' matches books without an author. */
   author?: string;
-  /** Only books where at least one page has narration audio. */
+  /** Only books where at least one page has narration audio; in `language` when that is set. */
   hasAudio?: boolean;
   /** Only books where at least one page has vocalized text. */
   hasNikud?: boolean;

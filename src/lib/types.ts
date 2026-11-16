@@ -283,6 +283,15 @@ export function pageVersion(
   return book.translation?.language === language ? page.translation : page.extraTranslations?.[language];
 }
 
+/** True when the page has narration in `language`: its own audio for the book's language, else its version's audio. */
+export function pageHasAudioIn(
+  book: Pick<Book, "language" | "translation">,
+  page: Pick<Page, "audio" | "translation" | "extraTranslations">,
+  language: BookLanguage,
+): boolean {
+  return bookLanguage(book) === language ? !!page.audio : !!pageVersion(book, page, language)?.audio;
+}
+
 /**
  * The book's version fields with `version` added or replaced: it takes
  * Book.translation when that is free or in the same language, else a place in

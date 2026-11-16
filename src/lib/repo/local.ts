@@ -37,6 +37,7 @@ import {
   SLUG_PATTERN,
   bookLanguage,
   bookVersions,
+  pageHasAudioIn,
   UserSchema,
   type Book,
   type BookWithPages,
@@ -289,6 +290,9 @@ export class LocalRepository implements Repository {
     const ids = filter.ids ? new Set(filter.ids) : null;
     const excluded = filter.excludeIds ? new Set(filter.excludeIds) : null;
 
+    // Narration counts in the language asked for (a Hebrew book's English version needs English audio).
+    const narrated = (book: Book, page: Page) => (filter.language ? pageHasAudioIn(book, page, filter.language) : !!page.audio);
+
     const matches = all.filter((entry) => {
       const b = entry.book;
       if (statuses && !statuses.includes(b.status)) return false;
@@ -304,7 +308,7 @@ export class LocalRepository implements Repository {
       }
       if (filter.timeBucket && readingTimeBucket(b.readingMinutes) !== filter.timeBucket) return false;
       if (filter.author !== undefined && b.author !== filter.author) return false;
-      if (filter.hasAudio && !b.pages.some((p) => p.audio)) return false;
+      if (filter.hasAudio && !b.pages.some((p) => narrated(b, p))) return false;
       if (filter.hasNikud && !b.pages.some((p) => p.textNikud)) return false;
       if (filter.hasAnimation && !b.pages.some((p) => p.video)) return false;
       if (wantedTag && !b.tags.some((t) => tagSlug(t) === wantedTag)) return false;
@@ -316,7 +320,7 @@ export class LocalRepository implements Repository {
     });
 
     // Sort and page the cached books first: only the page returned is copied.
-    const books = matches.map((entry) => ({ ...entry.book, hasAudio: entry.book.pages.some((p) => !!p.audio) }));
+    const books = matches.map((entry) => ({ ...entry.book, hasAudio: entry.book.pages.some((p) => narrated(entry.book, p)) }));
     const byNew = (a: Book, b: Book) => sortKeyNew(b).localeCompare(sortKeyNew(a));
     switch (filter.sort ?? "new") {
       case "popular":

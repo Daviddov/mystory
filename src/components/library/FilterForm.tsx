@@ -7,7 +7,7 @@ import { Button, Input, Label, Select } from "@/components/ui";
 import { taxonomyText } from "@/lib/i18n/messages";
 import { routes } from "@/lib/routes";
 import { AGE_GROUP_INFO, CATEGORIES, READING_TIME_BUCKETS, THEMES } from "@/lib/taxonomy";
-import { buildHref, parseLibraryQuery, toParams, SORT_OPTIONS, type LibraryQuery } from "./filters";
+import { buildHref, parseLibraryQuery, toParams, SHELF_LANGUAGES, SORT_OPTIONS, type LibraryQuery } from "./filters";
 
 export interface FilterFormProps {
   /** The query currently shown; used as the initial value of every control. */
@@ -123,6 +123,18 @@ export function FilterForm({ query, signedIn = false }: FilterFormProps) {
         </Select>
       </div>
 
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="filter-lang">{t.language}</Label>
+        <Select id="filter-lang" name="lang" defaultValue={query.lang ?? ""}>
+          <option value="">{t.languages.he}</option>
+          {SHELF_LANGUAGES.map((code) => (
+            <option key={code} value={code}>
+              {t.languages[code]}
+            </option>
+          ))}
+        </Select>
+      </div>
+
       {signedIn ? (
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="filter-read">{t.read}</Label>
@@ -151,7 +163,6 @@ export function FilterForm({ query, signedIn = false }: FilterFormProps) {
           [
             ["audio", `🔊 ${t.audio}`, query.audio],
             ["nikud", `אָ ${t.nikud}`, query.nikud],
-            ["anim", `🎬 ${t.anim}`, query.anim],
           ] as const
         ).map(([name, label, checked]) => (
           <label key={name} className="inline-flex cursor-pointer items-center gap-2 font-medium">
@@ -159,15 +170,6 @@ export function FilterForm({ query, signedIn = false }: FilterFormProps) {
             {label}
           </label>
         ))}
-        <label className="inline-flex cursor-pointer items-center gap-2 font-medium">
-          <input type="checkbox" name="lang" value="ar" defaultChecked={query.lang === "ar"} className="size-5 accent-primary" />
-          <span>
-            {t.arabic}{" "}
-            <span lang="ar" className="text-muted">
-              (كتب بالعربية)
-            </span>
-          </span>
-        </label>
       </fieldset>
 
       {/* A tag arrives from a tag link; keep it while the other filters change. */}

@@ -17,6 +17,7 @@ import { estimateReadingMinutes, normalizeForSearch, slugify } from "../hebrew";
 import { newId } from "../ids";
 import { categoryLabel, tagSlug, themeLabel } from "../taxonomy";
 import {
+  BookLanguageSchema,
   BookSchema,
   BookWithPagesSchema,
   CollectionSchema,
@@ -27,6 +28,7 @@ import {
   GenerationJobSchema,
   ID_PATTERN,
   PageSchema,
+  pageHasAudioIn,
   ProgressSchema,
   RecordingSchema,
   SiteSettingsSchema,
@@ -636,17 +638,33 @@ export class SupabaseRepository implements Repository {
       : [];
     if ((statuses && statuses.length === 0) || (ids && ids.length === 0)) return { books: [], total: 0 };
 
+    // BookLanguage is a closed enum, so it is safe inside the filter strings.
+    const audioLanguage = filter.hasAudio && filter.language && BookLanguageSchema.safeParse(filter.language).success ? filter.language : undefined;
+
     const build = (head: boolean) => {
       // Inner embeds keep only books with a matching page (the embed itself is not used).
       const embeds = [
-        filter.hasAudio ? "has_audio:pages!inner(page_index)" : "",
+        filter.hasAudio && !audioLanguage ? "has_audio:pages!inner(page_index)" : "",
+        // Narration in a language sits in one of three page slots; each embed checks one of them.
+        ...(audioLanguage ? ["audio_own:pages(page_index)", "audio_tr:pages(page_index)", "audio_x:pages(page_index)"] : []),
         filter.hasNikud ? "has_nikud:pages!inner(page_index)" : "",
         filter.hasAnimation ? "has_video:pages!inner(page_index)" : "",
       ].filter(Boolean);
       let query = this.db
         .from("books")
         .select([BOOK_COLUMNS, ...embeds].join(","), { count: "exact", head });
-      if (filter.hasAudio) query = query.not("has_audio.audio", "is", null);
+      if (filter.hasAudio && !audioLanguage) query = query.not("has_audio.audio", "is", null);
+      if (audioLanguage) {
+        query = query
+          .not("audio_own.audio", "is", null)
+          .not("audio_tr.translation->>audio", "is", null)
+          .not(`audio_x.extra_translations->${audioLanguage}->>audio`, "is", null)
+          .or(
+            `and(language.eq.${audioLanguage},audio_own.not.is.null),` +
+              `and(translation->>language.eq.${audioLanguage},audio_tr.not.is.null),` +
+              "audio_x.not.is.null",
+          );
+      }
       if (filter.hasNikud) query = query.not("has_nikud.text_nikud", "is", null).neq("has_nikud.text_nikud", "");
       if (filter.hasAnimation) query = query.not("has_video.video", "is", null);
       if (statuses) query = query.in("status", statuses);
@@ -729,14 +747,37 @@ export class SupabaseRepository implements Repository {
       } else {
         const ids = books.map((book) => book.id);
         for (let from = 0; from < ids.length; from += 200) {
+          const language = filter.language && BookLanguageSchema.safeParse(filter.language).success ? filter.language : undefined;
+          if (!language) {
+            const { data: rows, error: audioError } = await this.db
+              .from("pages")
+              .select("book_id")
+              .in("book_id", ids.slice(from, from + 200))
+              .not("audio", "is", null)
+              .limit(5000);
+            if (audioError) fail("list narrated books", audioError);
+            for (const row of (rows ?? []) as unknown as { book_id: string }[]) narrated.add(row.book_id);
+            continue;
+          }
+          // On a language shelf the listen icon means narration in that language.
           const { data: rows, error: audioError } = await this.db
             .from("pages")
-            .select("book_id")
+            .select(`book_id,audio,tr_audio:translation->>audio,x_audio:extra_translations->${language}->>audio`)
             .in("book_id", ids.slice(from, from + 200))
-            .not("audio", "is", null)
+            .or(`audio.not.is.null,translation->>audio.not.is.null,extra_translations->${language}->>audio.not.is.null`)
             .limit(5000);
           if (audioError) fail("list narrated books", audioError);
-          for (const row of (rows ?? []) as unknown as { book_id: string }[]) narrated.add(row.book_id);
+          const byId = new Map(books.map((book) => [book.id, book]));
+          for (const row of (rows ?? []) as unknown as { book_id: string; audio: string | null; tr_audio: string | null; x_audio: string | null }[]) {
+            const book = byId.get(row.book_id);
+            if (!book) continue;
+            const page = {
+              audio: row.audio ?? undefined,
+              translation: row.tr_audio ? { text: "", audio: row.tr_audio } : undefined,
+              extraTranslations: row.x_audio ? { [language]: { text: "", audio: row.x_audio } } : undefined,
+            };
+            if (pageHasAudioIn(book, page, language)) narrated.add(row.book_id);
+          }
         }
       }
       for (const book of books) book.hasAudio = narrated.has(book.id);

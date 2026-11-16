@@ -160,7 +160,7 @@ export function InfiniteBookGrid({
               showTags={showTags}
               hideTag={hideTag}
               locale={locale}
-              {...(params.lang === "ar" ? { language: "ar" as const } : {})}
+              language={params.lang === "ar" || params.lang === "en" ? params.lang : "he"}
               {...(item.isNew ? { badge: t.book.new } : {})}
               {...(item.read ? { read: true } : {})}
             />

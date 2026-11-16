@@ -97,10 +97,12 @@ describe("toBookFilter", () => {
     expect(filter.status).toBe("published");
   });
 
-  it("lists the Hebrew books unless lang=ar asks for the Arabic ones", () => {
+  it("lists the Hebrew books unless lang=ar or lang=en picks another language", () => {
     expect(toBookFilter(parseLibraryQuery({})).language).toBe("he");
     expect(toBookFilter(parseLibraryQuery({ lang: "ar" })).language).toBe("ar");
-    expect(toBookFilter(parseLibraryQuery({ lang: "en" })).language).toBe("he");
+    expect(toBookFilter(parseLibraryQuery({ lang: "en" })).language).toBe("en");
+    expect(toBookFilter(parseLibraryQuery({ lang: "fr" })).language).toBe("he");
+    expect(toBookFilter(parseLibraryQuery({ lang: "he" })).language).toBe("he");
   });
 });
 

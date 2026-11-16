@@ -41,6 +41,32 @@ describe("LocalRepository books", () => {
     await expect(data.repo.updateBook(second.id, { slug: "same" })).rejects.toBeInstanceOf(ConflictError);
   });
 
+  it("counts narration in the language asked for", async () => {
+    const book = await data.repo.createBook({
+      title: "דג הזהב",
+      ownerId: "u_1",
+      status: "published",
+      translation: { language: "en", title: "The Goldfish" },
+      pages: [{ index: 0, text: "דג", audio: "audio/he.mp3", translation: { text: "Fish" } }],
+    });
+    const narrated = async (language: "he" | "en" | "ar") =>
+      (await data.repo.listBooks({ language, hasAudio: true })).books.map((b) => b.id);
+    expect(await narrated("he")).toEqual([book.id]);
+    expect(await narrated("en")).toEqual([]);
+    expect((await data.repo.listBooks({ language: "en" })).books[0]?.hasAudio).toBe(false);
+
+    const english = await data.repo.createBook({
+      title: "הדוב",
+      ownerId: "u_1",
+      status: "published",
+      translation: { language: "en", title: "The Bear" },
+      pages: [{ index: 0, text: "דוב", translation: { text: "Bear", audio: "audio/en.mp3" } }],
+    });
+    expect(await narrated("en")).toEqual([english.id]);
+    expect(await narrated("he")).toEqual([book.id]);
+    expect(await narrated("ar")).toEqual([]);
+  });
+
   it("lists only published books by default and filters", async () => {
     const pub = await data.repo.createBook({
       title: "חתול בגשם",

@@ -8,7 +8,7 @@ import type { BookFilter } from "@/lib/repo/types";
 import { routes } from "@/lib/routes";
 import { bookListJsonLd } from "@/lib/seo";
 import { AGE_GROUP_INFO } from "@/lib/taxonomy";
-import { hrefWith, parseLibraryQuery, toParams, type LibraryQuery, type RawSearchParams } from "./filters";
+import { hrefWith, parseLibraryQuery, shelfLanguage, toParams, type LibraryQuery, type RawSearchParams } from "./filters";
 import { InfiniteBookGrid } from "./InfiniteBookGrid";
 import { listingApiUrl, scopeForBase, type ListingScope } from "./infinite";
 import { toListingItems } from "./listing";
@@ -175,7 +175,8 @@ export async function BrowseView({
               cardProps={(book) => ({
                 showTags: true,
                 hideTag: base.tag,
-                ...(shown.lang ? { language: shown.lang } : {}),
+                // Open each book (and its narration) in the language of the shelf.
+                language: shelfLanguage(shown),
                 ...(isNewBook(book, listing.now) ? { badge: messages.book.new } : {}),
               })}
               empty={

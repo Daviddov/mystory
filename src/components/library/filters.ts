@@ -3,7 +3,7 @@
  *
  * Every browse page reads the same query-string keys:
  *   age, category, theme, time, tag, q, lang, sort, page
- * Listings are in Hebrew unless lang=ar asks for the Arabic books.
+ * Listings are in Hebrew unless lang=ar / lang=en asks for the books readable in that language.
  * Unknown or invalid values are dropped instead of failing the page.
  */
 import { z } from "zod";
@@ -20,7 +20,7 @@ import {
 } from "@/lib/taxonomy";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n/locale";
 import { getMessages, taxonomyText } from "@/lib/i18n/messages";
-import { AGE_GROUPS, type AgeGroup, type LibraryLanguage } from "@/lib/types";
+import { AGE_GROUPS, type AgeGroup, type BookLanguage } from "@/lib/types";
 
 export const PAGE_SIZE = 24;
 export const MAX_QUERY_LENGTH = 100;
@@ -51,11 +51,23 @@ export interface LibraryQuery {
   anim?: true;
   /** Per signed-in user: only books they finished ('read') or have not finished ('unread'). */
   read?: ReadFilter;
-  /** The Arabic shelf instead of the Hebrew one (the default). */
-  lang?: Exclude<LibraryLanguage, "he">;
+  /**
+   * The Arabic or English shelf instead of the Hebrew one (the default): books
+   * readable in that language, opened (and narrated) in it.
+   */
+  lang?: ShelfLanguage;
   sort: LibrarySort;
   /** 1-based. */
   page: number;
+}
+
+/** Languages a visitor can pick besides Hebrew, the default shelf. */
+export const SHELF_LANGUAGES = ["ar", "en"] as const satisfies readonly BookLanguage[];
+export type ShelfLanguage = (typeof SHELF_LANGUAGES)[number];
+
+/** The language a listing is read in: the chosen shelf, else Hebrew. */
+export function shelfLanguage(query: Pick<LibraryQuery, "lang">): BookLanguage {
+  return query.lang ?? "he";
 }
 
 export const READ_FILTERS = ["read", "unread"] as const;
@@ -89,7 +101,7 @@ const LibraryQuerySchema = z.object({
   nikud: flag,
   anim: flag,
   read: oneOf(READ_FILTERS).optional().catch(undefined),
-  lang: z.literal("ar").optional().catch(undefined),
+  lang: z.enum(SHELF_LANGUAGES).optional().catch(undefined),
   sort: z
     .enum(SORT_OPTIONS.map((option) => option.value) as [LibrarySort, ...LibrarySort[]])
     .catch(DEFAULT_SORT),
@@ -142,7 +154,7 @@ export function toBookFilter(query: LibraryQuery, base: BookFilter = {}, pageSiz
     hasAudio: query.audio,
     hasNikud: query.nikud,
     hasAnimation: query.anim,
-    language: query.lang ?? "he",
+    language: shelfLanguage(query),
     ...base,
     status: "published",
     sort: query.sort,
@@ -226,7 +238,7 @@ export function describeActiveFilters(query: LibraryQuery, locale: Locale = DEFA
   if (query.audio) active.push({ key: "audio", label: t.audio, emoji: "🔊" });
   if (query.nikud) active.push({ key: "nikud", label: t.nikud, emoji: "אָ" });
   if (query.anim) active.push({ key: "anim", label: t.anim, emoji: "🎬" });
-  if (query.lang === "ar") active.push({ key: "lang", label: t.arabic, emoji: "ع" });
+  if (query.lang) active.push({ key: "lang", label: t.languageIs(t.languages[query.lang]), emoji: query.lang === "ar" ? "ع" : "A" });
   if (query.read) {
     active.push({ key: "read", label: query.read === "read" ? t.readBooks : t.unreadBooks, emoji: "✅" });
   }

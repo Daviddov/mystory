@@ -51,6 +51,8 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
   const t = getMessages(locale).book;
   const version = language && language !== bookLanguage(book) ? bookVersions(book).find((v) => v.language === language) : undefined;
   const inSecondLanguage = !!version;
+  // A book with versions opens in the shelf's language even when that is its own: a remembered reader choice must not switch it.
+  const pinLanguage = inSecondLanguage || (!!language && language === bookLanguage(book) && bookVersions(book).length > 0);
   const title = version ? version.title : book.title;
   const ages = bookAgeGroups(book);
   const age = getAgeGroup(ages[0]);
@@ -61,7 +63,7 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
   return (
     <article className={cn("group relative flex flex-col", layout === "shelf" && "w-40 shrink-0 sm:w-48", className)}>
       <Link
-        href={href ?? (inSecondLanguage ? `${routes.readStart(book.slug)}&lang=${language}` : routes.readStart(book.slug))}
+        href={href ?? (pinLanguage ? `${routes.readStart(book.slug)}&lang=${language}` : routes.readStart(book.slug))}
         className="flex flex-col gap-2.5 rounded-[1.25rem] focus-visible:outline-offset-4"
       >
         <div className="relative aspect-[3/4] overflow-hidden rounded-[1.25rem] bg-surface-2 shadow-card ring-1 ring-border/70 transition-[transform,box-shadow] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-lift group-active:scale-[0.98]">

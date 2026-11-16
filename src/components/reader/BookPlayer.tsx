@@ -129,7 +129,7 @@ export interface BookPlayerProps {
   recorder?: { signedIn: boolean; loginHref: string; canShare: boolean };
   /** Recording id to start with (a "listen" link from the shelf). */
   initialVoice?: string;
-  /** Open in one of the book's other languages (see switchableLanguages), e.g. Arabic from the Arabic shelf. */
+  /** Open in this language: one of the book's other languages (e.g. Arabic from the Arabic shelf), or its own to turn a remembered version off. */
   startLanguage?: BookLanguage;
   /** Open on a cover screen that asks how to start: read, listen or download (books opened from their card). */
   startScreen?: boolean;
@@ -434,7 +434,8 @@ function Player({
   // ---- Settings -----------------------------------------------------------
   const [prefs, setPrefs] = useState<ReaderPrefs>(() => ({
     ...(remember ? loadReaderPrefs() : {}),
-    ...(startLanguage ? { original: true, secondLanguage: startLanguage } : {}),
+    // Opened from a language shelf: read and narrate in that language (its own language turns the version off).
+    ...(startLanguage ? (startLanguage === bookLanguage(book) ? { original: false } : { original: true, secondLanguage: startLanguage }) : {}),
   }));
   const updatePrefs = (patch: ReaderPrefs) => {
     const next = { ...prefs, ...patch };

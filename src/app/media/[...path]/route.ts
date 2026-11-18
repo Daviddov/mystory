@@ -42,6 +42,14 @@ const PRIVATE_CACHE = "private, no-store";
 const PUBLIC_SIGNED_SECONDS = 60 * 60;
 const PUBLIC_REDIRECT_MAX_AGE = 5 * 60;
 /**
+ * How long Vercel's CDN may serve the redirect of a public file without
+ * running this function (s-maxage). Every picture and audio clip otherwise
+ * costs a function call with database lookups, which used up the free CPU
+ * allowance. A browser may reuse a CDN copy for PUBLIC_REDIRECT_MAX_AGE more,
+ * so a reused signed URL must outlive both (see publicSignedUrl).
+ */
+const PUBLIC_REDIRECT_CDN_MAX_AGE = 20 * 60;
+/**
  * Lifetime of a signed URL of a private file: long enough to play one page's
  * audio, short enough that a revoked share link stops working soon.
  */
@@ -65,7 +73,7 @@ async function publicSignedUrl(store: MediaStore, mediaPath: string): Promise<st
   const now = Date.now();
   const hit = cache.get(mediaPath);
   // Reuse only while the URL outlives the redirect's own cache lifetime with room to spare.
-  if (hit && hit.expiresAt - now > (PUBLIC_REDIRECT_MAX_AGE + 5 * 60) * 1000) return hit.url;
+  if (hit && hit.expiresAt - now > (PUBLIC_REDIRECT_CDN_MAX_AGE + PUBLIC_REDIRECT_MAX_AGE + 5 * 60) * 1000) return hit.url;
   const url = await store.signedUrl!(mediaPath, PUBLIC_SIGNED_SECONDS);
   if (!url) {
     cache.delete(mediaPath);
@@ -89,7 +97,10 @@ async function redirectToStore(store: MediaStore, mediaPath: string, access: Med
     status: 302,
     headers: {
       Location: target,
-      "Cache-Control": access === "public" ? `public, max-age=${PUBLIC_REDIRECT_MAX_AGE}` : PRIVATE_CACHE,
+      "Cache-Control":
+        access === "public"
+          ? `public, max-age=${PUBLIC_REDIRECT_MAX_AGE}, s-maxage=${PUBLIC_REDIRECT_CDN_MAX_AGE}`
+          : PRIVATE_CACHE,
       "Referrer-Policy": "no-referrer",
     },
   });

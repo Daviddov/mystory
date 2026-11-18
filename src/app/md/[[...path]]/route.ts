@@ -12,7 +12,7 @@
 import { markdownPage } from "@/lib/markdown-pages";
 
 export const dynamic = "force-static";
-export const revalidate = 600;
+export const revalidate = 86400; // once a day; edits made in the app revalidate at once (src/lib/library-cache.ts)
 
 /** Each page is rendered on its first request, then cached. */
 export function generateStaticParams(): { path: string[] }[] {

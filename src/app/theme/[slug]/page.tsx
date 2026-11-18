@@ -14,7 +14,7 @@ import { localizeTitle } from "@/lib/i18n/metadata";
 // Static and cached (ISR) for signed-out visitors; see src/lib/library-cache.ts.
 // Query strings and signed-in visitors go to the dynamic twin in src/app/live.
 export const dynamic = "force-static";
-export const revalidate = 600;
+export const revalidate = 86400; // once a day; edits made in the app revalidate at once (src/lib/library-cache.ts)
 
 /** Every theme is built at deploy time. */
 export function generateStaticParams(): { slug: string }[] {

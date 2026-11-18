@@ -10,7 +10,7 @@ import { BookView, bookMetadata } from "./book-view";
  * Signed-in visitors are rewritten to /live/book/[slug] by src/proxy.ts.
  */
 export const dynamic = "force-static";
-export const revalidate = 600;
+export const revalidate = 86400; // once a day; edits made in the app revalidate at once (src/lib/library-cache.ts)
 
 interface Props {
   params: Promise<{ slug: string }>;

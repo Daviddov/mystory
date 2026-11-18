@@ -4,10 +4,11 @@
  * The library pages (/, /books, /book/[slug], /age, /category, /theme, /time,
  * /tag, /collections, /parasha, /holidays, /listen) are static for signed-out visitors (force-static) and
  * kept fresh two ways:
- *   - time-based: each page is rebuilt in the background at most every
- *     10 minutes (`export const revalidate = 600` on each page), which is what
- *     picks up view counts and changes written outside the app (scripts,
- *     direct database edits);
+ *   - time-based: each page is rebuilt in the background at most once a day
+ *     (`export const revalidate = 86400` on each page), which is what picks up
+ *     view counts and changes written outside the app (scripts, direct
+ *     database edits). It was 10 minutes, which used up Vercel's free ISR
+ *     write allowance (every rebuild of every visited or crawled page is a write);
  *   - on demand: every repository write that changes what the library shows
  *     (a published book created, edited, published, unpublished or deleted;
  *     collections; site settings) calls revalidateLibrary(). See

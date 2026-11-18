@@ -7,7 +7,7 @@ import { loadLlmsTxt } from "@/lib/markdown-pages";
  * 10 minutes, or right away when a published book changes.
  */
 export const dynamic = "force-static";
-export const revalidate = 600;
+export const revalidate = 86400; // once a day; edits made in the app revalidate at once (src/lib/library-cache.ts)
 
 export async function GET(): Promise<Response> {
   return new Response(await loadLlmsTxt(), { headers: { "Content-Type": MARKDOWN_CONTENT_TYPE } });

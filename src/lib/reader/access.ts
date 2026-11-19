@@ -58,7 +58,7 @@ export async function loadServerProgress(user: User | null, bookId: string): Pro
  * is serialised into the HTML of every visitor, so share tokens, owner ids and
  * review notes of other people's books must not be in it.
  */
-export async function recommendBooks(book: Book, limit = 4): Promise<PublicBook[]> {
+export async function recommendBooks(book: Book, limit = 12): Promise<PublicBook[]> {
   try {
     const repo = await getRepo();
     const sameAge = await repo.listBooks({
@@ -66,7 +66,8 @@ export async function recommendBooks(book: Book, limit = 4): Promise<PublicBook[
       ageGroup: book.ageGroup,
       excludeIds: [book.id],
       sort: "popular",
-      limit: 24,
+      // A pool well beyond the limit, so the shared-topic ranking has room to choose.
+      limit: Math.max(24, limit * 3),
     });
     const overlap = (other: Book) =>
       other.categories.filter((slug) => book.categories.includes(slug)).length * 2 +

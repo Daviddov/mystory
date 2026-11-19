@@ -15,11 +15,10 @@ import { MockNotice } from "@/components/MockNotice";
 import { BookComments } from "@/components/personal/BookComments";
 import { FavoriteButton } from "@/components/personal/FavoriteButton";
 import { StarRating } from "@/components/personal/StarRating";
-import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { ShareButtons } from "@/components/ShareButtons";
 import { BookVideoButton } from "@/components/video/BookVideoButton";
 import { ButtonLink, Card, Chip } from "@/components/ui";
-import { canViewBook } from "@/lib/auth";
+import { canEditBook, canViewBook } from "@/lib/auth";
 import { toCommentView } from "@/lib/comments";
 import { isCreativeCommons } from "@/lib/credits";
 import { hasNikud } from "@/lib/hebrew";
@@ -157,6 +156,8 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
   // visitors are sent to the per-request twin by src/proxy.ts.
   const locale = await getLocale();
   const t = READER_MESSAGES[locale].book;
+  // Owner, editor or admin: they alone get the print/PDF and video buttons.
+  const canEdit = canEditBook(book, user);
 
   const repo = await getRepo();
   const [similar, isFavorite, inPlaylist, myProgress, ratingSummary, myRating, comments] = await Promise.all([
@@ -399,12 +400,14 @@ export async function BookView({ slug, viewer: user }: { slug: string; viewer: U
               )}
               {hasPages ? (
                 <>
-                  <ButtonLink href={routes.print(book.slug)} variant="outline">
-                    <Printer aria-hidden="true" className="size-5" />
-                    {t.print}
-                  </ButtonLink>
-                  <OfflineDownloadButton bookId={book.id} title={book.title} />
-                  {book.status === "published" ? (
+                  {/* Printing, the PDF and the video are for the book's owner, editors and admins only. */}
+                  {canEdit ? (
+                    <ButtonLink href={routes.print(book.slug)} variant="outline">
+                      <Printer aria-hidden="true" className="size-5" />
+                      {t.print}
+                    </ButtonLink>
+                  ) : null}
+                  {canEdit && book.status === "published" ? (
                     <BookVideoButton
                       title={plainText(book.title)}
                       slug={book.slug}

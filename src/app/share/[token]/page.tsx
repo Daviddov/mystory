@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BookOpen, Clock, Printer } from "lucide-react";
 import { BookCredits } from "@/components/BookCredits";
-import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { ButtonLink, Card, Chip } from "@/components/ui";
 import { isValidMediaPath } from "@/lib/media";
 import { mediaUrl } from "@/lib/media/url";
 import { shareImagePath } from "@/lib/og-image";
+import { canEditBook, getCurrentUser } from "@/lib/auth";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
 import { accountMessages } from "@/lib/i18n/account";
@@ -53,8 +53,10 @@ export default async function SharePage({ params }: Props) {
   const { token } = await params;
   const book = await loadSharedBook(token);
   if (!book) notFound();
-  const locale = await getLocale();
+  const [locale, user] = await Promise.all([getLocale(), getCurrentUser()]);
   const t = accountMessages(locale).share;
+  // A share link lets people read the book; printing and the PDF stay with its owner and the staff.
+  const canPrint = canEditBook(book, user);
 
   // The cover of an unpublished book is served only with the share token (see /media).
   const cover = mediaUrl(shareImagePath(book, isValidMediaPath) ?? "", book.updatedAt, book.status === "published" ? undefined : token);
@@ -107,11 +109,12 @@ export default async function SharePage({ params }: Props) {
                 <BookOpen aria-hidden="true" className="size-6" />
                 {t.read}
               </ButtonLink>
-              <OfflineDownloadButton bookId={book.id} title={book.title} token={isPublic ? undefined : token} />
-              <ButtonLink href={routes.print(book.slug, isPublic ? undefined : token)} variant="outline">
-                <Printer aria-hidden="true" className="size-5" />
-                {t.print}
-              </ButtonLink>
+              {canPrint ? (
+                <ButtonLink href={routes.print(book.slug, isPublic ? undefined : token)} variant="outline">
+                  <Printer aria-hidden="true" className="size-5" />
+                  {t.print}
+                </ButtonLink>
+              ) : null}
             </div>
           ) : (
             <p className="rounded-md bg-warning-soft px-4 py-3">{t.noPages}</p>

@@ -129,6 +129,7 @@ export const READER_MESSAGES = defineMessages(
       readAgain: "לקרוא שוב",
       questions: "על מה אפשר לדבר?",
       next: "מה קוראים עכשיו?",
+      moreBooks: "לעוד ספרים",
       credits: "קרדיטים ורישיון",
     },
     recording: {
@@ -409,6 +410,7 @@ export const READER_MESSAGES = defineMessages(
       readAgain: "Read it again",
       questions: "What can we talk about?",
       next: "What shall we read next?",
+      moreBooks: "More books",
       credits: "Credits and license",
     },
     recording: {

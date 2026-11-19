@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Link from "@/components/i18n/LocaleLink";
-import { CloudDownload, Headphones, Mic, Pencil, Plus } from "lucide-react";
+import { Headphones, Mic, Pencil, Plus } from "lucide-react";
 import { MyRecordingActions } from "@/components/personal/MyRecordingActions";
 import { PersonalLibrary } from "@/components/personal/PersonalLibrary";
 import { PersonalSync } from "@/components/personal/PersonalSync";
 import { ShareControls } from "@/components/personal/ShareControls";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
-import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { ButtonLink, Card, Chip, EmptyState, type ChipTone } from "@/components/ui";
 import { getCurrentUser } from "@/lib/auth";
 import { accountMessages } from "@/lib/i18n/account";
@@ -132,7 +131,6 @@ function MyBookRow({ book, locale }: { book: Book; locale: Locale }) {
             <Pencil aria-hidden="true" className="size-4" />
             {t.edit}
           </ButtonLink>
-          <OfflineDownloadButton bookId={book.id} title={book.title} size="sm" />
         </div>
         {book.status === "published" ? (
           <p className="text-sm text-muted">
@@ -252,10 +250,6 @@ export default async function MePage() {
           {t.onThisDevice}
         </h2>
         <div className="flex flex-wrap items-center gap-3">
-          <ButtonLink href="/offline" variant="outline">
-            <CloudDownload aria-hidden="true" className="size-5" />
-            {t.offlineBooks}
-          </ButtonLink>
           <InstallPrompt variant="inline" />
         </div>
       </section>

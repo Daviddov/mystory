@@ -31,7 +31,6 @@ export const ACCOUNT_MESSAGES = defineMessages(
       myRecordings: "ההקלטות שלי",
       recordingsIntro: "סיפורים שהקלטתם בקול שלכם בזמן הקריאה. הקלטה ששיתפתם תופיע לכל הקוראים אחרי אישור העורכים.",
       onThisDevice: "במכשיר הזה",
-      offlineBooks: "ספרים שהורדתי לקריאה בלי רשת",
       status: {
         draft: { label: "טיוטה", hint: "רק אתם רואים את הספר." },
         private: { label: "פרטי", hint: "רק אתם רואים את הספר, ומי שקיבל מכם קישור שיתוף." },
@@ -118,6 +117,11 @@ export const ACCOUNT_MESSAGES = defineMessages(
         link: "קישור הכניסה לא תקין או שפג תוקפו. בקשו קישור חדש.",
         google: "הכניסה עם Google לא הצליחה. נסו שוב או היכנסו עם אימייל.",
       } as Record<string, string>,
+      // Not errors: the emailed link did its job, but this browser has no session yet.
+      notices: {
+        confirmed: "כתובת האימייל אומתה. עכשיו היכנסו כאן עם האימייל והסיסמה.",
+        used: "הקישור הזה כבר שומש. אם כבר אישרתם את האימייל, פשוט היכנסו כאן עם הסיסמה. אחרת בקשו קישור חדש.",
+      } as Record<string, string>,
       unavailableTitle: "ההתחברות לא זמינה",
       unavailableDescription: "באתר הזה לא הוגדר שירות חשבונות. אפשר לקרוא את כל הספרים בלי להתחבר.",
       sentTitle: "שלחנו לכם קישור כניסה",
@@ -173,8 +177,7 @@ export const ACCOUNT_MESSAGES = defineMessages(
       noNetwork: "אין כרגע חיבור לרשת. הספרים שכאן נקראים גם ככה.",
       notActive: "הספרים שמורים במכשיר, אבל הקריאה בלי רשת עדיין לא פעילה בדפדפן הזה. טענו את העמוד מחדש כשיש חיבור.",
       emptyTitle: "עדיין לא הורדתם ספרים",
-      emptyDescription:
-        'בעמוד של כל ספר יש כפתור "הורדה לקריאה בלי רשת". ספר שהורדתם יחכה כאן, גם בטיסה וגם בטיול.',
+      emptyDescription: "אין במכשיר הזה ספרים שמורים לקריאה בלי רשת. כשיש חיבור, כל הספרים פתוחים לקריאה באתר.",
       allBooks: "לכל הספרים",
       readAria: (title: string) => `קריאת הספר ${title}`,
       pages: (n: number) => `${n} עמודים`,
@@ -199,24 +202,6 @@ export const ACCOUNT_MESSAGES = defineMessages(
       next: "הבא",
       theEnd: "הסוף! חזרה לספרים",
     },
-    download: {
-      failed: "ההורדה לא הצליחה. נסו שוב.",
-      errors: {
-        unsupported: "הדפדפן הזה לא תומך בשמירה לקריאה בלי רשת",
-        manifest: "לא הצלחנו לקבל את פרטי הספר. בדקו את החיבור ונסו שוב.",
-        assets: (n: number) => `${n} קבצים של הספר לא נשמרו, ולכן הוא לא זמין בלי רשת. נסו שוב.`,
-        storage: "אין מספיק מקום במכשיר כדי לשמור את הספר.",
-      },
-      saved: "שמור במכשיר",
-      openOffline: "פתיחה בלי רשת",
-      removeAria: (title?: string) => (title ? `הסרת ההורדה של ${title}` : "הסרת ההורדה"),
-      remove: "הסרה",
-      notActive:
-        "הספר נשמר, אבל הקריאה בלי רשת עדיין לא פעילה בדפדפן הזה. טענו את העמוד מחדש; אם ההודעה נשארת, הדפדפן או כתובת האתר לא תומכים בכך.",
-      downloadAria: (title?: string) => `הורדה לקריאה בלי רשת${title ? `: ${title}` : ""}`,
-      downloading: (percent: number) => `מוריד… ${percent}%`,
-      download: "הורדה לקריאה בלי רשת",
-    },
     install: {
       iosBefore: "באייפון ובאייפד: לוחצים על כפתור השיתוף",
       iosAfter: 'ובוחרים "הוספה למסך הבית".',
@@ -224,7 +209,7 @@ export const ACCOUNT_MESSAGES = defineMessages(
       installAsApp: "התקנה כאפליקציה",
       bannerAria: "התקנת האתר כאפליקציה",
       bannerTitle: "הסיפור שלי על מסך הבית",
-      bannerText: "נפתח בלחיצה אחת, וספרים שהורדתם נקראים גם בלי רשת.",
+      bannerText: "נפתח בלחיצה אחת, ישר מהמסך הראשי.",
       install: "התקנה",
       close: "סגירה",
     },
@@ -391,7 +376,6 @@ export const ACCOUNT_MESSAGES = defineMessages(
       recordingsIntro:
         "Stories you recorded in your own voice while reading. A recording you share will be available to all readers once our editors approve it.",
       onThisDevice: "On this device",
-      offlineBooks: "Books I downloaded for offline reading",
       status: {
         draft: { label: "Draft", hint: "Only you can see this book." },
         private: { label: "Private", hint: "Only you can see this book, plus anyone you sent a share link to." },
@@ -478,6 +462,10 @@ export const ACCOUNT_MESSAGES = defineMessages(
         link: "The sign-in link is invalid or has expired. Please ask for a new one.",
         google: "Signing in with Google didn't work. Try again, or sign in with email.",
       } as Record<string, string>,
+      notices: {
+        confirmed: "Your email address is confirmed. Now sign in here with your email and password.",
+        used: "This link was already used. If you already confirmed your email, just sign in here with your password. Otherwise ask for a new link.",
+      } as Record<string, string>,
       unavailableTitle: "Sign-in isn't available",
       unavailableDescription: "This site has no account service set up. You can read every book without signing in.",
       sentTitle: "We sent you a sign-in link",
@@ -532,8 +520,7 @@ export const ACCOUNT_MESSAGES = defineMessages(
       notActive:
         "The books are saved on this device, but offline reading isn't active in this browser yet. Reload the page when you're online.",
       emptyTitle: "You haven't downloaded any books yet",
-      emptyDescription:
-        'Every book page has a "Download for offline reading" button. A book you download will wait here, on a plane or on a trip.',
+      emptyDescription: "There are no books saved for offline reading on this device. When you're online, every book can be read on the site.",
       allBooks: "All books",
       readAria: (title: string) => `Read ${title}`,
       pages: pagesEn,
@@ -557,25 +544,6 @@ export const ACCOUNT_MESSAGES = defineMessages(
       next: "Next",
       theEnd: "The end! Back to books",
     },
-    download: {
-      failed: "The download didn't work. Please try again.",
-      errors: {
-        unsupported: "This browser can't save books for offline reading",
-        manifest: "We couldn't get the book's details. Check your connection and try again.",
-        assets: (n: number) =>
-          `${n === 1 ? "1 file" : `${n} files`} of the book couldn't be saved, so it isn't available offline. Please try again.`,
-        storage: "There isn't enough space on this device to save the book.",
-      },
-      saved: "Saved on this device",
-      openOffline: "Open offline",
-      removeAria: (title?: string) => (title ? `Remove the download of ${title}` : "Remove the download"),
-      remove: "Remove",
-      notActive:
-        "The book is saved, but offline reading isn't active in this browser yet. Reload the page; if this message stays, the browser or the site address doesn't support it.",
-      downloadAria: (title?: string) => `Download for offline reading${title ? `: ${title}` : ""}`,
-      downloading: (percent: number) => `Downloading… ${percent}%`,
-      download: "Download for offline reading",
-    },
     install: {
       iosBefore: "On iPhone and iPad: tap the Share button",
       iosAfter: 'and choose "Add to Home Screen".',
@@ -583,7 +551,7 @@ export const ACCOUNT_MESSAGES = defineMessages(
       installAsApp: "Install as an app",
       bannerAria: "Install the site as an app",
       bannerTitle: "My Story on your home screen",
-      bannerText: "Opens with one tap, and books you downloaded can be read offline.",
+      bannerText: "Opens with one tap, right from your home screen.",
       install: "Install",
       close: "Close",
     },

@@ -1,12 +1,12 @@
 /**
  * GET /api/pdf/<slug>            the book as a printable PDF (A4 landscape)
  *   ?nikud=1                     use the vocalized text where a page has it
- *   ?token=<shareToken>          access to a private book through its share link
+ *   ?token=<shareToken>          accepted but ignored: a share link does not open the PDF
  *   ?inline=1                    open in the browser instead of downloading
  *
- * Read-only. Published books are public; anything else needs the owner, an
- * editor or the share token (canViewBook). A book the caller may not see
- * answers 404, so the route does not reveal which slugs exist.
+ * Read-only, and only for the book's owner, editors and admins (canEditBook),
+ * published or not; a share token does not open it. Anyone else gets 404, so
+ * the route does not reveal which slugs exist.
  *
  * Building a PDF is CPU heavy and open to anonymous visitors, so it is rate
  * limited per user, or per IP address when signed out (RATE_LIMIT_PDF_PER_HOUR,
@@ -14,7 +14,7 @@
  */
 import { z } from "zod";
 import { apiError, jsonError } from "@/lib/api";
-import { canViewBook, getCurrentUser } from "@/lib/auth";
+import { canEditBook, getCurrentUser } from "@/lib/auth";
 import { getBookPdf, PdfFontsUnavailableError } from "@/lib/pdf";
 import { rateLimited } from "@/lib/rate-limit";
 import { getRepo } from "@/lib/repo";
@@ -46,7 +46,7 @@ export async function GET(request: Request, context: { params: Promise<{ slug: s
     const repo = await getRepo();
     const book = await repo.getBookBySlug(slug);
     const user = await getCurrentUser();
-    if (!book || !canViewBook(book, user, query.token)) return jsonError(404, "הספר לא נמצא");
+    if (!book || !canEditBook(book, user)) return jsonError(404, "הספר לא נמצא");
     if (book.pages.length === 0) return jsonError(409, "בספר הזה עדיין אין עמודים להדפסה");
     if (book.pages.length > MAX_PAGES) return jsonError(413, "הספר ארוך מדי להורדה כקובץ אחד");
     const limited = await rateLimited("PDF", { request, user });
@@ -66,7 +66,8 @@ export async function GET(request: Request, context: { params: Promise<{ slug: s
         "Content-Length": String(pdf.bytes.byteLength),
         // ASCII fallback from the slug, and the Hebrew title for browsers that read filename*.
         "Content-Disposition": `${disposition}; filename="${book.slug}.pdf"; filename*=UTF-8''${utf8Name}`,
-        "Cache-Control": book.status === "published" ? "public, max-age=300" : "private, no-store",
+        // Per user (owner, editor, admin), so never in a shared cache.
+        "Cache-Control": "private, no-store",
         "X-Content-Type-Options": "nosniff",
         "X-Robots-Tag": "noindex",
         "X-Pdf-Sheets": String(pdf.sheets),

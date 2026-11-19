@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { z } from "zod";
 import { missingPublishCredits, publishBlockers } from "@/app/admin/_lib/service";
 import { ReaderPublishPanel } from "@/components/admin/ReaderPublishPanel";
-import { OfflineDownloadButton } from "@/components/pwa/OfflineDownloadButton";
 import { BookPlayer } from "@/components/reader";
 import { loadBookForReader, loadServerProgress, recommendBooks } from "@/lib/reader/access";
 import { switchableLanguages, toPlayerBook } from "@/lib/reader/logic";
@@ -151,14 +150,6 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
       syncUrl
       autoNarrate={query.listen === "1"}
       startScreen={query.start === "1" && query.page === undefined}
-      downloadControl={
-        <OfflineDownloadButton
-          bookId={book.id}
-          title={book.title}
-          token={viaToken ? query.token : undefined}
-          size="lg"
-        />
-      }
       countView={book.status === "published"}
       endScreenStaffPanel={publishPanel}
       endScreenFeedback={

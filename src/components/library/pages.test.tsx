@@ -236,16 +236,19 @@ describe("library pages", () => {
       "עוד ספרים כאלה",
       "החתולה",
       "לספר הזה עוד אין הקראה",
-      // Signed-out readers get the device favorite button (no login wall), print and offline download.
+      // Signed-out readers get the device favorite button (no login wall).
       'aria-label="הוספה למועדפים: השבלול"',
-      'href="/print/snail"',
-      "הורדה לקריאה בלי רשת",
       "application/ld+json",
     ]) {
       expect(out, text).toContain(text);
     }
     expect(out).not.toContain("<script>alert(1)</script>");
     expect(out).not.toContain(SECRET_TITLE);
+    // Printing, the PDF and the video are only for the book's owner, editors and admins.
+    expect(out).not.toContain('href="/print/snail"');
+    expect(out).not.toContain("יצירת סרטון מהספר");
+    // Downloading for offline reading was removed.
+    expect(out).not.toContain("הורדה לקריאה בלי רשת");
     // The only login link is the comments' "sign in to comment"; reading, favorites and ratings need no sign-in.
     expect(out.match(/href="\/login[^"]*"/g)).toEqual(['href="/login?next=%2Fbook%2Fsnail"']);
     expect(out).toContain("התחברו כדי להגיב");
@@ -265,12 +268,23 @@ describe("library pages", () => {
 
     state.user = { id: "u_other", name: "אחר", role: "parent" };
     await expect(live(["book", "secret"])).rejects.toThrow("NEXT_NOT_FOUND");
+    // A signed-in reader who does not own a published book gets no print/PDF button either.
+    const otherView = await html(await live(["book", "snail"]));
+    expect(otherView).not.toContain('href="/print/snail"');
+    expect(otherView).not.toContain("יצירת סרטון מהספר");
+    // An editor gets both on every book.
+    state.user = { id: "u_ed", name: "עורכת", role: "editor" };
+    const editorView = await html(await live(["book", "snail"]));
+    expect(editorView).toContain('href="/print/snail"');
+    expect(editorView).toContain("יצירת סרטון מהספר");
+    state.user = { id: "u_other", name: "אחר", role: "parent" };
     expect((await liveMeta(["book", "secret"])).title).toBe("הספר לא נמצא");
 
     state.user = { id: "u_owner", name: "בעלים", role: "parent" };
     const out = await html(await live(["book", "secret"]));
     expect(out).toContain(SECRET_TITLE);
     expect(out).toContain("זה ספר פרטי");
+    expect(out).toContain('href="/print/secret"');
     expect(out).not.toContain("application/ld+json");
     const meta = await liveMeta(["book", "secret"]);
     expect(meta.robots).toEqual({ index: false, follow: false });

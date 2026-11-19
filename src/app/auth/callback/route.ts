@@ -25,7 +25,8 @@ export async function GET(request: Request): Promise<Response> {
   const next = safeNextPath(params.get("next"), "/");
   if (authMode() !== "supabase") redirect(routes.login());
 
-  const failed = `/auth/sign-in?error=link${next !== "/" ? `&next=${encodeURIComponent(next)}` : ""}`;
+  const signIn = (q: string) => `/auth/sign-in?${q}${next !== "/" ? `&next=${encodeURIComponent(next)}` : ""}`;
+  const failed = signIn("error=link");
   const query = QuerySchema.safeParse({
     code: params.get("code") ?? undefined,
     token_hash: params.get("token_hash") ?? undefined,
@@ -37,18 +38,30 @@ export async function GET(request: Request): Promise<Response> {
   const supabase = await createSupabaseServerClient();
   const { code, token_hash: tokenHash, type } = query.data;
 
-  let errorMessage: string | undefined;
   if (code) {
-    errorMessage = (await supabase.auth.exchangeCodeForSession(code)).error?.message;
-  } else if (tokenHash) {
-    errorMessage = (await supabase.auth.verifyOtp({ token_hash: tokenHash, type: type ?? "email" })).error?.message;
-  } else {
-    errorMessage = params.get("error_description") ?? "missing code";
+    // Supabase hands out a code only after it has verified the emailed token, so
+    // the address is confirmed even when the exchange fails here (usually the link
+    // was opened in another browser, which lacks the PKCE verifier cookie).
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+      console.warn("[auth] code exchange failed after a verified link:", error.message);
+      redirect(signIn("notice=confirmed"));
+    }
+    redirect(next);
   }
 
-  if (errorMessage) {
-    console.warn("[auth] sign-in callback failed:", errorMessage);
-    redirect(failed);
+  if (tokenHash) {
+    const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: type ?? "email" });
+    if (error) {
+      console.warn("[auth] sign-in callback failed:", error.message);
+      redirect(failed);
+    }
+    redirect(next);
   }
-  redirect(next);
+
+  // No code: Supabase refused the link before redirecting. Its reason travels in
+  // the URL fragment, which never reaches the server; by far the usual one is a
+  // link opened a second time (otp_expired) after it already confirmed the address.
+  console.warn("[auth] sign-in callback without a code:", params.get("error_code") ?? "no details");
+  redirect(signIn("notice=used"));
 }

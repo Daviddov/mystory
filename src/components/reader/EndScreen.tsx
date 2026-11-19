@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { BookCard } from "@/components/BookCard";
 import { BookCredits, hasCredits, type BookCreditsProps } from "@/components/BookCredits";
 import { useLocale } from "@/components/i18n/LocaleProvider";
-import { Button } from "@/components/ui";
+import { Button, ButtonLink } from "@/components/ui";
 import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { routes } from "@/lib/routes";
 import type { PublicBook } from "@/lib/public-book";
@@ -132,6 +132,11 @@ export function EndScreen({
             {recommendations.map((book) => (
               <BookCard key={book.id} book={book} href={routes.read(book.slug)} locale={locale} />
             ))}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <ButtonLink href={routes.books()} variant="outline" size="lg">
+              {t.moreBooks}
+            </ButtonLink>
           </div>
         </section>
       ) : null}

@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowRight, Download } from "lucide-react";
 import { ButtonLink, Chip } from "@/components/ui";
-import { canViewBook, getCurrentUser } from "@/lib/auth";
+import { canEditBook, getCurrentUser } from "@/lib/auth";
 import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { getLocale } from "@/lib/i18n/server";
 import { mediaUrl } from "@/lib/media/url";
@@ -36,19 +36,19 @@ function first(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
 }
 
-async function loadBook(slug: string, token: string | undefined): Promise<BookWithPages | null> {
+async function loadBook(slug: string): Promise<BookWithPages | null> {
   if (!SLUG_PATTERN.test(slug) || slug.length > 80) return null;
   const repo = await getRepo();
   const book = await repo.getBookBySlug(slug);
   if (!book) return null;
+  // Printing and the PDF belong to the book's owner, editors and admins; nobody else sees the page.
   const user = await getCurrentUser();
-  return canViewBook(book, user, token) ? book : null;
+  return canEditBook(book, user) ? book : null;
 }
 
-export async function generateMetadata({ params, searchParams }: PrintPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PrintPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const token = first((await searchParams).token);
-  const book = await loadBook(slug, token);
+  const book = await loadBook(slug);
   return localizeTitle({
     title: book ? `הדפסה: ${book.title}` : "הדפסת ספר",
     // The print view duplicates the book page; keep it out of search results.
@@ -77,7 +77,7 @@ export default async function PrintPage({ params, searchParams }: PrintPageProps
   const { slug } = await params;
   const search = await searchParams;
   const token = first(search.token)?.slice(0, 200);
-  const [book, locale] = await Promise.all([loadBook(slug, token), getLocale()]);
+  const [book, locale] = await Promise.all([loadBook(slug), getLocale()]);
   if (!book) notFound();
   const t = READER_MESSAGES[locale].print;
 

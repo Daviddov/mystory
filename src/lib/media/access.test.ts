@@ -227,7 +227,7 @@ describe("recommendations sent to the reader", () => {
       });
     }
 
-    const recommendations = await recommendBooks(current);
+    const recommendations = await recommendBooks(current, 4);
     expect(recommendations.length).toBe(4);
     for (const book of recommendations as Record<string, unknown>[]) {
       expect(book).not.toHaveProperty("shareToken");

@@ -29,7 +29,7 @@ type Mode = "signin" | "signup" | "link";
  * emailed link), or a one-time link by email, or Google. `next` must already
  * be a sanitized same-site path (see safeNextPath).
  */
-export function SignInForm({ next, error }: { next: string; error?: string }) {
+export function SignInForm({ next, error, notice }: { next: string; error?: string; notice?: string }) {
   const [mode, setMode] = useState<Mode>("signin");
   const [signInState, signInAction, signInPending] = useActionState(passwordSignInAction, INITIAL);
   const [signUpState, signUpFormAction, signUpPending] = useActionState(signUpAction, INITIAL);
@@ -98,6 +98,10 @@ export function SignInForm({ next, error }: { next: string; error?: string }) {
       {message ? (
         <p role="alert" className="rounded-md bg-danger-soft px-4 py-3 font-medium">
           {message}
+        </p>
+      ) : notice ? (
+        <p role="status" className="rounded-md bg-success-soft px-4 py-3 font-medium">
+          {notice}
         </p>
       ) : null}
 

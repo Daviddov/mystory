@@ -54,7 +54,6 @@ export function navFor(locale: Locale) {
     account: [
       { href: routes.me(), label: t.me },
       { href: routes.favorites(), label: t.favorites },
-      { href: routes.offline(), label: t.offline },
     ],
     info: [
       { href: routes.about(), label: t.about },

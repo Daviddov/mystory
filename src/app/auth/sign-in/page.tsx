@@ -20,7 +20,7 @@ export const dynamic = "force-dynamic";
 export default async function SignInPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string | string[]; error?: string | string[] }>;
+  searchParams: Promise<{ next?: string | string[]; error?: string | string[]; notice?: string | string[] }>;
 }) {
   const params = await searchParams;
   const next = safeNextPath(typeof params.next === "string" ? params.next : undefined, "/");
@@ -30,12 +30,13 @@ export default async function SignInPage({
   const locale = await getLocale();
   const t = accountMessages(locale).auth;
   const error = typeof params.error === "string" && Object.hasOwn(t.errors, params.error) ? t.errors[params.error] : undefined;
+  const notice = typeof params.notice === "string" && Object.hasOwn(t.notices, params.notice) ? t.notices[params.notice] : undefined;
   return (
     <main className="container-page flex justify-center py-12">
       <Card padding="lg" className="flex w-full max-w-md flex-col gap-6">
         <h1 className="text-3xl font-extrabold">{t.signIn}</h1>
         <p className="text-lg text-muted">{t.signInIntro}</p>
-        <SignInForm next={next} error={error} />
+        <SignInForm next={next} error={error} notice={notice} />
       </Card>
     </main>
   );

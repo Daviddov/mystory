@@ -110,4 +110,13 @@ describe("reader data helpers", () => {
     const ids = (await recommendBooks(book, 4)).map((entry) => entry.id);
     expect(ids).toEqual([similar.id, sameAge.id, otherAge.id]);
   });
+
+  it("offers a dozen books on the end screen by default", async () => {
+    const make = (title: string) => data.repo.createBook({ title, ownerId: owner.id, status: "published", ageGroup: "3-5" });
+    const book = await make("Current");
+    for (let n = 0; n < 15; n++) await make(`Other ${n}`);
+    const recommendations = await recommendBooks(book);
+    expect(recommendations).toHaveLength(12);
+    expect(recommendations.map((entry) => entry.id)).not.toContain(book.id);
+  });
 });

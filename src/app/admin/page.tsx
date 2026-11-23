@@ -99,6 +99,10 @@ export default async function AdminDashboardPage() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card as="section" aria-labelledby="views-heading" className="flex flex-col gap-4">
           <CardTitle id="views-heading">הספרים הנצפים ביותר</CardTitle>
+          <p className="text-muted">
+            <span className="text-2xl font-bold text-foreground tabular-nums">{NUMBER.format(stats.totalViews)}</span>{" "}
+            קריאות בסך הכול ב-{NUMBER.format(stats.byStatus.published)} ספרים שפורסמו
+          </p>
           {stats.mostViewed.length === 0 ? (
             <CardDescription>עדיין אין צפיות בספרים מפורסמים.</CardDescription>
           ) : (

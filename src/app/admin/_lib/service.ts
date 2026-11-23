@@ -285,6 +285,8 @@ export interface DashboardStats {
   byStatus: Record<BookStatus, number>;
   byOrigin: Record<BookOrigin, number>;
   mostViewed: Book[];
+  /** All-time readings of the books published now (sum of their view counters). */
+  totalViews: number;
   bookOfTheWeek: Book | null;
   generations: GenerationStats;
   collections: number;
@@ -338,6 +340,7 @@ export async function getDashboardStats(repo: Repository, now: Date = new Date()
     byStatus,
     byOrigin,
     mostViewed,
+    totalViews: books.reduce((sum, b) => (b.status === "published" ? sum + b.viewCount : sum), 0),
     bookOfTheWeek: books.find((b) => b.id === settings.bookOfTheWeekId) ?? null,
     generations: summarizeGenerations(jobs, now),
     collections: collections.length,

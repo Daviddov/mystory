@@ -6,6 +6,7 @@ import { BookCard } from "@/components/BookCard";
 import { BookCredits, hasCredits, type BookCreditsProps } from "@/components/BookCredits";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { Button, ButtonLink } from "@/components/ui";
+import { WhatsAppChannelLink } from "@/components/WhatsAppChannelLink";
 import { READER_MESSAGES } from "@/lib/i18n/reader";
 import { routes } from "@/lib/routes";
 import type { PublicBook } from "@/lib/public-book";
@@ -39,7 +40,7 @@ const CONFETTI = [
   { emoji: "⭐", x: 90, delay: 0.5 },
 ];
 
-/** Shown after the last page: questions to talk about, read again, and what to read next. */
+/** Shown after the last page: read again, what to read next (high up, so it shows without scrolling), then rating, questions and comments. */
 export function EndScreen({
   title,
   discussionQuestions,
@@ -55,9 +56,9 @@ export function EndScreen({
   const locale = useLocale();
   const t = READER_MESSAGES[locale].end;
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-8">
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-5">
       <header className="relative text-center">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-40 overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-28 overflow-hidden">
           {CONFETTI.map((piece, i) => (
             <span
               key={i}
@@ -69,19 +70,19 @@ export function EndScreen({
           ))}
         </div>
         <p
-          className="mystory-trophy relative mx-auto flex size-28 items-center justify-center rounded-full bg-accent-soft text-6xl shadow-card"
+          className="mystory-trophy relative mx-auto flex size-16 items-center justify-center rounded-full bg-accent-soft text-4xl shadow-card"
           aria-hidden="true"
         >
           🎉
         </p>
-        <h2 className="relative mt-4 text-4xl font-bold sm:text-5xl">{t.title}</h2>
-        <p className="mt-2 text-xl text-muted">
+        <h2 className="relative mt-2 text-3xl font-bold sm:text-4xl">{t.title}</h2>
+        <p className="mt-1 text-lg text-muted">
           {t.wellDoneBefore}
           <bdi>{title}</bdi>
           {t.wellDoneAfter}
         </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-          <Button size="lg" variant="primary" onClick={onReadAgain}>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+          <Button variant="primary" onClick={onReadAgain}>
             <RotateCcw aria-hidden="true" />
             {t.readAgain}
           </Button>
@@ -91,7 +92,29 @@ export function EndScreen({
 
       {staffPanel}
 
+      {recommendations.length > 0 ? (
+        <section aria-labelledby="reader-next-title">
+          <h3 id="reader-next-title" className="mb-3 text-xl font-bold sm:text-2xl">
+            <span aria-hidden="true">📚 </span>
+            {t.next}
+          </h3>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {recommendations.map((book) => (
+              <BookCard key={book.id} book={book} href={routes.read(book.slug)} locale={locale} />
+            ))}
+          </div>
+          <div className="mt-4 flex justify-center">
+            <ButtonLink href={routes.books()} variant="outline">
+              {t.moreBooks}
+            </ButtonLink>
+          </div>
+        </section>
+      ) : null}
+
       {feedback ? <div className="flex flex-col items-center gap-4">{feedback}</div> : null}
+
+      {/* The channel posts Hebrew stories, so the English site leaves it out. */}
+      {locale === "he" ? <WhatsAppChannelLink /> : null}
 
       {discussionQuestions.length > 0 ? (
         <section
@@ -120,25 +143,6 @@ export function EndScreen({
 
       {comments ? (
         <div className="rounded-[1.75rem] bg-surface p-6 shadow-card ring-1 ring-border/60 sm:p-8">{comments}</div>
-      ) : null}
-
-      {recommendations.length > 0 ? (
-        <section aria-labelledby="reader-next-title">
-          <h3 id="reader-next-title" className="mb-4 text-2xl font-bold">
-            <span aria-hidden="true">📚 </span>
-            {t.next}
-          </h3>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {recommendations.map((book) => (
-              <BookCard key={book.id} book={book} href={routes.read(book.slug)} locale={locale} />
-            ))}
-          </div>
-          <div className="mt-6 flex justify-center">
-            <ButtonLink href={routes.books()} variant="outline" size="lg">
-              {t.moreBooks}
-            </ButtonLink>
-          </div>
-        </section>
       ) : null}
 
       {/* Credits stay out of the way: a small link that opens them on demand. */}

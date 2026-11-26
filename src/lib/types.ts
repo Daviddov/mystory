@@ -82,6 +82,8 @@ export type WordTiming = z.infer<typeof WordTimingSchema>;
  */
 export const PageTranslationSchema = z.object({
   text: z.string(),
+  /** Same text with Hebrew vocalization marks, for a Hebrew version. */
+  textNikud: z.string().optional(),
   /** Media path of the narration in the second language. */
   audio: z.string().optional(),
   wordTimings: z.array(WordTimingSchema).optional(),

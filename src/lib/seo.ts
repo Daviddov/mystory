@@ -10,6 +10,20 @@ import type { Metadata } from "next";
 import { siteUrl } from "./config";
 import { stripNikud } from "./hebrew";
 import { routes } from "./routes";
+import { SOCIAL_PROFILES } from "./social";
+
+/**
+ * Robots directives of every indexable page (the root layout's default, and
+ * pages that pick between this and noindex). "max-image-preview: large" lets
+ * Google show a book's picture as a large preview in its results.
+ */
+export const INDEXABLE_ROBOTS = {
+  index: true,
+  follow: true,
+  "max-image-preview": "large",
+  "max-snippet": -1,
+  "max-video-preview": -1,
+} satisfies NonNullable<Metadata["robots"]>;
 
 export const SITE_NAME = "הסיפור שלי";
 export const SITE_ALT_NAME = "mystory";
@@ -123,6 +137,7 @@ export function siteJsonLd() {
       alternateName: SITE_ALT_NAME,
       url: `${base}/`,
       logo: `${base}/icons/icon-512.png`,
+      sameAs: SOCIAL_PROFILES,
     },
     {
       "@context": "https://schema.org",

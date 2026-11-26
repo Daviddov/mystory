@@ -70,7 +70,8 @@ export function BookCard({ book, href, layout = "grid", badge, footer, priority,
           {cover ? (
             <img
               src={cover}
-              alt=""
+              // The title, so search engines can tie the picture to the book (it also shows as a result preview).
+              alt={title}
               loading={priority ? "eager" : "lazy"}
               decoding="async"
               className="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"

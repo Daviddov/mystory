@@ -1,4 +1,5 @@
 import Link from "@/components/i18n/LocaleLink";
+import { WhatsAppChannelLink } from "@/components/WhatsAppChannelLink";
 import { getT } from "@/lib/i18n/server";
 import { navFor, type NavLink } from "@/lib/nav";
 import { routes } from "@/lib/routes";
@@ -45,9 +46,10 @@ export async function SiteFooter() {
         <FooterColumn title={t.footer.info} links={nav.info} />
       </div>
       <div className="border-t border-border">
-        <p className="container-page py-4 text-sm text-muted">
-          {t.site.tagline}
-        </p>
+        <div className="container-page flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-4">
+          <p className="text-sm text-muted">{t.site.tagline}</p>
+          {locale === "he" ? <WhatsAppChannelLink variant="inline" /> : null}
+        </div>
       </div>
     </footer>
   );

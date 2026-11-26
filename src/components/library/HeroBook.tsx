@@ -51,7 +51,7 @@ export function HeroBook({ book, label, locale = DEFAULT_LOCALE }: HeroBookProps
             {cover ? (
               <img
                 src={cover}
-                alt=""
+                alt={book.title}
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"

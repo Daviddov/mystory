@@ -29,7 +29,7 @@ import { getLocale } from "@/lib/i18n/server";
 import { mediaUrl } from "@/lib/media/url";
 import { getRepo } from "@/lib/repo";
 import { routes } from "@/lib/routes";
-import { absoluteUrl, plainText } from "@/lib/seo";
+import { absoluteUrl, INDEXABLE_ROBOTS, plainText } from "@/lib/seo";
 import {
   ageGroupsLabel,
   ageSpan,
@@ -124,7 +124,7 @@ export async function bookMetadata(slug: string, viewer: User | null): Promise<M
     description,
     authors: book.author ? [{ name: book.author }] : undefined,
     alternates: { canonical: routes.book(book.slug) },
-    robots: book.status === "published" ? undefined : { index: false, follow: false },
+    robots: book.status === "published" ? INDEXABLE_ROBOTS : { index: false, follow: false },
     // The share image is drawn from the cover by ./opengraph-image.ts (PNG, 1200x630).
     openGraph: {
       title,

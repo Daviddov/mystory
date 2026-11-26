@@ -79,6 +79,12 @@ describe("nikud", () => {
     expect(bookHasNikud({ pages: [{ text: "שלום" }] })).toBe(false);
     expect(bookHasNikud({ pages: [] })).toBe(false);
   });
+
+  it("counts nikud in a Hebrew version of a book in another language", () => {
+    expect(bookHasNikud({ pages: [{ text: "مرحبا", translation: vocalized }] })).toBe(true);
+    expect(bookHasNikud({ pages: [{ text: "مرحبا", extraTranslations: { he: vocalized } }] })).toBe(true);
+    expect(bookHasNikud({ pages: [{ text: "مرحبا", translation: { text: "שלום" } }] })).toBe(false);
+  });
 });
 
 describe("words and timings", () => {
@@ -202,6 +208,16 @@ describe("books in several languages", () => {
     };
     expect(switchableLanguages(book)).toEqual(["ar", "en"]);
     expect(otherLanguageText(book, book.pages[0], "en")).toBe("Hello");
+  });
+
+  it("shows a Hebrew version with nikud when nikud is on", () => {
+    const book = {
+      language: "ar" as const,
+      translation: { language: "he" as const, title: "שלום" },
+      pages: [{ index: 0, text: "مرحبا", translation: { text: "שלום עולם", textNikud: "שָׁלוֹם עוֹלָם" } }],
+    };
+    expect(otherLanguageText(book, book.pages[0], "he", true)).toBe("שָׁלוֹם עוֹלָם");
+    expect(otherLanguageText(book, book.pages[0], "he")).toBe("שלום עולם");
   });
 
   it("leaves out a version without any page text", () => {

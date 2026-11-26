@@ -13,7 +13,7 @@ import { localeDir } from "@/lib/i18n/locale";
 import { getMessages } from "@/lib/i18n/messages";
 import { SITE_NAME_EN, SITE_TITLE_EN } from "@/lib/i18n/metadata";
 import { getLocale } from "@/lib/i18n/server";
-import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TITLE } from "@/lib/seo";
+import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_TITLE } from "@/lib/seo";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -75,6 +75,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: SITE_DESCRIPTION,
     },
     twitter: { card: "summary_large_image", title: SITE_TITLE, description: SITE_DESCRIPTION },
+    robots: INDEXABLE_ROBOTS,
     verification: {
       google,
       other: bing ? { "msvalidate.01": bing } : undefined,

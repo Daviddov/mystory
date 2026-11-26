@@ -4,6 +4,7 @@ import { z } from "zod";
 import { missingPublishCredits, publishBlockers } from "@/app/admin/_lib/service";
 import { ReaderPublishPanel } from "@/components/admin/ReaderPublishPanel";
 import { BookPlayer } from "@/components/reader";
+import { GuestLimit } from "@/components/reader/GuestLimit";
 import { loadBookForReader, loadServerProgress, recommendBooks } from "@/lib/reader/access";
 import { switchableLanguages, toPlayerBook } from "@/lib/reader/logic";
 import { recordingsForReader } from "@/lib/recordings/service";
@@ -130,7 +131,7 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
       />
     ) : undefined;
 
-  return (
+  const player = (
     <BookPlayer
       book={toPlayerBook(book)}
       initialPage={query.page === undefined ? undefined : query.page - 1}
@@ -179,4 +180,15 @@ export default async function ReadPage({ params, searchParams }: ReadPageProps) 
       }
     />
   );
+
+  // A visitor without an account may open a few published books; a share link
+  // (someone sent them this book) is never limited.
+  if (user === null && book.status === "published" && !viaToken) {
+    return (
+      <GuestLimit bookId={book.id} loginHref={routes.login(readPath)} backHref={routes.book(book.slug)}>
+        {player}
+      </GuestLimit>
+    );
+  }
+  return player;
 }

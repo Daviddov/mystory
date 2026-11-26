@@ -153,8 +153,15 @@ export function usableNikud(page: Pick<Page, "text" | "textNikud">): string | nu
   return nikud;
 }
 
-export function bookHasNikud(book: { pages: Pick<Page, "text" | "textNikud">[] }): boolean {
-  return book.pages.some((page) => usableNikud(page) !== null);
+/** True when the book's own pages, or one of its versions in other languages (a Hebrew version), carry usable nikud. */
+export function bookHasNikud(book: {
+  pages: (Pick<Page, "text" | "textNikud"> & Partial<Pick<Page, "translation" | "extraTranslations">>)[];
+}): boolean {
+  return book.pages.some(
+    (page) =>
+      usableNikud(page) !== null ||
+      [page.translation, ...Object.values(page.extraTranslations ?? {})].some((version) => !!version && usableNikud(version) !== null),
+  );
 }
 
 export function pageDisplayText(page: Pick<Page, "text" | "textNikud">, nikud: boolean): string {
@@ -186,9 +193,9 @@ export function switchableLanguages(book: VersionBook & { pages: VersionPage[] }
 }
 
 /** A page's text in one of the other languages (see switchableLanguages), or "" when it has none. */
-export function otherLanguageText(book: VersionBook, page: VersionPage, language: BookLanguage): string {
+export function otherLanguageText(book: VersionBook, page: VersionPage, language: BookLanguage, nikud = false): string {
   const version = pageVersion(book, page, language);
-  if (version) return version.text.trim();
+  if (version) return pageDisplayText(version, nikud).trim();
   return language === book.originalLanguage ? (page.originalText ?? "").trim() : "";
 }
 

@@ -3,6 +3,7 @@
  * Everything here lists PUBLISHED books only (the repository default, and
  * stated explicitly so a later change of the default cannot leak drafts).
  */
+import { INDEXABLE_ROBOTS } from "@/lib/seo";
 import "server-only";
 import type { Metadata } from "next";
 import { groupBooksByOccasion } from "@/lib/occasions";
@@ -221,7 +222,7 @@ export async function listingRobots(base: BookFilter): Promise<Metadata["robots"
     repo.listBooks({ language: HEBREW, ...base, status: PUBLISHED, limit: 1 }),
     repo.listBooks({ status: PUBLISHED, language: HEBREW, limit: 1 }),
   ]);
-  return listingIndexable(listing.total, library.total) ? undefined : { index: false, follow: true };
+  return listingIndexable(listing.total, library.total) ? INDEXABLE_ROBOTS : { index: false, follow: true };
 }
 
 /** The most read published books. */

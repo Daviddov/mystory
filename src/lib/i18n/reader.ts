@@ -132,6 +132,14 @@ export const READER_MESSAGES = defineMessages(
       moreBooks: "לעוד ספרים",
       credits: "קרדיטים ורישיון",
     },
+    guestLimit: {
+      title: "רוצים עוד סיפורים?",
+      description: (limit: number) =>
+        `בלי חשבון אפשר לקרוא ${limit} ספרים. כדי להמשיך לקרוא את כל הספרים בספרייה, נכנסים או נרשמים. זה בחינם.`,
+      alreadyOpen: "הספרים שכבר פתחתם נשארים פתוחים בשבילכם.",
+      signIn: "כניסה או הרשמה",
+      back: "חזרה לדף הספר",
+    },
     recording: {
       region: "הקלטה בקול שלי",
       allDone: "הקלטתם את כל הספר! אפשר לשמוע אותו בבחירת הקול.",
@@ -412,6 +420,14 @@ export const READER_MESSAGES = defineMessages(
       next: "What shall we read next?",
       moreBooks: "More books",
       credits: "Credits and license",
+    },
+    guestLimit: {
+      title: "Want more stories?",
+      description: (limit: number) =>
+        `Without an account you can read ${limit} books. Sign in or sign up to keep reading every book in the library. It's free.`,
+      alreadyOpen: "The books you already opened stay open for you.",
+      signIn: "Sign in or sign up",
+      back: "Back to the book page",
     },
     recording: {
       region: "Record in my voice",

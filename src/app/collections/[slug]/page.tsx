@@ -11,7 +11,7 @@ import { getMessages, taxonomyText } from "@/lib/i18n/messages";
 import { getLocale } from "@/lib/i18n/server";
 import { mediaUrl } from "@/lib/media/url";
 import { routes } from "@/lib/routes";
-import { pageMetadata, plainText } from "@/lib/seo";
+import { INDEXABLE_ROBOTS, pageMetadata, plainText } from "@/lib/seo";
 import { SLUG_PATTERN } from "@/lib/types";
 import { localizeTitle } from "@/lib/i18n/metadata";
 
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ...page,
     openGraph: { ...page.openGraph, images: cover ? [{ url: cover }] : undefined },
     // An empty collection is left out of the sitemap too: nothing to index until a book is added.
-    robots: books.length > 0 ? undefined : { index: false, follow: true },
+    robots: books.length > 0 ? INDEXABLE_ROBOTS : { index: false, follow: true },
   }, `${name}: a collection of children's stories`);
 }
 

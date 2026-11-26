@@ -10,8 +10,11 @@
  * carries the book's share token, and then with `Cache-Control: private,
  * no-store`. Everyone else gets the same 404 as for a missing file.
  *
- * Supabase mode: the buckets are private, so an authorised request is
- * redirected to a signed URL that expires (untested against a real project).
+ * Supabase mode: the buckets are private. Pictures of a published book are
+ * served from here, under this stable address, and cached by Vercel's CDN
+ * (see REMOTE_PUBLIC_IMAGE_CACHE), so search engines can index them and show
+ * them as previews. Everything else (audio, video, private books) is
+ * redirected to a signed URL that expires.
  */
 import { getCurrentUser } from "@/lib/auth";
 import { getMediaStore, isValidMediaPath, type MediaStore } from "@/lib/media";
@@ -37,6 +40,17 @@ const PUBLIC_CACHE = "public, max-age=0, must-revalidate";
  */
 const PUBLIC_VERSIONED_CACHE = "public, max-age=604800, stale-while-revalidate=86400";
 const PRIVATE_CACHE = "private, no-store";
+/**
+ * A published book's picture fetched from a remote store: Vercel's CDN keeps it
+ * (s-maxage), so the function and the storage download run about once per
+ * picture and version instead of once per view. An address without ?v= changes
+ * less predictably, so it is kept for an hour only.
+ */
+const REMOTE_PUBLIC_IMAGE_CACHE = {
+  versioned: "public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400",
+  unversioned: "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400",
+};
+const IMAGE_EXTENSIONS = /\.(webp|png|jpe?g|gif|avif)$/i;
 
 /** Lifetime of a signed URL of a public file, and how long browsers may reuse the redirect to it. */
 const PUBLIC_SIGNED_SECONDS = 60 * 60;
@@ -131,7 +145,10 @@ async function serve(request: Request, segments: string[], headOnly: boolean): P
   if (access === "denied") return notFound();
 
   const store = await getMediaStore();
-  if (store.kind !== "local") return redirectToStore(store, mediaPath, access, request);
+  // Remote store: published pictures are served from here (a stable address
+  // search engines can keep); the rest is redirected to the store itself.
+  const remotePublicImage = store.kind !== "local" && access === "public" && IMAGE_EXTENSIONS.test(mediaPath);
+  if (store.kind !== "local" && !remotePublicImage) return redirectToStore(store, mediaPath, access, request);
 
   const object = await store.get(mediaPath);
   if (!object) return notFound();
@@ -143,7 +160,13 @@ async function serve(request: Request, segments: string[], headOnly: boolean): P
     ...SECURITY_HEADERS,
     "Content-Type": object.contentType,
     "Accept-Ranges": "bytes",
-    "Cache-Control": isPublic ? (versioned ? PUBLIC_VERSIONED_CACHE : PUBLIC_CACHE) : PRIVATE_CACHE,
+    "Cache-Control": remotePublicImage
+      ? REMOTE_PUBLIC_IMAGE_CACHE[versioned ? "versioned" : "unversioned"]
+      : isPublic
+        ? versioned
+          ? PUBLIC_VERSIONED_CACHE
+          : PUBLIC_CACHE
+        : PRIVATE_CACHE,
   });
   if (isPublic) {
     headers.set("ETag", etag);

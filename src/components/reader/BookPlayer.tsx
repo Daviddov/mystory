@@ -460,7 +460,7 @@ function Player({
     prefs.secondLanguage && otherLanguages.includes(prefs.secondLanguage) ? prefs.secondLanguage : (otherLanguages[0] ?? null);
   const showOriginal = originalLanguage !== null && (prefs.original ?? false);
   // A page without source text (added after the translation) stays in the book's language.
-  const originalText = showOriginal && current && originalLanguage ? otherLanguageText(book, current, originalLanguage) : "";
+  const originalText = showOriginal && current && originalLanguage ? otherLanguageText(book, current, originalLanguage, nikudOn) : "";
   const inOriginal = originalText !== "";
   // A second-language version reads in its own voice (or not at all, never in the other language).
   const shownVersion = showOriginal && current && originalLanguage ? pageVersion(book, current, originalLanguage) : undefined;
@@ -937,7 +937,7 @@ function Player({
   const separateTextValue = current && separateText
     ? chosenTextLanguage === bookLanguage(book)
       ? pageDisplayText(current, nikudOn)
-      : otherLanguageText(book, current, chosenTextLanguage)
+      : otherLanguageText(book, current, chosenTextLanguage, nikudOn)
     : "";
   const separateTextShown = separateTextValue !== "";
   const text = current
@@ -996,7 +996,7 @@ function Player({
       window.history.back();
     }
   };
-  const exitControl = (size: "icon" | "lg"): ReactNode => {
+  const exitControl = (size: "icon" | "md" | "lg"): ReactNode => {
     const content =
       size === "icon" ? (
         <ArrowRight aria-hidden="true" className="ltr:-scale-x-100" />
@@ -1224,7 +1224,7 @@ function Player({
             discussionQuestions={book.discussionQuestions}
             recommendations={recommendations}
             onReadAgain={readAgain}
-            exit={exitControl("lg")}
+            exit={exitControl("md")}
             creditsBook={book}
             mediaToken={shareToken}
             staffPanel={endScreenStaffPanel}

@@ -17,7 +17,7 @@ import { listBooksForViewer } from "@/components/library/queries";
 import { ButtonLink, Chip, EmptyState } from "@/components/ui";
 import { getT } from "@/lib/i18n/server";
 import { routes } from "@/lib/routes";
-import { pageMetadata } from "@/lib/seo";
+import { INDEXABLE_ROBOTS, pageMetadata } from "@/lib/seo";
 import type { User } from "@/lib/types";
 
 /**
@@ -43,7 +43,7 @@ export function booksMetadata(searchParams: RawSearchParams): Metadata {
       path: routes.books(),
     }),
     // Filter combinations are endless; only the plain listing is indexed.
-    robots: filtered || query.page > 1 ? { index: false, follow: true } : undefined,
+    robots: filtered || query.page > 1 ? { index: false, follow: true } : INDEXABLE_ROBOTS,
   };
 }
 

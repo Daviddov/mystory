@@ -3,6 +3,7 @@
  * They check what a visitor may see (only published books) and that every
  * page renders; they do not replace looking at the pages in a browser.
  */
+import { INDEXABLE_ROBOTS } from "@/lib/seo";
 import type { ReactNode } from "react";
 import { prerender } from "react-dom/static";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -360,8 +361,8 @@ describe("library pages", () => {
     // Titles are built for search: no nikud, and what the page is.
     expect(meta.title).toBe("השבלול: סיפור ילדים לקריאה");
     expect(meta.alternates?.canonical).toBe("/book/snail");
-    expect(meta.robots).toBeUndefined();
-    expect(booksMetadata({}).robots).toBeUndefined();
+    expect(meta.robots).toEqual(INDEXABLE_ROBOTS);
+    expect(booksMetadata({}).robots).toEqual(INDEXABLE_ROBOTS);
     expect(booksMetadata({ age: "3-5" }).robots).toEqual({ index: false, follow: true });
     expect((await searchMetadata({ searchParams: params({ q: "שבלול" }) })).title).toBe("חיפוש: שבלול");
     // Browsing pages share with their own text, not the home page's (the root openGraph is replaced, not merged).
